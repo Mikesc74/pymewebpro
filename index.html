@@ -85,17 +85,21 @@
     background:rgba(251,248,243,.78);
     border-bottom:1px solid rgba(10,31,26,.06);
   }
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;min-height:140px;padding:12px 0}
-  @media (max-width:600px){.nav-inner{min-height:96px}}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:-.01em}
-  .brand img.logo{height:80px;width:auto;display:block}
-  @media (max-width:600px){.brand img.logo{height:50px}}
-  .foot-brand .brand-text{font-size:1.5rem;font-weight:700;color:#fff;letter-spacing:-.5px}
-  .brand-mark{
-    width:34px;height:34px;border-radius:10px;
-    background:linear-gradient(135deg,var(--blue) 0%,#1d4ed8 100%);
-    display:grid;place-items:center;color:white;font-family:'Fraunces',serif;font-weight:900;
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;min-height:80px;padding:12px 0}
+  @media (max-width:600px){.nav-inner{min-height:64px}}
+  .brand{display:flex;align-items:baseline;gap:2px;letter-spacing:-.03em;line-height:1;text-decoration:none}
+  .brand .logo-text{
+    font-family:'Inter',sans-serif;font-weight:900;font-size:1.9rem;
+    display:inline-flex;align-items:baseline;
   }
+  .logo-pyme{color:var(--ink)}
+  .logo-webpro{color:#d4a017}
+  .logo-tld{color:var(--muted);font-weight:600;font-size:.95rem;margin-left:3px;letter-spacing:0}
+  .foot-brand .brand .logo-text{font-size:1.7rem}
+  .foot-brand .logo-pyme{color:white}
+  .foot-brand .logo-webpro{color:#f5c518}
+  .foot-brand .logo-tld{color:#7c8aa6}
+  @media (max-width:600px){.brand .logo-text{font-size:1.5rem}}
   .nav-links{display:flex;gap:34px;font-size:.95rem;font-weight:500;color:var(--ink-soft)}
   .nav-links a:hover{color:var(--coral)}
   .nav-cta{display:flex;gap:10px;align-items:center}
@@ -301,8 +305,8 @@
 
   /* WHAT WE BUILD */
   .build{background:var(--bg-2)}
-  .build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  @media (max-width:880px){.build-grid{grid-template-columns:1fr 1fr}}
+  .build-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media (max-width:980px){.build-grid{grid-template-columns:1fr 1fr}}
   @media (max-width:560px){.build-grid{grid-template-columns:1fr}}
   .build-card{
     background:white;padding:32px 28px;border-radius:18px;border:1px solid var(--line);
@@ -664,7 +668,7 @@
 <nav class="nav">
   <div class="wrap nav-inner">
     <a href="#" class="brand" aria-label="PymeWebPro.com">
-      <img class="logo" src="logo.png" alt="PymeWebPro.com · Sitios web para pymes en Colombia">
+      <span class="logo-text"><span class="logo-pyme">pyme</span><span class="logo-webpro">webpro</span><span class="logo-tld">.com</span></span>
     </a>
     <div class="nav-links">
       <a href="#incluye">¿Qué incluye?</a>
@@ -759,42 +763,6 @@
   </div>
 </header>
 
-<!-- INDUSTRIES PHOTO GRID -->
-<section class="industries">
-  <div class="wrap">
-    <div class="ind-head reveal">
-      <span class="eyebrow">Trabajamos con negocios como el suyo</span>
-      <h2 style="margin-top:14px;font-size:clamp(1.6rem,3vw,2.4rem)">Pequeños negocios que ya están vendiendo en internet.</h2>
-    </div>
-    <div class="ind-grid">
-      <figure class="ind-card reveal">
-        <img src="https://images.pexels.com/photos/7447277/pexels-photo-7447277.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Panadería con vitrina llena de panes y pasteles" loading="lazy">
-        <figcaption>Panaderías &amp; cafeterías</figcaption>
-      </figure>
-      <figure class="ind-card reveal">
-        <img src="https://images.pexels.com/photos/7807035/pexels-photo-7807035.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Mecánico en taller con llave" loading="lazy">
-        <figcaption>Talleres &amp; servicios</figcaption>
-      </figure>
-      <figure class="ind-card reveal">
-        <img src="https://images.pexels.com/photos/7697329/pexels-photo-7697329.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Barbería con clientes" loading="lazy">
-        <figcaption>Peluquerías &amp; spas</figcaption>
-      </figure>
-      <figure class="ind-card reveal">
-        <img src="https://images.pexels.com/photos/8475204/pexels-photo-8475204.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Dueños de tienda local sonriendo" loading="lazy">
-        <figcaption>Tiendas &amp; minimarkets</figcaption>
-      </figure>
-      <figure class="ind-card reveal">
-        <img src="https://images.pexels.com/photos/36729739/pexels-photo-36729739.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Dueña de café posando confiada" loading="lazy">
-        <figcaption>Restaurantes</figcaption>
-      </figure>
-      <figure class="ind-card reveal">
-        <img src="https://images.pexels.com/photos/5934226/pexels-photo-5934226.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Costurera trabajando en su pequeño negocio" loading="lazy">
-        <figcaption>Servicios a domicilio</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
 <!-- PROBLEM -->
 <section id="problema" class="problem">
   <div class="wrap">
@@ -838,12 +806,10 @@
       <h2 style="margin-top:18px">Todo lo que necesita para que<br>su negocio venda por internet.</h2>
     </div>
     <div class="build-grid">
-      <article class="build-card reveal"><div class="ico">URL</div><h3>Su propio dominio</h3><p>Le ayudamos a elegir y configurar el dominio (sunegocio.com o .co). El registro anual se paga aparte al registrador, queda a nombre suyo.</p></article>
+      <article class="build-card reveal"><div class="ico">URL</div><h3>Su propio dominio</h3><p>Le ayudamos a elegir y configurar sunegocio.com (o .co). El registro anual se paga aparte y queda a nombre suyo.</p></article>
       <article class="build-card reveal"><div class="ico">MOV</div><h3>Listo para celular</h3><p>9 de cada 10 clientes lo van a buscar desde el celular. Su sitio se ve perfecto en cualquier pantalla.</p></article>
-      <article class="build-card reveal"><div class="ico">WSP</div><h3>Botón de WhatsApp</h3><p>Un clic y el cliente le escribe directamente al WhatsApp del negocio. Sin formularios complicados.</p></article>
+      <article class="build-card reveal"><div class="ico">WSP</div><h3>Botón de WhatsApp</h3><p>Un clic y el cliente le escribe directo al WhatsApp del negocio. Sin formularios complicados.</p></article>
       <article class="build-card reveal"><div class="ico">SEO</div><h3>Listo para Google</h3><p>Configurado desde el primer día para que sus clientes locales lo encuentren.</p></article>
-      <article class="build-card reveal"><div class="ico">📊</div><h3>Reportes mensuales</h3><p>Le mostramos cada mes cuánta gente visita su sitio, qué buscan y desde dónde. Sin tecnicismos, en una página fácil de leer.</p></article>
-      <article class="build-card reveal"><div class="ico">⚡</div><h3>Construido para velocidad</h3><p>Código limpio, imágenes optimizadas y tecnología moderna. Su sitio carga al instante en cualquier conexión y se ve perfecto en cualquier pantalla.</p></article>
     </div>
   </div>
 </section>
@@ -1183,8 +1149,8 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <span class="brand-text">PymeWebPro.com</span>
-        <p style="margin-top:18px">Sitios web profesionales para pequeños negocios en Colombia. Diseño, hospedaje y soporte: todo en un solo lugar.</p>
+        <div class="brand"><span class="logo-text"><span class="logo-pyme">pyme</span><span class="logo-webpro">webpro</span><span class="logo-tld">.com</span></span></div>
+        <p style="margin-top:14px">Sitios web profesionales para pequeños negocios en Colombia. Diseño, hospedaje y soporte: todo en un solo lugar.</p>
       </div>
       <div class="foot-col">
         <h4>Servicios</h4>
