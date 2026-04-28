@@ -1,0 +1,17 @@
+# Source materials (not part of the deployed site)
+*.pptx
+*.zip
+1f47646e-8e46-4137-8617-d45fcd4687c4.jpeg
+logo.jpg
+
+# OS / editor cruft
+.DS_Store
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+
+# Build output (Cloudflare Pages doesn't need a build for plain static)
+node_modules/
+dist/
+.wrangler/

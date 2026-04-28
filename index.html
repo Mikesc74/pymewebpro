@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PymeWebPro · Sitios web profesionales para pequeños negocios en Colombia</title>
+<meta name="description" content="Diseñamos sitios web profesionales para pequeños negocios colombianos. Sin tecnicismos, sin sorpresas. Lo construimos, lo lanzamos, y usted recibe clientes nuevos por internet." />
+<meta name="theme-color" content="#0a1f1a" />
+<meta property="og:title" content="Su negocio merece un sitio web de verdad" />
+<meta property="og:description" content="Sitios web profesionales para negocios latinoamericanos. Diseño, hospedaje y SEO incluidos." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbf8f3;
+    --bg-2:#f3eee5;
+    --ink:#0a1f1a;
+    --ink-soft:#2c3a36;
+    --muted:#6a716e;
+    --line:#e6ddcd;
+    --green:#0d4f3c;
+    --green-2:#0a3d2f;
+    --green-soft:#e6f1ec;
+    --coral:#ff5a3d;
+    --coral-2:#ff7a5a;
+    --amber:#f5b400;
+    --white:#ffffff;
+    --shadow: 0 30px 80px -30px rgba(10,31,26,.25);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0}
+  h1{font-size:clamp(2.6rem,6.5vw,5.4rem);font-weight:800}
+  h2{font-size:clamp(2rem,4.6vw,3.6rem)}
+  h3{font-size:1.4rem;font-weight:600}
+  p{margin:0}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.78rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--green);background:var(--green-soft);
+    padding:6px 14px;border-radius:999px;
+  }
+  .eyebrow.dark{background:rgba(255,255,255,.08);color:#e8d9b8;border:1px solid rgba(255,255,255,.1)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    padding:16px 26px;border-radius:14px;font-weight:600;font-size:1rem;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    cursor:pointer;border:none;
+  }
+  .btn-primary{background:var(--coral);color:white;box-shadow:0 14px 30px -14px rgba(255,90,61,.6)}
+  .btn-primary:hover{transform:translateY(-2px);background:var(--coral-2);box-shadow:0 20px 40px -14px rgba(255,90,61,.7)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:white}
+  .btn-dark{background:var(--ink);color:white}
+  .btn-dark:hover{background:#000;transform:translateY(-2px)}
+  .btn-wa{background:#25d366;color:white}
+  .btn-wa:hover{background:#1ebe5b;transform:translateY(-2px)}
+
+  /* NAV */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(180%) blur(14px);
+    background:rgba(251,248,243,.78);
+    border-bottom:1px solid rgba(10,31,26,.06);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;min-height:140px;padding:12px 0}
+  @media (max-width:600px){.nav-inner{min-height:96px}}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:-.01em}
+  .brand img.logo{height:80px;width:auto;display:block}
+  @media (max-width:600px){.brand img.logo{height:50px}}
+  .foot-brand .brand-text{font-size:1.5rem;font-weight:700;color:#fff;letter-spacing:-.5px}
+  .brand-mark{
+    width:34px;height:34px;border-radius:10px;
+    background:linear-gradient(135deg,var(--green) 0%,#1a7a5e 100%);
+    display:grid;place-items:center;color:white;font-family:'Fraunces',serif;font-weight:900;
+  }
+  .nav-links{display:flex;gap:34px;font-size:.95rem;font-weight:500;color:var(--ink-soft)}
+  .nav-links a:hover{color:var(--coral)}
+  .nav-cta{display:flex;gap:10px;align-items:center}
+  @media (max-width:880px){.nav-links{display:none}.nav-cta .btn-ghost{display:none}}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:80px 0 60px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(60% 50% at 85% 10%, rgba(255,90,61,.12), transparent 70%),
+      radial-gradient(50% 50% at 5% 90%, rgba(13,79,60,.10), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;
+  }
+  @media (max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  .hero h1 .accent{
+    background:linear-gradient(120deg,var(--coral) 0%,#ff8a4a 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-weight:900;
+  }
+  .hero h1 .underline{
+    position:relative;display:inline-block;
+  }
+  .hero h1 .underline::after{
+    content:"";position:absolute;left:0;right:0;bottom:6px;height:14px;
+    background:rgba(245,180,0,.35);z-index:-1;border-radius:4px;
+  }
+  .hero-sub{font-size:1.18rem;color:var(--ink-soft);margin-top:24px;max-width:580px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+  .hero-trust{display:flex;gap:28px;flex-wrap:wrap;margin-top:36px;padding-top:30px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
+  .hero-trust b{display:block;color:var(--ink);font-size:1.6rem;font-weight:800;font-family:'Fraunces',serif;margin-bottom:2px}
+
+  /* mock browser */
+  .mock{
+    position:relative;
+    border-radius:24px;
+    background:white;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    border:1px solid var(--line);
+    transform:rotate(.5deg);
+  }
+  .mock-bar{
+    display:flex;align-items:center;gap:8px;padding:14px 16px;background:#f5f0e6;border-bottom:1px solid var(--line);
+  }
+  .mock-dot{width:11px;height:11px;border-radius:50%}
+  .mock-dot.r{background:#ff5f57}.mock-dot.y{background:#febc2e}.mock-dot.g{background:#28c840}
+  .mock-url{
+    margin-left:8px;background:white;border:1px solid var(--line);padding:5px 12px;border-radius:8px;
+    font-size:.78rem;color:var(--muted);font-family:ui-monospace,monospace;flex:1;max-width:280px
+  }
+  .mock-body{padding:0;background:white}
+  .mock-hero{
+    padding:34px 28px 28px;
+    background:linear-gradient(135deg,#0d4f3c 0%,#175e4b 60%,#1a7a5e 100%);
+    color:white;position:relative;overflow:hidden;
+  }
+  .mock-hero::after{
+    content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(255,180,80,.4),transparent 70%);
+  }
+  .mock-nav{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+  .mock-nav span:last-child{display:flex;gap:14px;font-weight:500;letter-spacing:.05em;text-transform:none;opacity:.7}
+  .mock-h1{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin-top:22px;line-height:1.1;max-width:90%}
+  .mock-p{font-size:.82rem;opacity:.8;margin-top:10px;max-width:85%}
+  .mock-btn{display:inline-block;background:var(--coral);color:white;padding:9px 16px;border-radius:8px;font-size:.78rem;font-weight:600;margin-top:18px}
+  .mock-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:18px}
+  .mock-card{background:#f5f0e6;border-radius:10px;padding:12px;font-size:.7rem}
+  .mock-card .ico{width:24px;height:24px;border-radius:6px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-weight:700;margin-bottom:8px}
+  .mock-card b{display:block;font-size:.75rem;color:var(--ink);margin-bottom:2px}
+  .mock-card span{color:var(--muted);font-size:.66rem}
+  .mock-foot{padding:12px 18px 18px;display:flex;justify-content:space-between;align-items:center;font-size:.66rem;color:var(--muted);border-top:1px solid var(--line)}
+
+  .float-tag{
+    position:absolute;background:white;border:1px solid var(--line);
+    border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);font-size:.85rem;font-weight:600;
+    display:flex;align-items:center;gap:10px;z-index:3;
+  }
+  .float-tag .pulse{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}70%{box-shadow:0 0 0 12px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+  .tag-a{top:-18px;left:-18px;transform:rotate(-3deg)}
+  .tag-b{bottom:-18px;right:-12px;transform:rotate(2deg)}
+  @media (max-width:980px){.tag-a,.tag-b{display:none}}
+  .float-photo{
+    position:absolute;right:-30px;bottom:-40px;width:170px;height:200px;
+    border-radius:18px;overflow:hidden;border:6px solid var(--bg);
+    box-shadow:var(--shadow);transform:rotate(4deg);z-index:2;
+  }
+  .float-photo img{width:100%;height:100%;object-fit:cover}
+  @media (max-width:980px){.float-photo{display:none}}
+
+  /* Industries photo grid */
+  .industries{background:var(--bg-2);padding:90px 0}
+  .ind-head{text-align:center;max-width:680px;margin:0 auto 44px}
+  .ind-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  @media (max-width:980px){.ind-grid{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:600px){.ind-grid{grid-template-columns:repeat(2,1fr)}}
+  .ind-card{
+    margin:0;position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;
+    cursor:default;transition:transform .3s ease;
+    box-shadow:0 8px 24px -10px rgba(10,31,26,.2);
+  }
+  .ind-card:hover{transform:translateY(-6px)}
+  .ind-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .ind-card:hover img{transform:scale(1.06)}
+  .ind-card::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 40%,rgba(10,31,26,.85) 100%);
+  }
+  .ind-card figcaption{
+    position:absolute;left:14px;right:14px;bottom:14px;z-index:2;
+    color:white;font-weight:600;font-size:.92rem;line-height:1.2;
+  }
+  /* avatar with image */
+  .avatar.photo{padding:0;overflow:hidden}
+  .avatar.photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* Sections */
+  section{padding:110px 0}
+  @media (max-width:768px){section{padding:80px 0}}
+  .section-head{max-width:760px;margin-bottom:60px}
+  .section-head p{color:var(--muted);font-size:1.1rem;margin-top:18px}
+
+  /* PROBLEM */
+  .problem{background:var(--bg)}
+  .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media (max-width:880px){.prob-grid{grid-template-columns:1fr}}
+  .prob-card{
+    padding:36px 30px;border-radius:20px;background:white;border:1px solid var(--line);
+    transition:transform .25s, box-shadow .25s;
+  }
+  .prob-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .prob-card .num{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:900;font-size:3rem;
+    color:var(--coral);line-height:1;margin-bottom:18px;display:block;
+  }
+  .prob-card h3{margin-bottom:10px;font-family:'Fraunces',serif;font-size:1.5rem}
+  .prob-card p{color:var(--muted);font-size:.98rem}
+  .prob-stat{
+    margin-top:50px;padding:28px 32px;border-radius:18px;background:var(--ink);color:white;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
+  }
+  .prob-stat strong{color:var(--amber);font-family:'Fraunces',serif;font-size:1.35rem;font-weight:700;font-style:italic}
+
+  /* WHAT WE BUILD */
+  .build{background:var(--bg-2)}
+  .build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:880px){.build-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.build-grid{grid-template-columns:1fr}}
+  .build-card{
+    background:white;padding:32px 28px;border-radius:18px;border:1px solid var(--line);
+    position:relative;transition:transform .25s, box-shadow .25s;
+  }
+  .build-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--green)}
+  .build-card .ico{
+    width:48px;height:48px;border-radius:12px;background:var(--green-soft);
+    display:grid;place-items:center;color:var(--green);font-weight:800;font-size:.85rem;letter-spacing:.05em;
+    margin-bottom:18px;
+  }
+  .build-card h3{font-size:1.2rem;margin-bottom:8px}
+  .build-card p{color:var(--muted);font-size:.95rem}
+
+  /* WHY */
+  .why{background:var(--ink);color:white;position:relative;overflow:hidden}
+  .why::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(50% 60% at 90% 0%, rgba(245,180,0,.12), transparent 70%),
+      radial-gradient(40% 50% at 0% 100%, rgba(255,90,61,.10), transparent 70%);
+  }
+  .why .section-head{position:relative}
+  .why h2{color:white}
+  .why .section-head p{color:#bdc7c2}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative}
+  @media (max-width:880px){.why-grid{grid-template-columns:1fr}}
+  .why-card{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+    padding:36px 32px;border-radius:20px;backdrop-filter:blur(10px);
+  }
+  .why-card .big{
+    font-family:'Fraunces',serif;font-size:4.4rem;font-weight:900;line-height:1;
+    background:linear-gradient(135deg,var(--amber) 0%,var(--coral) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin-bottom:14px;
+  }
+  .why-card h3{margin-bottom:14px;color:white}
+  .why-card ul{list-style:none;padding:0;margin:18px 0 0;color:#cdd5d1;font-size:.95rem}
+  .why-card li{padding:8px 0;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px}
+  .why-card li::before{content:"→";color:var(--amber);font-weight:700}
+
+  /* BEFORE/AFTER */
+  .ba{background:var(--bg)}
+  .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media (max-width:760px){.ba-grid{grid-template-columns:1fr}}
+  .ba-col{
+    border-radius:24px;padding:38px 32px;border:1px solid var(--line);
+  }
+  .ba-before{background:white}
+  .ba-after{background:linear-gradient(160deg,var(--green) 0%,#0a3d2f 100%);color:white;border:none;box-shadow:var(--shadow)}
+  .ba-tag{
+    font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .ba-before .ba-tag{color:var(--coral)}
+  .ba-after .ba-tag{color:var(--amber)}
+  .ba-col h3{font-family:'Fraunces',serif;font-size:1.7rem;margin-bottom:24px}
+  .ba-col ul{list-style:none;padding:0;margin:0}
+  .ba-col li{padding:14px 0;border-top:1px solid rgba(0,0,0,.07);display:flex;gap:12px;align-items:flex-start}
+  .ba-after li{border-top-color:rgba(255,255,255,.1)}
+  .ba-col li:first-child{border-top:none}
+  .mark{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:700;margin-top:1px}
+  .mark.x{background:#fee2e2;color:#b91c1c}
+  .mark.v{background:rgba(245,180,0,.2);color:var(--amber)}
+
+  /* PRICING */
+  .pricing{background:var(--bg-2)}
+  .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;align-items:stretch;max-width:880px;margin:0 auto}
+  @media (max-width:760px){.price-grid{grid-template-columns:1fr;max-width:480px}}
+  .price-card{
+    background:white;border-radius:22px;border:1px solid var(--line);
+    padding:38px 32px;display:flex;flex-direction:column;position:relative;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .price-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .price-card.featured{
+    background:var(--ink);color:white;border:none;transform:scale(1.04);
+    box-shadow:0 30px 80px -20px rgba(10,31,26,.4);
+  }
+  .price-card.featured:hover{transform:scale(1.04) translateY(-6px)}
+  @media (max-width:980px){.price-card.featured{transform:none}.price-card.featured:hover{transform:translateY(-6px)}}
+  .price-badge{
+    position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+    background:var(--coral);color:white;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    padding:6px 14px;border-radius:999px;
+  }
+  .price-name{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;margin-bottom:8px}
+  .price-amt{display:flex;align-items:baseline;gap:6px;margin:8px 0 6px}
+  .price-amt b{font-family:'Fraunces',serif;font-size:3rem;font-weight:800;letter-spacing:-.02em}
+  .price-amt span{color:var(--muted);font-size:.95rem}
+  .price-card.featured .price-amt span{color:#a3b3ac}
+  .price-host{font-size:.85rem;color:var(--muted);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+  .price-card.featured .price-host{color:#a3b3ac;border-bottom-color:rgba(255,255,255,.1)}
+  .price-feats{list-style:none;padding:0;margin:0 0 28px;flex:1}
+  .price-feats li{padding:9px 0;font-size:.94rem;display:flex;gap:10px;align-items:flex-start}
+  .price-feats li::before{
+    content:"✓";flex-shrink:0;width:20px;height:20px;border-radius:50%;
+    background:var(--green-soft);color:var(--green);
+    display:grid;place-items:center;font-size:.72rem;font-weight:700;margin-top:2px;
+  }
+  .price-card.featured .price-feats li::before{background:rgba(245,180,0,.2);color:var(--amber)}
+  .price-foot{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px}
+
+  /* FOUNDERS */
+  .founders{background:var(--bg)}
+  .found-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media (max-width:760px){.found-grid{grid-template-columns:1fr}}
+  .found-card{
+    background:white;padding:40px 36px;border-radius:22px;border:1px solid var(--line);
+    display:flex;gap:24px;align-items:flex-start;
+  }
+  .avatar{
+    flex-shrink:0;width:72px;height:72px;border-radius:50%;
+    background:linear-gradient(135deg,var(--green) 0%,#1a7a5e 100%);
+    color:white;display:grid;place-items:center;
+    font-family:'Fraunces',serif;font-weight:800;font-size:1.4rem;
+  }
+  .avatar.santi{background:linear-gradient(135deg,var(--coral) 0%,var(--amber) 100%)}
+  .found-card h3{font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:4px}
+  .found-card .role{color:var(--green);font-size:.85rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px}
+  .found-card p{color:var(--ink-soft);font-size:.97rem}
+  .found-note{
+    margin-top:32px;padding:30px 36px;border-radius:18px;
+    background:var(--green-soft);color:var(--green-2);font-size:1.05rem;line-height:1.6;
+    border-left:4px solid var(--green);
+  }
+
+  /* NETWORK */
+  .network{background:var(--bg-2)}
+  .net-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width:880px){.net-grid{grid-template-columns:1fr}}
+  .net-card{
+    background:white;border-radius:20px;overflow:hidden;border:1px solid var(--line);
+    transition:transform .25s, box-shadow .25s;
+  }
+  .net-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .net-banner{
+    height:120px;display:grid;place-items:center;color:white;
+    font-family:'Fraunces',serif;font-weight:800;font-size:1.5rem;letter-spacing:-.02em;position:relative;overflow:hidden;
+  }
+  .net-banner.med{background:linear-gradient(135deg,#0d4f3c 0%,#1a7a5e 50%,#3aa07e 100%)}
+  .net-banner.bar{background:linear-gradient(135deg,#1e3a8a 0%,#3b82f6 50%,#06b6d4 100%)}
+  .net-banner.car{background:linear-gradient(135deg,#9f1239 0%,#dc2626 50%,#f59e0b 100%)}
+  .net-body{padding:24px 26px}
+  .net-body .audience{font-size:.78rem;font-weight:600;color:var(--coral);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+  .net-body p{color:var(--muted);font-size:.94rem;line-height:1.55}
+
+  /* HOW */
+  .how{background:var(--ink);color:white;position:relative;overflow:hidden}
+  .how::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 60% at 50% 0%, rgba(245,180,0,.08), transparent 70%);
+  }
+  .how h2{color:white}
+  .how .section-head p{color:#bdc7c2}
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+  @media (max-width:880px){.how-grid{grid-template-columns:1fr}}
+  .step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px 32px}
+  .step .num{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:900;
+    background:linear-gradient(135deg,var(--amber),var(--coral));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-size:3.4rem;line-height:1;margin-bottom:8px;
+  }
+  .step .timing{font-size:.82rem;color:var(--amber);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+  .step h3{color:white;font-size:1.4rem;margin-bottom:14px}
+  .step ul{list-style:none;padding:0;margin:0;color:#cdd5d1}
+  .step li{padding:6px 0;font-size:.93rem;display:flex;gap:8px}
+  .step li::before{content:"→";color:var(--amber);flex-shrink:0}
+
+  /* CTA / FORM */
+  .cta{background:var(--bg-2);position:relative;overflow:hidden}
+  .cta-inner{
+    background:linear-gradient(135deg,var(--green) 0%,#0a3d2f 60%,#082b22 100%);
+    border-radius:28px;padding:64px;color:white;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  @media (max-width:760px){.cta-inner{padding:40px 28px}}
+  .cta-inner::before{
+    content:"";position:absolute;right:-100px;top:-100px;width:380px;height:380px;border-radius:50%;
+    background:radial-gradient(circle,rgba(245,180,0,.18),transparent 70%);
+  }
+  .cta-inner::after{
+    content:"";position:absolute;left:-50px;bottom:-50px;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,90,61,.18),transparent 70%);
+  }
+  .cta-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;position:relative;align-items:center}
+  @media (max-width:880px){.cta-grid{grid-template-columns:1fr;gap:36px}}
+  .cta h2{color:white}
+  .cta-sub{color:#bdc7c2;font-size:1.1rem;margin-top:20px;max-width:480px}
+  .cta-feats{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .cta-feats li{font-size:.93rem;color:#cdd5d1;display:flex;gap:8px}
+  .cta-feats li::before{content:"✓";color:var(--amber);font-weight:700}
+
+  .form{background:white;border-radius:20px;padding:36px;color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.3)}
+  .form h3{font-family:'Fraunces',serif;font-size:1.55rem;margin-bottom:6px}
+  .form p.lead{color:var(--muted);font-size:.95rem;margin-bottom:24px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+  .field input, .field select, .field textarea{
+    width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;
+    font-size:.97rem;font-family:inherit;background:#fafaf7;color:var(--ink);
+    transition:border-color .15s, background .15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;border-color:var(--green);background:white;
+  }
+  .field textarea{min-height:90px;resize:vertical}
+  .form .btn{width:100%;margin-top:6px}
+  .form-foot{font-size:.78rem;color:var(--muted);text-align:center;margin-top:14px}
+  .form-success{
+    display:none;text-align:center;padding:20px 0;
+  }
+  .form-success.active{display:block}
+  .form-success.active ~ *{display:none}
+  .form.sent .form-fields{display:none}
+  .form.sent .form-success{display:block}
+  .check-ico{
+    width:64px;height:64px;border-radius:50%;background:var(--green-soft);color:var(--green);
+    display:grid;place-items:center;margin:0 auto 18px;font-size:1.8rem;font-weight:700;
+  }
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#a3b3ac;padding:60px 0 30px}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+  @media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}}
+  .foot-brand .brand{color:white;margin-bottom:14px}
+  .foot-brand p{font-size:.92rem;color:#a3b3ac;max-width:320px}
+  .foot-col h4{color:white;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+  .foot-col a{display:block;padding:6px 0;font-size:.92rem;color:#a3b3ac;transition:color .15s}
+  .foot-col a:hover{color:var(--amber)}
+  .foot-bottom{
+    border-top:1px solid rgba(255,255,255,.08);padding-top:24px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.85rem;
+  }
+  /* WhatsApp floater */
+  .wa-float{
+    position:fixed;bottom:24px;right:24px;z-index:60;
+    background:#25d366;color:white;width:60px;height:60px;border-radius:50%;
+    display:grid;place-items:center;box-shadow:0 14px 30px -8px rgba(37,211,102,.6);
+    transition:transform .2s;
+  }
+  .wa-float:hover{transform:scale(1.08)}
+  .wa-float svg{width:28px;height:28px}
+
+  /* fade-in animation */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand" aria-label="PymeWebPro.com">
+      <img class="logo" src="logo.png" alt="PymeWebPro.com — Sitios web para pymes en Colombia">
+    </a>
+    <div class="nav-links">
+      <a href="#incluye">¿Qué incluye?</a>
+      <a href="#paquetes">Planes</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#paquetes" style="padding:10px 18px;font-size:.92rem">Ver precios</a>
+      <a class="btn btn-primary" href="#contacto" style="padding:11px 20px;font-size:.92rem">Hablar por WhatsApp</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">● Cupos limitados — 5 negocios este mes</span>
+      <h1 style="margin-top:18px">
+        Su negocio<br>merece estar<br>
+        <span class="underline">en</span> <span class="accent">internet.</span>
+      </h1>
+      <p class="hero-sub">
+        Sitios web profesionales para pequeños negocios en Colombia.
+        Nosotros lo construimos, usted recibe clientes nuevos por internet.
+        Sin tecnicismos, sin sorpresas, sin pagar por lo que no necesita.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contacto">
+          Hablar con nosotros
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href="#paquetes">Ver planes y precios</a>
+      </div>
+      <div class="hero-trust">
+        <div><b>2–3 sem</b>de la idea al lanzamiento</div>
+        <div><b>Desde<br>$590k</b>pago único, sin sorpresas</div>
+        <div><b>24/7</b>recibiendo clientes mientras duerme</div>
+      </div>
+    </div>
+
+    <div class="reveal" style="position:relative">
+      <div class="float-tag tag-a">
+        <span class="pulse"></span>
+        Nuevo lead recibido
+      </div>
+      <div class="mock">
+        <div class="mock-bar">
+          <span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span>
+          <span class="mock-url">https://sunombre.com</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-hero">
+            <div class="mock-nav"><span>SU NEGOCIO</span><span>Inicio · Servicios · Contacto</span></div>
+            <div class="mock-h1">Bienvenido a su nuevo sitio web profesional</div>
+            <div class="mock-p">Diseño moderno, rápido y listo para convertir visitantes en clientes.</div>
+            <span class="mock-btn">Solicitar cotización →</span>
+          </div>
+          <div class="mock-grid">
+            <div class="mock-card"><div class="ico">SEO</div><b>Posicionado</b><span>Visible en Google</span></div>
+            <div class="mock-card"><div class="ico">@</div><b>Formularios</b><span>Leads al correo</span></div>
+            <div class="mock-card"><div class="ico">⚡</div><b>Rápido</b><span>PSI 100/100</span></div>
+          </div>
+          <div class="mock-foot">
+            <span>© 2026 Su Negocio</span>
+            <span>WhatsApp · Email · Maps</span>
+          </div>
+        </div>
+      </div>
+      <div class="float-tag tag-b">
+        ⚡ <span>Cargado en 0.8s</span>
+      </div>
+      <div class="float-photo">
+        <img src="https://images.pexels.com/photos/5410101/pexels-photo-5410101.jpeg?auto=compress&cs=tinysrgb&h=400&w=320" alt="Dueña de pequeño negocio recibiendo pedido por celular" loading="lazy">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- INDUSTRIES PHOTO GRID -->
+<section class="industries">
+  <div class="wrap">
+    <div class="ind-head reveal">
+      <span class="eyebrow">Trabajamos con negocios como el suyo</span>
+      <h2 style="margin-top:14px;font-size:clamp(1.6rem,3vw,2.4rem)">Pequeños negocios que ya están vendiendo en internet.</h2>
+    </div>
+    <div class="ind-grid">
+      <figure class="ind-card reveal">
+        <img src="https://images.pexels.com/photos/7447277/pexels-photo-7447277.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Panadería con vitrina llena de panes y pasteles" loading="lazy">
+        <figcaption>Panaderías &amp; cafeterías</figcaption>
+      </figure>
+      <figure class="ind-card reveal">
+        <img src="https://images.pexels.com/photos/7807035/pexels-photo-7807035.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Mecánico en taller con llave" loading="lazy">
+        <figcaption>Talleres &amp; servicios</figcaption>
+      </figure>
+      <figure class="ind-card reveal">
+        <img src="https://images.pexels.com/photos/7697329/pexels-photo-7697329.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Barbería con clientes" loading="lazy">
+        <figcaption>Peluquerías &amp; spas</figcaption>
+      </figure>
+      <figure class="ind-card reveal">
+        <img src="https://images.pexels.com/photos/8475204/pexels-photo-8475204.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Dueños de tienda local sonriendo" loading="lazy">
+        <figcaption>Tiendas &amp; minimarkets</figcaption>
+      </figure>
+      <figure class="ind-card reveal">
+        <img src="https://images.pexels.com/photos/36729739/pexels-photo-36729739.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Dueña de café posando confiada" loading="lazy">
+        <figcaption>Restaurantes</figcaption>
+      </figure>
+      <figure class="ind-card reveal">
+        <img src="https://images.pexels.com/photos/5934226/pexels-photo-5934226.jpeg?auto=compress&cs=tinysrgb&h=520&w=800" alt="Costurera trabajando en su pequeño negocio" loading="lazy">
+        <figcaption>Servicios a domicilio</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problema" class="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">El problema</span>
+      <h2 style="margin-top:18px">Hoy en Colombia, si su negocio<br>no está en Google, <em style="font-style:italic;color:var(--coral)">no existe.</em></h2>
+      <p>Sus vecinos, sus clientes, su próxima venta — todos buscan en el celular antes de salir de casa. Y si no lo encuentran a usted, lo encuentran a su competencia.</p>
+    </div>
+    <div class="prob-grid">
+      <article class="prob-card reveal">
+        <span class="num">01</span>
+        <h3>Solo en Instagram o Facebook</h3>
+        <p>Las redes sociales no son su negocio — son arrendadas. Si Instagram cambia el algoritmo o le cierra la cuenta, pierde todo. Un sitio web propio nadie se lo quita.</p>
+      </article>
+      <article class="prob-card reveal">
+        <span class="num">02</span>
+        <h3>No aparece en Google Maps</h3>
+        <p>El cliente busca "panadería cerca de mí" o "taller mecánico en el barrio" y aparecen otros. Sin ficha en Google, no entra al juego.</p>
+      </article>
+      <article class="prob-card reveal">
+        <span class="num">03</span>
+        <h3>Pierde clientes a las 8 p.m.</h3>
+        <p>Cuando cierra el local, deja de vender. Un sitio web con WhatsApp y formulario de contacto sigue trabajando — y al otro día usted abre con mensajes y pedidos esperando.</p>
+      </article>
+    </div>
+    <div class="prob-stat reveal">
+      <div><strong>83%</strong><span style="color:#a3b3ac;margin-left:10px">de los colombianos buscan en Google antes de elegir un negocio local</span></div>
+      <div><strong>9 de 10</strong><span style="color:#a3b3ac;margin-left:10px">no compran si el negocio no tiene sitio web propio</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BUILD -->
+<section id="incluye" class="build">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Lo que recibe</span>
+      <h2 style="margin-top:18px">Todo lo que necesita para que<br>su negocio venda por internet.</h2>
+    </div>
+    <div class="build-grid">
+      <article class="build-card reveal"><div class="ico">URL</div><h3>Su propio dominio</h3><p>sunegocio.com o .co — profesional, fácil de recordar, suyo para siempre.</p></article>
+      <article class="build-card reveal"><div class="ico">MOV</div><h3>Listo para celular</h3><p>9 de cada 10 clientes lo van a buscar desde el celular. Su sitio se ve perfecto en cualquier pantalla.</p></article>
+      <article class="build-card reveal"><div class="ico">WSP</div><h3>Botón de WhatsApp</h3><p>Un clic y el cliente le escribe directamente al WhatsApp del negocio. Sin formularios complicados.</p></article>
+      <article class="build-card reveal"><div class="ico">SEO</div><h3>Listo para Google</h3><p>Configurado desde el primer día para que sus clientes locales lo encuentren.</p></article>
+      <article class="build-card reveal"><div class="ico">MAP</div><h3>Google Maps</h3><p>Le ayudamos a aparecer en el mapa cuando alguien busca cerca un negocio como el suyo.</p></article>
+      <article class="build-card reveal"><div class="ico">⚡</div><h3>Rápido y seguro</h3><p>Carga al instante, está disponible siempre y protegido contra ataques. Hospedado en la misma infraestructura que usan grandes empresas.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="porque" class="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow dark">Por qué importa</span>
+      <h2 style="margin-top:18px">Su próximo cliente está<br>buscando en el celular ahora mismo.</h2>
+      <p>Y lo que decide a quién llaman — a usted o a la competencia — es tener un sitio web propio.</p>
+    </div>
+    <div class="why-grid">
+      <article class="why-card reveal">
+        <div class="big">8 de 10</div>
+        <h3>Buscan antes de visitar</h3>
+        <p style="color:#bdc7c2">Antes de ir a un restaurante, taller o consultorio, los colombianos buscan en Google.</p>
+        <ul>
+          <li>Revisan fotos y precios</li>
+          <li>Leen reseñas en Google Maps</li>
+          <li>Comparan con la competencia</li>
+        </ul>
+      </article>
+      <article class="why-card reveal">
+        <div class="big">+30%</div>
+        <h3>Más confianza</h3>
+        <p style="color:#bdc7c2">Un negocio con sitio web propio se ve más serio, más profesional y cobra más sin perder clientes.</p>
+        <ul>
+          <li>Imagen profesional al instante</li>
+          <li>Justifica precios más altos</li>
+          <li>Diferencia de la informalidad</li>
+        </ul>
+      </article>
+      <article class="why-card reveal">
+        <div class="big">24/7</div>
+        <h3>Vende mientras duerme</h3>
+        <p style="color:#bdc7c2">Su negocio cierra a las 7 p.m. Su sitio web no. Recibe pedidos, citas y consultas las 24 horas.</p>
+        <ul>
+          <li>Pedidos llegan al WhatsApp</li>
+          <li>Citas se agendan solas</li>
+          <li>Sin pagar un empleado nocturno</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="ba">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Antes / Después</span>
+      <h2 style="margin-top:18px">El cambio que verán sus clientes<br>desde la primera semana.</h2>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-col ba-before reveal">
+        <div class="ba-tag">✗ Antes</div>
+        <h3>Solo redes sociales, invisible en Google.</h3>
+        <ul>
+          <li><span class="mark x">✕</span> Solo Instagram o Facebook</li>
+          <li><span class="mark x">✕</span> Sin aparecer en Google Maps</li>
+          <li><span class="mark x">✕</span> Toca contestar mensajes uno por uno</li>
+          <li><span class="mark x">✕</span> Cuando cierra, deja de vender</li>
+          <li><span class="mark x">✕</span> Se confunde con cualquier otro negocio</li>
+          <li><span class="mark x">✕</span> Pierde clientes que buscan en Google</li>
+          <li><span class="mark x">✕</span> No sabe cuántos lo vieron</li>
+        </ul>
+      </div>
+      <div class="ba-col ba-after reveal">
+        <div class="ba-tag">✓ Después</div>
+        <h3>Sitio propio, en Google, recibiendo clientes.</h3>
+        <ul>
+          <li><span class="mark v">✓</span> Sitio web propio en sunegocio.com</li>
+          <li><span class="mark v">✓</span> Aparece en Google Maps verificado</li>
+          <li><span class="mark v">✓</span> Botón de WhatsApp en cada página</li>
+          <li><span class="mark v">✓</span> Vende y agenda 24 horas, todos los días</li>
+          <li><span class="mark v">✓</span> Imagen profesional que justifica sus precios</li>
+          <li><span class="mark v">✓</span> Listo para que Google lo posicione</li>
+          <li><span class="mark v">✓</span> Reportes de cuántos lo visitan y de dónde</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="paquetes" class="pricing">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+      <span class="eyebrow">Planes y precios</span>
+      <h2 style="margin-top:18px">Precios para negocios reales,<br>no para multinacionales.</h2>
+      <p>Pago único en pesos colombianos + hospedaje mensual. Sin contratos largos, sin sorpresas. Pague en hasta 3 cuotas.</p>
+    </div>
+    <div class="price-grid">
+      <article class="price-card reveal">
+        <div class="price-name">Esencial</div>
+        <div class="price-amt"><b>$590k</b><span>COP</span></div>
+        <div class="price-host">pago único · $39.000/mes hospedaje</div>
+        <ul class="price-feats">
+          <li>Sitio profesional de hasta 4 páginas</li>
+          <li>Su propio dominio (.com o .co)</li>
+          <li>Botón directo al WhatsApp del negocio</li>
+          <li>Diseño listo para celular</li>
+          <li>Google Analytics integrado</li>
+          <li>1 ronda de cambios incluida</li>
+          <li>SEO básico para Google</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contacto">Quiero el plan Esencial</a>
+      </article>
+
+      <article class="price-card featured reveal">
+        <span class="price-badge">★ Más completo</span>
+        <div class="price-name" style="color:white">Pro</div>
+        <div class="price-amt"><b style="color:white">$1.900k</b><span>COP</span></div>
+        <div class="price-host">pago único · $59.000/mes hospedaje</div>
+        <ul class="price-feats" style="color:#cdd5d1">
+          <li>Todo lo del plan Esencial</li>
+          <li>Hasta 8 páginas + blog/noticias</li>
+          <li>Configuramos su Google Maps</li>
+          <li>Galería de fotos de su negocio</li>
+          <li>Soporte prioritario (24h)</li>
+          <li>3 rondas de cambios</li>
+          <li>Reporte mensual de visitas</li>
+        </ul>
+        <a class="btn btn-primary" href="#contacto">Quiero el plan Pro</a>
+      </article>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.92rem;margin-top:36px">
+      ¿Aún no sabe cuál? Hablemos 20 minutos por WhatsApp y le recomendamos el indicado — sin compromiso.
+    </p>
+  </div>
+</section>
+
+<!-- TESTIMONIAL / FAQ-LITE -->
+<section class="network">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2 style="margin-top:18px">Lo que nos preguntan<br>los dueños de negocio.</h2>
+    </div>
+    <div class="net-grid">
+      <article class="net-card reveal" style="padding:30px">
+        <div class="net-body" style="padding:0">
+          <div class="audience">¿Y si no sé nada de tecnología?</div>
+          <p>Justo para eso estamos nosotros. Usted no toca ni una línea de código. Le pedimos sus fotos, sus textos (o los escribimos nosotros), y le entregamos el sitio listo y funcionando.</p>
+        </div>
+      </article>
+      <article class="net-card reveal" style="padding:30px">
+        <div class="net-body" style="padding:0">
+          <div class="audience">¿Puedo pagar a cuotas?</div>
+          <p>Sí. Puede pagar hasta en 3 cuotas sin recargo: la primera para arrancar, la segunda cuando apruebe el diseño y la última al lanzar. Sin tarjetas de crédito ni intereses.</p>
+        </div>
+      </article>
+      <article class="net-card reveal" style="padding:30px">
+        <div class="net-body" style="padding:0">
+          <div class="audience">¿Qué pasa después de lanzar?</div>
+          <p>Le enseñamos a manejar su sitio, a recibir los mensajes que entran y a pedir cambios cuando los necesite. Si algo deja de funcionar, lo arreglamos sin costo. Hospedaje y soporte siempre incluidos.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="proceso" class="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow dark">Cómo funciona</span>
+      <h2 style="margin-top:18px">De la llamada inicial al sitio<br>en vivo: <em style="color:var(--amber);font-style:italic">2–3 semanas.</em></h2>
+    </div>
+    <div class="how-grid">
+      <article class="step reveal">
+        <div class="num">01</div>
+        <div class="timing">20 minutos · WhatsApp</div>
+        <h3>Hablamos de su negocio</h3>
+        <ul>
+          <li>Nos cuenta qué hace y a quién atiende</li>
+          <li>Vemos qué necesita su sitio</li>
+          <li>Le recomendamos el plan correcto</li>
+          <li>Sin compromiso, sin presión</li>
+        </ul>
+      </article>
+      <article class="step reveal">
+        <div class="num">02</div>
+        <div class="timing">1–2 semanas</div>
+        <h3>Construimos su sitio</h3>
+        <ul>
+          <li>Le mostramos el diseño antes</li>
+          <li>Escribimos los textos (o usamos los suyos)</li>
+          <li>Conectamos su WhatsApp y Google</li>
+          <li>Usted aprueba cada paso</li>
+        </ul>
+      </article>
+      <article class="step reveal">
+        <div class="num">03</div>
+        <div class="timing">Día del lanzamiento</div>
+        <h3>Salimos al aire</h3>
+        <ul>
+          <li>Su sitio en vivo en sunegocio.com</li>
+          <li>Configuración de Google Maps</li>
+          <li>Le enseñamos a usarlo en 30 min</li>
+          <li>Soporte permanente incluido</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / FORM -->
+<section id="contacto" class="cta">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <div class="cta-grid">
+        <div>
+          <span class="eyebrow dark">Próximos pasos</span>
+          <h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">Pongamos su negocio<br>en internet.</h2>
+          <p class="cta-sub">Hoy en Colombia, tener un sitio web propio es la inversión más rentable que puede hacer un pequeño negocio. Empiece con una conversación corta — sin compromiso.</p>
+          <ul class="cta-feats">
+            <li>Asesoría gratuita por WhatsApp</li>
+            <li>Cotización clara y por escrito</li>
+            <li>Su sitio en vivo en 2–3 semanas</li>
+            <li>Pague hasta en 3 cuotas</li>
+          </ul>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:30px">
+            <a class="btn btn-wa" href="https://wa.me/573014047722?text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              WhatsApp
+            </a>
+            <a class="btn btn-dark" href="https://wa.me/573014047722?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20planes%20web." target="_blank" rel="noopener">
+              Más información
+            </a>
+          </div>
+        </div>
+
+        <form class="form" id="contactForm" onsubmit="return submitForm(event)">
+          <div class="form-fields">
+            <h3>Hablemos de su negocio</h3>
+            <p class="lead">Llene este formulario o escríbanos por WhatsApp. Le respondemos el mismo día.</p>
+            <div class="field">
+              <label for="nombre">Su nombre</label>
+              <input id="nombre" name="nombre" type="text" required placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="field">
+              <label for="negocio">Nombre de su negocio</label>
+              <input id="negocio" name="negocio" type="text" required placeholder="Ej: Panadería La Esquina">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="field">
+                <label for="email">Correo</label>
+                <input id="email" name="email" type="email" required placeholder="correo@ejemplo.com">
+              </div>
+              <div class="field">
+                <label for="whatsapp">WhatsApp</label>
+                <input id="whatsapp" name="whatsapp" type="tel" required placeholder="+57 300 000 0000">
+              </div>
+            </div>
+            <div class="field">
+              <label for="tipo">¿Qué tipo de negocio tiene?</label>
+              <select id="tipo" name="tipo" required>
+                <option value="">Seleccione una opción…</option>
+                <option>Restaurante / cafetería / panadería</option>
+                <option>Peluquería / barbería / spa</option>
+                <option>Taller / servicio técnico</option>
+                <option>Tienda / minimarket</option>
+                <option>Consultorio / odontología</option>
+                <option>Servicios a domicilio</option>
+                <option>Profesional independiente</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="mensaje">Cuéntenos qué necesita (opcional)</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Tengo una panadería en Bogotá y quiero recibir pedidos por internet…"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar — me contactan hoy mismo →</button>
+            <p class="form-foot">Sus datos no se comparten con nadie. Sin compromiso.</p>
+          </div>
+          <div class="form-success">
+            <div class="check-ico">✓</div>
+            <h3 style="margin-bottom:10px">¡Listo, recibimos su mensaje!</h3>
+            <p style="color:var(--muted)">Le escribimos hoy mismo por WhatsApp o correo. Si quiere adelantar, también puede escribirnos directo.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="brand-text">PymeWebPro.com</span>
+        <p style="margin-top:18px">Sitios web profesionales para pequeños negocios en Colombia. Diseño, hospedaje y soporte — todo en un solo lugar.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Servicios</h4>
+        <a href="#paquetes">Planes y precios</a>
+        <a href="#incluye">¿Qué incluye?</a>
+        <a href="#proceso">Cómo funciona</a>
+        <a href="#contacto">Hablar por WhatsApp</a>
+      </div>
+      <div class="foot-col">
+        <h4>Para quién</h4>
+        <a href="#contacto">Restaurantes</a>
+        <a href="#contacto">Peluquerías &amp; spas</a>
+        <a href="#contacto">Talleres</a>
+        <a href="#contacto">Tiendas &amp; consultorios</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 PymeWebPro.com · Pensado y construido para el negocio colombiano.</span>
+      <span>Hecho con ❤ en Colombia</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/573014047722?text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20quiero%20un%20sitio%20web." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Form: simulated submit (replace with backend / Formspree / Cloudflare Worker later)
+  function submitForm(e){
+    e.preventDefault();
+    const f = document.getElementById('contactForm');
+    // build a mailto fallback so the lead is captured even without backend
+    const data = new FormData(f);
+    const msg = encodeURIComponent(`Hola, vengo del sitio web.\nNombre: ${data.get('nombre')}\nNegocio: ${data.get('negocio')}\nEmail: ${data.get('email')}\nWhatsApp: ${data.get('whatsapp')}\nTipo: ${data.get('tipo')}\nMensaje: ${data.get('mensaje')||'-'}`);
+    window.open(`https://wa.me/573014047722?text=${msg}`,'_blank');
+    f.classList.add('sent');
+    return false;
+  }
+</script>
+
+</body>
+</html>
