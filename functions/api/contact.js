@@ -61,7 +61,10 @@ export async function onRequestPost(context) {
   }
 
   const ADMIN_EMAIL = env.ADMIN_EMAIL || "mike@mikec.pro";
-  const FROM_EMAIL = env.FROM_EMAIL || "PymeWebPro <noreply@pymewebpro.com>";
+  // Default sender uses Resend's pre-verified onboarding domain so it works immediately.
+  // Once pymewebpro.com is verified in Resend, override this via FROM_EMAIL env var
+  // to e.g. "PymeWebPro <noreply@pymewebpro.com>".
+  const FROM_EMAIL = env.FROM_EMAIL || "PymeWebPro <onboarding@resend.dev>";
 
   const adminHtml = `
     <div style="font-family:system-ui,sans-serif;line-height:1.5;color:#0a1840;max-width:560px">

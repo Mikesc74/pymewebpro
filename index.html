@@ -1196,11 +1196,39 @@
     return false;
   }
 
-  // Bottom contact form: opens WhatsApp prefilled with all answers
-  function submitForm(e){
+  // Bottom contact form: POST to /api/contact (Cloudflare Pages Function);
+  // falls back to WhatsApp prefill if the API is unreachable.
+  async function submitForm(e){
     e.preventDefault();
     const f = document.getElementById('contactForm');
+    const btn = f.querySelector('button[type="submit"]');
     const data = new FormData(f);
+    const payload = Object.fromEntries(data);
+
+    const originalLabel = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = 'Enviando...';
+
+    try {
+      const resp = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (resp.ok) {
+        f.classList.add('sent');
+        return false;
+      }
+      // server-side problem: fall through to WhatsApp fallback
+      console.warn('Contact API returned', resp.status);
+    } catch (err) {
+      console.warn('Contact API unreachable:', err);
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = originalLabel;
+
+    // Fallback: open WhatsApp prefilled with all answers
     const msg = encodeURIComponent(
 `Hola, vengo del sitio web pymewebpro.com.
 
