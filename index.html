@@ -601,6 +601,22 @@
     outline:none;border-color:var(--green);background:white;
   }
   .field textarea{min-height:90px;resize:vertical}
+  .radio-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+  @media (max-width:520px){.radio-pills{grid-template-columns:1fr}}
+  .radio-pills .pill{
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:12px 10px;background:#fafaf7;border:1.5px solid var(--line);
+    border-radius:10px;font-size:.88rem;font-weight:600;line-height:1.25;
+    cursor:pointer;transition:all .15s ease;position:relative;color:var(--ink);
+  }
+  .radio-pills .pill input{position:absolute;opacity:0;pointer-events:none}
+  .radio-pills .pill small{display:block;font-weight:500;color:var(--muted);font-size:.74rem;margin-top:2px}
+  .radio-pills .pill:hover{border-color:var(--blue);background:white}
+  .radio-pills .pill:has(input:checked){
+    border-color:var(--blue);background:var(--blue-soft);color:var(--blue);
+    box-shadow:0 0 0 3px rgba(0,56,147,.10);
+  }
+  .radio-pills .pill:has(input:checked) small{color:var(--blue)}
   .form .btn{width:100%;margin-top:6px}
   .form-foot{font-size:.78rem;color:var(--muted);text-align:center;margin-top:14px}
   .form-success{
@@ -1210,6 +1226,22 @@
               </select>
             </div>
             <div class="field">
+              <label>¿Qué plan le interesa más?</label>
+              <div class="radio-pills">
+                <label class="pill"><input type="radio" name="plan" value="Esencial ($590k)"><span>Esencial<br><small>$590k única vez</small></span></label>
+                <label class="pill"><input type="radio" name="plan" value="Pro ($1.900k)"><span>Pro<br><small>$1.900k única vez</small></span></label>
+                <label class="pill"><input type="radio" name="plan" value="No estoy seguro" checked><span>No estoy seguro<br><small>quiero asesoría</small></span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label>¿Quiere agregar el Plan Hosting (opcional)?</label>
+              <div class="radio-pills">
+                <label class="pill"><input type="radio" name="hosting" value="Mensual ($30k/mes)"><span>Sí, mensual<br><small>$30k/mes</small></span></label>
+                <label class="pill"><input type="radio" name="hosting" value="Anual prepagado ($270k/año)"><span>Sí, anual<br><small>$270k/año (ahorro)</small></span></label>
+                <label class="pill"><input type="radio" name="hosting" value="No por ahora" checked><span>No por ahora<br><small>solo el sitio</small></span></label>
+              </div>
+            </div>
+            <div class="field">
               <label for="mensaje">Cuéntenos qué necesita (opcional)</label>
               <textarea id="mensaje" name="mensaje" placeholder="Tengo una panadería en Bogotá y quiero recibir pedidos por internet…"></textarea>
             </div>
@@ -1279,13 +1311,24 @@
     return false;
   }
 
-  // Bottom contact form
+  // Bottom contact form: opens WhatsApp prefilled with all answers
   function submitForm(e){
     e.preventDefault();
     const f = document.getElementById('contactForm');
-    // build a mailto fallback so the lead is captured even without backend
     const data = new FormData(f);
-    const msg = encodeURIComponent(`Hola, vengo del sitio web.\nNombre: ${data.get('nombre')}\nNegocio: ${data.get('negocio')}\nEmail: ${data.get('email')}\nWhatsApp: ${data.get('whatsapp')}\nTipo: ${data.get('tipo')}\nMensaje: ${data.get('mensaje')||'-'}`);
+    const msg = encodeURIComponent(
+`Hola, vengo del sitio web pymewebpro.com.
+
+Nombre: ${data.get('nombre')}
+Negocio: ${data.get('negocio')}
+Correo: ${data.get('email')}
+WhatsApp: ${data.get('whatsapp')}
+Tipo de negocio: ${data.get('tipo')}
+Plan que me interesa: ${data.get('plan')||'No especificado'}
+Plan Hosting: ${data.get('hosting')||'No especificado'}
+
+Mensaje: ${data.get('mensaje')||'(sin mensaje adicional)'}`
+    );
     window.open(`https://wa.me/573014047722?text=${msg}`,'_blank');
     f.classList.add('sent');
     return false;
