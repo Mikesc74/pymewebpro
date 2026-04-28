@@ -419,7 +419,41 @@
   /* PRICING */
   .pricing{background:var(--bg-2)}
   .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;align-items:stretch;max-width:880px;margin:0 auto}
+  .price-grid.price-grid-3{grid-template-columns:1fr 1fr 1.05fr;max-width:1200px}
+  @media (max-width:980px){.price-grid.price-grid-3{grid-template-columns:1fr;max-width:520px}}
   @media (max-width:760px){.price-grid{grid-template-columns:1fr;max-width:480px}}
+  .price-tier-label{
+    font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--blue);margin-bottom:4px;
+  }
+  /* SUPPORT CARD (blue/dark) */
+  .price-card-support{
+    background:linear-gradient(160deg,var(--blue) 0%,#06245a 100%);
+    color:white;border:none;
+    box-shadow:0 30px 80px -20px rgba(10,24,64,.4);
+  }
+  .price-card-support .price-feats li{color:#cdd5e6}
+  .price-card-support .price-feats li::before{
+    background:rgba(252,209,22,.22);color:var(--yellow);
+  }
+  .support-badge{background:var(--yellow);color:var(--blue);font-weight:800}
+  .btn-yellow{
+    background:var(--yellow);color:var(--blue);font-weight:700;
+    box-shadow:0 14px 30px -14px rgba(252,209,22,.6);
+  }
+  .btn-yellow:hover{background:var(--yellow-2);transform:translateY(-2px);box-shadow:0 20px 40px -14px rgba(252,209,22,.7)}
+  .price-annual{
+    background:rgba(252,209,22,.10);border:1px dashed rgba(252,209,22,.5);
+    border-radius:12px;padding:14px 16px;margin:18px 0 24px;
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .price-annual .annual-tag{
+    display:inline-block;background:var(--yellow);color:var(--blue);
+    font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 8px;border-radius:6px;align-self:flex-start;margin-bottom:4px;
+  }
+  .price-annual b{color:white;font-size:1.05rem}
+  .price-annual .annual-save{color:var(--yellow);font-size:.82rem;font-weight:600}
   .price-card{
     background:white;border-radius:22px;border:1px solid var(--line);
     padding:38px 32px;display:flex;flex-direction:column;position:relative;
@@ -952,14 +986,15 @@
   <div class="wrap">
     <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
       <span class="eyebrow">Planes y precios</span>
-      <h2 style="margin-top:18px">Precios para negocios reales,<br>no para multinacionales.</h2>
-      <p>Pago único más un plan de soporte mensual de $25.000 COP que incluye monitoreo, pequeños cambios y respuesta rápida cuando lo necesite. <b>Hospedaje gratis</b> en Cloudflare. Sin contratos largos, pague hasta en 3 cuotas.</p>
+      <h2 style="margin-top:18px">Pague una vez. Su sitio es suyo.<br>Sin contratos mensuales obligatorios.</h2>
+      <p>Elija un plan, lo construimos, se lo entregamos y queda 100% suyo. <b>Hospedaje gratis</b> en Cloudflare incluido para siempre. Si después quiere mantenimiento continuo, ofrecemos un plan opcional, sin presión y cancelable cuando quiera.</p>
     </div>
-    <div class="price-grid">
+    <div class="price-grid price-grid-3">
       <article class="price-card reveal">
+        <div class="price-tier-label">Sitio web</div>
         <div class="price-name">Esencial</div>
         <div class="price-amt"><b>$590k</b><span>COP</span></div>
-        <div class="price-host">pago único · $25.000/mes soporte y mantenimiento</div>
+        <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
         <ul class="price-feats">
           <li>Sitio profesional de una página con hasta 8 secciones</li>
           <li>Asesoría y configuración del dominio (registro anual aparte, ~$50–150k COP/año)</li>
@@ -969,28 +1004,49 @@
           <li>Google Analytics integrado</li>
           <li>1 ronda de cambios incluida</li>
           <li>SEO básico para Google</li>
-          <li>Plan de soporte mensual incluido (monitoreo y pequeños cambios)</li>
         </ul>
         <a class="btn btn-ghost" href="#contacto">Quiero el plan Esencial</a>
       </article>
 
-      <article class="price-card featured reveal">
+      <article class="price-card reveal">
         <span class="price-badge">★ Más completo</span>
-        <div class="price-name" style="color:white">Pro</div>
-        <div class="price-amt"><b style="color:white">$1.900k</b><span>COP</span></div>
-        <div class="price-host">pago único · $25.000/mes soporte y mantenimiento</div>
-        <ul class="price-feats" style="color:#cdd5d1">
+        <div class="price-tier-label">Sitio web</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amt"><b>$1.900k</b><span>COP</span></div>
+        <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
+        <ul class="price-feats">
           <li>Todo lo del plan Esencial</li>
           <li>Hasta 14 secciones más sección de novedades</li>
-          <li><b>Hospedaje premium gratis</b> y ultrarrápido en Cloudflare (la misma red que usan grandes empresas)</li>
+          <li><b>Hospedaje premium gratis</b> en Cloudflare (la misma red que usan grandes empresas)</li>
           <li>Google Business Profile configurado y verificado</li>
           <li>Textos optimizados con palabras clave de su ciudad y barrio</li>
           <li>Galería de fotos de su negocio</li>
-          <li>Soporte prioritario (24h)</li>
           <li>3 rondas de cambios</li>
-          <li>Reporte mensual de visitas</li>
         </ul>
         <a class="btn btn-primary" href="#contacto">Quiero el plan Pro</a>
+      </article>
+
+      <article class="price-card price-card-support reveal">
+        <span class="price-badge support-badge">Opcional</span>
+        <div class="price-tier-label" style="color:#fcd116">Mantenimiento continuo</div>
+        <div class="price-name" style="color:white">Plan Soporte</div>
+        <div class="price-amt"><b style="color:white">$30k</b><span style="color:#a3b3cc">COP/mes</span></div>
+        <div class="price-host" style="color:#a3b3cc">cancele cuando quiera, <b style="color:white">sin contrato</b></div>
+        <div class="price-annual">
+          <span class="annual-tag">Mejor valor</span>
+          <b>$250.000 COP / año prepagado</b>
+          <span class="annual-save">Ahorra $110.000 (3 meses gratis)</span>
+        </div>
+        <ul class="price-feats">
+          <li>Monitoreo 24/7 de su sitio</li>
+          <li>Pequeños cambios cada mes (horarios, fotos, textos, ofertas)</li>
+          <li>Respuesta prioritaria por WhatsApp en menos de 24h</li>
+          <li>Reporte mensual de visitas y rendimiento</li>
+          <li>Backups automáticos de su sitio</li>
+          <li>Actualizaciones técnicas y de seguridad</li>
+          <li>Asesoría continua para mejorar el sitio</li>
+        </ul>
+        <a class="btn btn-yellow" href="#contacto">Agregar plan de soporte</a>
       </article>
     </div>
     <p style="text-align:center;color:var(--muted);font-size:.92rem;margin-top:36px">
