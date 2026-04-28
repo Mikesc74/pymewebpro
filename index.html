@@ -427,18 +427,18 @@
     color:var(--blue);margin-bottom:4px;
   }
   /* SUPPORT CARD (blue/dark) — visually elevated as the "ongoing service" tier */
-  .price-card-support{
+  .price-card.price-card-support{
     background:linear-gradient(160deg,var(--blue) 0%,#06245a 100%);
     color:white;border:3px solid var(--yellow);
     box-shadow:0 0 0 6px rgba(252,209,22,.15), 0 30px 80px -20px rgba(10,24,64,.5);
     transform:scale(1.03);position:relative;
   }
-  .price-card-support:hover{transform:scale(1.03) translateY(-6px)}
-  @media (max-width:980px){.price-card-support{transform:none}.price-card-support:hover{transform:translateY(-6px)}}
-  .price-card-support .price-tier-label{color:var(--yellow)!important}
-  .price-card-support .price-host{color:#bdc7e0;border-bottom-color:rgba(255,255,255,.15)}
-  .price-card-support .price-feats li{color:#e8edf7;font-weight:500}
-  .price-card-support .price-feats li::before{
+  .price-card.price-card-support:hover{transform:scale(1.03) translateY(-6px)}
+  @media (max-width:980px){.price-card.price-card-support{transform:none}.price-card.price-card-support:hover{transform:translateY(-6px)}}
+  .price-card.price-card-support .price-tier-label{color:var(--yellow)!important}
+  .price-card.price-card-support .price-host{color:#bdc7e0;border-bottom-color:rgba(255,255,255,.15)}
+  .price-card.price-card-support .price-feats li{color:#e8edf7;font-weight:500}
+  .price-card.price-card-support .price-feats li::before{
     background:var(--yellow);color:var(--blue);font-weight:900;
   }
   .support-badge{
