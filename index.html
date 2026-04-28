@@ -595,6 +595,26 @@
   .cta-feats{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .cta-feats li{font-size:.93rem;color:#cdd5d1;display:flex;gap:8px}
   .cta-feats li::before{content:"✓";color:var(--amber);font-weight:700}
+  .contact-options{margin-top:30px;display:flex;flex-direction:column;gap:12px}
+  .contact-opt{
+    display:flex;align-items:center;gap:14px;
+    padding:16px 18px;border-radius:14px;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+    color:white;text-decoration:none;
+    transition:all .2s ease;
+  }
+  .contact-opt:hover{background:rgba(255,255,255,.10);border-color:rgba(252,209,22,.4);transform:translateX(4px)}
+  .contact-opt-ico{
+    flex-shrink:0;width:44px;height:44px;border-radius:11px;
+    display:grid;place-items:center;font-weight:800;font-size:1.2rem;
+  }
+  .contact-opt-wa{background:#25d366;color:white}
+  .contact-opt-mail{background:var(--yellow);color:var(--blue)}
+  .contact-opt-text{flex:1;display:flex;flex-direction:column;gap:2px;line-height:1.3}
+  .contact-opt-text b{font-size:.98rem;font-weight:700}
+  .contact-opt-text span{font-size:.84rem;color:#bdc7e0}
+  .contact-opt-arrow{font-size:1.2rem;color:var(--yellow);font-weight:700;transition:transform .2s}
+  .contact-opt:hover .contact-opt-arrow{transform:translateX(4px)}
 
   .form{background:white;border-radius:20px;padding:36px;color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.3)}
   .form h3{font-family:'Fraunces',serif;font-size:1.55rem;margin-bottom:6px}
@@ -683,8 +703,7 @@
       <a href="#contacto">Contacto</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-ghost" href="#paquetes" style="padding:10px 18px;font-size:.92rem">Ver precios</a>
-      <a class="btn btn-primary" href="#contacto" style="padding:11px 20px;font-size:.92rem">Hablar por WhatsApp</a>
+      <a class="btn btn-ghost" href="#contacto" style="padding:10px 20px;font-size:.92rem">Pedir cotización</a>
     </div>
   </div>
 </nav>
@@ -703,26 +722,16 @@
         Nosotros lo construimos, usted recibe clientes nuevos por internet.
         Sin tecnicismos, sin sorpresas, sin pagar por lo que no necesita.
       </p>
-      <form class="hero-form" id="heroForm" onsubmit="return submitHeroForm(event)">
-        <div class="hf-row">
-          <div class="hf-field">
-            <label for="hf-nombre">Su nombre</label>
-            <input id="hf-nombre" name="nombre" type="text" required placeholder="Ej: María González">
-          </div>
-          <div class="hf-field">
-            <label for="hf-whatsapp">WhatsApp</label>
-            <input id="hf-whatsapp" name="whatsapp" type="tel" required placeholder="+57 300 000 0000">
-          </div>
-          <button type="submit" class="btn btn-primary hf-btn">
-            Quiero mi sitio web
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
-        <div class="hf-foot">
-          Respuesta en menos de 24 horas, sin compromiso. ·
-          <a href="#paquetes">Ver planes y precios</a>
-        </div>
-      </form>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contacto" style="padding:18px 32px;font-size:1.05rem">
+          Pedir cotización gratis
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href="#paquetes" style="padding:18px 28px;font-size:1.05rem">Ver planes y precios</a>
+      </div>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:14px">
+        Respuesta en menos de 24 horas. Sin compromiso.
+      </p>
       <ul class="hero-trust">
         <li><span class="ht-ico ht-blue">✓</span><span><b>Listos en 2 a 3 semanas</b><br>de la idea a un sitio en vivo</span></li>
         <li><span class="ht-ico ht-yellow">$</span><span><b>Desde $590.000 COP</b><br>pago único, sin sorpresas</span></li>
@@ -1059,30 +1068,36 @@
     <div class="cta-inner reveal">
       <div class="cta-grid">
         <div>
-          <span class="eyebrow dark">Próximos pasos</span>
-          <h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">Pongamos su negocio<br>en internet.</h2>
-          <p class="cta-sub">Hoy en Colombia, tener un sitio web propio es la inversión más rentable que puede hacer un pequeño negocio. Empiece con una conversación corta, sin compromiso.</p>
-          <ul class="cta-feats">
-            <li>Asesoría gratuita por WhatsApp</li>
-            <li>Cotización clara y por escrito</li>
-            <li>Su sitio en vivo en 2–3 semanas</li>
-            <li>Pague hasta en 3 cuotas</li>
-          </ul>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:30px">
-            <a class="btn btn-wa" href="https://wa.me/573014047722?text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-              WhatsApp
+          <span class="eyebrow dark">Hablemos hoy mismo</span>
+          <h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">Llene el formulario<br>y le respondemos<br>en pocas horas.</h2>
+          <p class="cta-sub">Sin compromiso. Le devolvemos la llamada o escribimos por el medio que prefiera, con una propuesta clara por escrito.</p>
+
+          <div class="contact-options">
+            <a class="contact-opt" href="https://wa.me/573014047722?text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
+              <span class="contact-opt-ico contact-opt-wa">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              </span>
+              <span class="contact-opt-text">
+                <b>Chat directo por WhatsApp</b>
+                <span>+57 301 404 7722 · respuesta inmediata</span>
+              </span>
+              <span class="contact-opt-arrow" aria-hidden="true">→</span>
             </a>
-            <a class="btn btn-dark" href="https://wa.me/573014047722?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20planes%20web." target="_blank" rel="noopener">
-              Más información
+            <a class="contact-opt" href="mailto:ventas@pymewebpro.com?subject=Cotización%20PymeWebPro">
+              <span class="contact-opt-ico contact-opt-mail">@</span>
+              <span class="contact-opt-text">
+                <b>Enviar correo</b>
+                <span>ventas@pymewebpro.com</span>
+              </span>
+              <span class="contact-opt-arrow" aria-hidden="true">→</span>
             </a>
           </div>
         </div>
 
         <form class="form" id="contactForm" onsubmit="return submitForm(event)">
           <div class="form-fields">
-            <h3>Hablemos de su negocio</h3>
-            <p class="lead">Llene este formulario o escríbanos por WhatsApp. Le respondemos el mismo día.</p>
+            <h3>Llene este formulario</h3>
+            <p class="lead">Le respondemos en pocas horas con una propuesta clara, sin compromiso.</p>
             <div class="field">
               <label for="nombre">Su nombre</label>
               <input id="nombre" name="nombre" type="text" required placeholder="Ej: Juan Pérez">
@@ -1162,7 +1177,7 @@
         <a href="#paquetes">Planes y precios</a>
         <a href="#incluye">¿Qué incluye?</a>
         <a href="#proceso">Cómo funciona</a>
-        <a href="#contacto">Hablar por WhatsApp</a>
+        <a href="#contacto">Pedir cotización</a>
       </div>
       <div class="foot-col">
         <h4>Para quién</h4>
