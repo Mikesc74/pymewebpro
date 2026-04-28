@@ -317,6 +317,53 @@
   .build-card h3{font-size:1.2rem;margin-bottom:8px}
   .build-card p{color:var(--muted);font-size:.95rem}
 
+  /* PORTFOLIO */
+  .portfolio{background:var(--bg)}
+  .port-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  }
+  @media (max-width:980px){.port-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:600px){.port-grid{grid-template-columns:1fr}}
+  .port-card{
+    display:block;background:white;border-radius:18px;overflow:hidden;
+    border:1px solid var(--line);text-decoration:none;color:inherit;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .port-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--blue)}
+  .port-thumb{
+    aspect-ratio:3/2;background:var(--bg-2);overflow:hidden;position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .port-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .5s ease}
+  .port-card:hover .port-thumb img{transform:scale(1.04)}
+  .port-thumb::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 60%,rgba(10,24,64,.04) 100%);
+    pointer-events:none;
+  }
+  .port-body{padding:22px 24px 24px}
+  .port-tag{
+    display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--blue);background:var(--blue-soft);padding:4px 10px;border-radius:999px;
+    margin-bottom:10px;
+  }
+  .port-body h3{
+    font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;letter-spacing:-.01em;
+    margin-bottom:8px;
+  }
+  .port-body p{color:var(--muted);font-size:.92rem;line-height:1.5;margin-bottom:14px}
+  .port-cta{
+    color:var(--red);font-weight:600;font-size:.9rem;
+    border-bottom:2px solid transparent;transition:border-color .15s;
+  }
+  .port-card:hover .port-cta{border-bottom-color:var(--red)}
+  .port-card-cta{
+    background:linear-gradient(135deg,var(--blue) 0%,#06245a 100%);color:white;border:none;
+  }
+  .port-card-cta h3{color:white}
+  .port-card-cta p{color:#cdd5e6}
+  .port-card-cta:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+
   /* WHY */
   .why{background:var(--ink);color:white;position:relative;overflow:hidden}
   .why::before{
@@ -563,6 +610,7 @@
     </a>
     <div class="nav-links">
       <a href="#incluye">¿Qué incluye?</a>
+      <a href="#portafolio">Portafolio</a>
       <a href="#paquetes">Planes</a>
       <a href="#proceso">Proceso</a>
       <a href="#contacto">Contacto</a>
@@ -738,6 +786,82 @@
       <article class="build-card reveal"><div class="ico">SEO</div><h3>Listo para Google</h3><p>Configurado desde el primer día para que sus clientes locales lo encuentren.</p></article>
       <article class="build-card reveal"><div class="ico">MAP</div><h3>Google Maps</h3><p>Le ayudamos a aparecer en el mapa cuando alguien busca cerca un negocio como el suyo.</p></article>
       <article class="build-card reveal"><div class="ico">⚡</div><h3>Rápido y seguro</h3><p>Carga al instante, está disponible siempre y protegido contra ataques. Hospedado en la misma infraestructura que usan grandes empresas.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portafolio" class="portfolio">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Sitios que hemos construido</span>
+      <h2 style="margin-top:18px">Vea el tipo de sitio<br>que recibe usted.</h2>
+      <p>Estos son sitios reales, en línea, que diseñamos, programamos y mantenemos. La misma calidad y la misma tecnología que usaríamos en el sitio de su negocio.</p>
+    </div>
+    <div class="port-grid">
+      <a class="port-card reveal" href="https://medellin.guide" target="_blank" rel="noopener">
+        <div class="port-thumb">
+          <img src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fmedellin.guide?w=900&h=600" alt="medellin.guide" loading="lazy">
+        </div>
+        <div class="port-body">
+          <span class="port-tag">Guía de ciudad</span>
+          <h3>medellin.guide</h3>
+          <p>La guía más completa para visitar y vivir en Medellín. Más de 24 secciones, miles de visitas mensuales, primeros lugares en Google.</p>
+          <span class="port-cta">Ver el sitio →</span>
+        </div>
+      </a>
+      <a class="port-card reveal" href="https://barranquilla.guide" target="_blank" rel="noopener">
+        <div class="port-thumb">
+          <img src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fbarranquilla.guide?w=900&h=600" alt="barranquilla.guide" loading="lazy">
+        </div>
+        <div class="port-body">
+          <span class="port-tag">Guía de ciudad</span>
+          <h3>barranquilla.guide</h3>
+          <p>La guía completa de Barranquilla. Barrios, restaurantes, eventos del Carnaval y vida diaria en la ciudad.</p>
+          <span class="port-cta">Ver el sitio →</span>
+        </div>
+      </a>
+      <a class="port-card reveal" href="https://thecartagena.guide" target="_blank" rel="noopener">
+        <div class="port-thumb">
+          <img src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fthecartagena.guide?w=900&h=600" alt="thecartagena.guide" loading="lazy">
+        </div>
+        <div class="port-body">
+          <span class="port-tag">Guía de ciudad</span>
+          <h3>thecartagena.guide</h3>
+          <p>La guía definitiva de Cartagena para turistas y residentes. Más de 17 guías y creciendo.</p>
+          <span class="port-cta">Ver el sitio →</span>
+        </div>
+      </a>
+      <a class="port-card reveal" href="https://mikec.pro" target="_blank" rel="noopener">
+        <div class="port-thumb">
+          <img src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fmikec.pro?w=900&h=600" alt="mikec.pro" loading="lazy">
+        </div>
+        <div class="port-body">
+          <span class="port-tag">Sitio personal · Inglés</span>
+          <h3>mikec.pro</h3>
+          <p>Sitio personal y portafolio profesional. Diseño minimalista, contenido en inglés, optimizado para velocidad y SEO.</p>
+          <span class="port-cta">Ver el sitio →</span>
+        </div>
+      </a>
+      <a class="port-card reveal" href="https://nortesurconsulting.com" target="_blank" rel="noopener">
+        <div class="port-thumb">
+          <img src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fnortesurconsulting.com?w=900&h=600" alt="nortesurconsulting.com" loading="lazy">
+        </div>
+        <div class="port-body">
+          <span class="port-tag">Consultoría empresarial</span>
+          <h3>nortesurconsulting.com</h3>
+          <p>Sitio corporativo de consultoría. Diseño moderno, enfocado a generar contactos calificados y comunicar credibilidad.</p>
+          <span class="port-cta">Ver el sitio →</span>
+        </div>
+      </a>
+      <div class="port-card port-card-cta reveal">
+        <div class="port-body" style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;height:100%;padding:36px 32px">
+          <span class="port-tag" style="background:rgba(252,209,22,.22);color:var(--yellow-2)">Su negocio</span>
+          <h3 style="font-size:1.6rem;margin:10px 0 12px">¿Listo para tener uno como estos?</h3>
+          <p style="margin-bottom:20px">Construyamos el suyo. Hablemos 20 minutos por WhatsApp, sin compromiso.</p>
+          <a class="btn btn-primary" href="#contacto" style="padding:13px 22px;font-size:.92rem">Quiero el mío →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
