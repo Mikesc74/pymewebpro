@@ -13,6 +13,7 @@
     // ── nav ─────────────
     '¿Qué incluye?': "What's included",
     'Portafolio': 'Portfolio',
+    'Casos': 'Cases',
     'Nosotros': 'About',
     'Planes': 'Plans',
     'Proceso': 'Process',
@@ -89,6 +90,30 @@
       'The definitive guide to Cartagena for tourists and residents. 17+ guides and growing.',
     'Sitio personal · Inglés': 'Personal site · English',
     'Sitio personal · Consultoría': 'Personal site · Consulting',
+
+    // case studies
+    'Métricas reales': 'Real metrics',
+    'Números concretos,<br>no promesas vagas.': 'Concrete numbers,<br>not vague promises.',
+    'Estos son nuestros propios sitios. Lo construimos así, lo medimos así, y así construiremos el suyo.':
+      'These are our own sites. We build them this way, we measure them this way, and we will build yours the same way.',
+    'Guía de ciudad · Medellín': 'City guide · Medellín',
+    'Una guía completa de la ciudad: barrios, restaurantes, salud, eventos, mudanzas. Construida con el mismo stack y proceso que usamos en sus sitios.':
+      'A complete city guide: neighborhoods, restaurants, healthcare, events, relocation. Built with the same stack and process we use for your sites.',
+    'tiempo de respuesta del servidor': 'server response time',
+    'peso de la página de inicio': 'home page weight',
+    'páginas indexadas en Google': 'pages indexed on Google',
+    'esquemas estructurados para SEO local': 'structured-data schemas for local SEO',
+    'SSL + Cloudflare CDN global': 'SSL + Cloudflare global CDN',
+    'responsive para celular': 'mobile-responsive',
+    'Visitar sitio →': 'Visit site →',
+    'Consultoría B2B · Salesforce': 'B2B consulting · Salesforce',
+    'Sitio corporativo bilingüe para una consultora B2B con presencia en EE.UU., Colombia y México. Diseño limpio, respuesta veloz, mensaje al grano.':
+      'Bilingual corporate site for a B2B consultancy with presence in the US, Colombia, and Mexico. Clean design, fast response, message on point.',
+    'tiempo total de carga': 'total page load time',
+    'idiomas (español + inglés)': 'languages (Spanish + English)',
+    'scripts de terceros que ralentizan': 'third-party scripts slowing the site',
+    'Mediciones tomadas con curl desde un servidor en Estados Unidos. Su sitio se construye con el mismo stack: Cloudflare, HTML/CSS optimizado, sin frameworks pesados.':
+      'Measurements taken with curl from a server in the United States. Your site is built with the same stack: Cloudflare, optimized HTML/CSS, no heavy frameworks.',
 
     // ── nosotros ────────
     'Hecho a la medida<br>desde Medellín.': 'Built by hand<br>from Medellín.',

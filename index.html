@@ -428,6 +428,49 @@
   .mark.x{background:#fee2e2;color:#b91c1c}
   .mark.v{background:rgba(245,180,0,.2);color:var(--amber)}
 
+  /* CASE STUDIES */
+  .cases{background:var(--bg-2)}
+  .cases-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:32px;
+    max-width:1100px;margin:56px auto 0;
+  }
+  @media (max-width:880px){.cases-grid{grid-template-columns:1fr;gap:24px}}
+  .case-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;display:flex;flex-direction:column;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .case-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,31,26,.08)}
+  .case-thumb{aspect-ratio:16/9;background:var(--bg-2);overflow:hidden}
+  .case-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .case-body{padding:24px 26px 28px;display:flex;flex-direction:column;flex:1}
+  .case-tag{
+    display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blue);font-weight:700;margin-bottom:10px;
+  }
+  .case-card h3{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
+  .case-card p{color:var(--muted);font-size:.95rem;line-height:1.55;margin:0 0 20px}
+  .case-metrics{
+    list-style:none;padding:0;margin:0 0 22px;display:grid;
+    grid-template-columns:repeat(3,1fr);gap:14px 12px;
+    border-top:1px dashed var(--line);padding-top:18px;
+  }
+  @media (max-width:520px){.case-metrics{grid-template-columns:repeat(2,1fr)}}
+  .case-metrics li{display:flex;flex-direction:column;gap:2px}
+  .case-metrics b{
+    font-family:'Fraunces',serif;font-size:1.35rem;font-weight:800;color:var(--ink);line-height:1;
+  }
+  .case-metrics span{font-size:.72rem;color:var(--muted);line-height:1.35}
+  .case-cta{
+    margin-top:auto;display:inline-block;color:var(--blue);font-weight:700;
+    text-decoration:none;font-size:.95rem;letter-spacing:.02em;
+  }
+  .case-cta:hover{text-decoration:underline}
+  .case-foot{
+    text-align:center;color:var(--muted);font-size:.82rem;
+    margin:32px auto 0;max-width:640px;line-height:1.55;
+  }
+
   /* NOSOTROS / TEAM */
   .nosotros{background:var(--bg-1)}
   .team-grid{
@@ -789,6 +832,7 @@
     <div class="nav-links">
       <a href="#incluye">¿Qué incluye?</a>
       <a href="#portafolio">Portafolio</a>
+      <a href="#casos">Casos</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#paquetes">Planes</a>
       <a href="#proceso">Proceso</a>
@@ -997,6 +1041,57 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="casos" class="cases">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:760px">
+      <span class="eyebrow">Métricas reales</span>
+      <h2 style="margin-top:18px">Números concretos,<br>no promesas vagas.</h2>
+      <p>Estos son nuestros propios sitios. Lo construimos así, lo medimos así, y así construiremos el suyo.</p>
+    </div>
+    <div class="cases-grid reveal">
+
+      <article class="case-card">
+        <div class="case-thumb"><img src="screenshots/medellin-guide.jpg" alt="medellin.guide" loading="lazy"></div>
+        <div class="case-body">
+          <span class="case-tag">Guía de ciudad · Medellín</span>
+          <h3>medellin.guide</h3>
+          <p>Una guía completa de la ciudad: barrios, restaurantes, salud, eventos, mudanzas. Construida con el mismo stack y proceso que usamos en sus sitios.</p>
+          <ul class="case-metrics">
+            <li><b>0,4s</b><span>tiempo de respuesta del servidor</span></li>
+            <li><b>60 KB</b><span>peso de la página de inicio</span></li>
+            <li><b>41</b><span>páginas indexadas en Google</span></li>
+            <li><b>5</b><span>esquemas estructurados para SEO local</span></li>
+            <li><b>HTTPS</b><span>SSL + Cloudflare CDN global</span></li>
+            <li><b>100%</b><span>responsive para celular</span></li>
+          </ul>
+          <a class="case-cta" href="https://medellin.guide" target="_blank" rel="noopener">Visitar sitio →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-thumb"><img src="screenshots/nortesurconsulting.jpg" alt="nortesurconsulting.com" loading="lazy"></div>
+        <div class="case-body">
+          <span class="case-tag">Consultoría B2B · Salesforce</span>
+          <h3>nortesurconsulting.com</h3>
+          <p>Sitio corporativo bilingüe para una consultora B2B con presencia en EE.UU., Colombia y México. Diseño limpio, respuesta veloz, mensaje al grano.</p>
+          <ul class="case-metrics">
+            <li><b>0,3s</b><span>tiempo de respuesta del servidor</span></li>
+            <li><b>0,5s</b><span>tiempo total de carga</span></li>
+            <li><b>2</b><span>idiomas (español + inglés)</span></li>
+            <li><b>HTTPS</b><span>SSL + Cloudflare CDN global</span></li>
+            <li><b>100%</b><span>responsive para celular</span></li>
+            <li><b>0</b><span>scripts de terceros que ralentizan</span></li>
+          </ul>
+          <a class="case-cta" href="https://nortesurconsulting.com" target="_blank" rel="noopener">Visitar sitio →</a>
+        </div>
+      </article>
+
+    </div>
+    <p class="case-foot">Mediciones tomadas con curl desde un servidor en Estados Unidos. Su sitio se construye con el mismo stack: Cloudflare, HTML/CSS optimizado, sin frameworks pesados.</p>
   </div>
 </section>
 
