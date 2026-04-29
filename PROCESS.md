@@ -407,8 +407,8 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 1. Client provides feedback via WhatsApp or email (text + screenshots).
 2. Mike consolidates feedback, makes changes, redeploys preview.
-3. Esencial: "varias rondas de cambios incluidas" — pragmatic limit ~2-3 substantive rounds before flagging scope creep.
-4. Crecimiento: "3 rondas de cambios" — explicitly 3 rounds.
+3. Esencial: "2 rondas de cambios incluidas" — flag scope creep beyond round 2.
+4. Crecimiento: "Hasta 5 rondas de cambios" — hard cap at 5; beyond that becomes a paid add-on or Plan Hosting territory.
 5. Mike marks `design_approved` in the deliverables tracker once client signs off.
 
 **Owner:** Mike.
