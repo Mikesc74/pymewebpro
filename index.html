@@ -340,35 +340,47 @@
   /* CASE STUDIES */
   .cases{background:var(--bg-2)}
   .cases-grid{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:32px;
-    max-width:1100px;margin:56px auto 0;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+    max-width:1180px;margin:48px auto 0;
   }
-  @media (max-width:880px){.cases-grid{grid-template-columns:1fr;gap:24px}}
+  @media (max-width:980px){.cases-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+  @media (max-width:640px){.cases-grid{grid-template-columns:1fr;gap:18px}}
   .case-card{
-    background:#fff;border:1px solid var(--line);border-radius:16px;
+    background:#fff;border:1px solid var(--line);border-radius:14px;
     overflow:hidden;display:flex;flex-direction:column;
     transition:transform .2s ease, box-shadow .2s ease;
   }
   .case-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,31,26,.08)}
+  .case-card-featured{
+    position:relative;border:2px solid var(--red);
+    box-shadow:0 12px 32px rgba(206,17,38,.10);
+  }
+  .case-card-featured:hover{box-shadow:0 18px 40px rgba(206,17,38,.18);border-color:var(--red)}
+  .case-badge{
+    position:absolute;top:12px;right:12px;z-index:2;
+    background:var(--red);color:#fff;font-size:.62rem;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;
+    border-radius:999px;box-shadow:0 4px 12px rgba(206,17,38,.30);
+  }
   .case-thumb{aspect-ratio:16/9;background:var(--bg-2);overflow:hidden}
   .case-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .case-body{padding:24px 26px 28px;display:flex;flex-direction:column;flex:1}
+  .case-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
   .case-tag{
-    display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--blue);font-weight:700;margin-bottom:10px;
+    display:inline-block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--blue);font-weight:700;margin-bottom:8px;
   }
   .case-tag-client{
     color:var(--red);
   }
-  .case-card h3{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
-  .case-card p{color:var(--muted);font-size:.95rem;line-height:1.55;margin:0 0 20px}
+  .case-card h3{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;margin:0 0 8px;letter-spacing:-.01em}
+  .case-card p{color:var(--muted);font-size:.86rem;line-height:1.5;margin:0 0 14px}
   .case-pills{
-    list-style:none;padding:0;margin:0 0 22px;display:flex;flex-wrap:wrap;gap:6px 8px;
+    list-style:none;padding:0;margin:0 0 16px;display:flex;flex-wrap:wrap;gap:5px 6px;
   }
   .case-pills li{
-    display:inline-block;font-size:.74rem;color:var(--ink);
+    display:inline-block;font-size:.68rem;color:var(--ink);
     background:var(--bg-2);border:1px solid var(--line);
-    padding:4px 10px;border-radius:999px;font-weight:500;letter-spacing:.01em;
+    padding:3px 8px;border-radius:999px;font-weight:500;letter-spacing:.01em;
   }
   .case-metrics{
     list-style:none;padding:0;margin:0 0 22px;display:grid;
@@ -918,7 +930,8 @@
     </div>
     <div class="cases-grid reveal">
 
-      <article class="case-card">
+      <article class="case-card case-card-featured">
+        <span class="case-badge">Cliente real</span>
         <div class="case-thumb"><img src="screenshots/inviersol.jpg" alt="inviersol.com" loading="lazy"></div>
         <div class="case-body">
           <span class="case-tag case-tag-client">Cliente · Industria · Envigado</span>

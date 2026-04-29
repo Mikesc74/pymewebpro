@@ -392,6 +392,7 @@
     'Un cliente. Dos sitios propios.<br>Mismo stack para todos.': 'One client. Two of our own sites.<br>Same stack for everyone.',
     'Estamos arrancando con clientes reales. Mientras crecemos, también construimos y operamos nuestros propios sitios — el mismo proceso, las mismas herramientas, la misma calidad que usaríamos para el suyo.':
       "We're starting with real clients. While we grow, we also build and run our own sites — the same process, the same tools, the same quality we'd use for yours.",
+    'Cliente real': 'Real client',
     'Cliente · Industria · Envigado': 'Client · Industry · Envigado',
     'Trabajo propio · Guía de ciudad': 'Our own work · City guide',
     'Trabajo propio · B2B · Bilingüe': 'Our own work · B2B · Bilingual',
