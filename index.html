@@ -444,7 +444,8 @@
   .team-photo{flex-shrink:0;width:120px;height:120px;border-radius:50%;overflow:hidden;background:var(--bg-2);border:3px solid var(--bg-1);box-shadow:0 4px 14px rgba(10,31,26,.10)}
   .team-photo img{width:100%;height:100%;object-fit:cover;display:block}
   .team-meta{flex:1;min-width:0}
-  .team-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em}
+  .team-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em;display:inline-flex;align-items:center;gap:8px}
+  .team-flag{font-size:1.1rem;line-height:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,.08))}
   .team-role{color:var(--blue);font-weight:600;font-size:.88rem;margin:0 0 12px;letter-spacing:.02em}
   .team-bio{color:var(--muted);font-size:.93rem;line-height:1.55;margin:0 0 12px}
   .team-loc{color:var(--ink);font-size:.85rem;margin:0;display:inline-flex;align-items:center;gap:6px;font-weight:500}
@@ -941,7 +942,7 @@
       <article class="team-card">
         <div class="team-photo"><img src="/team/mike.jpg" alt="Mike Chartrand, co-fundador de PymeWebPro" loading="lazy" width="300" height="300"></div>
         <div class="team-meta">
-          <h3 class="team-name">Mike Chartrand</h3>
+          <h3 class="team-name">Mike Chartrand <span class="team-flag" aria-label="Canadiense" title="Canadiense">🇨🇦</span></h3>
           <p class="team-role">Co-fundador &amp; Diseñador</p>
           <p class="team-bio">Construye y diseña los sitios. Diseño limpio, código rápido, todo lo técnico — dominios, hospedaje, certificados.</p>
           <p class="team-loc"><span class="team-pin">📍</span>Medellín, Colombia</p>
@@ -950,7 +951,7 @@
       <article class="team-card">
         <div class="team-photo"><img src="/team/santiago.jpg" alt="Santiago Santos, co-fundador de PymeWebPro" loading="lazy" width="300" height="300"></div>
         <div class="team-meta">
-          <h3 class="team-name">Santiago Santos</h3>
+          <h3 class="team-name">Santiago Santos <span class="team-flag" aria-label="Colombiano" title="Colombiano">🇨🇴</span></h3>
           <p class="team-role">Co-fundador</p>
           <p class="team-bio">Estrategia, ventas y la voz al otro lado del WhatsApp. Habla con cada cliente para entender el negocio antes de empezar.</p>
           <p class="team-loc"><span class="team-pin">📍</span>Medellín, Colombia</p>
