@@ -90,6 +90,9 @@
       'The definitive guide to Cartagena for tourists and residents. 17+ guides and growing.',
     'Sitio personal · Inglés': 'Personal site · English',
     'Sitio personal · Consultoría': 'Personal site · Consulting',
+    'Cliente reciente · Industria · Envigado': 'Recent client · Industrial · Envigado',
+    'Empresa de parasoles, toldos y mantenimiento con más de 19 años en Envigado. Lanzamos su nuevo sitio web profesional para llegar a clientes en toda Colombia.':
+      'Awnings, shades, and maintenance company with 19+ years in Envigado. We launched their new professional website to reach customers across Colombia.',
 
     // case studies
     'Métricas reales': 'Real metrics',
