@@ -53,11 +53,19 @@
     'Cada sitio incluye lo esencial para un negocio colombiano: aparecer en Google, recibir mensajes por WhatsApp, mostrar su catálogo y ganarse la confianza de clientes nuevos.':
       'Every site includes the essentials for a Colombian business: showing up on Google, taking WhatsApp messages, displaying your catalog, and earning new customers\' trust.',
     'Su propio dominio': 'Your own domain',
-    'Le ayudamos a elegir y configurar sunegocio.com (o .co). El registro anual se paga aparte y queda a nombre suyo.': 'We help you pick and set up yourbusiness.com (or .co). The annual registration is separate and stays in your name.',
+    'Su propio dominio, suyo para siempre': 'Your own domain, yours forever',
+    'El dominio lo registra usted directamente (a su nombre, suyo para siempre). Le ayudamos a elegirlo y configurarlo. Costo aproximado: $50k–$150k/año según el dominio que escoja — usted decide.':
+      'You register the domain directly (in your name, yours forever). We help you pick it and set it up. Approximate cost: $50k–$150k/year depending on the domain — your choice.',
+    '¿Cómo funciona el dominio?': 'How does the domain work?',
+    'El dominio lo registra usted directamente con el registrador, a su nombre — suyo para siempre, no del nuestro. Le ayudamos a elegirlo y a configurarlo correctamente. Costo aproximado: $50.000 a $150.000 COP al año según el dominio que escoja, y usted decide.':
+      'You register the domain directly with the registrar, in your name — yours forever, not ours. We help you pick it and set it up correctly. Approximate cost: $50,000 to $150,000 COP per year depending on the domain, your choice.',
+    'El dominio queda a su nombre — suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)':
+      'Domain stays in your name — yours forever. We help you pick and configure it (registration ~$50k–$150k/yr, paid by you to the registrar)',
     'Listo para celular': 'Mobile-ready',
     '9 de cada 10 clientes lo van a buscar desde el celular. Su sitio se ve perfecto en cualquier pantalla.': '9 out of 10 customers will search from their phone. Your site looks perfect on any screen.',
-    'Botón de WhatsApp': 'WhatsApp button',
-    'Un clic y el cliente le escribe directo al WhatsApp del negocio. Sin formularios complicados.': 'One click and the customer messages your business WhatsApp directly. No complicated forms.',
+    'SEO y seguridad': 'SEO & security',
+    'HTTPS, código limpio y rápido, datos estructurados para Google, y respaldo automático todos los días. Su sitio es sólido y aparece bien posicionado.':
+      'HTTPS, clean and fast code, structured data for Google, and daily automatic backups. Your site is solid and ranks well.',
     'Listo para Google': 'Google-ready',
     'Configurado desde el primer día para que sus clientes locales lo encuentren.': 'Configured from day one so local customers can find you.',
 
