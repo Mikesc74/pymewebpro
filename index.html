@@ -267,53 +267,6 @@
   .section-head{max-width:760px;margin-bottom:60px}
   .section-head p{color:var(--muted);font-size:1.1rem;margin-top:18px}
 
-  /* PORTFOLIO */
-  .portfolio{background:var(--bg)}
-  .port-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
-  }
-  @media (max-width:980px){.port-grid{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:600px){.port-grid{grid-template-columns:1fr}}
-  .port-card{
-    display:block;background:white;border-radius:18px;overflow:hidden;
-    border:1px solid var(--line);text-decoration:none;color:inherit;
-    transition:transform .25s ease, box-shadow .25s ease;
-  }
-  .port-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--blue)}
-  .port-thumb{
-    aspect-ratio:3/2;background:var(--bg-2);overflow:hidden;position:relative;
-    border-bottom:1px solid var(--line);
-  }
-  .port-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .5s ease}
-  .port-card:hover .port-thumb img{transform:scale(1.04)}
-  .port-thumb::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,transparent 60%,rgba(10,24,64,.04) 100%);
-    pointer-events:none;
-  }
-  .port-body{padding:22px 24px 24px}
-  .port-tag{
-    display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--blue);background:var(--blue-soft);padding:4px 10px;border-radius:999px;
-    margin-bottom:10px;
-  }
-  .port-body h3{
-    font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;letter-spacing:-.01em;
-    margin-bottom:8px;
-  }
-  .port-body p{color:var(--muted);font-size:.92rem;line-height:1.5;margin-bottom:14px}
-  .port-cta{
-    color:var(--red);font-weight:600;font-size:.9rem;
-    border-bottom:2px solid transparent;transition:border-color .15s;
-  }
-  .port-card:hover .port-cta{border-bottom-color:var(--red)}
-  .port-card-cta{
-    background:linear-gradient(135deg,var(--blue) 0%,#06245a 100%);color:white;border:none;
-  }
-  .port-card-cta h3{color:white}
-  .port-card-cta p{color:#cdd5e6}
-  .port-card-cta:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-
   /* WHY */
   .why{background:var(--ink);color:white;position:relative;overflow:hidden}
   .why::before{
@@ -366,58 +319,23 @@
   .mark.x{background:#fee2e2;color:#b91c1c}
   .mark.v{background:rgba(245,180,0,.2);color:var(--amber)}
 
-  /* MARKET DATA — sourced Colombia-specific stats */
-  .market{background:var(--bg-2);padding:64px 0}
-  .market-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
-    max-width:980px;margin:0 auto;
+  /* HERO OUTCOMES — numbered list under hero subhead */
+  .hero-outcomes{
+    list-style:none;padding:0;margin:28px 0 0;display:flex;flex-direction:column;gap:14px;
+    max-width:560px;
   }
-  @media (max-width:760px){.market-grid{grid-template-columns:1fr;gap:22px}}
-  .market-stat{text-align:center;padding:18px 12px}
-  .ms-num{
-    font-family:'Fraunces',serif;font-weight:800;font-style:italic;
-    font-size:2.6rem;color:var(--blue);line-height:1.1;letter-spacing:-.01em;margin-bottom:10px;
+  .hero-outcomes li{
+    display:flex;gap:16px;align-items:flex-start;
   }
-  .ms-pct{font-size:1.5rem;font-weight:700;margin-left:2px;vertical-align:super;color:var(--blue);opacity:.85}
-  .ms-label{
-    color:var(--ink);font-size:1rem;font-weight:500;line-height:1.4;margin-bottom:10px;
-  }
-  .ms-src{
-    color:var(--muted);font-size:.74rem;line-height:1.4;
-  }
-  .ms-src sup{color:var(--blue);font-weight:700}
-  .market-sources{
-    text-align:center;color:var(--muted);font-size:.78rem;line-height:1.5;
-    max-width:780px;margin:32px auto 0;padding-top:22px;border-top:1px dashed var(--line);
-  }
-  .market-sources a{color:var(--blue);text-decoration:none}
-  .market-sources a:hover{text-decoration:underline}
-  .market-sources sup{color:var(--blue);font-weight:700;margin-right:2px}
-
-  /* OUTCOMES — replaces 'el problema' + 'lo que recibe' with results-focused frame */
-  .outcomes{background:var(--bg-1)}
-  .outcomes-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-    margin-top:56px;
-  }
-  @media (max-width:980px){.outcomes-grid{grid-template-columns:1fr;gap:18px}}
-  .outcome-card{
-    background:#fff;border:1px solid var(--line);border-radius:14px;
-    padding:32px 28px;display:flex;flex-direction:column;
-    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-  }
-  .outcome-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,31,26,.06);border-color:var(--blue-soft)}
-  .oc-num{
+  .ho-num{
     font-family:'Fraunces',serif;font-style:italic;font-weight:800;
-    font-size:1.6rem;color:var(--blue);margin-bottom:14px;line-height:1;
+    font-size:1.15rem;color:var(--blue);line-height:1.4;flex-shrink:0;
+    min-width:26px;
   }
-  .outcome-card h3{
-    font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;
-    line-height:1.3;letter-spacing:-.005em;margin:0 0 12px;color:var(--ink);
+  .ho-text{
+    color:var(--ink);font-size:1rem;line-height:1.55;
   }
-  .outcome-card p{
-    color:var(--muted);font-size:.95rem;line-height:1.6;margin:0;
-  }
+  .ho-text b{color:var(--ink);font-weight:600}
 
   /* CASE STUDIES */
   .cases{background:var(--bg-2)}
@@ -439,8 +357,19 @@
     display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
     color:var(--blue);font-weight:700;margin-bottom:10px;
   }
+  .case-tag-client{
+    color:var(--red);
+  }
   .case-card h3{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;margin:0 0 12px;letter-spacing:-.01em}
   .case-card p{color:var(--muted);font-size:.95rem;line-height:1.55;margin:0 0 20px}
+  .case-pills{
+    list-style:none;padding:0;margin:0 0 22px;display:flex;flex-wrap:wrap;gap:6px 8px;
+  }
+  .case-pills li{
+    display:inline-block;font-size:.74rem;color:var(--ink);
+    background:var(--bg-2);border:1px solid var(--line);
+    padding:4px 10px;border-radius:999px;font-weight:500;letter-spacing:.01em;
+  }
   .case-metrics{
     list-style:none;padding:0;margin:0 0 22px;display:grid;
     grid-template-columns:repeat(3,1fr);gap:14px 12px;
@@ -840,9 +769,7 @@
       <span class="logo-text"><span class="logo-pyme">pyme</span><span class="logo-webpro">webpro</span><span class="logo-tld">.com</span></span>
     </a>
     <div class="nav-links">
-      <a href="#incluye">Resultados</a>
-      <a href="#portafolio">Portafolio</a>
-      <a href="#casos">Casos</a>
+      <a href="#trabajo">Trabajo</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#paquetes">Planes</a>
       <a href="#proceso">Proceso</a>
@@ -882,6 +809,11 @@
       <p style="color:var(--muted);font-size:.9rem;margin-top:14px">
         Le respondemos cuanto antes. Sin compromiso.
       </p>
+      <ul class="hero-outcomes">
+        <li><span class="ho-num">01</span><span class="ho-text"><b>Más llamadas y mensajes desde Google Maps.</b> La gente que ya estaba buscando, ahora lo encuentra.</span></li>
+        <li><span class="ho-num">02</span><span class="ho-text"><b>Clientes que llegan ya decididos.</b> Leyeron su sitio antes; vienen a comprar, no a preguntar.</span></li>
+        <li><span class="ho-num">03</span><span class="ho-text"><b>Menos tiempo explicando lo básico por WhatsApp.</b> Su sitio responde 24/7; usted solo lo que requiere su criterio.</span></li>
+      </ul>
     </div>
 
     <div class="reveal" style="position:relative">
@@ -922,197 +854,57 @@
   </div>
 </header>
 
-<!-- MARKET DATA -->
-<section id="datos-mercado" class="market">
-  <div class="wrap">
-    <div class="market-grid reveal">
-      <div class="market-stat">
-        <div class="ms-num">89<span class="ms-pct">%</span></div>
-        <div class="ms-label">de los consumidores dice que es importante que un negocio pequeño tenga sitio web propio.</div>
-        <div class="ms-src">Encuesta global GoDaddy 2023<sup>1</sup></div>
-      </div>
-      <div class="market-stat">
-        <div class="ms-num">1 de 3</div>
-        <div class="ms-label">no compra a un negocio nuevo si su sitio está incompleto o "en construcción".</div>
-        <div class="ms-src">Encuesta GoDaddy a Gen Z y Millennials, 2024<sup>2</sup></div>
-      </div>
-      <div class="market-stat">
-        <div class="ms-num">solo 40<span class="ms-pct">%</span></div>
-        <div class="ms-label">de los negocios locales tiene sitio web propio. Estar en ese 40% es una ventaja real frente a su competencia.</div>
-        <div class="ms-src">BrightLocal Local Consumer Review Survey<sup>3</sup></div>
-      </div>
-    </div>
-    <p class="market-sources">
-      <sup>1</sup> <a href="https://aboutus.godaddy.net/newsroom/news-releases/press-release-details/2023/Consumer-Expectations-vs-Retailers-Reality-GoDaddy-Surveys-of-Small-Businesses-and-Consumers-Show-Disparity/default.aspx" target="_blank" rel="noopener">GoDaddy — Consumer Expectations vs Retailers' Reality (2023)</a>
-      · <sup>2</sup> <a href="https://aboutus.godaddy.net/newsroom/news-releases/press-release-details/2024/Gen-Z-and-Millennials-to-Small-Businesses-Get-Online-or-Get-Left-Behind/default.aspx" target="_blank" rel="noopener">GoDaddy — Gen Z &amp; Millennials Survey (2024)</a>
-      · <sup>3</sup> <a href="https://www.brightlocal.com/research/local-consumer-review-survey/" target="_blank" rel="noopener">BrightLocal — Local Consumer Review Survey</a>
-    </p>
-  </div>
-</section>
-
-<!-- OUTCOMES -->
-<section id="incluye" class="outcomes">
+<!-- TRABAJO (single section: cliente + dos trabajos propios) -->
+<section id="trabajo" class="cases">
   <div class="wrap">
     <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
-      <span class="eyebrow">Lo que cambia</span>
-      <h2 style="margin-top:18px">Lo que cambia cuando su negocio<br>está bien en internet.</h2>
-      <p>No es magia ni promesa de marketing. Son tres cosas concretas que verá en su día a día desde la primera semana.</p>
-    </div>
-    <div class="outcomes-grid reveal">
-      <article class="outcome-card">
-        <div class="oc-num">01</div>
-        <h3>Más llamadas y mensajes desde Google Maps</h3>
-        <p>Cuando alguien busca su tipo de negocio cerca, su perfil aparece con horarios, fotos, reseñas y botón directo de WhatsApp y llamada. Esa gente ya estaba buscando; ahora lo encuentra a usted.</p>
-      </article>
-      <article class="outcome-card">
-        <div class="oc-num">02</div>
-        <h3>Clientes que llegan ya decididos</h3>
-        <p>El cliente lee su sitio antes de escribirle: ve sus servicios, precios, ubicación y testimonios. Llega a comprar, no a preguntar. Cierra más rápido y con menos negociación.</p>
-      </article>
-      <article class="outcome-card">
-        <div class="oc-num">03</div>
-        <h3>Menos tiempo explicando lo básico por WhatsApp</h3>
-        <p>Horarios, dirección, qué incluye un servicio, cómo llegar — todo está en su sitio, accesible 24/7. Usted responde solo lo que requiere su criterio. El sitio hace el resto.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section id="portafolio" class="portfolio">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Sitios que hemos construido</span>
-      <h2 style="margin-top:18px">Vea el tipo de sitio<br>que recibe usted.</h2>
-      <p>Estos son sitios reales, en línea, que diseñamos, programamos y mantenemos. La misma calidad y la misma tecnología que usaríamos en el sitio de su negocio.</p>
-    </div>
-    <div class="port-grid">
-      <a class="port-card reveal" href="https://inviersol.com" target="_blank" rel="noopener">
-        <div class="port-thumb">
-          <img src="screenshots/inviersol.jpg" alt="inviersol.com" loading="lazy">
-        </div>
-        <div class="port-body">
-          <span class="port-tag">Cliente reciente · Industria · Envigado</span>
-          <h3>inviersol.com</h3>
-          <p>Empresa de parasoles, toldos y mantenimiento con más de 19 años en Envigado. Lanzamos su nuevo sitio web profesional para llegar a clientes en toda Colombia.</p>
-          <span class="port-cta">Ver el sitio →</span>
-        </div>
-      </a>
-      <a class="port-card reveal" href="https://medellin.guide" target="_blank" rel="noopener">
-        <div class="port-thumb">
-          <img src="screenshots/medellin-guide.jpg" alt="medellin.guide" loading="lazy">
-        </div>
-        <div class="port-body">
-          <span class="port-tag">Guía de ciudad</span>
-          <h3>medellin.guide</h3>
-          <p>La guía más completa para visitar y vivir en Medellín. Más de 24 secciones, miles de visitas mensuales, primeros lugares en Google.</p>
-          <span class="port-cta">Ver el sitio →</span>
-        </div>
-      </a>
-      <a class="port-card reveal" href="https://barranquilla.guide" target="_blank" rel="noopener">
-        <div class="port-thumb">
-          <img src="screenshots/barranquilla-guide.jpg" alt="barranquilla.guide" loading="lazy">
-        </div>
-        <div class="port-body">
-          <span class="port-tag">Guía de ciudad</span>
-          <h3>barranquilla.guide</h3>
-          <p>La guía completa de Barranquilla. Barrios, restaurantes, eventos del Carnaval y vida diaria en la ciudad.</p>
-          <span class="port-cta">Ver el sitio →</span>
-        </div>
-      </a>
-      <a class="port-card reveal" href="https://thecartagena.guide" target="_blank" rel="noopener">
-        <div class="port-thumb">
-          <img src="screenshots/thecartagena-guide.jpg" alt="thecartagena.guide" loading="lazy">
-        </div>
-        <div class="port-body">
-          <span class="port-tag">Guía de ciudad</span>
-          <h3>thecartagena.guide</h3>
-          <p>La guía definitiva de Cartagena para turistas y residentes. Más de 17 guías y creciendo.</p>
-          <span class="port-cta">Ver el sitio →</span>
-        </div>
-      </a>
-      <a class="port-card reveal" href="https://mikec.pro" target="_blank" rel="noopener">
-        <div class="port-thumb">
-          <img src="screenshots/mikec-pro.jpg" alt="mikec.pro" loading="lazy">
-        </div>
-        <div class="port-body">
-          <span class="port-tag">Sitio personal · Inglés</span>
-          <h3>mikec.pro</h3>
-          <p>Sitio personal y portafolio profesional. Diseño minimalista, contenido en inglés, optimizado para velocidad y SEO.</p>
-          <span class="port-cta">Ver el sitio →</span>
-        </div>
-      </a>
-      <a class="port-card reveal" href="https://nortesurconsulting.com" target="_blank" rel="noopener">
-        <div class="port-thumb">
-          <img src="screenshots/nortesurconsulting.jpg" alt="nortesurconsulting.com" loading="lazy">
-        </div>
-        <div class="port-body">
-          <span class="port-tag">Consultoría empresarial</span>
-          <h3>nortesurconsulting.com</h3>
-          <p>Sitio corporativo de consultoría. Diseño moderno, enfocado a generar contactos calificados y comunicar credibilidad.</p>
-          <span class="port-cta">Ver el sitio →</span>
-        </div>
-      </a>
-      <div class="port-card port-card-cta reveal">
-        <div class="port-body" style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;height:100%;padding:36px 32px">
-          <span class="port-tag" style="background:rgba(252,209,22,.22);color:var(--yellow-2)">Su negocio</span>
-          <h3 style="font-size:1.6rem;margin:10px 0 12px">¿Listo para tener uno como estos?</h3>
-          <p style="margin-bottom:20px">Construyamos el suyo. Hablemos 20 minutos por WhatsApp, sin compromiso.</p>
-          <a class="btn btn-primary" href="#contacto" style="padding:13px 22px;font-size:.92rem">Quiero el mío →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CASE STUDIES -->
-<section id="casos" class="cases">
-  <div class="wrap">
-    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:760px">
-      <span class="eyebrow">Métricas reales</span>
-      <h2 style="margin-top:18px">Números concretos,<br>no promesas vagas.</h2>
-      <p>Estos son nuestros propios sitios. Lo construimos así, lo medimos así, y así construiremos el suyo.</p>
+      <span class="eyebrow">Trabajo</span>
+      <h2 style="margin-top:18px">Un cliente. Dos sitios propios.<br>Mismo stack para todos.</h2>
+      <p>Estamos arrancando con clientes reales. Mientras crecemos, también construimos y operamos nuestros propios sitios — el mismo proceso, las mismas herramientas, la misma calidad que usaríamos para el suyo.</p>
     </div>
     <div class="cases-grid reveal">
 
       <article class="case-card">
+        <div class="case-thumb"><img src="screenshots/inviersol.jpg" alt="inviersol.com" loading="lazy"></div>
+        <div class="case-body">
+          <span class="case-tag case-tag-client">Cliente · Industria · Envigado</span>
+          <h3>inviersol.com</h3>
+          <p>INVIERSOL S.A.S. — empresa con más de 19 años fabricando e instalando parasoles, toldos y cubiertas en Antioquia. Lanzamos su primer sitio web profesional para que los clientes que ya los buscan en Google los encuentren con horarios, galería y botón directo de WhatsApp.</p>
+          <ul class="case-pills">
+            <li>SSL + Cloudflare</li><li>Mobile-ready</li><li>Mapa + WhatsApp</li><li>Galería de proyectos</li>
+          </ul>
+          <a class="case-cta" href="https://inviersol.com" target="_blank" rel="noopener">Visitar inviersol.com →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
         <div class="case-thumb"><img src="screenshots/medellin-guide.jpg" alt="medellin.guide" loading="lazy"></div>
         <div class="case-body">
-          <span class="case-tag">Guía de ciudad · Medellín</span>
+          <span class="case-tag">Trabajo propio · Guía de ciudad</span>
           <h3>medellin.guide</h3>
-          <p>Una guía completa de la ciudad: barrios, restaurantes, salud, eventos, mudanzas. Construida con el mismo stack y proceso que usamos en sus sitios.</p>
-          <ul class="case-metrics">
-            <li><b>0,4s</b><span>tiempo de respuesta del servidor</span></li>
-            <li><b>60 KB</b><span>peso de la página de inicio</span></li>
-            <li><b>41</b><span>páginas indexadas en Google</span></li>
-            <li><b>5</b><span>esquemas estructurados para SEO local</span></li>
-            <li><b>HTTPS</b><span>SSL + Cloudflare CDN global</span></li>
-            <li><b>100%</b><span>responsive para celular</span></li>
+          <p>Nuestra guía de Medellín: barrios, restaurantes, salud, eventos, mudanzas. Más de 40 páginas indexadas, datos estructurados para SEO local, carga en menos de un segundo. Construida con el mismo proceso que usaríamos en su sitio.</p>
+          <ul class="case-pills">
+            <li>40+ páginas en Google</li><li>SEO local (schema.org)</li><li>&lt;1s de carga</li><li>SSL + Cloudflare</li>
           </ul>
-          <a class="case-cta" href="https://medellin.guide" target="_blank" rel="noopener">Visitar sitio →</a>
+          <a class="case-cta" href="https://medellin.guide" target="_blank" rel="noopener">Visitar medellin.guide →</a>
         </div>
       </article>
 
       <article class="case-card">
         <div class="case-thumb"><img src="screenshots/nortesurconsulting.jpg" alt="nortesurconsulting.com" loading="lazy"></div>
         <div class="case-body">
-          <span class="case-tag">Consultoría B2B · Salesforce</span>
+          <span class="case-tag">Trabajo propio · B2B · Bilingüe</span>
           <h3>nortesurconsulting.com</h3>
-          <p>Sitio corporativo bilingüe para una consultora B2B con presencia en EE.UU., Colombia y México. Diseño limpio, respuesta veloz, mensaje al grano.</p>
-          <ul class="case-metrics">
-            <li><b>0,3s</b><span>tiempo de respuesta del servidor</span></li>
-            <li><b>0,5s</b><span>tiempo total de carga</span></li>
-            <li><b>2</b><span>idiomas (español + inglés)</span></li>
-            <li><b>HTTPS</b><span>SSL + Cloudflare CDN global</span></li>
-            <li><b>100%</b><span>responsive para celular</span></li>
-            <li><b>0</b><span>scripts de terceros que ralentizan</span></li>
+          <p>Sitio corporativo de NorteSur Consulting (la empresa detrás de PymeWebPro). B2B bilingüe ES/EN, diseño limpio, mensaje al grano. Misma plataforma, mismo nivel de pulido que entregamos a clientes pequeños.</p>
+          <ul class="case-pills">
+            <li>Bilingüe ES + EN</li><li>0,3s respuesta servidor</li><li>SSL + Cloudflare</li><li>0 scripts pesados</li>
           </ul>
-          <a class="case-cta" href="https://nortesurconsulting.com" target="_blank" rel="noopener">Visitar sitio →</a>
+          <a class="case-cta" href="https://nortesurconsulting.com" target="_blank" rel="noopener">Visitar nortesurconsulting.com →</a>
         </div>
       </article>
 
     </div>
-    <p class="case-foot">Mediciones tomadas con curl desde un servidor en Estados Unidos. Su sitio se construye con el mismo stack: Cloudflare, HTML/CSS optimizado, sin frameworks pesados.</p>
+    <p class="case-foot">Estamos midiendo los resultados de negocio de INVIERSOL — llamadas, mensajes y búsquedas locales. Publicaremos los números reales con su permiso a los 30, 60 y 90 días.</p>
   </div>
 </section>
 
@@ -1260,26 +1052,20 @@
     <div class="net-grid">
       <article class="net-card reveal" style="padding:30px">
         <div class="net-body" style="padding:0">
-          <div class="audience">¿Y si no sé nada de tecnología?</div>
-          <p>Justo para eso estamos nosotros. Usted no toca ni una línea de código. Le pedimos sus fotos, sus textos (o los escribimos nosotros), y le entregamos el sitio listo y funcionando.</p>
+          <div class="audience">¿Cuánto cuesta y puedo pagar a cuotas?</div>
+          <p>Pago único: $890.000 COP por el plan Esencial o $1.790.000 COP por Crecimiento (con un año de hosting incluido). En la pantalla de pago puede diferir su tarjeta de crédito en 3, 6 o más cuotas sin costo adicional para nosotros — su banco se encarga del cobro mensual y nosotros arrancamos el mismo día.</p>
         </div>
       </article>
       <article class="net-card reveal" style="padding:30px">
         <div class="net-body" style="padding:0">
-          <div class="audience">¿Puedo pagar a cuotas?</div>
-          <p>Sí. En la pantalla de pago puede diferir su tarjeta de crédito hasta en 3, 6 o más cuotas sin costo adicional para nosotros. Su banco se encarga del cobro mensual; nosotros recibimos el pago completo y arrancamos su sitio el mismo día.</p>
+          <div class="audience">¿En cuánto tiempo está mi sitio en vivo?</div>
+          <p>7 días calendario para el plan Esencial, 14 para Crecimiento — contados desde que usted nos entrega su información en el portal (logo, fotos, textos). Si nos demoramos más por culpa nuestra, le devolvemos el 100% del dinero. Sin letra chica.</p>
         </div>
       </article>
       <article class="net-card reveal" style="padding:30px">
         <div class="net-body" style="padding:0">
-          <div class="audience">¿Qué pasa después de lanzar?</div>
-          <p>Le entregamos su sitio funcionando y le enseñamos a manejarlo. Si quiere que nosotros lo alojemos, lo monitoreemos y le hagamos pequeños cambios cada mes, puede agregar el Plan Hosting opcional, sin contrato.</p>
-        </div>
-      </article>
-      <article class="net-card reveal" style="padding:30px">
-        <div class="net-body" style="padding:0">
-          <div class="audience">¿Cómo funciona el dominio?</div>
-          <p>El dominio lo registra usted directamente con el registrador, a su nombre. Suyo para siempre, no del nuestro. Le ayudamos a elegirlo y a configurarlo correctamente. Costo aproximado: $50.000 a $150.000 COP al año según el dominio que escoja, y usted decide.</p>
+          <div class="audience">¿De quién es el sitio cuando termine?</div>
+          <p>Suyo. El dominio queda a su nombre directamente con el registrador (no nuestro). Una vez pagado el plan, el código, las fotos y los textos son suyos. Si algún día quiere mudarse a otro proveedor, le entregamos los archivos y le ayudamos con la transición.</p>
         </div>
       </article>
     </div>
@@ -1457,7 +1243,7 @@
       <div class="foot-col">
         <h4>Servicios</h4>
         <a href="#paquetes">Planes y precios</a>
-        <a href="#incluye">Resultados</a>
+        <a href="#trabajo">Trabajo</a>
         <a href="#proceso">Cómo funciona</a>
         <a href="#contacto">Hablemos</a>
       </div>

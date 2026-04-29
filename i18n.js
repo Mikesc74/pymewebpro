@@ -11,9 +11,7 @@
   // handled separately via [data-i18n-html] selectors below.
   const EN = {
     // ── nav ─────────────
-    'Resultados': 'Results',
-    'Portafolio': 'Portfolio',
-    'Casos': 'Cases',
+    'Trabajo': 'Work',
     'Nosotros': 'About',
     'Planes': 'Plans',
     'Proceso': 'Process',
@@ -372,33 +370,42 @@
     '9 de 10': '9 in 10',
     'no compran si el negocio no tiene sitio web propio': "won't buy if the business doesn't have its own website",
 
-    // ── market data band (sourced stats: customers avoid businesses without websites) ──
-    'de los consumidores dice que es importante que un negocio pequeño tenga sitio web propio.': 'of consumers say it is important for a small business to have its own website.',
-    'Encuesta global GoDaddy 2023': 'GoDaddy global survey, 2023',
-    '1 de 3': '1 in 3',
-    'no compra a un negocio nuevo si su sitio está incompleto o "en construcción".': "won't buy from a new business if its website is incomplete or \"under construction\".",
-    'Encuesta GoDaddy a Gen Z y Millennials, 2024': 'GoDaddy Gen Z & Millennials survey, 2024',
-    'solo 40': 'only 40',
-    'de los negocios locales tiene sitio web propio. Estar en ese 40% es una ventaja real frente a su competencia.': 'of local businesses have their own website. Being in that 40% is a real edge over your competition.',
-    'BrightLocal Local Consumer Review Survey': 'BrightLocal Local Consumer Review Survey',
-    'GoDaddy — Consumer Expectations vs Retailers\' Reality (2023)': 'GoDaddy — Consumer Expectations vs Retailers\' Reality (2023)',
-    'GoDaddy — Gen Z & Millennials Survey (2024)': 'GoDaddy — Gen Z & Millennials Survey (2024)',
-    'BrightLocal — Local Consumer Review Survey': 'BrightLocal — Local Consumer Review Survey',
+    // ── hero outcomes (numbered list under hero subhead) ──
+    'Más llamadas y mensajes desde Google Maps.': 'More calls and messages from Google Maps.',
+    'La gente que ya estaba buscando, ahora lo encuentra.': 'People who were already searching now find you.',
+    'Clientes que llegan ya decididos.': 'Customers who arrive already decided.',
+    'Leyeron su sitio antes; vienen a comprar, no a preguntar.': 'They read your site first; they come to buy, not to ask.',
+    'Menos tiempo explicando lo básico por WhatsApp.': 'Less time explaining the basics on WhatsApp.',
+    'Su sitio responde 24/7; usted solo lo que requiere su criterio.': 'Your site answers 24/7; you only handle what truly needs your judgment.',
 
-    // ── outcomes section (replaces 'el problema' + 'lo que recibe') ──
-    'Lo que cambia': 'What changes',
-    'Lo que cambia cuando su negocio<br>está bien en internet.': 'What changes when your business<br>is properly online.',
-    'No es magia ni promesa de marketing. Son tres cosas concretas que verá en su día a día desde la primera semana.':
-      "It's not magic or marketing promises. Three concrete things you'll notice from your first week.",
-    'Más llamadas y mensajes desde Google Maps': 'More calls and messages from Google Maps',
-    'Cuando alguien busca su tipo de negocio cerca, su perfil aparece con horarios, fotos, reseñas y botón directo de WhatsApp y llamada. Esa gente ya estaba buscando; ahora lo encuentra a usted.':
-      'When someone searches for your kind of business nearby, your profile shows up with hours, photos, reviews and direct WhatsApp/call buttons. That traffic was already searching — now it finds you.',
-    'Clientes que llegan ya decididos': 'Customers who arrive already decided',
-    'El cliente lee su sitio antes de escribirle: ve sus servicios, precios, ubicación y testimonios. Llega a comprar, no a preguntar. Cierra más rápido y con menos negociación.':
-      'The customer reads your site before reaching out: services, prices, location, testimonials. They come to buy, not to ask. You close faster and with less back-and-forth.',
-    'Menos tiempo explicando lo básico por WhatsApp': 'Less time explaining the basics on WhatsApp',
-    'Horarios, dirección, qué incluye un servicio, cómo llegar — todo está en su sitio, accesible 24/7. Usted responde solo lo que requiere su criterio. El sitio hace el resto.':
-      'Hours, address, what a service includes, how to find you — it\'s all on the site, 24/7. You only answer questions that actually need your judgment. The site handles the rest.',
+    // ── trabajo (single combined section: client + own work) ──
+    'Un cliente. Dos sitios propios.': 'One client. Two of our own sites.',
+    'Mismo stack para todos.': 'Same stack for everyone.',
+    'Un cliente. Dos sitios propios.<br>Mismo stack para todos.': 'One client. Two of our own sites.<br>Same stack for everyone.',
+    'Estamos arrancando con clientes reales. Mientras crecemos, también construimos y operamos nuestros propios sitios — el mismo proceso, las mismas herramientas, la misma calidad que usaríamos para el suyo.':
+      "We're starting with real clients. While we grow, we also build and run our own sites — the same process, the same tools, the same quality we'd use for yours.",
+    'Cliente · Industria · Envigado': 'Client · Industry · Envigado',
+    'Trabajo propio · Guía de ciudad': 'Our own work · City guide',
+    'Trabajo propio · B2B · Bilingüe': 'Our own work · B2B · Bilingual',
+    'INVIERSOL S.A.S. — empresa con más de 19 años fabricando e instalando parasoles, toldos y cubiertas en Antioquia. Lanzamos su primer sitio web profesional para que los clientes que ya los buscan en Google los encuentren con horarios, galería y botón directo de WhatsApp.':
+      'INVIERSOL S.A.S. — a company with 19+ years building and installing sunshades, awnings, and covers across Antioquia. We launched their first professional website so customers already searching for them on Google find them with hours, gallery, and a direct WhatsApp button.',
+    'Nuestra guía de Medellín: barrios, restaurantes, salud, eventos, mudanzas. Más de 40 páginas indexadas, datos estructurados para SEO local, carga en menos de un segundo. Construida con el mismo proceso que usaríamos en su sitio.':
+      'Our Medellín guide: neighborhoods, restaurants, healthcare, events, moving tips. 40+ indexed pages, structured data for local SEO, load time under a second. Built with the same process we use for your site.',
+    'Sitio corporativo de NorteSur Consulting (la empresa detrás de PymeWebPro). B2B bilingüe ES/EN, diseño limpio, mensaje al grano. Misma plataforma, mismo nivel de pulido que entregamos a clientes pequeños.':
+      "NorteSur Consulting's corporate site (the company behind PymeWebPro). Bilingual ES/EN B2B, clean design, message to the point. Same platform, same level of polish we deliver to small clients.",
+    'Mapa + WhatsApp': 'Map + WhatsApp',
+    'Galería de proyectos': 'Project gallery',
+    '40+ páginas en Google': '40+ pages on Google',
+    'SEO local (schema.org)': 'Local SEO (schema.org)',
+    '<1s de carga': '<1s load time',
+    'Bilingüe ES + EN': 'Bilingual ES + EN',
+    '0,3s respuesta servidor': '0.3s server response',
+    '0 scripts pesados': '0 heavy scripts',
+    'Visitar inviersol.com →': 'Visit inviersol.com →',
+    'Visitar medellin.guide →': 'Visit medellin.guide →',
+    'Visitar nortesurconsulting.com →': 'Visit nortesurconsulting.com →',
+    'Estamos midiendo los resultados de negocio de INVIERSOL — llamadas, mensajes y búsquedas locales. Publicaremos los números reales con su permiso a los 30, 60 y 90 días.':
+      "We're measuring INVIERSOL's business results — calls, messages, and local searches. With their permission, we'll publish the real numbers at 30, 60, and 90 days.",
 
     // ── build mini cards (compact "what's included" grid) ──────────────
     'Dominio propio': 'Own domain',
@@ -500,15 +507,18 @@
     // ── pricing footer note ─────────────────────────────────────────────
     '¿Aún no sabe cuál? Hablemos 20 minutos por WhatsApp y le recomendamos el indicado, sin compromiso.': "Not sure which one? Let's talk 20 minutes on WhatsApp and we'll recommend the right one, no commitment.",
 
-    // ── network / FAQ section ───────────────────────────────────────────
+    // ── network / FAQ section (3 questions: price, timeline, ownership) ──
     'Preguntas frecuentes': 'Frequently asked questions',
     'Lo que nos preguntan los dueños de negocio.': 'What business owners ask us.',
-    '¿Y si no sé nada de tecnología?': 'What if I don\'t know anything about tech?',
-    'Justo para eso estamos nosotros. Usted no toca ni una línea de código. Le pedimos sus fotos, sus textos (o los escribimos nosotros), y le entregamos el sitio listo y funcionando.':
-      "That's exactly what we're here for. You don't touch a single line of code. We ask for your photos and copy (or we write it for you), and we hand over the site ready to go.",
-    '¿Qué pasa después de lanzar?': 'What happens after launch?',
-    'Le entregamos su sitio funcionando y le enseñamos a manejarlo. Si quiere que nosotros lo alojemos, lo monitoreemos y le hagamos pequeños cambios cada mes, puede agregar el Plan Hosting opcional, sin contrato.':
-      'We hand over the site running and show you how to manage it. If you want us to host it, monitor it, and make small monthly changes, you can add the optional Hosting Plan, no contract.',
+    '¿Cuánto cuesta y puedo pagar a cuotas?': 'How much does it cost and can I pay in installments?',
+    'Pago único: $890.000 COP por el plan Esencial o $1.790.000 COP por Crecimiento (con un año de hosting incluido). En la pantalla de pago puede diferir su tarjeta de crédito en 3, 6 o más cuotas sin costo adicional para nosotros — su banco se encarga del cobro mensual y nosotros arrancamos el mismo día.':
+      'One-time payment: $890,000 COP for the Essential plan or $1,790,000 COP for Growth (with one year of hosting included). On the payment screen you can split your credit card into 3, 6, or more installments at no extra cost — your bank handles the monthly billing and we start the same day.',
+    '¿En cuánto tiempo está mi sitio en vivo?': 'How long until my site is live?',
+    '7 días calendario para el plan Esencial, 14 para Crecimiento — contados desde que usted nos entrega su información en el portal (logo, fotos, textos). Si nos demoramos más por culpa nuestra, le devolvemos el 100% del dinero. Sin letra chica.':
+      "7 calendar days for the Essential plan, 14 for Growth — counting from the moment you hand over your information in the portal (logo, photos, copy). If we take longer because of us, we refund you 100%. No fine print.",
+    '¿De quién es el sitio cuando termine?': 'Who owns the site when it\'s done?',
+    'Suyo. El dominio queda a su nombre directamente con el registrador (no nuestro). Una vez pagado el plan, el código, las fotos y los textos son suyos. Si algún día quiere mudarse a otro proveedor, le entregamos los archivos y le ayudamos con la transición.':
+      "Yours. The domain stays in your name directly with the registrar (not ours). Once the plan is paid, the code, photos, and copy are yours. If you ever want to move to another provider, we hand over the files and help with the transition.",
 
     // ── process section steps ───────────────────────────────────────────
     'Día 1': 'Day 1',
@@ -626,14 +636,10 @@
       { sel: '.hero h1',
         es: 'Su negocio<br>merece estar<br><span class="underline">en</span> <span class="accent">internet.</span>',
         en: 'Your business<br>belongs<br><span class="underline">on</span> <span class="accent">the internet.</span>' },
-      // Outcomes h2
-      { sel: '#incluye .section-head h2',
-        es: 'Lo que cambia cuando su negocio<br>está bien en internet.',
-        en: 'What changes when your business<br>is properly online.' },
-      // Portfolio h2
-      { sel: '#portafolio .section-head h2',
-        es: 'Vea el tipo de sitio<br>que recibe usted.',
-        en: 'See the kind of site<br>you\'ll get.' },
+      // Trabajo h2 (combined client + own work section)
+      { sel: '#trabajo .section-head h2',
+        es: 'Un cliente. Dos sitios propios.<br>Mismo stack para todos.',
+        en: 'One client. Two of our own sites.<br>Same stack for everyone.' },
       // Nosotros h2
       { sel: '#nosotros .section-head h2',
         es: 'Hecho a la medida<br>desde Medellín.',
