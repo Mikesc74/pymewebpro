@@ -118,10 +118,10 @@
 
     // ── nosotros ────────
     'Hecho a la medida<br>desde Medellín.': 'Built by hand<br>from Medellín.',
-    'Somos el equipo de liderazgo de NORTE SUR CONSULTING. Llevamos años construyendo sitios web para negocios reales (restaurantes, talleres, peluquerías, profesionales) y entendemos cómo funciona la realidad colombiana: pago contado, WhatsApp como canal principal, márgenes ajustados, sin tiempo para perder.':
-      "We're the leadership team at NORTE SUR CONSULTING. We've spent years building websites for real businesses (restaurants, garages, salons, professionals) and we understand the reality on the ground in Colombia: cash payments, WhatsApp as the main channel, tight margins, no time to waste.",
-    'Cuando le respondemos un mensaje, le respondemos nosotros': 'When we reply to a message, we reply ourselves',
-    ', no un bot. Esa es la diferencia.': ", no bot. That's the difference.",
+    'Somos el equipo de liderazgo de PymeWebPro. Cada sitio lo diseñamos, programamos, alojamos y mantenemos nosotros mismos, desde Medellín.':
+      "We're the PymeWebPro leadership team. Every site is designed, built, hosted, and maintained by us, from Medellín.",
+    'Cuando le responde alguien, le respondemos nosotros': "When someone replies, it's us replying",
+    ', no un bot.': ", not a bot.",
     'Correo profesional': 'Professional email',
     'redirigido a su Gmail (sin costo adicional)': 'forwarded to your Gmail (no extra cost)',
     'Co-fundador & Diseñador': 'Co-founder & Designer',
@@ -334,6 +334,8 @@
 
     // ── shorter common phrases (placeholders, aria-labels)
     'Sitios web profesionales para pequeños negocios en Colombia': 'Professional websites for small businesses in Colombia',
+    'Sitios web profesionales para pequeños negocios en Colombia. Diseño, hospedaje y soporte: todo en un solo lugar.':
+      'Professional websites for small businesses in Colombia. Design, hosting, and support — all in one place.',
 
     // ── hero mock-browser ────────────────────────────────────────────────
     'https://sunombre.com': 'https://yourbrand.com',
@@ -651,11 +653,36 @@
       { sel: '#proceso .section-head h2',
         es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 días</em><br>(Crecimiento en 14). <span style="color:var(--blue)">O le devolvemos el dinero</span>.',
         en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 days</em><br>(Growth in 14). <span style="color:var(--blue)">Or your money back</span>.' },
+      // FAQ h2
+      { sel: '.network .section-head h2',
+        es: 'Lo que nos preguntan<br>los dueños de negocio.',
+        en: 'What business owners<br>ask us.' },
+      // Esencial / Crecimiento price-host (split by <b>)
+      { sel: '.price-host',
+        es: 'pago <b>único</b>, sin pagos mensuales',
+        en: '<b>one-time</b> payment, no monthly fees' },
+      // Hosting price-host (split by <b>, white styled)
+      { sel: '.price-host',
+        es: 'cancele cuando quiera, <b style="color:white">sin contrato</b>',
+        en: 'cancel anytime, <b style="color:white">no contract</b>' },
+      // Form footer (split by <br> + <strong>)
+      { sel: '.form-foot',
+        es: 'Sus datos no se comparten con nadie. Sin compromiso.<br><strong>Garantía de 30 días</strong> · si no le gusta su sitio, le devolvemos su dinero.',
+        en: "Your info is never shared. No commitment.<br><strong>30-day guarantee</strong> · if you don't love your site, we refund you." },
     ];
+    function normHtml(s) {
+      // Collapse whitespace, then strip whitespace adjacent to tag boundaries
+      // so '<br> <span>' compares equal to '<br><span>'.
+      return s
+        .replace(/\s+/g, ' ')
+        .replace(/\s*<\s*/g, '<')
+        .replace(/\s*>\s*/g, '>')
+        .trim();
+    }
     for (const r of richReplacements) {
       document.querySelectorAll(r.sel).forEach(el => {
-        const cur = el.innerHTML.trim().replace(/\s+/g, ' ');
-        const target = r.es.trim().replace(/\s+/g, ' ');
+        const cur = normHtml(el.innerHTML);
+        const target = normHtml(r.es);
         if (cur === target) el.innerHTML = r.en;
       });
     }
