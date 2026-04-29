@@ -366,6 +366,33 @@
   .mark.x{background:#fee2e2;color:#b91c1c}
   .mark.v{background:rgba(245,180,0,.2);color:var(--amber)}
 
+  /* MARKET DATA — sourced Colombia-specific stats */
+  .market{background:var(--bg-2);padding:64px 0}
+  .market-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+    max-width:980px;margin:0 auto;
+  }
+  @media (max-width:760px){.market-grid{grid-template-columns:1fr;gap:22px}}
+  .market-stat{text-align:center;padding:18px 12px}
+  .ms-num{
+    font-family:'Fraunces',serif;font-weight:800;font-style:italic;
+    font-size:2.4rem;color:var(--blue);line-height:1.1;letter-spacing:-.01em;margin-bottom:8px;
+  }
+  .ms-label{
+    color:var(--ink);font-size:1rem;font-weight:500;line-height:1.4;margin-bottom:10px;
+  }
+  .ms-src{
+    color:var(--muted);font-size:.74rem;line-height:1.4;
+  }
+  .ms-src sup{color:var(--blue);font-weight:700}
+  .market-sources{
+    text-align:center;color:var(--muted);font-size:.78rem;line-height:1.5;
+    max-width:780px;margin:32px auto 0;padding-top:22px;border-top:1px dashed var(--line);
+  }
+  .market-sources a{color:var(--blue);text-decoration:none}
+  .market-sources a:hover{text-decoration:underline}
+  .market-sources sup{color:var(--blue);font-weight:700;margin-right:2px}
+
   /* OUTCOMES — replaces 'el problema' + 'lo que recibe' with results-focused frame */
   .outcomes{background:var(--bg-1)}
   .outcomes-grid{
@@ -893,6 +920,33 @@
     </div>
   </div>
 </header>
+
+<!-- MARKET DATA -->
+<section id="datos-mercado" class="market">
+  <div class="wrap">
+    <div class="market-grid reveal">
+      <div class="market-stat">
+        <div class="ms-num">8 de cada 10</div>
+        <div class="ms-label">colombianos usan internet hoy</div>
+        <div class="ms-src">Fuente: DANE, ENTIC Hogares 2024 (82,3% de personas de 5+ años)<sup>1</sup></div>
+      </div>
+      <div class="market-stat">
+        <div class="ms-num">9 de cada 10</div>
+        <div class="ms-label">entran a internet desde el celular</div>
+        <div class="ms-src">Fuente: DANE, ENTIC Hogares 2024<sup>1</sup></div>
+      </div>
+      <div class="market-stat">
+        <div class="ms-num">41,1 millones</div>
+        <div class="ms-label">de colombianos en línea</div>
+        <div class="ms-src">Fuente: We Are Social / DataReportal, Digital 2025 Colombia<sup>2</sup></div>
+      </div>
+    </div>
+    <p class="market-sources">
+      <sup>1</sup> <a href="https://www.dane.gov.co/files/operaciones/ENTIC/bol-ENTICHogares-2024.pdf" target="_blank" rel="noopener">DANE — Boletín ENTIC Hogares 2024</a> ·
+      <sup>2</sup> <a href="https://datareportal.com/reports/digital-2025-colombia" target="_blank" rel="noopener">DataReportal — Digital 2025: Colombia</a>
+    </p>
+  </div>
+</section>
 
 <!-- OUTCOMES -->
 <section id="incluye" class="outcomes">

@@ -372,6 +372,19 @@
     '9 de 10': '9 in 10',
     'no compran si el negocio no tiene sitio web propio': "won't buy if the business doesn't have its own website",
 
+    // ── market data band (sourced stats above outcomes) ──
+    '8 de cada 10': '8 in 10',
+    '9 de cada 10': '9 in 10',
+    'colombianos usan internet hoy': 'Colombians use the internet today',
+    'entran a internet desde el celular': 'access the internet from a mobile phone',
+    '41,1 millones': '41.1 million',
+    'de colombianos en línea': 'Colombians online',
+    'Fuente: DANE, ENTIC Hogares 2024 (82,3% de personas de 5+ años)': 'Source: DANE, ENTIC Hogares 2024 (82.3% of people 5+ years old)',
+    'Fuente: DANE, ENTIC Hogares 2024': 'Source: DANE, ENTIC Hogares 2024',
+    'Fuente: We Are Social / DataReportal, Digital 2025 Colombia': 'Source: We Are Social / DataReportal, Digital 2025 Colombia',
+    'DANE — Boletín ENTIC Hogares 2024': 'DANE — ENTIC Households 2024 Bulletin',
+    'DataReportal — Digital 2025: Colombia': 'DataReportal — Digital 2025: Colombia',
+
     // ── outcomes section (replaces 'el problema' + 'lo que recibe') ──
     'Lo que cambia': 'What changes',
     'Lo que cambia cuando su negocio<br>está bien en internet.': 'What changes when your business<br>is properly online.',
