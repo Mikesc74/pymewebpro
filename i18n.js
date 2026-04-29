@@ -118,10 +118,8 @@
 
     // ── nosotros ────────
     'Hecho a la medida<br>desde Medellín.': 'Built by hand<br>from Medellín.',
-    'Somos el equipo de liderazgo de PymeWebPro. Cada sitio lo diseñamos, programamos, alojamos y mantenemos nosotros mismos, desde Medellín.':
-      "We're the PymeWebPro leadership team. Every site is designed, built, hosted, and maintained by us, from Medellín.",
-    'Cuando le responde alguien, le respondemos nosotros': "When someone replies, it's us replying",
-    ', no un bot.': ", not a bot.",
+    'Con PymeWebPro, puede estar tranquilo: recibe calidad local. Cada sitio es diseñado, programado, alojado y mantenido por nuestro equipo, aquí en Medellín.':
+      "With PymeWebPro, you can rest assured knowing you're getting local quality. Every site is designed, built, hosted, and maintained by our team, here in Medellín.",
     'Correo profesional': 'Professional email',
     'redirigido a su Gmail (sin costo adicional)': 'forwarded to your Gmail (no extra cost)',
     'Co-fundador & Diseñador': 'Co-founder & Designer',
@@ -278,10 +276,9 @@
     'A su ritmo': 'At your own pace',
     'Reciba su portal privado': 'Get your private portal',
     'Le enviamos un enlace privado a su correo': 'We email you a private link',
-    'Sube logo, fotos y colores de marca': 'Upload logo, photos, and brand colors',
-    'Tipo de negocio, dirección y horarios': 'Business type, address, and hours',
+    'Sube logo, fotos y contenido de su negocio': "Upload your logo, photos, and your business's content",
     'Nos cuenta su visión: tono, público, qué destacar': 'Tell us your vision: tone, audience, what to highlight',
-    'Decide hosting (mensual, anual o ninguno)': 'Choose hosting (monthly, yearly, or none)',
+    'Todo guardado automáticamente, complete a su ritmo': 'Everything auto-saved, complete at your own pace',
     'Todo guardado automáticamente, completa cuando pueda': 'Everything saved automatically — finish whenever',
     '7 a 14 días': '7 to 14 days',
     'Construimos su sitio': 'We build your site',
@@ -750,8 +747,8 @@
         en: 'From fastest to<br>most careful.' },
       // Process h2
       { sel: '#proceso .section-head h2',
-        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 a 14 días</em>. <span style="color:var(--blue)">O le devolvemos el dinero</span>.',
-        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 to 14 days</em>. <span style="color:var(--blue)">Or your money back</span>.' },
+        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 a 14 días</em>. O le devolvemos el dinero.',
+        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 to 14 days</em>. Or your money back.' },
       // FAQ h2
       { sel: '.network .section-head h2',
         es: 'Lo que nos preguntan<br>los dueños de negocio.',
