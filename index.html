@@ -9,6 +9,9 @@
 <meta property="og:title" content="Su negocio merece un sitio web de verdad" />
 <meta property="og:description" content="Sitios web profesionales para negocios latinoamericanos. Diseño, hospedaje y SEO incluidos." />
 <meta property="og:type" content="website" />
+<link rel="alternate" hreflang="es" href="https://pymewebpro.com/" />
+<link rel="alternate" hreflang="en" href="https://pymewebpro.com/?lang=en" />
+<link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
@@ -451,6 +454,20 @@
   .team-loc{color:var(--ink);font-size:.85rem;margin:0;display:inline-flex;align-items:center;gap:6px;font-weight:500}
   .team-pin{font-size:.9rem}
 
+  /* LANG TOGGLE */
+  .lang-toggle{
+    background:transparent;border:1px solid var(--line);
+    color:var(--ink);font:600 .82rem 'Inter',sans-serif;letter-spacing:.05em;
+    padding:8px 14px;border-radius:24px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:all .18s ease;
+  }
+  .lang-toggle:hover{border-color:var(--blue);background:rgba(0,56,147,.04)}
+  .lang-toggle .lang-current{color:var(--ink);font-weight:700}
+  .lang-toggle .lang-sep{color:var(--muted);font-weight:400}
+  .lang-toggle .lang-other{color:var(--muted);font-weight:500}
+  .lang-toggle:hover .lang-other{color:var(--blue)}
+
   /* TRUST BADGES (pricing + form) */
   .trust-badges{display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:22px}
   .trust-badge{
@@ -756,7 +773,13 @@
       <a href="#proceso">Proceso</a>
       <a href="#contacto">Contacto</a>
     </div>
-    <div class="nav-cta"></div>
+    <div class="nav-cta">
+      <button id="langToggle" class="lang-toggle" type="button" aria-label="Toggle language">
+        <span class="lang-current">ES</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-other">EN</span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -1379,6 +1402,8 @@ Mensaje: ${data.get('mensaje')||'(sin mensaje adicional)'}`
     return false;
   }
 </script>
+
+<script src="/i18n.js" defer></script>
 
 </body>
 </html>
