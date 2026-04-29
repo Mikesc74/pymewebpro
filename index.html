@@ -176,25 +176,6 @@
     content:"✓ Listo, recibimos sus datos. Le contactamos hoy mismo.";
     display:block;text-align:center;padding:20px;color:var(--blue);font-weight:600;
   }
-  .hero-trust{
-    list-style:none;padding:24px 0 0;margin:30px 0 0;
-    border-top:1px solid var(--line);
-    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
-  }
-  @media (max-width:760px){.hero-trust{grid-template-columns:1fr;gap:14px}}
-  .hero-trust li{
-    display:flex;gap:12px;align-items:flex-start;
-    font-size:.86rem;line-height:1.4;color:var(--muted);
-  }
-  .hero-trust b{display:block;color:var(--ink);font-size:.95rem;font-weight:700;font-family:'Inter',sans-serif;margin-bottom:2px}
-  .ht-ico{
-    flex-shrink:0;width:30px;height:30px;border-radius:8px;
-    display:grid;place-items:center;font-weight:700;font-size:.92rem;
-  }
-  .ht-blue{background:var(--blue-soft);color:var(--blue)}
-  .ht-yellow{background:rgba(252,209,22,.22);color:var(--yellow-2)}
-  .ht-red{background:rgba(206,17,38,.10);color:var(--red);font-size:1.1rem;font-weight:900}
-
   /* mock browser */
   .mock{
     position:relative;
@@ -921,11 +902,6 @@
       <p style="color:var(--muted);font-size:.9rem;margin-top:14px">
         Le respondemos cuanto antes. Sin compromiso.
       </p>
-      <ul class="hero-trust">
-        <li><span class="ht-ico ht-blue">⚡</span><span><b>Esencial en 7 días · Crecimiento en 14</b><br>o le devolvemos su dinero</span></li>
-        <li><span class="ht-ico ht-yellow">$</span><span><b>Desde $890.000 COP</b><br>pago único, sin sorpresas</span></li>
-        <li><span class="ht-ico ht-red">∞</span><span><b>Soporte siempre incluido</b><br>nosotros respondemos</span></li>
-      </ul>
     </div>
 
     <div class="reveal" style="position:relative">
@@ -974,26 +950,6 @@
       <h2 style="margin-top:18px">Hoy en Colombia, si su negocio<br>no está en Google, <em style="font-style:italic;color:var(--coral)">no existe.</em></h2>
       <p>Sus vecinos, sus clientes y su próxima venta están buscando en el celular antes de salir de casa. Si no lo encuentran a usted, encuentran a la competencia.</p>
     </div>
-    <div class="prob-grid">
-      <article class="prob-card reveal">
-        <span class="num">01</span>
-        <span class="prob-hook">Si solo está en Instagram o Facebook…</span>
-        <h3>Está construyendo en terreno alquilado.</h3>
-        <p>Las redes sociales no son suyas. Si Instagram cambia el algoritmo o le cierra la cuenta, pierde todos sus clientes. Un sitio web propio nadie se lo quita.</p>
-      </article>
-      <article class="prob-card reveal">
-        <span class="num">02</span>
-        <span class="prob-hook">Si no aparece en Google…</span>
-        <h3>Para sus clientes, no existe.</h3>
-        <p>Cuando alguien busca en Google "panadería en mi barrio" o "taller mecánico cerca", aparecen otros. Sin un sitio web propio, usted ni siquiera entra al juego.</p>
-      </article>
-      <article class="prob-card reveal">
-        <span class="num">03</span>
-        <span class="prob-hook">Si cierra el local a las 8 p.m.…</span>
-        <h3>Su negocio deja de vender.</h3>
-        <p>Pero los clientes siguen buscando en el celular. Un sitio web con WhatsApp y formulario de contacto sigue trabajando, y al otro día usted abre con mensajes y pedidos esperando.</p>
-      </article>
-    </div>
     <div class="prob-stat reveal">
       <div><strong>83%</strong><span style="color:#a3b3ac;margin-left:10px">de los colombianos buscan en Google antes de elegir un negocio local</span></div>
       <div><strong>9 de 10</strong><span style="color:#a3b3ac;margin-left:10px">no compran si el negocio no tiene sitio web propio</span></div>
@@ -1018,8 +974,8 @@
       <article class="build-mini reveal"><div class="bm-ico">🔒</div><h4>SSL / HTTPS</h4><span>su sitio seguro y verificado</span></article>
       <article class="build-mini reveal"><div class="bm-ico">📱</div><h4>Diseño para celular</h4><span>se ve perfecto en cualquier pantalla</span></article>
       <article class="build-mini reveal"><div class="bm-ico">⚡</div><h4>Indexado en 7 días</h4><span>meta tags + sitemap automático</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">🚀</div><h4>Velocidad &lt;2s</h4><span>carga ultrarrápida</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">✏️</div><h4>1 ronda de cambios</h4><span>incluida</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">🚀</div><h4>Velocidad &lt;1s</h4><span>carga ultrarrápida</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">✏️</div><h4>Varias rondas de cambios</h4><span>incluidas</span></article>
       <article class="build-mini reveal"><div class="bm-ico">🛡</div><h4>Garantía 30 días</h4><span>dinero de vuelta si no le gusta</span></article>
     </div>
   </div>
@@ -1222,8 +1178,8 @@
           <li>Sección de testimonios o reseñas de sus clientes</li>
           <li>Certificado SSL (HTTPS) incluido (su sitio seguro y verificado por Google)</li>
           <li>Diseño listo para celular</li>
-          <li>Indexado en Google en 7 días, meta tags optimizadas por página, sitemap automático y carga en menos de 2 segundos</li>
-          <li>1 ronda de cambios incluida</li>
+          <li>Indexado en Google en 7 días, meta tags optimizadas por página, sitemap automático y carga en menos de 1 segundo</li>
+          <li>Varias rondas de cambios incluidas</li>
           <li><strong>Garantía de 30 días.</strong> Devolvemos su dinero si no le gusta</li>
           <li>El dominio queda a su nombre. Suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)</li>
         </ul>
