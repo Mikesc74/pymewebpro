@@ -579,11 +579,17 @@
   .price-host{font-size:.85rem;color:var(--muted);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
   .price-card.featured .price-host{color:#a3b3ac;border-bottom-color:rgba(255,255,255,.1)}
   .price-feats{list-style:none;padding:0;margin:0 0 28px;flex:1}
-  .price-feats li{padding:9px 0;font-size:.94rem;display:flex;gap:10px;align-items:flex-start}
+  .price-feats li{
+    position:relative;
+    padding:9px 0 9px 30px;
+    font-size:.94rem;line-height:1.5;
+  }
   .price-feats li::before{
-    content:"✓";flex-shrink:0;width:20px;height:20px;border-radius:50%;
+    content:"✓";
+    position:absolute;left:0;top:10px;
+    width:20px;height:20px;border-radius:50%;
     background:var(--green-soft);color:var(--green);
-    display:grid;place-items:center;font-size:.72rem;font-weight:700;margin-top:2px;
+    display:grid;place-items:center;font-size:.72rem;font-weight:700;
   }
   .price-card.featured .price-feats li::before{background:rgba(245,180,0,.2);color:var(--amber)}
   .price-foot{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px}
@@ -1057,7 +1063,6 @@
         <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
         <ul class="price-feats">
           <li>Páginas listas: <b>Inicio, servicios, sobre nosotros, contacto y ubicación</b></li>
-          <li>El dominio queda a su nombre. Suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)</li>
           <li>Correo profesional <b>info@sunegocio.com</b> redirigido a su Gmail (sin costo adicional)</li>
           <li>Mapa de Google integrado con su ubicación</li>
           <li>Barra social: WhatsApp, Instagram, Facebook y Google Maps en un clic desde el celular</li>
@@ -1068,6 +1073,7 @@
           <li>Indexado en Google en 7 días, meta tags optimizadas por página, sitemap automático y carga en menos de 2 segundos</li>
           <li>1 ronda de cambios incluida</li>
           <li><strong>Garantía de 30 días.</strong> Devolvemos su dinero si no le gusta</li>
+          <li>El dominio queda a su nombre. Suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)</li>
         </ul>
         <p class="price-fine">+ Google Analytics, Search Console, sitemap.xml y robots.txt configurados.</p>
         <a class="btn btn-ghost" href="#contacto">Quiero el plan Esencial</a>
