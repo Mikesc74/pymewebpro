@@ -255,25 +255,30 @@
     'Soporte por WhatsApp incluido': 'WhatsApp support included',
     'Su sitio empieza a recibir clientes': 'Your site starts getting customers',
 
-    // ── CTA / form ──────
-    'Hablemos hoy mismo': "Let's talk today",
-    'Llene el formulario': 'Fill out the form',
-    'y le respondemos': "and we'll reply",
-    'en pocas horas.': 'within a few hours.',
-    'Reserve su sitio web': 'Reserve your website',
-    'en menos de 2 minutos.': 'in under 2 minutes.',
-    'Si elige un plan, le mostramos su precio final con el descuento aplicado y puede pagar al instante. Si todavía no está seguro, le contactamos por WhatsApp cuanto antes, sin compromiso.':
-      "If you pick a plan, we'll show you the final price with the discount applied and you can pay instantly. If you're not sure yet, we'll reach out on WhatsApp as soon as we can, no commitment.",
-    'Sin compromiso. Le devolvemos la llamada o escribimos por el medio que prefiera, con una propuesta clara por escrito.':
-      "No commitment. We'll call you back or write by your preferred channel, with a clear proposal in writing.",
-    'Chat directo por WhatsApp': 'Direct WhatsApp chat',
-    '+57 301 404 7722 · le respondemos cuanto antes': '+57 301 404 7722 · we reply as soon as we can',
-    'Enviar correo': 'Send email',
-    'ventas@pymewebpro.com': 'ventas@pymewebpro.com',
+    // ── CTA / contact ladder ──
+    'Tres formas de empezar': 'Three ways to start',
+    'De más rápido a más cuidadoso.': 'From fastest to most careful.',
+    'De más rápido a<br>más cuidadoso.': 'From fastest to<br>most careful.',
+    'Usted decide cómo arrancar. Si ya tiene claro lo que quiere, pague directo. Si tiene dudas, hablemos por WhatsApp. Si prefiere escribir primero, déjenos sus datos.':
+      'You pick how to start. If you already know what you want, pay directly. If you have questions, chat on WhatsApp. If you prefer to write first, leave us your details.',
+    'Más rápido': 'Fastest',
+    'Tiene dudas': 'Has questions',
+    'Más cuidadoso': 'More careful',
+    '¿Listo para empezar?': 'Ready to start?',
+    'Elija plan, pague con tarjeta o cuotas, y arrancamos su sitio hoy mismo.':
+      'Pick a plan, pay by card or in installments, and we start your site today.',
+    'Pagar Esencial': 'Pay Essential',
+    'Pagar Crecimiento': 'Pay Growth',
+    '$890.000 COP · pago único': '$890,000 COP · one-time',
+    '$1.790.000 COP · incluye 1 año hosting': '$1,790,000 COP · 1 year hosting included',
+    '¿Quiere hablar primero?': 'Want to talk first?',
+    'Chat directo por WhatsApp · respuesta en minutos · sin compromiso.':
+      'Direct WhatsApp chat · reply in minutes · no commitment.',
+    '+57 301 404 7722 →': '+57 301 404 7722 →',
+    '¿Prefiere que le escribamos?': 'Prefer that we write to you?',
+    'Déjenos sus datos y le contactamos cuanto antes. Lo demás (logo, fotos, contenido, hosting) lo recogemos en su portal privado, a su ritmo.':
+      "Leave your details and we'll reach out as soon as we can. Everything else (logo, photos, content, hosting) we collect in your private portal, at your own pace.",
     'Llene este formulario': 'Fill out this form',
-    '5 campos. Listo.': '5 fields. Done.',
-    'Lo demás (logo, fotos, contenido, hosting) lo recogemos en su portal privado, a su ritmo.':
-      'Everything else (logo, photos, content, hosting) we collect in your private portal, at your own pace.',
     'Le respondemos cuanto antes con una propuesta clara, sin compromiso.': "We'll reply as soon as we can with a clear proposal, no commitment.",
     'Su nombre': 'Your name',
     'Ej: Juan Pérez': 'e.g. Juan Pérez',
@@ -654,12 +659,12 @@
       // Pricing h2 (no <br>; handled by text-walker via single-line key)
       // CTA / form h2
       { sel: '#contacto .cta-grid h2',
-        es: 'Reserve su sitio web<br>en menos de 2 minutos.',
-        en: 'Reserve your website<br>in under 2 minutes.' },
+        es: 'De más rápido a<br>más cuidadoso.',
+        en: 'From fastest to<br>most careful.' },
       // Process h2
       { sel: '#proceso .section-head h2',
-        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 días</em><br>(Crecimiento en 14). <span style="color:var(--blue)">O le devolvemos el dinero</span>.',
-        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 days</em><br>(Growth in 14). <span style="color:var(--blue)">Or your money back</span>.' },
+        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 a 14 días</em>. <span style="color:var(--blue)">O le devolvemos el dinero</span>.',
+        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 to 14 days</em>. <span style="color:var(--blue)">Or your money back</span>.' },
       // FAQ h2
       { sel: '.network .section-head h2',
         es: 'Lo que nos preguntan<br>los dueños de negocio.',

@@ -671,26 +671,55 @@
   .cta-feats{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .cta-feats li{font-size:.93rem;color:#cdd5d1;display:flex;gap:8px}
   .cta-feats li::before{content:"✓";color:var(--amber);font-weight:700}
-  .contact-options{margin-top:30px;display:flex;flex-direction:column;gap:12px}
-  .contact-opt{
-    display:flex;align-items:center;gap:14px;
-    padding:16px 18px;border-radius:14px;
+  /* CONTACT LADDER — three tiers of intent */
+  .ladder{margin-top:30px;display:flex;flex-direction:column;gap:14px}
+  .ladder-card{
+    display:block;padding:22px 24px;border-radius:14px;
     background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
-    color:white;text-decoration:none;
-    transition:all .2s ease;
+    text-decoration:none;color:#fff;transition:all .2s ease;
   }
-  .contact-opt:hover{background:rgba(255,255,255,.10);border-color:rgba(252,209,22,.4);transform:translateX(4px)}
-  .contact-opt-ico{
-    flex-shrink:0;width:44px;height:44px;border-radius:11px;
-    display:grid;place-items:center;font-weight:800;font-size:1.2rem;
+  .ladder-tier{
+    font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:#bdc7e0;display:flex;align-items:center;gap:8px;margin-bottom:10px;
   }
-  .contact-opt-wa{background:#25d366;color:white}
-  .contact-opt-mail{background:var(--yellow);color:var(--blue)}
-  .contact-opt-text{flex:1;display:flex;flex-direction:column;gap:2px;line-height:1.3}
-  .contact-opt-text b{font-size:.98rem;font-weight:700}
-  .contact-opt-text span{font-size:.84rem;color:#bdc7e0}
-  .contact-opt-arrow{font-size:1.2rem;color:var(--yellow);font-weight:700;transition:transform .2s}
-  .contact-opt:hover .contact-opt-arrow{transform:translateX(4px)}
+  .ladder-num{
+    background:var(--yellow);color:var(--ink);
+    width:22px;height:22px;border-radius:50%;
+    display:grid;place-items:center;font-size:.78rem;font-weight:800;letter-spacing:0;
+  }
+  .ladder-q{
+    font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;line-height:1.25;
+    color:#fff;margin-bottom:4px;letter-spacing:-.005em;
+  }
+  .ladder-a{
+    color:#bdc7e0;font-size:.92rem;line-height:1.5;margin:0;
+  }
+  /* Tier 1 — Pay (most prominent: yellow accent border) */
+  .ladder-pay{border-color:rgba(252,209,22,.45);background:rgba(252,209,22,.06)}
+  .ladder-pay-buttons{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;
+  }
+  @media (max-width:560px){.ladder-pay-buttons{grid-template-columns:1fr}}
+  .ladder-pay-buttons .btn-reserve{
+    flex-direction:column;gap:2px;padding:14px 16px;text-align:center;line-height:1.2;
+  }
+  .ladder-pay-buttons .btn-reserve b{font-weight:700;font-size:.98rem}
+  .ladder-pay-buttons .btn-reserve small{
+    font-weight:500;font-size:.74rem;opacity:.88;letter-spacing:.01em;
+  }
+  /* Tier 2 — WhatsApp (interactive card, hover-translate) */
+  .ladder-wa{cursor:pointer}
+  .ladder-wa:hover{
+    background:rgba(37,211,102,.10);border-color:rgba(37,211,102,.5);transform:translateX(4px);
+  }
+  .ladder-q-row{display:flex;align-items:flex-start;gap:14px;justify-content:space-between}
+  .ladder-wa-ico{
+    flex-shrink:0;width:38px;height:38px;border-radius:50%;
+    background:#25d366;color:#fff;display:grid;place-items:center;
+  }
+  .ladder-wa-num{
+    margin-top:12px;color:var(--yellow);font-weight:700;font-size:.9rem;letter-spacing:.02em;
+  }
 
   .form{background:white;border-radius:20px;padding:36px;color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.3)}
   .form h3{font-family:'Fraunces',serif;font-size:1.55rem;margin-bottom:6px}
@@ -856,7 +885,7 @@
         ⚡ <span>Cargado en 0.8s</span>
       </div>
       <div class="float-photo">
-        <img src="https://images.pexels.com/photos/5410101/pexels-photo-5410101.jpeg?auto=compress&cs=tinysrgb&h=400&w=320" alt="Dueña de pequeño negocio recibiendo pedido por celular" loading="lazy">
+        <img src="/photos/pexels-yuraforrat-12769592.jpg" alt="Calle de pueblo paisa en Antioquia" loading="lazy" width="170" height="200">
       </div>
     </div>
   </div>
@@ -867,7 +896,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow dark">Cómo funciona</span>
-      <h2 style="margin-top:18px">Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 días</em><br>(Crecimiento en 14). <span style="color:var(--blue)">O le devolvemos el dinero</span>.</h2>
+      <h2 style="margin-top:18px">Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 a 14 días</em>. <span style="color:var(--blue)">O le devolvemos el dinero</span>.</h2>
     </div>
     <div class="how-grid">
       <article class="step reveal">
@@ -1144,36 +1173,50 @@
     <div class="cta-inner reveal">
       <div class="cta-grid">
         <div>
-          <span class="eyebrow dark">Hablemos hoy mismo</span>
-          <h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">Reserve su sitio web<br>en menos de 2 minutos.</h2>
-          <p class="cta-sub">Si elige un plan, le mostramos su precio final con el descuento aplicado y puede pagar al instante. Si todavía no está seguro, le contactamos por WhatsApp cuanto antes, sin compromiso.</p>
+          <span class="eyebrow dark">Tres formas de empezar</span>
+          <h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">De más rápido a<br>más cuidadoso.</h2>
+          <p class="cta-sub">Usted decide cómo arrancar. Si ya tiene claro lo que quiere, pague directo. Si tiene dudas, hablemos por WhatsApp. Si prefiere escribir primero, déjenos sus datos.</p>
 
-          <div class="contact-options">
-            <a class="contact-opt" href="https://portal.pymewebpro.com/go/whatsapp?campaign=contact_section&text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
-              <span class="contact-opt-ico contact-opt-wa">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-              </span>
-              <span class="contact-opt-text">
-                <b>Chat directo por WhatsApp</b>
-                <span>+57 301 404 7722 · le respondemos cuanto antes</span>
-              </span>
-              <span class="contact-opt-arrow" aria-hidden="true">→</span>
-            </a>
-            <a class="contact-opt" href="mailto:ventas@pymewebpro.com?subject=Consulta%20PymeWebPro">
-              <span class="contact-opt-ico contact-opt-mail">@</span>
-              <span class="contact-opt-text">
-                <b>Enviar correo</b>
-                <span>ventas@pymewebpro.com</span>
-              </span>
-              <span class="contact-opt-arrow" aria-hidden="true">→</span>
+          <div class="ladder">
+            <!-- TIER 1: PAY NOW -->
+            <div class="ladder-card ladder-pay">
+              <div class="ladder-tier"><span class="ladder-num">1</span> Más rápido</div>
+              <div class="ladder-q">¿Listo para empezar?</div>
+              <p class="ladder-a">Elija plan, pague con tarjeta o cuotas, y arrancamos su sitio hoy mismo.</p>
+              <div class="ladder-pay-buttons">
+                <a class="btn btn-reserve" href="#contactForm" data-plan="esencial" data-focus="form">
+                  <b>Pagar Esencial</b>
+                  <small>$890.000 COP · pago único</small>
+                </a>
+                <a class="btn btn-reserve btn-reserve-featured" href="#contactForm" data-plan="crecimiento" data-focus="form">
+                  <b>Pagar Crecimiento</b>
+                  <small>$1.790.000 COP · incluye 1 año hosting</small>
+                </a>
+              </div>
+            </div>
+
+            <!-- TIER 2: WHATSAPP -->
+            <a class="ladder-card ladder-wa" href="https://portal.pymewebpro.com/go/whatsapp?campaign=contact_section&text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
+              <div class="ladder-tier"><span class="ladder-num">2</span> Tiene dudas</div>
+              <div class="ladder-q-row">
+                <div>
+                  <div class="ladder-q">¿Quiere hablar primero?</div>
+                  <p class="ladder-a">Chat directo por WhatsApp · respuesta en minutos · sin compromiso.</p>
+                </div>
+                <span class="ladder-wa-ico">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                </span>
+              </div>
+              <div class="ladder-wa-num">+57 301 404 7722 →</div>
             </a>
           </div>
         </div>
 
         <form class="form" id="contactForm" onsubmit="return submitForm(event)">
           <div class="form-fields">
-            <h3>5 campos. Listo.</h3>
-            <p class="lead">Lo demás (logo, fotos, contenido, hosting) lo recogemos en su portal privado, a su ritmo.</p>
+            <div class="ladder-tier" style="color:var(--blue);margin-bottom:8px"><span class="ladder-num">3</span> Más cuidadoso</div>
+            <h3>¿Prefiere que le escribamos?</h3>
+            <p class="lead">Déjenos sus datos y le contactamos cuanto antes. Lo demás (logo, fotos, contenido, hosting) lo recogemos en su portal privado, a su ritmo.</p>
             <!-- Honeypot: humans don't fill this; bots do. Submission is silently dropped if filled. -->
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
             <div class="field">
@@ -1273,6 +1316,8 @@
   // When user clicks "Reservar mi cupo →" on a plan card, preselect the
   // matching radio button on the contact form (the href #contacto handles
   // the scroll). Then re-trigger the submit-button-label sync.
+  // If the button has data-focus="form", also scroll the form into view and
+  // focus the first empty required field.
   (function bindReserveButtons(){
     const buttons = document.querySelectorAll('.btn-reserve[data-plan]');
     buttons.forEach(btn => {
@@ -1287,6 +1332,19 @@
             r.dispatchEvent(new Event('change', {bubbles:true}));
           }
         });
+        // Pay-now buttons (in-section): scroll form into view + focus first empty required field
+        if (btn.dataset.focus === 'form') {
+          const form = document.getElementById('contactForm');
+          if (form) {
+            setTimeout(() => {
+              form.scrollIntoView({behavior:'smooth', block:'center'});
+              const firstEmpty = form.querySelector('input[required]:placeholder-shown, input[required]:not([value])');
+              if (firstEmpty && !firstEmpty.value) {
+                setTimeout(() => firstEmpty.focus({preventScroll:true}), 350);
+              }
+            }, 50);
+          }
+        }
       });
     });
   })();
