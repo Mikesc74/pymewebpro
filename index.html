@@ -501,32 +501,38 @@
     font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
     color:var(--blue);margin-bottom:4px;
   }
-  /* SUPPORT CARD — visually quiet "optional" tier (recedes vs Crecimiento) */
+  /* SUPPORT CARD — soft red wash, "optional" tier (recedes vs Crecimiento) */
   .price-card.price-card-support{
-    background:#fff;border:1px dashed var(--line);
+    background:linear-gradient(180deg,#fff5f5 0%,#ffeaea 100%);
+    border:1px solid rgba(206,17,38,.18);
     position:relative;
   }
-  .price-card.price-card-support:hover{transform:translateY(-4px);border-style:solid;border-color:var(--blue-soft)}
+  .price-card.price-card-support:hover{
+    transform:translateY(-4px);
+    border-color:rgba(206,17,38,.45);
+    box-shadow:0 18px 38px -16px rgba(206,17,38,.20);
+  }
   .support-badge{
-    background:var(--bg-2)!important;color:var(--muted)!important;
-    border:1px solid var(--line);font-weight:700;letter-spacing:.14em;
+    background:rgba(206,17,38,.10)!important;color:var(--red)!important;
+    border:1px solid rgba(206,17,38,.25);font-weight:800;letter-spacing:.14em;
   }
   .btn-yellow{
-    background:var(--blue);color:#fff;font-weight:700;
+    background:var(--red);color:#fff;font-weight:700;
+    box-shadow:0 12px 26px -12px rgba(206,17,38,.55);
   }
-  .btn-yellow:hover{background:#06245a;transform:translateY(-2px)}
+  .btn-yellow:hover{background:#a30e1e;transform:translateY(-2px);box-shadow:0 18px 36px -12px rgba(206,17,38,.7)}
   .price-annual{
-    background:rgba(0,56,147,.04);border:1px solid rgba(0,56,147,.18);
+    background:rgba(206,17,38,.06);border:1px solid rgba(206,17,38,.22);
     border-radius:12px;padding:14px 16px;margin:14px 0 22px;
     display:flex;flex-direction:column;gap:4px;
   }
   .price-annual .annual-tag{
-    display:inline-block;background:var(--blue-soft);color:var(--blue);
+    display:inline-block;background:rgba(206,17,38,.12);color:var(--red);
     font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
     padding:3px 8px;border-radius:6px;align-self:flex-start;margin-bottom:2px;
   }
   .price-annual b{color:var(--ink);font-size:1rem;letter-spacing:-.01em}
-  .price-annual .annual-save{color:var(--muted);font-size:.82rem;font-weight:500}
+  .price-annual .annual-save{color:var(--red);font-size:.82rem;font-weight:600;opacity:.85}
   .price-card{
     background:white;border-radius:22px;border:1px solid var(--line);
     padding:38px 32px;display:flex;flex-direction:column;position:relative;
@@ -613,10 +619,13 @@
   .price-card.featured .price-more .price-feats-more li{color:#a3b3ac}
   .price-card.featured .price-more .price-feats-more li::before{background:rgba(255,255,255,.08);color:#a3b3ac}
   /* Support card variant */
-  .price-card.price-card-support .price-more summary{color:var(--yellow)}
-  .price-card.price-card-support .price-more summary:hover{color:#fff}
-  .price-card.price-card-support .price-more .price-feats-more li{color:#bdc7e0}
-  .price-card.price-card-support .price-more .price-feats-more li::before{background:rgba(255,255,255,.08);color:#bdc7e0}
+  .price-card.price-card-support .price-more summary{color:var(--red)}
+  .price-card.price-card-support .price-more summary:hover{color:#a30e1e}
+  .price-card.price-card-support .price-more .price-feats-more li{color:var(--ink);opacity:.75}
+  .price-card.price-card-support .price-more .price-feats-more li::before{background:rgba(206,17,38,.12);color:var(--red)}
+  /* Tier label + check marks on red card */
+  .price-card.price-card-support .price-tier-label{color:var(--red)}
+  .price-card.price-card-support .price-feats li::before{background:rgba(206,17,38,.12);color:var(--red)}
   @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
   /* Dual CTAs: Hablar primero (secondary) + Reservar mi cupo (primary) */
   .price-ctas{display:flex;flex-direction:column;gap:8px;margin-top:auto}
@@ -1065,8 +1074,7 @@
     <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
       <span class="eyebrow">Nosotros</span>
       <h2 style="margin-top:18px">Hecho a la medida<br>desde Medellín.</h2>
-      <p>Somos el equipo de liderazgo de PymeWebPro. Cada sitio lo diseñamos, programamos, alojamos y mantenemos nosotros mismos, desde Medellín.</p>
-      <p style="margin-top:14px"><strong>Cuando le responde alguien, le respondemos nosotros</strong>, no un bot.</p>
+      <p>Con PymeWebPro, puede estar tranquilo: recibe calidad local. Cada sitio es diseñado, programado, alojado y mantenido por nuestro equipo, aquí en Medellín.</p>
     </div>
     <div class="team-grid reveal">
       <article class="team-card">
