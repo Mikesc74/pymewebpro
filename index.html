@@ -875,8 +875,10 @@
         <h3>Reciba su portal privado</h3>
         <ul>
           <li>Le enviamos un enlace privado a su correo</li>
-          <li>Sube su logo, fotos y colores de marca</li>
-          <li>Nos cuenta su visión: tono, público, contenido</li>
+          <li>Sube logo, fotos y colores de marca</li>
+          <li>Tipo de negocio, dirección y horarios</li>
+          <li>Nos cuenta su visión: tono, público, qué destacar</li>
+          <li>Decide hosting (mensual, anual o ninguno)</li>
           <li>Todo guardado automáticamente, completa cuando pueda</li>
         </ul>
       </article>
@@ -1157,8 +1159,8 @@
 
         <form class="form" id="contactForm" onsubmit="return submitForm(event)">
           <div class="form-fields">
-            <h3>Llene este formulario</h3>
-            <p class="lead">Le respondemos cuanto antes con una propuesta clara, sin compromiso.</p>
+            <h3>5 campos. Listo.</h3>
+            <p class="lead">Lo demás (logo, fotos, contenido, hosting) lo recogemos en su portal privado, a su ritmo.</p>
             <!-- Honeypot: humans don't fill this; bots do. Submission is silently dropped if filled. -->
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
             <div class="field">
@@ -1180,38 +1182,12 @@
               </div>
             </div>
             <div class="field">
-              <label for="tipo">¿Qué tipo de negocio tiene?</label>
-              <select id="tipo" name="tipo" required>
-                <option value="">Seleccione una opción…</option>
-                <option>Restaurante / cafetería / panadería</option>
-                <option>Peluquería / barbería / spa</option>
-                <option>Taller / servicio técnico</option>
-                <option>Tienda / minimarket</option>
-                <option>Consultorio / odontología</option>
-                <option>Servicios a domicilio</option>
-                <option>Profesional independiente</option>
-                <option>Otro</option>
-              </select>
-            </div>
-            <div class="field">
               <label>¿Qué plan le interesa más?</label>
               <div class="radio-pills">
                 <label class="pill"><input type="radio" name="plan" value="Esencial ($890k)"><span>Esencial<br><small>$890k única vez</small></span></label>
                 <label class="pill"><input type="radio" name="plan" value="Crecimiento ($1.790k)"><span>Crecimiento<br><small>$1.790k única vez</small></span></label>
                 <label class="pill"><input type="radio" name="plan" value="No estoy seguro" checked><span>No estoy seguro<br><small>quiero asesoría</small></span></label>
               </div>
-            </div>
-            <div class="field">
-              <label>¿Quiere agregar el Plan Hosting? <small style="font-weight:400;color:var(--muted)">(Crecimiento ya incluye 1 año gratis)</small></label>
-              <div class="radio-pills">
-                <label class="pill"><input type="radio" name="hosting" value="Mensual ($30k/mes)"><span>Sí, mensual<br><small>$30k/mes</small></span></label>
-                <label class="pill"><input type="radio" name="hosting" value="Anual prepagado ($270k/año)"><span>Sí, anual<br><small>$270k/año (ahorro)</small></span></label>
-                <label class="pill"><input type="radio" name="hosting" value="No por ahora" checked><span>No por ahora<br><small>solo el sitio</small></span></label>
-              </div>
-            </div>
-            <div class="field">
-              <label for="mensaje">Cuéntenos qué necesita (opcional)</label>
-              <textarea id="mensaje" name="mensaje" placeholder="Tengo una panadería en Bogotá y quiero recibir pedidos por internet…"></textarea>
             </div>
             <button type="submit" class="btn btn-primary" id="contactSubmit" data-pay-label="Continuar al pago →" data-talk-label="Enviar, me contactan hoy mismo →">Enviar, me contactan hoy mismo →</button>
             <p class="form-foot">Sus datos no se comparten con nadie. Sin compromiso.<br><strong>Garantía de 30 días</strong> · si no le gusta su sitio, le devolvemos su dinero.</p>
