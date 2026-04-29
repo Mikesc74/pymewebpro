@@ -451,6 +451,28 @@
   .team-loc{color:var(--ink);font-size:.85rem;margin:0;display:inline-flex;align-items:center;gap:6px;font-weight:500}
   .team-pin{font-size:.9rem}
 
+  /* TRUST BADGES (pricing + form) */
+  .trust-badges{display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:22px}
+  .trust-badge{
+    display:inline-flex;align-items:center;gap:12px;padding:12px 20px;border-radius:30px;
+    font-weight:600;font-size:.93rem;line-height:1.35;max-width:580px;
+  }
+  .trust-badge .tb-ico{font-size:1.15rem;flex-shrink:0}
+  .trust-badge .tb-text b{font-weight:800}
+  .trust-guarantee{
+    background:rgba(16,185,129,.08);
+    color:#065f46;
+    border:1px solid rgba(16,185,129,.25);
+  }
+  .trust-discount{
+    background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);
+    color:#0a1f1a;
+    box-shadow:0 4px 12px rgba(251,191,36,.25);
+  }
+  @media (max-width:520px){
+    .trust-badge{font-size:.85rem;padding:10px 16px;text-align:left}
+  }
+
   /* PRICING */
   .pricing{background:var(--bg-2)}
   .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;align-items:stretch;max-width:880px;margin:0 auto}
@@ -968,9 +990,15 @@
       <span class="eyebrow">Planes y precios</span>
       <h2 style="margin-top:18px">Pague una vez. Su sitio es suyo.<br>Sin contratos mensuales obligatorios.</h2>
       <p>Elija un plan, lo construimos, se lo entregamos y queda 100% suyo. Si quiere que nosotros lo alojemos, lo monitoreemos y hagamos pequeños cambios cada mes, agregue el Plan Soporte opcional, cancelable cuando quiera.</p>
-      <div style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);color:#0a1f1a;padding:12px 20px;border-radius:30px;margin-top:18px;font-weight:700;font-size:.95rem;box-shadow:0 4px 12px rgba(251,191,36,.25)">
-        <span>🎁</span>
-        <span>Ahorre <b>$100.000</b> si paga el mismo día que llene el formulario</span>
+      <div class="trust-badges">
+        <div class="trust-badge trust-guarantee">
+          <span class="tb-ico">🛡</span>
+          <span class="tb-text"><b>Garantía de 30 días.</b> Si no le gusta su sitio, le devolvemos su dinero. Sin preguntas.</span>
+        </div>
+        <div class="trust-badge trust-discount">
+          <span class="tb-ico">🎁</span>
+          <span class="tb-text">Ahorre <b>$100.000</b> si paga el mismo día que llene el formulario</span>
+        </div>
       </div>
     </div>
     <div class="price-grid price-grid-3">
@@ -988,6 +1016,7 @@
           <li>Google Analytics integrado</li>
           <li>1 ronda de cambios incluida</li>
           <li>SEO básico para Google</li>
+          <li><strong>Garantía de 30 días</strong> — devolvemos su dinero si no le gusta</li>
         </ul>
         <a class="btn btn-ghost" href="#contacto">Quiero el plan Esencial</a>
       </article>
@@ -1009,6 +1038,7 @@
           <li>Sección de testimonios o reseñas destacadas</li>
           <li>Datos estructurados para que Google muestre horarios, ubicación y reseñas en los resultados</li>
           <li>3 rondas de cambios</li>
+          <li><strong>Garantía de 30 días</strong> — devolvemos su dinero si no le gusta</li>
         </ul>
         <a class="btn btn-primary" href="#contacto">Quiero el plan Pro</a>
       </article>
@@ -1214,7 +1244,7 @@
               <textarea id="mensaje" name="mensaje" placeholder="Tengo una panadería en Bogotá y quiero recibir pedidos por internet…"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Enviar, me contactan hoy mismo →</button>
-            <p class="form-foot">Sus datos no se comparten con nadie. Sin compromiso.</p>
+            <p class="form-foot">Sus datos no se comparten con nadie. Sin compromiso.<br><strong>Garantía de 30 días</strong> · si no le gusta su sitio, le devolvemos su dinero.</p>
           </div>
           <div class="form-success">
             <div class="check-ico">✓</div>
