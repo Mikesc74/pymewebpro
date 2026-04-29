@@ -174,6 +174,7 @@
     'Quiero el plan Esencial': 'I want the Essential plan',
     '★ Más completo': '★ Most complete',
     'Crecimiento': 'Growth',
+    'Lanzamiento': 'Launch price',
     'Todo lo del plan Esencial': 'Everything in Essential',
     '1 año de hosting incluido': '1 year of hosting included',
     '(valor $270.000 COP)': '(value $270,000 COP)',
