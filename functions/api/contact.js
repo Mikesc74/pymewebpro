@@ -172,7 +172,11 @@ export async function onRequestPost(context) {
     // back from the portal AND they selected a chargeable plan.
     const portalUrl = (env.PORTAL_URL || "https://portal.pymewebpro.com").replace(/\/$/, "");
     const planText = String(data.plan || "").toLowerCase();
-    const hasPaidPlan = planText.includes("esencial") || planText.includes("pro");
+    const hasPaidPlan =
+      planText.includes("esencial") ||
+      planText.includes("crecimiento") ||
+      planText.includes("growth") ||
+      planText.includes("pro");
     const confirmUrl = leadId && hasPaidPlan ? `${portalUrl}/c/${leadId}` : null;
 
     return new Response(JSON.stringify({ success: true, lead_id: leadId, confirm_url: confirmUrl }), {
