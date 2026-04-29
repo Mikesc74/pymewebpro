@@ -372,18 +372,18 @@
     '9 de 10': '9 in 10',
     'no compran si el negocio no tiene sitio web propio': "won't buy if the business doesn't have its own website",
 
-    // ── market data band (sourced stats above outcomes) ──
-    '8 de cada 10': '8 in 10',
-    '9 de cada 10': '9 in 10',
-    'colombianos usan internet hoy': 'Colombians use the internet today',
-    'entran a internet desde el celular': 'access the internet from a mobile phone',
-    '41,1 millones': '41.1 million',
-    'de colombianos en línea': 'Colombians online',
-    'Fuente: DANE, ENTIC Hogares 2024 (82,3% de personas de 5+ años)': 'Source: DANE, ENTIC Hogares 2024 (82.3% of people 5+ years old)',
-    'Fuente: DANE, ENTIC Hogares 2024': 'Source: DANE, ENTIC Hogares 2024',
-    'Fuente: We Are Social / DataReportal, Digital 2025 Colombia': 'Source: We Are Social / DataReportal, Digital 2025 Colombia',
-    'DANE — Boletín ENTIC Hogares 2024': 'DANE — ENTIC Households 2024 Bulletin',
-    'DataReportal — Digital 2025: Colombia': 'DataReportal — Digital 2025: Colombia',
+    // ── market data band (sourced stats: customers avoid businesses without websites) ──
+    'de los consumidores dice que es importante que un negocio pequeño tenga sitio web propio.': 'of consumers say it is important for a small business to have its own website.',
+    'Encuesta global GoDaddy 2023': 'GoDaddy global survey, 2023',
+    '1 de 3': '1 in 3',
+    'no compra a un negocio nuevo si su sitio está incompleto o "en construcción".': "won't buy from a new business if its website is incomplete or \"under construction\".",
+    'Encuesta GoDaddy a Gen Z y Millennials, 2024': 'GoDaddy Gen Z & Millennials survey, 2024',
+    'solo 40': 'only 40',
+    'de los negocios locales tiene sitio web propio. Los otros pierden esa decisión cada día.': 'of local businesses have their own website. The rest lose that decision every day.',
+    'BrightLocal Local Consumer Review Survey': 'BrightLocal Local Consumer Review Survey',
+    'GoDaddy — Consumer Expectations vs Retailers\' Reality (2023)': 'GoDaddy — Consumer Expectations vs Retailers\' Reality (2023)',
+    'GoDaddy — Gen Z & Millennials Survey (2024)': 'GoDaddy — Gen Z & Millennials Survey (2024)',
+    'BrightLocal — Local Consumer Review Survey': 'BrightLocal — Local Consumer Review Survey',
 
     // ── outcomes section (replaces 'el problema' + 'lo que recibe') ──
     'Lo que cambia': 'What changes',
