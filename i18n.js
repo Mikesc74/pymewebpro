@@ -421,8 +421,10 @@
     'O le devolvemos su dinero. Sin excusas.': 'Or your money back. No excuses.',
     'pago': 'one-time',
     'único, sin pagos mensuales': 'payment, no monthly fees',
-    'Entrega en 7 días o le devolvemos el dinero': 'Delivery in 7 days or we refund you',
-    'Entrega en 14 días o le devolvemos el dinero': 'Delivery in 14 days or we refund you',
+    'Entrega en 7 días desde su brief, o le devolvemos el dinero': 'Delivery in 7 days from your brief, or we refund you',
+    'Entrega en 14 días desde su brief, o le devolvemos el dinero': 'Delivery in 14 days from your brief, or we refund you',
+    'desde su brief, o le devolvemos el dinero': 'from your brief, or we refund you',
+    'desde su brief': 'from your brief',
     'Lanzamiento': 'Launch price',
 
     // ── plan card extras (mixed inline content) ─────────────────────────
