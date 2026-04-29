@@ -178,8 +178,9 @@
     'Garantía de 30 días': '30-day guarantee',
     'Quiero el plan Esencial': 'I want the Essential plan',
     'Respuesta prioritaria por WhatsApp (los clientes con Plan Hosting van primero en la cola)': 'Priority WhatsApp support (Hosting Plan clients jump to the front of the queue)',
-    'Hablar primero': 'Talk first',
-    '20 min, gratis': '20 min, free',
+    'Hablar por WhatsApp': 'Chat on WhatsApp',
+    'respuesta en minutos': 'reply in minutes',
+    '· respuesta en minutos': '· reply in minutes',
     'Reservar mi cupo': 'Reserve my spot',
     'Pagar ahora': 'Pay now',
     '¿Puedo pagar a cuotas?': 'Can I pay in installments?',
@@ -214,8 +215,8 @@
     'COP/mes': 'COP/month',
     'Cancelable cuando quiera, sin penalidad.': 'Cancel anytime, no penalty.',
     'Quiero agregar Plan Soporte': 'I want to add the Support Plan',
-    '¿Aún no sabe cuál? Hablemos 20 minutos por WhatsApp y le recomendamos el indicado, sin compromiso.':
-      "Not sure which one? Let's talk for 20 minutes on WhatsApp and we'll recommend the right one, no commitment.",
+    '¿Aún no sabe cuál? Escríbanos por WhatsApp y le recomendamos el indicado, sin compromiso.':
+      "Not sure which one? Send us a WhatsApp and we'll recommend the right one, no commitment.",
 
     // ── network / testimonial ─
     'Para el negocio colombiano': 'For the Colombian business',
@@ -232,7 +233,7 @@
     'Llene el formulario o hablemos primero por WhatsApp': 'Fill out the form or talk first on WhatsApp',
     'Elige plan: Esencial o Crecimiento': 'Pick a plan: Essential or Growth',
     'Pague en línea con tarjeta o cuotas': 'Pay online with card or installments',
-    'O agende una llamada de 20 min, sin compromiso': 'Or book a 20-min call, no commitment',
+    'O coordinemos una llamada por WhatsApp · respuesta en minutos': 'Or set up a call via WhatsApp · reply in minutes',
     'A su ritmo': 'At your own pace',
     'Reciba su portal privado': 'Get your private portal',
     'Le enviamos un enlace privado a su correo': 'We email you a private link',
@@ -479,7 +480,7 @@
     '+ Google Analytics, Search Console, sitemap.xml, robots.txt y herramientas estándar.': '+ Google Analytics, Search Console, sitemap.xml, robots.txt, and standard tooling.',
 
     // ── plan CTAs + sub-text ────────────────────────────────────────────
-    'Hablar primero': 'Talk first',
+    'Hablar por WhatsApp': 'Chat on WhatsApp',
     '· 20 min, gratis': '· 20 min, free',
     'Reservar mi cupo →': 'Reserve my spot →',
 
@@ -505,7 +506,7 @@
     'Ahorra $90.000 (3 meses gratis)': 'Save $90,000 (3 months free)',
 
     // ── pricing footer note ─────────────────────────────────────────────
-    '¿Aún no sabe cuál? Hablemos 20 minutos por WhatsApp y le recomendamos el indicado, sin compromiso.': "Not sure which one? Let's talk 20 minutes on WhatsApp and we'll recommend the right one, no commitment.",
+    '¿Aún no sabe cuál? Escríbanos por WhatsApp y le recomendamos el indicado, sin compromiso.': "Not sure which one? Send us a WhatsApp and we'll recommend the right one, no commitment.",
 
     // ── network / FAQ section (3 questions: price, timeline, ownership) ──
     'Preguntas frecuentes': 'Frequently asked questions',
