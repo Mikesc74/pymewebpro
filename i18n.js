@@ -11,7 +11,7 @@
   // handled separately via [data-i18n-html] selectors below.
   const EN = {
     // ── nav ─────────────
-    '¿Qué incluye?': "What's included",
+    'Resultados': 'Results',
     'Portafolio': 'Portfolio',
     'Casos': 'Cases',
     'Nosotros': 'About',
@@ -189,7 +189,6 @@
       'Yes. On the payment screen you can split your credit card payment into 3, 6, or more installments at no extra charge. Your bank handles the monthly billing; we receive full payment and start your site the same day.',
     '★ Más completo': '★ Most complete',
     'Crecimiento': 'Growth',
-    'Lanzamiento': 'Launch price',
     'Todo lo del plan Esencial': 'Everything in Essential',
     '1 año de hosting incluido': '1 year of hosting included',
     '(valor $270.000 COP)': '(value $270,000 COP)',
@@ -373,9 +372,20 @@
     '9 de 10': '9 in 10',
     'no compran si el negocio no tiene sitio web propio': "won't buy if the business doesn't have its own website",
 
-    // ── what's included headline ────────────────────────────────────────
-    'Lo que recibe': 'What you get',
-    'Todo lo que necesita para que su negocio venda por internet.': 'Everything you need to make your business sell online.',
+    // ── outcomes section (replaces 'el problema' + 'lo que recibe') ──
+    'Lo que cambia': 'What changes',
+    'Lo que cambia cuando su negocio<br>está bien en internet.': 'What changes when your business<br>is properly online.',
+    'No es magia ni promesa de marketing. Son tres cosas concretas que verá en su día a día desde la primera semana.':
+      "It's not magic or marketing promises. Three concrete things you'll notice from your first week.",
+    'Más llamadas y mensajes desde Google Maps': 'More calls and messages from Google Maps',
+    'Cuando alguien busca su tipo de negocio cerca, su perfil aparece con horarios, fotos, reseñas y botón directo de WhatsApp y llamada. Esa gente ya estaba buscando; ahora lo encuentra a usted.':
+      'When someone searches for your kind of business nearby, your profile shows up with hours, photos, reviews and direct WhatsApp/call buttons. That traffic was already searching — now it finds you.',
+    'Clientes que llegan ya decididos': 'Customers who arrive already decided',
+    'El cliente lee su sitio antes de escribirle: ve sus servicios, precios, ubicación y testimonios. Llega a comprar, no a preguntar. Cierra más rápido y con menos negociación.':
+      'The customer reads your site before reaching out: services, prices, location, testimonials. They come to buy, not to ask. You close faster and with less back-and-forth.',
+    'Menos tiempo explicando lo básico por WhatsApp': 'Less time explaining the basics on WhatsApp',
+    'Horarios, dirección, qué incluye un servicio, cómo llegar — todo está en su sitio, accesible 24/7. Usted responde solo lo que requiere su criterio. El sitio hace el resto.':
+      'Hours, address, what a service includes, how to find you — it\'s all on the site, 24/7. You only answer questions that actually need your judgment. The site handles the rest.',
 
     // ── build mini cards (compact "what's included" grid) ──────────────
     'Dominio propio': 'Own domain',
@@ -431,7 +441,6 @@
     'Entrega en 14 días desde su brief, o le devolvemos el dinero': 'Delivery in 14 days from your brief, or we refund you',
     'desde su brief, o le devolvemos el dinero': 'from your brief, or we refund you',
     'desde su brief': 'from your brief',
-    'Lanzamiento': 'Launch price',
 
     // ── plan card extras (mixed inline content) ─────────────────────────
     'Páginas listas:': 'Pages ready:',
@@ -604,7 +613,10 @@
       { sel: '.hero h1',
         es: 'Su negocio<br>merece estar<br><span class="underline">en</span> <span class="accent">internet.</span>',
         en: 'Your business<br>belongs<br><span class="underline">on</span> <span class="accent">the internet.</span>' },
-      // What we build h2 (no <br>; handled by text-walker via single-line key)
+      // Outcomes h2
+      { sel: '#incluye .section-head h2',
+        es: 'Lo que cambia cuando su negocio<br>está bien en internet.',
+        en: 'What changes when your business<br>is properly online.' },
       // Portfolio h2
       { sel: '#portafolio .section-head h2',
         es: 'Vea el tipo de sitio<br>que recibe usted.',

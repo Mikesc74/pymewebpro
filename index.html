@@ -267,62 +267,6 @@
   .section-head{max-width:760px;margin-bottom:60px}
   .section-head p{color:var(--muted);font-size:1.1rem;margin-top:18px}
 
-  /* PROBLEM */
-  .problem{background:var(--bg)}
-  .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  @media (max-width:880px){.prob-grid{grid-template-columns:1fr}}
-  .prob-card{
-    padding:36px 30px;border-radius:20px;background:white;border:1px solid var(--line);
-    transition:transform .25s, box-shadow .25s;
-  }
-  .prob-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-  .prob-card .num{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:900;font-size:2.4rem;
-    color:var(--red);line-height:1;margin-bottom:14px;display:block;
-  }
-  .prob-hook{
-    display:block;color:var(--blue);font-weight:600;font-size:.85rem;
-    letter-spacing:.02em;margin-bottom:8px;font-style:italic;
-  }
-  .prob-card h3{margin-bottom:12px;font-family:'Fraunces',serif;font-size:1.45rem;line-height:1.15}
-  .prob-card p{color:var(--muted);font-size:.96rem}
-  .prob-stat{
-    margin-top:50px;padding:28px 32px;border-radius:18px;background:var(--ink);color:white;
-    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
-  }
-  .prob-stat strong{color:var(--amber);font-family:'Fraunces',serif;font-size:1.35rem;font-weight:700;font-style:italic}
-
-  /* WHAT WE BUILD */
-  .build{background:var(--bg-2)}
-  .build-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  @media (max-width:980px){.build-grid{grid-template-columns:1fr 1fr}}
-  @media (max-width:560px){.build-grid{grid-template-columns:1fr}}
-  .build-card{
-    background:white;padding:32px 28px;border-radius:18px;border:1px solid var(--line);
-    position:relative;transition:transform .25s, box-shadow .25s;
-  }
-  .build-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--green)}
-  .build-card .ico{
-    width:48px;height:48px;border-radius:12px;background:var(--green-soft);
-    display:grid;place-items:center;color:var(--green);font-weight:800;font-size:.85rem;letter-spacing:.05em;
-    margin-bottom:18px;
-  }
-  .build-card h3{font-size:1.2rem;margin-bottom:8px}
-  .build-card p{color:var(--muted);font-size:.95rem}
-  /* Mini build cards: tight grid, ~half size, no long descriptions */
-  .build-grid-mini{grid-template-columns:repeat(4,1fr);gap:12px}
-  @media (max-width:980px){.build-grid-mini{grid-template-columns:repeat(3,1fr)}}
-  @media (max-width:600px){.build-grid-mini{grid-template-columns:repeat(2,1fr);gap:10px}}
-  .build-mini{
-    background:#fff;border:1px solid var(--line);border-radius:12px;
-    padding:18px 16px 16px;text-align:left;
-    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  }
-  .build-mini:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(10,31,26,.06);border-color:var(--green)}
-  .bm-ico{font-size:1.5rem;line-height:1;margin-bottom:10px}
-  .build-mini h4{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;margin:0 0 4px;color:var(--ink);letter-spacing:-.005em}
-  .build-mini span{display:block;color:var(--muted);font-size:.78rem;line-height:1.4}
-
   /* PORTFOLIO */
   .portfolio{background:var(--bg)}
   .port-grid{
@@ -421,6 +365,31 @@
   .mark{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:700;margin-top:1px}
   .mark.x{background:#fee2e2;color:#b91c1c}
   .mark.v{background:rgba(245,180,0,.2);color:var(--amber)}
+
+  /* OUTCOMES — replaces 'el problema' + 'lo que recibe' with results-focused frame */
+  .outcomes{background:var(--bg-1)}
+  .outcomes-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+    margin-top:56px;
+  }
+  @media (max-width:980px){.outcomes-grid{grid-template-columns:1fr;gap:18px}}
+  .outcome-card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:32px 28px;display:flex;flex-direction:column;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .outcome-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,31,26,.06);border-color:var(--blue-soft)}
+  .oc-num{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:800;
+    font-size:1.6rem;color:var(--blue);margin-bottom:14px;line-height:1;
+  }
+  .outcome-card h3{
+    font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;
+    line-height:1.3;letter-spacing:-.005em;margin:0 0 12px;color:var(--ink);
+  }
+  .outcome-card p{
+    color:var(--muted);font-size:.95rem;line-height:1.6;margin:0;
+  }
 
   /* CASE STUDIES */
   .cases{background:var(--bg-2)}
@@ -596,25 +565,6 @@
   .price-amt b{font-family:'Fraunces',serif;font-size:3rem;font-weight:800;letter-spacing:-.02em;display:inline-block;margin-right:6px;vertical-align:baseline}
   .price-amt > span{color:var(--muted);font-size:.95rem;vertical-align:baseline}
   .price-card.featured .price-amt > span{color:#a3b3ac}
-  .price-strike{
-    display:block;
-    font-family:'Fraunces',serif;
-    font-size:1.25rem;font-weight:600;
-    text-decoration:line-through;
-    color:rgba(10,31,26,.35);
-    margin-bottom:2px;line-height:1;
-  }
-  .price-card.featured .price-strike{color:rgba(255,255,255,.4)}
-  .price-launch{
-    display:inline-block;margin-top:10px;
-    background:#fcd116;color:#0a1f1a;
-    font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
-    padding:5px 11px;border-radius:14px;line-height:1;
-    width:fit-content;
-  }
-  /* Launch badge on its own line under the price (prevents wide-row overflow on mobile) */
-  .price-amt .price-launch{display:block}
-  .price-card.featured .price-launch{background:#fcd116;color:#0a1f1a}
   .price-delivery{
     display:inline-flex;align-items:center;gap:8px;
     background:rgba(0,56,147,.08);color:#003893;
@@ -862,7 +812,7 @@
       <span class="logo-text"><span class="logo-pyme">pyme</span><span class="logo-webpro">webpro</span><span class="logo-tld">.com</span></span>
     </a>
     <div class="nav-links">
-      <a href="#incluye">¿Qué incluye?</a>
+      <a href="#incluye">Resultados</a>
       <a href="#portafolio">Portafolio</a>
       <a href="#casos">Casos</a>
       <a href="#nosotros">Nosotros</a>
@@ -944,37 +894,30 @@
   </div>
 </header>
 
-<!-- PROBLEM -->
-<section id="problema" class="problem">
+<!-- OUTCOMES -->
+<section id="incluye" class="outcomes">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">El problema</span>
-      <h2 style="margin-top:18px">Hoy en Colombia, si su negocio no está en Google, <em style="font-style:italic;color:var(--coral)">no existe.</em></h2>
-      <p>Sus vecinos, sus clientes y su próxima venta están buscando en el celular antes de salir de casa. Si no lo encuentran a usted, encuentran a la competencia.</p>
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
+      <span class="eyebrow">Lo que cambia</span>
+      <h2 style="margin-top:18px">Lo que cambia cuando su negocio<br>está bien en internet.</h2>
+      <p>No es magia ni promesa de marketing. Son tres cosas concretas que verá en su día a día desde la primera semana.</p>
     </div>
-  </div>
-</section>
-
-<!-- WHAT WE BUILD -->
-<section id="incluye" class="build">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Lo que recibe</span>
-      <h2 style="margin-top:18px">Todo lo que necesita para que su negocio venda por internet.</h2>
-    </div>
-    <div class="build-grid build-grid-mini">
-      <article class="build-mini reveal"><div class="bm-ico">🌐</div><h4>Dominio propio</h4><span>a su nombre, suyo para siempre</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">✉️</div><h4>Correo profesional</h4><span>info@sunegocio → su Gmail</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">📍</div><h4>Mapa de Google</h4><span>integrado con su ubicación</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">🔗</div><h4>Barra social</h4><span>WhatsApp, IG, FB y Maps</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">🖼</div><h4>Galería de fotos</h4><span>muestre su negocio</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">⭐</div><h4>Testimonios</h4><span>reseñas de sus clientes</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">🔒</div><h4>SSL / HTTPS</h4><span>su sitio seguro y verificado</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">📱</div><h4>Diseño para celular</h4><span>se ve perfecto en cualquier pantalla</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">⚡</div><h4>Indexado en 7 días</h4><span>meta tags + sitemap automático</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">🚀</div><h4>Velocidad &lt;1s</h4><span>carga ultrarrápida</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">✏️</div><h4>Rondas de cambios</h4><span>2 con Esencial · 5 con Crecimiento</span></article>
-      <article class="build-mini reveal"><div class="bm-ico">🛡</div><h4>Garantía 30 días</h4><span>dinero de vuelta si no le gusta</span></article>
+    <div class="outcomes-grid reveal">
+      <article class="outcome-card">
+        <div class="oc-num">01</div>
+        <h3>Más llamadas y mensajes desde Google Maps</h3>
+        <p>Cuando alguien busca su tipo de negocio cerca, su perfil aparece con horarios, fotos, reseñas y botón directo de WhatsApp y llamada. Esa gente ya estaba buscando; ahora lo encuentra a usted.</p>
+      </article>
+      <article class="outcome-card">
+        <div class="oc-num">02</div>
+        <h3>Clientes que llegan ya decididos</h3>
+        <p>El cliente lee su sitio antes de escribirle: ve sus servicios, precios, ubicación y testimonios. Llega a comprar, no a preguntar. Cierra más rápido y con menos negociación.</p>
+      </article>
+      <article class="outcome-card">
+        <div class="oc-num">03</div>
+        <h3>Menos tiempo explicando lo básico por WhatsApp</h3>
+        <p>Horarios, dirección, qué incluye un servicio, cómo llegar — todo está en su sitio, accesible 24/7. Usted responde solo lo que requiere su criterio. El sitio hace el resto.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -1194,11 +1137,7 @@
         <span class="price-badge">★ Más completo</span>
         <div class="price-tier-label">Sitio web</div>
         <div class="price-name">Crecimiento</div>
-        <div class="price-amt">
-          <span class="price-strike">$2.490.000</span>
-          <b>$1.790.000</b><span>COP</span>
-          <span class="price-launch">Lanzamiento</span>
-        </div>
+        <div class="price-amt"><b>$1.790.000</b><span>COP</span></div>
         <div class="price-delivery"><span class="pd-ico">⚡</span><strong>Entrega en 14 días</strong> desde su brief, o le devolvemos el dinero</div>
         <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
         <ul class="price-feats">
@@ -1463,7 +1402,7 @@
       <div class="foot-col">
         <h4>Servicios</h4>
         <a href="#paquetes">Planes y precios</a>
-        <a href="#incluye">¿Qué incluye?</a>
+        <a href="#incluye">Resultados</a>
         <a href="#proceso">Cómo funciona</a>
         <a href="#contacto">Hablemos</a>
       </div>
