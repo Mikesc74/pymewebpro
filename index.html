@@ -351,26 +351,12 @@
     transition:transform .2s ease, box-shadow .2s ease;
   }
   .case-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,31,26,.08)}
-  .case-card-featured{
-    position:relative;border:2px solid var(--red);
-    box-shadow:0 12px 32px rgba(206,17,38,.10);
-  }
-  .case-card-featured:hover{box-shadow:0 18px 40px rgba(206,17,38,.18);border-color:var(--red)}
-  .case-badge{
-    position:absolute;top:12px;right:12px;z-index:2;
-    background:var(--red);color:#fff;font-size:.62rem;font-weight:700;
-    letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;
-    border-radius:999px;box-shadow:0 4px 12px rgba(206,17,38,.30);
-  }
   .case-thumb{aspect-ratio:16/9;background:var(--bg-2);overflow:hidden}
   .case-thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .case-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
   .case-tag{
     display:inline-block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--blue);font-weight:700;margin-bottom:8px;
-  }
-  .case-tag-client{
-    color:var(--red);
   }
   .case-card h3{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;margin:0 0 8px;letter-spacing:-.01em}
   .case-card p{color:var(--muted);font-size:.86rem;line-height:1.5;margin:0 0 14px}
@@ -398,6 +384,43 @@
     text-decoration:none;font-size:.95rem;letter-spacing:.02em;
   }
   .case-cta:hover{text-decoration:underline}
+
+  /* TESTIMONIALS */
+  .testimonials{background:var(--bg-1)}
+  .testimonials-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+    max-width:1100px;margin:48px auto 0;
+  }
+  @media (max-width:980px){.testimonials-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+  @media (max-width:640px){.testimonials-grid{grid-template-columns:1fr;gap:16px}}
+  .testimonial{
+    margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:26px 26px 22px;display:flex;flex-direction:column;gap:18px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .testimonial:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,31,26,.07)}
+  .testimonial blockquote{
+    margin:0;font-family:'Fraunces',serif;font-style:italic;font-weight:500;
+    font-size:1.05rem;line-height:1.5;color:var(--ink);letter-spacing:-.005em;
+    position:relative;padding-left:18px;
+  }
+  .testimonial blockquote::before{
+    content:'"';position:absolute;left:-2px;top:-12px;
+    font-family:'Fraunces',serif;font-size:3.2rem;line-height:1;
+    color:var(--blue);opacity:.25;font-style:normal;
+  }
+  .testimonial figcaption{
+    display:flex;align-items:center;gap:14px;
+    padding-top:16px;border-top:1px solid var(--line);
+  }
+  .t-photo{
+    flex-shrink:0;width:48px;height:48px;border-radius:50%;
+    overflow:hidden;background:var(--bg-2);
+  }
+  .t-photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .t-meta{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .t-name{font-weight:700;font-size:.92rem;color:var(--ink);letter-spacing:-.005em}
+  .t-role{font-size:.78rem;color:var(--muted);line-height:1.3}
 
   /* NOSOTROS / TEAM */
   .nosotros{background:var(--bg-1)}
@@ -949,25 +972,24 @@
   </div>
 </section>
 
-<!-- TRABAJO (single section: cliente + dos trabajos propios) -->
+<!-- TRABAJO -->
 <section id="trabajo" class="cases">
   <div class="wrap">
     <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
       <span class="eyebrow">Trabajo</span>
-      <h2 style="margin-top:18px">Un cliente. Dos sitios propios.<br>Mismo stack para todos.</h2>
-      <p>Estamos arrancando con clientes reales. Mientras crecemos, también construimos y operamos nuestros propios sitios — el mismo proceso, las mismas herramientas, la misma calidad que usaríamos para el suyo.</p>
+      <h2 style="margin-top:18px">Sitios reales,<br>en vivo y en Google.</h2>
+      <p>Cada uno diseñado, programado, alojado y mantenido con el mismo proceso que aplicamos al suyo.</p>
     </div>
     <div class="cases-grid reveal">
 
-      <article class="case-card case-card-featured">
-        <span class="case-badge">Cliente real</span>
+      <article class="case-card">
         <div class="case-thumb"><img src="screenshots/inviersol.jpg" alt="inviersol.com" loading="lazy"></div>
         <div class="case-body">
-          <span class="case-tag case-tag-client">Cliente · Industria · Envigado</span>
+          <span class="case-tag">Industria · Antioquia</span>
           <h3>inviersol.com</h3>
-          <p>INVIERSOL S.A.S. — empresa con más de 19 años fabricando e instalando parasoles, toldos y cubiertas en Antioquia. Lanzamos su primer sitio web profesional para que los clientes que ya los buscan en Google los encuentren con horarios, galería y botón directo de WhatsApp.</p>
+          <p>Empresa con más de 19 años fabricando e instalando parasoles, toldos y cubiertas. Sitio con horarios, galería de proyectos y botón directo de WhatsApp.</p>
           <ul class="case-pills">
-            <li>SSL + Cloudflare</li><li>Mobile-ready</li><li>Mapa + WhatsApp</li><li>Galería de proyectos</li>
+            <li>SSL + Cloudflare</li><li>Mobile-ready</li><li>Mapa + WhatsApp</li><li>Galería</li>
           </ul>
           <a class="case-cta" href="https://inviersol.com" target="_blank" rel="noopener">Visitar inviersol.com →</a>
         </div>
@@ -976,28 +998,120 @@
       <article class="case-card">
         <div class="case-thumb"><img src="screenshots/medellin-guide.jpg" alt="medellin.guide" loading="lazy"></div>
         <div class="case-body">
-          <span class="case-tag">Trabajo propio · Guía de ciudad</span>
+          <span class="case-tag">Guía local · Medellín</span>
           <h3>medellin.guide</h3>
-          <p>Nuestra guía de Medellín: barrios, restaurantes, salud, eventos, mudanzas. Más de 40 páginas indexadas, datos estructurados para SEO local, carga en menos de un segundo. Construida con el mismo proceso que usaríamos en su sitio.</p>
+          <p>Guía completa de Medellín: barrios, restaurantes, salud, eventos, mudanzas. Más de 40 páginas indexadas con datos estructurados para SEO local.</p>
           <ul class="case-pills">
-            <li>40+ páginas en Google</li><li>SEO local (schema.org)</li><li>&lt;1s de carga</li><li>SSL + Cloudflare</li>
+            <li>40+ páginas en Google</li><li>SEO local (schema.org)</li><li>&lt;1s de carga</li><li>SSL</li>
           </ul>
           <a class="case-cta" href="https://medellin.guide" target="_blank" rel="noopener">Visitar medellin.guide →</a>
         </div>
       </article>
 
       <article class="case-card">
+        <div class="case-thumb"><img src="screenshots/barranquilla-guide.jpg" alt="barranquilla.guide" loading="lazy"></div>
+        <div class="case-body">
+          <span class="case-tag">Guía local · Barranquilla</span>
+          <h3>barranquilla.guide</h3>
+          <p>Guía de Barranquilla para residentes y visitantes. Barrios, restaurantes, eventos del Carnaval, vida cotidiana en la ciudad — con SEO local desde el primer día.</p>
+          <ul class="case-pills">
+            <li>SEO local</li><li>Mobile-ready</li><li>SSL + Cloudflare</li><li>Schema.org</li>
+          </ul>
+          <a class="case-cta" href="https://barranquilla.guide" target="_blank" rel="noopener">Visitar barranquilla.guide →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-thumb"><img src="screenshots/thecartagena-guide.jpg" alt="thecartagena.guide" loading="lazy"></div>
+        <div class="case-body">
+          <span class="case-tag">Guía local · Cartagena</span>
+          <h3>thecartagena.guide</h3>
+          <p>Guía definitiva de Cartagena para turistas y residentes. Más de 17 secciones temáticas y creciendo, optimizada para búsquedas locales en español e inglés.</p>
+          <ul class="case-pills">
+            <li>Bilingüe ES + EN</li><li>17+ secciones</li><li>SEO local</li><li>SSL</li>
+          </ul>
+          <a class="case-cta" href="https://thecartagena.guide" target="_blank" rel="noopener">Visitar thecartagena.guide →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
         <div class="case-thumb"><img src="screenshots/nortesurconsulting.jpg" alt="nortesurconsulting.com" loading="lazy"></div>
         <div class="case-body">
-          <span class="case-tag">Trabajo propio · B2B · Bilingüe</span>
+          <span class="case-tag">B2B · Consultoría</span>
           <h3>nortesurconsulting.com</h3>
-          <p>Sitio corporativo de NorteSur Consulting (la empresa detrás de PymeWebPro). B2B bilingüe ES/EN, diseño limpio, mensaje al grano. Misma plataforma, mismo nivel de pulido que entregamos a clientes pequeños.</p>
+          <p>Sitio corporativo de consultoría. Diseño limpio, bilingüe ES/EN, enfocado en generar contactos calificados y comunicar credibilidad.</p>
           <ul class="case-pills">
-            <li>Bilingüe ES + EN</li><li>0,3s respuesta servidor</li><li>SSL + Cloudflare</li><li>0 scripts pesados</li>
+            <li>Bilingüe ES + EN</li><li>0,3s respuesta servidor</li><li>SSL</li><li>0 scripts pesados</li>
           </ul>
           <a class="case-cta" href="https://nortesurconsulting.com" target="_blank" rel="noopener">Visitar nortesurconsulting.com →</a>
         </div>
       </article>
+
+      <article class="case-card">
+        <div class="case-thumb"><img src="screenshots/mikec-pro.jpg" alt="mikec.pro" loading="lazy"></div>
+        <div class="case-body">
+          <span class="case-tag">Profesional · Portafolio</span>
+          <h3>mikec.pro</h3>
+          <p>Sitio personal y portafolio profesional. Diseño minimalista, contenido en inglés, optimizado para velocidad y SEO técnico.</p>
+          <ul class="case-pills">
+            <li>Mobile-ready</li><li>SEO técnico</li><li>SSL</li><li>Diseño limpio</li>
+          </ul>
+          <a class="case-cta" href="https://mikec.pro" target="_blank" rel="noopener">Visitar mikec.pro →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios" class="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:760px">
+      <span class="eyebrow">Lo que dicen</span>
+      <h2 style="margin-top:18px">Negocios que confiaron<br>y vieron resultados.</h2>
+      <p>Voces reales de clientes que pasaron de "no aparezco en Google" a "me están escribiendo todos los días."</p>
+    </div>
+    <div class="testimonials-grid reveal">
+
+      <figure class="testimonial">
+        <blockquote>
+          "[Aquí va el testimonio del cliente: una o dos frases sobre el cambio que vio en su negocio después del sitio. Idealmente algo concreto — más llamadas, más reservas, clientes que ya llegan informados.]"
+        </blockquote>
+        <figcaption>
+          <div class="t-photo"><img src="testimonials/cliente-1.jpg" alt="" loading="lazy" width="56" height="56"></div>
+          <div class="t-meta">
+            <div class="t-name">[Nombre del cliente]</div>
+            <div class="t-role">[Cargo · Negocio]</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="testimonial">
+        <blockquote>
+          "[Segundo testimonio. Distinto sector si es posible — para mostrar que funciona en restaurantes, talleres, profesionales independientes. Frases cortas, en lenguaje natural.]"
+        </blockquote>
+        <figcaption>
+          <div class="t-photo"><img src="testimonials/cliente-2.jpg" alt="" loading="lazy" width="56" height="56"></div>
+          <div class="t-meta">
+            <div class="t-name">[Nombre del cliente]</div>
+            <div class="t-role">[Cargo · Negocio]</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="testimonial">
+        <blockquote>
+          "[Tercer testimonio. Si tiene una métrica (porcentaje, número de mensajes nuevos, tiempo ahorrado), úsela. Si no, una frase emocional sobre la experiencia trabajando con ustedes funciona igual.]"
+        </blockquote>
+        <figcaption>
+          <div class="t-photo"><img src="testimonials/cliente-3.jpg" alt="" loading="lazy" width="56" height="56"></div>
+          <div class="t-meta">
+            <div class="t-name">[Nombre del cliente]</div>
+            <div class="t-role">[Cargo · Negocio]</div>
+          </div>
+        </figcaption>
+      </figure>
 
     </div>
   </div>
@@ -1273,6 +1387,7 @@
         <a href="#trabajo">Trabajo</a>
         <a href="#proceso">Cómo funciona</a>
         <a href="#contacto">Hablemos</a>
+        <a href="/hosting">¿Ya es cliente? Renueve su hosting →</a>
       </div>
       <div class="foot-col">
         <h4>Legal</h4>

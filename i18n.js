@@ -391,33 +391,60 @@
     'Menos tiempo explicando lo básico por WhatsApp.': 'Less time explaining the basics on WhatsApp.',
     'Su sitio responde 24/7; usted solo lo que requiere su criterio.': 'Your site answers 24/7; you only handle what truly needs your judgment.',
 
-    // ── trabajo (single combined section: client + own work) ──
-    'Un cliente. Dos sitios propios.': 'One client. Two of our own sites.',
-    'Mismo stack para todos.': 'Same stack for everyone.',
-    'Un cliente. Dos sitios propios.<br>Mismo stack para todos.': 'One client. Two of our own sites.<br>Same stack for everyone.',
-    'Estamos arrancando con clientes reales. Mientras crecemos, también construimos y operamos nuestros propios sitios — el mismo proceso, las mismas herramientas, la misma calidad que usaríamos para el suyo.':
-      "We're starting with real clients. While we grow, we also build and run our own sites — the same process, the same tools, the same quality we'd use for yours.",
-    'Cliente real': 'Real client',
-    'Cliente · Industria · Envigado': 'Client · Industry · Envigado',
-    'Trabajo propio · Guía de ciudad': 'Our own work · City guide',
-    'Trabajo propio · B2B · Bilingüe': 'Our own work · B2B · Bilingual',
-    'INVIERSOL S.A.S. — empresa con más de 19 años fabricando e instalando parasoles, toldos y cubiertas en Antioquia. Lanzamos su primer sitio web profesional para que los clientes que ya los buscan en Google los encuentren con horarios, galería y botón directo de WhatsApp.':
-      'INVIERSOL S.A.S. — a company with 19+ years building and installing sunshades, awnings, and covers across Antioquia. We launched their first professional website so customers already searching for them on Google find them with hours, gallery, and a direct WhatsApp button.',
-    'Nuestra guía de Medellín: barrios, restaurantes, salud, eventos, mudanzas. Más de 40 páginas indexadas, datos estructurados para SEO local, carga en menos de un segundo. Construida con el mismo proceso que usaríamos en su sitio.':
-      'Our Medellín guide: neighborhoods, restaurants, healthcare, events, moving tips. 40+ indexed pages, structured data for local SEO, load time under a second. Built with the same process we use for your site.',
-    'Sitio corporativo de NorteSur Consulting (la empresa detrás de PymeWebPro). B2B bilingüe ES/EN, diseño limpio, mensaje al grano. Misma plataforma, mismo nivel de pulido que entregamos a clientes pequeños.':
-      "NorteSur Consulting's corporate site (the company behind PymeWebPro). Bilingual ES/EN B2B, clean design, message to the point. Same platform, same level of polish we deliver to small clients.",
+    // ── trabajo (portfolio of live sites) ──
+    'Sitios reales,': 'Real sites,',
+    'en vivo y en Google.': 'live and on Google.',
+    'Sitios reales,<br>en vivo y en Google.': 'Real sites,<br>live and on Google.',
+    'Cada uno diseñado, programado, alojado y mantenido con el mismo proceso que aplicamos al suyo.':
+      'Each one designed, built, hosted, and maintained with the same process we apply to yours.',
+    // Card tags
+    'Industria · Antioquia': 'Industry · Antioquia',
+    'Guía local · Medellín': 'Local guide · Medellín',
+    'Guía local · Barranquilla': 'Local guide · Barranquilla',
+    'Guía local · Cartagena': 'Local guide · Cartagena',
+    'B2B · Consultoría': 'B2B · Consulting',
+    'Profesional · Portafolio': 'Professional · Portfolio',
+    // Card descriptions
+    'Empresa con más de 19 años fabricando e instalando parasoles, toldos y cubiertas. Sitio con horarios, galería de proyectos y botón directo de WhatsApp.':
+      'A company with 19+ years building and installing sunshades, awnings, and covers. Site with hours, project gallery, and direct WhatsApp button.',
+    'Guía completa de Medellín: barrios, restaurantes, salud, eventos, mudanzas. Más de 40 páginas indexadas con datos estructurados para SEO local.':
+      'Complete guide to Medellín: neighborhoods, restaurants, healthcare, events, moving tips. 40+ indexed pages with structured data for local SEO.',
+    'Guía de Barranquilla para residentes y visitantes. Barrios, restaurantes, eventos del Carnaval, vida cotidiana en la ciudad — con SEO local desde el primer día.':
+      "Guide to Barranquilla for residents and visitors. Neighborhoods, restaurants, Carnival events, daily life in the city — with local SEO from day one.",
+    'Guía definitiva de Cartagena para turistas y residentes. Más de 17 secciones temáticas y creciendo, optimizada para búsquedas locales en español e inglés.':
+      'The definitive guide to Cartagena for tourists and residents. 17+ thematic sections and growing, optimized for local searches in Spanish and English.',
+    'Sitio corporativo de consultoría. Diseño limpio, bilingüe ES/EN, enfocado en generar contactos calificados y comunicar credibilidad.':
+      'Corporate consulting site. Clean design, bilingual ES/EN, focused on generating qualified leads and communicating credibility.',
+    'Sitio personal y portafolio profesional. Diseño minimalista, contenido en inglés, optimizado para velocidad y SEO técnico.':
+      'Personal site and professional portfolio. Minimalist design, English content, optimized for speed and technical SEO.',
+    // Card pills
     'Mapa + WhatsApp': 'Map + WhatsApp',
-    'Galería de proyectos': 'Project gallery',
+    'Galería': 'Gallery',
     '40+ páginas en Google': '40+ pages on Google',
     'SEO local (schema.org)': 'Local SEO (schema.org)',
+    'SEO local': 'Local SEO',
+    'Schema.org': 'Schema.org',
+    '17+ secciones': '17+ sections',
     '<1s de carga': '<1s load time',
     'Bilingüe ES + EN': 'Bilingual ES + EN',
     '0,3s respuesta servidor': '0.3s server response',
     '0 scripts pesados': '0 heavy scripts',
+    'SEO técnico': 'Technical SEO',
+    'Diseño limpio': 'Clean design',
     'Visitar inviersol.com →': 'Visit inviersol.com →',
     'Visitar medellin.guide →': 'Visit medellin.guide →',
+    'Visitar barranquilla.guide →': 'Visit barranquilla.guide →',
+    'Visitar thecartagena.guide →': 'Visit thecartagena.guide →',
     'Visitar nortesurconsulting.com →': 'Visit nortesurconsulting.com →',
+    'Visitar mikec.pro →': 'Visit mikec.pro →',
+
+    // ── testimonios ──
+    'Lo que dicen': 'What they say',
+    'Negocios que confiaron': 'Businesses that trusted us',
+    'y vieron resultados.': 'and saw results.',
+    'Negocios que confiaron<br>y vieron resultados.': 'Businesses that trusted us<br>and saw results.',
+    'Voces reales de clientes que pasaron de "no aparezco en Google" a "me están escribiendo todos los días."':
+      'Real voices from customers who went from "I don\'t show up on Google" to "people message me every day."',
 
     // ── build mini cards (compact "what's included" grid) ──────────────
     'Dominio propio': 'Own domain',
@@ -648,10 +675,14 @@
       { sel: '.hero h1',
         es: 'Su negocio<br>merece estar<br><span class="underline">en</span> <span class="accent">internet.</span>',
         en: 'Your business<br>belongs<br><span class="underline">on</span> <span class="accent">the internet.</span>' },
-      // Trabajo h2 (combined client + own work section)
+      // Trabajo h2
       { sel: '#trabajo .section-head h2',
-        es: 'Un cliente. Dos sitios propios.<br>Mismo stack para todos.',
-        en: 'One client. Two of our own sites.<br>Same stack for everyone.' },
+        es: 'Sitios reales,<br>en vivo y en Google.',
+        en: 'Real sites,<br>live and on Google.' },
+      // Testimonios h2
+      { sel: '#testimonios .section-head h2',
+        es: 'Negocios que confiaron<br>y vieron resultados.',
+        en: 'Businesses that trusted us<br>and saw results.' },
       // Nosotros h2
       { sel: '#nosotros .section-head h2',
         es: 'Hecho a la medida<br>desde Medellín.',
