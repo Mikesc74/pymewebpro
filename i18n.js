@@ -172,6 +172,13 @@
     '+ Google Analytics, Search Console, sitemap.xml, robots.txt y herramientas estándar.': '+ Google Analytics, Search Console, sitemap.xml, robots.txt, and standard tooling.',
     'Garantía de 30 días': '30-day guarantee',
     'Quiero el plan Esencial': 'I want the Essential plan',
+    'Hablar primero': 'Talk first',
+    '20 min, gratis': '20 min, free',
+    'Reservar mi cupo': 'Reserve my spot',
+    'Pagar ahora': 'Pay now',
+    '¿Puedo pagar a cuotas?': 'Can I pay in installments?',
+    'Sí. En la pantalla de pago puede diferir su tarjeta de crédito hasta en 3, 6 o más cuotas sin costo adicional para nosotros. Su banco se encarga del cobro mensual; nosotros recibimos el pago completo y arrancamos su sitio el mismo día.':
+      'Yes. On the payment screen you can split your credit card payment into 3, 6, or more installments at no extra charge. Your bank handles the monthly billing; we receive full payment and start your site the same day.',
     '★ Más completo': '★ Most complete',
     'Crecimiento': 'Growth',
     'Lanzamiento': 'Launch price',
@@ -239,6 +246,10 @@
     'Llene el formulario': 'Fill out the form',
     'y le respondemos': "and we'll reply",
     'en pocas horas.': 'within a few hours.',
+    'Reserve su sitio web': 'Reserve your website',
+    'en menos de 2 minutos.': 'in under 2 minutes.',
+    'Si elige un plan, le mostramos su precio final con el descuento aplicado y puede pagar al instante. Si todavía no está seguro, le contactamos por WhatsApp en pocas horas, sin compromiso.':
+      "If you pick a plan, we'll show you the final price with the discount applied and you can pay instantly. If you're not sure yet, we'll contact you on WhatsApp within a few hours, no commitment.",
     'Sin compromiso. Le devolvemos la llamada o escribimos por el medio que prefiera, con una propuesta clara por escrito.':
       "No commitment. We'll call you back or write by your preferred channel, with a clear proposal in writing.",
     'Chat directo por WhatsApp': 'Direct WhatsApp chat',
@@ -283,6 +294,7 @@
     'Cuéntenos qué necesita (opcional)': 'Tell us what you need (optional)',
     'Tengo una panadería en Bogotá y quiero recibir pedidos por internet…': 'I have a bakery in Bogotá and want to take online orders…',
     'Enviar, me contactan hoy mismo →': 'Send, contact me today →',
+    'Continuar al pago →': 'Continue to payment →',
     'Sus datos no se comparten con nadie. Sin compromiso.': "Your data isn't shared with anyone. No commitment.",
     'si no le gusta su sitio, le devolvemos su dinero.': "if you don't love your site, we refund your money.",
     '¡Listo, recibimos su mensaje!': 'Got it! We received your message!',
@@ -415,8 +427,8 @@
         en: 'Pay once. Your site is yours.<br>No mandatory monthly contracts.' },
       // CTA / form h2
       { sel: '#contacto .cta-grid h2',
-        es: 'Llene el formulario<br>y le respondemos<br>en pocas horas.',
-        en: 'Fill out the form<br>and we\'ll reply<br>within a few hours.' },
+        es: 'Reserve su sitio web<br>en menos de 2 minutos.',
+        en: 'Reserve your website<br>in under 2 minutes.' },
       // Process h2
       { sel: '#proceso .section-head h2',
         es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 días</em><br>(Crecimiento en 14). <span style="color:var(--blue)">O le devolvemos el dinero</span>.',
