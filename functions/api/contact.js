@@ -132,9 +132,10 @@ export async function onRequestPost(context) {
     // 3. Forward the lead to the PymeWebPro Portal so it shows up in /admin/leads.
     //    silent_notify:true so the portal doesn't send its own admin email
     //    (Mike already got the rich one above).
+    let leadId = null;
     try {
       const portalUrl = (env.PORTAL_URL || "https://portal.pymewebpro.com").replace(/\/$/, "");
-      await fetch(`${portalUrl}/api/leads`, {
+      const portalRes = await fetch(`${portalUrl}/api/leads`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -157,13 +158,24 @@ export async function onRequestPost(context) {
           silent_notify: true,
         }),
       });
+      if (portalRes.ok) {
+        const portalData = await portalRes.json().catch(() => ({}));
+        leadId = portalData.lead_id || null;
+      }
     } catch (err) {
       // Don't fail the user request if the portal forward fails — they already
       // got their auto-confirmation and Mike already got the lead email.
       console.error("Portal lead forward failed:", err.message);
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    // Build the redirect URL to the confirmation/pay page if we got a lead_id
+    // back from the portal AND they selected a chargeable plan.
+    const portalUrl = (env.PORTAL_URL || "https://portal.pymewebpro.com").replace(/\/$/, "");
+    const planText = String(data.plan || "").toLowerCase();
+    const hasPaidPlan = planText.includes("esencial") || planText.includes("pro");
+    const confirmUrl = leadId && hasPaidPlan ? `${portalUrl}/c/${leadId}` : null;
+
+    return new Response(JSON.stringify({ success: true, lead_id: leadId, confirm_url: confirmUrl }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

@@ -425,6 +425,31 @@
   .mark.x{background:#fee2e2;color:#b91c1c}
   .mark.v{background:rgba(245,180,0,.2);color:var(--amber)}
 
+  /* NOSOTROS / TEAM */
+  .nosotros{background:var(--bg-1)}
+  .team-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:32px;
+    max-width:840px;margin:56px auto 0;
+  }
+  @media (max-width:680px){.team-grid{grid-template-columns:1fr;gap:24px}}
+  .team-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:28px;display:flex;gap:24px;align-items:flex-start;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .team-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,31,26,.06)}
+  @media (max-width:520px){
+    .team-card{flex-direction:column;gap:18px;align-items:center;text-align:center;padding:24px}
+  }
+  .team-photo{flex-shrink:0;width:120px;height:120px;border-radius:50%;overflow:hidden;background:var(--bg-2);border:3px solid var(--bg-1);box-shadow:0 4px 14px rgba(10,31,26,.10)}
+  .team-photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .team-meta{flex:1;min-width:0}
+  .team-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;margin:0 0 4px;color:var(--ink);letter-spacing:-.01em}
+  .team-role{color:var(--blue);font-weight:600;font-size:.88rem;margin:0 0 12px;letter-spacing:.02em}
+  .team-bio{color:var(--muted);font-size:.93rem;line-height:1.55;margin:0 0 12px}
+  .team-loc{color:var(--ink);font-size:.85rem;margin:0;display:inline-flex;align-items:center;gap:6px;font-weight:500}
+  .team-pin{font-size:.9rem}
+
   /* PRICING */
   .pricing{background:var(--bg-2)}
   .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;align-items:stretch;max-width:880px;margin:0 auto}
@@ -698,6 +723,7 @@
     <div class="nav-links">
       <a href="#incluye">¿Qué incluye?</a>
       <a href="#portafolio">Portafolio</a>
+      <a href="#nosotros">Nosotros</a>
       <a href="#paquetes">Planes</a>
       <a href="#proceso">Proceso</a>
       <a href="#contacto">Contacto</a>
@@ -902,6 +928,38 @@
   </div>
 </section>
 
+<!-- NOSOTROS -->
+<section id="nosotros" class="nosotros">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
+      <span class="eyebrow">Nosotros</span>
+      <h2 style="margin-top:18px">Hecho a la medida<br>desde Medellín.</h2>
+      <p>No somos una agencia gigante con call-center en otro país. Somos dos personas que llevan años construyendo sitios web para negocios reales — restaurantes, talleres, peluquerías, profesionales — y entendemos cómo funciona la realidad colombiana: pago contado, WhatsApp como canal principal, márgenes ajustados, sin tiempo para perder.</p>
+      <p style="margin-top:14px"><strong>Cuando le respondemos un mensaje, le respondemos nosotros</strong> — no un bot, no un junior. Esa es la diferencia.</p>
+    </div>
+    <div class="team-grid reveal">
+      <article class="team-card">
+        <div class="team-photo"><img src="/team/mike.jpg" alt="Mike Chartrand, co-fundador de PymeWebPro" loading="lazy" width="300" height="300"></div>
+        <div class="team-meta">
+          <h3 class="team-name">Mike Chartrand</h3>
+          <p class="team-role">Co-fundador &amp; Diseñador</p>
+          <p class="team-bio">Construye y diseña los sitios. Diseño limpio, código rápido, todo lo técnico — dominios, hospedaje, certificados.</p>
+          <p class="team-loc"><span class="team-pin">📍</span>Medellín, Colombia</p>
+        </div>
+      </article>
+      <article class="team-card">
+        <div class="team-photo"><img src="/team/santiago.jpg" alt="Santiago Santos, co-fundador de PymeWebPro" loading="lazy" width="300" height="300"></div>
+        <div class="team-meta">
+          <h3 class="team-name">Santiago Santos</h3>
+          <p class="team-role">Co-fundador</p>
+          <p class="team-bio">Estrategia, ventas y la voz al otro lado del WhatsApp. Habla con cada cliente para entender el negocio antes de empezar.</p>
+          <p class="team-loc"><span class="team-pin">📍</span>Medellín, Colombia</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section id="paquetes" class="pricing">
   <div class="wrap">
@@ -909,6 +967,10 @@
       <span class="eyebrow">Planes y precios</span>
       <h2 style="margin-top:18px">Pague una vez. Su sitio es suyo.<br>Sin contratos mensuales obligatorios.</h2>
       <p>Elija un plan, lo construimos, se lo entregamos y queda 100% suyo. Si quiere que nosotros lo alojemos, lo monitoreemos y hagamos pequeños cambios cada mes, agregue el Plan Soporte opcional, cancelable cuando quiera.</p>
+      <div style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);color:#0a1f1a;padding:12px 20px;border-radius:30px;margin-top:18px;font-weight:700;font-size:.95rem;box-shadow:0 4px 12px rgba(251,191,36,.25)">
+        <span>🎁</span>
+        <span>Ahorre <b>$100.000</b> si paga el mismo día que llene el formulario</span>
+      </div>
     </div>
     <div class="price-grid price-grid-3">
       <article class="price-card reveal">
@@ -1236,6 +1298,14 @@
         body: JSON.stringify(payload),
       });
       if (resp.ok) {
+        const result = await resp.json().catch(() => ({}));
+        // If we got a confirm_url back AND they picked a paid plan, redirect them
+        // to the pay page where they can lock in the $100k discount within 24h.
+        if (result.confirm_url) {
+          window.location.href = result.confirm_url;
+          return false;
+        }
+        // Otherwise (no plan selected, "No estoy seguro"), just show success state.
         f.classList.add('sent');
         return false;
       }
