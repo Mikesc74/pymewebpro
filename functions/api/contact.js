@@ -1,11 +1,13 @@
 // Cloudflare Pages Function: receives form POSTs, emails the lead to Mike,
-// and sends an auto-confirmation back to the customer.
+// sends an auto-confirmation back to the customer, AND forwards the lead
+// to the PymeWebPro Portal so it shows up in /admin/leads.
 //
 // Required environment variable (set in Cloudflare Pages → Settings → Environment variables):
-//   RESEND_API_KEY  — from resend.com (free tier covers 3,000 emails/mo)
+//   RESEND_API_KEY   — from resend.com (free tier covers 3,000 emails/mo)
 // Optional:
-//   ADMIN_EMAIL     — defaults to mike@mikec.pro
-//   FROM_EMAIL      — defaults to "PymeWebPro <noreply@pymewebpro.com>"
+//   ADMIN_EMAIL      — defaults to mike@mikec.pro
+//   FROM_EMAIL       — defaults to "PymeWebPro <noreply@pymewebpro.com>"
+//   PORTAL_URL       — defaults to https://portal.pymewebpro.com
 
 const escape = (s) =>
   String(s ?? "")
@@ -39,6 +41,15 @@ export async function onRequestPost(context) {
   } catch {
     return new Response(JSON.stringify({ error: "invalid_json" }), {
       status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // Honeypot — bots auto-fill any field they see. If the hidden 'website'
+  // field has any value, silently 200 without sending or storing anything.
+  if (data.website || data.url_field) {
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
       headers: { "Content-Type": "application/json" },
     });
   }
@@ -116,6 +127,40 @@ export async function onRequestPost(context) {
       });
     } catch (err) {
       console.error("Customer confirmation failed:", err.message);
+    }
+
+    // 3. Forward the lead to the PymeWebPro Portal so it shows up in /admin/leads.
+    //    silent_notify:true so the portal doesn't send its own admin email
+    //    (Mike already got the rich one above).
+    try {
+      const portalUrl = (env.PORTAL_URL || "https://portal.pymewebpro.com").replace(/\/$/, "");
+      await fetch(`${portalUrl}/api/leads`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "contact_form",
+          name: data.nombre,
+          email: data.email,
+          phone: data.whatsapp,
+          business_name: data.negocio || null,
+          message: data.mensaje || null,
+          language: "es",
+          page: data.page || "/",
+          utm_source: data.utm_source || null,
+          utm_medium: data.utm_medium || null,
+          utm_campaign: data.utm_campaign || null,
+          extra: {
+            tipo: data.tipo || null,
+            plan: data.plan || null,
+            hosting: data.hosting || null,
+          },
+          silent_notify: true,
+        }),
+      });
+    } catch (err) {
+      // Don't fail the user request if the portal forward fails — they already
+      // got their auto-confirmation and Mike already got the lead email.
+      console.error("Portal lead forward failed:", err.message);
     }
 
     return new Response(JSON.stringify({ success: true }), {

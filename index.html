@@ -1071,7 +1071,7 @@
           <p class="cta-sub">Sin compromiso. Le devolvemos la llamada o escribimos por el medio que prefiera, con una propuesta clara por escrito.</p>
 
           <div class="contact-options">
-            <a class="contact-opt" href="https://wa.me/573014047722?text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
+            <a class="contact-opt" href="https://portal.pymewebpro.com/go/whatsapp?campaign=contact_section&text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
               <span class="contact-opt-ico contact-opt-wa">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
               </span>
@@ -1096,6 +1096,8 @@
           <div class="form-fields">
             <h3>Llene este formulario</h3>
             <p class="lead">Le respondemos en pocas horas con una propuesta clara, sin compromiso.</p>
+            <!-- Honeypot: humans don't fill this; bots do. Submission is silently dropped if filled. -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
             <div class="field">
               <label for="nombre">Su nombre</label>
               <input id="nombre" name="nombre" type="text" required placeholder="Ej: Juan Pérez">
@@ -1192,7 +1194,7 @@
   </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/573014047722?text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20quiero%20un%20sitio%20web." target="_blank" rel="noopener" aria-label="WhatsApp">
+<a class="wa-float" href="https://portal.pymewebpro.com/go/whatsapp?campaign=floater&text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20quiero%20un%20sitio%20web." target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 </a>
 
@@ -1209,7 +1211,7 @@
     const f = document.getElementById('heroForm');
     const data = new FormData(f);
     const msg = encodeURIComponent(`Hola, soy ${data.get('nombre')}. Quiero un sitio web para mi negocio. Mi WhatsApp: ${data.get('whatsapp')}`);
-    window.open(`https://wa.me/573014047722?text=${msg}`,'_blank');
+    window.open(`https://portal.pymewebpro.com/go/whatsapp?campaign=hero_form&text=${msg}`,'_blank');
     f.classList.add('sent');
     return false;
   }
@@ -1260,7 +1262,7 @@ Plan Hosting: ${data.get('hosting')||'No especificado'}
 
 Mensaje: ${data.get('mensaje')||'(sin mensaje adicional)'}`
     );
-    window.open(`https://wa.me/573014047722?text=${msg}`,'_blank');
+    window.open(`https://portal.pymewebpro.com/go/whatsapp?campaign=form_fallback&text=${msg}`,'_blank');
     f.classList.add('sent');
     return false;
   }
