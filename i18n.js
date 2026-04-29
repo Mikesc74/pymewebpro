@@ -19,7 +19,7 @@
     'Contacto': 'Contact',
 
     // ── hero ────────────
-    '● Un negocio por industria por ciudad': '● One business per industry per city',
+    '● Ya no hay excusa para no estar en internet': '● No more excuses for not being online',
     'Sitios web profesionales para pequeños negocios en Colombia. Nosotros lo construimos, usted recibe clientes nuevos por internet. Sin tecnicismos, sin sorpresas, sin pagar por lo que no necesita.':
       "Professional websites for small businesses in Colombia. We build it, you get new customers online. No jargon, no surprises, no paying for what you don't need.",
     'Quiero mi sitio web': 'I want my website',
@@ -54,13 +54,13 @@
       'Every site includes the essentials for a Colombian business: showing up on Google, taking WhatsApp messages, displaying your catalog, and earning new customers\' trust.',
     'Su propio dominio': 'Your own domain',
     'Su propio dominio, suyo para siempre': 'Your own domain, yours forever',
-    'El dominio lo registra usted directamente (a su nombre, suyo para siempre). Le ayudamos a elegirlo y configurarlo. Costo aproximado: $50k–$150k/año según el dominio que escoja — usted decide.':
-      'You register the domain directly (in your name, yours forever). We help you pick it and set it up. Approximate cost: $50k–$150k/year depending on the domain — your choice.',
+    'El dominio lo registra usted directamente (a su nombre, suyo para siempre). Le ayudamos a elegirlo y configurarlo. Costo aproximado: $50k–$150k/año según el dominio que escoja. Usted decide.':
+      'You register the domain directly (in your name, yours forever). We help you pick it and set it up. Approximate cost: $50k–$150k/year depending on the domain. Your choice.',
     '¿Cómo funciona el dominio?': 'How does the domain work?',
-    'El dominio lo registra usted directamente con el registrador, a su nombre — suyo para siempre, no del nuestro. Le ayudamos a elegirlo y a configurarlo correctamente. Costo aproximado: $50.000 a $150.000 COP al año según el dominio que escoja, y usted decide.':
-      'You register the domain directly with the registrar, in your name — yours forever, not ours. We help you pick it and set it up correctly. Approximate cost: $50,000 to $150,000 COP per year depending on the domain, your choice.',
-    'El dominio queda a su nombre — suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)':
-      'Domain stays in your name — yours forever. We help you pick and configure it (registration ~$50k–$150k/yr, paid by you to the registrar)',
+    'El dominio lo registra usted directamente con el registrador, a su nombre. Suyo para siempre, no del nuestro. Le ayudamos a elegirlo y a configurarlo correctamente. Costo aproximado: $50.000 a $150.000 COP al año según el dominio que escoja, y usted decide.':
+      'You register the domain directly with the registrar, in your name. Yours forever, not ours. We help you pick it and set it up correctly. Approximate cost: $50,000 to $150,000 COP per year depending on the domain, your choice.',
+    'El dominio queda a su nombre. Suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)':
+      'Domain stays in your name. Yours forever. We help you pick and configure it (registration ~$50k–$150k/yr, paid by you to the registrar)',
     'Listo para celular': 'Mobile-ready',
     '9 de cada 10 clientes lo van a buscar desde el celular. Su sitio se ve perfecto en cualquier pantalla.': '9 out of 10 customers will search from their phone. Your site looks perfect on any screen.',
     'SEO y seguridad': 'SEO & security',
@@ -92,14 +92,14 @@
 
     // ── nosotros ────────
     'Hecho a la medida<br>desde Medellín.': 'Built by hand<br>from Medellín.',
-    'No somos una agencia gigante con call-center en otro país. Somos dos personas que llevan años construyendo sitios web para negocios reales — restaurantes, talleres, peluquerías, profesionales — y entendemos cómo funciona la realidad colombiana: pago contado, WhatsApp como canal principal, márgenes ajustados, sin tiempo para perder.':
-      "We're not a giant agency with a call center in another country. We're two people who have spent years building websites for real businesses — restaurants, garages, salons, professionals — and we understand the reality on the ground in Colombia: cash payments, WhatsApp as the main channel, tight margins, no time to waste.",
+    'No somos una agencia gigante con call-center en otro país. Somos dos personas que llevan años construyendo sitios web para negocios reales (restaurantes, talleres, peluquerías, profesionales) y entendemos cómo funciona la realidad colombiana: pago contado, WhatsApp como canal principal, márgenes ajustados, sin tiempo para perder.':
+      "We're not a giant agency with a call center in another country. We're two people who have spent years building websites for real businesses (restaurants, garages, salons, professionals) and we understand the reality on the ground in Colombia: cash payments, WhatsApp as the main channel, tight margins, no time to waste.",
     'Cuando le respondemos un mensaje, le respondemos nosotros': 'When we reply to a message, we reply ourselves',
-    ' — no un bot, no un junior. Esa es la diferencia.': ' — no bot, no junior. That\'s the difference.',
+    ', no un bot, no un junior. Esa es la diferencia.': ', no bot, no junior. That\'s the difference.',
     'Co-fundador & Diseñador': 'Co-founder & Designer',
     'Co-fundador': 'Co-founder',
-    'Construye y diseña los sitios. Diseño limpio, código rápido, todo lo técnico — dominios, hospedaje, certificados.':
-      'Builds and designs the sites. Clean design, fast code, all the technical stuff — domains, hosting, certificates.',
+    'Construye y diseña los sitios. Diseño limpio, código rápido, todo lo técnico: dominios, hospedaje, certificados.':
+      'Builds and designs the sites. Clean design, fast code, all the technical stuff: domains, hosting, certificates.',
     'Estrategia, ventas y la voz al otro lado del WhatsApp. Habla con cada cliente para entender el negocio antes de empezar.':
       'Strategy, sales, and the voice on the other end of WhatsApp. Talks to every client to understand the business before we start.',
     'Medellín, Colombia': 'Medellín, Colombia',
@@ -110,9 +110,9 @@
     'Planes y precios': 'Plans & pricing',
     'Pague una vez. Su sitio es suyo.<br>Sin contratos mensuales obligatorios.': 'Pay once. Your site is yours.<br>No mandatory monthly contracts.',
     'Elija un plan, lo construimos, se lo entregamos y queda 100% suyo. Si quiere que nosotros lo alojemos, lo monitoreemos y hagamos pequeños cambios cada mes, agregue el Plan Soporte opcional, cancelable cuando quiera.':
-      "Pick a plan, we build it, we deliver it, and it's 100% yours. If you'd like us to host it, monitor it, and make small changes each month, add the optional Support Plan — cancel anytime.",
-    'Esencial en 7 días, Pro en 14': 'Essential in 7 days, Pro in 14',
-    'o le devolvemos su dinero. Sin excusas.': 'or your money back. No excuses.',
+      "Pick a plan, we build it, we deliver it, and it's 100% yours. If you'd like us to host it, monitor it, and make small changes each month, add the optional Support Plan, cancel anytime.",
+    'Esencial en 7 días, Pro en 14.': 'Essential in 7 days, Pro in 14.',
+    'O le devolvemos su dinero. Sin excusas.': 'Or your money back. No excuses.',
     'Garantía de 30 días.': '30-day guarantee.',
     'Si no le gusta su sitio, le devolvemos su dinero. Sin preguntas.': "If you don't love your site, we refund your money. No questions asked.",
     'Ahorre': 'Save',
@@ -123,7 +123,7 @@
     'único, sin pagos mensuales': 'payment, no recurring fees',
     'Entrega en 7 días': 'Delivery in 7 days',
     'Entrega en 14 días': 'Delivery in 14 days',
-    'devolvemos su dinero si no le gusta': 'money back if you don\'t like it',
+    'Devolvemos su dinero si no le gusta': 'Money back if you don\'t like it',
     'o le devolvemos el dinero': 'or we refund you',
     'Sitio profesional de una página con hasta 8 secciones': 'Professional one-page site with up to 8 sections',
     'Asesoría y configuración del dominio (registro anual aparte, ~$50–150k COP/año)': 'Domain advice and setup (annual registration separate, ~$50–150k COP/year)',
@@ -155,13 +155,13 @@
     'Cancelable cuando quiera, sin penalidad.': 'Cancel anytime, no penalty.',
     'Quiero agregar Plan Soporte': 'I want to add the Support Plan',
     '¿Aún no sabe cuál? Hablemos 20 minutos por WhatsApp y le recomendamos el indicado, sin compromiso.':
-      "Not sure which one? Let's talk for 20 minutes on WhatsApp and we'll recommend the right one — no commitment.",
+      "Not sure which one? Let's talk for 20 minutes on WhatsApp and we'll recommend the right one, no commitment.",
 
     // ── network / testimonial ─
     'Para el negocio colombiano': 'For the Colombian business',
     '"Le pasé el enlace a tres clientes nuevos esta semana. Antes les explicaba todo por teléfono."':
       '"I sent the link to three new customers this week. I used to explain everything by phone."',
-    '— Negocio cliente, Medellín': '— Client business, Medellín',
+    'Negocio cliente, Medellín': 'Client business, Medellín',
     'Construyamos el suyo. Hablemos 20 minutos por WhatsApp, sin compromiso.': "Let's build yours. Talk 20 minutes on WhatsApp, no commitment.",
     'Empezar mi sitio': 'Start my site',
 
@@ -233,10 +233,10 @@
     'solo el sitio': 'site only',
     'Cuéntenos qué necesita (opcional)': 'Tell us what you need (optional)',
     'Tengo una panadería en Bogotá y quiero recibir pedidos por internet…': 'I have a bakery in Bogotá and want to take online orders…',
-    'Enviar, me contactan hoy mismo →': 'Send — contact me today →',
+    'Enviar, me contactan hoy mismo →': 'Send, contact me today →',
     'Sus datos no se comparten con nadie. Sin compromiso.': "Your data isn't shared with anyone. No commitment.",
     'si no le gusta su sitio, le devolvemos su dinero.': "if you don't love your site, we refund your money.",
-    '¡Listo, recibimos su mensaje!': 'Got it — we received your message!',
+    '¡Listo, recibimos su mensaje!': 'Got it! We received your message!',
     'Le escribimos hoy mismo por WhatsApp o correo. Si quiere adelantar, también puede escribirnos directo.':
       "We'll reach out today via WhatsApp or email. If you'd like to get ahead, message us directly.",
 
@@ -286,7 +286,7 @@
 
     const root = document.body;
     if (lang !== 'en') {
-      // Spanish is the source — nothing to swap. Just update toggle UI + URL.
+      // Spanish is the source. Nothing to swap, just update toggle UI + URL.
       updateToggleUI(lang);
       return;
     }
@@ -370,8 +370,8 @@
         en: 'Fill out the form<br>and we\'ll reply<br>within a few hours.' },
       // Process h2
       { sel: '#proceso .section-head h2',
-        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 días</em><br>(Pro en 14) — <span style="color:var(--blue)">o le devolvemos el dinero</span>.',
-        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 days</em><br>(Pro in 14) — <span style="color:var(--blue)">or your money back</span>.' },
+        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 días</em><br>(Pro en 14). <span style="color:var(--blue)">O le devolvemos el dinero</span>.',
+        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 days</em><br>(Pro in 14). <span style="color:var(--blue)">Or your money back</span>.' },
     ];
     for (const r of richReplacements) {
       document.querySelectorAll(r.sel).forEach(el => {
