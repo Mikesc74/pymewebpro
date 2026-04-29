@@ -139,6 +139,10 @@
     'Elija un plan, lo construimos, se lo entregamos y queda 100% suyo. Si quiere que nosotros lo alojemos, lo monitoreemos y hagamos pequeños cambios cada mes, agregue el Plan Soporte opcional, cancelable cuando quiera.':
       "Pick a plan, we build it, we deliver it, and it's 100% yours. If you'd like us to host it, monitor it, and make small changes each month, add the optional Support Plan, cancel anytime.",
     'Esencial en 7 días, Crecimiento en 14.': 'Essential in 7 days, Growth in 14.',
+    'Entrega 7–14 días': 'Delivery 7–14 days',
+    'o reembolso': 'or refund',
+    '−$100.000': '−$100,000',
+    'si paga hoy': 'if you pay today',
     'O le devolvemos su dinero. Sin excusas.': 'Or your money back. No excuses.',
     'Garantía de 30 días.': '30-day guarantee.',
     'Si no le gusta su sitio, le devolvemos su dinero. Sin preguntas.': "If you don't love your site, we refund your money. No questions asked.",

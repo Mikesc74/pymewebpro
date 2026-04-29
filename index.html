@@ -505,31 +505,27 @@
   .lang-toggle .lang-other{color:var(--muted);font-weight:500}
   .lang-toggle:hover .lang-other{color:var(--blue)}
 
-  /* TRUST BADGES (pricing + form) */
-  .trust-badges{display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:22px}
-  .trust-badge{
-    display:inline-flex;align-items:center;gap:12px;padding:12px 20px;border-radius:30px;
-    font-weight:600;font-size:.93rem;line-height:1.35;max-width:580px;
+  /* TRUST CHIPS — single compact row above plan cards */
+  .trust-row{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:8px 12px;
+    margin-top:22px;
   }
-  .trust-badge .tb-ico{font-size:1.15rem;flex-shrink:0}
-  .trust-badge .tb-text b{font-weight:800}
-  .trust-delivery{
-    background:rgba(0,56,147,.08);
-    color:#003893;
-    border:1px solid rgba(0,56,147,.25);
+  .trust-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:7px 14px;border-radius:999px;
+    background:rgba(10,31,26,.04);color:var(--ink);
+    border:1px solid rgba(10,31,26,.08);
+    font-size:.86rem;font-weight:500;line-height:1.2;white-space:nowrap;
   }
-  .trust-guarantee{
-    background:rgba(16,185,129,.08);
-    color:#065f46;
-    border:1px solid rgba(16,185,129,.25);
-  }
-  .trust-discount{
+  .trust-chip b{font-weight:800;margin-right:2px}
+  .trust-chip .tc-ico{font-size:1rem}
+  .trust-chip-hot{
     background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);
-    color:#0a1f1a;
-    box-shadow:0 4px 12px rgba(251,191,36,.25);
+    color:#0a1f1a;border-color:transparent;
+    box-shadow:0 2px 8px rgba(251,191,36,.25);
   }
   @media (max-width:520px){
-    .trust-badge{font-size:.85rem;padding:10px 16px;text-align:left}
+    .trust-chip{font-size:.78rem;padding:6px 11px;white-space:normal}
   }
 
   /* PRICING */
@@ -1147,19 +1143,10 @@
       <span class="eyebrow">Planes y precios</span>
       <h2 style="margin-top:18px">Pague una vez. Su sitio es suyo.<br>Sin contratos mensuales obligatorios.</h2>
       <p>Elija un plan, lo construimos, se lo entregamos y queda 100% suyo. Si quiere que nosotros lo alojemos, lo monitoreemos y hagamos pequeños cambios cada mes, agregue el Plan Soporte opcional, cancelable cuando quiera.</p>
-      <div class="trust-badges">
-        <div class="trust-badge trust-delivery">
-          <span class="tb-ico">⚡</span>
-          <span class="tb-text"><b>Esencial en 7 días, Crecimiento en 14.</b> O le devolvemos su dinero. Sin excusas.</span>
-        </div>
-        <div class="trust-badge trust-guarantee">
-          <span class="tb-ico">🛡</span>
-          <span class="tb-text"><b>Garantía de 30 días.</b> Si no le gusta su sitio, le devolvemos su dinero. Sin preguntas.</span>
-        </div>
-        <div class="trust-badge trust-discount">
-          <span class="tb-ico">🎁</span>
-          <span class="tb-text">Ahorre <b>$100.000</b> si paga el mismo día que llene el formulario</span>
-        </div>
+      <div class="trust-row">
+        <span class="trust-chip"><span class="tc-ico">⚡</span><b>Entrega 7–14 días</b> o reembolso</span>
+        <span class="trust-chip"><span class="tc-ico">🛡</span><b>Garantía 30 días</b></span>
+        <span class="trust-chip trust-chip-hot"><span class="tc-ico">🎁</span><b>−$100.000</b> si paga hoy</span>
       </div>
     </div>
     <div class="price-grid price-grid-3">
