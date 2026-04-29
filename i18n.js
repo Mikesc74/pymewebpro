@@ -319,6 +319,176 @@
 
     // ── shorter common phrases (placeholders, aria-labels)
     'Sitios web profesionales para pequeños negocios en Colombia': 'Professional websites for small businesses in Colombia',
+
+    // ── hero mock-browser ────────────────────────────────────────────────
+    'https://sunombre.com': 'https://yourbrand.com',
+    'SU NEGOCIO': 'YOUR BUSINESS',
+    'Inicio · Servicios · Contacto': 'Home · Services · Contact',
+    'Bienvenido a su nuevo sitio web profesional': 'Welcome to your new professional website',
+    'Diseño moderno, rápido y listo para convertir visitantes en clientes.': 'Modern, fast design ready to convert visitors into customers.',
+    'Solicitar información →': 'Request info →',
+    'Posicionado': 'Ranked',
+    'Visible en Google': 'Visible on Google',
+    'Formularios': 'Forms',
+    'Leads al correo': 'Leads to email',
+    'Rápido': 'Fast',
+    'PSI 100/100': 'PSI 100/100',
+    '© 2026 Su Negocio': '© 2026 Your Business',
+    'WhatsApp · Email · Maps': 'WhatsApp · Email · Maps',
+    'Cargado en 0.8s': 'Loaded in 0.8s',
+    'Nuevo lead recibido': 'New lead received',
+
+    // ── problem section ─────────────────────────────────────────────────
+    'El problema': 'The problem',
+    'Hoy en Colombia, si su negocio no está en Google, no existe.': "Today in Colombia, if your business isn't on Google, it doesn't exist.",
+    'Sus vecinos, sus clientes y su próxima venta están buscando en el celular antes de salir de casa. Si no lo encuentran a usted, encuentran a la competencia.': 'Your neighbors, your customers, and your next sale are searching on their phone before leaving home. If they don\'t find you, they find your competition.',
+    'Si solo está en Instagram o Facebook…': 'If you\'re only on Instagram or Facebook…',
+    'Está construyendo en terreno alquilado.': 'You\'re building on rented land.',
+    'Las redes sociales no son suyas. Si Instagram cambia el algoritmo o le cierra la cuenta, pierde todos sus clientes. Un sitio web propio nadie se lo quita.': 'Social media platforms aren\'t yours. If Instagram changes its algorithm or closes your account, you lose all your customers. A site you own can\'t be taken away.',
+    'Si no aparece en Google…': 'If you don\'t show up on Google…',
+    'Para sus clientes, no existe.': 'To your customers, you don\'t exist.',
+    'Cuando alguien busca en Google "panadería en mi barrio" o "taller mecánico cerca", aparecen otros. Sin un sitio web propio, usted ni siquiera entra al juego.': 'When someone searches "bakery near me" or "mechanic close by," others show up. Without a site of your own, you\'re not even in the game.',
+    'Si cierra el local a las 8 p.m.…': 'If your shop closes at 8 p.m.…',
+    'Su negocio deja de vender.': 'Your business stops selling.',
+    'Pero los clientes siguen buscando en el celular. Un sitio web con WhatsApp y formulario de contacto sigue trabajando, y al otro día usted abre con mensajes y pedidos esperando.': 'But customers keep searching on their phones. A site with WhatsApp and a contact form keeps working, and the next morning you open up with messages and orders waiting.',
+    'de los colombianos buscan en Google antes de elegir un negocio local': 'of Colombians search Google before choosing a local business',
+    '9 de 10': '9 in 10',
+    'no compran si el negocio no tiene sitio web propio': "won't buy if the business doesn't have its own website",
+
+    // ── what's included headline ────────────────────────────────────────
+    'Lo que recibe': 'What you get',
+    'Todo lo que necesita para que su negocio venda por internet.': 'Everything you need to make your business sell online.',
+
+    // ── build mini cards (compact "what's included" grid) ──────────────
+    'Dominio propio': 'Own domain',
+    'a su nombre, suyo para siempre': 'in your name, yours forever',
+    'info@sunegocio → su Gmail': 'info@yourbiz → your Gmail',
+    'Mapa de Google': 'Google Maps',
+    'integrado con su ubicación': 'embedded with your location',
+    'Barra social': 'Social bar',
+    'WhatsApp, IG, FB y Maps': 'WhatsApp, IG, FB and Maps',
+    'Galería de fotos': 'Photo gallery',
+    'muestre su negocio': 'showcase your business',
+    'Testimonios': 'Testimonials',
+    'reseñas de sus clientes': 'reviews from your customers',
+    'SSL / HTTPS': 'SSL / HTTPS',
+    'su sitio seguro y verificado': 'secure and verified site',
+    'Diseño para celular': 'Mobile design',
+    'se ve perfecto en cualquier pantalla': 'looks perfect on every screen',
+    'Indexado en 7 días': 'Indexed in 7 days',
+    'meta tags + sitemap automático': 'meta tags + auto sitemap',
+    'Velocidad <2s': 'Speed under 2s',
+    'carga ultrarrápida': 'ultra-fast load',
+    '1 ronda de cambios': '1 revision round',
+    'incluida': 'included',
+    'Garantía 30 días': '30-day guarantee',
+    'dinero de vuelta si no le gusta': 'money back if you don\'t love it',
+
+    // ── portfolio cards (full descriptions) ─────────────────────────────
+    'Vea el tipo de sitio que recibe usted.': 'See the kind of site you\'ll get.',
+    'medellin.guide': 'medellin.guide',
+    'barranquilla.guide': 'barranquilla.guide',
+    'thecartagena.guide': 'thecartagena.guide',
+    'mikec.pro': 'mikec.pro',
+    'nortesurconsulting.com': 'nortesurconsulting.com',
+    'Sitio personal y portafolio profesional. Diseño minimalista, contenido en inglés, optimizado para velocidad y SEO.':
+      'Personal site and professional portfolio. Minimalist design, English content, optimized for speed and SEO.',
+    'Consultoría empresarial': 'Business consulting',
+    'Sitio corporativo de consultoría. Diseño moderno, enfocado a generar contactos calificados y comunicar credibilidad.':
+      'Corporate consulting site. Modern design focused on generating qualified leads and communicating credibility.',
+    '¿Listo para tener uno como estos?': 'Ready to have one like these?',
+    'Quiero el mío →': 'I want mine →',
+
+    // ── case-studies headline (rewritten) ───────────────────────────────
+    'Números concretos, no promesas vagas.': 'Concrete numbers, not vague promises.',
+
+    // ── pricing trust badges + delivery pill ────────────────────────────
+    '🎁': '🎁',
+    'O le devolvemos su dinero. Sin excusas.': 'Or your money back. No excuses.',
+    'pago': 'one-time',
+    'único, sin pagos mensuales': 'payment, no monthly fees',
+    'Entrega en 7 días o le devolvemos el dinero': 'Delivery in 7 days or we refund you',
+    'Entrega en 14 días o le devolvemos el dinero': 'Delivery in 14 days or we refund you',
+    'Lanzamiento': 'Launch price',
+
+    // ── plan card extras (mixed inline content) ─────────────────────────
+    'Páginas listas:': 'Pages ready:',
+    'Inicio, servicios, sobre nosotros, contacto y ubicación': 'Home, services, about us, contact and location',
+    'info@sunegocio.com': 'info@yourbusiness.com',
+    'redirigido a su Gmail (sin costo adicional)': 'forwarded to your Gmail (no extra cost)',
+    'Correo profesional': 'Professional email',
+    'El dominio queda a su nombre. Suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)':
+      'Domain stays in your name. Yours forever. We help you pick and configure it (registration ~$50k–$150k/yr, paid by you to the registrar)',
+    'Páginas adicionales:': 'Additional pages:',
+    'Blog/Noticias, galería ampliada, reservas, reseñas, equipo y FAQ': 'Blog/News, extended gallery, bookings, reviews, team, and FAQ',
+    'Garantía de 30 días.': '30-day guarantee.',
+    'Devolvemos su dinero si no le gusta': 'Money back if you don\'t love it',
+    '(valor $270.000 COP)': '(value $270,000 COP)',
+    '+ Google Analytics, Search Console, sitemap.xml y robots.txt configurados.': '+ Google Analytics, Search Console, sitemap.xml, and robots.txt configured.',
+    '+ Google Analytics, Search Console, sitemap.xml, robots.txt y herramientas estándar.': '+ Google Analytics, Search Console, sitemap.xml, robots.txt, and standard tooling.',
+
+    // ── plan CTAs + sub-text ────────────────────────────────────────────
+    'Hablar primero': 'Talk first',
+    '· 20 min, gratis': '· 20 min, free',
+    'Reservar mi cupo →': 'Reserve my spot →',
+
+    // ── support card ────────────────────────────────────────────────────
+    'Plan Soporte (opcional)': 'Support Plan (optional)',
+    'Hosting + monitoreo + cambios menores cada mes': 'Hosting + monitoring + small monthly changes',
+    'COP/mes': 'COP/mo',
+    'Cancelable cuando quiera, sin penalidad.': 'Cancel anytime, no penalty.',
+    'Hospedaje + soporte': 'Hosting + support',
+    'Plan Hosting': 'Hosting Plan',
+    'cancele cuando quiera, sin contrato': 'cancel anytime, no contract',
+    'Hospedaje en la red global de Cloudflare (la misma que usan grandes empresas)': 'Hosting on the global Cloudflare network (the same one big companies use)',
+    'Hospedaje ultrarrápido': 'Ultra-fast hosting',
+    'en la red global de Cloudflare (la misma que usan grandes empresas)': 'on the global Cloudflare network (the same one big companies use)',
+    '99.9% de disponibilidad garantizada, carga en menos de 1 segundo': '99.9% uptime guarantee, page load under 1 second',
+    'Protección anti-ataques (DDoS, hackers, bots)': 'Attack protection (DDoS, hackers, bots)',
+    'Monitoreo 24/7 de su sitio': '24/7 site monitoring',
+    'Pequeños cambios cada mes (horarios, fotos, textos, ofertas)': 'Small monthly changes (hours, photos, copy, offers)',
+    'Backups automáticos y reporte mensual de visitas': 'Automatic backups and monthly visit report',
+    'Agregar Plan Hosting': 'Add Hosting Plan',
+    '$270.000 COP / año prepagado': '$270,000 COP / year prepaid',
+    'Mejor valor': 'Best value',
+    'Ahorra $90.000 (3 meses gratis)': 'Save $90,000 (3 months free)',
+
+    // ── pricing footer note ─────────────────────────────────────────────
+    '¿Aún no sabe cuál? Hablemos 20 minutos por WhatsApp y le recomendamos el indicado, sin compromiso.': "Not sure which one? Let's talk 20 minutes on WhatsApp and we'll recommend the right one, no commitment.",
+
+    // ── network / FAQ section ───────────────────────────────────────────
+    'Preguntas frecuentes': 'Frequently asked questions',
+    'Lo que nos preguntan los dueños de negocio.': 'What business owners ask us.',
+    '¿Y si no sé nada de tecnología?': 'What if I don\'t know anything about tech?',
+    'Justo para eso estamos nosotros. Usted no toca ni una línea de código. Le pedimos sus fotos, sus textos (o los escribimos nosotros), y le entregamos el sitio listo y funcionando.':
+      "That's exactly what we're here for. You don't touch a single line of code. We ask for your photos and copy (or we write it for you), and we hand over the site ready to go.",
+    '¿Qué pasa después de lanzar?': 'What happens after launch?',
+    'Le entregamos su sitio funcionando y le enseñamos a manejarlo. Si quiere que nosotros lo alojemos, lo monitoreemos y le hagamos pequeños cambios cada mes, puede agregar el Plan Hosting opcional, sin contrato.':
+      'We hand over the site running and show you how to manage it. If you want us to host it, monitor it, and make small monthly changes, you can add the optional Hosting Plan, no contract.',
+
+    // ── process section steps ───────────────────────────────────────────
+    'Día 1': 'Day 1',
+    'Lanzamos y le entregamos las llaves': 'We launch and hand over the keys',
+    'Su dominio queda en su nombre': 'Your domain stays in your name',
+    'Le mostramos cómo hacer cambios pequeños': 'We show you how to make small edits',
+    'Soporte por WhatsApp para preguntas': 'WhatsApp support for questions',
+    'Su sitio empieza a recibir clientes': 'Your site starts getting customers',
+
+    // ── form / contact section extras ───────────────────────────────────
+    'Hablemos hoy mismo': "Let's talk today",
+    'Reserve su sitio web en menos de 2 minutos.': 'Reserve your website in under 2 minutes.',
+
+    // ── footer ──────────────────────────────────────────────────────────
+    'Pensado y construido para el negocio colombiano.': 'Designed and built for the Colombian business.',
+    'Hecho con ❤ en Colombia': 'Made with ❤ in Colombia',
+    'Restaurantes, peluquerías, talleres, tiendas y más.': 'Restaurants, salons, garages, shops, and more.',
+    'Peluquerías &amp; spas': 'Salons & spas',
+    'Tiendas &amp; consultorios': 'Shops & clinics',
+    'Tiendas & consultorios': 'Shops & clinics',
+    'Peluquerías & spas': 'Salons & spas',
+
+    // ── lang toggle ─────────────────────────────────────────────────────
+    'Toggle language': 'Toggle language',
   };
 
   // ─── helpers ──────────────────────────────────────────────────────────────
@@ -371,13 +541,15 @@
     const replacements = [];
     let node;
     while ((node = walker.nextNode())) {
-      const trimmed = node.nodeValue.trim();
-      if (EN[trimmed]) {
-        replacements.push([node, EN[trimmed]]);
+      // Normalize internal whitespace (newlines + indentation collapse to single
+      // space) so paragraphs in the HTML match their single-line keys.
+      const normalized = node.nodeValue.replace(/\s+/g, ' ').trim();
+      if (EN[normalized]) {
+        replacements.push([node, EN[normalized]]);
       }
     }
     for (const [n, en] of replacements) {
-      // Preserve surrounding whitespace
+      // Preserve leading/trailing whitespace to keep adjacent inline content tidy
       const leading = n.nodeValue.match(/^\s*/)[0];
       const trailing = n.nodeValue.match(/\s*$/)[0];
       n.nodeValue = leading + en + trailing;

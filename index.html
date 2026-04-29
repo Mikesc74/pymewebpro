@@ -328,6 +328,19 @@
   }
   .build-card h3{font-size:1.2rem;margin-bottom:8px}
   .build-card p{color:var(--muted);font-size:.95rem}
+  /* Mini build cards: tight grid, ~half size, no long descriptions */
+  .build-grid-mini{grid-template-columns:repeat(4,1fr);gap:12px}
+  @media (max-width:980px){.build-grid-mini{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:600px){.build-grid-mini{grid-template-columns:repeat(2,1fr);gap:10px}}
+  .build-mini{
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px 16px;text-align:left;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .build-mini:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(10,31,26,.06);border-color:var(--green)}
+  .bm-ico{font-size:1.5rem;line-height:1;margin-bottom:10px}
+  .build-mini h4{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;margin:0 0 4px;color:var(--ink);letter-spacing:-.005em}
+  .build-mini span{display:block;color:var(--muted);font-size:.78rem;line-height:1.4}
 
   /* PORTFOLIO */
   .portfolio{background:var(--bg)}
@@ -995,11 +1008,19 @@
       <span class="eyebrow">Lo que recibe</span>
       <h2 style="margin-top:18px">Todo lo que necesita para que<br>su negocio venda por internet.</h2>
     </div>
-    <div class="build-grid">
-      <article class="build-card reveal"><div class="ico">URL</div><h3>Su propio dominio, suyo para siempre</h3><p>El dominio lo registra usted directamente (a su nombre, suyo para siempre). Le ayudamos a elegirlo y configurarlo. Costo aproximado: $50k–$150k/año según el dominio que escoja. Usted decide.</p></article>
-      <article class="build-card reveal"><div class="ico">MOV</div><h3>Listo para celular</h3><p>9 de cada 10 clientes lo van a buscar desde el celular. Su sitio se ve perfecto en cualquier pantalla.</p></article>
-      <article class="build-card reveal"><div class="ico">SEC</div><h3>SEO y seguridad</h3><p>HTTPS, código limpio y rápido, datos estructurados para Google, y respaldo automático todos los días. Su sitio es sólido y aparece bien posicionado.</p></article>
-      <article class="build-card reveal"><div class="ico">SEO</div><h3>Listo para Google</h3><p>Configurado desde el primer día para que sus clientes locales lo encuentren.</p></article>
+    <div class="build-grid build-grid-mini">
+      <article class="build-mini reveal"><div class="bm-ico">🌐</div><h4>Dominio propio</h4><span>a su nombre, suyo para siempre</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">✉️</div><h4>Correo profesional</h4><span>info@sunegocio → su Gmail</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">📍</div><h4>Mapa de Google</h4><span>integrado con su ubicación</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">🔗</div><h4>Barra social</h4><span>WhatsApp, IG, FB y Maps</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">🖼</div><h4>Galería de fotos</h4><span>muestre su negocio</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">⭐</div><h4>Testimonios</h4><span>reseñas de sus clientes</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">🔒</div><h4>SSL / HTTPS</h4><span>su sitio seguro y verificado</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">📱</div><h4>Diseño para celular</h4><span>se ve perfecto en cualquier pantalla</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">⚡</div><h4>Indexado en 7 días</h4><span>meta tags + sitemap automático</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">🚀</div><h4>Velocidad &lt;2s</h4><span>carga ultrarrápida</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">✏️</div><h4>1 ronda de cambios</h4><span>incluida</span></article>
+      <article class="build-mini reveal"><div class="bm-ico">🛡</div><h4>Garantía 30 días</h4><span>dinero de vuelta si no le gusta</span></article>
     </div>
   </div>
 </section>
