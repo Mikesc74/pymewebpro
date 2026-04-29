@@ -138,7 +138,7 @@
 
     // ── pricing ─────────
     'Planes y precios': 'Plans & pricing',
-    'Pague una vez. Su sitio es suyo.<br>Sin contratos mensuales obligatorios.': 'Pay once. Your site is yours.<br>No mandatory monthly contracts.',
+    'Pague una vez. Su sitio es suyo. Sin contratos mensuales obligatorios.': 'Pay once. Your site is yours. No mandatory monthly contracts.',
     'Elija un plan, lo construimos, se lo entregamos y queda 100% suyo. Si quiere que nosotros lo alojemos, lo monitoreemos y hagamos pequeños cambios cada mes, agregue el Plan Soporte opcional, cancelable cuando quiera.':
       "Pick a plan, we build it, we deliver it, and it's 100% yours. If you'd like us to host it, monitor it, and make small changes each month, add the optional Support Plan, cancel anytime.",
     'Esencial en 7 días, Crecimiento en 14.': 'Essential in 7 days, Growth in 14.',
@@ -590,10 +590,7 @@
       { sel: '.hero h1',
         es: 'Su negocio<br>merece estar<br><span class="underline">en</span> <span class="accent">internet.</span>',
         en: 'Your business<br>belongs<br><span class="underline">on</span> <span class="accent">the internet.</span>' },
-      // What we build h2
-      { sel: '#incluye .section-head h2',
-        es: 'Todo lo que necesita para que<br>su negocio venda por internet.',
-        en: 'Everything you need to make<br>your business sell online.' },
+      // What we build h2 (no <br>; handled by text-walker via single-line key)
       // Portfolio h2
       { sel: '#portafolio .section-head h2',
         es: 'Vea el tipo de sitio<br>que recibe usted.',
@@ -602,10 +599,7 @@
       { sel: '#nosotros .section-head h2',
         es: 'Hecho a la medida<br>desde Medellín.',
         en: 'Built by hand<br>from Medellín.' },
-      // Pricing h2
-      { sel: '#paquetes .section-head h2',
-        es: 'Pague una vez. Su sitio es suyo.<br>Sin contratos mensuales obligatorios.',
-        en: 'Pay once. Your site is yours.<br>No mandatory monthly contracts.' },
+      // Pricing h2 (no <br>; handled by text-walker via single-line key)
       // CTA / form h2
       { sel: '#contacto .cta-grid h2',
         es: 'Reserve su sitio web<br>en menos de 2 minutos.',
