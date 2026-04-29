@@ -118,10 +118,10 @@
 
     // ── nosotros ────────
     'Hecho a la medida<br>desde Medellín.': 'Built by hand<br>from Medellín.',
-    'No somos una agencia gigante con call-center en otro país. Somos dos personas que llevan años construyendo sitios web para negocios reales (restaurantes, talleres, peluquerías, profesionales) y entendemos cómo funciona la realidad colombiana: pago contado, WhatsApp como canal principal, márgenes ajustados, sin tiempo para perder.':
-      "We're not a giant agency with a call center in another country. We're two people who have spent years building websites for real businesses (restaurants, garages, salons, professionals) and we understand the reality on the ground in Colombia: cash payments, WhatsApp as the main channel, tight margins, no time to waste.",
+    'Somos el equipo de liderazgo de NORTE SUR CONSULTING. Llevamos años construyendo sitios web para negocios reales (restaurantes, talleres, peluquerías, profesionales) y entendemos cómo funciona la realidad colombiana: pago contado, WhatsApp como canal principal, márgenes ajustados, sin tiempo para perder.':
+      "We're the leadership team at NORTE SUR CONSULTING. We've spent years building websites for real businesses (restaurants, garages, salons, professionals) and we understand the reality on the ground in Colombia: cash payments, WhatsApp as the main channel, tight margins, no time to waste.",
     'Cuando le respondemos un mensaje, le respondemos nosotros': 'When we reply to a message, we reply ourselves',
-    ', no un bot, no un junior. Esa es la diferencia.': ', no bot, no junior. That\'s the difference.',
+    ', no un bot. Esa es la diferencia.': ", no bot. That's the difference.",
     'Correo profesional': 'Professional email',
     'redirigido a su Gmail (sin costo adicional)': 'forwarded to your Gmail (no extra cost)',
     'Co-fundador & Diseñador': 'Co-founder & Designer',
@@ -404,8 +404,6 @@
     'Visitar inviersol.com →': 'Visit inviersol.com →',
     'Visitar medellin.guide →': 'Visit medellin.guide →',
     'Visitar nortesurconsulting.com →': 'Visit nortesurconsulting.com →',
-    'Estamos midiendo los resultados de negocio de INVIERSOL — llamadas, mensajes y búsquedas locales. Publicaremos los números reales con su permiso a los 30, 60 y 90 días.':
-      "We're measuring INVIERSOL's business results — calls, messages, and local searches. With their permission, we'll publish the real numbers at 30, 60, and 90 days.",
 
     // ── build mini cards (compact "what's included" grid) ──────────────
     'Dominio propio': 'Own domain',
