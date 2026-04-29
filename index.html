@@ -591,6 +591,43 @@
   .price-foot{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px}
   .price-fine{font-size:.78rem;color:var(--muted);margin:0 0 18px;line-height:1.5;padding-top:14px;border-top:1px dashed var(--line)}
   .price-card.featured .price-fine{color:#a3b3ac;border-top-color:rgba(255,255,255,.12)}
+  /* Accordion: hide secondary features behind 'Ver todo lo incluido' */
+  .price-more{margin:0 0 24px}
+  .price-more summary{
+    list-style:none;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.86rem;font-weight:600;color:var(--blue);
+    padding:6px 0;letter-spacing:.01em;
+    transition:color .15s ease;
+  }
+  .price-more summary::-webkit-details-marker{display:none}
+  .price-more summary::after{
+    content:"▾";display:inline-block;font-size:.72rem;
+    transition:transform .2s ease;
+  }
+  .price-more[open] summary::after{transform:rotate(180deg)}
+  .price-more summary:hover{color:var(--ink)}
+  .price-more .price-feats-more{
+    margin:8px 0 0;animation:fadeIn .25s ease;
+  }
+  .price-more .price-feats-more li{
+    font-size:.88rem;color:var(--muted);padding:6px 0 6px 26px;
+  }
+  .price-more .price-feats-more li::before{
+    width:16px;height:16px;font-size:.62rem;top:9px;
+    background:var(--bg-2);color:var(--muted);
+  }
+  /* Featured (dark) card variant */
+  .price-card.featured .price-more summary{color:var(--amber)}
+  .price-card.featured .price-more summary:hover{color:#fff}
+  .price-card.featured .price-more .price-feats-more li{color:#a3b3ac}
+  .price-card.featured .price-more .price-feats-more li::before{background:rgba(255,255,255,.08);color:#a3b3ac}
+  /* Support card variant */
+  .price-card.price-card-support .price-more summary{color:var(--yellow)}
+  .price-card.price-card-support .price-more summary:hover{color:#fff}
+  .price-card.price-card-support .price-more .price-feats-more li{color:#bdc7e0}
+  .price-card.price-card-support .price-more .price-feats-more li::before{background:rgba(255,255,255,.08);color:#bdc7e0}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
   /* Dual CTAs: Hablar primero (secondary) + Reservar mi cupo (primary) */
   .price-ctas{display:flex;flex-direction:column;gap:8px;margin-top:auto}
   .btn-talk,.btn-reserve{
@@ -1084,20 +1121,25 @@
         <div class="price-delivery"><span class="pd-ico">⚡</span><strong>Entrega en 7 días</strong> desde su brief, o le devolvemos el dinero</div>
         <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
         <ul class="price-feats">
-          <li>Páginas listas: <b>Inicio, servicios, sobre nosotros, contacto y ubicación</b></li>
-          <li>Correo profesional <b>info@sunegocio.com</b> redirigido a su Gmail (sin costo adicional)</li>
-          <li>Mapa de Google integrado con su ubicación</li>
-          <li>Barra social: WhatsApp, Instagram, Facebook y Google Maps en un clic desde el celular</li>
-          <li>Galería de fotos para mostrar su negocio</li>
-          <li>Sección de testimonios o reseñas de sus clientes</li>
-          <li>Certificado SSL (HTTPS) incluido (su sitio seguro y verificado por Google)</li>
-          <li>Diseño listo para celular</li>
-          <li>Indexado en Google en 7 días, meta tags optimizadas por página, sitemap automático y carga en menos de 1 segundo</li>
+          <li><b>5 páginas:</b> Inicio, servicios, sobre nosotros, contacto y ubicación</li>
+          <li>Correo profesional <b>info@sunegocio.com</b> redirigido a su Gmail</li>
+          <li>Mapa de Google integrado + diseño listo para celular</li>
+          <li>SSL/HTTPS incluido + indexado en Google en 7 días</li>
           <li>2 rondas de cambios incluidas</li>
-          <li><strong>Garantía de 30 días.</strong> Devolvemos su dinero si no le gusta</li>
-          <li>El dominio queda a su nombre. Suyo para siempre. Le ayudamos a elegirlo y configurarlo (registro ~$50k–$150k/año, lo paga usted al registrador)</li>
+          <li><strong>Garantía de 30 días</strong> · le devolvemos el dinero si no le gusta</li>
         </ul>
-        <p class="price-fine">+ Google Analytics, Search Console, sitemap.xml y robots.txt configurados.</p>
+        <details class="price-more">
+          <summary>Ver todo lo incluido</summary>
+          <ul class="price-feats price-feats-more">
+            <li>Barra social: WhatsApp, Instagram, Facebook y Maps en un clic</li>
+            <li>Galería de fotos para mostrar su negocio</li>
+            <li>Sección de testimonios o reseñas de clientes</li>
+            <li>Meta tags optimizadas por página + sitemap automático</li>
+            <li>Carga en menos de 1 segundo</li>
+            <li>El dominio queda a su nombre, suyo para siempre (registro ~$50k–$150k/año al registrador)</li>
+            <li>+ Google Analytics, Search Console, sitemap.xml y robots.txt configurados</li>
+          </ul>
+        </details>
         <div class="price-ctas">
           <a class="btn btn-talk" href="https://portal.pymewebpro.com/go/whatsapp?campaign=plan_esencial&text=Hola%2C%20me%20interesa%20el%20plan%20Esencial%20(%24890k).%20Quisiera%20hacer%20unas%20preguntas%20antes%20de%20avanzar." target="_blank" rel="noopener">Hablar por WhatsApp <small>· respuesta en minutos</small></a>
           <a class="btn btn-reserve" href="#contacto" data-plan="esencial">Reservar mi cupo →</a>
@@ -1112,25 +1154,28 @@
         <div class="price-delivery"><span class="pd-ico">⚡</span><strong>Entrega en 14 días</strong> desde su brief, o le devolvemos el dinero</div>
         <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
         <ul class="price-feats">
-          <li>Todo lo del plan Esencial, más:</li>
-          <li><strong>1 año de hosting incluido</strong> (valor $360.000 COP — $30.000 × 12)</li>
-          <li>Páginas adicionales: <b>Blog/Noticias, galería ampliada, reservas, reseñas, equipo y FAQ</b></li>
-          <li>Sección de Blog/Noticias real (publica sus propias entradas cuando quiera)</li>
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><strong>1 año de hosting incluido</strong> (valor $360.000 COP)</li>
+          <li><b>Páginas adicionales:</b> Blog, galería ampliada, reservas, equipo y FAQ</li>
           <li>Versión bilingüe (español + inglés)</li>
-          <li>Google Business Profile configurado y verificado</li>
-          <li>Logo nuevo o refresh con diseño asistido por IA</li>
-          <li>Sistema de agendamiento o reservas integrado</li>
-          <li>PDF descargable (menú, catálogo o ficha técnica) optimizado para celular</li>
-          <li>Captura de correos integrada (suscripciones a newsletter o promociones)</li>
-          <li>Catálogo de WhatsApp Business enlazado (si vende productos)</li>
-          <li>Conversion tracking: Meta Pixel + GA4 con metas de conversión configuradas</li>
-          <li>Formulario de contacto con confirmación automática al cliente</li>
-          <li>Datos estructurados para que Google muestre horarios, ubicación y reseñas en los resultados</li>
-          <li>Optimización de velocidad y rendimiento (Core Web Vitals)</li>
-          <li>Hasta 5 rondas de cambios incluidas</li>
-          <li><strong>Garantía de 30 días.</strong> Devolvemos su dinero si no le gusta</li>
+          <li>Google Business Profile + logo asistido por IA</li>
+          <li>5 rondas de cambios incluidas</li>
+          <li><strong>Garantía de 30 días</strong> · le devolvemos el dinero si no le gusta</li>
         </ul>
-        <p class="price-fine">+ Google Analytics, Search Console, sitemap.xml, robots.txt y herramientas estándar.</p>
+        <details class="price-more">
+          <summary>Ver todo lo incluido</summary>
+          <ul class="price-feats price-feats-more">
+            <li>Sistema de agendamiento o reservas integrado</li>
+            <li>PDF descargable (menú, catálogo o ficha técnica)</li>
+            <li>Captura de correos para newsletter o promociones</li>
+            <li>Catálogo de WhatsApp Business enlazado</li>
+            <li>Conversion tracking: Meta Pixel + GA4 con metas configuradas</li>
+            <li>Formulario de contacto con confirmación automática</li>
+            <li>Datos estructurados para resultados enriquecidos en Google</li>
+            <li>Optimización de Core Web Vitals (velocidad y rendimiento)</li>
+            <li>+ Google Analytics, Search Console, sitemap.xml y robots.txt configurados</li>
+          </ul>
+        </details>
         <div class="price-ctas">
           <a class="btn btn-talk" href="https://portal.pymewebpro.com/go/whatsapp?campaign=plan_crecimiento&text=Hola%2C%20me%20interesa%20el%20plan%20Crecimiento%20(%241.790k).%20Quisiera%20hacer%20unas%20preguntas%20antes%20de%20avanzar." target="_blank" rel="noopener">Hablar por WhatsApp <small>· respuesta en minutos</small></a>
           <a class="btn btn-reserve btn-reserve-featured" href="#contacto" data-plan="crecimiento">Reservar mi cupo →</a>
@@ -1149,14 +1194,21 @@
           <span class="annual-save">Ahorra $90.000 (3 meses gratis)</span>
         </div>
         <ul class="price-feats">
-          <li><b>Hospedaje ultrarrápido</b> en la red global de Cloudflare (la misma que usan grandes empresas)</li>
-          <li>99.9% de disponibilidad garantizada, carga en menos de 1 segundo</li>
-          <li>Protección anti-ataques (DDoS, hackers, bots)</li>
-          <li>Monitoreo 24/7 de su sitio</li>
+          <li><b>Hospedaje ultrarrápido</b> en Cloudflare (99.9% uptime)</li>
           <li>Pequeños cambios cada mes (horarios, fotos, textos, ofertas)</li>
-          <li>Respuesta prioritaria por WhatsApp (los clientes con Plan Hosting van primero en la cola)</li>
-          <li>Backups automáticos y reporte mensual de visitas</li>
+          <li>Respuesta prioritaria por WhatsApp</li>
+          <li><b>Sin contrato</b> · cancele cuando quiera</li>
         </ul>
+        <details class="price-more">
+          <summary>Ver todo lo incluido</summary>
+          <ul class="price-feats price-feats-more">
+            <li>Protección anti-ataques (DDoS, hackers, bots)</li>
+            <li>Monitoreo 24/7 + alertas si su sitio cae</li>
+            <li>Backups automáticos diarios</li>
+            <li>Reporte mensual de visitas</li>
+            <li>Carga en menos de 1 segundo desde cualquier ciudad de Colombia</li>
+          </ul>
+        </details>
         <a class="btn btn-yellow" href="#contacto">Agregar Plan Hosting</a>
       </article>
     </div>
