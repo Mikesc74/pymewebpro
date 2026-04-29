@@ -417,6 +417,10 @@
       'Corporate consulting site. Clean design, bilingual ES/EN, focused on generating qualified leads and communicating credibility.',
     'Sitio personal y portafolio profesional. Diseño minimalista, contenido en inglés, optimizado para velocidad y SEO técnico.':
       'Personal site and professional portfolio. Minimalist design, English content, optimized for speed and technical SEO.',
+    'Educación · Inglés': 'Education · English',
+    'Escuela de inglés en Medellín. Sitio bilingüe, optimizado para que estudiantes encuentren información de cursos, niveles y horarios antes de la primera clase.':
+      'English school in Medellín. Bilingual site, optimized so students find course info, levels, and schedules before their first class.',
+    'Visitar MC English →': 'Visit MC English →',
     // Card pills
     'Mapa + WhatsApp': 'Map + WhatsApp',
     'Galería': 'Gallery',
@@ -445,6 +449,17 @@
     'Negocios que confiaron<br>y vieron resultados.': 'Businesses that trusted us<br>and saw results.',
     'Voces reales de clientes que pasaron de "no aparezco en Google" a "me están escribiendo todos los días."':
       'Real voices from customers who went from "I don\'t show up on Google" to "people message me every day."',
+    // Testimonial quotes
+    '"Antes nadie sabía que existíamos. Ahora los estudiantes nos encuentran en Google, nos escriben por WhatsApp y llegan a la primera clase ya informados. El sitio hace el trabajo de explicar lo que yo no tengo tiempo de explicar."':
+      '"Nobody knew we existed before. Now students find us on Google, message us on WhatsApp, and show up to their first class already informed. The site does the work of explaining what I don\'t have time to explain."',
+    '"Necesitaba un sitio rápido y bien posicionado en Google sin pagar anuncios. Eso fue exactamente lo que entregaron. A los tres meses ya aparecía en la primera página para varias búsquedas locales."':
+      '"I needed a fast site that ranked well on Google without paying for ads. That\'s exactly what they delivered. Within three months I was on page one for several local searches."',
+    '"Llevamos casi 20 años en el mercado pero no teníamos sitio web. Ahora los clientes nos encuentran con horarios, fotos de proyectos y botón directo de WhatsApp — y llegan listos para cotizar, no a preguntar lo básico."':
+      '"We\'ve been in the market for almost 20 years but had no website. Now customers find us with hours, project photos, and a direct WhatsApp button — and they come ready to request a quote, not to ask the basics."',
+    // Testimonial roles
+    'Fundadora · MC English': 'Founder · MC English',
+    'Fundador · Barranquilla.guide': 'Founder · Barranquilla.guide',
+    'Director · INVIERSOL': 'Director · INVIERSOL',
 
     // ── build mini cards (compact "what's included" grid) ──────────────
     'Dominio propio': 'Own domain',
