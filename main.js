@@ -26,17 +26,6 @@ const io = new IntersectionObserver((entries)=>{
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// Hero form: opens WhatsApp prefilled with name + phone
-function submitHeroForm(e){
-  e.preventDefault();
-  const f = document.getElementById('heroForm');
-  const data = new FormData(f);
-  const msg = encodeURIComponent(`Hola, soy ${data.get('nombre')}. Quiero un sitio web para mi negocio. Mi WhatsApp: ${data.get('whatsapp')}`);
-  window.open(`https://portal.pymewebpro.com/go/whatsapp?campaign=hero_form&text=${msg}`,'_blank');
-  f.classList.add('sent');
-  return false;
-}
-
 // When user clicks "Reservar mi cupo →" on a plan card, preselect the
 // matching radio button on the contact form (the href #contacto handles
 // the scroll). Then re-trigger the submit-button-label sync.
@@ -110,42 +99,57 @@ async function submitForm(e){
     });
     if (resp.ok) {
       const result = await resp.json().catch(() => ({}));
-      // If we got a confirm_url back AND they picked a paid plan, redirect them
-      // to the pay page where they can lock in the $100k discount within 24h.
-      if (result.confirm_url) {
-        window.location.href = result.confirm_url;
-        return false;
-      }
-      // Otherwise (no plan selected, "No estoy seguro"), just show success state.
-      f.classList.add('sent');
+      // Single mental model: server's response decides where the user goes.
+      // Paid plan with a portal confirm URL → straight to pay page.
+      // Otherwise → /gracias.html (mirrors what the no-JS native form post
+      // already does via the server-side 303). The user is never left in an
+      // ambiguous "did this work?" state — they always end up on a real page.
+      window.location.href = result.confirm_url || '/gracias.html';
       return false;
     }
-    // server-side problem: fall through to WhatsApp fallback
     console.warn('Contact API returned', resp.status);
   } catch (err) {
     console.warn('Contact API unreachable:', err);
   }
 
+  // API call failed (network or 5xx). Don't pretend success and don't
+  // auto-open a WhatsApp tab — both behaviors hide the failure and produce
+  // the "form sent, nobody replied" pattern. Surface it inline and offer
+  // WhatsApp as an explicit alternative the user can choose.
   btn.disabled = false;
   btn.innerHTML = originalLabel;
-
-  // Fallback: open WhatsApp prefilled with all answers
-  const msg = encodeURIComponent(
-`Hola, vengo del sitio web pymewebpro.com.
-
-Nombre: ${data.get('nombre')}
-Negocio: ${data.get('negocio')}
-Correo: ${data.get('email')}
-WhatsApp: ${data.get('whatsapp')}
-Tipo de negocio: ${data.get('tipo')}
-Plan que me interesa: ${data.get('plan')||'No especificado'}
-Plan Hosting: ${data.get('hosting')||'No especificado'}
-
-Mensaje: ${data.get('mensaje')||'(sin mensaje adicional)'}`
-  );
-  window.open(`https://portal.pymewebpro.com/go/whatsapp?campaign=form_fallback&text=${msg}`,'_blank');
-  f.classList.add('sent');
+  showFormError(f, data);
   return false;
+}
+
+function showFormError(f, data) {
+  let banner = f.querySelector('.form-error');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.className = 'form-error';
+    banner.setAttribute('role', 'alert');
+    banner.style.cssText =
+      'background:#fce4e7;border:1px solid #ce1126;color:#7a0817;' +
+      'padding:14px 18px;border-radius:10px;margin:0 0 16px;font-size:.95rem;line-height:1.5';
+    const fields = f.querySelector('.form-fields');
+    if (fields) fields.prepend(banner);
+    else f.prepend(banner);
+  }
+  const msg = encodeURIComponent(
+    'Hola, no pude enviar el formulario en pymewebpro.com.\n\n' +
+    `Nombre: ${data.get('nombre') || ''}\n` +
+    `Negocio: ${data.get('negocio') || ''}\n` +
+    `WhatsApp: ${data.get('whatsapp') || ''}`
+  );
+  banner.innerHTML =
+    'No pudimos enviar su mensaje en este momento. ' +
+    'Escríbanos directo y le respondemos hoy mismo: ' +
+    '<a href="https://wa.me/573014047722?text=' + msg + '" ' +
+      'style="color:inherit;text-decoration:underline;font-weight:600" ' +
+      'rel="noopener">WhatsApp +57 301 404 7722</a> · ' +
+    '<a href="mailto:ventas@pymewebpro.com" ' +
+      'style="color:inherit;text-decoration:underline;font-weight:600">ventas@pymewebpro.com</a>';
+  banner.scrollIntoView({behavior: 'smooth', block: 'center'});
 }
 
 // Wire up contact form submit (was previously inline onsubmit attribute,
