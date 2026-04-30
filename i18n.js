@@ -16,6 +16,8 @@
     'Planes': 'Plans',
     'Proceso': 'Process',
     'Contacto': 'Contact',
+    'Abrir menú': 'Open menu',
+    'Cerrar menú': 'Close menu',
 
     // ── hero ────────────
     '● Ya no hay excusa para no estar en internet': '● No more excuses for not being online',

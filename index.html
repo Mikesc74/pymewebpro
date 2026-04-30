@@ -124,7 +124,38 @@
   .nav-links{display:flex;gap:34px;font-size:.95rem;font-weight:500;color:var(--ink-soft)}
   .nav-links a:hover{color:var(--coral)}
   .nav-cta{display:flex;gap:10px;align-items:center}
-  @media (max-width:880px){.nav-links{display:none}.nav-cta .btn-ghost{display:none}}
+  /* Hamburger toggle (hidden on desktop) */
+  .nav-toggle{
+    display:none;background:transparent;border:1px solid var(--line);
+    width:42px;height:42px;border-radius:10px;cursor:pointer;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;
+    padding:0;transition:border-color .15s;
+  }
+  .nav-toggle:hover{border-color:var(--ink)}
+  .nav-toggle-bar{
+    display:block;width:20px;height:2px;background:var(--ink);
+    transition:transform .25s ease, opacity .15s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2){opacity:0}
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  /* Mobile nav panel */
+  .mobile-nav{
+    display:none;background:var(--bg);border-top:1px solid var(--line);
+    padding:10px 16px 20px;flex-direction:column;
+  }
+  .mobile-nav a{
+    padding:14px 8px;font-size:1.05rem;font-weight:600;color:var(--ink);
+    border-bottom:1px solid var(--line);text-decoration:none;
+  }
+  .mobile-nav a:last-child{border-bottom:none}
+  .mobile-nav a:hover{color:var(--coral)}
+  .mobile-nav.open{display:flex}
+  @media (max-width:880px){
+    .nav-links{display:none}
+    .nav-cta .btn-ghost{display:none}
+    .nav-toggle{display:inline-flex}
+  }
 
   /* HERO */
   .hero{
@@ -899,7 +930,19 @@
         <span class="lang-sep">/</span>
         <span class="lang-other">EN</span>
       </button>
+      <button id="navToggle" class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
     </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <a href="#trabajo">Trabajo</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#paquetes">Planes</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#contacto">Contacto</a>
   </div>
 </nav>
 
@@ -1389,6 +1432,28 @@
 </a>
 
 <script>
+  // Mobile hamburger menu
+  (function bindNavToggle(){
+    const btn = document.getElementById('navToggle');
+    const panel = document.getElementById('mobileNav');
+    if(!btn || !panel) return;
+    function setOpen(open){
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      if(open){ panel.removeAttribute('hidden'); panel.classList.add('open'); }
+      else { panel.classList.remove('open'); panel.setAttribute('hidden',''); }
+    }
+    btn.addEventListener('click', () => {
+      setOpen(btn.getAttribute('aria-expanded') !== 'true');
+    });
+    // Close when a nav link is tapped
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    // Close on Esc
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') setOpen(false); });
+    // Close on resize above breakpoint
+    window.addEventListener('resize', () => { if(window.innerWidth > 880) setOpen(false); });
+  })();
+
   // Reveal on scroll
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
