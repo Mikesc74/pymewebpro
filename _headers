@@ -1,0 +1,17 @@
+# Cloudflare Pages _headers
+# Format: blank line between blocks. First line of each block is a path
+# pattern; following indented lines are headers to add to responses for
+# matching paths.
+#
+# Pattern /* matches every path. To override per-path, add another block
+# with a more specific pattern below (Pages picks the most specific match).
+
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=(), browsing-topics=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
