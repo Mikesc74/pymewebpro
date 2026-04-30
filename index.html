@@ -871,9 +871,50 @@
   .foot-col a:hover{color:var(--amber)}
   .foot-legal{
     padding:18px 0;border-top:1px solid rgba(255,255,255,.1);
-    color:rgba(255,255,255,.5);font-size:.78rem;line-height:1.55;
+    color:rgba(255,255,255,.5);font-size:.78rem;line-height:1.7;
   }
   .foot-legal b{color:rgba(255,255,255,.75);font-weight:600}
+  .foot-legal div{margin:1px 0}
+  .foot-legal a{color:rgba(255,255,255,.65)}
+  .foot-legal a:hover{color:#fff;text-decoration:underline}
+
+  /* Trust badges + payment row */
+  .trust-strip{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;
+    margin:36px auto 0;max-width:840px;
+  }
+  .trust-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:1px solid var(--line);
+    padding:8px 14px;border-radius:999px;
+    font-size:.82rem;color:var(--ink);font-weight:500;
+  }
+  .trust-pill svg{width:14px;height:14px;flex-shrink:0;color:var(--blue)}
+  .pay-strip{
+    background:rgba(255,255,255,.5);border:1px solid var(--line);
+    border-radius:14px;padding:14px 18px;margin-top:28px;
+    text-align:center;font-size:.88rem;color:var(--ink);
+  }
+  .pay-strip strong{color:var(--blue);font-weight:600}
+  .pay-methods{
+    display:inline-flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:center;
+  }
+  .pay-method{
+    background:#fff;border:1px solid var(--line);padding:6px 12px;
+    border-radius:8px;font-size:.78rem;color:var(--ink-soft);font-weight:600;
+    letter-spacing:.02em;
+  }
+  /* Money-back guarantee badge for price cards */
+  .price-guarantee{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(0,56,147,.08);color:var(--blue);
+    padding:6px 12px;border-radius:999px;
+    font-size:.74rem;font-weight:600;letter-spacing:.02em;
+    margin-top:10px;
+  }
+  .price-card.featured .price-guarantee{
+    background:rgba(252,209,22,.18);color:var(--yellow);
+  }
   .foot-bottom{
     border-top:1px solid rgba(255,255,255,.08);padding-top:24px;
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.85rem;
@@ -1369,6 +1410,7 @@
         <div class="price-name">Esencial</div>
         <div class="price-amt"><b>$890.000</b><span>COP</span></div>
         <div class="price-iva">IVA incluido</div>
+        <div class="price-guarantee"><span aria-hidden="true">✓</span> Garantía de 30 días</div>
         <div class="price-delivery"><span class="pd-ico">⚡</span><strong>Entrega en 7 días</strong> desde su brief, o le devolvemos el dinero</div>
         <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
         <ul class="price-feats">
@@ -1403,6 +1445,7 @@
         <div class="price-name">Crecimiento</div>
         <div class="price-amt"><b>$1.790.000</b><span>COP</span></div>
         <div class="price-iva">IVA incluido</div>
+        <div class="price-guarantee"><span aria-hidden="true">✓</span> Garantía de 30 días</div>
         <div class="price-delivery"><span class="pd-ico">⚡</span><strong>Entrega en 14 días</strong> desde su brief, o le devolvemos el dinero</div>
         <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
         <ul class="price-feats">
@@ -1440,6 +1483,7 @@
         <div class="price-name">Plan Hosting</div>
         <div class="price-amt"><b>$30.000</b><span>COP/mes</span></div>
         <div class="price-iva">IVA incluido</div>
+        <div class="price-guarantee"><span aria-hidden="true">✓</span> Garantía de 30 días</div>
         <div class="price-host">cancele cuando quiera, <b>sin contrato</b></div>
         <div class="price-annual">
           <span class="annual-tag">Mejor valor</span>
@@ -1468,6 +1512,31 @@
     <p style="text-align:center;color:var(--muted);font-size:.92rem;margin-top:36px">
       ¿Aún no sabe cuál? Escríbanos por WhatsApp y le recomendamos el indicado, sin compromiso.
     </p>
+
+    <div class="pay-strip">
+      <strong>Pagos seguros vía Wompi</strong> (Bancolombia)
+      <div class="pay-methods">
+        <span class="pay-method">PSE</span>
+        <span class="pay-method">Nequi</span>
+        <span class="pay-method">Tarjeta crédito / débito</span>
+        <span class="pay-method">Hasta 36 cuotas</span>
+      </div>
+    </div>
+
+    <div class="trust-strip">
+      <span class="trust-pill">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.485 1.929a.75.75 0 0 1 .086 1.057l-7 8.5a.75.75 0 0 1-1.114.05l-3-3a.75.75 0 0 1 1.06-1.06l2.42 2.42 6.49-7.881a.75.75 0 0 1 1.058-.086Z"/></svg>
+        Empresa registrada · NIT 901.956.771-1
+      </span>
+      <span class="trust-pill">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.485 1.929a.75.75 0 0 1 .086 1.057l-7 8.5a.75.75 0 0 1-1.114.05l-3-3a.75.75 0 0 1 1.06-1.06l2.42 2.42 6.49-7.881a.75.75 0 0 1 1.058-.086Z"/></svg>
+        Cámara de Comercio de Medellín · matrícula 21-817900-12
+      </span>
+      <span class="trust-pill">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.485 1.929a.75.75 0 0 1 .086 1.057l-7 8.5a.75.75 0 0 1-1.114.05l-3-3a.75.75 0 0 1 1.06-1.06l2.42 2.42 6.49-7.881a.75.75 0 0 1 1.058-.086Z"/></svg>
+        Garantía de 30 días o le devolvemos el dinero
+      </span>
+    </div>
   </div>
 </section>
 
@@ -1618,8 +1687,11 @@
       </div>
     </div>
     <address class="foot-legal" style="font-style:normal">
-      <span><b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín, Antioquia, Colombia · NIT 901.956.771-1 · Cámara de Comercio de Medellín, mat. 21-817900-12</span><br>
-      <span><a href="tel:+573014047722">+57 301 404 7722</a> · <!--email_off--><a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a><!--/email_off--></span>
+      <div><b>PymeWebPro · NORTE SUR CONSULTING S.A.S.</b></div>
+      <div>NIT 901.956.771-1</div>
+      <div>Cámara de Comercio de Medellín · matrícula 21-817900-12</div>
+      <div>Medellín, Antioquia, Colombia</div>
+      <div><a href="tel:+573014047722">+57 301 404 7722</a> · <!--email_off--><a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a><!--/email_off--></div>
     </address>
     <div class="foot-bottom">
       <span>© 2026 PymeWebPro.com · Pensado y construido para el negocio colombiano.</span>
