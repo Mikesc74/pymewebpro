@@ -159,3 +159,38 @@ function showFormError(f, data) {
   if (!f) return;
   f.addEventListener('submit', submitForm);
 })();
+
+// Cookie / data-treatment consent banner (Ley 1581 + Decreto 1377).
+// Pattern: show banner once on first visit; persist choice in localStorage
+// under 'pwp_consent'. Set window.__pwpConsent so future trackers (GA4,
+// Meta Pixel, etc.) can gate initialization on consent. Currently the site
+// runs no third-party tracking, so this is purely informational — but it
+// has to ship before any tracker does, not after.
+(function bindCookieBanner(){
+  const STORAGE_KEY = 'pwp_consent';
+  let stored = null;
+  try { stored = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+
+  // Always expose the current consent state for trackers to query.
+  window.__pwpConsent = stored;
+
+  // If a decision was already made, banner stays hidden. Otherwise reveal it.
+  if (stored === 'accepted' || stored === 'rejected') return;
+  const banner = document.getElementById('cookieBanner');
+  if (!banner) return;
+  banner.removeAttribute('hidden');
+
+  function decide(value){
+    try { localStorage.setItem(STORAGE_KEY, value); } catch (e) {}
+    window.__pwpConsent = value;
+    banner.setAttribute('hidden', '');
+    if (value === 'accepted') {
+      // Trackers can listen for this event to boot themselves once consent
+      // is granted mid-session (instead of only on next page load).
+      document.dispatchEvent(new CustomEvent('pwp:consent-granted'));
+    }
+  }
+
+  document.getElementById('cookieAccept').addEventListener('click', () => decide('accepted'));
+  document.getElementById('cookieReject').addEventListener('click', () => decide('rejected'));
+})();
