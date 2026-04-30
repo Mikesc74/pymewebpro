@@ -1,51 +1,69 @@
-// PymeWebPro · GA4 (consent-gated)
+// PymeWebPro · GA4 with Google Consent Mode v2
 //
-// We never load gtag.js or send a pageview until the user has explicitly
-// accepted cookies via the banner (window.__pwpConsent === 'accepted').
+// gtag.js loads on every page (so GA4's tag-installation auto-detector
+// recognises the property as installed), but starts in 'denied' mode for
+// all storage types — no cookies set, no PII sent — until the visitor
+// explicitly clicks Aceptar on the cookie banner. main.js's bindCookieBanner
+// dispatches the 'pwp:consent-granted' event which we use to flip
+// analytics_storage to 'granted'. Reject or ignore = stays denied.
 //
-// Boot path:
-//   1. On script load, check stored consent. If already 'accepted' → fire.
-//   2. Otherwise listen for the 'pwp:consent-granted' DOM event that
-//      main.js dispatches when the user clicks Accept on the banner. Fire
-//      the moment that event arrives (no page reload required).
-//
-// CSP requires script-src 'self' + googletagmanager.com, connect-src for
-// google-analytics.com + googletagmanager.com, and img-src for the
-// occasional GA pixel — see _headers.
+// CSP: requires https://www.googletagmanager.com in script-src and
+// https://www.google-analytics.com / .googletagmanager.com in connect-src
+// + img-src — see _headers.
 
 (function () {
   'use strict';
 
   const GA_ID = 'G-TEWNM2CXYZ';
-  let booted = false;
 
-  function bootGA() {
-    if (booted) return;
-    booted = true;
+  // 1. Initialize dataLayer + gtag shim
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
 
-    // Load the gtag.js library
-    const s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-    document.head.appendChild(s);
+  // 2. Set Consent Mode defaults BEFORE gtag.js loads.
+  //    All storage denied. Google still receives a privacy-safe
+  //    'modeled' ping (no cookies, no client IDs).
+  window.gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'denied',
+    'personalization_storage': 'denied',
+    'security_storage': 'granted', // CSRF tokens, fraud prevention — always allowed
+    'wait_for_update': 500
+  });
 
-    // Init dataLayer + gtag shim
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
+  // 3. Load the gtag.js library
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+  document.head.appendChild(s);
 
-    window.gtag('js', new Date());
-    window.gtag('config', GA_ID, {
-      anonymize_ip: true,
-      send_page_view: true,
+  // 4. Standard gtag init
+  window.gtag('js', new Date());
+  window.gtag('config', GA_ID, {
+    anonymize_ip: true,
+    send_page_view: true
+  });
+
+  // 5. Consent update path: flip analytics + ad storage to granted
+  //    when the user clicks Aceptar in the cookie banner.
+  function grantAnalytics() {
+    window.gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted',
+      'functionality_storage': 'granted',
+      'personalization_storage': 'granted'
     });
   }
 
-  // Already consented in a prior session
+  // a) Already consented in a prior session
   if (window.__pwpConsent === 'accepted') {
-    bootGA();
-    return;
+    grantAnalytics();
   }
-
-  // First-visit acceptance fires this event from main.js's bindCookieBanner()
-  document.addEventListener('pwp:consent-granted', bootGA);
+  // b) Or fire as soon as Accept is clicked this session
+  document.addEventListener('pwp:consent-granted', grantAnalytics);
 })();
