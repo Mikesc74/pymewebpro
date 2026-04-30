@@ -614,22 +614,39 @@
   .price-foot{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px}
   .price-fine{font-size:.78rem;color:var(--muted);margin:0 0 18px;line-height:1.5;padding-top:14px;border-top:1px dashed var(--line)}
   .price-card.featured .price-fine{color:#a3b3ac;border-top-color:rgba(255,255,255,.12)}
-  /* Accordion: hide secondary features behind 'Ver todo lo incluido' */
-  .price-more{margin:0 0 24px}
+  /* Accordion: hide secondary features behind 'Ver todo lo incluido'.
+     Closed-state summary is styled as a prominent pill with a slow
+     pulse so buyers don't miss it. Open state drops the pulse and
+     becomes a plain header. */
+  .price-more{margin:14px 0 24px}
   .price-more summary{
     list-style:none;cursor:pointer;
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:.86rem;font-weight:600;color:var(--blue);
-    padding:6px 0;letter-spacing:.01em;
-    transition:color .15s ease;
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:1rem;font-weight:700;color:var(--blue);
+    padding:11px 18px;letter-spacing:.01em;
+    background:var(--blue-soft);border:1.5px solid var(--blue);
+    border-radius:999px;
+    transition:transform .15s ease, background .15s ease, color .15s ease;
+    animation:pulseAttn 2.6s ease-in-out infinite;
   }
   .price-more summary::-webkit-details-marker{display:none}
   .price-more summary::after{
-    content:"▾";display:inline-block;font-size:.72rem;
+    content:"▾";display:inline-block;font-size:.78rem;
     transition:transform .2s ease;
   }
+  .price-more[open] summary{
+    background:transparent;border-color:transparent;color:var(--ink-soft);
+    font-size:.86rem;font-weight:600;padding:6px 0;animation:none;
+  }
   .price-more[open] summary::after{transform:rotate(180deg)}
-  .price-more summary:hover{color:var(--ink)}
+  .price-more summary:hover{transform:translateY(-1px);background:var(--blue);color:#fff}
+  @keyframes pulseAttn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 56, 147, .35); }
+    50%      { box-shadow: 0 0 0 10px rgba(0, 56, 147, 0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .price-more summary{animation:none}
+  }
   .price-more .price-feats-more{
     margin:8px 0 0;animation:fadeIn .25s ease;
   }
@@ -640,16 +657,39 @@
     width:16px;height:16px;font-size:.62rem;top:9px;
     background:var(--bg-2);color:var(--muted);
   }
-  /* Featured (dark) card variant */
-  .price-card.featured .price-more summary{color:var(--amber)}
-  .price-card.featured .price-more summary:hover{color:#fff}
+  /* Featured (dark) card variant — pill is yellow on dark navy */
+  .price-card.featured .price-more summary{
+    background:rgba(252,209,22,.15);border-color:var(--amber);color:var(--amber);
+  }
+  .price-card.featured .price-more summary:hover{background:var(--amber);color:var(--ink)}
+  .price-card.featured .price-more[open] summary{
+    background:transparent;border-color:transparent;color:#a3b3ac;
+  }
   .price-card.featured .price-more .price-feats-more li{color:#a3b3ac}
   .price-card.featured .price-more .price-feats-more li::before{background:rgba(255,255,255,.08);color:#a3b3ac}
+  .price-card.featured .price-more summary{
+    animation-name:pulseAttnAmber;
+  }
+  @keyframes pulseAttnAmber {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(252, 209, 22, .45); }
+    50%      { box-shadow: 0 0 0 10px rgba(252, 209, 22, 0); }
+  }
   /* Support card variant */
-  .price-card.price-card-support .price-more summary{color:var(--red)}
-  .price-card.price-card-support .price-more summary:hover{color:#a30e1e}
+  /* Support (hosting) card variant — pill is red on the soft red wash */
+  .price-card.price-card-support .price-more summary{
+    background:rgba(206,17,38,.08);border-color:var(--red);color:var(--red);
+    animation-name:pulseAttnRed;
+  }
+  .price-card.price-card-support .price-more summary:hover{background:var(--red);color:#fff}
+  .price-card.price-card-support .price-more[open] summary{
+    background:transparent;border-color:transparent;color:var(--ink-soft);
+  }
   .price-card.price-card-support .price-more .price-feats-more li{color:var(--ink);opacity:.75}
   .price-card.price-card-support .price-more .price-feats-more li::before{background:rgba(206,17,38,.12);color:var(--red)}
+  @keyframes pulseAttnRed {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(206, 17, 38, .35); }
+    50%      { box-shadow: 0 0 0 10px rgba(206, 17, 38, 0); }
+  }
   /* Tier label + check marks on red card */
   .price-card.price-card-support .price-tier-label{color:var(--red)}
   .price-card.price-card-support .price-feats li::before{background:rgba(206,17,38,.12);color:var(--red)}
