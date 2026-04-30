@@ -20,11 +20,36 @@
   window.addEventListener('resize', () => { if(window.innerWidth > 880) setOpen(false); });
 })();
 
-// Reveal on scroll
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// Reveal on scroll. Two gotchas the original implementation hit:
+//   1. threshold:.12 didn't fire until an element was 12% on-screen, which
+//      a fast-scrolling mobile user could blow past — leaving a blank
+//      cream gap before the section animated in.
+//   2. Above-the-fold elements with .reveal start at opacity:0 in the CSS,
+//      so any delay between DOM parse and JS run produced a flash of
+//      invisible content.
+// Fix: instantly reveal anything already visible (or about to be) on JS
+// boot, then observe the rest with threshold:0 + rootMargin pre-fire.
+// CSS adds a prefers-reduced-motion bypass for accessibility / WCAG 2.3.3.
+(function setupReveal(){
+  const all = document.querySelectorAll('.reveal');
+  // 1. Fire immediately for anything already on-screen or within ~one viewport below
+  all.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 100) el.classList.add('in');
+  });
+  // 2. Observer for the rest — pre-fires 200px before the element scrolls in
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px 200px 0px' });
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+  } else {
+    // Old browsers — just reveal everything, no animation
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }
+})();
 
 // When user clicks "Reservar mi cupo →" on a plan card, preselect the
 // matching radio button on the contact form (the href #contacto handles

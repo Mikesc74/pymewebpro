@@ -936,9 +936,14 @@
   .wa-float:hover{transform:scale(1.08)}
   .wa-float svg{width:28px;height:28px}
 
-  /* fade-in animation */
+  /* fade-in animation. main.js reveals already-visible elements immediately
+     and observes the rest with rootMargin pre-fire, so fast-scrolling mobile
+     users don't catch blank zones. */
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease}
   .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+  }
 
   /* Cookie/data consent banner (Ley 1581 / Decreto 1377). Hidden by default;
      main.js shows it on first visit when no decision is stored. */
