@@ -297,8 +297,8 @@
     'Contacto': 'Contact',
     '¿Por dónde quiere empezar?': 'Where would you like to start?',
     '¿Por dónde<br>quiere empezar?': 'Where would<br>you like to start?',
-    'Cada negocio llega aquí en un momento distinto. Estas son las tres puertas.':
-      'Every business arrives here at a different moment. These are the three doors.',
+    'Cada negocio llega aquí en un momento distinto. Estas son las tres puertas — elija 1, 2 o 3.':
+      'Every business arrives here at a different moment. These are the three doors — choose 1, 2, or 3.',
     // Card 1: Pay
     'Listo para arrancar': 'Ready to start',
     'Pagar y empezar': 'Pay and get started',
