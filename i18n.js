@@ -366,6 +366,8 @@
     // Hosting plan unit
     '$30.000 COP/mes': '$30,000 COP/mo',
     '$270.000 COP/año': '$270,000 COP/yr',
+    'IVA incluido': 'VAT included',
+    '· IVA incluido': '· VAT included',
     // Pricing bullet — text walker sees the trailing fragment as its own node
     'redirigido a su Gmail': 'forwarded to your Gmail',
     'No estoy seguro': "I'm not sure",
