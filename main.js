@@ -185,6 +185,21 @@ function showFormError(f, data) {
   f.addEventListener('submit', submitForm);
 })();
 
+// Hide the WhatsApp floater while the contact form is on-screen. On iPhone
+// SE width (375px) the floater's 60px circle + 24px right margin overlaps
+// the form submit button, which is annoying and risks a mistap.
+(function bindFloaterHide(){
+  const floater = document.querySelector('.wa-float');
+  const contact = document.getElementById('contacto');
+  if (!floater || !contact || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      floater.classList.toggle('hide-on-form', e.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+  io.observe(contact);
+})();
+
 // Cookie / data-treatment consent banner (Ley 1581 + Decreto 1377).
 // Pattern: show banner once on first visit; persist choice in localStorage
 // under 'pwp_consent'. Set window.__pwpConsent so future trackers (GA4,
