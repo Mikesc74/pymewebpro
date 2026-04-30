@@ -909,6 +909,147 @@
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease}
   .reveal.in{opacity:1;transform:none}
 </style>
+
+<!-- ============================================================
+     Structured data (JSON-LD)
+     - Organization + LocalBusiness describe the business behind PymeWebPro
+     - Two Service entries describe the offerings (web design + hosting)
+     - FAQPage mirrors the 3 visible FAQs lower on the page
+     If you change visible FAQ copy, update the FAQPage block too.
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://pymewebpro.com/#organization",
+  "name": "PymeWebPro",
+  "legalName": "NORTE SUR CONSULTING S.A.S.",
+  "url": "https://pymewebpro.com/",
+  "logo": "https://pymewebpro.com/favicon-192.png",
+  "image": "https://pymewebpro.com/og-image.jpg",
+  "description": "Diseñamos sitios web profesionales para pequeños negocios en Colombia. Diseño, hospedaje y soporte: todo en un solo lugar.",
+  "email": "ventas@pymewebpro.com",
+  "telephone": "+57-301-404-7722",
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "CO"
+  },
+  "sameAs": []
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://pymewebpro.com/#localbusiness",
+  "name": "PymeWebPro",
+  "image": "https://pymewebpro.com/og-image.jpg",
+  "url": "https://pymewebpro.com/",
+  "telephone": "+57-301-404-7722",
+  "email": "ventas@pymewebpro.com",
+  "priceRange": "COP$890.000–COP$1.790.000",
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "CO"
+  },
+  "parentOrganization": { "@id": "https://pymewebpro.com/#organization" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://pymewebpro.com/#service-web-design",
+  "serviceType": "Diseño y desarrollo de sitios web",
+  "name": "Diseño de sitio web profesional",
+  "description": "Sitio web profesional para pequeños negocios en Colombia, listo en 7 a 14 días. Incluye diseño, copy en español, optimización móvil, SEO básico, y dominio + hosting el primer año en el plan Crecimiento.",
+  "provider": { "@id": "https://pymewebpro.com/#organization" },
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Plan Esencial",
+      "price": "890000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/#paquetes",
+      "availability": "https://schema.org/InStock"
+    },
+    {
+      "@type": "Offer",
+      "name": "Plan Crecimiento",
+      "price": "1790000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/#paquetes",
+      "availability": "https://schema.org/InStock"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://pymewebpro.com/#service-hosting",
+  "serviceType": "Hosting administrado",
+  "name": "Hosting + soporte mensual",
+  "description": "Hospedaje administrado, certificado SSL, copias de seguridad, monitoreo y cambios menores incluidos. Cancelable cuando quiera, sin contrato.",
+  "provider": { "@id": "https://pymewebpro.com/#organization" },
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Hosting mensual",
+      "price": "30000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/hosting.html",
+      "availability": "https://schema.org/InStock"
+    },
+    {
+      "@type": "Offer",
+      "name": "Hosting anual prepagado",
+      "price": "270000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/hosting.html",
+      "availability": "https://schema.org/InStock"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://pymewebpro.com/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta y puedo pagar a cuotas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pago único: $890.000 COP por el plan Esencial o $1.790.000 COP por Crecimiento (con un año de hosting incluido). En la pantalla de pago puede diferir su tarjeta de crédito en 3, 6 o más cuotas sin costo adicional para nosotros — su banco se encarga del cobro mensual y nosotros arrancamos el mismo día."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿En cuánto tiempo está mi sitio en vivo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "7 días calendario para el plan Esencial, 14 para Crecimiento — contados desde que usted nos entrega su información en el portal (logo, fotos, textos). Si nos demoramos más por culpa nuestra, le devolvemos el 100% del dinero. Sin letra chica."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿De quién es el sitio cuando termine?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Suyo. El dominio queda a su nombre directamente con el registrador (no nuestro). Una vez pagado el plan, el código, las fotos y los textos son suyos. Si algún día quiere mudarse a otro proveedor, le entregamos los archivos y le ayudamos con la transición."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
