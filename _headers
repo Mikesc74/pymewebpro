@@ -23,3 +23,23 @@
   Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-dHNs/U6J29qtMkUhjZFdYq0N/ybRR9d10sIEpjfOvsE=' 'sha256-VXlFLDL5uPkBGIVNWKIAWE/m0wgn4/Ze9GCsZYMy7Q0=' 'sha256-3qJeKqM0UNi1HZHbMMFDJxewxL3rvdeo20Ek9qLv9kY=' 'sha256-/4FfLBeLDFM8ToHgOvn793TuhUsxy1toI8/i7hZ67Yg=' 'sha256-jKSZec9alXPl5oTTyxfpHxo4/kk2wNUFwvEUnJ6A+dk=' 'sha256-x9W/JJ2P8D7b3FHQPHtjK0LbyRawOha1B97m/8HUQ/8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+
+# Cache HTML docs at the edge for 24h with stale-while-revalidate. Browsers
+# revalidate after 10 min; the CDN serves cached HTML for a day and refreshes
+# in the background. Without this Cloudflare Pages defaults to max-age=0
+# must-revalidate which defeats edge caching entirely.
+
+/
+  Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=86400
+
+/terminos.html
+  Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=86400
+
+/politica-de-datos.html
+  Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=86400
+
+/hosting.html
+  Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=86400
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
