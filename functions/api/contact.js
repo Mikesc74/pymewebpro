@@ -32,43 +32,79 @@ async function sendEmail(env, payload) {
   return resp.json();
 }
 
+// Content-type sniffing: native <form> POSTs are application/x-www-form-urlencoded
+// (or multipart/form-data); the JS fetch from main.js sends application/json.
+// We support both so the form still works with JS disabled.
+const isFormPost = (req) => {
+  const ct = req.headers.get("content-type") || "";
+  return (
+    ct.includes("application/x-www-form-urlencoded") ||
+    ct.includes("multipart/form-data")
+  );
+};
+
+// Build a Response that either redirects (for native form posts — Post-Redirect-Get
+// so a reload doesn't resubmit) or returns JSON (for JS fetch).
+const respond = (request, formMode, jsonBody, redirectTo, status = 200) => {
+  if (formMode) {
+    const target = new URL(redirectTo || "/gracias.html", request.url).toString();
+    return Response.redirect(target, 303);
+  }
+  return new Response(JSON.stringify(jsonBody), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+};
+
 export async function onRequestPost(context) {
   const { request, env } = context;
+  const formMode = isFormPost(request);
 
   let data;
   try {
-    data = await request.json();
+    if (formMode) {
+      const form = await request.formData();
+      data = Object.fromEntries(form);
+    } else {
+      data = await request.json();
+    }
   } catch {
-    return new Response(JSON.stringify({ error: "invalid_json" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return respond(
+      request,
+      formMode,
+      { error: "invalid_body" },
+      "/gracias.html?error=invalid",
+      400
+    );
   }
 
   // Honeypot — bots auto-fill any field they see. If the hidden 'website'
   // field has any value, silently 200 without sending or storing anything.
   if (data.website || data.url_field) {
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return respond(request, formMode, { success: true }, "/gracias.html");
   }
 
   // Required fields
   if (!data.nombre || !data.email || !data.whatsapp) {
-    return new Response(
-      JSON.stringify({ error: "missing_fields" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
+    return respond(
+      request,
+      formMode,
+      { error: "missing_fields" },
+      "/gracias.html?error=missing",
+      400
     );
   }
 
   // No API key configured: log & return graceful failure so frontend falls back to WhatsApp
   if (!env.RESEND_API_KEY) {
     console.error("RESEND_API_KEY not configured");
-    return new Response(JSON.stringify({ error: "email_not_configured" }), {
-      status: 503,
-      headers: { "Content-Type": "application/json" },
-    });
+    return respond(
+      request,
+      formMode,
+      { error: "email_not_configured" },
+      "/gracias.html?error=email",
+      503
+    );
   }
 
   const ADMIN_EMAIL = env.ADMIN_EMAIL || "mike@mikec.pro";
@@ -179,16 +215,21 @@ export async function onRequestPost(context) {
       planText.includes("pro");
     const confirmUrl = leadId && hasPaidPlan ? `${portalUrl}/c/${leadId}` : null;
 
-    return new Response(JSON.stringify({ success: true, lead_id: leadId, confirm_url: confirmUrl }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return respond(
+      request,
+      formMode,
+      { success: true, lead_id: leadId, confirm_url: confirmUrl },
+      confirmUrl || "/gracias.html"
+    );
   } catch (err) {
     console.error("Lead capture failed:", err.message);
-    return new Response(JSON.stringify({ error: "send_failed" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return respond(
+      request,
+      formMode,
+      { error: "send_failed" },
+      "/gracias.html?error=send",
+      500
+    );
   }
 }
 
