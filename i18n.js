@@ -1,6 +1,12 @@
 // PymeWebPro · bilingual swap (ES ↔ EN)
 // Source language is Spanish (in the HTML). Toggle replaces text nodes with EN.
-// Persists in localStorage + ?lang=en query param. Auto-detects on first visit.
+// Persists in localStorage + ?lang=en query param.
+//
+// LANGUAGE POLICY: Spanish is the canonical language for this site. We do
+// NOT auto-switch based on navigator.language — the EN translation has known
+// gaps and an unsolicited switch creates a "Frankenstein" mixed-language page
+// for English-Accept-Language Googlebot variants and international visitors.
+// EN only activates on explicit ?lang=en or a previous user toggle.
 
 (function () {
   'use strict';
@@ -343,6 +349,25 @@
     'Otro': 'Other',
     '¿Qué plan le interesa más?': 'Which plan interests you most?',
     'única vez': 'one-time',
+    // Plan radio-button pills (small label inside <small>) — full strings the
+    // text walker sees, since "$890k única vez" isn't decomposable.
+    '$890k única vez': '$890k one-time',
+    '$1.790k única vez': '$1.790M one-time',
+    // Process step 1 timing label
+    '7–14 días': '7–14 days',
+    'desde su brief': 'from your brief',
+    // Trust chip
+    'Entrega 7–14 días': 'Delivery in 7–14 days',
+    'o reembolso': 'or refund',
+    // Pricing card delivery line (split across <strong> + tail)
+    'Entrega en 7 días': 'Delivery in 7 days',
+    'Entrega en 14 días': 'Delivery in 14 days',
+    'desde su brief, o le devolvemos el dinero': 'from your brief, or your money back',
+    // Hosting plan unit
+    '$30.000 COP/mes': '$30,000 COP/mo',
+    '$270.000 COP/año': '$270,000 COP/yr',
+    // Pricing bullet — text walker sees the trailing fragment as its own node
+    'redirigido a su Gmail': 'forwarded to your Gmail',
     'No estoy seguro': "I'm not sure",
     'quiero asesoría': 'I want advice',
     '¿Quiere agregar el Plan Hosting?': 'Want to add the Hosting Plan?',
@@ -644,17 +669,20 @@
 
   // ─── helpers ──────────────────────────────────────────────────────────────
   function detectLang() {
+    // 1. Explicit URL param wins. ?lang=en stores it; ?lang=es clears EN.
     const params = new URLSearchParams(location.search);
     const fromUrl = params.get('lang');
     if (fromUrl === 'en' || fromUrl === 'es') {
       try { localStorage.setItem('pwp_lang', fromUrl); } catch (e) {}
       return fromUrl;
     }
+    // 2. Previously-toggled preference.
     let stored = null;
     try { stored = localStorage.getItem('pwp_lang'); } catch (e) {}
     if (stored === 'en' || stored === 'es') return stored;
-    const browser = (navigator.language || 'es').toLowerCase();
-    return browser.startsWith('en') ? 'en' : 'es';
+    // 3. Default: Spanish. We deliberately do NOT consult navigator.language
+    //    — see the LANGUAGE POLICY comment at the top of this file.
+    return 'es';
   }
 
   function setUrlParam(lang) {
@@ -667,11 +695,83 @@
   function applyLanguage(lang) {
     document.documentElement.lang = lang;
 
+    // <title> + Open Graph locale need to track language too — without this,
+    // shares from the EN page show Spanish title and es_CO locale.
+    const setMeta = (selector, value) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute('content', value);
+    };
+    if (lang === 'en') {
+      document.title = 'PymeWebPro · Professional websites for small businesses in Colombia';
+      setMeta('meta[property="og:title"]', 'PymeWebPro · Professional websites for small businesses in Colombia');
+      setMeta('meta[property="og:description"]', 'Design, hosting, and support — all in one place. Your site live in 7 to 14 days, or your money back.');
+      setMeta('meta[property="og:locale"]', 'en_US');
+      setMeta('meta[name="twitter:title"]', 'PymeWebPro · Professional websites for small businesses in Colombia');
+      setMeta('meta[name="twitter:description"]', 'Design, hosting, and support — all in one place. Your site live in 7 to 14 days, or your money back.');
+      setMeta('meta[name="description"]', "We design professional websites for small Colombian businesses. No jargon, no surprises. We build it, we launch it, you get new customers online.");
+    }
+
     const root = document.body;
     if (lang !== 'en') {
       // Spanish is the source. Nothing to swap, just update toggle UI + URL.
       updateToggleUI(lang);
       return;
+    }
+
+    // ── Rich-HTML replacements MUST run before the text walker. ─────────────
+    // The walker translates standalone text nodes by exact match. Some of those
+    // text nodes are nested inside <em>/<span>/<strong> within an h2/h3/p that
+    // has its own rich replacement (e.g. the #proceso H2 contains the standalone
+    // text node "7 a 14 días" which has its own EN key). If the walker runs
+    // first, that node gets translated, the surrounding wrapper stays Spanish,
+    // and the rich replacement's exact-innerHTML check then fails to match —
+    // producing the half-translated "Su sitio en vivo en 7 to 14 days. O le
+    // devolvemos el dinero." that the audit flagged.
+    function normHtml(s) {
+      // Collapse whitespace, then strip whitespace adjacent to tag boundaries
+      // so '<br> <span>' compares equal to '<br><span>'.
+      return s
+        .replace(/\s+/g, ' ')
+        .replace(/\s*<\s*/g, '<')
+        .replace(/\s*>\s*/g, '>')
+        .trim();
+    }
+    const __richReplacements = [
+      { sel: '.hero h1',
+        es: 'Su negocio<br>merece estar<br><span class="underline">en</span> <span class="accent">internet.</span>',
+        en: 'Your business<br>belongs<br><span class="underline">on</span> <span class="accent">the internet.</span>' },
+      { sel: '#trabajo .section-head h2',
+        es: 'Sitios reales,<br>en vivo y en Google.',
+        en: 'Real sites,<br>live and on Google.' },
+      { sel: '#testimonios .section-head h2',
+        es: 'Negocios que confiaron<br>y vieron resultados.',
+        en: 'Businesses that trusted us<br>and saw results.' },
+      { sel: '#nosotros .section-head h2',
+        es: 'Hecho a la medida<br>desde Medellín.',
+        en: 'Built by hand<br>from Medellín.' },
+      { sel: '#contacto .cta-grid h2',
+        es: '¿Por dónde<br>quiere empezar?',
+        en: 'Where would<br>you like to start?' },
+      { sel: '#proceso .section-head h2',
+        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 a 14 días</em>. O le devolvemos el dinero.',
+        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 to 14 days</em>. Or your money back.' },
+      { sel: '.network .section-head h2',
+        es: 'Lo que nos preguntan<br>los dueños de negocio.',
+        en: 'What business owners<br>ask us.' },
+      { sel: '.price-host',
+        es: 'pago <b>único</b>, sin pagos mensuales',
+        en: '<b>one-time</b> payment, no monthly fees' },
+      { sel: '.price-host',
+        es: 'cancele cuando quiera, <b style="color:white">sin contrato</b>',
+        en: 'cancel anytime, <b style="color:white">no contract</b>' },
+      { sel: '.form-foot',
+        es: 'Sus datos no se comparten con nadie. Sin compromiso.<br><strong>Garantía de 30 días</strong> · si no le gusta su sitio, le devolvemos su dinero.',
+        en: "Your info is never shared. No commitment.<br><strong>30-day guarantee</strong> · if you don't love your site, we refund you." },
+    ];
+    for (const r of __richReplacements) {
+      document.querySelectorAll(r.sel).forEach(el => {
+        if (normHtml(el.innerHTML) === normHtml(r.es)) el.innerHTML = r.en;
+      });
     }
 
     // Walk all leaf text nodes inside <body>; replace any whose trimmed value
@@ -725,68 +825,6 @@
         if (EN[v]) el.setAttribute(attr, EN[v]);
       });
     });
-
-    // Replace specific rich-HTML elements that the text walker can't handle
-    // cleanly because of inline tags (<br>, <em>, <span>, <strong>).
-    const richReplacements = [
-      // Hero h1
-      { sel: '.hero h1',
-        es: 'Su negocio<br>merece estar<br><span class="underline">en</span> <span class="accent">internet.</span>',
-        en: 'Your business<br>belongs<br><span class="underline">on</span> <span class="accent">the internet.</span>' },
-      // Trabajo h2
-      { sel: '#trabajo .section-head h2',
-        es: 'Sitios reales,<br>en vivo y en Google.',
-        en: 'Real sites,<br>live and on Google.' },
-      // Testimonios h2
-      { sel: '#testimonios .section-head h2',
-        es: 'Negocios que confiaron<br>y vieron resultados.',
-        en: 'Businesses that trusted us<br>and saw results.' },
-      // Nosotros h2
-      { sel: '#nosotros .section-head h2',
-        es: 'Hecho a la medida<br>desde Medellín.',
-        en: 'Built by hand<br>from Medellín.' },
-      // Pricing h2 (no <br>; handled by text-walker via single-line key)
-      // CTA / form h2
-      { sel: '#contacto .cta-grid h2',
-        es: '¿Por dónde<br>quiere empezar?',
-        en: 'Where would<br>you like to start?' },
-      // Process h2
-      { sel: '#proceso .section-head h2',
-        es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 a 14 días</em>. O le devolvemos el dinero.',
-        en: 'Your site live in <em style="color:var(--amber);font-style:italic">7 to 14 days</em>. Or your money back.' },
-      // FAQ h2
-      { sel: '.network .section-head h2',
-        es: 'Lo que nos preguntan<br>los dueños de negocio.',
-        en: 'What business owners<br>ask us.' },
-      // Esencial / Crecimiento price-host (split by <b>)
-      { sel: '.price-host',
-        es: 'pago <b>único</b>, sin pagos mensuales',
-        en: '<b>one-time</b> payment, no monthly fees' },
-      // Hosting price-host (split by <b>, white styled)
-      { sel: '.price-host',
-        es: 'cancele cuando quiera, <b style="color:white">sin contrato</b>',
-        en: 'cancel anytime, <b style="color:white">no contract</b>' },
-      // Form footer (split by <br> + <strong>)
-      { sel: '.form-foot',
-        es: 'Sus datos no se comparten con nadie. Sin compromiso.<br><strong>Garantía de 30 días</strong> · si no le gusta su sitio, le devolvemos su dinero.',
-        en: "Your info is never shared. No commitment.<br><strong>30-day guarantee</strong> · if you don't love your site, we refund you." },
-    ];
-    function normHtml(s) {
-      // Collapse whitespace, then strip whitespace adjacent to tag boundaries
-      // so '<br> <span>' compares equal to '<br><span>'.
-      return s
-        .replace(/\s+/g, ' ')
-        .replace(/\s*<\s*/g, '<')
-        .replace(/\s*>\s*/g, '>')
-        .trim();
-    }
-    for (const r of richReplacements) {
-      document.querySelectorAll(r.sel).forEach(el => {
-        const cur = normHtml(el.innerHTML);
-        const target = normHtml(r.es);
-        if (cur === target) el.innerHTML = r.en;
-      });
-    }
 
     updateToggleUI(lang);
   }
