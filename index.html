@@ -762,12 +762,15 @@
   }
   .ladder-num{
     background:var(--yellow);color:var(--ink);
-    width:44px;height:44px;border-radius:50%;
-    display:grid;place-items:center;font-size:1.25rem;font-weight:800;letter-spacing:0;
+    width:44px;height:44px;border-radius:50%;flex-shrink:0;
+    display:inline-grid;place-items:center;
+    font-family:'Inter',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:0;
+    margin-right:12px;vertical-align:middle;
   }
   .ladder-q{
     font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;line-height:1.25;
     color:#fff;margin-bottom:4px;letter-spacing:-.005em;
+    display:flex;align-items:center;
   }
   .ladder-a{
     color:#bdc7e0;font-size:.92rem;line-height:1.5;margin:0;
@@ -800,7 +803,7 @@
   }
 
   .form{background:white;border-radius:20px;padding:36px;color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.3)}
-  .form h3{font-family:'Fraunces',serif;font-size:1.55rem;margin-bottom:6px}
+  .form h3{font-family:'Fraunces',serif;font-size:1.55rem;margin-bottom:6px;display:flex;align-items:center}
   .form p.lead{color:var(--muted);font-size:.95rem;margin-bottom:24px}
   .field{margin-bottom:14px}
   .field label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
@@ -1265,13 +1268,13 @@
         <div>
           <span class="eyebrow dark">Contacto</span>
           <h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">¿Por dónde<br>quiere empezar?</h2>
-          <p class="cta-sub">Cada negocio llega aquí en un momento distinto. Estas son las tres puertas — elija 1, 2 o 3.</p>
+          <p class="cta-sub">Cada negocio llega aquí en un momento distinto. Estas son las tres puertas — elija A, B o C.</p>
 
           <div class="ladder">
             <!-- PAY NOW -->
             <div class="ladder-card ladder-pay">
-              <div class="ladder-tier"><span class="ladder-num">1</span> Listo para arrancar</div>
-              <div class="ladder-q">Pagar y empezar</div>
+              <div class="ladder-tier">Listo para arrancar</div>
+              <div class="ladder-q"><span class="ladder-num">A</span> Pagar y empezar</div>
               <p class="ladder-a">Si ya eligió plan, pague con tarjeta, Nequi o PSE — arrancamos su sitio esta semana.</p>
               <div class="ladder-pay-buttons">
                 <a class="btn btn-reserve" href="#contactForm" data-plan="esencial" data-focus="form">
@@ -1287,10 +1290,10 @@
 
             <!-- WHATSAPP -->
             <a class="ladder-card ladder-wa" href="https://portal.pymewebpro.com/go/whatsapp?campaign=contact_section&text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." target="_blank" rel="noopener">
-              <div class="ladder-tier"><span class="ladder-num">2</span> Con preguntas puntuales</div>
+              <div class="ladder-tier">Con preguntas puntuales</div>
               <div class="ladder-q-row">
                 <div>
-                  <div class="ladder-q">Hablar por WhatsApp</div>
+                  <div class="ladder-q"><span class="ladder-num">B</span> Hablar por WhatsApp</div>
                   <p class="ladder-a">Conversación directa con quien construye su sitio. Resolvemos dudas y le mostramos ejemplos.</p>
                 </div>
                 <span class="ladder-wa-ico">
@@ -1304,8 +1307,8 @@
 
         <form class="form" id="contactForm" onsubmit="return submitForm(event)">
           <div class="form-fields">
-            <div class="ladder-tier" style="color:var(--blue);margin-bottom:8px"><span class="ladder-num">3</span> Quiere más detalle</div>
-            <h3>Recibir una propuesta</h3>
+            <div class="ladder-tier" style="color:var(--blue);margin-bottom:8px">Quiere más detalle</div>
+            <h3><span class="ladder-num">C</span> Recibir una propuesta</h3>
             <p class="lead">Nos cuenta su negocio y le escribimos con un plan a la medida — no una respuesta automática. Lo demás (logo, fotos, contenido, hosting) lo recogemos después en su portal privado.</p>
             <!-- Honeypot: humans don't fill this; bots do. Submission is silently dropped if filled. -->
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
