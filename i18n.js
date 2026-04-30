@@ -293,29 +293,32 @@
     'Soporte por WhatsApp incluido': 'WhatsApp support included',
     'Su sitio empieza a recibir clientes': 'Your site starts getting customers',
 
-    // ── CTA / contact ladder ──
-    'Tres formas de empezar': 'Three ways to start',
-    'De más rápido a más cuidadoso.': 'From fastest to most careful.',
-    'De más rápido a<br>más cuidadoso.': 'From fastest to<br>most careful.',
-    'Usted decide cómo arrancar. Si ya tiene claro lo que quiere, pague directo. Si tiene dudas, hablemos por WhatsApp. Si prefiere escribir primero, déjenos sus datos.':
-      'You pick how to start. If you already know what you want, pay directly. If you have questions, chat on WhatsApp. If you prefer to write first, leave us your details.',
-    'Más rápido': 'Fastest',
-    'Tiene dudas': 'Has questions',
-    'Más cuidadoso': 'More careful',
-    '¿Listo para empezar?': 'Ready to start?',
-    'Elija plan, pague con tarjeta o cuotas, y arrancamos su sitio hoy mismo.':
-      'Pick a plan, pay by card or in installments, and we start your site today.',
+    // ── CTA / contact section (situation-based, no intent ladder) ──
+    'Contacto': 'Contact',
+    '¿Por dónde quiere empezar?': 'Where would you like to start?',
+    '¿Por dónde<br>quiere empezar?': 'Where would<br>you like to start?',
+    'Cada negocio llega aquí en un momento distinto. Estas son las tres puertas.':
+      'Every business arrives here at a different moment. These are the three doors.',
+    // Card 1: Pay
+    'Listo para arrancar': 'Ready to start',
+    'Pagar y empezar': 'Pay and get started',
+    'Si ya eligió plan, pague con tarjeta, Nequi o PSE — arrancamos su sitio esta semana.':
+      "If you've picked a plan, pay by card, Nequi, or PSE — we start your site this week.",
     'Pagar Esencial': 'Pay Essential',
     'Pagar Crecimiento': 'Pay Growth',
     '$890.000 COP · pago único': '$890,000 COP · one-time',
     '$1.790.000 COP · incluye 1 año hosting': '$1,790,000 COP · 1 year hosting included',
-    '¿Quiere hablar primero?': 'Want to talk first?',
-    'Chat directo por WhatsApp · respuesta en minutos · sin compromiso.':
-      'Direct WhatsApp chat · reply in minutes · no commitment.',
+    // Card 2: WhatsApp
+    'Con preguntas puntuales': 'Have a few quick questions',
+    'Hablar por WhatsApp': 'Chat on WhatsApp',
+    'Conversación directa con quien construye su sitio. Resolvemos dudas y le mostramos ejemplos.':
+      'Direct conversation with the person who builds your site. We answer questions and show you examples.',
     '+57 301 404 7722 →': '+57 301 404 7722 →',
-    '¿Prefiere que le escribamos?': 'Prefer that we write to you?',
-    'Déjenos sus datos y le contactamos cuanto antes. Lo demás (logo, fotos, contenido, hosting) lo recogemos en su portal privado, a su ritmo.':
-      "Leave your details and we'll reach out as soon as we can. Everything else (logo, photos, content, hosting) we collect in your private portal, at your own pace.",
+    // Card 3: Form
+    'Quiere más detalle': 'Want more detail',
+    'Recibir una propuesta': 'Get a tailored proposal',
+    'Nos cuenta su negocio y le escribimos con un plan a la medida — no una respuesta automática. Lo demás (logo, fotos, contenido, hosting) lo recogemos después en su portal privado.':
+      'Tell us about your business and we reply with a tailored plan — not an auto-response. Everything else (logo, photos, content, hosting) we collect later in your private portal.',
     'Llene este formulario': 'Fill out this form',
     'Le respondemos cuanto antes con una propuesta clara, sin compromiso.': "We'll reply as soon as we can with a clear proposal, no commitment.",
     'Su nombre': 'Your name',
@@ -743,8 +746,8 @@
       // Pricing h2 (no <br>; handled by text-walker via single-line key)
       // CTA / form h2
       { sel: '#contacto .cta-grid h2',
-        es: 'De más rápido a<br>más cuidadoso.',
-        en: 'From fastest to<br>most careful.' },
+        es: '¿Por dónde<br>quiere empezar?',
+        en: 'Where would<br>you like to start?' },
       // Process h2
       { sel: '#proceso .section-head h2',
         es: 'Su sitio en vivo en <em style="color:var(--amber);font-style:italic">7 a 14 días</em>. O le devolvemos el dinero.',
