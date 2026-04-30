@@ -223,45 +223,25 @@
     display:block;text-align:center;padding:20px;color:var(--blue);font-weight:600;
   }
   /* mock browser */
-  .mock{
+  /* Hero phone-frame — real medellin.guide screenshot inside an iPhone-style bezel */
+  .phone-frame{
     position:relative;
-    border-radius:24px;
-    background:white;
+    width:100%;max-width:320px;margin:0 auto;
+    background:#0a1840;
+    padding:10px;
+    border-radius:40px;
     box-shadow:var(--shadow);
-    overflow:hidden;
-    border:1px solid var(--line);
     transform:rotate(.5deg);
   }
-  .mock-bar{
-    display:flex;align-items:center;gap:8px;padding:14px 16px;background:#f5f0e6;border-bottom:1px solid var(--line);
+  .phone-frame img{
+    display:block;width:100%;height:auto;
+    border-radius:30px;background:#fff;
   }
-  .mock-dot{width:11px;height:11px;border-radius:50%}
-  .mock-dot.r{background:#ff5f57}.mock-dot.y{background:#febc2e}.mock-dot.g{background:#28c840}
-  .mock-url{
-    margin-left:8px;background:white;border:1px solid var(--line);padding:5px 12px;border-radius:8px;
-    font-size:.78rem;color:var(--muted);font-family:ui-monospace,monospace;flex:1;max-width:280px
+  /* iOS-style notch indicator */
+  .phone-frame::before{
+    content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);
+    width:90px;height:22px;background:#0a1840;border-radius:14px;z-index:2;
   }
-  .mock-body{padding:0;background:white}
-  .mock-hero{
-    padding:34px 28px 28px;
-    background:linear-gradient(135deg,#003893 0%,#1d4ed8 60%,#3b82f6 100%);
-    color:white;position:relative;overflow:hidden;
-  }
-  .mock-hero::after{
-    content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;
-    background:radial-gradient(circle,rgba(252,209,22,.45),transparent 70%);
-  }
-  .mock-nav{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
-  .mock-nav span:last-child{display:flex;gap:14px;font-weight:400;letter-spacing:.05em;text-transform:none;opacity:.7}
-  .mock-h1{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin-top:22px;line-height:1.1;max-width:90%}
-  .mock-p{font-size:.82rem;opacity:.8;margin-top:10px;max-width:85%}
-  .mock-btn{display:inline-block;background:var(--coral);color:white;padding:9px 16px;border-radius:8px;font-size:.78rem;font-weight:600;margin-top:18px}
-  .mock-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:18px}
-  .mock-card{background:#f5f0e6;border-radius:10px;padding:12px;font-size:.7rem}
-  .mock-card .ico{width:24px;height:24px;border-radius:6px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-weight:700;margin-bottom:8px}
-  .mock-card b{display:block;font-size:.75rem;color:var(--ink);margin-bottom:2px}
-  .mock-card span{color:var(--muted);font-size:.66rem}
-  .mock-foot{padding:12px 18px 18px;display:flex;justify-content:space-between;align-items:center;font-size:.66rem;color:var(--muted);border-top:1px solid var(--line)}
 
   .float-tag{
     position:absolute;background:white;border:1px solid var(--line);
@@ -1184,28 +1164,11 @@
 <span class="pulse"></span>
         New lead received
       </div>
-<div class="mock">
-<div class="mock-bar">
-<span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span>
-<span class="mock-url">https://yourbrand.com</span>
-</div>
-<div class="mock-body">
-<div class="mock-hero">
-<div class="mock-nav"><span>YOUR BUSINESS</span><span>Home · Services · Contact</span></div>
-<div class="mock-h1">Welcome to your new professional website</div>
-<div class="mock-p">Modern, fast design ready to convert visitors into customers.</div>
-<span class="mock-btn">Request info →</span>
-</div>
-<div class="mock-grid">
-<div class="mock-card"><div class="ico">SEO</div><b>Ranked</b><span>Visible on Google</span></div>
-<div class="mock-card"><div class="ico">@</div><b>Forms</b><span>Leads to email</span></div>
-<div class="mock-card"><div class="ico">⚡</div><b>Fast</b><span>PSI 100/100</span></div>
-</div>
-<div class="mock-foot">
-<span>© 2026 Your Business</span>
-<span>WhatsApp · Email · Maps</span>
-</div>
-</div>
+<div class="phone-frame">
+<picture>
+<source srcset="/photos/medellin-guide-mobile.webp" type="image/webp">
+<img src="/photos/medellin-guide-mobile.jpg" alt="Mobile view of medellin.guide, a site we built" width="680" height="1472" loading="eager" fetchpriority="high" decoding="async">
+</picture>
 </div>
 <div class="float-tag tag-b">
         ⚡ <span>Loaded in 0.8s</span>
