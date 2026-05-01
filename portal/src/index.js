@@ -1680,6 +1680,8 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
             <SiteHealthPanel client={client} onChange={onRefresh} />
 
+            <MockupsPanel client={client} />
+
             {deliverables && (
               <DeliverablesPanel
                 clientId={client.id}
@@ -1811,6 +1813,125 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           <div style={{fontSize:'0.65rem',letterSpacing:'0.18em',color:'rgba(255,255,255,0.4)',textTransform:'uppercase',marginBottom:'0.35rem'}}>{label}</div>
           <div className="serif" style={{fontSize:'1.25rem',color,fontStyle:'italic',fontFamily:'ui-monospace,monospace',fontWeight:600}}>{value}</div>
           {hint && <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)',marginTop:'0.2rem'}}>{hint}</div>}
+        </div>
+      );
+    }
+
+    function MockupsPanel({ client }) {
+      const [mockups, setMockups] = useState([]);
+      const [comments, setComments] = useState({});
+      const [loading, setLoading] = useState(false);
+      const [generating, setGenerating] = useState(false);
+      const [shareUrls, setShareUrls] = useState({});
+      const [shipping, setShipping] = useState({});
+      const [revInst, setRevInst] = useState({});
+
+      async function load() {
+        setLoading(true);
+        try {
+          const r = await adminApi('/api/admin/clients/' + client.id + '/mockups');
+          const list = r.mockups || [];
+          setMockups(list);
+          if (list.length) {
+            const c = await adminApi('/api/admin/mockups/' + list[0].id + '/comments');
+            setComments(prev => ({ ...prev, [list[0].id]: c.comments || [] }));
+          }
+        } catch (e) { alert('Error: ' + e.message); }
+        finally { setLoading(false); }
+      }
+      useEffect(() => { load(); }, [client.id]);
+
+      async function generate() {
+        setGenerating(true);
+        try {
+          await adminApi('/api/admin/clients/' + client.id + '/mockups', { method: 'POST' });
+          await load();
+        } catch (e) { alert('No se pudo generar: ' + e.message); }
+        finally { setGenerating(false); }
+      }
+      async function share(mid) {
+        try {
+          const r = await adminApi('/api/admin/mockups/' + mid + '/share', { method: 'POST', body: JSON.stringify({ ttl_days: 7 }) });
+          setShareUrls(s => ({ ...s, [mid]: r.url }));
+          try { await navigator.clipboard.writeText(r.url); } catch (_) {}
+        } catch (e) { alert('Error: ' + e.message); }
+      }
+      async function regen(mid) {
+        const inst = (revInst[mid] || '').trim();
+        if (!confirm('¿Regenerar el mockup' + (inst ? ' con la nota: "' + inst + '"' : '') + '?')) return;
+        try {
+          await adminApi('/api/admin/mockups/' + mid + '/regenerate', { method: 'POST', body: JSON.stringify({ instruction: inst }) });
+          setRevInst(r => ({ ...r, [mid]: '' }));
+          await load();
+        } catch (e) { alert('Error: ' + e.message); }
+      }
+      async function ship(mid) {
+        if (!confirm('¿Lanzar este mockup como sitio final? (crea proyecto Pages)')) return;
+        setShipping(s => ({ ...s, [mid]: true }));
+        try {
+          const r = await adminApi('/api/admin/mockups/' + mid + '/ship', { method: 'POST' });
+          alert('Lanzado: ' + r.url + (r.note ? '\n\n' + r.note : ''));
+          await load();
+        } catch (e) { alert('Error: ' + e.message); }
+        finally { setShipping(s => ({ ...s, [mid]: false })); }
+      }
+
+      return (
+        <div style={{marginBottom:'2.5rem'}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem'}}>
+            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',margin:0}}>Mockups</h2>
+            <button onClick={generate} disabled={generating} style={primaryBtn}>
+              {generating ? 'Generando…' : (mockups.length ? 'Generar nueva versión' : 'Generar mockup')}
+            </button>
+          </div>
+          {loading ? (
+            <div style={{padding:'1rem',color:'rgba(255,255,255,0.5)'}}>Cargando…</div>
+          ) : mockups.length === 0 ? (
+            <div style={{padding:'2rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',color:'rgba(255,255,255,0.5)',textAlign:'center',borderRadius:'4px'}}>
+              Sin mockups todavía. Haga clic en "Generar mockup" para crear el primero.
+            </div>
+          ) : mockups.map(m => (
+            <div key={m.id} style={{marginBottom:'1rem',padding:'1.25rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'6px'}}>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'0.75rem',flexWrap:'wrap',gap:'0.5rem'}}>
+                <div>
+                  <span style={{fontSize:'0.95rem',fontWeight:600,color:'#fbbf24'}}>v{m.version}</span>
+                  <span style={{marginLeft:'0.75rem',fontSize:'0.75rem',color:'rgba(255,255,255,0.5)',textTransform:'uppercase',letterSpacing:'0.1em'}}>{m.status}</span>
+                  <span style={{marginLeft:'0.75rem',fontSize:'0.75rem',color:'rgba(255,255,255,0.4)'}}>{new Date(m.created_at*1000).toLocaleString()}</span>
+                </div>
+                <div style={{display:'flex',gap:'0.5rem'}}>
+                  <button onClick={()=>share(m.id)} style={ghostBtn}>Compartir (7 días)</button>
+                  <button onClick={()=>ship(m.id)} disabled={shipping[m.id]} style={{...primaryBtn,padding:'8px 14px',fontSize:'0.8rem'}}>
+                    {shipping[m.id] ? 'Lanzando…' : (m.status==='shipped' ? 'Re-lanzar' : 'Lanzar final')}
+                  </button>
+                </div>
+              </div>
+              {shareUrls[m.id] && (
+                <div style={{padding:'0.6rem 0.85rem',background:'rgba(251,191,36,0.08)',border:'1px solid rgba(251,191,36,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem'}}>
+                  <span style={{color:'rgba(255,255,255,0.6)'}}>Enlace temp (copiado):</span> <a href={shareUrls[m.id]} target="_blank" rel="noopener" style={{color:'#fbbf24'}}>{shareUrls[m.id]}</a>
+                </div>
+              )}
+              {m.shipped_url && (
+                <div style={{padding:'0.6rem 0.85rem',background:'rgba(16,185,129,0.08)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem'}}>
+                  <span style={{color:'rgba(255,255,255,0.6)'}}>En vivo:</span> <a href={m.shipped_url} target="_blank" rel="noopener" style={{color:'#10b981'}}>{m.shipped_url}</a>
+                </div>
+              )}
+              {(comments[m.id] || []).length > 0 && (
+                <div style={{marginTop:'0.75rem',padding:'0.75rem',background:'rgba(0,0,0,0.2)',borderRadius:'4px'}}>
+                  <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.5)',marginBottom:'0.5rem',textTransform:'uppercase',letterSpacing:'0.12em'}}>Comentarios del cliente</div>
+                  {comments[m.id].map(c => (
+                    <div key={c.id} style={{padding:'0.5rem 0',borderBottom:'1px solid rgba(255,255,255,0.05)'}}>
+                      <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)'}}>{c.section || 'general'} · {new Date(c.created_at*1000).toLocaleString()}</div>
+                      <div style={{color:'rgba(255,255,255,0.85)',fontSize:'0.9rem',marginTop:'0.2rem',whiteSpace:'pre-wrap'}}>{c.body}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div style={{display:'flex',gap:'0.5rem',marginTop:'0.75rem'}}>
+                <input value={revInst[m.id] || ''} onChange={e=>setRevInst(r=>({...r,[m.id]:e.target.value}))} placeholder="Nota para regenerar (opcional)…" style={{...inputStyle,padding:'0.5rem 0.75rem',flex:1,fontSize:'0.85rem'}} />
+                <button onClick={()=>regen(m.id)} style={ghostBtn}>Regenerar</button>
+              </div>
+            </div>
+          ))}
         </div>
       );
     }
