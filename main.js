@@ -51,26 +51,64 @@
   }
 })();
 
-// When user clicks "Reservar mi cupo →" on a plan card, preselect the
-// matching radio button on the contact form (the href #contacto handles
-// the scroll). Then re-trigger the submit-button-label sync.
-// If the button has data-focus="form", also scroll the form into view and
-// focus the first empty required field.
+// Plan-picker behavior. Two places use .btn-reserve[data-plan]:
+//   1. The pricing cards higher up — clicking jumps to #contacto, which is
+//      a server-side anchor scroll. The plan cards in the contact section
+//      ARE the source of truth, so we just store the picked plan in a
+//      hidden input + update the in-form summary + scroll the form into
+//      view if data-focus="form" (only true for the in-section cards,
+//      since the pricing-card buttons rely on the URL hash for scroll).
+//   2. The contact-section plan cards themselves.
+// Either path ends with: hidden input is set, summary is updated, submit
+// is enabled, label changes from "Pick a plan first" to "Continue to payment".
 (function bindReserveButtons(){
   const buttons = document.querySelectorAll('.btn-reserve[data-plan]');
+  if (!buttons.length) return;
+
+  const PLAN_LABELS = {
+    es: {
+      esencial: { name: 'Esencial', price: '$390.000 COP', form: 'Esencial ($390k)' },
+      crecimiento: { name: 'Crecimiento', price: '$690.000 COP', form: 'Crecimiento ($690k)' },
+    },
+    en: {
+      esencial: { name: 'Essential', price: '$390,000 COP', form: 'Esencial ($390k)' },
+      crecimiento: { name: 'Growth', price: '$690,000 COP', form: 'Crecimiento ($690k)' },
+    },
+  };
+  const lang = (document.documentElement.lang || 'es').toLowerCase().startsWith('en') ? 'en' : 'es';
+  const labels = PLAN_LABELS[lang];
+
+  const hiddenInput = document.getElementById('planHidden');
+  const summary = document.getElementById('planSummary');
+  const summaryName = document.getElementById('planSummaryName');
+  const changeBtn = document.getElementById('changePlan');
+  const submitBtn = document.getElementById('contactSubmit');
+
+  function setPlan(planKey) {
+    const meta = labels[planKey];
+    if (!meta) return;
+    if (hiddenInput) hiddenInput.value = meta.form;
+    if (summary && summaryName) {
+      summary.classList.remove('is-empty');
+      summaryName.textContent = meta.name + ' · ' + meta.price;
+    }
+    if (changeBtn) changeBtn.style.display = '';
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = submitBtn.dataset.payLabel;
+    }
+    // Visually highlight the picked card in the contact section
+    document.querySelectorAll('.cta-plan-card[data-plan]').forEach(c => {
+      c.classList.toggle('is-selected', c.dataset.plan === planKey);
+    });
+  }
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const plan = btn.dataset.plan;
-      const radios = document.querySelectorAll('#contactForm input[name="plan"]');
-      radios.forEach(r => {
-        const v = (r.value||'').toLowerCase();
-        if ((plan === 'esencial' && v.includes('esencial')) ||
-            (plan === 'crecimiento' && (v.includes('crecimiento') || v.includes('pro')))) {
-          r.checked = true;
-          r.dispatchEvent(new Event('change', {bubbles:true}));
-        }
-      });
-      // Pay-now buttons (in-section): scroll form into view + focus first empty required field
+      if (!labels[plan]) return; // 'hosting' card is a plain link — let it navigate
+      setPlan(plan);
+
       if (btn.dataset.focus === 'form') {
         const form = document.getElementById('contactForm');
         if (form) {
@@ -85,22 +123,14 @@
       }
     });
   });
-})();
 
-// Update the contact-form submit button label based on selected plan:
-// paid plans → "Continuar al pago →", "No estoy seguro" → "Enviar, me contactan hoy mismo →".
-(function syncCtaLabel(){
-  const btn = document.getElementById('contactSubmit');
-  if(!btn) return;
-  const radios = document.querySelectorAll('#contactForm input[name="plan"]');
-  function update(){
-    let v = '';
-    radios.forEach(r => { if (r.checked) v = (r.value||'').toLowerCase(); });
-    const isPaid = v.includes('esencial') || v.includes('crecimiento') || v.includes('growth') || v.includes('pro');
-    btn.innerHTML = isPaid ? btn.dataset.payLabel : btn.dataset.talkLabel;
+  // "Change plan" → scroll back to the cards
+  if (changeBtn) {
+    changeBtn.addEventListener('click', () => {
+      const cards = document.querySelector('.cta-plan-cards');
+      if (cards) cards.scrollIntoView({behavior:'smooth', block:'center'});
+    });
   }
-  radios.forEach(r => r.addEventListener('change', update));
-  update();
 })();
 
 // Bottom contact form: POST to /api/contact (Cloudflare Pages Function);
@@ -163,8 +193,8 @@ function showFormError(f, data) {
   const msg = encodeURIComponent(
     'Hola, no pude enviar el formulario en pymewebpro.com.\n\n' +
     `Nombre: ${data.get('nombre') || ''}\n` +
-    `Negocio: ${data.get('negocio') || ''}\n` +
-    `WhatsApp: ${data.get('whatsapp') || ''}`
+    `WhatsApp: ${data.get('whatsapp') || ''}\n` +
+    `Plan: ${data.get('plan') || ''}`
   );
   banner.innerHTML =
     'No pudimos enviar su mensaje en este momento. ' +

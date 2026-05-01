@@ -1,0 +1,44 @@
+name = "pymewebpro-portal"
+main = "src/index.js"
+compatibility_date = "2026-04-01"
+account_id = "c98561adefb602704d4e7a6a1b7e7597"
+
+# Custom domain route (already configured on the live Worker — keep here for parity)
+routes = [
+  { pattern = "portal.pymewebpro.com/*", zone_name = "pymewebpro.com" },
+]
+
+# --- Bindings (discovered from the live deployment 2026-04-30) ------------
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pymewebpro-portal"
+database_id = "93fc7e21-713c-4479-bb55-69ae05c275dc"
+
+[[kv_namespaces]]
+binding = "TOKENS"
+id = "47573834bfad418aa10b8f851a250a03"
+
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "pymewebpro-client-assets"
+
+# --- Plain-text vars ------------------------------------------------------
+# These are visible in the Worker; don't put secrets here.
+[vars]
+APP_URL = "https://portal.pymewebpro.com"
+FROM_EMAIL = "PymeWebPro <noreply@pymewebpro.com>"
+ADMIN_EMAIL = "mike@mikec.pro"
+WHATSAPP_NUMBER = "+573014047722"
+
+# --- Secrets (NOT stored here — set via wrangler) -------------------------
+# Run these once after `wrangler login`:
+#
+#   wrangler secret put ADMIN_TOKEN          --name pymewebpro-portal
+#   wrangler secret put RESEND_API_KEY       --name pymewebpro-portal
+#   wrangler secret put WOMPI_PUBLIC_KEY     --name pymewebpro-portal
+#   wrangler secret put WOMPI_INTEGRITY      --name pymewebpro-portal
+#   wrangler secret put WOMPI_EVENTS         --name pymewebpro-portal
+#
+# Values are already set on the live Worker — view/copy them from
+# Cloudflare dashboard → Workers & Pages → pymewebpro-portal → Settings → Variables.

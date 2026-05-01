@@ -1,0 +1,33 @@
+name = "pymewebpro-engine"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+account_id = "c98561adefb602704d4e7a6a1b7e7597"
+
+# Bind to your existing pymewebpro.com zone via routes after `wrangler deploy`.
+# Example: routes = [{ pattern = "engine.pymewebpro.com/*", zone_name = "pymewebpro.com" }]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pymewebpro-engine"
+database_id = "1026bae2-cd6f-441b-866f-569cc1bc04ed"
+
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "pymewebpro-assets"
+
+[vars]
+ADMIN_EMAIL = "mike@mikec.pro"
+PUBLIC_BASE_URL = "https://engine.pymewebpro.com"
+WOMPI_ENV = "sandbox"  # sandbox | production
+
+# Secrets (set via `wrangler secret put <NAME>`):
+#   WOMPI_PUBLIC_KEY
+#   WOMPI_PRIVATE_KEY
+#   WOMPI_INTEGRITY_SECRET
+#   WOMPI_EVENTS_SECRET
+#   ANTHROPIC_API_KEY
+#   RESEND_API_KEY
+#   ADMIN_PASSWORD            # simple password for admin login
+#   SHARE_LINK_SECRET         # HMAC key for signed share tokens
+#   CLOUDFLARE_API_TOKEN      # for Pages deploy from inside the Worker

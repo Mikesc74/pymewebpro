@@ -95,6 +95,8 @@
   }
   .btn-primary{background:var(--coral);color:white;box-shadow:0 14px 30px -14px rgba(206,17,38,.55)}
   .btn-primary:hover{transform:translateY(-2px);background:var(--coral-2);box-shadow:0 20px 40px -14px rgba(206,17,38,.7)}
+  .btn-primary:disabled{background:#9ca3af;color:#fff;box-shadow:none;cursor:not-allowed;opacity:.85}
+  .btn-primary:disabled:hover{transform:none;background:#9ca3af;box-shadow:none}
   .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
   .btn-ghost:hover{background:var(--ink);color:white}
   .btn-dark{background:var(--ink);color:white}
@@ -480,6 +482,68 @@
   .team-bio{color:var(--muted);font-size:.93rem;line-height:1.55;margin:0 0 12px}
   .team-loc{color:var(--ink);font-size:.85rem;margin:0;display:inline-flex;align-items:center;gap:6px;font-weight:400}
   .team-pin{font-size:.9rem}
+
+  /* CONTACT — plan picker cards (left of form) */
+  .cta-plan-cards{display:flex;flex-direction:column;gap:12px;margin-top:32px}
+  .cta-plan-card{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
+    border-radius:14px;padding:18px 22px;
+    display:flex;justify-content:space-between;align-items:center;gap:18px;
+    cursor:pointer;text-decoration:none;color:#fff;text-align:left;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+    font-family:inherit;font-size:inherit;width:100%;
+    position:relative;
+  }
+  .cta-plan-card:hover{transform:translateY(-2px);border-color:var(--yellow);background:rgba(255,255,255,.10)}
+  .cta-plan-card.is-selected{border-color:var(--yellow);background:rgba(252,209,22,.10);box-shadow:0 0 0 2px rgba(252,209,22,.25)}
+  .cta-plan-card.cta-plan-card-featured{border-color:rgba(252,209,22,.4);background:rgba(252,209,22,.08)}
+  .cta-plan-card .cta-plan-info{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+  .cta-plan-card .cta-plan-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:#fff;letter-spacing:-.01em}
+  .cta-plan-card .cta-plan-desc{color:rgba(232,217,184,.78);font-size:.84rem;line-height:1.4}
+  .cta-plan-card .cta-plan-price{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+  .cta-plan-card .cta-plan-price b{color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;letter-spacing:-.01em}
+  .cta-plan-card .cta-plan-price small{color:rgba(232,217,184,.65);font-size:.74rem;font-weight:400}
+  .cta-plan-card .cta-plan-badge{
+    position:absolute;top:-9px;left:18px;
+    background:var(--yellow);color:var(--ink);
+    font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    padding:3px 10px;border-radius:999px;
+  }
+  .cta-wa-fallback{margin-top:18px;color:rgba(232,217,184,.78);font-size:.88rem;text-align:left}
+  .cta-wa-fallback a{color:#fcd116;font-weight:600;text-decoration:none}
+  .cta-wa-fallback a:hover{text-decoration:underline}
+
+  /* Selected-plan summary above submit button */
+  .form-plan-summary{
+    background:var(--blue-soft);border:1px solid rgba(0,56,147,.15);border-radius:10px;
+    padding:12px 16px;margin:0 0 18px;display:flex;justify-content:space-between;align-items:center;
+    color:var(--ink);font-size:.92rem;
+  }
+  .form-plan-summary b{color:var(--blue);font-weight:700}
+  .form-plan-summary .change-plan{color:var(--blue);font-size:.82rem;font-weight:600;text-decoration:none;cursor:pointer;background:none;border:none;padding:0;font-family:inherit}
+  .form-plan-summary .change-plan:hover{text-decoration:underline}
+  .form-plan-summary.is-empty{background:#fff5d6;border-color:#e6c84a;color:#7a5a00}
+  .form-plan-summary.is-empty b{color:#7a5a00}
+
+  /* TECH STACK */
+  .tech{padding:90px 0;background:var(--bg-2)}
+  .tech-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+    max-width:1140px;margin:52px auto 0;
+  }
+  @media (max-width:980px){.tech-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+  @media (max-width:520px){.tech-grid{grid-template-columns:1fr;gap:16px}}
+  .tech-card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:30px 22px;text-align:center;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .tech-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,31,26,.10);border-color:var(--blue)}
+  .tech-ico{font-size:2.1rem;line-height:1;margin-bottom:14px;display:block}
+  .tech-card h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;margin:0 0 10px;color:var(--ink);letter-spacing:-.01em}
+  .tech-card .tech-sub{display:block;color:var(--blue);font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin:-6px 0 12px}
+  .tech-card p{color:var(--muted);font-size:.9rem;line-height:1.55;margin:0}
+  .tech-card b{color:var(--ink);font-weight:600}
 
   /* LANG TOGGLE */
   .lang-toggle{
@@ -1305,7 +1369,7 @@
 <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
 <span class="eyebrow">Work</span>
 <h2 style="margin-top:18px">Real sites,<br/>live and on Google.</h2>
-<p>Each one designed, built, hosted, secured, and maintained with the same tools and mechanics as the biggest and most expensive website companies in the world.</p>
+<p>Each site is built on GitHub and served through Cloudflare, the fastest and most secure CDN on the planet. AI does the heavy lifting, so you get the kind of enterprise-grade website that used to cost tens of millions of pesos, at a price any small business can afford.</p>
 </div>
 <div class="cases-grid reveal">
 <article class="case-card">
@@ -1392,6 +1456,43 @@
 </div>
 </div>
 </section>
+<!-- TECH STACK -->
+<section class="tech" id="tecnologia">
+<div class="wrap">
+<div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:820px">
+<span class="eyebrow">The stack</span>
+<h2 style="margin-top:18px">Built on<br/>top-tier tech.</h2>
+<p>No shortcuts, no flimsy "drag-and-drop builder", no low-quality code that breaks in six months. Your site is built with the same tools that power Netflix, Shopify, and some of the biggest companies in the world.</p>
+</div>
+<div class="tech-grid reveal">
+<article class="tech-card">
+<div class="tech-ico">⚙️</div>
+<h3>GitHub</h3>
+<span class="tech-sub">Code and versioning</span>
+<p>Every change is tracked, nothing gets lost. The code is yours: we hand it over at the end and you can take it to any other provider whenever you want.</p>
+</article>
+<article class="tech-card">
+<div class="tech-ico">⚡</div>
+<h3>Cloudflare</h3>
+<span class="tech-sub">Hosting + CDN</span>
+<p>The fastest and most secure CDN on the planet. Loads in under a second from anywhere, with SSL/HTTPS, DDoS protection, and automatic backups included.</p>
+</article>
+<article class="tech-card">
+<div class="tech-ico">🤖</div>
+<h3>Generative AI</h3>
+<span class="tech-sub">Design and build</span>
+<p>What used to take an agency team weeks, we deliver in hours. Agency-grade quality, without agency-grade pricing.</p>
+</article>
+<article class="tech-card">
+<div class="tech-ico">💳</div>
+<h3>Wompi</h3>
+<span class="tech-sub">Payments · Bancolombia</span>
+<p>If you sell online, your customers pay with PSE, Nequi, card, or installments, end-to-end encrypted. No awkward redirects to strange pages.</p>
+</article>
+</div>
+</div>
+</section>
+
 <!-- PRICING -->
 <section class="pricing" id="paquetes">
 <div class="wrap">
@@ -1481,7 +1582,6 @@
 <div class="price-name">Hosting Plan</div>
 <div class="price-amt"><b>$30.000</b><span>COP/mo</span></div>
 <div class="price-iva">VAT included</div>
-<div class="price-guarantee"><span aria-hidden="true">✓</span> 30-day guarantee</div>
 <div class="price-host">cancel anytime, <b>no contract</b></div>
 <div class="price-annual">
 <span class="annual-tag">Best value</span>
@@ -1581,57 +1681,61 @@
 <div class="cta-grid">
 <div>
 <span class="eyebrow dark">Contact</span>
-<h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">Where would<br/>you like to start?</h2>
-<p class="cta-sub">Every business arrives here at a different moment. These are the three doors - choose A, B, or C.</p>
-<div class="ladder">
-<!-- PAY NOW -->
-<div class="ladder-card ladder-pay">
-<div class="ladder-tier">Ready to start</div>
-<div class="ladder-q"><span class="ladder-num">A</span> Pay and get started</div>
-<p class="ladder-a">If you've picked a plan, pay by card, Nequi, or PSE - we start your site this week.</p>
-<div class="ladder-pay-buttons">
-<a class="btn btn-reserve" data-focus="form" data-plan="esencial" href="#contactForm">
-<b>Pay Essential</b>
-<small>$390,000 COP · one-time · launch</small>
+<h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">Reserve<br/>your spot.</h2>
+<p class="cta-sub">Pick a plan, fill in 3 details, go to payment. Under 30 seconds.</p>
+
+<div class="cta-plan-cards">
+<button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-focus="form">
+<div class="cta-plan-info">
+<div class="cta-plan-name">Essential</div>
+<div class="cta-plan-desc">Professional site · 5 pages · one-time payment</div>
+</div>
+<div class="cta-plan-price">
+<b>$390,000</b>
+<small>COP one-time</small>
+</div>
+</button>
+
+<button type="button" class="cta-plan-card cta-plan-card-featured btn-reserve" data-plan="crecimiento" data-focus="form">
+<span class="cta-plan-badge">★ Most complete</span>
+<div class="cta-plan-info">
+<div class="cta-plan-name">Growth</div>
+<div class="cta-plan-desc">11+ pages · bilingual · 1 year hosting included</div>
+</div>
+<div class="cta-plan-price">
+<b>$690,000</b>
+<small>COP one-time</small>
+</div>
+</button>
+
+<a class="cta-plan-card" href="/hosting.html">
+<div class="cta-plan-info">
+<div class="cta-plan-name">Hosting Plan</div>
+<div class="cta-plan-desc">Hosting + support · cancel anytime</div>
+</div>
+<div class="cta-plan-price">
+<b>$30,000</b>
+<small>COP/mo</small>
+</div>
 </a>
-<a class="btn btn-reserve btn-reserve-featured" data-focus="form" data-plan="crecimiento" href="#contactForm">
-<b>Pay Growth</b>
-<small>$690,000 COP · 1 year hosting included</small>
-</a>
 </div>
+
+<p class="cta-wa-fallback">
+Questions before you pay?
+<a href="https://portal.pymewebpro.com/go/whatsapp?campaign=contact_section&amp;text=Hola%2C%20tengo%20preguntas%20antes%20de%20decidir%20mi%20plan." target="_blank" rel="noopener noreferrer">Message us on WhatsApp →</a>
+</p>
 </div>
-<!-- WHATSAPP -->
-<a class="ladder-card ladder-wa" href="https://portal.pymewebpro.com/go/whatsapp?campaign=contact_section&amp;text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20me%20interesa%20un%20sitio%20web." rel="noopener noreferrer" target="_blank">
-<div class="ladder-tier">Have a few quick questions</div>
-<div class="ladder-q-row">
-<div>
-<div class="ladder-q"><span class="ladder-num">B</span> Chat on WhatsApp</div>
-<p class="ladder-a">Direct conversation with the person who builds your site. We answer questions and show you examples.</p>
-</div>
-<span class="ladder-wa-ico">
-<svg aria-hidden="true" fill="currentColor" focusable="false" height="22" viewbox="0 0 24 24" width="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
-</span>
-</div>
-<div class="ladder-wa-num">+57 301 404 7722 <span aria-hidden="true">→</span></div>
-</a>
-</div>
-</div>
+
 <form action="/api/contact" class="form" id="contactForm" method="post">
 <div class="form-fields">
-<div class="ladder-tier" style="color:var(--blue);margin-bottom:8px">Want more detail</div>
-<h3><span class="ladder-num">C</span> Get a tailored proposal</h3>
-<p class="lead">Tell us about your business and we reply with a tailored plan - not an auto-response. Everything else (logo, photos, content, hosting) we collect later in your private portal.</p>
+<h3 style="font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;margin:0 0 6px;color:var(--ink);letter-spacing:-.01em">Your details</h3>
+<p class="lead">Name, email, and WhatsApp. Done. We send you to checkout.</p>
 <!-- Honeypot: humans don't fill this; bots do. Submission is silently dropped if filled. -->
 <input aria-hidden="true" autocomplete="off" name="website" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" tabindex="-1" type="text"/>
 <div class="field">
 <label for="nombre">Your name</label>
 <input id="nombre" name="nombre" placeholder="e.g. Juan Pérez" required="" type="text"/>
 </div>
-<div class="field">
-<label for="negocio">Your business name</label>
-<input id="negocio" name="negocio" placeholder="e.g. Corner Bakery" required="" type="text"/>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
 <div class="field">
 <label for="email">Email</label>
 <input id="email" name="email" placeholder="you@example.com" required="" type="email"/>
@@ -1640,22 +1744,20 @@
 <label for="whatsapp">WhatsApp</label>
 <input id="whatsapp" name="whatsapp" placeholder="+57 300 000 0000" required="" type="tel"/>
 </div>
+
+<div class="form-plan-summary is-empty" id="planSummary">
+<span><b>Plan:</b> <span id="planSummaryName">pick a plan on the left</span></span>
+<button type="button" class="change-plan" id="changePlan" style="display:none">change</button>
 </div>
-<div class="field">
-<label>Which plan interests you most?</label>
-<div class="radio-pills">
-<label class="pill"><input name="plan" type="radio" value="Esencial ($390k)"/><span>Essential<br/><small>$390k one-time</small></span></label>
-<label class="pill"><input name="plan" type="radio" value="Crecimiento ($690k)"/><span>Growth<br/><small>$690k one-time</small></span></label>
-<label class="pill"><input name="plan" type="radio" value="No estoy seguro"/><span>I'm not sure<br/><small>I want advice</small></span></label>
-</div>
-</div>
-<button class="btn btn-primary" data-pay-label="Continue to payment →" data-talk-label="Send, contact me today →" id="contactSubmit" type="submit">Send, contact me today →</button>
+<input type="hidden" name="plan" id="planHidden" value=""/>
+
+<button class="btn btn-primary" data-pay-label="Continue to payment →" data-talk-label="Send, contact me today →" id="contactSubmit" type="submit" disabled>Pick a plan first</button>
 <p class="form-foot">Your data isn't shared with anyone. No commitment.<br/><strong>30-day guarantee</strong> · if you don't love your site, we refund you.</p>
 </div>
 <div class="form-success">
 <div class="check-ico">✓</div>
 <h3 style="margin-bottom:10px">Got it! We received your message!</h3>
-<p style="color:var(--muted)">We'll reach out today via WhatsApp or email. If you'd like to get ahead, message us directly.</p>
+<p style="color:var(--muted)">Sending you to checkout now.</p>
 </div>
 </form>
 </div>
