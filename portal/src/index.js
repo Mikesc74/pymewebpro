@@ -326,7 +326,7 @@ const DELIVERABLES = [
   { key: "close_revisions", group: "close", plan: "esencial", label: "Rondas de cambios completadas" }
 ];
 const GROUP_LABELS = {
-  setup: "Configuración técnica", design: "Diseño y marca", pages: "Páginas",
+  setup: "Configuración técnica", design: "Diseño y marca", pages: "Secciones",
   features: "Funcionalidades", seo: "SEO + Analytics", close: "Cierre y entrega"
 };
 const STATUS_LABELS = {
@@ -559,7 +559,7 @@ const ALLOWED_TYPES = [
   "application/pdf", "application/postscript", "application/illustrator",
   "application/zip", "video/mp4"
 ];
-const VALID_CATEGORIES = ["logo", "photo", "reference", "other"];
+const VALID_CATEGORIES = ["logo", "photo", "reference", "pdf", "other"];
 async function handleFiles(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
@@ -923,6 +923,23 @@ async function handleCreateCheckout(request, env, leadId) {
   const quote = computeQuote(lead);
   if (!quote.chargeable) return json({ error: "Plan no seleccionado. Por favor escríbanos por WhatsApp para confirmar su plan." }, 400);
   if (!env.WOMPI_PUBLIC_KEY || !env.WOMPI_INTEGRITY) return json({ error: "Payments not configured" }, 503);
+
+  // Require encargado-del-tratamiento authorization (Ley 1581 cover for us as data processor)
+  let body = {};
+  try { body = await request.json(); } catch (_) {}
+  if (!body || body.authorization_accepted !== true) {
+    return json({ error: "Antes de pagar debe aceptar la autorización legal." }, 400);
+  }
+  const clauseVersion = String(body.clause_version || ENCARGADO_CLAUSE_VERSION);
+  const clauseTextHash = await sha256(
+    (lead.language === "en") ? ENCARGADO_CLAUSE_EN : ENCARGADO_CLAUSE_ES
+  );
+  const ip = request.headers.get("cf-connecting-ip") || "";
+  const ipHash = ip ? (await sha256(ip)).slice(0, 32) : null;
+  const userAgent = (request.headers.get("user-agent") || "").slice(0, 250);
+  await env.DB.prepare(
+    "INSERT INTO data_processor_authorizations (id, lead_id, email, clause_version, clause_text_hash, ip_hash, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?)",
+  ).bind(uuid(), leadId, lead.email || "", clauseVersion, clauseTextHash, ipHash, userAgent).run();
   const reference = `pwp-${leadId}-${Date.now().toString(36)}`;
   const amountInCents = quote.total_cents;
   const currency = "COP";
@@ -1046,17 +1063,157 @@ function notFoundHtml() {
 // (lines ~2398-2683 of the original); structure is straightforward and easy to rebuild.
 // NOTE: The confirmation page POSTs to `/api/leads/:leadId/checkout` to get the Wompi URL,
 // then redirects the browser to checkout.wompi.co.
+// Encargado-del-tratamiento clause shown at checkout. Versioned so we can prove
+// later exactly what wording each customer accepted.
+const ENCARGADO_CLAUSE_VERSION = "v1.0-2026-04-30";
+const ENCARGADO_CLAUSE_ES = `Autorizo a PymeWebPro (operado por NSC, NIT registrado en Colombia) a actuar como Encargado del Tratamiento de los datos personales que mi sitio web reciba de sus visitantes (formularios de contacto, suscripciones a newsletter, datos de analítica) bajo la Ley 1581 de 2012. Como Responsable del Tratamiento, asumo las obligaciones legales frente a los titulares y autorizo a PymeWebPro a procesar dichos datos en mi nombre, almacenarlos en servidores seguros (Cloudflare), y transferirlos cuando sea necesario para prestar el servicio. PymeWebPro guardará confidencialidad y aplicará medidas razonables de seguridad. Esta autorización puedo revocarla cancelando mi suscripción al servicio.`;
+const ENCARGADO_CLAUSE_EN = `I authorize PymeWebPro (operated by NSC, registered in Colombia) to act as Data Processor for the personal data my website receives from its visitors (contact forms, newsletter subscriptions, analytics data) under Colombian Law 1581 of 2012. As Data Controller, I assume legal obligations toward data subjects and authorize PymeWebPro to process such data on my behalf, store it on secure servers (Cloudflare), and transfer it when necessary to provide the service. PymeWebPro will maintain confidentiality and apply reasonable security measures. I may revoke this authorization by cancelling my service subscription.`;
+
 function confirmationHtml({ lead, quote, lang, lastPayment, justReturned }) {
-  // [Full HTML omitted from this recovery doc — ~280 lines of localized template literal.
-  //  Re-build at leisure; key elements: countdown banner using quote.discount_deadline,
-  //  card with rows for plan/hosting/discount/total, button#payBtn that fetches checkout_url,
-  //  Wompi+Bancolombia trust badge, WhatsApp help link.]
   const isEs = lang !== "en";
   if (lastPayment && lastPayment.status === "approved") return statusPage({ title: isEs ? "¡Pago recibido!" : "Payment received!", body: isEs ? "Le enviamos un correo con el enlace para empezar su proyecto." : "Check your email for the link to start your project.", color: "#10b981", icon: "✓" });
   if (justReturned && lastPayment && lastPayment.status === "pending") return statusPage({ title: isEs ? "Pago en proceso" : "Payment processing", body: isEs ? "Estamos esperando confirmación de Wompi." : "Waiting for confirmation from Wompi.", color: "#fbbf24", icon: "⏳" });
   if (!quote.chargeable) return statusPage({ title: isEs ? "Plan no seleccionado" : "No plan selected", body: "", color: "#fbbf24", icon: "?", showWa: true });
-  // [main template would go here]
-  return `<!DOCTYPE html><html><body><h1>Confirm your plan</h1><button onclick="fetch('/api/leads/${lead.id}/checkout',{method:'POST'}).then(r=>r.json()).then(d=>location.href=d.checkout_url)">Pay ${formatCop(quote.total_cop)}</button></body></html>`;
+
+  const t = isEs ? {
+    title: "Confirme su plan", subtitle: "Listo para arrancar — falta un paso.",
+    plan: "Plan", hosting: "Hosting", discount: "Descuento de lanzamiento",
+    total: "Total a pagar", iva: "IVA incluido",
+    securePay: "Pago seguro vía Wompi (Bancolombia)", credit: "Tarjeta · Nequi · PSE · cuotas",
+    installments: "Puede diferir el pago en 3, 6 o más cuotas con tarjeta de crédito. La disponibilidad y número de cuotas dependen de su banco.",
+    authTitle: "Autorización legal (obligatoria)",
+    authIntro: "Antes de proceder, por favor lea y acepte la siguiente cláusula. Sin esta autorización no podemos procesar legalmente los datos que su sitio web reciba de sus clientes.",
+    authCheckbox: "He leído y acepto la cláusula anterior.",
+    fullPrivacy: "Ver Política de Privacidad de PymeWebPro",
+    payBtn: "Pagar con Wompi", paying: "Cargando…",
+    helpWa: "¿Preguntas? Escríbanos por WhatsApp",
+    needHelp: "¿No es lo correcto? Contáctenos por WhatsApp y le ayudamos.",
+  } : {
+    title: "Confirm your plan", subtitle: "One step away from getting started.",
+    plan: "Plan", hosting: "Hosting", discount: "Launch discount",
+    total: "Total", iva: "VAT included",
+    securePay: "Secure payment via Wompi (Bancolombia)", credit: "Card · Nequi · PSE · installments",
+    installments: "You can split payment into 3, 6 or more credit-card installments. Availability and number of installments depend on your bank.",
+    authTitle: "Legal authorization (required)",
+    authIntro: "Before proceeding, please read and accept the following clause. Without this authorization we cannot legally process the visitor data your site will collect.",
+    authCheckbox: "I have read and accept the clause above.",
+    fullPrivacy: "View PymeWebPro's Privacy Policy",
+    payBtn: "Pay with Wompi", paying: "Loading…",
+    helpWa: "Questions? Message us on WhatsApp",
+    needHelp: "Not what you expected? Contact us on WhatsApp and we'll help.",
+  };
+  const clause = isEs ? ENCARGADO_CLAUSE_ES : ENCARGADO_CLAUSE_EN;
+
+  return `<!DOCTYPE html><html lang="${esc(lang)}"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(t.title)} · PymeWebPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:linear-gradient(135deg,#0a0e27 0%,#1a1d3a 50%,#2d1b4e 100%);color:#fff;min-height:100vh;line-height:1.55}
+.serif{font-family:'Cormorant Garamond',Georgia,serif}
+.wrap{max-width:640px;margin:0 auto;padding:40px 20px}
+.brand{display:flex;align-items:center;gap:.5rem;margin-bottom:30px}.brand-spark{color:#fbbf24}
+.title{font-size:2.4rem;font-style:italic;font-weight:400;margin:0 0 6px;letter-spacing:-.01em}
+.subtitle{color:rgba(255,255,255,0.6);margin:0 0 30px}
+.card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:28px;margin-bottom:18px}
+.row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.row:last-child{border-bottom:0;padding-bottom:0}
+.row .lbl{color:rgba(255,255,255,0.6)}.row .val{font-weight:600}
+.total{margin-top:14px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.15);display:flex;justify-content:space-between;align-items:baseline}
+.total .lbl{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.6)}
+.total .val{font-size:2rem;font-style:italic;color:#fbbf24}
+.iva{font-size:.8rem;color:rgba(255,255,255,0.45);margin-top:4px}
+.discount-row{color:#10b981}
+.installments{font-size:.78rem;color:rgba(255,255,255,0.5);margin-top:14px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:4px}
+.auth h3{margin:0 0 8px;font-size:1rem;color:#fbbf24;letter-spacing:.1em;text-transform:uppercase}
+.auth-intro{font-size:.9rem;color:rgba(255,255,255,0.65);margin:0 0 14px}
+.clause{font-size:.85rem;line-height:1.65;background:rgba(0,0,0,0.25);padding:16px 18px;border-radius:4px;color:rgba(255,255,255,0.85);margin-bottom:14px;max-height:240px;overflow-y:auto}
+.check-row{display:flex;align-items:flex-start;gap:.7rem;cursor:pointer;padding:10px 0}
+.check-row input{margin-top:3px;width:18px;height:18px;cursor:pointer;accent-color:#fbbf24}
+.check-row span{font-size:.9rem;color:rgba(255,255,255,0.85)}
+.policy-link{font-size:.8rem;color:#fbbf24;text-decoration:none;display:inline-block;margin-top:10px}
+.pay-btn{width:100%;background:#fbbf24;color:#0a0e27;border:0;padding:18px 24px;border-radius:4px;font-family:inherit;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.95rem;cursor:pointer;margin-top:10px}
+.pay-btn:disabled{opacity:.35;cursor:not-allowed}
+.pay-btn:not(:disabled):hover{filter:brightness(1.08)}
+.trust{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:20px;color:rgba(255,255,255,0.45);font-size:.78rem;flex-wrap:wrap}
+.wa-help{display:block;text-align:center;margin-top:24px;color:rgba(255,255,255,0.6);font-size:.85rem}
+.wa-help a{color:#fbbf24;text-decoration:none;font-weight:600}
+.err{padding:10px 14px;background:rgba(252,165,165,0.1);border:1px solid rgba(252,165,165,0.3);color:#fca5a5;border-radius:4px;margin-top:12px;font-size:.85rem;display:none}
+</style>
+</head><body>
+<div class="wrap">
+  <div class="brand"><span class="brand-spark">✦</span><span class="serif" style="font-style:italic;font-size:1.2rem">Pyme<span style="color:#fbbf24">WebPro</span></span></div>
+  <h1 class="serif title">${esc(t.title)}</h1>
+  <p class="subtitle">${esc(t.subtitle)}</p>
+
+  <div class="card">
+    <div class="row"><span class="lbl">${esc(t.plan)}</span><span class="val">${esc(planLabel(quote.plan, lang))}</span></div>
+    <div class="row"><span class="lbl">${esc(t.hosting)}</span><span class="val">${esc(hostingLabel(quote.hosting, lang))}${quote.hosting_bundled ? ` <small style="color:#10b981">(${isEs ? "incluido" : "included"})</small>` : ""}</span></div>
+    ${quote.discount_active ? `<div class="row discount-row"><span class="lbl">${esc(t.discount)}</span><span class="val">−${esc(formatCop(quote.discount_cop))} COP</span></div>` : ""}
+    <div class="total">
+      <div><div class="lbl">${esc(t.total)}</div><div class="iva">${esc(t.iva)}</div></div>
+      <div class="val">${esc(formatCop(quote.total_cop))} COP</div>
+    </div>
+    <div class="installments">${esc(t.installments)}</div>
+  </div>
+
+  <div class="card auth">
+    <h3>${esc(t.authTitle)}</h3>
+    <p class="auth-intro">${esc(t.authIntro)}</p>
+    <div class="clause">${esc(clause)}</div>
+    <label class="check-row">
+      <input type="checkbox" id="authBox" />
+      <span>${esc(t.authCheckbox)}</span>
+    </label>
+    <a class="policy-link" href="https://pymewebpro.com/politica-de-datos.html" target="_blank" rel="noopener">${esc(t.fullPrivacy)} →</a>
+  </div>
+
+  <button id="payBtn" class="pay-btn" disabled>${esc(t.payBtn)} · ${esc(formatCop(quote.total_cop))} COP</button>
+  <div class="err" id="errBox"></div>
+
+  <div class="trust">
+    <span>🔒 ${esc(t.securePay)}</span>
+    <span>${esc(t.credit)}</span>
+  </div>
+
+  <div class="wa-help">
+    ${esc(t.needHelp)}<br>
+    <a href="/go/whatsapp?campaign=confirm_help">${esc(t.helpWa)} →</a>
+  </div>
+</div>
+<script>
+(function(){
+  const box = document.getElementById('authBox');
+  const btn = document.getElementById('payBtn');
+  const err = document.getElementById('errBox');
+  const tPaying = ${JSON.stringify(t.paying)};
+  const tPay = ${JSON.stringify(t.payBtn + " · " + formatCop(quote.total_cop) + " COP")};
+  box.addEventListener('change', function(){ btn.disabled = !box.checked; });
+  btn.addEventListener('click', async function(){
+    if (!box.checked) return;
+    btn.disabled = true; btn.textContent = tPaying; err.style.display = 'none';
+    try {
+      const r = await fetch('/api/leads/${esc(lead.id)}/checkout', {
+        method: 'POST',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify({ authorization_accepted: true, clause_version: ${JSON.stringify(ENCARGADO_CLAUSE_VERSION)} })
+      });
+      const j = await r.json();
+      if (!r.ok || !j.checkout_url) throw new Error(j.error || 'No se pudo crear el checkout');
+      location.href = j.checkout_url;
+    } catch (e) {
+      err.textContent = e.message;
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = tPay;
+    }
+  });
+})();
+</script>
+</body></html>`;
 }
 function statusPage({ title, body, color, icon, showWa = false }) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title} · PymeWebPro</title></head>
@@ -1166,7 +1323,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     const ArrowRight = (p) => <Icon {...p} d='<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>' />;
 
     // ─── i18n ──────────────────────────────────────────────────────────
-    const T = {"en":{"brand":"PymeWebPro","tagline":"Client Onboarding Portal","loginTitle":"Welcome","loginSub":"Enter your email to receive a secure login link","emailPh":"you@yourbusiness.com","sendLink":"Send Magic Link","sending":"Sending…","linkSent":"Check your inbox","linkSentSub":"We sent a login link to","backToLogin":"← Use a different email","progress":"Project Progress","complete":"complete","saving":"Saving…","saved":"Saved","saveError":"Save failed","verifying":"Verifying your link…","verifyFailed":"Link expired or invalid","sections":{"business":"Business Basics","contact":"Contact & Social","brand":"Brand Assets","visual":"Visual Direction","content":"Content & Themes","tech":"Technical Setup","growth":"Growth Add-Ons"},"fields":{"bizName":"Business Name","tagline":"Tagline / Slogan","whatYouDo":"What does your business do?","audience":"Who is your target audience?","phone":"Phone Number","email":"Public Email","address":"Business Address","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Upload Logo (PNG, SVG, AI)","colors":"Brand Colors","colorsHelp":"Add hex codes or describe your palette","fonts":"Font Preferences","photos":"Upload Photography & Imagery","refSites":"Reference websites you like","tone":"Brand Tone","topics":"Key topics to cover","pages":"Pages needed","domain":"Existing Domain","hosting":"Current Hosting","bizEmail":"Business Email Setup","bookingsUrl":"Booking link (Calendly, Cal.com, etc.)","pdfUrl":"Catalog / Menu PDF link","pdfLabel":"PDF button label","pdfLabelPh":"e.g. Menu, Catalog, Spec Sheet","waCatalogUrl":"WhatsApp Business catalog link","newsletterUrl":"Newsletter form action URL","newsletterHelp":"Mailchimp, ConvertKit, MailerLite, etc.","ga4Id":"Google Analytics 4 ID","ga4Help":"Looks like G-XXXXXXXXXX","metaPixelId":"Meta (Facebook) Pixel ID","metaPixelHelp":"15-16 digit number from Meta Events Manager","testimonials":"Testimonials","testimonialsHelp":"One per line: Name | Quote | Role (e.g.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"FAQs","faqsHelp":"One per line: Question? | Answer","growthIntro":"These features are part of your Growth plan. Fill in only what applies — leave the rest blank."},"ph":{"bizName":"Acme Imports S.A.","tagline":"Your one-line pitch","whatYouDo":"Describe products, services, what makes you unique…","audience":"Demographics, industries, regions…","colors":"#0F172A, gold accent, warm neutrals…","tone":"Professional, friendly, bold, premium…","topics":"Sustainability, B2B sales, family-owned story…","pages":"Home, About, Services, Portfolio, Contact…"},"next":"Next","back":"Back","submit":"Submit & Notify Us","submitting":"Submitting…","submitted":"Submitted","submittedSub":"We’ve been notified. We’ll reach out shortly.","dragDrop":"Drop files here or click to upload"},"es":{"brand":"PymeWebPro","tagline":"Portal de Incorporación","loginTitle":"Bienvenido","loginSub":"Ingrese su correo para recibir un enlace de acceso","emailPh":"tu@tunegocio.com","sendLink":"Enviar Enlace","sending":"Enviando…","linkSent":"Revise su bandeja","linkSentSub":"Enviamos un enlace a","backToLogin":"← Usar otro correo","progress":"Progreso","complete":"completo","saving":"Guardando…","saved":"Guardado","saveError":"Error","verifying":"Verificando…","verifyFailed":"Enlace caducado o inválido","sections":{"business":"Datos del Negocio","contact":"Contacto y Redes","brand":"Activos de Marca","visual":"Dirección Visual","content":"Contenido y Temas","tech":"Configuración Técnica","growth":"Funciones Crecimiento"},"fields":{"bizName":"Nombre del Negocio","tagline":"Eslogan","whatYouDo":"¿Qué hace su empresa?","audience":"¿Quién es su público objetivo?","phone":"Teléfono","email":"Correo Público","address":"Dirección","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Subir Logo (PNG, SVG, AI)","colors":"Colores de Marca","colorsHelp":"Agregue códigos hex o describa su paleta","fonts":"Tipografía","photos":"Subir Fotografías","refSites":"Sitios de referencia","tone":"Tono de Marca","topics":"Temas clave","pages":"Páginas necesarias","domain":"Dominio Existente","hosting":"Hosting Actual","bizEmail":"Correo Empresarial","bookingsUrl":"Enlace de reservas (Calendly, Cal.com, etc.)","pdfUrl":"Link al catálogo / menú en PDF","pdfLabel":"Texto del botón PDF","pdfLabelPh":"ej. Menú, Catálogo, Ficha Técnica","waCatalogUrl":"Catálogo de WhatsApp Business","newsletterUrl":"URL del formulario de newsletter","newsletterHelp":"Mailchimp, ConvertKit, MailerLite, etc.","ga4Id":"ID de Google Analytics 4","ga4Help":"Formato G-XXXXXXXXXX","metaPixelId":"ID del Pixel de Meta (Facebook)","metaPixelHelp":"Número de 15-16 dígitos del Events Manager de Meta","testimonials":"Testimonios","testimonialsHelp":"Uno por línea: Nombre | Cita | Rol (ej.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"Preguntas frecuentes","faqsHelp":"Uno por línea: ¿Pregunta? | Respuesta","growthIntro":"Estas funciones son parte de su plan Crecimiento. Complete solo lo que aplique — deje el resto en blanco."},"ph":{"bizName":"Acme Imports S.A.","tagline":"Su pitch en una línea","whatYouDo":"Describa productos, servicios…","audience":"Demografía, industrias, regiones…","colors":"#0F172A, dorado de acento…","tone":"Profesional, amigable, audaz…","topics":"Sostenibilidad, ventas B2B…","pages":"Inicio, Nosotros, Servicios, Contacto…"},"next":"Siguiente","back":"Atrás","submit":"Enviar y Notificarnos","submitting":"Enviando…","submitted":"Enviado","submittedSub":"Hemos sido notificados. Le contactaremos pronto.","dragDrop":"Suelte archivos aquí o haga clic"}};
+    const T = {"en":{"brand":"PymeWebPro","tagline":"Client Onboarding Portal","loginTitle":"Welcome","loginSub":"Enter your email to receive a secure login link","emailPh":"you@yourbusiness.com","sendLink":"Send Magic Link","sending":"Sending…","linkSent":"Check your inbox","linkSentSub":"We sent a login link to","backToLogin":"← Use a different email","progress":"Project Progress","complete":"complete","saving":"Saving…","saved":"Saved","saveError":"Save failed","verifying":"Verifying your link…","verifyFailed":"Link expired or invalid","sections":{"business":"Business Basics","contact":"Contact & Social","brand":"Brand Assets","visual":"Visual Direction","content":"Content & Themes","tech":"Technical Setup","growth":"Growth Add-Ons"},"fields":{"bizName":"Business Name","tagline":"Tagline / Slogan","whatYouDo":"What does your business do?","audience":"Who is your target audience?","nit":"Tax ID (NIT or cédula)","nitHelp":"Required for the privacy policy and terms pages","legalRepresentative":"Legal representative full name (optional)","phone":"Phone Number","email":"Public Email","address":"Business Address","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Upload Logo (PNG, SVG, AI)","colors":"Brand Colors","colorsHelp":"Add hex codes or describe your palette","fonts":"Font Preferences","photos":"Upload Photography & Imagery","refSites":"Reference websites you like","photoAlts":"Describe each photo (one per line, in upload order)","photoAltsHelp":"Used for accessibility (screen readers) and SEO. Example line: 'Front of our bakery on Calle 50 with the team smiling'","tone":"Brand Tone","topics":"Key topics to cover","pages":"Sections needed","domain":"Existing Domain","hosting":"Current Hosting","bizEmail":"Business Email Setup","bookingsUrl":"Booking link (Calendly, Cal.com, etc.)","pdfUp":"Upload Catalog / Menu PDF","pdfLabel":"PDF button label","pdfLabelPh":"e.g. Menu, Catalog, Spec Sheet","waCatalogUrl":"WhatsApp Business catalog link","newsletterEnableLabel":"Enable newsletter signup form on the site","newsletterHelp":"Subscribers get stored and you'll be emailed each new sign-up","ga4Id":"Google Analytics 4 ID","ga4Help":"Looks like G-XXXXXXXXXX","metaPixelId":"Meta (Facebook) Pixel ID","metaPixelHelp":"15-16 digit number from Meta Events Manager","testimonials":"Testimonials","testimonialsHelp":"One per line: Name | Quote | Role (e.g.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"FAQs","faqsHelp":"One per line: Question? | Answer","growthIntro":"These features are part of your Growth plan. Fill in only what applies — leave the rest blank.","bilingualLabel":"Generate an English version of my site too (en/)"},"ph":{"bizName":"Acme Imports S.A.","tagline":"Your one-line pitch","whatYouDo":"Describe products, services, what makes you unique…","audience":"Demographics, industries, regions…","colors":"#0F172A, gold accent, warm neutrals…","tone":"Professional, friendly, bold, premium…","topics":"Sustainability, B2B sales, family-owned story…","pages":"Home, About, Services, Portfolio, Contact (one per line)…"},"next":"Next","back":"Back","submit":"Submit & Notify Us","submitting":"Submitting…","submitted":"Submitted","submittedSub":"We’ve been notified. We’ll reach out shortly.","dragDrop":"Drop files here or click to upload"},"es":{"brand":"PymeWebPro","tagline":"Portal de Incorporación","loginTitle":"Bienvenido","loginSub":"Ingrese su correo para recibir un enlace de acceso","emailPh":"tu@tunegocio.com","sendLink":"Enviar Enlace","sending":"Enviando…","linkSent":"Revise su bandeja","linkSentSub":"Enviamos un enlace a","backToLogin":"← Usar otro correo","progress":"Progreso","complete":"completo","saving":"Guardando…","saved":"Guardado","saveError":"Error","verifying":"Verificando…","verifyFailed":"Enlace caducado o inválido","sections":{"business":"Datos del Negocio","contact":"Contacto y Redes","brand":"Activos de Marca","visual":"Dirección Visual","content":"Contenido y Temas","tech":"Configuración Técnica","growth":"Funciones Crecimiento"},"fields":{"bizName":"Nombre del Negocio","tagline":"Eslogan","whatYouDo":"¿Qué hace su empresa?","audience":"¿Quién es su público objetivo?","nit":"NIT o cédula","nitHelp":"Requerido para la política de privacidad y los términos","legalRepresentative":"Representante legal (nombre completo, opcional)","phone":"Teléfono","email":"Correo Público","address":"Dirección","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Subir Logo (PNG, SVG, AI)","colors":"Colores de Marca","colorsHelp":"Agregue códigos hex o describa su paleta","fonts":"Tipografía","photos":"Subir Fotografías","refSites":"Sitios de referencia","photoAlts":"Describa cada foto (una por línea, en orden de subida)","photoAltsHelp":"Se usa para accesibilidad (lectores de pantalla) y SEO. Ejemplo: 'Fachada de nuestra panadería en la Calle 50 con el equipo sonriendo'","tone":"Tono de Marca","topics":"Temas clave","pages":"Secciones necesarias","domain":"Dominio Existente","hosting":"Hosting Actual","bizEmail":"Correo Empresarial","bookingsUrl":"Enlace de reservas (Calendly, Cal.com, etc.)","pdfUp":"Subir catálogo / menú en PDF","pdfLabel":"Texto del botón PDF","pdfLabelPh":"ej. Menú, Catálogo, Ficha Técnica","waCatalogUrl":"Catálogo de WhatsApp Business","newsletterEnableLabel":"Activar formulario de suscripción en el sitio","newsletterHelp":"Los suscriptores se guardan y le enviamos un correo en cada nuevo registro","ga4Id":"ID de Google Analytics 4","ga4Help":"Formato G-XXXXXXXXXX","metaPixelId":"ID del Pixel de Meta (Facebook)","metaPixelHelp":"Número de 15-16 dígitos del Events Manager de Meta","testimonials":"Testimonios","testimonialsHelp":"Uno por línea: Nombre | Cita | Rol (ej.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"Preguntas frecuentes","faqsHelp":"Uno por línea: ¿Pregunta? | Respuesta","growthIntro":"Estas funciones son parte de su plan Crecimiento. Complete solo lo que aplique — deje el resto en blanco.","bilingualLabel":"Generar también una versión en inglés (en/)"},"ph":{"bizName":"Acme Imports S.A.","tagline":"Su pitch en una línea","whatYouDo":"Describa productos, servicios…","audience":"Demografía, industrias, regiones…","colors":"#0F172A, dorado de acento…","tone":"Profesional, amigable, audaz…","topics":"Sostenibilidad, ventas B2B…","pages":"Inicio, Nosotros, Servicios, Contacto (uno por línea)…"},"next":"Siguiente","back":"Atrás","submit":"Enviar y Notificarnos","submitting":"Enviando…","submitted":"Enviado","submittedSub":"Hemos sido notificados. Le contactaremos pronto.","dragDrop":"Suelte archivos aquí o haga clic"}};
 
     // ─── API CLIENT ───────────────────────────────────────────────────
     async function api(path, opts = {}) {
@@ -1820,6 +1977,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     function MockupsPanel({ client }) {
       const [mockups, setMockups] = useState([]);
       const [comments, setComments] = useState({});
+      const [preflight, setPreflight] = useState(null);
       const [loading, setLoading] = useState(false);
       const [generating, setGenerating] = useState(false);
       const [shareUrls, setShareUrls] = useState({});
@@ -1833,8 +1991,15 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           const list = r.mockups || [];
           setMockups(list);
           if (list.length) {
-            const c = await adminApi('/api/admin/mockups/' + list[0].id + '/comments');
-            setComments(prev => ({ ...prev, [list[0].id]: c.comments || [] }));
+            const latest = list[0];
+            const [c, p] = await Promise.all([
+              adminApi('/api/admin/mockups/' + latest.id + '/comments').catch(() => ({comments:[]})),
+              adminApi('/api/admin/mockups/' + latest.id + '/preflight').catch(() => null),
+            ]);
+            setComments(prev => ({ ...prev, [latest.id]: c.comments || [] }));
+            setPreflight(p ? { mockupId: latest.id, ...p } : null);
+          } else {
+            setPreflight(null);
           }
         } catch (e) { alert('Error: ' + e.message); }
         finally { setLoading(false); }
@@ -1870,10 +2035,40 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         setShipping(s => ({ ...s, [mid]: true }));
         try {
           const r = await adminApi('/api/admin/mockups/' + mid + '/ship', { method: 'POST' });
-          alert('Lanzado: ' + r.url + (r.note ? '\n\n' + r.note : ''));
+          alert('Lanzado: ' + r.url + (r.note ? '\\n\\n' + r.note : ''));
+          await load();
+        } catch (e) {
+          // 422 = preflight failed
+          if (e.message && e.message.includes('preflight')) {
+            alert('No se puede lanzar: hay errores en la verificación previa. Vea la lista arriba y arregle antes de continuar.');
+          } else {
+            alert('Error: ' + e.message);
+          }
+        }
+        finally { setShipping(s => ({ ...s, [mid]: false })); }
+      }
+      const latestMockupId = mockups[0]?.id;
+      const preflightForLatest = preflight && preflight.mockupId === latestMockupId ? preflight : null;
+      const canShipLatest = preflightForLatest ? preflightForLatest.canShip : true;
+      const hasShippedMockup = mockups.some(m => m.status === 'shipped');
+
+      async function disableSite() {
+        const reason = prompt('Razón para bajar el sitio (refund / fraud / customer_request):', 'refund');
+        if (reason === null) return;
+        if (!confirm('¿Confirmar? El sitio en vivo dejará de estar accesible (HTTP 410).')) return;
+        try {
+          await adminApi('/api/admin/clients/' + client.id + '/site/disable', { method: 'POST', body: JSON.stringify({ reason }) });
+          alert('Sitio bajado. Verá una página de "Sitio no disponible" en el slug.');
           await load();
         } catch (e) { alert('Error: ' + e.message); }
-        finally { setShipping(s => ({ ...s, [mid]: false })); }
+      }
+      async function enableSite() {
+        if (!confirm('¿Reactivar el sitio?')) return;
+        try {
+          await adminApi('/api/admin/clients/' + client.id + '/site/enable', { method: 'POST' });
+          alert('Sitio reactivado.');
+          await load();
+        } catch (e) { alert('Error: ' + e.message); }
       }
 
       const planLabel = client.plan === 'pro' ? 'Crecimiento' : client.plan === 'esencial' ? 'Esencial' : '—';
@@ -1885,9 +2080,13 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',margin:0}}>Mockups</h2>
               <span style={{fontSize:'0.7rem',padding:'0.25rem 0.7rem',borderRadius:'999px',background:planColor+'22',color:planColor,letterSpacing:'0.12em',textTransform:'uppercase',fontWeight:600}}>Plan: {planLabel}</span>
             </div>
-            <button onClick={generate} disabled={generating} style={primaryBtn}>
-              {generating ? 'Generando…' : (mockups.length ? 'Generar nueva versión' : 'Generar mockup')}
-            </button>
+            <div style={{display:'flex',gap:'0.5rem',flexWrap:'wrap'}}>
+              <button onClick={generate} disabled={generating} style={primaryBtn}>
+                {generating ? 'Generando…' : (mockups.length ? 'Generar nueva versión' : 'Generar mockup')}
+              </button>
+              {hasShippedMockup && <button onClick={disableSite} style={{...ghostBtn,color:'#fca5a5',borderColor:'rgba(252,165,165,0.4)'}}>Bajar sitio (refund)</button>}
+              {hasShippedMockup && <button onClick={enableSite} style={{...ghostBtn,fontSize:'0.78rem'}}>Reactivar</button>}
+            </div>
           </div>
           {loading ? (
             <div style={{padding:'1rem',color:'rgba(255,255,255,0.5)'}}>Cargando…</div>
@@ -1905,11 +2104,30 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 </div>
                 <div style={{display:'flex',gap:'0.5rem'}}>
                   <button onClick={()=>share(m.id)} style={ghostBtn}>Compartir (7 días)</button>
-                  <button onClick={()=>ship(m.id)} disabled={shipping[m.id]} style={{...primaryBtn,padding:'8px 14px',fontSize:'0.8rem'}}>
+                  <button onClick={()=>ship(m.id)} disabled={shipping[m.id] || (m.id===latestMockupId && !canShipLatest)} title={(m.id===latestMockupId && !canShipLatest) ? 'Verificación previa con errores — arregle antes de lanzar' : ''} style={{...primaryBtn,padding:'8px 14px',fontSize:'0.8rem',opacity:(m.id===latestMockupId && !canShipLatest)?0.4:1}}>
                     {shipping[m.id] ? 'Lanzando…' : (m.status==='shipped' ? 'Re-lanzar' : 'Lanzar final')}
                   </button>
                 </div>
               </div>
+              {m.id===latestMockupId && preflightForLatest && (preflightForLatest.errors.length>0 || preflightForLatest.warnings.length>0) && (
+                <div style={{marginTop:'0.5rem',marginBottom:'0.75rem'}}>
+                  {preflightForLatest.errors.length>0 && (
+                    <div style={{padding:'0.75rem 1rem',background:'rgba(252,165,165,0.08)',border:'1px solid rgba(252,165,165,0.4)',borderRadius:'4px',marginBottom:'0.5rem'}}>
+                      <div style={{fontSize:'0.7rem',color:'#fca5a5',textTransform:'uppercase',letterSpacing:'0.12em',fontWeight:600,marginBottom:'0.4rem'}}>{preflightForLatest.errors.length} error(es) — bloquea lanzamiento</div>
+                      {preflightForLatest.errors.map((e,idx)=>(<div key={idx} style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.85)',padding:'0.2rem 0'}}>✗ {e.msg}</div>))}
+                    </div>
+                  )}
+                  {preflightForLatest.warnings.length>0 && (
+                    <div style={{padding:'0.75rem 1rem',background:'rgba(251,191,36,0.08)',border:'1px solid rgba(251,191,36,0.3)',borderRadius:'4px'}}>
+                      <div style={{fontSize:'0.7rem',color:'#fbbf24',textTransform:'uppercase',letterSpacing:'0.12em',fontWeight:600,marginBottom:'0.4rem'}}>{preflightForLatest.warnings.length} advertencia(s) — no bloquea</div>
+                      {preflightForLatest.warnings.map((w,idx)=>(<div key={idx} style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.75)',padding:'0.2rem 0'}}>⚠ {w.msg}</div>))}
+                    </div>
+                  )}
+                </div>
+              )}
+              {m.id===latestMockupId && preflightForLatest && preflightForLatest.errors.length===0 && preflightForLatest.warnings.length===0 && (
+                <div style={{padding:'0.5rem 0.85rem',background:'rgba(16,185,129,0.08)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem',color:'#10b981'}}>✓ Verificación previa: todo en orden, listo para lanzar.</div>
+              )}
               {shareUrls[m.id] && (
                 <div style={{padding:'0.6rem 0.85rem',background:'rgba(251,191,36,0.08)',border:'1px solid rgba(251,191,36,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem'}}>
                   <span style={{color:'rgba(255,255,255,0.6)'}}>Enlace temp (copiado):</span> <a href={shareUrls[m.id]} target="_blank" rel="noopener" style={{color:'#fbbf24'}}>{shareUrls[m.id]}</a>
@@ -2171,11 +2389,11 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const SecIcon = sectionIcons[section];
       const currentKey = sectionKeys[section];
       const sectionFields = {
-        business:['bizName','tagline','whatYouDo','audience'],
+        business:['bizName','tagline','whatYouDo','audience','nit','legalRepresentative'],
         contact:['phone','email','address','whatsapp','ig','fb','li','tw'],
-        brand:['colors','fonts'], visual:['refSites'],
+        brand:['colors','fonts'], visual:['refSites','photoAlts'],
         content:['tone','topics','pages'], tech:['domain','hosting','bizEmail'],
-        growth:['bookingsUrl','pdfUrl','pdfLabel','waCatalogUrl','newsletterUrl','ga4Id','metaPixelId','testimonials','faqs']
+        growth:['bilingual','bookingsUrl','pdfLabel','waCatalogUrl','newsletterEnabled','ga4Id','metaPixelId','testimonials','faqs']
       };
       const [saveStatus, setSaveStatus] = useState({});
       const saveTimers = useRef({});
@@ -2268,6 +2486,10 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               <div style={{display:'flex',flexDirection:'column',gap:'1.5rem'}}>
                 {currentKey==='business' && <>
                   <Field label={t.fields.bizName} value={data.bizName||''} onChange={v=>update('bizName',v)} placeholder={t.ph.bizName}/>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 2fr',gap:'1rem'}}>
+                    <Field label={t.fields.nit} value={data.nit||''} onChange={v=>update('nit',v)} placeholder="900.123.456-7" help={t.fields.nitHelp}/>
+                    <Field label={t.fields.legalRepresentative} value={data.legalRepresentative||''} onChange={v=>update('legalRepresentative',v)} placeholder=""/>
+                  </div>
                   <Field label={t.fields.tagline} value={data.tagline||''} onChange={v=>update('tagline',v)} placeholder={t.ph.tagline}/>
                   <Field label={t.fields.whatYouDo} value={data.whatYouDo||''} onChange={v=>update('whatYouDo',v)} placeholder={t.ph.whatYouDo} textarea/>
                   <Field label={t.fields.audience} value={data.audience||''} onChange={v=>update('audience',v)} placeholder={t.ph.audience} textarea/>
@@ -2292,6 +2514,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 </>}
                 {currentKey==='visual' && <>
                   <FileDrop label={t.fields.photos} dragText={t.dragDrop} category="photo" files={files.filter(f=>f.category==='photo')} onUpload={handleFileUpload} onDelete={handleFileDelete} accept="image/*,video/*" multi/>
+                  <Field label={t.fields.photoAlts} value={data.photoAlts||''} onChange={v=>update('photoAlts',v)} textarea help={t.fields.photoAltsHelp} placeholder={'Fachada de nuestra panadería\nEl equipo en la mañana\nProductos del día'}/>
                   <Field label={t.fields.refSites} value={data.refSites||''} onChange={v=>update('refSites',v)} textarea placeholder="https://…"/>
                 </>}
                 {currentKey==='content' && <>
@@ -2306,19 +2529,25 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 </>}
                 {currentKey==='growth' && <>
                   <p style={{margin:'0 0 1rem',color:'rgba(255,255,255,0.55)',fontSize:'0.9rem',fontStyle:'italic'}}>{t.fields.growthIntro}</p>
+                  <label style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.85rem 1rem',background:'rgba(251,191,36,0.06)',border:'1px solid rgba(251,191,36,0.2)',borderRadius:'4px',cursor:'pointer'}}>
+                    <input type="checkbox" checked={data.bilingual==='1'} onChange={e=>update('bilingual',e.target.checked?'1':'')}/>
+                    <span style={{color:'rgba(255,255,255,0.85)',fontSize:'0.9rem'}}>{t.fields.bilingualLabel}</span>
+                  </label>
                   <Field label={t.fields.bookingsUrl} value={data.bookingsUrl||''} onChange={v=>update('bookingsUrl',v)} placeholder="https://calendly.com/su-negocio"/>
-                  <div style={{display:'grid',gridTemplateColumns:'2fr 1fr',gap:'1rem'}}>
-                    <Field label={t.fields.pdfUrl} value={data.pdfUrl||''} onChange={v=>update('pdfUrl',v)} placeholder="https://..."/>
-                    <Field label={t.fields.pdfLabel} value={data.pdfLabel||''} onChange={v=>update('pdfLabel',v)} placeholder={t.fields.pdfLabelPh}/>
-                  </div>
+                  <FileDrop label={t.fields.pdfUp} dragText={t.dragDrop} category="pdf" files={files.filter(f=>f.category==='pdf')} onUpload={handleFileUpload} onDelete={handleFileDelete} accept="application/pdf"/>
+                  <Field label={t.fields.pdfLabel} value={data.pdfLabel||''} onChange={v=>update('pdfLabel',v)} placeholder={t.fields.pdfLabelPh}/>
                   <Field label={t.fields.waCatalogUrl} value={data.waCatalogUrl||''} onChange={v=>update('waCatalogUrl',v)} placeholder="https://wa.me/c/..."/>
-                  <Field label={t.fields.newsletterUrl} value={data.newsletterUrl||''} onChange={v=>update('newsletterUrl',v)} placeholder="https://..." help={t.fields.newsletterHelp}/>
+                  <label style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.85rem 1rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',cursor:'pointer'}}>
+                    <input type="checkbox" checked={data.newsletterEnabled==='1'} onChange={e=>update('newsletterEnabled',e.target.checked?'1':'')}/>
+                    <span style={{color:'rgba(255,255,255,0.85)',fontSize:'0.9rem'}}>{t.fields.newsletterEnableLabel}</span>
+                  </label>
+                  {data.newsletterEnabled==='1' && <p style={{margin:'-0.5rem 0 0',fontSize:'0.78rem',color:'rgba(255,255,255,0.45)'}}>{t.fields.newsletterHelp}</p>}
                   <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                     <Field label={t.fields.ga4Id} value={data.ga4Id||''} onChange={v=>update('ga4Id',v)} placeholder="G-XXXXXXXXXX" help={t.fields.ga4Help}/>
                     <Field label={t.fields.metaPixelId} value={data.metaPixelId||''} onChange={v=>update('metaPixelId',v)} placeholder="123456789012345" help={t.fields.metaPixelHelp}/>
                   </div>
-                  <Field label={t.fields.testimonials} value={data.testimonials||''} onChange={v=>update('testimonials',v)} textarea placeholder={"María Pérez | Excelente servicio, llegamos al doble de clientes | Dueña, Café del Centro\nJorge Ramos | Profesionales y rápidos | Gerente, Logística JR"} help={t.fields.testimonialsHelp}/>
-                  <Field label={t.fields.faqs} value={data.faqs||''} onChange={v=>update('faqs',v)} textarea placeholder={"¿Cuánto tarda el envío? | Entre 2 y 5 días hábiles a nivel nacional.\n¿Tienen garantía? | Sí, 30 días contra defectos de fábrica."} help={t.fields.faqsHelp}/>
+                  <Field label={t.fields.testimonials} value={data.testimonials||''} onChange={v=>update('testimonials',v)} textarea placeholder={"María Pérez | Excelente servicio, llegamos al doble de clientes | Dueña, Café del Centro\\nJorge Ramos | Profesionales y rápidos | Gerente, Logística JR"} help={t.fields.testimonialsHelp}/>
+                  <Field label={t.fields.faqs} value={data.faqs||''} onChange={v=>update('faqs',v)} textarea placeholder={"¿Cuánto tarda el envío? | Entre 2 y 5 días hábiles a nivel nacional.\\n¿Tienen garantía? | Sí, 30 días contra defectos de fábrica."} help={t.fields.faqsHelp}/>
                 </>}
               </div>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:'4rem',paddingTop:'2rem',borderTop:'1px solid rgba(255,255,255,0.08)'}}>
@@ -2432,12 +2661,12 @@ const src_default = {
       if (path.startsWith("/api/client/")) return cors(await handleClient(request, env, ctx));
       if (path === "/api/leads") return cors(await handlePublicLeads(request, env, ctx));
       if (path.startsWith("/api/admin/leads") || path === "/api/admin/clicks") return cors(await handleAdminLeads(request, env, ctx));
+      // ─── mockup engine routes (must run BEFORE the /api/admin/* and /api/* catch-alls) ───
+      const __mockupResp = await handleMockups(request, env, ctx, { json, isAdmin, randomToken, uuid, sha256, escapeHtml });
+      if (__mockupResp) return cors(__mockupResp);
       if (path.startsWith("/api/admin/")) return cors(await handleAdmin(request, env, ctx));
       if (path.startsWith("/api/files/")) return cors(await handleFiles(request, env, ctx));
       if (path.startsWith("/api/")) return cors(json({ error: "Not found" }, 404));
-      // ─── mockup engine routes (added by graft) ───────────────────────────
-      const __mockupResp = await handleMockups(request, env, ctx, { json, isAdmin, randomToken, uuid, sha256, escapeHtml });
-      if (__mockupResp) return cors(__mockupResp);
       // SPA fallthrough
       return new Response(FRONTEND_HTML, {
         headers: {

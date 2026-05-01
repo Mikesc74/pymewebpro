@@ -76,21 +76,36 @@ export function renderBlueprint1(input, opts) {
   const ga4Id = pro ? (i.ga4Id || "") : "";
   const metaPixelId = pro ? (i.metaPixelId || "") : "";
 
-  // ─── JSON-LD (LocalBusiness on both, FAQPage on Growth) ────────────────
+  // ─── JSON-LD (LocalBusiness on every site, FAQPage if FAQs, Service per service) ──
+  const businessId = (i.canonicalUrl || "") + "#business";
   const ldLocalBusiness = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": businessId || undefined,
     "name": i.businessName,
     "description": i.tagline,
     "url": i.canonicalUrl || undefined,
     "telephone": i.phone || undefined,
     "email": i.email || undefined,
     "image": i.logoUrl || undefined,
-    "address": i.address ? { "@type": "PostalAddress", "streetAddress": i.address } : undefined,
+    "address": i.address ? { "@type": "PostalAddress", "streetAddress": i.address, "addressCountry": "CO" } : undefined,
     "openingHours": i.hours || undefined,
+    "taxID": i.nit || undefined,
     "sameAs": [i.instagram, i.facebook].filter(Boolean),
   };
   const jsonLdBlocks = [renderJsonLd(ldLocalBusiness)];
+  // Service entries — one per service in the list
+  for (const s of services) {
+    const name = typeof s === "string" ? s : (s.title || s.name || "");
+    if (!name) continue;
+    jsonLdBlocks.push(renderJsonLd({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": name,
+      "provider": businessId ? { "@id": businessId } : { "@type": "LocalBusiness", "name": i.businessName },
+      "areaServed": i.address ? { "@type": "Country", "name": "Colombia" } : undefined,
+    }));
+  }
   if (faqs.length) {
     jsonLdBlocks.push(renderJsonLd({
       "@context": "https://schema.org",
@@ -103,13 +118,14 @@ export function renderBlueprint1(input, opts) {
     }));
   }
 
-  // ─── Tracking pixels (Growth only, only if IDs present) ────────────────
-  const ga4Tag = ga4Id ? `
-<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(ga4Id)}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${esc(ga4Id)}');</script>` : "";
-  const metaPixelTag = metaPixelId ? `
-<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${esc(metaPixelId)}');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${esc(metaPixelId)}&ev=PageView&noscript=1"/></noscript>` : "";
+  // ─── Tracking pixels — GATED behind cookie consent (Ley 1581) ────────────
+  // The actual scripts only run after the visitor clicks Accept on the banner.
+  // We embed the IDs as data-* attributes so the banner script can pick them up
+  // and dynamically inject the trackers ONLY when consent is given.
+  const trackerConfigTag = (ga4Id || metaPixelId) ? `
+<script id="pwp-tracker-config" type="application/json">${JSON.stringify({ ga4Id: ga4Id || null, metaPixelId: metaPixelId || null })}</script>` : "";
+  const ga4Tag = "";
+  const metaPixelTag = "";
 
   return `<!doctype html>
 <html lang="${i.language}"><head>
@@ -129,8 +145,7 @@ ${i.logoUrl ? `<meta property="og:image" content="${esc(i.logoUrl)}">` : ""}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
 ${jsonLdBlocks.join("\n")}
-${ga4Tag}
-${metaPixelTag}
+${trackerConfigTag}
 <style>
 :root{--primary:${i.primary};--accent:${i.accent};--ink:${i.ink};--bg:${i.bg};--muted:#5e6883;--line:#e5e0c9}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
@@ -180,8 +195,11 @@ footer{padding:30px 24px;color:var(--muted);font-size:.9rem;text-align:center}
 <a class="skip" href="#main">${i.language === "en" ? "Skip to content" : "Saltar al contenido"}</a>
 
 <header class="nav" data-section="nav">
-  <div class="logo">${i.logoUrl ? `<img src="${esc(i.logoUrl)}" alt="${esc(i.businessName)}" style="height:40px;width:auto">` : esc(i.businessName)}</div>
-  <a class="btn" href="${esc(waLink)}" rel="noopener">${t.contact}</a>
+  <div class="logo">${i.logoUrl ? `<img src="${esc(i.logoUrl)}" alt="${esc(i.businessName)}" style="height:40px;width:auto" width="160" height="40" decoding="async">` : esc(i.businessName)}</div>
+  <div style="display:flex;gap:14px;align-items:center">
+    ${i.bilingualAltHref ? `<a href="${esc(i.bilingualAltHref)}" style="color:var(--ink);font-weight:600;font-size:.9rem;text-decoration:none">${i.language === "en" ? "Español" : "English"}</a>` : ""}
+    <a class="btn" href="${esc(waLink)}" rel="noopener">${t.contact}</a>
+  </div>
 </header>
 
 <main id="main">
@@ -207,7 +225,12 @@ footer{padding:30px 24px;color:var(--muted);font-size:.9rem;text-align:center}
 
 ${gallery.length ? `<section class="section wrap" data-section="gallery">
   <h2>${t.gallery}</h2>
-  <div class="gallery">${gallery.map((u, idx) => `<img src="${esc(u)}" alt="${esc(i.businessName)} ${idx+1}" loading="lazy">`).join("")}</div>
+  <div class="gallery">${gallery.map((u, idx) => {
+    const altText = (i.galleryAlts && i.galleryAlts[idx]) ? i.galleryAlts[idx] : `${i.businessName} ${idx+1}`;
+    // Explicit width/height reserves space → prevents CLS even before image loads.
+    // The CSS `.gallery img` rule sets a fixed display size; intrinsic dimensions are a hint to the browser.
+    return `<img src="${esc(u)}" alt="${esc(altText)}" loading="lazy" decoding="async" width="800" height="800">`;
+  }).join("")}</div>
 </section>` : ""}
 
 ${testimonials.length ? `<section class="section wrap" data-section="testimonials">
@@ -239,14 +262,46 @@ ${pro && waCatalogUrl ? `<section class="section wrap" data-section="wa-catalog"
   <p style="margin-top:12px"><a class="btn" href="${esc(waCatalogUrl)}" target="_blank" rel="noopener">${t.catalog} →</a></p>
 </section>` : ""}
 
-${newsletter ? `<section class="section wrap" data-section="newsletter">
+${newsletter && i.newsletterEndpoint ? `<section class="section wrap" data-section="newsletter">
   <h2>${t.newsletter}</h2>
-  <div class="newsletter">
-    <form action="${esc(i.newsletterUrl || "")}" method="POST" target="_blank" rel="noopener">
-      <input type="email" name="email" required placeholder="${t.newsletterPlaceholder}" aria-label="${t.newsletterPlaceholder}">
-      <button class="btn" type="submit">${t.newsletterCta}</button>
+  <div class="newsletter" style="flex-direction:column;align-items:stretch;gap:14px">
+    <form id="pwp-newsletter" style="display:flex;flex-direction:column;gap:10px;width:100%">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input type="email" name="email" required placeholder="${t.newsletterPlaceholder}" aria-label="${t.newsletterPlaceholder}" style="flex:1;min-width:200px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font:inherit">
+        <button class="btn" type="submit">${t.newsletterCta}</button>
+      </div>
+      <!-- Honeypot: humans never see/fill this; bots usually do -->
+      <input type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <label style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--muted);line-height:1.45;cursor:pointer">
+        <input type="checkbox" name="habeas_data_accepted" required style="margin-top:3px;flex-shrink:0">
+        <span>${i.language === "en"
+          ? `I authorize <strong>${esc(i.businessName)}</strong> to process my email address to send me commercial communications. I can revoke this authorization at any time by replying STOP. See the <a href="./privacy.html" style="color:var(--primary)">Privacy Policy</a> (Colombian Law 1581 of 2012).`
+          : `Autorizo a <strong>${esc(i.businessName)}</strong> a tratar mi correo electrónico para enviarme comunicaciones comerciales. Puedo revocar esta autorización en cualquier momento respondiendo STOP. Ver <a href="./politica-privacidad.html" style="color:var(--primary)">Política de Privacidad</a> (Ley 1581 de 2012).`}</span>
+      </label>
     </form>
+    <p id="pwp-newsletter-msg" role="status" style="margin:0;color:var(--muted);font-size:.9rem;display:none"></p>
   </div>
+  <script>
+  (function(){
+    var f=document.getElementById('pwp-newsletter');var m=document.getElementById('pwp-newsletter-msg');
+    if(!f)return;
+    f.addEventListener('submit', async function(e){
+      e.preventDefault();
+      var email=f.email.value.trim();if(!email)return;
+      var honeypot=f.elements['company_url'].value;
+      var consent=f.elements['habeas_data_accepted'].checked;
+      if(!consent){m.textContent=${JSON.stringify(i.language === "en" ? "Please accept the Privacy Policy to subscribe." : "Por favor acepte la Política de Privacidad para suscribirse.")};m.style.display='block';m.style.color='#a30d1f';return;}
+      f.querySelector('button[type=submit]').disabled=true;
+      try{
+        var r=await fetch(${JSON.stringify(i.newsletterEndpoint)},{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:email, habeas_data_accepted:true, company_url:honeypot, clause_version:'v1.0-2026-04-30'})});
+        var j=await r.json();
+        if(j.ok){m.textContent=${JSON.stringify(t.newsletterThanks)};m.style.display='block';m.style.color='var(--muted)';f.reset();}
+        else{m.textContent=(j.error||'Error');m.style.display='block';m.style.color='#a30d1f';}
+      }catch(_){m.textContent='Error';m.style.display='block';m.style.color='#a30d1f';}
+      finally{f.querySelector('button[type=submit]').disabled=false;}
+    });
+  })();
+  </script>
 </section>` : ""}
 
 ${faqs.length ? `<section class="section wrap" data-section="faq">
@@ -274,7 +329,65 @@ ${faqs.length ? `<section class="section wrap" data-section="faq">
 </section>
 </main>
 
-<footer>© ${new Date().getFullYear()} ${esc(i.businessName)} · Hecho con PymeWebPro · <a href="/politica-privacidad">${i.language === "en" ? "Privacy" : "Privacidad"}</a></footer>
+<footer style="padding:30px 24px;color:var(--muted);font-size:.9rem;text-align:center">
+  ${i.nit ? `<div style="margin-bottom:8px"><strong>${esc(i.businessName)}</strong> · NIT ${esc(i.nit)}${i.address ? ` · ${esc(i.address)}` : ""}${i.camara ? ` · ${esc(i.camara)}` : ""}</div>` : ""}
+  © ${new Date().getFullYear()} ${esc(i.businessName)} · Hecho con PymeWebPro ·
+  ${i.language === "en"
+    ? `<a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a>`
+    : `<a href="./politica-privacidad.html">Política de Privacidad</a> · <a href="./terminos.html">Términos</a>`}
+  · <a href="#" onclick="pwpManageConsent();return false">${i.language === "en" ? "Manage cookies" : "Configurar cookies"}</a>
+</footer>
+
+<!-- Cookie consent banner (Ley 1581) — gates GA4 + Meta Pixel until accept -->
+<div id="pwp-consent" style="position:fixed;left:16px;right:16px;bottom:16px;max-width:560px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.15);padding:18px 20px;font-family:Inter,system-ui,sans-serif;display:none;z-index:9998">
+  <p style="margin:0 0 10px;font-size:.92rem;color:var(--ink)">
+    ${i.language === "en"
+      ? `We use <strong>analytics & marketing cookies</strong> (Google Analytics, Meta Pixel) to improve your experience. You can accept, reject, or read our <a href="./${i.language === "en" ? "privacy.html" : "politica-privacidad.html"}" style="color:var(--primary)">Privacy Policy</a>.`
+      : `Usamos <strong>cookies de analítica y marketing</strong> (Google Analytics, Meta Pixel) para mejorar su experiencia. Puede aceptar, rechazar, o leer nuestra <a href="./politica-privacidad.html" style="color:var(--primary)">Política de Privacidad</a>.`}
+  </p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button onclick="pwpConsent('accept')" style="background:var(--primary);color:#fff;border:0;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;font:inherit">${i.language === "en" ? "Accept" : "Aceptar"}</button>
+    <button onclick="pwpConsent('reject')" style="background:transparent;color:var(--primary);border:1px solid var(--primary);padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;font:inherit">${i.language === "en" ? "Reject" : "Rechazar"}</button>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY='pwp_consent';
+  var stored = localStorage.getItem(KEY);
+  if (!stored) { document.getElementById('pwp-consent').style.display='block'; }
+  else if (stored === 'accept') { pwpLoadTrackers(); }
+})();
+function pwpConsent(v){
+  localStorage.setItem('pwp_consent', v);
+  document.getElementById('pwp-consent').style.display='none';
+  if (v === 'accept') pwpLoadTrackers();
+}
+function pwpManageConsent(){
+  localStorage.removeItem('pwp_consent');
+  document.getElementById('pwp-consent').style.display='block';
+}
+function pwpLoadTrackers(){
+  var cfgEl = document.getElementById('pwp-tracker-config');
+  if (!cfgEl) return;
+  var cfg; try { cfg = JSON.parse(cfgEl.textContent); } catch(e){ return; }
+  // Google Analytics 4
+  if (cfg.ga4Id) {
+    var s = document.createElement('script');
+    s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(cfg.ga4Id);
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', cfg.ga4Id, { 'anonymize_ip': true });
+  }
+  // Meta Pixel
+  if (cfg.metaPixelId) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', cfg.metaPixelId);
+    fbq('track', 'PageView');
+  }
+}
+</script>
 </body></html>`;
 }
 
