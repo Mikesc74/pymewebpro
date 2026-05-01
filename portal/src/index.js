@@ -492,6 +492,16 @@ async function getClientDetail(env, id) {
   const items = deliverablesForPlan(plan).map((d) => ({ ...d, status: state[d.key] || "pending" }));
   const summary = computeSummary(state, plan);
   if (client.site_health) { try { client.site_health = JSON.parse(client.site_health); } catch { client.site_health = null; } }
+  // Attach the custom domain (and live-site slug, if any) so the admin DomainPanel can show state.
+  const liveSite = await env.DB.prepare(
+    "SELECT slug, custom_domain, r2_prefix, disabled_at FROM live_sites WHERE client_id = ?"
+  ).bind(id).first();
+  if (liveSite) {
+    client.custom_domain = liveSite.custom_domain || null;
+    client.live_slug = liveSite.slug || null;
+    client.live_published = !!(liveSite.r2_prefix && liveSite.r2_prefix.length > 0);
+    client.live_disabled = !!liveSite.disabled_at;
+  }
   return json({ client, sections, files: files.results || [], deliverables: { plan, items, summary, groups: GROUP_LABELS, statuses: STATUS_LABELS } });
 }
 async function setDeliverableStatus(request, env, clientId, key) {
@@ -1323,7 +1333,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     const ArrowRight = (p) => <Icon {...p} d='<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>' />;
 
     // ─── i18n ──────────────────────────────────────────────────────────
-    const T = {"en":{"brand":"PymeWebPro","tagline":"Client Onboarding Portal","loginTitle":"Welcome","loginSub":"Enter your email to receive a secure login link","emailPh":"you@yourbusiness.com","sendLink":"Send Magic Link","sending":"Sending…","linkSent":"Check your inbox","linkSentSub":"We sent a login link to","backToLogin":"← Use a different email","progress":"Project Progress","complete":"complete","saving":"Saving…","saved":"Saved","saveError":"Save failed","verifying":"Verifying your link…","verifyFailed":"Link expired or invalid","sections":{"business":"Business Basics","contact":"Contact & Social","brand":"Brand Assets","visual":"Visual Direction","content":"Content & Themes","tech":"Technical Setup","growth":"Growth Add-Ons"},"fields":{"bizName":"Business Name","tagline":"Tagline / Slogan","whatYouDo":"What does your business do?","audience":"Who is your target audience?","nit":"Tax ID (NIT or cédula)","nitHelp":"Required for the privacy policy and terms pages","legalRepresentative":"Legal representative full name (optional)","phone":"Phone Number","email":"Public Email","address":"Business Address","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Upload Logo (PNG, SVG, AI)","colors":"Brand Colors","colorsHelp":"Add hex codes or describe your palette","fonts":"Font Preferences","photos":"Upload Photography & Imagery","refSites":"Reference websites you like","photoAlts":"Describe each photo (one per line, in upload order)","photoAltsHelp":"Used for accessibility (screen readers) and SEO. Example line: 'Front of our bakery on Calle 50 with the team smiling'","tone":"Brand Tone","topics":"Key topics to cover","pages":"Sections needed","domain":"Existing Domain","hosting":"Current Hosting","bizEmail":"Business Email Setup","bookingsUrl":"Booking link (Calendly, Cal.com, etc.)","pdfUp":"Upload Catalog / Menu PDF","pdfLabel":"PDF button label","pdfLabelPh":"e.g. Menu, Catalog, Spec Sheet","waCatalogUrl":"WhatsApp Business catalog link","newsletterEnableLabel":"Enable newsletter signup form on the site","newsletterHelp":"Subscribers get stored and you'll be emailed each new sign-up","ga4Id":"Google Analytics 4 ID","ga4Help":"Looks like G-XXXXXXXXXX","metaPixelId":"Meta (Facebook) Pixel ID","metaPixelHelp":"15-16 digit number from Meta Events Manager","testimonials":"Testimonials","testimonialsHelp":"One per line: Name | Quote | Role (e.g.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"FAQs","faqsHelp":"One per line: Question? | Answer","growthIntro":"These features are part of your Growth plan. Fill in only what applies — leave the rest blank.","bilingualLabel":"Generate an English version of my site too (en/)"},"ph":{"bizName":"Acme Imports S.A.","tagline":"Your one-line pitch","whatYouDo":"Describe products, services, what makes you unique…","audience":"Demographics, industries, regions…","colors":"#0F172A, gold accent, warm neutrals…","tone":"Professional, friendly, bold, premium…","topics":"Sustainability, B2B sales, family-owned story…","pages":"Home, About, Services, Portfolio, Contact (one per line)…"},"next":"Next","back":"Back","submit":"Submit & Notify Us","submitting":"Submitting…","submitted":"Submitted","submittedSub":"We’ve been notified. We’ll reach out shortly.","dragDrop":"Drop files here or click to upload"},"es":{"brand":"PymeWebPro","tagline":"Portal de Incorporación","loginTitle":"Bienvenido","loginSub":"Ingrese su correo para recibir un enlace de acceso","emailPh":"tu@tunegocio.com","sendLink":"Enviar Enlace","sending":"Enviando…","linkSent":"Revise su bandeja","linkSentSub":"Enviamos un enlace a","backToLogin":"← Usar otro correo","progress":"Progreso","complete":"completo","saving":"Guardando…","saved":"Guardado","saveError":"Error","verifying":"Verificando…","verifyFailed":"Enlace caducado o inválido","sections":{"business":"Datos del Negocio","contact":"Contacto y Redes","brand":"Activos de Marca","visual":"Dirección Visual","content":"Contenido y Temas","tech":"Configuración Técnica","growth":"Funciones Crecimiento"},"fields":{"bizName":"Nombre del Negocio","tagline":"Eslogan","whatYouDo":"¿Qué hace su empresa?","audience":"¿Quién es su público objetivo?","nit":"NIT o cédula","nitHelp":"Requerido para la política de privacidad y los términos","legalRepresentative":"Representante legal (nombre completo, opcional)","phone":"Teléfono","email":"Correo Público","address":"Dirección","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Subir Logo (PNG, SVG, AI)","colors":"Colores de Marca","colorsHelp":"Agregue códigos hex o describa su paleta","fonts":"Tipografía","photos":"Subir Fotografías","refSites":"Sitios de referencia","photoAlts":"Describa cada foto (una por línea, en orden de subida)","photoAltsHelp":"Se usa para accesibilidad (lectores de pantalla) y SEO. Ejemplo: 'Fachada de nuestra panadería en la Calle 50 con el equipo sonriendo'","tone":"Tono de Marca","topics":"Temas clave","pages":"Secciones necesarias","domain":"Dominio Existente","hosting":"Hosting Actual","bizEmail":"Correo Empresarial","bookingsUrl":"Enlace de reservas (Calendly, Cal.com, etc.)","pdfUp":"Subir catálogo / menú en PDF","pdfLabel":"Texto del botón PDF","pdfLabelPh":"ej. Menú, Catálogo, Ficha Técnica","waCatalogUrl":"Catálogo de WhatsApp Business","newsletterEnableLabel":"Activar formulario de suscripción en el sitio","newsletterHelp":"Los suscriptores se guardan y le enviamos un correo en cada nuevo registro","ga4Id":"ID de Google Analytics 4","ga4Help":"Formato G-XXXXXXXXXX","metaPixelId":"ID del Pixel de Meta (Facebook)","metaPixelHelp":"Número de 15-16 dígitos del Events Manager de Meta","testimonials":"Testimonios","testimonialsHelp":"Uno por línea: Nombre | Cita | Rol (ej.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"Preguntas frecuentes","faqsHelp":"Uno por línea: ¿Pregunta? | Respuesta","growthIntro":"Estas funciones son parte de su plan Crecimiento. Complete solo lo que aplique — deje el resto en blanco.","bilingualLabel":"Generar también una versión en inglés (en/)"},"ph":{"bizName":"Acme Imports S.A.","tagline":"Su pitch en una línea","whatYouDo":"Describa productos, servicios…","audience":"Demografía, industrias, regiones…","colors":"#0F172A, dorado de acento…","tone":"Profesional, amigable, audaz…","topics":"Sostenibilidad, ventas B2B…","pages":"Inicio, Nosotros, Servicios, Contacto (uno por línea)…"},"next":"Siguiente","back":"Atrás","submit":"Enviar y Notificarnos","submitting":"Enviando…","submitted":"Enviado","submittedSub":"Hemos sido notificados. Le contactaremos pronto.","dragDrop":"Suelte archivos aquí o haga clic"}};
+    const T = {"en":{"brand":"PymeWebPro","tagline":"Client Onboarding Portal","loginTitle":"Welcome","loginSub":"Enter your email to receive a secure login link","emailPh":"you@yourbusiness.com","sendLink":"Send Magic Link","sending":"Sending…","linkSent":"Check your inbox","linkSentSub":"We sent a login link to","backToLogin":"← Use a different email","progress":"Project Progress","complete":"complete","saving":"Saving…","saved":"Saved","saveError":"Couldn't save — check your connection","welcomeTitle":"Welcome — let's build your site","welcomeBody":"This takes about 5–10 minutes. Your answers save as you type, so feel free to leave and come back. Don't worry about getting every field perfect — we'll polish your copy ourselves before showing you the mockup.","welcomeCta":"Let's start","optional":"optional","sectionDone":"done","skipForNow":"Skip for now","intros":{"business":"The basics — these appear on your site and are the foundation for everything else. About 2 minutes.","contact":"How should visitors reach you? What you put here goes on the WhatsApp button, the footer, and the map.","brand":"Your logo and the colors that identify you. No logo yet? Upload any placeholder — we'll handle the rest.","visual":"Authentic photos of your business sell far better than stock images. 3 to 8 good photos is plenty.","content":"The tone and topics you want to convey. You don't need to write the final copy — that's our job. Just describe the feeling.","tech":"If you already own a domain or have hosting, tell us. If not, we set everything up for you.","growth":"Extra features included in your Growth plan. Fill in only what applies — leave the rest blank."},"verifying":"Verifying your link…","verifyFailed":"Link expired or invalid","sections":{"business":"Business Basics","contact":"Contact & Social","brand":"Brand Assets","visual":"Visual Direction","content":"Content & Themes","tech":"Technical Setup","growth":"Growth Add-Ons"},"fields":{"bizName":"Business Name","tagline":"Tagline / Slogan","whatYouDo":"What does your business do?","audience":"Who is your target audience?","nit":"Tax ID (NIT or cédula)","nitHelp":"Required for the privacy policy and terms pages","legalRepresentative":"Legal representative full name (optional)","phone":"Phone Number","email":"Public Email","address":"Business Address","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Upload Logo (PNG, SVG, AI)","colors":"Brand Colors","colorsHelp":"Add hex codes or describe your palette","fonts":"Font Preferences","photos":"Upload Photography & Imagery","refSites":"Reference websites you like","photoAlts":"Describe each photo (one per line, in upload order)","photoAltsHelp":"Used for accessibility (screen readers) and SEO. Example line: 'Front of our bakery on Calle 50 with the team smiling'","tone":"Brand Tone","topics":"Key topics to cover","pages":"Sections needed","domain":"Existing Domain","hosting":"Current Hosting","bizEmail":"Business Email Setup","bookingsUrl":"Booking link (Calendly, Cal.com, etc.)","pdfUp":"Upload Catalog / Menu PDF","pdfLabel":"PDF button label","pdfLabelPh":"e.g. Menu, Catalog, Spec Sheet","waCatalogUrl":"WhatsApp Business catalog link","newsletterEnableLabel":"Enable newsletter signup form on the site","newsletterHelp":"Subscribers get stored and you'll be emailed each new sign-up","ga4Id":"Google Analytics 4 ID","ga4Help":"Looks like G-XXXXXXXXXX","metaPixelId":"Meta (Facebook) Pixel ID","metaPixelHelp":"15-16 digit number from Meta Events Manager","testimonials":"Testimonials","testimonialsHelp":"One per line: Name | Quote | Role (e.g.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"FAQs","faqsHelp":"One per line: Question? | Answer","growthIntro":"These features are part of your Growth plan. Fill in only what applies — leave the rest blank.","bilingualLabel":"Generate an English version of my site too (en/)"},"ph":{"bizName":"Bakery La Esquina · Aurora Yoga Studio · Taller El Diamante","tagline":"e.g. Fresh bread since 1995 · Your day starts calm · Quick repairs, with warranty","whatYouDo":"In your own words: what do you sell or offer, what makes you different, who already trusts you…","audience":"Local families, professionals 30-50, small businesses needing X…","colors":"#0F172A and a warm gold · or just describe: 'navy blue + Colombian yellow', 'earthy & warm', etc.","tone":"Professional · friendly · bold · warm · direct · sober — pick a few","topics":"Sustainability, family heritage, fast turnaround, B2B specialists…","pages":"Home, About, Services, Portfolio, Contact (one per line)…"},"next":"Next","back":"Back","submit":"Submit & Notify Us","submitting":"Submitting…","submitted":"Submitted","submittedSub":"We’ve been notified. We’ll reach out shortly.","dragDrop":"Drop files here or click to upload"},"es":{"brand":"PymeWebPro","tagline":"Portal de Incorporación","loginTitle":"Bienvenido","loginSub":"Ingrese su correo para recibir un enlace de acceso","emailPh":"tu@tunegocio.com","sendLink":"Enviar Enlace","sending":"Enviando…","linkSent":"Revise su bandeja","linkSentSub":"Enviamos un enlace a","backToLogin":"← Usar otro correo","progress":"Progreso","complete":"completo","saving":"Guardando…","saved":"Guardado","saveError":"No se pudo guardar — verifique su conexión","welcomeTitle":"¡Bienvenido! Vamos a poner su sitio en línea","welcomeBody":"Esto le toma entre 5 y 10 minutos. Sus respuestas se guardan a medida que escribe, así que puede salir y volver cuando quiera. No se preocupe si algo no queda perfecto — pulimos el texto por usted antes de mostrarle el mockup.","welcomeCta":"Empecemos","optional":"opcional","sectionDone":"listo","skipForNow":"Saltar por ahora","intros":{"business":"Lo básico — estos datos aparecen en su sitio y son la base de todo lo demás. Unos 2 minutos.","contact":"¿Cómo prefiere que sus clientes lo contacten? Lo que ponga aquí va al botón de WhatsApp, al pie de página y al mapa.","brand":"Su logo y los colores que lo identifican. ¿No tiene logo todavía? Suba cualquier imagen — nosotros nos encargamos.","visual":"Fotos auténticas de su negocio venden mucho mejor que fotos de stock. 3 a 8 fotos buenas son suficientes.","content":"El tono y los temas que quiere transmitir. No tiene que escribir el texto final — eso lo hacemos nosotros. Solo descríbanos la sensación.","tech":"Si ya tiene un dominio o un hosting actual, díganoslo. Si no, todo lo configuramos por usted.","growth":"Funciones extra incluidas en su plan Crecimiento. Complete solo lo que aplique — deje el resto en blanco si no lo necesita."},"verifying":"Verificando…","verifyFailed":"Enlace caducado o inválido","sections":{"business":"Datos del Negocio","contact":"Contacto y Redes","brand":"Activos de Marca","visual":"Dirección Visual","content":"Contenido y Temas","tech":"Configuración Técnica","growth":"Funciones Crecimiento"},"fields":{"bizName":"Nombre del Negocio","tagline":"Eslogan","whatYouDo":"¿Qué hace su empresa?","audience":"¿Quién es su público objetivo?","nit":"NIT o cédula","nitHelp":"Requerido para la política de privacidad y los términos","legalRepresentative":"Representante legal (nombre completo, opcional)","phone":"Teléfono","email":"Correo Público","address":"Dirección","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Subir Logo (PNG, SVG, AI)","colors":"Colores de Marca","colorsHelp":"Agregue códigos hex o describa su paleta","fonts":"Tipografía","photos":"Subir Fotografías","refSites":"Sitios de referencia","photoAlts":"Describa cada foto (una por línea, en orden de subida)","photoAltsHelp":"Se usa para accesibilidad (lectores de pantalla) y SEO. Ejemplo: 'Fachada de nuestra panadería en la Calle 50 con el equipo sonriendo'","tone":"Tono de Marca","topics":"Temas clave","pages":"Secciones necesarias","domain":"Dominio Existente","hosting":"Hosting Actual","bizEmail":"Correo Empresarial","bookingsUrl":"Enlace de reservas (Calendly, Cal.com, etc.)","pdfUp":"Subir catálogo / menú en PDF","pdfLabel":"Texto del botón PDF","pdfLabelPh":"ej. Menú, Catálogo, Ficha Técnica","waCatalogUrl":"Catálogo de WhatsApp Business","newsletterEnableLabel":"Activar formulario de suscripción en el sitio","newsletterHelp":"Los suscriptores se guardan y le enviamos un correo en cada nuevo registro","ga4Id":"ID de Google Analytics 4","ga4Help":"Formato G-XXXXXXXXXX","metaPixelId":"ID del Pixel de Meta (Facebook)","metaPixelHelp":"Número de 15-16 dígitos del Events Manager de Meta","testimonials":"Testimonios","testimonialsHelp":"Uno por línea: Nombre | Cita | Rol (ej.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"Preguntas frecuentes","faqsHelp":"Uno por línea: ¿Pregunta? | Respuesta","growthIntro":"Estas funciones son parte de su plan Crecimiento. Complete solo lo que aplique — deje el resto en blanco.","bilingualLabel":"Generar también una versión en inglés (en/)"},"ph":{"bizName":"Panadería La Esquina · Estudio Yoga Aurora · Taller El Diamante","tagline":"ej. Pan caliente desde 1995 · Su día empieza con calma · Reparaciones rápidas con garantía","whatYouDo":"En sus propias palabras: qué vende u ofrece, qué lo hace diferente, quién ya le compra…","audience":"Familias del barrio, profesionales 30-50, pymes que necesitan X…","colors":"#0F172A y un dorado cálido · o simplemente describa: 'azul marino + amarillo Colombia', 'tierras cálidas', etc.","tone":"Profesional · cercano · juvenil · sobrio · directo · cálido — elija algunos","topics":"Sostenibilidad, tradición familiar, entrega rápida, especialistas en B2B…","pages":"Inicio, Nosotros, Servicios, Contacto (uno por línea)…"},"next":"Siguiente","back":"Atrás","submit":"Enviar y Notificarnos","submitting":"Enviando…","submitted":"Enviado","submittedSub":"Hemos sido notificados. Le contactaremos pronto.","dragDrop":"Suelte archivos aquí o haga clic"}};
 
     // ─── API CLIENT ───────────────────────────────────────────────────
     async function api(path, opts = {}) {
@@ -1837,6 +1847,8 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
             <SiteHealthPanel client={client} onChange={onRefresh} />
 
+            <DomainPanel client={client} onChange={onRefresh} />
+
             <MockupsPanel client={client} />
 
             {deliverables && (
@@ -1970,6 +1982,65 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           <div style={{fontSize:'0.65rem',letterSpacing:'0.18em',color:'rgba(255,255,255,0.4)',textTransform:'uppercase',marginBottom:'0.35rem'}}>{label}</div>
           <div className="serif" style={{fontSize:'1.25rem',color,fontStyle:'italic',fontFamily:'ui-monospace,monospace',fontWeight:600}}>{value}</div>
           {hint && <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)',marginTop:'0.2rem'}}>{hint}</div>}
+        </div>
+      );
+    }
+
+    function DomainPanel({ client, onChange }) {
+      const [domain, setDomain] = useState(client.custom_domain || '');
+      const [working, setWorking] = useState(false);
+      const [result, setResult] = useState(null);
+      const currentDomain = client.custom_domain || null;
+
+      async function attach() {
+        const clean = domain.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
+        if (!clean || !/^[a-z0-9][a-z0-9.-]+\.[a-z]{2,}$/.test(clean)) {
+          alert('Formato inválido. Use: minegocio.com');
+          return;
+        }
+        if (!confirm('¿Adjuntar el dominio ' + clean + ' a este cliente? (Cloudflare zone + Worker route + DNS records)')) return;
+        setWorking(true); setResult(null);
+        try {
+          const r = await adminApi('/api/admin/clients/' + client.id + '/domain', {
+            method: 'POST', body: JSON.stringify({ domain: clean })
+          });
+          setResult(r);
+          await onChange();
+        } catch (e) { alert('Error: ' + e.message); }
+        finally { setWorking(false); }
+      }
+      async function detach() {
+        if (!confirm('¿Desvincular el dominio? El sitio dejará de servir en él pero seguirá en /site/<slug>/.')) return;
+        try {
+          await adminApi('/api/admin/clients/' + client.id + '/domain', { method: 'DELETE' });
+          setDomain(''); setResult(null); await onChange();
+        } catch (e) { alert('Error: ' + e.message); }
+      }
+      return (
+        <div style={{marginBottom:'2.5rem'}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem'}}>
+            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',margin:0}}>Dominio del cliente</h2>
+            {currentDomain && <span style={{fontSize:'0.75rem',padding:'0.25rem 0.7rem',borderRadius:'999px',background:'rgba(16,185,129,0.18)',color:'#10b981',fontWeight:600}}>{currentDomain}</span>}
+          </div>
+          <div style={{padding:'1.25rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px'}}>
+            <p style={{margin:'0 0 1rem',fontSize:'.88rem',color:'rgba(255,255,255,0.7)',lineHeight:1.55}}>Cuando esté listo el dominio (registrado en cualquier registrador), pegue el nombre aquí y haga clic en Adjuntar. El portal lo agrega a Cloudflare, crea el Worker route, configura el SSL automáticamente y le devuelve los nameservers que el cliente debe poner en su registrador.</p>
+            <div style={{display:'flex',gap:'0.5rem',flexWrap:'wrap'}}>
+              <input value={domain} onChange={e=>setDomain(e.target.value)} placeholder="minegocio.com" style={{...inputStyle,flex:1,minWidth:220}}/>
+              <button onClick={attach} disabled={working} style={primaryBtn}>{working ? 'Adjuntando…' : 'Adjuntar'}</button>
+              {currentDomain && <button onClick={detach} style={ghostBtn}>Desvincular</button>}
+            </div>
+            {result && (
+              <div style={{marginTop:'1rem',padding:'0.85rem 1rem',background:result.status==='ready'?'rgba(16,185,129,0.08)':'rgba(251,191,36,0.08)',border:'1px solid '+(result.status==='ready'?'rgba(16,185,129,0.3)':'rgba(251,191,36,0.3)'),borderRadius:'6px',fontSize:'0.9rem'}}>
+                <div style={{color:result.status==='ready'?'#10b981':'#fbbf24',fontWeight:600,marginBottom:'0.4rem'}}>Estado: {result.status}</div>
+                <div style={{color:'rgba(255,255,255,0.85)',lineHeight:1.5}}>{result.msg}</div>
+                {result.nameservers && result.nameservers.length > 0 && (
+                  <div style={{marginTop:'0.5rem',padding:'0.6rem 0.8rem',background:'rgba(0,0,0,0.3)',borderRadius:'4px',fontFamily:'ui-monospace,monospace',fontSize:'0.85rem'}}>
+                    {result.nameservers.map((ns, i) => (<div key={i}>{ns}</div>))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       );
     }
@@ -2449,6 +2520,21 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const filledCount = allFields.filter(f => data[f] && String(data[f]).trim()).length + (files.length > 0 ? 2 : 0);
       const progress = Math.min(100, Math.round((filledCount / (allFields.length + 2)) * 100));
 
+      // Per-section completion: section is "started" if any of its fields has a value,
+      // or (for brand/visual) if any matching file has been uploaded.
+      const sectionStarted = (key) => {
+        const fields = sectionFields[key] || [];
+        if (fields.some(f => data[f] && String(data[f]).trim())) return true;
+        if (key === 'brand' && files.some(f => f.category === 'logo')) return true;
+        if (key === 'visual' && files.some(f => f.category === 'photo')) return true;
+        if (key === 'growth' && files.some(f => f.category === 'pdf')) return true;
+        return false;
+      };
+
+      // First-visit detection — show welcome banner only when nothing has been filled yet
+      const [welcomeDismissed, setWelcomeDismissed] = useState(false);
+      const isFirstVisit = filledCount === 0 && !welcomeDismissed;
+
       return (
         <div style={{minHeight:'100vh',background:'#0a0e27',color:'#fff'}}>
           <header style={headerStyle}>
@@ -2474,15 +2560,34 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               </div>
               {sectionKeys.map((key,i) => {
                 const Ic = sectionIcons[i]; const active = i===section;
-                return <button key={key} onClick={()=>setSection(i)} style={{width:'100%',display:'flex',alignItems:'center',gap:'0.75rem',padding:'0.85rem 1rem',marginBottom:'0.25rem',background:active?'rgba(251,191,36,0.1)':'transparent',border:'none',borderLeft:active?'2px solid #fbbf24':'2px solid transparent',color:active?'#fbbf24':'rgba(255,255,255,0.7)',cursor:'pointer',fontFamily:'inherit',fontSize:'0.9rem',textAlign:'left'}}><Ic size={16}/>{t.sections[key]}</button>;
+                const started = sectionStarted(key);
+                return <button key={key} onClick={()=>setSection(i)} title={started ? t.sectionDone : ''} style={{width:'100%',display:'flex',alignItems:'center',gap:'0.75rem',padding:'0.85rem 1rem',marginBottom:'0.25rem',background:active?'rgba(251,191,36,0.1)':'transparent',border:'none',borderLeft:active?'2px solid #fbbf24':'2px solid transparent',color:active?'#fbbf24':'rgba(255,255,255,0.7)',cursor:'pointer',fontFamily:'inherit',fontSize:'0.9rem',textAlign:'left'}}>
+                  <Ic size={16}/>
+                  <span style={{flex:1}}>{t.sections[key]}</span>
+                  {started && <span aria-label={t.sectionDone} style={{display:'inline-flex',alignItems:'center',justifyContent:'center',width:'18px',height:'18px',borderRadius:'50%',background:'rgba(16,185,129,0.18)',color:'#10b981',fontSize:'0.75rem',fontWeight:700}}>✓</span>}
+                </button>;
               })}
+              <div style={{padding:'1rem',marginTop:'1.5rem',color:'rgba(255,255,255,0.4)',fontSize:'0.78rem',lineHeight:1.5}}>
+                {t.welcomeBody.split('. ')[1] || ''}
+              </div>
             </aside>
             <main style={{padding:'3rem 4rem',maxWidth:'900px'}}>
               <div style={{display:'flex',alignItems:'center',gap:'1rem',marginBottom:'0.5rem'}}>
                 <SecIcon size={24} color="#fbbf24"/>
                 <span style={{fontSize:'0.75rem',letterSpacing:'0.2em',color:'rgba(255,255,255,0.4)',textTransform:'uppercase'}}>{section+1} / {sectionKeys.length}</span>
               </div>
-              <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:'0 0 3rem'}}>{t.sections[currentKey]}</h1>
+              <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:'0 0 1rem'}}>{t.sections[currentKey]}</h1>
+              <p style={{color:'rgba(255,255,255,0.65)',fontSize:'1rem',lineHeight:1.55,margin:'0 0 2.5rem',maxWidth:'640px'}}>{(t.intros && t.intros[currentKey]) || ''}</p>
+              {isFirstVisit && (
+                <div style={{padding:'1.5rem 1.75rem',background:'linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02))',border:'1px solid rgba(251,191,36,0.25)',borderRadius:'8px',marginBottom:'2.5rem',display:'flex',gap:'1rem',alignItems:'flex-start'}}>
+                  <Sparkle size={20} color="#fbbf24" style={{marginTop:'2px',flexShrink:0}}/>
+                  <div style={{flex:1}}>
+                    <div className="serif" style={{fontStyle:'italic',fontSize:'1.15rem',color:'#fbbf24',marginBottom:'0.4rem'}}>{t.welcomeTitle}</div>
+                    <div style={{color:'rgba(255,255,255,0.75)',fontSize:'0.92rem',lineHeight:1.55}}>{t.welcomeBody}</div>
+                    <button onClick={()=>setWelcomeDismissed(true)} style={{marginTop:'1rem',background:'#fbbf24',color:'#0a0e27',border:0,padding:'0.6rem 1.2rem',borderRadius:'4px',fontWeight:600,cursor:'pointer',fontFamily:'inherit',fontSize:'0.85rem'}}>{t.welcomeCta} →</button>
+                  </div>
+                </div>
+              )}
               <div style={{display:'flex',flexDirection:'column',gap:'1.5rem'}}>
                 {currentKey==='business' && <>
                   <Field label={t.fields.bizName} value={data.bizName||''} onChange={v=>update('bizName',v)} placeholder={t.ph.bizName}/>
@@ -2514,7 +2619,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 </>}
                 {currentKey==='visual' && <>
                   <FileDrop label={t.fields.photos} dragText={t.dragDrop} category="photo" files={files.filter(f=>f.category==='photo')} onUpload={handleFileUpload} onDelete={handleFileDelete} accept="image/*,video/*" multi/>
-                  <Field label={t.fields.photoAlts} value={data.photoAlts||''} onChange={v=>update('photoAlts',v)} textarea help={t.fields.photoAltsHelp} placeholder={'Fachada de nuestra panadería\nEl equipo en la mañana\nProductos del día'}/>
+                  <Field label={t.fields.photoAlts} value={data.photoAlts||''} onChange={v=>update('photoAlts',v)} textarea help={t.fields.photoAltsHelp} placeholder={'Fachada de nuestra panadería\\nEl equipo en la mañana\\nProductos del día'}/>
                   <Field label={t.fields.refSites} value={data.refSites||''} onChange={v=>update('refSites',v)} textarea placeholder="https://…"/>
                 </>}
                 {currentKey==='content' && <>

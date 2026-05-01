@@ -33,6 +33,34 @@ extracted into separate files.
 
 ---
 
+## Deploying
+
+**Always run `npm run deploy` from `portal/` — never `wrangler deploy` directly.**
+
+`npm run deploy` runs a `predeploy` hook that:
+1. Extracts the inline React SPA from `FRONTEND_HTML`.
+2. Resolves template-literal escapes the way JS does at runtime.
+3. Parses the resulting JSX with `@babel/parser`.
+4. Aborts the deploy if it doesn't parse.
+
+This catches the common bug where a JS string with `\n` inside `FRONTEND_HTML`
+(a JS template literal) becomes a multi-line string at runtime, which crashes
+the browser. We've hit it three times — never again.
+
+First-time setup (once):
+```
+cd portal
+npm install
+```
+
+Subsequent deploys:
+```
+npm run deploy
+```
+
+If the check fails, the error tells you the line + suggests the fix
+(usually `\n` → `\\n`).
+
 ## How to fix prices on the live site — three paths
 
 ### Path A — Edit in the Cloudflare dashboard (fastest, ~3 minutes)

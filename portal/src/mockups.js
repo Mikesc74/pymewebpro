@@ -52,6 +52,18 @@ export async function handleMockups(req, env, ctx, helpers) {
   const p = url.pathname;
   const m = req.method;
 
+  // Custom-domain serving — if the request Host matches a custom_domain, route to that client's site
+  const reqHost = (req.headers.get("host") || "").toLowerCase().replace(/^www\./, "");
+  const knownHosts = ["portal.pymewebpro.com", "pymewebpro.com"];
+  if (m === "GET" && reqHost && !knownHosts.includes(reqHost) && !reqHost.endsWith(".workers.dev")) {
+    const customSite = await env.DB.prepare(
+      "SELECT slug FROM live_sites WHERE custom_domain = ? AND r2_prefix != ''",
+    ).bind(reqHost).first();
+    if (customSite) {
+      return serveLiveSite(env, customSite.slug, p === "" ? "/" : p);
+    }
+  }
+
   // Live customer sites at /site/<slug>/...
   let mt = p.match(/^\/site\/([a-z0-9-]+)(\/.*)?$/);
   if (mt && m === "GET") return serveLiveSite(env, mt[1], mt[2] || "/");
@@ -107,6 +119,10 @@ export async function handleMockups(req, env, ctx, helpers) {
 
     mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/site\/enable$/);
     if (mt && m === "POST") return enableSite(env, helpers, mt[1]);
+
+    mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/domain$/);
+    if (mt && m === "POST") return attachDomain(env, helpers, mt[1], req);
+    if (mt && m === "DELETE") return detachDomain(env, helpers, mt[1]);
   }
 
   return null; // fall through to portal's existing dispatcher
@@ -781,6 +797,126 @@ function notFoundPage(slug, env) {
 <style>body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#fbfaf6;color:#0a1840;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
 .box{max-width:480px}h1{font-family:Georgia,serif;font-size:2.4rem;margin:0 0 8px}p{color:#5e6883;line-height:1.6}a{display:inline-block;margin-top:18px;background:#003893;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600}</style>
 </head><body><div class="box"><h1>404 · Página no encontrada</h1><p>Esta página no existe en este sitio.</p><a href="${home}">Volver al inicio</a></div></body></html>`;
+}
+
+// ─── Custom-domain attach ────────────────────────────────────────────────
+// Mike registers the domain in Cloudflare (manually or otherwise), then pastes
+// it into the admin panel. We:
+//   1. Save the mapping in live_sites.custom_domain
+//   2. If CLOUDFLARE_API_TOKEN is configured, attempt to add a Worker route on
+//      that zone so requests to <domain>/* hit this worker. Best-effort —
+//      if it fails (e.g. zone not in this account, missing scopes), we still
+//      save the mapping; Mike can add the route manually in the dashboard.
+async function attachDomain(env, helpers, clientId, req) {
+  const body = await req.json().catch(() => ({}));
+  const raw = String(body.domain || "").trim().toLowerCase();
+  // Strip protocol / paths / trailing slash
+  const domain = raw.replace(/^https?:\/\//, "").replace(/\/.*$/, "").replace(/^www\./, "");
+  if (!/^[a-z0-9][a-z0-9.-]+\.[a-z]{2,}$/.test(domain)) {
+    return helpers.json({ error: "invalid_domain", msg: "Dominio inválido. Use formato: minegocio.com" }, 400);
+  }
+
+  // Make sure no other client has this domain
+  const conflict = await env.DB.prepare(
+    "SELECT client_id FROM live_sites WHERE custom_domain = ? AND client_id != ?",
+  ).bind(domain, clientId).first();
+  if (conflict) return helpers.json({ error: "domain_taken", msg: "Ese dominio ya está asignado a otro cliente." }, 409);
+
+  // Save in live_sites (creates row if none — handles case of attaching domain before first ship)
+  const existing = await env.DB.prepare("SELECT slug FROM live_sites WHERE client_id = ?").bind(clientId).first();
+  if (existing) {
+    await env.DB.prepare("UPDATE live_sites SET custom_domain = ?, updated_at = ? WHERE client_id = ?")
+      .bind(domain, Math.floor(Date.now() / 1000), clientId).run();
+  } else {
+    // No live site yet — store pending domain in client metadata so we can wire it on first ship.
+    // We'll create a placeholder live_sites row (slug = client uuid prefix) so the lookup works
+    // for the eventual ship.
+    const slug = `pending-${clientId.slice(0, 8)}`;
+    await env.DB.prepare(`
+      INSERT INTO live_sites (slug, client_id, mockup_id, r2_prefix, custom_domain, is_bilingual, updated_at)
+      VALUES (?, ?, '', '', ?, 0, ?)
+      ON CONFLICT(client_id) DO UPDATE SET custom_domain = excluded.custom_domain, updated_at = excluded.updated_at
+    `).bind(slug, clientId, domain, Math.floor(Date.now() / 1000)).run();
+  }
+
+  // Full automation: lookup zone, create if missing, add Worker route, return nameservers
+  let status = "manual_required";
+  let msg = "Dominio guardado. Configure manualmente en Cloudflare (token API no configurado).";
+  let nameservers = null;
+  if (env.CLOUDFLARE_API_TOKEN && env.CLOUDFLARE_ACCOUNT_ID) {
+    try {
+      // 1) Look up the zone
+      const zonesRes = await fetch(`https://api.cloudflare.com/client/v4/zones?name=${encodeURIComponent(domain)}`, {
+        headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}` },
+      });
+      const zonesJson = await zonesRes.json();
+      let zone = zonesJson?.result?.[0];
+
+      // 2) If zone doesn't exist, create it (Cloudflare auto-issues SSL)
+      if (!zone) {
+        const createRes = await fetch("https://api.cloudflare.com/client/v4/zones", {
+          method: "POST",
+          headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" },
+          body: JSON.stringify({ name: domain, account: { id: env.CLOUDFLARE_ACCOUNT_ID }, type: "full" }),
+        });
+        const createJson = await createRes.json();
+        if (!createJson.success) {
+          return helpers.json({
+            ok: true,
+            domain,
+            status: "zone_create_failed",
+            msg: "No pudimos agregar el dominio en Cloudflare: " + (createJson?.errors?.[0]?.message || "error desconocido") + ". Agréguelo manualmente.",
+          });
+        }
+        zone = createJson.result;
+      }
+      nameservers = zone.name_servers || zone.original_name_servers || null;
+
+      // 3) Add the Worker route (idempotent — code 10020 = "already exists" treated as success)
+      const routeRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/workers/routes`, {
+        method: "POST",
+        headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" },
+        body: JSON.stringify({ pattern: `${domain}/*`, script: "pymewebpro-portal" }),
+      });
+      const routeJson = await routeRes.json();
+      const errCode = routeJson?.errors?.[0]?.code;
+      if (routeJson.success || errCode === 10020) {
+        // 4) Add a placeholder DNS record so the zone validates
+        // (root A record pointing at a Cloudflare anycast IP — proxied=true so Worker route catches the traffic)
+        await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/dns_records`, {
+          method: "POST",
+          headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" },
+          body: JSON.stringify({ type: "A", name: "@", content: "192.0.2.1", proxied: true, ttl: 1 }),
+        }).catch(() => {});
+        await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/dns_records`, {
+          method: "POST",
+          headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" },
+          body: JSON.stringify({ type: "CNAME", name: "www", content: domain, proxied: true, ttl: 1 }),
+        }).catch(() => {});
+
+        status = "ready";
+        msg = nameservers
+          ? `✓ Zone y Worker route configurados. El cliente debe cambiar los nameservers de su dominio a estos: ${nameservers.join(", ")}. Una vez propagado (~minutos a 24h), el sitio queda en https://${domain}.`
+          : `✓ Zone y Worker route configurados. Si los nameservers ya apuntan a Cloudflare, el sitio queda en https://${domain}.`;
+      } else {
+        status = "route_failed";
+        msg = "Zone OK, pero no pudimos crear la ruta: " + (routeJson?.errors?.[0]?.message || "error desconocido") + ". Agréguela manualmente.";
+      }
+    } catch (e) {
+      status = "api_error";
+      msg = "Error llamando a Cloudflare API: " + e.message;
+    }
+  }
+
+  return helpers.json({ ok: true, domain, status, msg, nameservers });
+}
+
+async function detachDomain(env, helpers, clientId) {
+  await env.DB.prepare("UPDATE live_sites SET custom_domain = NULL, updated_at = ? WHERE client_id = ?")
+    .bind(Math.floor(Date.now() / 1000), clientId).run();
+  // Note: we deliberately don't auto-remove the Cloudflare route — Mike can do that manually
+  // if he wants to fully release the domain. Detach just stops us routing requests on it.
+  return helpers.json({ ok: true, msg: "Domain unbound. Remove the Worker route in Cloudflare manually if you want to fully release it." });
 }
 
 // ─── Disable / enable a live site (refund-disable flow) ───────────────────
