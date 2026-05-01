@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para hoteles boutique en Medellín · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web bilingüe para hoteles boutique paisas en Medellín. Galería, reservas y conexión con Booking. Listo en 48 horas. Desde $390.000 COP." />
+<meta name="theme-color" content="#c2410c" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-hoteles-boutique-medellin/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbf6ed; --ink:#3d2817; --ink-soft:#5d4530; --muted:#8b7762;
+    --line:#e8d8c4; --terracotta:#c2410c; --terracotta-soft:#fed7aa;
+    --wood:#92400e; --wood-soft:#fef3c7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:0;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease;letter-spacing:.02em}
+  .btn-primary{background:var(--terracotta);color:#fff}
+  .btn-primary:hover{background:#9a3410;transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--bg)}
+  .btn-wood{background:var(--wood);color:#fff}
+  .btn-wood:hover{background:#78350f;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(251,246,237,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--terracotta)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Magazine-style hero with wide photo placeholder */
+  .hero{padding:60px 0 50px}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:50px;align-items:center}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);background:transparent;padding:0;margin-bottom:20px;border-bottom:2px solid var(--terracotta);padding-bottom:4px}
+  .hero h1{font-family:'Fraunces',serif}
+  .hero h1 .accent{font-style:italic;color:var(--terracotta)}
+  .hero p.lead{font-size:1.1rem;color:var(--ink-soft);margin-top:22px;max-width:480px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .hero-meta{margin-top:18px;font-size:.85rem;color:var(--muted);font-style:italic}
+
+  .photo-block{
+    aspect-ratio:4/5;
+    background:linear-gradient(135deg,var(--terracotta) 0%,var(--wood) 100%);
+    border-radius:0;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(61,40,23,.35);
+  }
+  .photo-block::before{
+    content:"";position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(255,255,255,.03) 30px,rgba(255,255,255,.03) 31px),
+      radial-gradient(circle at 30% 30%,rgba(255,255,255,.15) 0%,transparent 60%);
+  }
+  .photo-block .caption{
+    position:absolute;bottom:24px;left:24px;right:24px;
+    color:#fff;font-family:'Fraunces',serif;font-style:italic;font-size:1.4rem;line-height:1.2;
+  }
+  .photo-block .caption small{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;font-weight:700;color:var(--terracotta-soft)}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:36px;font-style:italic}
+
+  /* Gallery-style features */
+  .feats{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line)}
+  .feat{padding:32px 30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+  .feat:nth-child(2n){border-right:0}
+  .feat:nth-last-child(-n+2){border-bottom:0}
+  .feat-num{font-family:'Fraunces',serif;font-style:italic;color:var(--terracotta);font-size:1.6rem;font-weight:800;display:block;margin-bottom:10px}
+  .feat h3{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;margin-bottom:8px}
+  .feat p{font-size:.94rem;color:var(--ink-soft)}
+
+  .pricing{background:var(--ink);color:var(--bg)}
+  .pricing h2{color:var(--bg)}
+  .pricing .lead{color:rgba(251,246,237,.7);font-style:normal}
+  .pricing .eyebrow{color:var(--terracotta-soft);border-bottom-color:var(--terracotta-soft)}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+  .price-card{background:rgba(255,255,255,.04);color:var(--bg);border:1px solid rgba(255,255,255,.1);padding:36px 32px;display:flex;flex-direction:column;position:relative}
+  .price-card.featured{background:var(--bg);color:var(--ink);border:none}
+  .price-card.featured .price-tier,.price-card.featured .price-iva{color:var(--muted)}
+  .price-card.featured .price-feats li{color:var(--ink-soft)}
+  .price-badge{position:absolute;top:0;left:0;background:var(--terracotta);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px}
+  .price-tier{font-size:.74rem;color:rgba(251,246,237,.65);font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding-top:14px}
+  .price-name{font-family:'Fraunces',serif;font-style:italic;font-size:1.9rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:rgba(251,246,237,.55);margin-bottom:18px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 22px;font-size:.92rem}
+  .price-feats li::before{content:"✦";position:absolute;left:0;top:7px;color:var(--terracotta-soft);font-weight:800}
+  .price-card.featured .price-feats li::before{color:var(--terracotta)}
+  .price-feats li b{font-weight:700}
+
+  footer{background:var(--bg);border-top:1px solid var(--line);padding:40px 0 30px;font-size:.9rem;color:var(--muted)}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:var(--ink-soft)} .foot-row a:hover{color:var(--ink)}
+  .foot-row b{color:var(--ink)}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .photo-block{aspect-ratio:3/2}
+    .feats{grid-template-columns:1fr}
+    .feat{border-right:0;border-bottom:1px solid var(--line)}
+    .feat:last-child{border-bottom:0}
+    .price-grid{grid-template-columns:1fr}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Hoteles boutique · Medellín</span>
+      <h1>Para hoteles <span class="accent">paisas</span> que cuidan cada detalle.</h1>
+      <p class="lead"><b>Sus huéspedes deciden por las fotos antes que por el precio.</b> Si su sitio carga rápido en el celular, muestra cuartos reales y se reserva sin fricción, ganan ustedes y no la cadena.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+        <a class="btn btn-ghost" href="#planes">Ver planes</a>
+      </div>
+      <p class="hero-meta">En vivo en 48 horas. Desde $390.000 COP.</p>
+    </div>
+    <div class="photo-block">
+      <div class="caption">
+        <small>Hoteles boutique</small>
+        El Poblado, Laureles, San Antonio de Prado, Sabaneta.
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que su sitio refleja.</h2>
+    <p class="lead">Pensado para hoteles pequeños paisas, fincas y posadas boutique en El Valle de Aburrá y los pueblos cercanos.</p>
+    <div class="feats">
+      <article class="feat">
+        <span class="feat-num">01</span>
+        <h3>Galería de cuartos</h3>
+        <p>Cada habitación con fotos profesionales, descripción, comodidades, capacidad y precio por noche. Carga rápida en celular para que el huésped recorra el hotel desde la cama.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-num">02</span>
+        <h3>Reservas en línea</h3>
+        <p>Calendario con disponibilidad por noche, código de descuento, mínimo de noches en temporada alta. Pagos con Wompi (tarjeta, PSE, Nequi).</p>
+      </article>
+      <article class="feat">
+        <span class="feat-num">03</span>
+        <h3>Bilingüe ES/EN</h3>
+        <p>Versión en inglés correcto. La mayoría de huéspedes boutique en El Poblado son extranjeros: chefs, nómadas digitales, parejas de luna de miel.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-num">04</span>
+        <h3>Conexión con Booking y Airbnb</h3>
+        <p>Botón directo a sus listings de Booking, Airbnb y Hotels.com. Útil para huéspedes que prefieren reservar con plataformas que ya usan.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <span class="eyebrow">Planes y precios</span>
+    <h2 style="margin-top:14px">Pague una vez. Su sitio es suyo.</h2>
+    <p class="lead">Sin comisión por reserva, sin contratos mensuales. El hotel queda bajo su control.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b> con galería</li>
+          <li>Catálogo de cuartos con precios</li>
+          <li>Mapa + WhatsApp Business</li>
+          <li>Formulario con habeas data</li>
+          <li>Optimizado para celular</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" style="border-color:var(--bg);color:var(--bg)" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Recomendado</span>
+        <span class="price-tier">Sitio bilingüe + reservas</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Versión bilingüe ES/EN</b></li>
+          <li><b>Reservas y pagos en línea</b> (Wompi)</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Conexión con Booking, Airbnb y Hotels.com</li>
+          <li>Google Business + reseñas</li>
+        </ul>
+        <a class="btn btn-wood" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

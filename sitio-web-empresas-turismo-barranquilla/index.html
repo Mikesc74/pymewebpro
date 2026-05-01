@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para empresas de turismo en Barranquilla · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web para operadores de turismo del Carnaval, manglares y playas en Barranquilla. Bilingüe y con reservas. Listo en 48 horas. Desde $390.000 COP." />
+<meta name="theme-color" content="#06b6d4" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-empresas-turismo-barranquilla/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fefdf3; --ink:#0c2530; --ink-soft:#264555; --muted:#6b7e8a;
+    --line:#fde68a; --turquoise:#06b6d4; --turquoise-soft:#cffafe;
+    --orange:#f97316; --orange-soft:#ffedd5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--orange);color:#fff;box-shadow:0 14px 28px -14px rgba(249,115,22,.5)}
+  .btn-primary:hover{transform:translateY(-1px);background:#ea580c}
+  .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-turquoise{background:var(--turquoise);color:#fff}
+  .btn-turquoise:hover{background:#0891b2;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(254,253,243,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--turquoise)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--orange)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 22px;font-size:.9rem}
+
+  /* Vibrant carnival hero with diagonal stripes feel */
+  .hero{padding:90px 0 70px;position:relative;background:linear-gradient(135deg,var(--turquoise-soft) 0%,#fff 50%,var(--orange-soft) 100%)}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--turquoise);background:#fff;padding:6px 14px;border-radius:999px;margin-bottom:22px;border:2px solid var(--turquoise)}
+  .hero h1{max-width:840px}
+  .hero h1 .accent{color:var(--orange);font-style:italic}
+  .hero h1 .underline{position:relative;display:inline-block}
+  .hero h1 .underline::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:14px;background:var(--orange-soft);z-index:-1;border-radius:3px}
+  .hero p.lead{font-size:1.15rem;color:var(--ink-soft);margin-top:22px;max-width:620px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted)}
+  .hero-meta b{color:var(--ink)}
+
+  .sec{padding:80px 0}
+  .sec h2{margin-bottom:14px;text-align:center}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin:0 auto 40px;text-align:center}
+
+  /* Asymmetric feature cards (some bigger, some smaller) */
+  .feats{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:18px;grid-auto-rows:auto}
+  .feat{background:#fff;border:2px solid var(--turquoise);border-radius:18px;padding:30px 28px}
+  .feat.alt{border-color:var(--orange)}
+  .feat.big{grid-column:span 2;background:linear-gradient(135deg,var(--turquoise) 0%,#0891b2 100%);color:#fff;border-color:var(--turquoise)}
+  .feat.big h3{color:#fff}
+  .feat.big p{color:rgba(255,255,255,.9)}
+  .feat-emoji{font-size:1.8rem;margin-bottom:14px;display:block}
+  .feat h3{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;margin-bottom:8px}
+  .feat p{font-size:.94rem;color:var(--ink-soft)}
+
+  .pricing{background:linear-gradient(180deg,#fff 0%,var(--turquoise-soft) 100%);border-top:1px solid var(--turquoise)}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .price-card{background:#fff;border-radius:24px;padding:32px 30px;display:flex;flex-direction:column;position:relative;box-shadow:0 20px 50px -20px rgba(12,37,48,.15)}
+  .price-card.featured{background:linear-gradient(180deg,#fff 0%,var(--orange-soft) 100%);border:3px solid var(--orange)}
+  .price-badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:999px}
+  .price-tier{font-size:.74rem;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:var(--muted);margin-bottom:18px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 26px;font-size:.92rem;color:var(--ink-soft)}
+  .price-feats li::before{content:"🎺";position:absolute;left:0;top:7px;font-size:.8rem}
+  .price-card.featured .price-feats li::before{content:"⭐"}
+  .price-feats li b{color:var(--ink);font-weight:600}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.75);padding:40px 0 30px;font-size:.9rem}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:rgba(255,255,255,.85)} .foot-row a:hover{color:#fff}
+  .foot-row b{color:#fff}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .feats{grid-template-columns:1fr}
+    .feat.big{grid-column:span 1}
+    .price-grid{grid-template-columns:1fr}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Carnaval · Manglares · Playas</span>
+    <h1>Sitio web para operadores de <span class="underline">turismo</span> en <span class="accent">Barranquilla</span>.</h1>
+    <p class="lead"><b>El visitante busca Carnaval con seis meses de anticipación.</b> Si su sitio explica los palcos, el desfile, los hoteles cercanos y los traslados, reservan con usted desde Estados Unidos o Bogotá. Listo en 48 horas, bilingüe.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+      <a class="btn btn-ghost" href="#planes">Ver planes</a>
+    </div>
+    <p class="hero-meta"><b>En vivo en 48 horas</b> · Bilingüe ES/EN · Desde $390.000 COP</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que su sitio resuelve.</h2>
+    <p class="lead">Pensado para operadores pequeños de Carnaval, ecoturismo de manglares (Ciénaga, Salamanca) y city tours por El Prado y el Museo del Caribe.</p>
+    <div class="feats">
+      <article class="feat big">
+        <span class="feat-emoji">🎭</span>
+        <h3>Catálogo de Carnaval</h3>
+        <p>Palcos por día (sábado, domingo, lunes, martes), zonas, precios en COP y USD, hospedaje cercano y traslados. Listo seis meses antes.</p>
+      </article>
+      <article class="feat alt">
+        <span class="feat-emoji">🌴</span>
+        <h3>Ecoturismo</h3>
+        <p>Tours a manglares, avistamiento de aves, Ciénaga Grande.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">📅</span>
+        <h3>Reservas en línea</h3>
+        <p>Calendario con cupos. Pagos con Wompi (tarjeta, Nequi, PSE).</p>
+      </article>
+      <article class="feat alt">
+        <span class="feat-emoji">🌎</span>
+        <h3>Bilingüe ES/EN</h3>
+        <p>Para visitantes de Estados Unidos y Europa que llegan al Carnaval.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">📷</span>
+        <h3>Galería profesional</h3>
+        <p>Fotos del Carnaval, manglares, comparsas. Las imágenes venden.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <h2>Planes y precios.</h2>
+    <p class="lead">Pago único. Sin comisiones por reserva. Sin contratos mensuales.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b> con catálogo</li>
+          <li>Galería optimizada para celular</li>
+          <li>WhatsApp Business + mapa</li>
+          <li>RNT visible</li>
+          <li>Habeas data</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Carnaval ready</span>
+        <span class="price-tier">Sitio bilingüe + reservas</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Versión bilingüe ES/EN</b></li>
+          <li><b>Reservas y pagos en línea</b> (Wompi)</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Sección Carnaval con palcos por día</li>
+          <li>Google Business + reseñas</li>
+        </ul>
+        <a class="btn btn-turquoise" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

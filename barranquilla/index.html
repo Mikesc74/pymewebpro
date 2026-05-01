@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitios web para PyMEs en Barranquilla · por industria | PymeWebPro</title>
+<meta name="description" content="Sitios web profesionales para abogados, clínicas dentales, empresas de turismo y hoteles boutique en Barranquilla. En vivo en 48 horas. Desde $390.000 COP." />
+<meta name="theme-color" content="#0c4a6e" />
+<link rel="canonical" href="https://pymewebpro.com/barranquilla/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf0; --ink:#082f49; --ink-soft:#1e4358; --muted:#647b8a;
+    --line:#e0e6dc; --ocean:#0c4a6e; --ocean-soft:#bae6fd;
+    --gold:#fbbf24;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.6rem,2.8vw,2.2rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:8px;font-weight:600;font-size:.95rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--ocean);color:#fff}
+  .btn-primary:hover{background:#053246;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(250,250,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--ocean)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+
+  .crumbs{padding:18px 0 0;font-size:.85rem;color:var(--muted)}
+  .crumbs a{color:var(--muted)} .crumbs a:hover{color:var(--ink)}
+  .crumbs .sep{margin:0 6px;color:var(--line)}
+
+  .hero{padding:50px 0 60px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--ocean-soft) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocean);background:var(--ocean-soft);padding:6px 14px;border-radius:999px;margin-bottom:18px;position:relative}
+  .hero h1{max-width:780px;position:relative}
+  .hero h1 .accent{font-style:italic;color:var(--ocean)}
+  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:640px;position:relative}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+
+  .sec{padding:60px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1rem;max-width:680px;margin-bottom:32px}
+
+  /* Costa: large rounded cards in 2x2 with corner colored accent */
+  .vert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .vert{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 28px;display:block;transition:all .15s ease;position:relative;overflow:hidden}
+  .vert::before{content:"";position:absolute;top:0;left:0;width:6px;height:100%;background:var(--ocean)}
+  .vert:nth-child(2)::before{background:var(--gold)}
+  .vert:nth-child(3)::before{background:#0891b2}
+  .vert:nth-child(4)::before{background:var(--gold)}
+  .vert:hover{transform:translateY(-2px);box-shadow:0 20px 40px -20px rgba(8,47,73,.15)}
+  .vert-tag{font-size:.72rem;color:var(--muted);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:block}
+  .vert h3{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:800;margin-bottom:8px;color:var(--ink)}
+  .vert h3 em{color:var(--ocean);font-style:italic}
+  .vert p{color:var(--ink-soft);font-size:.93rem;margin-bottom:14px}
+  .vert .arrow{color:var(--ocean);font-weight:700;font-size:.9rem}
+
+  .other-cities{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  .city-link{background:#fff;border:1px solid var(--line);padding:16px 22px;border-radius:8px;text-align:center;font-weight:600;color:var(--ink);transition:all .15s ease}
+  .city-link:hover{border-color:var(--ocean);color:var(--ocean);transform:translateY(-1px)}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.75);padding:40px 0 30px;font-size:.9rem}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:rgba(255,255,255,.85)} .foot-row a:hover{color:#fff}
+  .foot-row b{color:#fff}
+
+  @media (max-width:780px){
+    .vert-grid{grid-template-columns:1fr}
+    .other-cities{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Ruta de navegación">
+    <a href="https://pymewebpro.com/">Inicio</a>
+    <span class="sep">›</span>
+    <a href="https://pymewebpro.com/sitios-web-por-industria/">Por industria y ciudad</a>
+    <span class="sep">›</span>
+    <span style="color:var(--ink)">Barranquilla</span>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Barranquilla · Costa Caribe</span>
+    <h1>Sitios web para PyMEs en <span class="accent">Barranquilla.</span></h1>
+    <p class="lead"><b>En la Costa el cliente investiga antes de llegar.</b> Si su sitio carga rápido en el celular, explica precios y deja reservar o agendar sin llamar, gana usted. Cuatro verticales adaptadas al ritmo costeño. En vivo en 48 horas, desde $390.000 COP.</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Industrias que atendemos en Barranquilla.</h2>
+    <p class="lead">Cada página explica el problema específico de su industria, qué incluye su sitio y los precios.</p>
+    <div class="vert-grid">
+      <a class="vert" href="https://pymewebpro.com/sitio-web-abogados-barranquilla/">
+        <span class="vert-tag">⚖️ Abogados</span>
+        <h3>Derecho <em>laboral y de familia</em></h3>
+        <p>Para firmas pequeñas en El Prado, Riomar, Villa Country y Boston. Formularios con habeas data y WhatsApp Business integrado.</p>
+        <span class="arrow">Ver detalles →</span>
+      </a>
+      <a class="vert" href="https://pymewebpro.com/sitio-web-clinicas-dentales-barranquilla/">
+        <span class="vert-tag">🦷 Clínicas dentales</span>
+        <h3>Implantes y <em>odontología general</em></h3>
+        <p>Para clínicas en El Prado, Alto Prado y Villa Country. Catálogo de tratamientos con precios y galería de casos.</p>
+        <span class="arrow">Ver detalles →</span>
+      </a>
+      <a class="vert" href="https://pymewebpro.com/sitio-web-empresas-turismo-barranquilla/">
+        <span class="vert-tag">🌎 Turismo</span>
+        <h3>Carnaval y <em>ecoturismo</em></h3>
+        <p>Para operadores de Carnaval, manglares y city tours. Bilingüe ES/EN con reservas y pagos en línea.</p>
+        <span class="arrow">Ver detalles →</span>
+      </a>
+      <a class="vert" href="https://pymewebpro.com/sitio-web-hoteles-boutique-barranquilla/">
+        <span class="vert-tag">🏨 Hoteles boutique</span>
+        <h3>Frente al <em>Caribe</em></h3>
+        <p>Para hoteles en El Prado, Riomar y Puerto Colombia. Galería, reservas y conexión con Booking, Airbnb y Expedia.</p>
+        <span class="arrow">Ver detalles →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>¿Su negocio está en otra ciudad?</h2>
+    <p class="lead">También atendemos PyMEs en Medellín y Bogotá.</p>
+    <div class="other-cities">
+      <a class="city-link" href="https://pymewebpro.com/medellin/">Sitios web en Medellín →</a>
+      <a class="city-link" href="https://pymewebpro.com/bogota/">Sitios web en Bogotá →</a>
+      <a class="city-link" href="https://pymewebpro.com/sitios-web-por-industria/">Ver todas las industrias →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín, Colombia</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

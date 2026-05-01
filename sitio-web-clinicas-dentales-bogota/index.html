@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para clínicas dentales en Bogotá · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web para clínicas de ortodoncia y odontología pediátrica en Bogotá. En vivo en 48 horas. Desde $390.000 COP. Garantía de 30 días." />
+<meta name="theme-color" content="#1e3a8a" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-clinicas-dentales-bogota/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f8fafc; --ink:#0f172a; --ink-soft:#334155; --muted:#64748b;
+    --line:#e2e8f0; --navy:#1e3a8a; --navy-soft:#dbeafe;
+    --sky:#0ea5e9; --sky-soft:#e0f2fe;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:10px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--navy);color:#fff;box-shadow:0 14px 28px -14px rgba(30,58,138,.5)}
+  .btn-primary:hover{transform:translateY(-1px);background:#1e40af}
+  .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-sky{background:var(--sky);color:#fff}
+  .btn-sky:hover{background:#0284c7;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--navy)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Hero with side-by-side trust badge column */
+  .hero{padding:80px 0 60px}
+  .hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:center}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);background:var(--navy-soft);padding:6px 14px;border-radius:6px;margin-bottom:22px}
+  .hero h1 .accent{color:var(--sky);font-style:italic}
+  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:560px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted)}
+  .hero-meta b{color:var(--ink)}
+
+  .trust-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px;box-shadow:0 20px 50px -20px rgba(15,23,42,.1)}
+  .trust-card h3{font-family:'Fraunces',serif;font-size:1.25rem;margin-bottom:18px;color:var(--ink)}
+  .trust-item{display:flex;align-items:start;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .trust-item:last-child{border-bottom:0}
+  .trust-icon{width:36px;height:36px;border-radius:8px;background:var(--sky-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+  .trust-text{font-size:.9rem;color:var(--ink-soft)}
+  .trust-text b{color:var(--ink);font-weight:600;display:block;margin-bottom:2px}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:36px}
+
+  /* Structured grid 4-up */
+  .feats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px 24px;border-left:4px solid var(--navy)}
+  .feat:nth-child(2){border-left-color:var(--sky)}
+  .feat:nth-child(3){border-left-color:var(--navy)}
+  .feat:nth-child(4){border-left-color:var(--sky)}
+  .feat h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;margin-bottom:8px}
+  .feat p{font-size:.94rem;color:var(--ink-soft)}
+
+  .pricing{background:var(--navy);color:#fff}
+  .pricing h2{color:#fff}
+  .pricing .lead{color:rgba(255,255,255,.75)}
+  .pricing .eyebrow{background:rgba(255,255,255,.1);color:#fff}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .price-card{background:#fff;color:var(--ink);border-radius:14px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
+  .price-card.featured{background:linear-gradient(180deg,#fff 0%,#f0f9ff 100%);border:2px solid var(--sky)}
+  .price-badge{position:absolute;top:-13px;left:24px;background:var(--sky);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:6px}
+  .price-tier{font-size:.74rem;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:var(--muted);margin-bottom:18px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 26px;font-size:.92rem;color:var(--ink-soft)}
+  .price-feats li::before{content:"✓";position:absolute;left:0;top:7px;width:18px;height:18px;border-radius:50%;background:var(--navy-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800}
+  .price-feats li b{color:var(--ink);font-weight:600}
+
+  footer{background:#fff;border-top:1px solid var(--line);padding:40px 0 30px;font-size:.9rem;color:var(--muted)}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:var(--ink-soft)} .foot-row a:hover{color:var(--ink)}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .feats,.price-grid{grid-template-columns:1fr}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Ortodoncia · Pediátrica · Bogotá</span>
+      <h1>Sitio web para clínicas de <span class="accent">ortodoncia y pediátrica</span> en Bogotá.</h1>
+      <p class="lead"><b>Las mamás de Cedritos comparan tres clínicas antes de agendar.</b> Si su sitio explica con claridad cómo trabajan con niños y qué cubren los planes de tratamiento, agendan con usted la primera vez.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+        <a class="btn btn-ghost" href="#planes">Ver planes</a>
+      </div>
+      <p class="hero-meta"><b>En vivo en 48 horas</b> · Desde $390.000 COP</p>
+    </div>
+    <aside class="trust-card">
+      <h3>Lo que confían sus pacientes</h3>
+      <div class="trust-item">
+        <div class="trust-icon">🦷</div>
+        <div class="trust-text"><b>Ortodoncia tradicional e invisible</b>Brackets metálicos, cerámicos, Invisalign.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">👶</div>
+        <div class="trust-text"><b>Odontología pediátrica</b>Atención especializada de 3 a 14 años.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📅</div>
+        <div class="trust-text"><b>Citas en línea</b>Sin llamar, sin esperar.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💳</div>
+        <div class="trust-text"><b>Planes de pago</b>Cuotas con tarjeta o crédito.</div>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que incluye su sitio.</h2>
+    <p class="lead">Diseñado para clínicas pequeñas de ortodoncia y pediátrica en Chapinero, Cedritos, Chicó, Usaquén y Suba.</p>
+    <div class="feats">
+      <article class="feat">
+        <h3>Catálogo de tratamientos con precios</h3>
+        <p>Brackets, Invisalign, retenedores, expansores. Cada uno con descripción, tiempo estimado y rango de precio. Filtra al paciente que llega listo a agendar.</p>
+      </article>
+      <article class="feat">
+        <h3>Sección para padres</h3>
+        <p>Cuándo llevar al niño por primera vez, qué esperar, cómo manejar la ansiedad infantil. Las mamás que leen su sitio agendan con confianza.</p>
+      </article>
+      <article class="feat">
+        <h3>Reservas en línea</h3>
+        <p>Calendario con valoración inicial gratuita. El paciente elige horario sin tener que llamar. Usted controla la disponibilidad.</p>
+      </article>
+      <article class="feat">
+        <h3>Habeas data y consentimientos</h3>
+        <p>Formulario de menores con autorización de acudiente. Cumple con Ley 1581 de 2012 y normativa de salud.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <span class="eyebrow">Planes y precios</span>
+    <h2 style="margin-top:14px">Todo incluido. Pague una vez.</h2>
+    <p class="lead">Sin contratos mensuales obligatorios. Plan Hosting opcional para mantenimiento.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b>: inicio, tratamientos, equipo, reservas, contacto</li>
+          <li>Catálogo con precios visibles</li>
+          <li>Mapa + WhatsApp Business</li>
+          <li>Formulario con habeas data</li>
+          <li>Optimizado para celular</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Recomendado</span>
+        <span class="price-tier">Sitio web ampliado</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Reservas en línea integradas</b> con su calendario</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Blog para posicionamiento ("ortodoncia niños Cedritos")</li>
+          <li>Google Business Profile</li>
+          <li>Captura de correos para newsletter</li>
+        </ul>
+        <a class="btn btn-sky" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b style="color:var(--ink)">PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

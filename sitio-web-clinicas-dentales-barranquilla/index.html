@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para clínicas dentales en Barranquilla · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web para clínicas de implantes y odontología general en Barranquilla. En vivo en 48 horas. Desde $390.000 COP. Garantía 30 días." />
+<meta name="theme-color" content="#f59e0b" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-clinicas-dentales-barranquilla/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fffbf5; --ink:#3d2817; --ink-soft:#5d4530; --muted:#8b7762;
+    --line:#f0e4d3; --gold:#f59e0b; --gold-soft:#fef3c7;
+    --coral:#fb7185; --coral-soft:#ffe4e6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:14px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--gold);color:var(--ink);box-shadow:0 14px 28px -14px rgba(245,158,11,.6)}
+  .btn-primary:hover{transform:translateY(-1px);background:#d97706}
+  .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-coral{background:var(--coral);color:#fff}
+  .btn-coral:hover{background:#e11d48;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(255,251,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--gold)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Hero with sun-burst left, content right */
+  .hero{padding:80px 0 60px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--gold-soft) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#92400e;background:var(--gold-soft);padding:6px 14px;border-radius:999px;margin-bottom:22px;position:relative}
+  .hero h1{max-width:820px;position:relative}
+  .hero h1 .accent{color:var(--coral);font-style:italic}
+  .hero p.lead{font-size:1.15rem;color:var(--ink-soft);margin-top:22px;max-width:620px;position:relative}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;position:relative}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted);position:relative}
+  .hero-meta b{color:var(--ink)}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:36px}
+
+  /* List-style features (numbered, no cards) */
+  .feat-list{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .feat-item{display:grid;grid-template-columns:48px 1fr;gap:18px;align-items:start}
+  .feat-num{width:42px;height:42px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-style:italic;font-weight:800;font-size:1.1rem}
+  .feat-item h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;margin-bottom:6px}
+  .feat-item p{font-size:.94rem;color:var(--ink-soft)}
+
+  .pricing{background:#fff}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .price-card{background:linear-gradient(180deg,#fff 0%,var(--gold-soft) 100%);border:1px solid var(--line);border-radius:18px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
+  .price-card.featured{background:linear-gradient(180deg,#fff 0%,var(--coral-soft) 100%);border:2px solid var(--coral)}
+  .price-badge{position:absolute;top:-13px;left:24px;background:var(--coral);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+  .price-tier{font-size:.74rem;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:var(--muted);margin-bottom:18px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 26px;font-size:.92rem;color:var(--ink-soft)}
+  .price-feats li::before{content:"✓";position:absolute;left:0;top:7px;width:18px;height:18px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800}
+  .price-card.featured .price-feats li::before{background:var(--coral);color:#fff}
+  .price-feats li b{color:var(--ink);font-weight:600}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.75);padding:40px 0 30px;font-size:.9rem}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:rgba(255,255,255,.85)} .foot-row a:hover{color:#fff}
+  .foot-row b{color:#fff}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .feat-list,.price-grid{grid-template-columns:1fr}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Implantes · Odontología general · Barranquilla</span>
+    <h1>Sitio web para clínicas dentales <span class="accent">en Barranquilla.</span></h1>
+    <p class="lead"><b>Sus pacientes investigan en Google antes de pisar la clínica.</b> Si su sitio muestra credenciales, casos y precios claros, llegan listos a tomar decisiones. Listo en 48 horas, desde $390.000 COP.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+      <a class="btn btn-ghost" href="#planes">Ver planes</a>
+    </div>
+    <p class="hero-meta"><b>En vivo en 48 horas</b> · El Prado, Riomar, Villa Country · Garantía 30 días</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Cuatro cosas que su sitio resuelve.</h2>
+    <p class="lead">Pensado para clínicas pequeñas en Barranquilla que ofrecen implantes, endodoncia, periodoncia y odontología general.</p>
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-num">1</div>
+        <div>
+          <h3>Catálogo con precios</h3>
+          <p>Implantes unitarios, all-on-4, blanqueamiento, endodoncia. Cada tratamiento con rango de precio para evitar consultas vagas por WhatsApp.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">2</div>
+        <div>
+          <h3>Casos de éxito anonimizados</h3>
+          <p>Galería de antes y después con autorización del paciente. Carga rápida en celular. Es lo que el visitante mira primero.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">3</div>
+        <div>
+          <h3>Equipo y credenciales</h3>
+          <p>Tarjeta profesional, especializaciones, años de experiencia. La credibilidad cierra la cita en la primera visita al sitio.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">4</div>
+        <div>
+          <h3>WhatsApp Business + mapa</h3>
+          <p>Botón con mensaje pre-redactado por tipo de tratamiento. Mapa de Google integrado. El paciente llega al canal con contexto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <h2>Planes y precios.</h2>
+    <p class="lead">Pago único. Sin contratos mensuales obligatorios.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b> con galería de casos</li>
+          <li>Catálogo con precios visibles</li>
+          <li>Mapa + WhatsApp Business</li>
+          <li>Formulario con habeas data</li>
+          <li>Optimizado para celular</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Recomendado</span>
+        <span class="price-tier">Sitio web ampliado</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Reservas en línea</b> con calendario</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Blog para posicionamiento</li>
+          <li>Google Business Profile</li>
+          <li>Logo asistido por IA</li>
+        </ul>
+        <a class="btn btn-coral" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

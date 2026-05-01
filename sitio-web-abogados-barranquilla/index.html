@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para abogados en Barranquilla · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web para firmas de derecho laboral y de familia en Barranquilla. En vivo en 48 horas. Desde $390.000 COP. Garantía de 30 días." />
+<meta name="theme-color" content="#0d6e6e" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-abogados-barranquilla/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fdf8f0; --ink:#0a2e2e; --ink-soft:#2a4a4a; --muted:#6b7b7b;
+    --line:#e8dcc4; --teal:#0d6e6e; --teal-soft:#ccebeb;
+    --orange:#ea580c; --orange-soft:#ffead2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:14px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--orange);color:#fff;box-shadow:0 14px 28px -14px rgba(234,88,12,.5)}
+  .btn-primary:hover{transform:translateY(-1px);background:#c2410c}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-teal{background:var(--teal);color:#fff}
+  .btn-teal:hover{background:#0a5252;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(253,248,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--orange)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Hero left, with stats column on right side on desktop */
+  .hero{padding:70px 0 60px}
+  .hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:center}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);background:var(--teal-soft);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+  .hero h1 .accent{color:var(--orange);font-style:italic}
+  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:580px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted)}
+  .hero-meta b{color:var(--ink)}
+
+  .stats-card{background:var(--teal);color:#fff;border-radius:18px;padding:32px 28px}
+  .stats-card h3{font-family:'Fraunces',serif;color:#fff;font-size:1.3rem;margin-bottom:18px}
+  .stats-card .stat{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;align-items:baseline}
+  .stats-card .stat:last-child{border-bottom:0}
+  .stats-card .stat b{font-family:'Fraunces',serif;font-size:1.6rem;color:#facc15}
+  .stats-card .stat span{color:rgba(255,255,255,.85);font-size:.9rem}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:36px}
+
+  /* Alternating two-column features */
+  .feat-row{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:30px;align-items:center}
+  .feat-row:nth-child(even) .feat-text{order:2}
+  .feat-text h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;margin-bottom:10px}
+  .feat-text p{color:var(--ink-soft);font-size:1rem}
+  .feat-num-block{background:#fff;border:1px solid var(--line);border-radius:18px;padding:36px;text-align:center}
+  .feat-num-block .num{font-family:'Fraunces',serif;font-style:italic;font-weight:800;font-size:4rem;color:var(--teal);line-height:1}
+  .feat-num-block .label{font-size:.85rem;color:var(--muted);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+
+  .pricing{background:#fff}
+  .price-stack{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+  .price-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+  .price-card.featured{border:2px solid var(--orange);background:linear-gradient(90deg,#fff 0%,#fff8f1 100%)}
+  .price-info .price-tier{font-size:.74rem;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-info .price-name{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:800;margin:4px 0 10px}
+  .price-info p{font-size:.92rem;color:var(--ink-soft);margin-bottom:6px}
+  .price-info ul{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .price-info ul li{background:var(--teal-soft);color:var(--teal);padding:4px 10px;border-radius:999px;font-size:.78rem;font-weight:600}
+  .price-side{text-align:right}
+  .price-side .amt{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:800;color:var(--ink)}
+  .price-side .iva{font-size:.78rem;color:var(--muted);margin-bottom:10px}
+  .price-side .btn{padding:11px 20px;font-size:.9rem}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.7);padding:40px 0 30px;font-size:.9rem}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:rgba(255,255,255,.85)} .foot-row a:hover{color:#fff}
+  .foot-row b{color:#fff}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .feat-row{grid-template-columns:1fr;gap:14px}
+    .feat-row:nth-child(even) .feat-text{order:1}
+    .price-card{grid-template-columns:1fr;text-align:left}
+    .price-side{text-align:left}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Laboral · Familia · Barranquilla</span>
+      <h1>Sitio web para abogados <span class="accent">laborales y de familia</span> en Barranquilla.</h1>
+      <p class="lead"><b>En Barranquilla las consultas laborales llegan por WhatsApp a las 7 de la mañana.</b> Si su sitio explica los derechos básicos antes de la consulta, los clientes llegan con expectativas claras y honorarios pactados.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+        <a class="btn btn-ghost" href="#planes">Ver planes</a>
+      </div>
+      <p class="hero-meta"><b>En vivo en 48 horas</b> · Desde $390.000 COP · Garantía 30 días</p>
+    </div>
+    <aside class="stats-card">
+      <h3>Cobertura</h3>
+      <div class="stat"><b>48h</b><span>en vivo</span></div>
+      <div class="stat"><b>5</b><span>secciones</span></div>
+      <div class="stat"><b>30d</b><span>garantía</span></div>
+      <div class="stat"><b>Costa</b><span>El Prado, Riomar, Boston</span></div>
+    </aside>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Tres cosas que distinguen su sitio.</h2>
+    <p class="lead">Pensado para firmas pequeñas de derecho laboral, de familia y civil en Barranquilla. Sin plantillas, sin clichés.</p>
+
+    <div class="feat-row">
+      <div class="feat-text">
+        <h3>Áreas de práctica claras</h3>
+        <p>Despidos, prestaciones, divorcios, custodia, alimentos, sucesiones. Cada área con descripción que explica qué hace usted, sin lenguaje publicitario que aleje al cliente serio.</p>
+      </div>
+      <div class="feat-num-block">
+        <div class="num">01</div>
+        <div class="label">Áreas</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-text">
+        <h3>Formulario con habeas data</h3>
+        <p>Cumple con Ley 1581 de 2012. El cliente describe su caso (despido, separación, herencia) y acepta el aviso de tratamiento. Usted revisa al día siguiente con contexto suficiente.</p>
+      </div>
+      <div class="feat-num-block">
+        <div class="num">02</div>
+        <div class="label">Filtro</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-text">
+        <h3>WhatsApp Business integrado</h3>
+        <p>Botón con mensaje pre-redactado por área (laboral, familia, civil). El cliente entra al canal con contexto. Usted no recibe consultas vagas a deshoras.</p>
+      </div>
+      <div class="feat-num-block">
+        <div class="num">03</div>
+        <div class="label">Canal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <h2 style="text-align:center">Planes y precios.</h2>
+    <p class="lead" style="margin-left:auto;margin-right:auto;text-align:center">Pago único. Su sitio es suyo. Sin compromisos mensuales.</p>
+    <div class="price-stack">
+      <article class="price-card">
+        <div class="price-info">
+          <span class="price-tier">Sitio web</span>
+          <div class="price-name">Plan Esencial</div>
+          <p>5 secciones, dominio configurado, correo profesional, formulario con habeas data, mapa y WhatsApp.</p>
+          <ul>
+            <li>5 secciones</li><li>Correo @sufirma</li><li>Habeas data</li><li>Garantía 30 días</li>
+          </ul>
+        </div>
+        <div class="price-side">
+          <div class="amt">$390.000</div>
+          <div class="iva">COP · IVA incluido</div>
+          <a class="btn btn-ghost" href="https://pymewebpro.com/#contacto">Reservar →</a>
+        </div>
+      </article>
+      <article class="price-card featured">
+        <div class="price-info">
+          <span class="price-tier">★ Recomendado</span>
+          <div class="price-name">Plan Crecimiento</div>
+          <p>Todo lo del Esencial, más blog jurídico, 1 año de hosting incluido, Google Business Profile y logo asistido por IA.</p>
+          <ul>
+            <li>Blog jurídico</li><li>1 año hosting</li><li>Google Business</li><li>Logo IA</li>
+          </ul>
+        </div>
+        <div class="price-side">
+          <div class="amt">$690.000</div>
+          <div class="iva">COP · IVA incluido</div>
+          <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para abogados en Bogotá · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web para firmas de derecho corporativo y contractual en Bogotá. En vivo en 48 horas. Desde $390.000 COP. Garantía de 30 días." />
+<meta name="theme-color" content="#1a1a1a" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-abogados-bogota/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fcfcfa; --ink:#171717; --ink-soft:#374151; --muted:#6b7280;
+    --line:#e5e5e0; --green:#047857; --green-soft:#d1fae5;
+    --gold:#a16207;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:8px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--ink);color:#fff}
+  .btn-primary:hover{background:#000;transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-green{background:var(--green);color:#fff}
+  .btn-green:hover{background:#065f46;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(252,252,250,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--gold)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Hero centered */
+  .hero{padding:90px 0 70px;text-align:center;position:relative}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 0%,rgba(4,120,87,.08),transparent 70%);pointer-events:none}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green);background:var(--green-soft);padding:6px 14px;border-radius:999px;margin-bottom:24px;position:relative}
+  .hero h1{max-width:840px;margin:0 auto;position:relative}
+  .hero h1 .accent{font-style:italic;color:var(--green)}
+  .hero p.lead{font-size:1.15rem;color:var(--ink-soft);margin:24px auto 0;max-width:660px;position:relative}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;justify-content:center;position:relative}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted);position:relative}
+  .hero-meta b{color:var(--ink)}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:40px}
+
+  /* 3-column feature grid */
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px 24px}
+  .feat-num{font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:1rem;color:var(--green);margin-bottom:10px}
+  .feat h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px}
+  .feat p{font-size:.93rem;color:var(--ink-soft)}
+
+  .barrios-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .barrio{background:#fff;border:1px solid var(--line);padding:8px 14px;border-radius:4px;font-size:.88rem;font-weight:600}
+
+  .pricing{background:#0f0f0e;color:#fff}
+  .pricing h2{color:#fff}
+  .pricing .lead{color:rgba(255,255,255,.7)}
+  .pricing .eyebrow{background:rgba(4,120,87,.18);color:#34d399;border:1px solid rgba(52,211,153,.25)}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .price-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
+  .price-card.featured{background:#fff;color:var(--ink);border:1px solid #fff}
+  .price-card.featured .price-tier,.price-card.featured .price-iva{color:var(--muted)}
+  .price-card.featured .price-feats li{color:var(--ink-soft)}
+  .price-badge{position:absolute;top:-13px;left:24px;background:var(--green);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:4px}
+  .price-tier{font-size:.74rem;color:rgba(255,255,255,.6);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:18px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 22px;font-size:.92rem}
+  .price-feats li::before{content:"✓";position:absolute;left:0;top:7px;color:var(--green);font-weight:800}
+  .price-card.featured .price-feats li::before{color:var(--green)}
+  .price-feats li b{font-weight:700}
+
+  footer{background:#fff;border-top:1px solid var(--line);padding:40px 0 30px;font-size:.9rem;color:var(--muted)}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:var(--ink-soft)} .foot-row a:hover{color:var(--ink)}
+
+  @media (max-width:780px){
+    .hero{padding:60px 0 50px}
+    .feats{grid-template-columns:1fr}
+    .price-grid{grid-template-columns:1fr}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Derecho corporativo · Bogotá · desde $390.000 COP</span>
+    <h1>Sitio web para firmas de <span class="accent">derecho corporativo</span> en Bogotá.</h1>
+    <p class="lead"><b>Sus clientes corporativos en Bogotá lo investigan antes del primer correo.</b> Si su sitio refleja la rigurosidad de su práctica, llegan listos a hablar de honorarios. Si no, contratan al estudio que sí lo hace. Listo en 48 horas.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+      <a class="btn btn-ghost" href="#planes">Ver planes</a>
+    </div>
+    <p class="hero-meta"><b>En vivo en 48 horas</b> · Garantía de 30 días</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que incluye su sitio.</h2>
+    <p class="lead">Pensado para firmas pequeñas de derecho corporativo, contractual y societario en Bogotá. Sin plantillas ni clichés.</p>
+    <div class="feats">
+      <article class="feat">
+        <div class="feat-num">01</div>
+        <h3>Áreas de práctica</h3>
+        <p>Derecho societario, contratos, fusiones, laboral corporativo, tributario. Cada una con descripción profesional, sin lenguaje publicitario.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-num">02</div>
+        <h3>Perfil del equipo</h3>
+        <p>Tarjeta profesional, especialización, publicaciones y casos de éxito anonimizados. La credibilidad cierra honorarios sin pelear precio.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-num">03</div>
+        <h3>Habeas data integrado</h3>
+        <p>Aviso de tratamiento de datos según Ley 1581 y Decreto 1377. El cliente acepta antes de enviar el formulario.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-num">04</div>
+        <h3>Recursos descargables</h3>
+        <p>Modelos de contrato, guías y checklists en PDF, con captura de correo previa para alimentar su pipeline de clientes corporativos.</p>
+      </article>
+      <article class="feat">
+        <div class="feat-num">05</div>
+        <h3>Blog jurídico</h3>
+        <p>Artículos cortos sobre cambios normativos. Posiciona su firma para búsquedas como "reforma tributaria 2026" o "contratos de trabajo Colombia."</p>
+      </article>
+      <article class="feat">
+        <div class="feat-num">06</div>
+        <h3>Contacto profesional</h3>
+        <p>Correo @sufirma.com.co, teléfono fijo en visible y mapa de Google. WhatsApp Business opcional, no obligatorio.</p>
+      </article>
+    </div>
+    <div class="barrios-row">
+      <span class="barrio">Chapinero</span>
+      <span class="barrio">Chicó</span>
+      <span class="barrio">Usaquén</span>
+      <span class="barrio">Centro Internacional</span>
+      <span class="barrio">Cedritos</span>
+      <span class="barrio">Salitre</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <span class="eyebrow">Planes y precios</span>
+    <h2 style="margin-top:14px">Pague una vez. Su sitio es suyo.</h2>
+    <p class="lead">Sin contratos mensuales obligatorios. Plan Hosting opcional para mantenimiento.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b> profesionales</li>
+          <li>Configuración de dominio propio</li>
+          <li>Correo profesional</li>
+          <li>Formulario con habeas data</li>
+          <li>SSL/HTTPS + indexado en Google</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" style="border-color:#fff;color:#fff" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Recomendado</span>
+        <span class="price-tier">Sitio web extendido</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Blog jurídico</b> con primeros 3 artículos</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Captura de correos para newsletter</li>
+          <li>Recursos descargables (PDF)</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-green" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b style="color:var(--ink)">PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín, Colombia</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

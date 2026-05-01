@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitios web para PyMEs en Bogotá · por industria | PymeWebPro</title>
+<meta name="description" content="Sitios web profesionales para abogados, clínicas dentales, empresas de turismo y hoteles boutique en Bogotá. En vivo en 48 horas. Desde $390.000 COP." />
+<meta name="theme-color" content="#1a1a1a" />
+<link rel="canonical" href="https://pymewebpro.com/bogota/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fcfcfa; --ink:#171717; --ink-soft:#374151; --muted:#6b7280;
+    --line:#e5e5e0; --green:#047857; --green-soft:#d1fae5;
+    --gold:#a16207;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.6rem,2.8vw,2.2rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:8px;font-weight:600;font-size:.95rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--ink);color:#fff}
+  .btn-primary:hover{background:#000;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(252,252,250,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--gold)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+
+  .crumbs{padding:18px 0 0;font-size:.85rem;color:var(--muted)}
+  .crumbs a{color:var(--muted)} .crumbs a:hover{color:var(--ink)}
+  .crumbs .sep{margin:0 6px;color:var(--line)}
+
+  .hero{padding:50px 0 60px}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green);background:var(--green-soft);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  .hero h1{max-width:760px}
+  .hero h1 .accent{font-style:italic;color:var(--green)}
+  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:640px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+
+  .sec{padding:60px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1rem;max-width:680px;margin-bottom:32px}
+
+  /* Capital city: structured table-like vertical list */
+  .vert-list{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+  .vert{display:grid;grid-template-columns:140px 1fr auto;gap:24px;padding:26px 0;border-bottom:1px solid var(--line);align-items:center;transition:padding-left .15s ease}
+  .vert:hover{padding-left:8px}
+  .vert-tag{font-family:'Fraunces',serif;font-style:italic;font-size:1rem;color:var(--green);font-weight:700}
+  .vert-body h3{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;margin-bottom:4px}
+  .vert-body p{color:var(--ink-soft);font-size:.93rem}
+  .vert-arrow{color:var(--green);font-weight:700;font-size:.9rem;white-space:nowrap}
+
+  .other-cities{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  .city-link{background:#fff;border:1px solid var(--line);padding:16px 22px;border-radius:8px;text-align:center;font-weight:600;color:var(--ink);transition:all .15s ease}
+  .city-link:hover{border-color:var(--green);color:var(--green);transform:translateY(-1px)}
+
+  footer{background:#fff;border-top:1px solid var(--line);padding:40px 0 30px;font-size:.9rem;color:var(--muted)}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:var(--ink-soft)} .foot-row a:hover{color:var(--ink)}
+  .foot-row b{color:var(--ink)}
+
+  @media (max-width:780px){
+    .vert{grid-template-columns:1fr;gap:8px}
+    .vert-arrow{justify-self:start}
+    .other-cities{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Ruta de navegación">
+    <a href="https://pymewebpro.com/">Inicio</a>
+    <span class="sep">›</span>
+    <a href="https://pymewebpro.com/sitios-web-por-industria/">Por industria y ciudad</a>
+    <span class="sep">›</span>
+    <span style="color:var(--ink)">Bogotá</span>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Bogotá · Capital</span>
+    <h1>Sitios web para PyMEs en <span class="accent">Bogotá.</span></h1>
+    <p class="lead"><b>El cliente bogotano investiga antes de llamar.</b> Si su sitio refleja la rigurosidad y profesionalismo que su industria exige, llegan listos a contratar. Cuatro verticales con estructura adaptada a Bogotá. Listo en 48 horas, desde $390.000 COP.</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Industrias que atendemos en Bogotá.</h2>
+    <p class="lead">Cada página explica el problema específico de su industria, qué incluye su sitio y los precios.</p>
+    <div class="vert-list">
+      <a class="vert" href="https://pymewebpro.com/sitio-web-abogados-bogota/">
+        <span class="vert-tag">Abogados</span>
+        <div class="vert-body">
+          <h3>Derecho corporativo y contratos</h3>
+          <p>Para firmas pequeñas en Chapinero, Chicó, Usaquén y Centro Internacional.</p>
+        </div>
+        <span class="vert-arrow">Ver detalles →</span>
+      </a>
+      <a class="vert" href="https://pymewebpro.com/sitio-web-clinicas-dentales-bogota/">
+        <span class="vert-tag">Clínicas dentales</span>
+        <div class="vert-body">
+          <h3>Ortodoncia y odontología pediátrica</h3>
+          <p>Para clínicas en Cedritos, Chapinero y Usaquén con pacientes familiares.</p>
+        </div>
+        <span class="vert-arrow">Ver detalles →</span>
+      </a>
+      <a class="vert" href="https://pymewebpro.com/sitio-web-empresas-turismo-bogota/">
+        <span class="vert-tag">Turismo</span>
+        <div class="vert-body">
+          <h3>Escapadas y turismo corporativo</h3>
+          <p>Para operadores de fines de semana en Villa de Leyva, Salento y Guatavita.</p>
+        </div>
+        <span class="vert-arrow">Ver detalles →</span>
+      </a>
+      <a class="vert" href="https://pymewebpro.com/sitio-web-hoteles-boutique-bogota/">
+        <span class="vert-tag">Hoteles boutique</span>
+        <div class="vert-body">
+          <h3>Patrimonio y carácter</h3>
+          <p>Para hoteles en La Candelaria, Chapinero Alto y Usaquén con huéspedes internacionales.</p>
+        </div>
+        <span class="vert-arrow">Ver detalles →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>¿Su negocio está en otra ciudad?</h2>
+    <p class="lead">También atendemos PyMEs en Medellín y Barranquilla.</p>
+    <div class="other-cities">
+      <a class="city-link" href="https://pymewebpro.com/medellin/">Sitios web en Medellín →</a>
+      <a class="city-link" href="https://pymewebpro.com/barranquilla/">Sitios web en Barranquilla →</a>
+      <a class="city-link" href="https://pymewebpro.com/sitios-web-por-industria/">Ver todas las industrias →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín, Colombia</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

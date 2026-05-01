@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para hoteles boutique en Barranquilla · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web bilingüe para hoteles boutique en El Prado, Riomar y la zona costera de Barranquilla. Listo en 48 horas. Desde $390.000 COP." />
+<meta name="theme-color" content="#0c4a6e" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-hoteles-boutique-barranquilla/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf0; --ink:#082f49; --ink-soft:#1e4358; --muted:#647b8a;
+    --line:#e0e6dc; --ocean:#0c4a6e; --ocean-soft:#bae6fd;
+    --gold:#fbbf24; --gold-soft:#fef3c7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:8px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--ocean);color:#fff;box-shadow:0 14px 28px -14px rgba(12,74,110,.5)}
+  .btn-primary:hover{transform:translateY(-1px);background:#053246}
+  .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-gold{background:var(--gold);color:var(--ink)}
+  .btn-gold:hover{background:#f59e0b;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(250,250,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--ocean)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Wide hero with photo grid concept (color blocks) */
+  .hero{padding:80px 0 60px}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocean);background:var(--ocean-soft);padding:6px 14px;border-radius:8px;margin-bottom:22px}
+  .hero h1 .accent{color:var(--ocean);font-style:italic}
+  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:560px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted)}
+  .hero-meta b{color:var(--ink)}
+
+  /* Photo collage (CSS-only) */
+  .photo-grid{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:10px;height:440px}
+  .pg-block{border-radius:8px;position:relative;overflow:hidden;color:#fff;display:flex;align-items:flex-end;padding:20px}
+  .pg-1{grid-row:span 2;background:linear-gradient(135deg,var(--ocean) 0%,#053246 100%)}
+  .pg-2{background:linear-gradient(135deg,var(--gold) 0%,#d97706 100%);color:var(--ink)}
+  .pg-3{background:linear-gradient(135deg,#0891b2 0%,var(--ocean) 100%)}
+  .pg-block::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0,transparent 40px,rgba(255,255,255,.04) 40px,rgba(255,255,255,.04) 41px)}
+  .pg-block .lbl{position:relative;font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;font-weight:700}
+  .pg-block .lbl small{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;opacity:.8;margin-bottom:4px}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:36px}
+
+  /* Three column with hover */
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:8px;padding:28px 24px;transition:all .15s ease;border-top:3px solid var(--ocean)}
+  .feat:nth-child(2){border-top-color:var(--gold)}
+  .feat:nth-child(3){border-top-color:#0891b2}
+  .feat:nth-child(4){border-top-color:var(--gold)}
+  .feat:nth-child(5){border-top-color:var(--ocean)}
+  .feat:nth-child(6){border-top-color:#0891b2}
+  .feat:hover{transform:translateY(-2px);box-shadow:0 20px 40px -20px rgba(8,47,73,.15)}
+  .feat-emoji{font-size:1.6rem;margin-bottom:12px;display:block}
+  .feat h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px}
+  .feat p{font-size:.92rem;color:var(--ink-soft)}
+
+  .pricing{background:linear-gradient(135deg,var(--ocean) 0%,#053246 100%);color:#fff}
+  .pricing h2{color:#fff}
+  .pricing .lead{color:rgba(255,255,255,.75)}
+  .pricing .eyebrow{background:rgba(251,191,36,.15);color:var(--gold);border:1px solid rgba(251,191,36,.3)}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+  .price-card{background:rgba(255,255,255,.05);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:32px 28px;display:flex;flex-direction:column;position:relative;backdrop-filter:blur(10px)}
+  .price-card.featured{background:#fff;color:var(--ink);border:none}
+  .price-card.featured .price-tier,.price-card.featured .price-iva{color:var(--muted)}
+  .price-card.featured .price-feats li{color:var(--ink-soft)}
+  .price-badge{position:absolute;top:-13px;right:24px;background:var(--gold);color:var(--ink);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:6px}
+  .price-tier{font-size:.74rem;color:rgba(255,255,255,.6);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:18px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 22px;font-size:.92rem}
+  .price-feats li::before{content:"⚓";position:absolute;left:0;top:7px;color:var(--gold);font-size:.85rem}
+  .price-card.featured .price-feats li::before{color:var(--ocean)}
+  .price-feats li b{font-weight:600}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.75);padding:40px 0 30px;font-size:.9rem}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:rgba(255,255,255,.85)} .foot-row a:hover{color:#fff}
+  .foot-row b{color:#fff}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .photo-grid{height:auto;grid-template-columns:1fr;grid-template-rows:auto auto auto}
+    .pg-1{grid-row:span 1;height:200px}
+    .pg-2,.pg-3{height:140px}
+    .feats{grid-template-columns:1fr}
+    .price-grid{grid-template-columns:1fr}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Boutique · Costa Caribe · Barranquilla</span>
+      <h1>Hoteles boutique frente al <span class="accent">Caribe.</span></h1>
+      <p class="lead"><b>El viajero a Barranquilla quiere algo más que un hotel de cadena.</b> Si su sitio muestra el carácter de la casa, las habitaciones, la terraza, la piscina, la cercanía al Carnaval, eligen su hotel sobre el Hilton.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+        <a class="btn btn-ghost" href="#planes">Ver planes</a>
+      </div>
+      <p class="hero-meta"><b>En vivo en 48 horas</b> · Bilingüe ES/EN · Garantía 30 días</p>
+    </div>
+    <div class="photo-grid">
+      <div class="pg-block pg-1">
+        <div class="lbl"><small>Cuartos</small>Suites con vista al Caribe.</div>
+      </div>
+      <div class="pg-block pg-2">
+        <div class="lbl"><small>Carnaval</small>A 15 min del desfile.</div>
+      </div>
+      <div class="pg-block pg-3">
+        <div class="lbl"><small>Terraza</small>Brisa nocturna y mar.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que su sitio comunica.</h2>
+    <p class="lead">Pensado para hoteles pequeños en El Prado, Alto Prado, Riomar, Boston y la zona costera de Puerto Colombia.</p>
+    <div class="feats">
+      <article class="feat">
+        <span class="feat-emoji">🛏️</span>
+        <h3>Galería de cuartos</h3>
+        <p>Habitaciones, suites, áreas comunes con fotografía profesional. La galería vende el hotel antes que las palabras.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">📅</span>
+        <h3>Reservas en línea</h3>
+        <p>Calendario con disponibilidad por noche. Pagos con Wompi (tarjeta internacional, PSE, transferencia).</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">🌎</span>
+        <h3>Bilingüe ES/EN</h3>
+        <p>Inglés correcto para huéspedes de Estados Unidos, Europa y el Caribe. Detección automática del idioma.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">🎭</span>
+        <h3>Sección Carnaval</h3>
+        <p>Distancia al desfile, paquetes con palco incluido, traslados desde el hotel. Vende seis meses por adelantado.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">🔗</span>
+        <h3>Conexión Booking + Airbnb</h3>
+        <p>Botón directo a sus listings en Booking, Expedia, Airbnb y Hotels.com. El huésped reserva donde se sienta cómodo.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">⭐</span>
+        <h3>Reseñas integradas</h3>
+        <p>Reseñas de Google y TripAdvisor visibles. La prueba social cierra reservas mejor que cualquier descuento.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <span class="eyebrow">Planes y precios</span>
+    <h2 style="margin-top:14px">Pague una vez. Su hotel es suyo.</h2>
+    <p class="lead">Sin comisión por reserva, sin contratos mensuales obligatorios.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b> con galería</li>
+          <li>Catálogo de cuartos con precios</li>
+          <li>Mapa + WhatsApp Business</li>
+          <li>Formulario con habeas data</li>
+          <li>Optimizado para celular</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" style="border-color:#fff;color:#fff" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Recomendado</span>
+        <span class="price-tier">Sitio bilingüe + reservas</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Versión bilingüe ES/EN</b></li>
+          <li><b>Reservas y pagos en línea</b> (Wompi)</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Conexión con Booking, Expedia y Airbnb</li>
+          <li>Sección Carnaval</li>
+        </ul>
+        <a class="btn btn-gold" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

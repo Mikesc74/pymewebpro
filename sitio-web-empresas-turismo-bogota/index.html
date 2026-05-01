@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para empresas de turismo en Bogotá · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web para operadores de turismo corporativo y escapadas de fin de semana en Bogotá. En vivo en 48 horas. Desde $390.000 COP." />
+<meta name="theme-color" content="#475569" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-empresas-turismo-bogota/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f8f9f6; --ink:#1e293b; --ink-soft:#334155; --muted:#64748b;
+    --line:#dbe0d6; --slate:#475569; --slate-soft:#e2e8f0;
+    --mt-green:#14532d; --mt-green-soft:#dcfce7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:4px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--mt-green);color:#fff}
+  .btn-primary:hover{background:#166534;transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-slate{background:var(--slate);color:#fff}
+  .btn-slate:hover{background:#334155;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(248,249,246,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--mt-green)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Minimalist hero, structured */
+  .hero{padding:80px 0 60px}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);background:var(--slate-soft);padding:6px 14px;border-radius:3px;margin-bottom:22px}
+  .hero h1{max-width:780px}
+  .hero h1 .accent{font-style:italic;color:var(--mt-green)}
+  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:600px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted)}
+  .hero-meta b{color:var(--ink)}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:36px}
+
+  /* Two-column list-style features (no cards, just rows) */
+  .feat-table{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+  .feat-row{display:grid;grid-template-columns:200px 1fr;gap:30px;padding:24px 0;border-bottom:1px solid var(--line)}
+  .feat-row .lbl{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;color:var(--ink)}
+  .feat-row .lbl span{display:block;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mt-green);margin-bottom:4px}
+  .feat-row p{color:var(--ink-soft);font-size:1rem}
+
+  .pricing{background:#fff}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .price-card{background:#fff;padding:36px 32px;display:flex;flex-direction:column;border-right:1px solid var(--line);position:relative}
+  .price-card:last-child{border-right:0}
+  .price-card.featured{background:var(--mt-green-soft)}
+  .price-badge{position:absolute;top:0;right:0;background:var(--mt-green);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px}
+  .price-tier{font-size:.74rem;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:var(--muted);margin-bottom:20px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 22px;font-size:.92rem;color:var(--ink-soft)}
+  .price-feats li::before{content:"—";position:absolute;left:0;top:7px;color:var(--mt-green);font-weight:800;font-family:'Fraunces',serif}
+  .price-feats li b{color:var(--ink);font-weight:600}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.75);padding:40px 0 30px;font-size:.9rem}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:rgba(255,255,255,.85)} .foot-row a:hover{color:#fff}
+  .foot-row b{color:#fff}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .feat-row{grid-template-columns:1fr;gap:8px}
+    .price-grid{grid-template-columns:1fr}
+    .price-card{border-right:0;border-bottom:1px solid var(--line)}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Corporativo · Escapadas · Bogotá</span>
+    <h1>Sitio web para operadores de turismo en <span class="accent">Bogotá</span>.</h1>
+    <p class="lead"><b>El bogotano busca escapada el martes y reserva el jueves.</b> Si su catálogo de fines de semana en Villa de Leyva, Salento o Guatavita está claro y se reserva en dos clics, vende. Si pide llamar, pierde la venta.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+      <a class="btn btn-ghost" href="#planes">Ver planes</a>
+    </div>
+    <p class="hero-meta"><b>En vivo en 48 horas</b> · Catálogo + reservas · Garantía 30 días</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Cómo está estructurado su sitio.</h2>
+    <p class="lead">Pensado para operadores pequeños de turismo corporativo, escapadas de fin de semana y city tours en Bogotá.</p>
+    <div class="feat-table">
+      <div class="feat-row">
+        <div class="lbl"><span>01</span>Catálogo</div>
+        <p>Cada paquete con duración, itinerario por día, hospedaje, alimentación, transporte, qué incluye y qué no. Precio claro en COP, USD opcional.</p>
+      </div>
+      <div class="feat-row">
+        <div class="lbl"><span>02</span>Reservas</div>
+        <p>Calendario con cupos disponibles por fecha. El cliente reserva sin llamar. Pagos en línea con Wompi (tarjeta, PSE, Nequi, transferencia).</p>
+      </div>
+      <div class="feat-row">
+        <div class="lbl"><span>03</span>Corporativo</div>
+        <p>Sección B2B para empresas: cotización en línea, planes de incentivos, retiros corporativos, eventos en hoteles boutique.</p>
+      </div>
+      <div class="feat-row">
+        <div class="lbl"><span>04</span>Confianza</div>
+        <p>RNT visible, reseñas de Google integradas, fotos reales de tours pasados, equipo y guías acreditados.</p>
+      </div>
+      <div class="feat-row">
+        <div class="lbl"><span>05</span>Bilingüe</div>
+        <p>Versión en inglés en plan Crecimiento. Útil para huéspedes corporativos extranjeros y turistas que extienden viaje desde Cartagena o Medellín.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <h2>Planes y precios.</h2>
+    <p class="lead">Pago único. Sin comisión por reserva. Plan Hosting opcional.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b> con catálogo</li>
+          <li>Galería optimizada para celular</li>
+          <li>WhatsApp Business + mapa</li>
+          <li>Formulario con habeas data</li>
+          <li>RNT visible</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Recomendado</span>
+        <span class="price-tier">Sitio bilingüe + reservas</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Versión bilingüe ES/EN</b></li>
+          <li><b>Reservas en línea</b> con calendario</li>
+          <li><b>Pagos en línea</b> (Wompi)</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Sección corporativa B2B</li>
+        </ul>
+        <a class="btn btn-slate" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

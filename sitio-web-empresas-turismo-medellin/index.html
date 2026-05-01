@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sitio web para empresas de turismo en Medellín · desde $390.000 | PymeWebPro</title>
+<meta name="description" content="Sitio web para operadores de turismo de naturaleza, café y experiencias en Medellín. Bilingüe, con catálogo y reservas. Listo en 48 horas." />
+<meta name="theme-color" content="#166534" />
+<link rel="canonical" href="https://pymewebpro.com/sitio-web-empresas-turismo-medellin/" />
+<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfaf2; --ink:#1c2418; --ink-soft:#3a4732; --muted:#6f7a64;
+    --line:#e0dcc4; --green:#166534; --green-soft:#dcfce7;
+    --coffee:#78350f; --coffee-soft:#fef3c7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  h3{font-size:1.2rem;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:6px;font-weight:600;font-size:.98rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
+  .btn-primary{background:var(--green);color:#fff}
+  .btn-primary:hover{background:#14532d;transform:translateY(-1px)}
+  .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-coffee{background:var(--coffee);color:#fff}
+  .btn-coffee:hover{background:#5d2a08;transform:translateY(-1px)}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(251,250,242,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
+  .brand .pyme{color:var(--ink)} .brand .web{color:var(--green)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
+  .nav .btn-primary{padding:10px 18px;font-size:.9rem}
+
+  /* Wide hero with full-width green band */
+  .hero{padding:80px 0 60px;background:linear-gradient(180deg,var(--bg) 0%,var(--green-soft) 100%)}
+  .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center}
+  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green);background:#fff;padding:6px 14px;border-radius:4px;margin-bottom:22px;border:1px solid var(--green-soft)}
+  .hero h1 .accent{color:var(--coffee);font-style:italic}
+  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:560px}
+  .hero p.lead b{color:var(--ink);font-weight:600}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .hero-meta{margin-top:18px;font-size:.88rem;color:var(--muted)}
+  .hero-meta b{color:var(--ink)}
+
+  .pictogram{background:#fff;border:1px solid var(--line);border-radius:0;padding:36px;text-align:center;font-family:'Fraunces',serif;line-height:1.15;border-radius:6px;box-shadow:0 20px 50px -20px rgba(28,36,24,.15)}
+  .pictogram .big{font-size:5rem;display:block;margin-bottom:14px}
+  .pictogram h3{font-family:'Fraunces',serif;font-size:1.5rem;font-style:italic;color:var(--green)}
+  .pictogram p{color:var(--ink-soft);font-size:.95rem;margin-top:8px;font-family:'Inter',sans-serif;font-style:normal}
+
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec h2{margin-bottom:14px}
+  .sec .lead{color:var(--ink-soft);font-size:1.05rem;max-width:680px;margin-bottom:36px}
+
+  /* 3 column features with icon top */
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:6px;padding:28px 24px;text-align:left}
+  .feat-emoji{font-size:1.8rem;margin-bottom:14px;display:block}
+  .feat h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px}
+  .feat p{font-size:.93rem;color:var(--ink-soft)}
+
+  .pricing{background:var(--ink);color:#fff}
+  .pricing h2{color:#fff}
+  .pricing .lead{color:rgba(255,255,255,.75)}
+  .pricing .eyebrow{background:rgba(220,252,231,.1);color:#bbf7d0;border:1px solid rgba(187,247,208,.2)}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .price-card{background:#fff;color:var(--ink);border-radius:6px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
+  .price-card.featured{background:var(--coffee-soft);border:2px solid var(--coffee)}
+  .price-badge{position:absolute;top:-13px;left:24px;background:var(--coffee);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:4px}
+  .price-tier{font-size:.74rem;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .price-name{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:800;margin:6px 0 12px}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .price-amount b{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:800}
+  .price-amount span{color:var(--muted);font-size:.92rem}
+  .price-iva{font-size:.82rem;color:var(--muted);margin-bottom:18px}
+  .price-feats{margin:14px 0 24px;flex-grow:1}
+  .price-feats li{position:relative;padding:7px 0 7px 22px;font-size:.92rem;color:var(--ink-soft)}
+  .price-feats li::before{content:"▸";position:absolute;left:0;top:7px;color:var(--green);font-weight:800}
+  .price-card.featured .price-feats li::before{color:var(--coffee)}
+  .price-feats li b{color:var(--ink);font-weight:600}
+
+  footer{background:#fff;border-top:1px solid var(--line);padding:40px 0 30px;font-size:.9rem;color:var(--muted)}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-row a{color:var(--ink-soft)} .foot-row a:hover{color:var(--ink)}
+  .foot-row b{color:var(--ink)}
+
+  @media (max-width:780px){
+    .hero{padding:50px 0 40px}
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .feats,.price-grid{grid-template-columns:1fr}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
+    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Naturaleza · Café · Medellín</span>
+      <h1>Sitio web para operadores de <span class="accent">turismo</span> en Medellín.</h1>
+      <p class="lead"><b>El turista que llega a Medellín ya tiene su tour reservado antes de aterrizar.</b> Si su catálogo de tours, precios y disponibilidad están en línea (en español e inglés), reservan con usted. Si no, reservan con la cadena.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar mi cupo →</a>
+        <a class="btn btn-ghost" href="#planes">Ver planes</a>
+      </div>
+      <p class="hero-meta"><b>En vivo en 48 horas</b> · Bilingüe · Desde $390.000 COP</p>
+    </div>
+    <div class="pictogram">
+      <span class="big">☕</span>
+      <h3>Comuna 13. Guatapé. Eje Cafetero.</h3>
+      <p>Sus tours bandera, en su sitio, con precio y reserva en línea.</p>
+    </div>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que incluye su sitio.</h2>
+    <p class="lead">Pensado para operadores pequeños de tours de naturaleza, café, gastronomía y experiencias en Medellín y el Valle de Aburrá.</p>
+    <div class="feats">
+      <article class="feat">
+        <span class="feat-emoji">🗺️</span>
+        <h3>Catálogo de tours</h3>
+        <p>Cada tour con descripción, itinerario, duración, precio (COP y USD), incluye y no incluye, punto de encuentro y mapa.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">📅</span>
+        <h3>Reservas en línea</h3>
+        <p>Calendario con disponibilidad por día y por hora. El turista reserva sin tener que escribir, usted controla cupos.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">🌎</span>
+        <h3>Bilingüe ES/EN</h3>
+        <p>Versión en inglés correcto para turistas de Estados Unidos, Canadá y Europa. Detección automática del idioma del navegador.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">⭐</span>
+        <h3>Reseñas integradas</h3>
+        <p>Reseñas de Google y TripAdvisor visibles. La prueba social cierra la reserva más rápido que cualquier descuento.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">📷</span>
+        <h3>Galería de fotos profesional</h3>
+        <p>Optimizada para celular, carga rápida. Las fotos venden los tours antes que las palabras.</p>
+      </article>
+      <article class="feat">
+        <span class="feat-emoji">💳</span>
+        <h3>Pagos en línea</h3>
+        <p>Integración con Wompi (Bancolombia). Tarjeta, Nequi, PSE, transferencia. El turista paga al reservar.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec pricing" id="planes">
+  <div class="wrap">
+    <span class="eyebrow">Planes y precios</span>
+    <h2 style="margin-top:14px">Pague una vez. Su sitio es suyo.</h2>
+    <p class="lead">Sin comisiones por reserva, sin contratos mensuales obligatorios.</p>
+    <div class="price-grid">
+      <article class="price-card">
+        <span class="price-tier">Sitio web</span>
+        <div class="price-name">Esencial</div>
+        <div class="price-amount"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>5 secciones</b> con catálogo de tours</li>
+          <li>Galería de fotos optimizada</li>
+          <li>WhatsApp Business + mapa</li>
+          <li>Formulario con habeas data</li>
+          <li>Optimizado para celular</li>
+          <li><b>Garantía de 30 días</b></li>
+        </ul>
+        <a class="btn btn-ghost" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+      <article class="price-card featured">
+        <span class="price-badge">★ Recomendado</span>
+        <span class="price-tier">Sitio bilingüe + reservas</span>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amount"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva">IVA incluido · pago único</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Versión bilingüe ES/EN</b></li>
+          <li><b>Reservas en línea</b> con calendario</li>
+          <li><b>Pagos en línea</b> (Wompi)</li>
+          <li><b>1 año de hosting incluido</b></li>
+          <li>Google Business + reseñas integradas</li>
+        </ul>
+        <a class="btn btn-coffee" href="https://pymewebpro.com/#contacto">Reservar →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 <b style="color:var(--ink)">PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín</span>
+    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
