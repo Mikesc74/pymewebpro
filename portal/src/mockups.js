@@ -14,15 +14,29 @@ import { BLUEPRINTS } from "./blueprint.js";
 // import { json, isAdmin, randomToken, uuid, sha256, escapeHtml } from "./utils.js";
 // (The portal already exports these — keep this comment for reference when integrating.)
 
-const SYSTEM_PROMPT = `Eres un editor copy senior de PymeWebPro. Recibes datos crudos de un cliente colombiano (PyME) y devuelves un JSON listo para alimentar un blueprint HTML.
+const SYSTEM_PROMPT_BASE = `Eres un editor copy senior de PymeWebPro. Recibes datos crudos de un cliente colombiano (PyME) y devuelves un JSON listo para alimentar un blueprint HTML.
 Reglas:
 - Español colombiano natural, profesional pero cálido. NO suene a IA. Frases cortas.
 - Si datos faltan, INVENTA piezas razonables y conservadoras (no exageres).
 - Servicios: máximo 6, cada uno 2-4 palabras.
 - "tagline": 6-12 palabras, beneficio claro, no cliché.
 - Colores: si el cliente da hex/nombres, conviértelos a hex; si no, elige una paleta apropiada al sector (primary + accent + ink + bg).
-Devuelve SOLO JSON con este shape, sin texto extra:
-{"businessName":"","tagline":"","industry":"","services":["",""],"phone":"","email":"","address":"","hours":"","instagram":"","facebook":"","primary":"#xxxxxx","accent":"#xxxxxx","ink":"#0a1840","bg":"#fbfaf6","ctaPhone":"","ctaWhatsapp":""}`;
+Campos básicos (Esencial): businessName, tagline, industry, services, phone, email, address, hours, instagram, facebook, primary, accent, ink, bg, ctaPhone, ctaWhatsapp, testimonials (array de {name, quote, role} si los datos del cliente los incluyen, si no [])`;
+
+const SYSTEM_PROMPT_PRO_EXTRA = `
+ADEMÁS, este cliente es plan CRECIMIENTO (Growth). Si los datos crudos contienen valores para estos, inclúyelos en el JSON; si no existen, omita la clave (NO invente IDs ni URLs):
+- bookingsUrl: URL de Calendly / Cal.com / etc para el sistema de reservas
+- pdfUrl + pdfLabel: link a un catálogo / menú PDF
+- waCatalogUrl: link al catálogo de WhatsApp Business
+- newsletterUrl: endpoint del formulario de suscripción
+- ga4Id: ID de Google Analytics 4 (formato G-XXXXXXXX)
+- metaPixelId: ID del Meta Pixel
+- faqs: array de {q, a} si el cliente proporciona preguntas frecuentes`;
+
+function systemPromptFor(plan) {
+  const isPro = String(plan || "").toLowerCase() === "pro" || String(plan || "").toLowerCase() === "crecimiento" || String(plan || "").toLowerCase() === "growth";
+  return SYSTEM_PROMPT_BASE + (isPro ? "\n\n" + SYSTEM_PROMPT_PRO_EXTRA : "") + `\n\nDevuelve SOLO JSON, sin markdown ni texto adicional.`;
+}
 
 // ─── Public dispatch (called from index.js) ─────────────────────────────────
 
@@ -89,16 +103,17 @@ async function generateForClient(env, helpers, clientId, req) {
   const logo = (assets.results || []).find((a) => a.category === "logo");
   const photos = (assets.results || []).filter((a) => a.category === "photo").slice(0, 6);
 
-  // Ask Claude for the blueprint input
-  const filled = await callClaude(env, intake);
+  // Ask Claude for the blueprint input (plan-aware)
+  const plan = String(client.plan || "esencial").toLowerCase();
+  const filled = await callClaude(env, intake, plan);
 
   // Wire asset URLs (served via /m/<token>/asset/<filename>)
   if (logo) filled.logoUrl = `./asset/${encodeURIComponent(safeName(logo))}`;
   filled.galleryUrls = photos.map((p) => `./asset/${encodeURIComponent(safeName(p))}`);
 
-  // Render
+  // Render with plan
   const render = BLUEPRINTS["blueprint-1"];
-  const htmlOut = render(filled);
+  const htmlOut = render(filled, { plan });
 
   // Determine version
   const last = await env.DB.prepare("SELECT MAX(version) as v FROM mockups WHERE client_id = ?")
@@ -142,11 +157,15 @@ async function regenerate(env, helpers, mockupId, req) {
   return generateForClient(env, helpers, m.client_id, req);
 }
 
-async function callClaude(env, intake) {
+async function callClaude(env, intake, plan) {
+  const isPro = String(plan || "").toLowerCase() === "pro" || String(plan || "").toLowerCase() === "crecimiento" || String(plan || "").toLowerCase() === "growth";
   if (!env.ANTHROPIC_API_KEY) {
     // Dev fallback — produce something reasonable from raw intake
     const biz = intake.business || {};
-    return {
+    const tech = intake.tech || {};
+    const visual = intake.visual || {};
+    const content = intake.content || {};
+    const out = {
       businessName: biz.bizName || intake._client_business_name || "Su Negocio",
       tagline: biz.tagline || biz.whatYouDo || "Su negocio, en línea.",
       industry: biz.audience || "Servicios",
@@ -159,7 +178,20 @@ async function callClaude(env, intake) {
       ctaPhone: (intake.contact || {}).phone,
       ctaWhatsapp: (intake.contact || {}).whatsapp,
       primary: "#003893", accent: "#fcd116", ink: "#0a1840", bg: "#fbfaf6",
+      testimonials: Array.isArray(intake.testimonials) ? intake.testimonials : [],
+      faqs: Array.isArray(intake.faqs) ? intake.faqs : [],
     };
+    if (isPro) {
+      out.bookingsUrl = tech.bookingsUrl || tech.calendly || content.bookingsUrl;
+      out.pdfUrl = tech.pdfUrl || content.pdfUrl;
+      out.pdfLabel = tech.pdfLabel || content.pdfLabel;
+      out.waCatalogUrl = (intake.contact || {}).waCatalog || tech.waCatalogUrl;
+      out.newsletterUrl = tech.newsletterUrl || content.newsletterUrl;
+      out.newsletterEnabled = !!(out.newsletterUrl || tech.newsletter);
+      out.ga4Id = tech.ga4Id || tech.ga4 || tech.gaId;
+      out.metaPixelId = tech.metaPixelId || tech.fbPixelId || tech.pixelId;
+    }
+    return out;
   }
   const r = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -170,9 +202,9 @@ async function callClaude(env, intake) {
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 1500,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: `Datos crudos del cliente:\n${JSON.stringify(intake, null, 2)}` }],
+      max_tokens: 2000,
+      system: systemPromptFor(plan),
+      messages: [{ role: "user", content: `Plan: ${isPro ? "CRECIMIENTO" : "ESENCIAL"}\n\nDatos crudos del cliente:\n${JSON.stringify(intake, null, 2)}` }],
     }),
   });
   const j = await r.json();
