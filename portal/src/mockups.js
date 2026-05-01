@@ -143,9 +143,9 @@ async function generateForClient(env, helpers, clientId, req) {
     try { intake[row.section] = JSON.parse(row.data); } catch { intake[row.section] = row.data; }
   }
 
-  // Pull asset URLs (logo, photos, pdf)
+  // Pull asset URLs (logo, photos, pdf) — include alt_text for per-photo accessibility
   const assets = await env.DB.prepare(
-    "SELECT id, category, filename, r2_key FROM files WHERE client_id = ? AND category IN ('logo','photo','pdf') ORDER BY uploaded_at DESC",
+    "SELECT id, category, filename, r2_key, alt_text FROM files WHERE client_id = ? AND category IN ('logo','photo','pdf') ORDER BY uploaded_at DESC",
   ).bind(clientId).all();
   const logo = (assets.results || []).find((a) => a.category === "logo");
   const photos = (assets.results || []).filter((a) => a.category === "photo").slice(0, 6);
@@ -159,9 +159,16 @@ async function generateForClient(env, helpers, clientId, req) {
   // Wire asset URLs (served via /m/<token>/asset/<filename>)
   if (logo) filled.logoUrl = `./asset/${encodeURIComponent(safeName(logo))}`;
   filled.galleryUrls = photos.map((p) => `./asset/${encodeURIComponent(safeName(p))}`);
-  // Per-photo alt text — split the visual.photoAlts textarea by lines
-  const altLines = String((intake.visual || {}).photoAlts || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-  filled.galleryAlts = photos.map((_p, idx) => altLines[idx] || `${(intake.business||{}).bizName || client.business_name} ${idx + 1}`);
+  // Per-photo alt text. Preferred source is files.alt_text (set per-photo by the
+  // wizard's PhotosWithAlts step). Fallback for legacy clients: the old
+  // visual.photoAlts newline-separated textarea, mapped by upload order.
+  const fallbackAltLines = String((intake.visual || {}).photoAlts || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  const bizName = (intake.business||{}).bizName || client.business_name;
+  filled.galleryAlts = photos.map((p, idx) => {
+    if (p.alt_text && String(p.alt_text).trim()) return p.alt_text;
+    if (fallbackAltLines[idx]) return fallbackAltLines[idx];
+    return `${bizName} ${idx + 1}`;
+  });
 
   // Always pass through structured trust signals from intake (Claude shouldn't
   // translate or invent these — they're factual/legal identifiers).
@@ -632,11 +639,15 @@ async function preflightMockup(env, helpers, mockupId) {
   } else {
     const html = await obj.text();
     if (!/<h1\b/i.test(html)) errors.push({ code: "no_h1", msg: "No hay <h1> — mal para SEO." });
-    if (!/<meta\s+name=["']description["']/i.test(html)) errors.push({ code: "no_meta_desc", msg: "Falta meta description." });'    if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "Sin og:image — se verá feo en WhatsApp/Facebook." });'    // Imgs without alt
+    if (!/<meta\s+name=["']description["']/i.test(html)) errors.push({ code: "no_meta_desc", msg: "Falta meta description." });
+    if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "Sin og:image — se verá feo en WhatsApp/Facebook." });
+    // Imgs without alt
     const imgMatches = [...html.matchAll(/<img\b[^>]*>/gi)];
-    const imgsNoAlt = imgMatches.filter(m => !/alt=/.test(m[0]) || /alt=["']\s*["']/.test(m[0]));'    if (imgsNoAlt.length) warnings.push({ code: "imgs_no_alt", msg: `${imgsNoAlt.length} imagen(es) sin texto alt — accesibilidad y SEO.` });
+    const imgsNoAlt = imgMatches.filter(m => !/alt=/.test(m[0]) || /alt=["']\s*["']/.test(m[0]));
+    if (imgsNoAlt.length) warnings.push({ code: "imgs_no_alt", msg: `${imgsNoAlt.length} imagen(es) sin texto alt — accesibilidad y SEO.` });
     // No mixed content
-    if (/src=["']http:\/\//i.test(html) || /href=["']http:\/\/(?!schema\.org)/i.test(html)) {'      warnings.push({ code: "mixed_content", msg: "Hay URLs http:// (no https) en el HTML." });
+    if (/src=["']http:\/\//i.test(html) || /href=["']http:\/\/(?!schema\.org)/i.test(html)) {
+      warnings.push({ code: "mixed_content", msg: "Hay URLs http:// (no https) en el HTML." });
     }
     if (!/politica-privacidad/i.test(html)) warnings.push({ code: "no_privacy_link", msg: "No se ve un link a política de privacidad." });
   }
