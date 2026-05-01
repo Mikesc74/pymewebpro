@@ -65,29 +65,39 @@
   const buttons = document.querySelectorAll('.btn-reserve[data-plan]');
   if (!buttons.length) return;
 
+  // Combined plan+hosting key → human label (sent via hidden input → portal
+  // normalizes "Esencial"/"Crecimiento" to "esencial"/"pro" and
+  // "mensual"/"anual" to "monthly"/"annual" before computing the quote).
   const PLAN_LABELS = {
     es: {
-      esencial: { name: 'Esencial', price: '$390.000 COP', form: 'Esencial ($390k)' },
-      crecimiento: { name: 'Crecimiento', price: '$690.000 COP', form: 'Crecimiento ($690k)' },
+      'esencial:none':        { name: 'Esencial',                       price: '$390.000 COP',          form: 'Esencial ($390k)' },
+      'esencial:monthly':     { name: 'Esencial + Hosting mensual',     price: '$390.000 + $30.000/mes', form: 'Esencial + Hosting mensual ($390k + $30k/mes)' },
+      'esencial:annual':      { name: 'Esencial + Hosting anual',       price: '$660.000 COP',          form: 'Esencial + Hosting anual ($660k)' },
+      'crecimiento:annual':   { name: 'Crecimiento',                    price: '$690.000 COP',          form: 'Crecimiento ($690k)' },
     },
     en: {
-      esencial: { name: 'Essential', price: '$390,000 COP', form: 'Esencial ($390k)' },
-      crecimiento: { name: 'Growth', price: '$690,000 COP', form: 'Crecimiento ($690k)' },
+      'esencial:none':        { name: 'Essential',                      price: '$390,000 COP',          form: 'Esencial ($390k)' },
+      'esencial:monthly':     { name: 'Essential + Monthly hosting',    price: '$390,000 + $30,000/mo', form: 'Esencial + Hosting mensual ($390k + $30k/mes)' },
+      'esencial:annual':      { name: 'Essential + Annual hosting',     price: '$660,000 COP',          form: 'Esencial + Hosting anual ($660k)' },
+      'crecimiento:annual':   { name: 'Growth',                         price: '$690,000 COP',          form: 'Crecimiento ($690k)' },
     },
   };
   const lang = (document.documentElement.lang || 'es').toLowerCase().startsWith('en') ? 'en' : 'es';
   const labels = PLAN_LABELS[lang];
 
-  const hiddenInput = document.getElementById('planHidden');
+  const planInput = document.getElementById('planHidden');
+  const hostingInput = document.getElementById('hostingHidden');
   const summary = document.getElementById('planSummary');
   const summaryName = document.getElementById('planSummaryName');
   const changeBtn = document.getElementById('changePlan');
   const submitBtn = document.getElementById('contactSubmit');
 
-  function setPlan(planKey) {
-    const meta = labels[planKey];
+  function setPackage(planKey, hostingKey) {
+    const lookup = `${planKey}:${hostingKey}`;
+    const meta = labels[lookup];
     if (!meta) return;
-    if (hiddenInput) hiddenInput.value = meta.form;
+    if (planInput) planInput.value = meta.form;
+    if (hostingInput) hostingInput.value = hostingKey;
     if (summary && summaryName) {
       summary.classList.remove('is-empty');
       summaryName.textContent = meta.name + ' · ' + meta.price;
@@ -99,15 +109,20 @@
     }
     // Visually highlight the picked card in the contact section
     document.querySelectorAll('.cta-plan-card[data-plan]').forEach(c => {
-      c.classList.toggle('is-selected', c.dataset.plan === planKey);
+      const isMatch = c.dataset.plan === planKey && (c.dataset.hosting || 'none') === hostingKey;
+      c.classList.toggle('is-selected', isMatch);
     });
   }
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const plan = btn.dataset.plan;
-      if (!labels[plan]) return; // 'hosting' card is a plain link — let it navigate
-      setPlan(plan);
+      const hosting = btn.dataset.hosting || 'none';
+      // Only handle our known package combinations. Anything else (legacy
+      // pricing-card buttons without data-hosting, or a 'hosting' card that
+      // links to /hosting.html) just navigates normally.
+      if (!labels[`${plan}:${hosting}`]) return;
+      setPackage(plan, hosting);
 
       if (btn.dataset.focus === 'form') {
         const form = document.getElementById('contactForm');

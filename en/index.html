@@ -484,11 +484,11 @@
   .team-pin{font-size:.9rem}
 
   /* CONTACT — plan picker cards (left of form) */
-  .cta-plan-cards{display:flex;flex-direction:column;gap:12px;margin-top:32px}
+  .cta-plan-cards{display:flex;flex-direction:column;gap:12px;margin-top:28px}
   .cta-plan-card{
     background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
-    border-radius:14px;padding:18px 22px;
-    display:flex;justify-content:space-between;align-items:center;gap:18px;
+    border-radius:14px;padding:18px 22px 16px;
+    display:flex;flex-direction:column;gap:8px;
     cursor:pointer;text-decoration:none;color:#fff;text-align:left;
     transition:transform .2s ease, border-color .2s ease, background .2s ease;
     font-family:inherit;font-size:inherit;width:100%;
@@ -497,12 +497,24 @@
   .cta-plan-card:hover{transform:translateY(-2px);border-color:var(--yellow);background:rgba(255,255,255,.10)}
   .cta-plan-card.is-selected{border-color:var(--yellow);background:rgba(252,209,22,.10);box-shadow:0 0 0 2px rgba(252,209,22,.25)}
   .cta-plan-card.cta-plan-card-featured{border-color:rgba(252,209,22,.4);background:rgba(252,209,22,.08)}
-  .cta-plan-card .cta-plan-info{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
-  .cta-plan-card .cta-plan-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:#fff;letter-spacing:-.01em}
-  .cta-plan-card .cta-plan-desc{color:rgba(232,217,184,.78);font-size:.84rem;line-height:1.4}
-  .cta-plan-card .cta-plan-price{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
-  .cta-plan-card .cta-plan-price b{color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;letter-spacing:-.01em}
-  .cta-plan-card .cta-plan-price small{color:rgba(232,217,184,.65);font-size:.74rem;font-weight:400}
+  .cta-plan-card .cta-plan-row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .cta-plan-card .cta-plan-info{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+  .cta-plan-card .cta-plan-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;color:#fff;letter-spacing:-.01em;line-height:1.2}
+  .cta-plan-card .cta-plan-desc{color:rgba(232,217,184,.7);font-size:.78rem;line-height:1.4;font-weight:500;letter-spacing:.02em;text-transform:uppercase}
+  .cta-plan-card .cta-plan-price{display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex-shrink:0;text-align:right}
+  .cta-plan-card .cta-plan-price b{color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;letter-spacing:-.01em;line-height:1.1}
+  .cta-plan-card .cta-plan-price small{color:rgba(232,217,184,.65);font-size:.72rem;font-weight:400;line-height:1.2}
+  .cta-plan-card .cta-plan-feats{
+    list-style:none;padding:0;margin:4px 0 0;
+    display:flex;flex-direction:column;gap:3px;
+  }
+  .cta-plan-card .cta-plan-feats li{
+    color:rgba(232,217,184,.85);font-size:.82rem;line-height:1.45;
+    padding:0 0 0 18px;position:relative;
+  }
+  .cta-plan-card .cta-plan-feats li::before{
+    content:"✓";position:absolute;left:0;top:0;color:var(--yellow);font-weight:700;font-size:.85rem;
+  }
   .cta-plan-card .cta-plan-badge{
     position:absolute;top:-9px;left:18px;
     background:var(--yellow);color:var(--ink);
@@ -544,6 +556,35 @@
   .tech-card .tech-sub{display:block;color:var(--blue);font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin:-6px 0 12px}
   .tech-card p{color:var(--muted);font-size:.9rem;line-height:1.55;margin:0}
   .tech-card b{color:var(--ink);font-weight:600}
+
+  /* FAQ ACCORDION */
+  .faq-grid{max-width:780px;margin:48px auto 0;display:flex;flex-direction:column;gap:12px}
+  .faq-item{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .faq-item:hover{border-color:var(--blue-soft)}
+  .faq-item[open]{border-color:var(--blue);box-shadow:0 8px 24px rgba(10,24,64,.06)}
+  .faq-item summary{
+    list-style:none;cursor:pointer;
+    padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:18px;
+    font-family:'Fraunces',serif;font-weight:700;font-size:1.08rem;color:var(--ink);
+    user-select:none;letter-spacing:-.005em;line-height:1.3;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::marker{content:""}
+  .faq-item .faq-toggle{
+    flex-shrink:0;width:34px;height:34px;border-radius:50%;
+    background:var(--blue-soft);color:var(--blue);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.55rem;font-weight:300;line-height:1;
+    transition:transform .25s ease, background .2s ease, color .2s ease;
+  }
+  .faq-item[open] .faq-toggle{transform:rotate(45deg);background:var(--blue);color:#fff}
+  .faq-item .faq-body{
+    padding:0 26px 22px;margin:0;color:var(--ink-soft);font-size:.95rem;line-height:1.65;
+  }
+  .faq-item .faq-body strong{color:var(--ink)}
 
   /* LANG TOGGLE */
   .lang-toggle{
@@ -1536,7 +1577,7 @@
 </details>
 <div class="price-ctas">
 <a class="btn btn-talk" href="https://portal.pymewebpro.com/go/whatsapp?campaign=plan_esencial&amp;text=Hola%2C%20me%20interesa%20el%20plan%20Esencial%20(%24390k%20oferta%20de%20lanzamiento).%20Quisiera%20hacer%20unas%20preguntas%20antes%20de%20avanzar." rel="noopener noreferrer" target="_blank">Chat on WhatsApp <small>· reply in minutes</small></a>
-<a class="btn btn-reserve" data-plan="esencial" href="#contacto">Reserve my spot →</a>
+<a class="btn btn-reserve" data-plan="esencial" data-hosting="none" href="#contacto">Reserve my spot →</a>
 </div>
 </article>
 <article class="price-card featured reveal">
@@ -1573,7 +1614,7 @@
 </details>
 <div class="price-ctas">
 <a class="btn btn-talk" href="https://portal.pymewebpro.com/go/whatsapp?campaign=plan_crecimiento&amp;text=Hola%2C%20me%20interesa%20el%20plan%20Crecimiento%20(%24690k%20oferta%20de%20lanzamiento).%20Quisiera%20hacer%20unas%20preguntas%20antes%20de%20avanzar." rel="noopener noreferrer" target="_blank">Chat on WhatsApp <small>· reply in minutes</small></a>
-<a class="btn btn-reserve btn-reserve-featured" data-plan="crecimiento" href="#contacto">Reserve my spot →</a>
+<a class="btn btn-reserve btn-reserve-featured" data-plan="crecimiento" data-hosting="annual" href="#contacto">Reserve my spot →</a>
 </div>
 </article>
 <article class="price-card price-card-support reveal">
@@ -1652,25 +1693,28 @@
 <span class="eyebrow">Frequently asked questions</span>
 <h2 style="margin-top:18px">What business owners<br/>ask us.</h2>
 </div>
-<div class="net-grid">
-<article class="net-card reveal" style="padding:30px">
-<div class="net-body" style="padding:0">
-<div class="audience">How much does it cost and can I pay in installments?</div>
-<p><strong>Launch offer.</strong> One-time payment: $390,000 COP (Essential) or $690,000 COP (Growth, includes one year of hosting). Split it into 3, 6, or more installments on your credit card; we start the day you pay.</p>
-</div>
-</article>
-<article class="net-card reveal" style="padding:30px">
-<div class="net-body" style="padding:0">
-<div class="audience">How long until my site is live?</div>
-<p>48 hours for both plans, counted from when we receive your asset pack (logo, photos, copy). If we run late on our side, we refund 100%.</p>
-</div>
-</article>
-<article class="net-card reveal" style="padding:30px">
-<div class="net-body" style="padding:0">
-<div class="audience">Who owns the site when it's done?</div>
-<p>Yours. The domain stays in your name, not ours. The code, photos, and copy are yours once paid. If you want to leave later, we hand everything over.</p>
-</div>
-</article>
+<div class="faq-grid">
+<details class="faq-item reveal">
+<summary>
+<span>How much does it cost and can I pay in installments?</span>
+<span class="faq-toggle" aria-hidden="true">+</span>
+</summary>
+<p class="faq-body"><strong>Launch offer.</strong> One-time payment from $390,000 COP (Essential) up to $690,000 COP (Growth, includes one year of hosting). Split it into 3, 6, or more installments on your credit card; we start the day you pay.</p>
+</details>
+<details class="faq-item reveal">
+<summary>
+<span>How long until my site is live?</span>
+<span class="faq-toggle" aria-hidden="true">+</span>
+</summary>
+<p class="faq-body">48 hours for both plans, counted from when we receive your asset pack (logo, photos, copy). If we run late on our side, we refund 100%.</p>
+</details>
+<details class="faq-item reveal">
+<summary>
+<span>Who owns the site when it's done?</span>
+<span class="faq-toggle" aria-hidden="true">+</span>
+</summary>
+<p class="faq-body">Yours. The domain stays in your name, not ours. The code, photos, and copy are yours once paid. If you want to leave later, we hand everything over.</p>
+</details>
 </div>
 </div>
 </section>
@@ -1685,39 +1729,82 @@
 <p class="cta-sub">Pick a plan, fill in 3 details, go to payment. Under 30 seconds.</p>
 
 <div class="cta-plan-cards">
-<button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-focus="form">
+<!-- a) Essential, no hosting -->
+<button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-hosting="none" data-focus="form">
+<div class="cta-plan-row">
 <div class="cta-plan-info">
 <div class="cta-plan-name">Essential</div>
-<div class="cta-plan-desc">Professional site · 5 pages · one-time payment</div>
+<div class="cta-plan-desc">No hosting</div>
 </div>
 <div class="cta-plan-price">
 <b>$390,000</b>
 <small>COP one-time</small>
 </div>
+</div>
+<ul class="cta-plan-feats">
+<li>Professional 5-page site, live in 48 hours</li>
+<li>Design + content + domain + email forwarding</li>
+<li>Yours on GitHub at the end, no strings attached</li>
+</ul>
 </button>
 
-<button type="button" class="cta-plan-card cta-plan-card-featured btn-reserve" data-plan="crecimiento" data-focus="form">
+<!-- b) Essential + Monthly hosting -->
+<button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-hosting="monthly" data-focus="form">
+<div class="cta-plan-row">
+<div class="cta-plan-info">
+<div class="cta-plan-name">Essential + Monthly hosting</div>
+<div class="cta-plan-desc">One-time + subscription</div>
+</div>
+<div class="cta-plan-price">
+<b>$390,000</b>
+<small>+ $30,000/mo</small>
+</div>
+</div>
+<ul class="cta-plan-feats">
+<li>Everything in Essential</li>
+<li>Cloudflare hosting with SSL, backups, and monitoring</li>
+<li>Small monthly updates · cancel anytime</li>
+</ul>
+</button>
+
+<!-- c) Essential + Annual hosting -->
+<button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-hosting="annual" data-focus="form">
+<div class="cta-plan-row">
+<div class="cta-plan-info">
+<div class="cta-plan-name">Essential + Annual hosting</div>
+<div class="cta-plan-desc">Best value · save $90k</div>
+</div>
+<div class="cta-plan-price">
+<b>$660,000</b>
+<small>COP one-time</small>
+</div>
+</div>
+<ul class="cta-plan-feats">
+<li>Everything in Essential + 1 full year of hosting</li>
+<li>Works out to $55,000/mo (3 months free vs monthly)</li>
+<li>Priority WhatsApp support included</li>
+</ul>
+</button>
+
+<!-- d) Growth -->
+<button type="button" class="cta-plan-card cta-plan-card-featured btn-reserve" data-plan="crecimiento" data-hosting="annual" data-focus="form">
 <span class="cta-plan-badge">★ Most complete</span>
+<div class="cta-plan-row">
 <div class="cta-plan-info">
 <div class="cta-plan-name">Growth</div>
-<div class="cta-plan-desc">11+ pages · bilingual · 1 year hosting included</div>
+<div class="cta-plan-desc">Full site + 1 year hosting</div>
 </div>
 <div class="cta-plan-price">
 <b>$690,000</b>
 <small>COP one-time</small>
 </div>
+</div>
+<ul class="cta-plan-feats">
+<li>11+ pages · bilingual EN/ES · blog and bookings</li>
+<li>Google Business Profile + AI logo + Meta Pixel</li>
+<li>1 year hosting included + 5 revision rounds</li>
+</ul>
 </button>
-
-<a class="cta-plan-card" href="/hosting.html">
-<div class="cta-plan-info">
-<div class="cta-plan-name">Hosting Plan</div>
-<div class="cta-plan-desc">Hosting + support · cancel anytime</div>
-</div>
-<div class="cta-plan-price">
-<b>$30,000</b>
-<small>COP/mo</small>
-</div>
-</a>
 </div>
 
 <p class="cta-wa-fallback">
@@ -1746,10 +1833,11 @@ Questions before you pay?
 </div>
 
 <div class="form-plan-summary is-empty" id="planSummary">
-<span><b>Plan:</b> <span id="planSummaryName">pick a plan on the left</span></span>
+<span><b>Plan:</b> <span id="planSummaryName">pick a package on the left</span></span>
 <button type="button" class="change-plan" id="changePlan" style="display:none">change</button>
 </div>
 <input type="hidden" name="plan" id="planHidden" value=""/>
+<input type="hidden" name="hosting" id="hostingHidden" value=""/>
 
 <button class="btn btn-primary" data-pay-label="Continue to payment →" data-talk-label="Send, contact me today →" id="contactSubmit" type="submit" disabled>Pick a plan first</button>
 <p class="form-foot">Your data isn't shared with anyone. No commitment.<br/><strong>30-day guarantee</strong> · if you don't love your site, we refund you.</p>
@@ -1797,7 +1885,7 @@ Questions before you pay?
 </address>
 <div class="foot-bottom">
 <span>© 2026 PymeWebPro.com · Designed and built for the Colombian business.</span>
-<span>Made with ❤ in Colombia</span>
+<span>Made with <span style="color:#ce1126">❤</span> in Colombia</span>
 </div>
 </div>
 </footer>
