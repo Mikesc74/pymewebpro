@@ -2449,11 +2449,379 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       );
     }
 
+    // ─── Wizard step config ────────────────────────────────────────────
+    // Single source of truth for the step-by-step intake flow.
+    // Each step: key + section + group + question/help/placeholder per locale + input type.
+    // proOnly steps are filtered out for Esencial customers.
+    const WIZARD_STEPS = [
+      // Datos básicos
+      { key:'bizName', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'text',
+        q:{es:'¿Cómo se llama su negocio?',en:'What is your business name?'},
+        h:{es:'Aparecerá en el título de la página, el footer y en su logo si no nos sube uno.',en:'Appears in the page title, footer, and logo if you do not upload one.'},
+        p:{es:'Panadería La Esquina',en:'La Esquina Bakery'} },
+      { key:'nit', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'text',
+        q:{es:'¿Cuál es su NIT o cédula?',en:'What is your tax ID (NIT or cédula)?'},
+        h:{es:'Lo necesitamos para la política de privacidad y los términos de su sitio (Ley 1581 de 2012).',en:'Required for the privacy policy and terms (Colombian Law 1581 of 2012).'},
+        p:{es:'900.123.456-7',en:'900.123.456-7'} },
+      { key:'legalRepresentative', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'text',
+        q:{es:'¿Nombre del representante legal?',en:'Legal representative name?'},
+        h:{es:'Opcional. Aparece en la política de privacidad como contacto formal.',en:'Optional. Listed in the privacy policy as the formal contact.'},
+        p:{es:'',en:''} },
+      { key:'tagline', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'text',
+        q:{es:'En una frase, ¿qué hace su negocio?',en:'In one sentence, what does your business do?'},
+        h:{es:'Esta frase aparece en grande debajo del nombre. La pulimos antes de mostrarle el mockup.',en:'Appears prominently under the business name. We polish it before the mockup.'},
+        p:{es:'Pan caliente desde 1995. Producción artesanal, atención cercana.',en:'Fresh bread since 1995. Artisan-made, friendly service.'} },
+      { key:'whatYouDo', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'textarea',
+        q:{es:'Cuéntenos un poco más: ¿qué vende u ofrece, qué lo hace diferente, quién ya le compra?',en:'Tell us more: what do you sell, what makes you different, who already buys from you?'},
+        h:{es:'En sus propias palabras. Nosotros lo convertimos en texto profesional.',en:'In your own words. We turn it into polished site copy.'},
+        p:{es:'',en:''} },
+      { key:'audience', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'textarea',
+        q:{es:'¿Quién es su cliente ideal?',en:'Who is your ideal customer?'},
+        h:{es:'Familias del barrio, profesionales 30-50 años, otras pymes... lo que aplique.',en:'Local families, professionals 30-50, other small businesses... whatever fits.'},
+        p:{es:'',en:''} },
+
+      // Contacto
+      { key:'phone', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'tel',
+        q:{es:'¿Su teléfono público?',en:'Public phone number?'},
+        h:{es:'Aparece en el botón Llamar y en el footer.',en:'Shown in the Call button and footer.'},
+        p:{es:'+57 300 123 4567',en:'+57 300 123 4567'} },
+      { key:'whatsapp', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'tel',
+        q:{es:'¿Su WhatsApp Business?',en:'WhatsApp Business number?'},
+        h:{es:'Si es el mismo del teléfono, déjelo en blanco — usaremos el de arriba.',en:'If same as your phone, leave blank — we will reuse it.'},
+        p:{es:'+57 300 123 4567',en:'+57 300 123 4567'} },
+      { key:'email', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'email',
+        q:{es:'¿Email público para clientes?',en:'Public email for customers?'},
+        h:{es:'No tiene que ser su correo personal. Le configuramos info@sunegocio.com si quiere.',en:'Does not have to be your personal email. We set up info@yourbusiness.com if you like.'},
+        p:{es:'info@sunegocio.com',en:'info@yourbusiness.com'} },
+      { key:'address', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'text',
+        q:{es:'¿Dirección física?',en:'Physical address?'},
+        h:{es:'Si atiende en una ubicación. Si no, sáltela.',en:'If you have a physical location. Otherwise skip.'},
+        p:{es:'Calle 50 # 23-45, Medellín',en:'Calle 50 # 23-45, Medellín'} },
+      { key:'instagram', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'text',
+        q:{es:'¿Instagram?',en:'Instagram?'},
+        h:{es:'URL completo o @handle.',en:'Full URL or @handle.'},
+        p:{es:'@sunegocio',en:'@yourbusiness'} },
+      { key:'fb', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'text',
+        q:{es:'¿Facebook?',en:'Facebook?'},
+        h:{es:'',en:''},
+        p:{es:'facebook.com/sunegocio',en:'facebook.com/yourbusiness'} },
+
+      // Marca
+      { key:'__logoUpload', section:'brand', group:{es:'Su marca',en:'Your brand'}, type:'file', category:'logo',
+        q:{es:'Suba su logo',en:'Upload your logo'},
+        h:{es:'PNG con fondo transparente es lo ideal. Si no tiene logo, sáltelo — usaremos su nombre en una tipografía bonita.',en:'PNG with transparent background is ideal. No logo? Skip — we will use your business name in a nice font.'},
+        accept:'image/*,.ai,.eps' },
+      { key:'colors', section:'brand', group:{es:'Su marca',en:'Your brand'}, type:'text',
+        q:{es:'¿Sus colores de marca?',en:'Your brand colors?'},
+        h:{es:'Hex (#003893) o solo descríbalos: "azul marino + amarillo Colombia", "tonos cálidos terrosos".',en:'Hex codes (#003893) or just describe: "navy blue + Colombian yellow", "warm earthy tones".'},
+        p:{es:'#003893, #fcd116',en:'#003893, #fcd116'} },
+      { key:'fonts', section:'brand', group:{es:'Su marca',en:'Your brand'}, type:'text',
+        q:{es:'¿Tipografía preferida?',en:'Font preference?'},
+        h:{es:'Si tiene una en mente. Si no, elegimos una que combine.',en:'If you have one in mind. Otherwise we pick one that fits.'},
+        p:{es:'Inter, Montserrat, Lato...',en:'Inter, Montserrat, Lato...'} },
+
+      // Visual
+      { key:'__photosUpload', section:'visual', group:{es:'Imágenes',en:'Imagery'}, type:'file', category:'photo', multi:true,
+        q:{es:'Suba 3 a 8 fotos auténticas',en:'Upload 3 to 8 authentic photos'},
+        h:{es:'Fotos reales del negocio venden mucho mejor que stock. Si no tiene, le sugerimos opciones libres de derechos.',en:'Real photos sell far better than stock. If you have none, we suggest royalty-free options.'},
+        accept:'image/*,video/*' },
+      { key:'photoAlts', section:'visual', group:{es:'Imágenes',en:'Imagery'}, type:'textarea',
+        q:{es:'Describa cada foto, una por línea',en:'Describe each photo, one per line'},
+        h:{es:'Para accesibilidad y SEO. En el orden en que las subió.',en:'For accessibility and SEO. In upload order.'},
+        p:{es:'Fachada de la panadería\\nEl equipo en la mañana\\nProductos del día',en:'Front of the bakery\\nThe team in the morning\\nToday products'} },
+      { key:'refSites', section:'visual', group:{es:'Imágenes',en:'Imagery'}, type:'textarea',
+        q:{es:'¿Sitios web que le gustan?',en:'Websites you like?'},
+        h:{es:'Pegue 1 a 3 URLs. Nos ayuda a entender su gusto visual.',en:'Paste 1 to 3 URLs. Helps us understand your visual taste.'},
+        p:{es:'https://...',en:'https://...'} },
+
+      // Contenido
+      { key:'tone', section:'content', group:{es:'Voz y contenido',en:'Voice and content'}, type:'text',
+        q:{es:'¿Tono de marca?',en:'Brand tone?'},
+        h:{es:'Cercano · profesional · juvenil · cálido · directo · sobrio. Elija lo que aplica.',en:'Friendly · professional · youthful · warm · direct · sober. Pick what fits.'},
+        p:{es:'cercano y profesional',en:'friendly and professional'} },
+      { key:'topics', section:'content', group:{es:'Voz y contenido',en:'Voice and content'}, type:'textarea',
+        q:{es:'¿Temas o mensajes clave?',en:'Key topics or messages?'},
+        h:{es:'Tradición familiar, entrega rápida, sostenibilidad, especialistas en B2B...',en:'Family heritage, fast turnaround, sustainability, B2B specialists...'},
+        p:{es:'',en:''} },
+      { key:'pages', section:'content', group:{es:'Voz y contenido',en:'Voice and content'}, type:'textarea',
+        q:{es:'¿Qué secciones quiere en su sitio?',en:'Which sections do you want?'},
+        h:{es:'Por defecto: inicio, servicios, sobre nosotros, contacto, ubicación. Mencione si quiere cambios.',en:'Default: home, services, about, contact, location. Tell us if you want changes.'},
+        p:{es:'',en:''} },
+
+      // Técnico
+      { key:'domain', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
+        q:{es:'¿Tiene un dominio (.com) ya?',en:'Do you already have a domain?'},
+        h:{es:'Si lo registró, escríbalo. Si no, sáltelo — le ayudamos a comprarlo y configurarlo.',en:'If registered, type it. Otherwise skip — we help you buy and set it up.'},
+        p:{es:'minegocio.com',en:'mybusiness.com'} },
+      { key:'hosting', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
+        q:{es:'¿Tiene hosting actualmente?',en:'Do you currently have hosting?'},
+        h:{es:'Si paga hospedaje en algún lado, díganoslo. Si no, sáltelo.',en:'If you pay for hosting somewhere, tell us. Otherwise skip.'},
+        p:{es:'',en:''} },
+      { key:'bizEmail', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
+        q:{es:'¿Cómo quiere su correo profesional?',en:'How do you want your professional email?'},
+        h:{es:'Ejemplo: info@sunegocio.com. Si tiene preferencias distintas, descríbalas.',en:'Example: info@yourbusiness.com. If you have other preferences, describe.'},
+        p:{es:'info@sunegocio.com',en:'info@yourbusiness.com'} },
+
+      // Crecimiento (proOnly)
+      { key:'bilingual', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'yesno', proOnly:true,
+        q:{es:'¿Quiere también una versión en inglés?',en:'Do you want an English version too?'},
+        h:{es:'Generamos /es y /en automáticamente, traducidas profesionalmente.',en:'We auto-generate /es and /en, professionally translated.'} },
+      { key:'bookingsUrl', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
+        q:{es:'¿Tiene un sistema de reservas?',en:'Do you have a booking system?'},
+        h:{es:'Pegue su URL de Calendly, Cal.com o similar. Lo embebemos en su sitio.',en:'Paste your Calendly, Cal.com or similar URL. We embed it.'},
+        p:{es:'https://calendly.com/...',en:'https://calendly.com/...'} },
+      { key:'__pdfUpload', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'file', category:'pdf', proOnly:true,
+        q:{es:'¿Tiene un menú o catálogo en PDF?',en:'Do you have a menu or catalog PDF?'},
+        h:{es:'Lo añadimos como botón de descarga en su sitio.',en:'We add it as a download button.'},
+        accept:'application/pdf' },
+      { key:'pdfLabel', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
+        q:{es:'¿Cómo se llama el PDF?',en:'What is the PDF called?'},
+        h:{es:'Ejemplo: Menú · Catálogo 2026 · Ficha técnica.',en:'Example: Menu · 2026 Catalog · Spec sheet.'},
+        p:{es:'Menú',en:'Menu'} },
+      { key:'waCatalogUrl', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
+        q:{es:'¿Catálogo de WhatsApp Business?',en:'WhatsApp Business catalog?'},
+        h:{es:'Si tiene catálogo en WA Business, pegue el link.',en:'If you have a WA Business catalog, paste the link.'},
+        p:{es:'https://wa.me/c/...',en:'https://wa.me/c/...'} },
+      { key:'newsletterEnabled', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'yesno', proOnly:true,
+        q:{es:'¿Quiere un formulario de newsletter?',en:'Do you want a newsletter signup form?'},
+        h:{es:'Los suscriptores se guardan; le notificamos cada nuevo registro.',en:'Subscribers are saved; we notify you on each signup.'} },
+      { key:'ga4Id', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
+        q:{es:'¿ID de Google Analytics 4?',en:'Google Analytics 4 ID?'},
+        h:{es:'Formato G-XXXXXXXXXX. Sáltelo si no tiene cuenta — se la creamos.',en:'Format G-XXXXXXXXXX. Skip if you do not have one — we set it up.'},
+        p:{es:'G-XXXXXXXXXX',en:'G-XXXXXXXXXX'} },
+      { key:'metaPixelId', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
+        q:{es:'¿ID del Meta Pixel?',en:'Meta Pixel ID?'},
+        h:{es:'15-16 dígitos. Solo si corre ads en Facebook o Instagram.',en:'15-16 digits. Only if you run Facebook or Instagram ads.'},
+        p:{es:'1234567890123456',en:'1234567890123456'} },
+      { key:'testimonials', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'textarea', proOnly:true,
+        q:{es:'¿Tiene testimonios reales?',en:'Do you have real testimonials?'},
+        h:{es:'Uno por línea, formato: Nombre | Cita | Rol. Solo testimonios reales con permiso.',en:'One per line: Name | Quote | Role. Only real testimonials with permission.'},
+        p:{es:'María Pérez | Excelente servicio | Cliente desde 2022',en:'María Pérez | Excellent service | Customer since 2022'} },
+      { key:'faqs', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'textarea', proOnly:true,
+        q:{es:'¿Preguntas frecuentes que recibe?',en:'Frequently asked questions you receive?'},
+        h:{es:'Una por línea, formato: ¿Pregunta? | Respuesta.',en:'One per line: Question? | Answer.'},
+        p:{es:'¿Hacen domicilios? | Sí, en toda Medellín.',en:'Do you deliver? | Yes, anywhere in Medellín.'} },
+    ];
+
     function Portal({ t, lang, setLang, client, email, data, setData, files, setFiles, section, setSection, onLogout, onSubmit, submitting }) {
       const isPro = client && (client.plan === 'pro' || client.plan === 'crecimiento' || client.plan === 'growth');
-      const sectionKeys = isPro
-        ? ['business','contact','brand','visual','content','tech','growth']
-        : ['business','contact','brand','visual','content','tech'];
+      const allSteps = WIZARD_STEPS.filter(s => !s.proOnly || isPro);
+      const total = allSteps.length;
+      const loc = (o) => (o && (o[lang] || o.es || '')) || '';
+
+      const initialView = (() => {
+        const filledFields = Object.keys(data || {}).some(k => data[k] && String(data[k]).trim());
+        return (filledFields || (files && files.length > 0)) ? 'step' : 'welcome';
+      })();
+      const [view, setView] = useState(initialView);
+      const [step, setStep] = useState(0);
+      const [saving, setSaving] = useState(false);
+
+      const cur = allSteps[step] || null;
+      const progress = total > 0 ? Math.round(((step) / total) * 100) : 0;
+
+      async function persistSection(sec) {
+        const fields = WIZARD_STEPS.filter(s => s.section === sec && !s.key.startsWith('__')).map(s => s.key);
+        const payload = {};
+        fields.forEach(f => payload[f] = data[f] || '');
+        try { await api('/api/client/intake/' + sec, { method: 'PUT', body: JSON.stringify(payload) }); } catch (_) {}
+      }
+      async function next() {
+        if (!cur) return;
+        if (!cur.key.startsWith('__')) { setSaving(true); await persistSection(cur.section); setSaving(false); }
+        if (step + 1 >= total) setView('review');
+        else setStep(step + 1);
+      }
+      function back() { if (step > 0) setStep(step - 1); else setView('welcome'); }
+      function jumpTo(i) { setStep(i); setView('step'); }
+
+      async function handleFileUpload(file, category) {
+        if (!file) return;
+        const tempId = 'temp-' + Date.now();
+        setFiles(p => [{ id: tempId, filename: file.name, category, uploading: true, size_bytes: file.size }, ...p]);
+        try {
+          const res = await fetch('/api/files/upload?category=' + category + '&filename=' + encodeURIComponent(file.name), {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem(SESSION_KEY), 'Content-Type': file.type || 'application/octet-stream' },
+            body: file
+          });
+          const j = await res.json();
+          if (!res.ok) throw new Error(j.error);
+          setFiles(p => p.map(f => f.id === tempId ? { ...j.file, uploaded_at: Date.now() } : f));
+        } catch (e) {
+          setFiles(p => p.filter(f => f.id !== tempId));
+          alert('Upload failed: ' + e.message);
+        }
+      }
+      async function handleFileDelete(fileId) {
+        setFiles(p => p.filter(f => f.id !== fileId));
+        try { await api('/api/files/' + fileId, { method: 'DELETE' }); } catch {}
+      }
+
+      // ─── Welcome view ─────────────────────────────────────────────────
+      if (view === 'welcome') {
+        return (
+          <div style={pageStyle}>
+            <Orbs/>
+            <button onClick={()=>setLang(lang==='en'?'es':'en')} style={{position:'absolute',top:'2rem',right:'2rem',...langBtn,zIndex:10}}>{lang==='en'?'ES':'EN'}</button>
+            <div style={{maxWidth:'560px',width:'100%',position:'relative',zIndex:1}}>
+              <div style={{textAlign:'center',marginBottom:'2.5rem'}}>
+                <Sparkle size={48} color="#fbbf24"/>
+              </div>
+              <h1 className="serif" style={{...titleStyle,fontSize:'3rem',textAlign:'center',marginBottom:'1.5rem'}}>{lang==='es'?'¡Bienvenido!':'Welcome!'}</h1>
+              <p style={{color:'rgba(255,255,255,0.75)',fontSize:'1.05rem',lineHeight:1.65,textAlign:'center',marginBottom:'1rem'}}>
+                {lang==='es'
+                  ? 'Vamos a poner su sitio en línea. Esto le toma unos 15 minutos.'
+                  : 'Let us get your site online. About 15 minutes.'}
+              </p>
+              <p style={{color:'rgba(255,255,255,0.55)',fontSize:'.95rem',lineHeight:1.65,textAlign:'center',marginBottom:'2.5rem'}}>
+                {lang==='es'
+                  ? 'Cada pregunta es opcional — si no sabe la respuesta, salte y nosotros lo manejamos. Sus respuestas se guardan a medida que escribe.'
+                  : 'Every question is optional — if you do not know, skip and we handle it. Your answers save as you type.'}
+              </p>
+              <div style={{textAlign:'center'}}>
+                <button onClick={()=>setView('step')} style={{...primaryBtn,fontSize:'1rem',padding:'1rem 2.25rem'}}>
+                  {lang==='es'?'Empezar':'Let us start'} <ChevR size={16}/>
+                </button>
+              </div>
+              <p style={{textAlign:'center',marginTop:'2rem',fontSize:'.8rem',color:'rgba(255,255,255,0.35)'}}>
+                {client && client.plan ? ('Plan: ' + ((client.plan==='pro'||client.plan==='crecimiento')?'Crecimiento':'Esencial')) : ''}
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      // ─── Review view ─────────────────────────────────────────────────
+      if (view === 'review') {
+        // Group steps by section for rendering
+        const groups = {};
+        allSteps.forEach((s, idx) => {
+          const g = s.section;
+          if (!groups[g]) groups[g] = { label: loc(s.group), items: [] };
+          groups[g].items.push({ ...s, idx });
+        });
+        return (
+          <div style={{minHeight:'100vh',background:'#0a0e27',color:'#fff'}}>
+            <header style={headerStyle}>
+              <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
+                <Sparkle size={18} color="#fbbf24"/>
+                <span className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>Pyme<span style={{color:'#fbbf24'}}>WebPro</span></span>
+              </div>
+              <div style={{display:'flex',alignItems:'center',gap:'1rem'}}>
+                <button onClick={()=>setLang(lang==='en'?'es':'en')} style={langBtn}>{lang==='en'?'ES':'EN'}</button>
+                <span style={{color:'rgba(255,255,255,0.5)',fontSize:'.85rem'}}>{email}</span>
+                <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
+              </div>
+            </header>
+            <main style={{padding:'3rem 2rem',maxWidth:'780px',margin:'0 auto'}}>
+              <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:'0 0 1rem'}}>{lang==='es'?'Revisión final':'Final review'}</h1>
+              <p style={{color:'rgba(255,255,255,0.65)',marginBottom:'2.5rem',lineHeight:1.6}}>
+                {lang==='es'
+                  ? 'Repase sus respuestas. Puede editar cualquier campo antes de enviar.'
+                  : 'Review your answers. You can edit any field before submitting.'}
+              </p>
+              {Object.entries(groups).map(([gKey, g]) => (
+                <div key={gKey} style={{marginBottom:'2rem'}}>
+                  <div style={{fontSize:'.7rem',letterSpacing:'.2em',color:'#fbbf24',textTransform:'uppercase',marginBottom:'.75rem'}}>{g.label}</div>
+                  {g.items.map(s => {
+                    let answer;
+                    if (s.key === '__logoUpload') answer = files.filter(f => f.category === 'logo').map(f => f.filename).join(', ');
+                    else if (s.key === '__photosUpload') { const ph = files.filter(f => f.category === 'photo'); answer = ph.length ? ph.length + ' ' + (lang==='es'?'fotos':'photos') : ''; }
+                    else if (s.key === '__pdfUpload') answer = files.filter(f => f.category === 'pdf').map(f => f.filename).join(', ');
+                    else if (s.type === 'yesno') answer = data[s.key] === '1' ? (lang==='es'?'Sí':'Yes') : (data[s.key] === '0' ? 'No' : '');
+                    else answer = data[s.key] || '';
+                    const isSet = answer && String(answer).trim();
+                    return (
+                      <div key={s.key} onClick={()=>jumpTo(s.idx)} style={{padding:'.85rem 1rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',marginBottom:'.4rem',cursor:'pointer',display:'flex',justifyContent:'space-between',alignItems:'center',gap:'.75rem'}}>
+                        <div style={{flex:1,minWidth:0}}>
+                          <div style={{fontSize:'.78rem',color:'rgba(255,255,255,0.5)',marginBottom:'.2rem'}}>{loc(s.q)}</div>
+                          <div style={{color:isSet?'rgba(255,255,255,0.9)':'rgba(255,255,255,0.35)',fontStyle:isSet?'normal':'italic',whiteSpace:'pre-wrap',wordBreak:'break-word',fontSize:'.92rem'}}>
+                            {isSet ? String(answer) : (lang==='es'?'(saltado)':'(skipped)')}
+                          </div>
+                        </div>
+                        <span style={{color:'#fbbf24',fontSize:'.78rem',whiteSpace:'nowrap'}}>{lang==='es'?'Editar':'Edit'} →</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+              <div style={{display:'flex',gap:'.75rem',marginTop:'2rem',paddingTop:'1.5rem',borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+                <button onClick={()=>{ setStep(0); setView('step'); }} style={{...secondaryBtn,flex:1}}>
+                  <ChevL size={16}/> {lang==='es'?'Volver al inicio':'Back to start'}
+                </button>
+                <button onClick={onSubmit} disabled={submitting} style={{...primaryBtn,flex:2}}>
+                  {submitting?<><Loader size={16} className="spin"/>{t.submitting}</>:(lang==='es'?'Enviar — empezamos su sitio':'Submit — let us build your site')}
+                </button>
+              </div>
+            </main>
+          </div>
+        );
+      }
+
+      // ─── Step view ────────────────────────────────────────────────────
+      if (!cur) { setView('review'); return null; }
+      const skipLabel = lang==='es' ? 'Saltar' : 'Skip';
+      const continueLabel = lang==='es' ? 'Continuar' : 'Continue';
+      const backLabel = lang==='es' ? 'Atrás' : 'Back';
+
+      return (
+        <div style={{minHeight:'100vh',background:'#0a0e27',color:'#fff',display:'flex',flexDirection:'column'}}>
+          <header style={headerStyle}>
+            <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
+              <Sparkle size={18} color="#fbbf24"/>
+              <span className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>Pyme<span style={{color:'#fbbf24'}}>WebPro</span></span>
+            </div>
+            <div style={{display:'flex',alignItems:'center',gap:'1rem'}}>
+              {saving && <span style={{color:'rgba(255,255,255,0.4)',fontSize:'.78rem'}}><Loader size={12} className="spin"/> {t.saving}</span>}
+              <button onClick={()=>setLang(lang==='en'?'es':'en')} style={langBtn}>{lang==='en'?'ES':'EN'}</button>
+              <span style={{color:'rgba(255,255,255,0.5)',fontSize:'.85rem'}}>{email}</span>
+              <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
+            </div>
+          </header>
+          <div style={{height:'4px',background:'rgba(255,255,255,0.06)',position:'relative'}}>
+            <div style={{position:'absolute',inset:0,width:progress+'%',background:'linear-gradient(90deg,#fbbf24,#f59e0b)',transition:'width .4s'}}/>
+          </div>
+          <main style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',padding:'2rem',position:'relative'}}>
+            <Orbs/>
+            <div style={{maxWidth:'620px',width:'100%',position:'relative',zIndex:1}}>
+              <div style={{display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'.75rem'}}>
+                <span style={{fontSize:'.7rem',letterSpacing:'.2em',textTransform:'uppercase',color:'#fbbf24',fontWeight:600}}>{loc(cur.group)}</span>
+                <span style={{color:'rgba(255,255,255,0.3)'}}>·</span>
+                <span style={{fontSize:'.78rem',color:'rgba(255,255,255,0.5)'}}>{step+1} {lang==='es'?'de':'of'} {total}</span>
+              </div>
+              <h1 className="serif" style={{fontSize:'1.85rem',fontWeight:400,fontStyle:'italic',margin:'0 0 .85rem',lineHeight:1.25}}>{loc(cur.q)}</h1>
+              {loc(cur.h) && <p style={{color:'rgba(255,255,255,0.6)',fontSize:'.95rem',lineHeight:1.6,margin:'0 0 2rem'}}>{loc(cur.h)}</p>}
+              <div style={{marginBottom:'2rem'}}>
+                {cur.type === 'text' || cur.type === 'tel' || cur.type === 'email' ? (
+                  <input type={cur.type} value={data[cur.key]||''} onChange={e=>setData(p=>({...p,[cur.key]:e.target.value}))} placeholder={loc(cur.p)} style={{...inputStyle,fontSize:'1rem',padding:'1rem 1.1rem'}} autoFocus/>
+                ) : cur.type === 'textarea' ? (
+                  <textarea value={data[cur.key]||''} onChange={e=>setData(p=>({...p,[cur.key]:e.target.value}))} placeholder={loc(cur.p)} rows={4} style={{...inputStyle,resize:'vertical',fontSize:'1rem',padding:'1rem 1.1rem'}} autoFocus/>
+                ) : cur.type === 'yesno' ? (
+                  <div style={{display:'flex',gap:'.75rem'}}>
+                    {[['1', lang==='es'?'Sí':'Yes'], ['0', 'No']].map(([v,lbl]) => {
+                      const active = data[cur.key] === v;
+                      return <button key={v} onClick={()=>setData(p=>({...p,[cur.key]:v}))} style={{flex:1,padding:'1.1rem',background:active?'rgba(251,191,36,0.15)':'rgba(255,255,255,0.03)',border:'1px solid '+(active?'#fbbf24':'rgba(255,255,255,0.1)'),color:active?'#fbbf24':'rgba(255,255,255,0.85)',borderRadius:'4px',cursor:'pointer',fontFamily:'inherit',fontSize:'1.1rem',fontWeight:500}}>{lbl}</button>;
+                    })}
+                  </div>
+                ) : cur.type === 'file' ? (
+                  <FileDrop label="" dragText={t.dragDrop} category={cur.category} files={files.filter(f=>f.category===cur.category)} onUpload={handleFileUpload} onDelete={handleFileDelete} accept={cur.accept} multi={!!cur.multi}/>
+                ) : null}
+              </div>
+              <div style={{display:'flex',gap:'.75rem',justifyContent:'space-between',alignItems:'center'}}>
+                <button onClick={back} style={{...secondaryBtn,padding:'.7rem 1rem'}}><ChevL size={14}/> {backLabel}</button>
+                <div style={{display:'flex',gap:'.5rem'}}>
+                  <button onClick={next} style={{...ghostBtn,fontSize:'.8rem',padding:'.7rem 1rem'}}>{skipLabel} →</button>
+                  <button onClick={next} style={{...primaryBtn,padding:'.85rem 1.5rem'}}>{continueLabel} <ChevR size={14}/></button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+    function _UNUSED_SECTION_KEYS() {
+      const sectionKeys = ['business','contact','brand','visual','content','tech'];
       const sectionIcons = isPro
         ? [Brief,Phone,Palette,Img,FT,Settings,Sparkle]
         : [Brief,Phone,Palette,Img,FT,Settings];
