@@ -9,6 +9,8 @@
 // 24-hour $100k discount DISABLED — the launch-offer pricing IS the discount.
 // Setting WINDOW=0 means `now < deadline` is always false → discount_active = false
 // → countdown banner and discount row are conditionally hidden in confirmationHtml.
+// IMPORTANT: confirmationHtml's else-branch for the expired-banner must also be
+// emptied — otherwise users see "La oferta de descuento expiró..." every time.
 
 import { sha256, uuid, randomToken, json } from "./utils.js";
 import { sendEmail, logEvent } from "./utils.js";
@@ -280,4 +282,14 @@ function notFoundHtml() {
 }
 
 // confirmationHtml() and statusPage() — see deployed bundle (lines 2398-2613).
+//
+// LIVE EDITS APPLIED IN CF DASHBOARD (keep in sync if you ever rebuild source):
+//   1. Empty the else-branch of the discount banner so the "expired"
+//      message doesn't show:
+//        ${quote.discount_active ? `<countdown banner>` : ``}
+//   2. Update the "Lo que recibe" / "What you get" bullets:
+//        ES: "Listo en 48 horas" (was "Listo en 2-3 semanas")
+//            "Soporte por WhatsApp" (was "Soporte por WhatsApp y correo")
+//        EN: "Ready in 48 hours" (was "Ready in 2-3 weeks")
+//            "WhatsApp support" (was "WhatsApp & email support")
 // Omitted here for brevity; reconstruct from bundle if a full source rebuild is needed.
