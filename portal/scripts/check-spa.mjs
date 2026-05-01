@@ -30,19 +30,37 @@ function extractFrontendHtml(src) {
 }
 
 function unescapeTemplateLiteral(s) {
-  // Apply the same transforms that JS does when evaluating a template literal.
-  // \` -> `, \${ -> ${, \\ -> \, \n -> \n (actual newline), etc.
-  return s
-    .replace(/\\`/g, "`")
-    .replace(/\\\$\{/g, "${")
-    .replace(/\\\\/g, "\\");
-  // We deliberately leave \n / \t etc. as-is for the babel script's purposes —
-  // the bug we're catching is when JS string literals INSIDE the babel script
-  // contain real newlines (because the OUTER template eval converted \n).
-  // To simulate that fully we'd also expand \n; we do it implicitly by reading
-  // the file as-is — any literal \n in the source becomes a real newline in JS
-  // strings when the template runs. To detect this, we extract the babel
-  // <script> section and parse it as JSX.
+  // Full simulation of JS template-literal escape rules.
+  // Key rules:
+  //   \\ -> \, \` -> `, \${ -> ${, \n -> newline, \t -> tab, etc.
+  //   ANY OTHER \X -> X (the backslash is silently dropped per ECMAScript spec).
+  // The "other" rule is the killer: \/ becomes /, \. becomes ., which breaks
+  // any JS regex literal containing them when written naively inside the
+  // FRONTEND_HTML template literal. Catching this requires a faithful sim.
+  let out = "";
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (c === "\\" && i + 1 < s.length) {
+      const n = s[i + 1];
+      if (n === "n") out += "\n";
+      else if (n === "t") out += "\t";
+      else if (n === "r") out += "\r";
+      else if (n === "\\") out += "\\";
+      else if (n === "`") out += "`";
+      else if (n === "$") out += "$";
+      else if (n === "'") out += "'";
+      else if (n === '"') out += '"';
+      else if (n === "b") out += "\b";
+      else if (n === "f") out += "\f";
+      else if (n === "0") out += "\0";
+      else if (n === "v") out += "\v";
+      else out += n; // unrecognized: drop the backslash
+      i++;
+      continue;
+    }
+    out += c;
+  }
+  return out;
 }
 
 function extractBabelScript(html) {

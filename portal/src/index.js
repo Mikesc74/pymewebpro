@@ -5,10 +5,10 @@
 // esbuild bundle returned by `wrangler deployments view` / `workers_get_worker_code`.
 // The bundle was 4035 lines: lines 1-879 were unenv/@cloudflare/unenv-preset polyfills
 // (Performance, console, hrtime, TTY streams, Process polyfill); those have been
-// elided here as they're auto-generated and re-emitted on every deploy.
+// elided here as they're auto-generated and re-emitted on every deploy.'
 //
 // Below: every `// src/*.js` module from the bundle, in original order,
-// followed by the worker's `export default { fetch }`.
+// followed by the worker's `export default { fetch }`.'
 //
 // Mockup engine module imported from a sibling file (added by graft):
 import { handleMockups } from "./mockups.js";
@@ -182,7 +182,7 @@ function magicLinkEmailEn(url, bizName) {
       <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">${bizName ? `Hi ${bizName},` : "Hello,"}</p>
       <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">Click the button below to log in to your client portal. This link expires in 15 minutes.</p>
       <a href="${url}" style="display: inline-block; background: #fbbf24; color: #0a0e27; padding: 14px 32px; text-decoration: none; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 2px; margin: 24px 0;">Log In</a>
-      <p style="color: rgba(255,255,255,0.4); font-size: 13px;">If the button doesn't work, copy this URL into your browser:<br><a href="${url}" style="color: #fbbf24; word-break: break-all;">${url}</a></p>
+      <p style="color: rgba(255,255,255,0.4); font-size: 13px;">If the button doesn't work, copy this URL into your browser:<br><a href="${url}" style="color: #fbbf24; word-break: break-all;">${url}</a></p>'
     </div>`;
 }
 function magicLinkEmailEs(url, bizName) {
@@ -547,7 +547,7 @@ function inviteEmailEn(url, bizName) {
   return `<div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 20px; background: #0a0e27; color: #fff;">
     <h1 style="font-style: italic; color: #fbbf24;">PymeWebPro</h1>
     <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">${bizName ? `Hi ${bizName},` : "Hello,"}</p>
-    <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">You've been invited to the PymeWebPro client portal. Click below to begin filling in your project details — logos, brand colors, content, and assets.</p>
+    <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">You've been invited to the PymeWebPro client portal. Click below to begin filling in your project details — logos, brand colors, content, and assets.</p>'
     <a href="${url}" style="display: inline-block; background: #fbbf24; color: #0a0e27; padding: 14px 32px; text-decoration: none; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 2px; margin: 24px 0;">Open Portal</a>
     <p style="color: rgba(255,255,255,0.4); font-size: 13px;">This link is valid for 7 days. After that, request a new one from the login page.</p>
   </div>`;
@@ -846,7 +846,7 @@ function convertedInviteEn(url, bizName) {
   return `<div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 20px; background: #0a0e27; color: #fff;">
     <h1 style="font-style: italic; color: #fbbf24;">PymeWebPro</h1>
     <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">${bizName ? `Hi ${escapeHtml(bizName)},` : "Hello,"}</p>
-    <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">Thanks for reaching out. We've set up your client portal — click below to share your project details (logos, brand colors, content, and assets).</p>
+    <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.6;">Thanks for reaching out. We've set up your client portal — click below to share your project details (logos, brand colors, content, and assets).</p>'
     <a href="${url}" style="display: inline-block; background: #fbbf24; color: #0a0e27; padding: 14px 32px; text-decoration: none; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 2px; margin: 24px 0;">Open Portal</a>
     <p style="color: rgba(255,255,255,0.4); font-size: 13px;">This link is valid for 7 days.</p>
   </div>`;
@@ -1105,8 +1105,8 @@ function confirmationHtml({ lead, quote, lang, lastPayment, justReturned }) {
     securePay: "Secure payment via Wompi (Bancolombia)", credit: "Card · Nequi · PSE · installments",
     installments: "You can split payment into 3, 6 or more credit-card installments. Availability and number of installments depend on your bank.",
     authTitle: "Legal authorization (required)",
-    authIntro: "Before proceeding, please read and accept the following clause. Without this authorization we cannot legally process the visitor data your site will collect.",
-    authCheckbox: "I have read and accept the clause above.",
+    authIntro: "Before proceeding, please read and accept the following clause. Without this authorization we can't legally process the visitor data your site will collect.",
+    authCheckbox: "I've read and accept the clause above.",
     fullPrivacy: "View PymeWebPro's Privacy Policy",
     payBtn: "Pay with Wompi", paying: "Loading…",
     helpWa: "Questions? Message us on WhatsApp",
@@ -1610,7 +1610,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 {loading ? <Loader size={24} className="spin" color="#fbbf24" /> : (
                   leads.length === 0 ? (
                     <div style={{textAlign:'center',padding:'4rem',color:'rgba(255,255,255,0.4)'}}>
-                      No leads yet. They'll appear here as the contact form fires.
+                      No leads yet. They'll appear here as the contact form fires.'
                     </div>
                   ) : (
                     <div style={{display:'flex',flexDirection:'column',gap:'0.75rem'}}>
@@ -1993,8 +1993,8 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const currentDomain = client.custom_domain || null;
 
       async function attach() {
-        const clean = domain.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
-        if (!clean || !/^[a-z0-9][a-z0-9.-]+\.[a-z]{2,}$/.test(clean)) {
+        const clean = domain.trim().toLowerCase().replace(/^https?:\\/\\//, '').replace(/\\/.*$/, '').replace(/^www\\./, '');
+        if (!clean || !/^[a-z0-9][a-z0-9.-]+\\.[a-z]{2,}$/.test(clean)) {
           alert('Formato inválido. Use: minegocio.com');
           return;
         }
@@ -2456,11 +2456,11 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     const WIZARD_STEPS = [
       // Datos básicos
       { key:'bizName', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'text',
-        q:{es:'¿Cómo se llama su negocio?',en:'What is your business name?'},
-        h:{es:'Aparecerá en el título de la página, el footer y en su logo si no nos sube uno.',en:'Appears in the page title, footer, and logo if you do not upload one.'},
+        q:{es:'¿Cómo se llama su negocio?',en:"What's your business name?"},
+        h:{es:'Aparecerá en el título de la página, el footer y en su logo si no nos sube uno.',en:"Appears in the page title, footer, and logo if you don't upload one."},
         p:{es:'Panadería La Esquina',en:'La Esquina Bakery'} },
       { key:'nit', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'text',
-        q:{es:'¿Cuál es su NIT o cédula?',en:'What is your tax ID (NIT or cédula)?'},
+        q:{es:'¿Cuál es su NIT o cédula?',en:"What's your tax ID (NIT or cédula)?"},
         h:{es:'Lo necesitamos para la política de privacidad y los términos de su sitio (Ley 1581 de 2012).',en:'Required for the privacy policy and terms (Colombian Law 1581 of 2012).'},
         p:{es:'900.123.456-7',en:'900.123.456-7'} },
       { key:'legalRepresentative', section:'business', group:{es:'Datos básicos',en:'The basics'}, type:'text',
@@ -2487,15 +2487,15 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         p:{es:'+57 300 123 4567',en:'+57 300 123 4567'} },
       { key:'whatsapp', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'tel',
         q:{es:'¿Su WhatsApp Business?',en:'WhatsApp Business number?'},
-        h:{es:'Si es el mismo del teléfono, déjelo en blanco — usaremos el de arriba.',en:'If same as your phone, leave blank — we will reuse it.'},
+        h:{es:'Si es el mismo del teléfono, déjelo en blanco — usaremos el de arriba.',en:"If same as your phone, leave blank — we'll reuse it."},
         p:{es:'+57 300 123 4567',en:'+57 300 123 4567'} },
       { key:'email', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'email',
         q:{es:'¿Email público para clientes?',en:'Public email for customers?'},
-        h:{es:'No tiene que ser su correo personal. Le configuramos info@sunegocio.com si quiere.',en:'Does not have to be your personal email. We set up info@yourbusiness.com if you like.'},
+        h:{es:'No tiene que ser su correo personal. Le configuramos info@sunegocio.com si quiere.',en:"Doesn't have to be your personal email. We set up info@yourbusiness.com if you like."},
         p:{es:'info@sunegocio.com',en:'info@yourbusiness.com'} },
       { key:'address', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'text',
         q:{es:'¿Dirección física?',en:'Physical address?'},
-        h:{es:'Si atiende en una ubicación. Si no, sáltela.',en:'If you have a physical location. Otherwise skip.'},
+        h:{es:'Si atiende en una ubicación. Si no, sáltela.',en:"If you've a physical location. Otherwise skip."},
         p:{es:'Calle 50 # 23-45, Medellín',en:'Calle 50 # 23-45, Medellín'} },
       { key:'instagram', section:'contact', group:{es:'Cómo lo contactan',en:'How visitors reach you'}, type:'text',
         q:{es:'¿Instagram?',en:'Instagram?'},
@@ -2509,7 +2509,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       // Marca
       { key:'__logoUpload', section:'brand', group:{es:'Su marca',en:'Your brand'}, type:'file', category:'logo',
         q:{es:'Suba su logo',en:'Upload your logo'},
-        h:{es:'PNG con fondo transparente es lo ideal. Si no tiene logo, sáltelo — usaremos su nombre en una tipografía bonita.',en:'PNG with transparent background is ideal. No logo? Skip — we will use your business name in a nice font.'},
+        h:{es:'PNG con fondo transparente es lo ideal. Si no tiene logo, sáltelo — usaremos su nombre en una tipografía bonita.',en:"PNG with transparent background is ideal. No logo? Skip — we'll use your business name in a nice font."},
         accept:'image/*,.ai,.eps' },
       { key:'colors', section:'brand', group:{es:'Su marca',en:'Your brand'}, type:'text',
         q:{es:'¿Sus colores de marca?',en:'Your brand colors?'},
@@ -2517,13 +2517,13 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         p:{es:'#003893, #fcd116',en:'#003893, #fcd116'} },
       { key:'fonts', section:'brand', group:{es:'Su marca',en:'Your brand'}, type:'text',
         q:{es:'¿Tipografía preferida?',en:'Font preference?'},
-        h:{es:'Si tiene una en mente. Si no, elegimos una que combine.',en:'If you have one in mind. Otherwise we pick one that fits.'},
+        h:{es:'Si tiene una en mente. Si no, elegimos una que combine.',en:"If you've one in mind. Otherwise we pick one that fits."},
         p:{es:'Inter, Montserrat, Lato...',en:'Inter, Montserrat, Lato...'} },
 
       // Visual
       { key:'__photosUpload', section:'visual', group:{es:'Imágenes',en:'Imagery'}, type:'file', category:'photo', multi:true,
         q:{es:'Suba 3 a 8 fotos auténticas',en:'Upload 3 to 8 authentic photos'},
-        h:{es:'Fotos reales del negocio venden mucho mejor que stock. Si no tiene, le sugerimos opciones libres de derechos.',en:'Real photos sell far better than stock. If you have none, we suggest royalty-free options.'},
+        h:{es:'Fotos reales del negocio venden mucho mejor que stock. Si no tiene, le sugerimos opciones libres de derechos.',en:"Real photos sell far better than stock. If you've none, we suggest royalty-free options."},
         accept:'image/*,video/*' },
       { key:'photoAlts', section:'visual', group:{es:'Imágenes',en:'Imagery'}, type:'textarea',
         q:{es:'Describa cada foto, una por línea',en:'Describe each photo, one per line'},
@@ -2559,7 +2559,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         p:{es:'',en:''} },
       { key:'bizEmail', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
         q:{es:'¿Cómo quiere su correo profesional?',en:'How do you want your professional email?'},
-        h:{es:'Ejemplo: info@sunegocio.com. Si tiene preferencias distintas, descríbalas.',en:'Example: info@yourbusiness.com. If you have other preferences, describe.'},
+        h:{es:'Ejemplo: info@sunegocio.com. Si tiene preferencias distintas, descríbalas.',en:"Example: info@yourbusiness.com. If you've other preferences, describe."},
         p:{es:'info@sunegocio.com',en:'info@yourbusiness.com'} },
 
       // Crecimiento (proOnly)
@@ -2567,34 +2567,34 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         q:{es:'¿Quiere también una versión en inglés?',en:'Do you want an English version too?'},
         h:{es:'Generamos /es y /en automáticamente, traducidas profesionalmente.',en:'We auto-generate /es and /en, professionally translated.'} },
       { key:'bookingsUrl', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
-        q:{es:'¿Tiene un sistema de reservas?',en:'Do you have a booking system?'},
+        q:{es:'¿Tiene un sistema de reservas?',en:"Do you've a booking system?"},
         h:{es:'Pegue su URL de Calendly, Cal.com o similar. Lo embebemos en su sitio.',en:'Paste your Calendly, Cal.com or similar URL. We embed it.'},
         p:{es:'https://calendly.com/...',en:'https://calendly.com/...'} },
       { key:'__pdfUpload', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'file', category:'pdf', proOnly:true,
-        q:{es:'¿Tiene un menú o catálogo en PDF?',en:'Do you have a menu or catalog PDF?'},
+        q:{es:'¿Tiene un menú o catálogo en PDF?',en:"Do you've a menu or catalog PDF?"},
         h:{es:'Lo añadimos como botón de descarga en su sitio.',en:'We add it as a download button.'},
         accept:'application/pdf' },
       { key:'pdfLabel', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
-        q:{es:'¿Cómo se llama el PDF?',en:'What is the PDF called?'},
+        q:{es:'¿Cómo se llama el PDF?',en:"What's the PDF called?"},
         h:{es:'Ejemplo: Menú · Catálogo 2026 · Ficha técnica.',en:'Example: Menu · 2026 Catalog · Spec sheet.'},
         p:{es:'Menú',en:'Menu'} },
       { key:'waCatalogUrl', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
         q:{es:'¿Catálogo de WhatsApp Business?',en:'WhatsApp Business catalog?'},
-        h:{es:'Si tiene catálogo en WA Business, pegue el link.',en:'If you have a WA Business catalog, paste the link.'},
+        h:{es:'Si tiene catálogo en WA Business, pegue el link.',en:"If you've a WA Business catalog, paste the link."},
         p:{es:'https://wa.me/c/...',en:'https://wa.me/c/...'} },
       { key:'newsletterEnabled', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'yesno', proOnly:true,
         q:{es:'¿Quiere un formulario de newsletter?',en:'Do you want a newsletter signup form?'},
         h:{es:'Los suscriptores se guardan; le notificamos cada nuevo registro.',en:'Subscribers are saved; we notify you on each signup.'} },
       { key:'ga4Id', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
         q:{es:'¿ID de Google Analytics 4?',en:'Google Analytics 4 ID?'},
-        h:{es:'Formato G-XXXXXXXXXX. Sáltelo si no tiene cuenta — se la creamos.',en:'Format G-XXXXXXXXXX. Skip if you do not have one — we set it up.'},
+        h:{es:'Formato G-XXXXXXXXXX. Sáltelo si no tiene cuenta — se la creamos.',en:"Format G-XXXXXXXXXX. Skip if you don't have one — we set it up."},
         p:{es:'G-XXXXXXXXXX',en:'G-XXXXXXXXXX'} },
       { key:'metaPixelId', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
         q:{es:'¿ID del Meta Pixel?',en:'Meta Pixel ID?'},
         h:{es:'15-16 dígitos. Solo si corre ads en Facebook o Instagram.',en:'15-16 digits. Only if you run Facebook or Instagram ads.'},
         p:{es:'1234567890123456',en:'1234567890123456'} },
       { key:'testimonials', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'textarea', proOnly:true,
-        q:{es:'¿Tiene testimonios reales?',en:'Do you have real testimonials?'},
+        q:{es:'¿Tiene testimonios reales?',en:"Do you've real testimonials?"},
         h:{es:'Uno por línea, formato: Nombre | Cita | Rol. Solo testimonios reales con permiso.',en:'One per line: Name | Quote | Role. Only real testimonials with permission.'},
         p:{es:'María Pérez | Excelente servicio | Cliente desde 2022',en:'María Pérez | Excellent service | Customer since 2022'} },
       { key:'faqs', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'textarea', proOnly:true,
@@ -2672,16 +2672,16 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               <p style={{color:'rgba(255,255,255,0.75)',fontSize:'1.05rem',lineHeight:1.65,textAlign:'center',marginBottom:'1rem'}}>
                 {lang==='es'
                   ? 'Vamos a poner su sitio en línea. Esto le toma unos 15 minutos.'
-                  : 'Let us get your site online. About 15 minutes.'}
+                  : "Let's get your site online. About 15 minutes."}
               </p>
               <p style={{color:'rgba(255,255,255,0.55)',fontSize:'.95rem',lineHeight:1.65,textAlign:'center',marginBottom:'2.5rem'}}>
                 {lang==='es'
                   ? 'Cada pregunta es opcional — si no sabe la respuesta, salte y nosotros lo manejamos. Sus respuestas se guardan a medida que escribe.'
-                  : 'Every question is optional — if you do not know, skip and we handle it. Your answers save as you type.'}
+                  : "Every question is optional — if you don't know, skip and we handle it. Your answers save as you type."}
               </p>
               <div style={{textAlign:'center'}}>
                 <button onClick={()=>setView('step')} style={{...primaryBtn,fontSize:'1rem',padding:'1rem 2.25rem'}}>
-                  {lang==='es'?'Empezar':'Let us start'} <ChevR size={16}/>
+                  {lang==='es'?'Empezar':"Let's start"} <ChevR size={16}/>
                 </button>
               </div>
               <p style={{textAlign:'center',marginTop:'2rem',fontSize:'.8rem',color:'rgba(255,255,255,0.35)'}}>
@@ -2751,7 +2751,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   <ChevL size={16}/> {lang==='es'?'Volver al inicio':'Back to start'}
                 </button>
                 <button onClick={onSubmit} disabled={submitting} style={{...primaryBtn,flex:2}}>
-                  {submitting?<><Loader size={16} className="spin"/>{t.submitting}</>:(lang==='es'?'Enviar — empezamos su sitio':'Submit — let us build your site')}
+                  {submitting?<><Loader size={16} className="spin"/>{t.submitting}</>:(lang==='es'?'Enviar — empezamos su sitio':"Submit — let's build your site")}
                 </button>
               </div>
             </main>
@@ -3218,7 +3218,7 @@ export { src_default as default };
 // );
 //
 // CREATE TABLE audit_log (
-//   id INTEGER PRIMARY KEY AUTOINCREMENT,  -- inferred; INSERT does not provide id
+//   id INTEGER PRIMARY KEY AUTOINCREMENT,  -- inferred; INSERT doesn't provide id'
 //   client_id TEXT, event TEXT, metadata TEXT, created_at INTEGER
 // );
 //

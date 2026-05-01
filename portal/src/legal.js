@@ -185,7 +185,7 @@ export function renderPrivacyEn(data) {
 </ul>
 
 <h2>5. How to exercise your rights</h2>
-<p>Send us your request — clearly stating which right you wish to exercise and including a copy of your ID — to <a href="mailto:${esc(email)}">${esc(email)}</a>. We will respond within fifteen (15) business days as required by Article 14 of Law 1581 of 2012.</p>
+<p>Send us your request — clearly stating which right you wish to exercise and including a copy of your ID — to <a href="mailto:${esc(email)}">${esc(email)}</a>. We'll respond within fifteen (15) business days as required by Article 14 of Law 1581 of 2012.</p>
 
 <h2>6. Cookies</h2>
 <p>This site may use first- and third-party cookies (e.g. Google Analytics, Meta Pixel) for analytics and advertising. You can disable cookies in your browser settings.</p>
@@ -268,7 +268,7 @@ export function renderTermsEn(data) {
 <p><small>Last updated: ${today}</small></p>
 
 <h2>1. Acceptance</h2>
-<p>By accessing and using this website you accept these Terms in full. If you do not agree, please do not use this site.</p>
+<p>By accessing and using this website you accept these Terms in full. If you don't agree, please don't use this site.</p>
 
 <h2>2. Site operator</h2>
 <p>This site is operated by <strong>${esc(businessName)}</strong>, Tax ID ${esc(nit)}, Colombia.</p>
@@ -280,10 +280,10 @@ export function renderTermsEn(data) {
 <p>All content (text, images, brand, logo, design) is the property of <strong>${esc(businessName)}</strong> or used with the owner's permission. Reproduction, distribution or modification without prior written consent is prohibited.</p>
 
 <h2>5. Third-party content & links</h2>
-<p>This site may link to third-party sites. We are not responsible for their content or policies; inclusion of a link does not imply endorsement.</p>
+<p>This site may link to third-party sites. We're not responsible for their content or policies; inclusion of a link doesn't imply endorsement.</p>
 
 <h2>6. Limitation of liability</h2>
-<p>The site is provided "as is". We do not guarantee uninterrupted availability or freedom from errors. To the extent permitted by law, we will not be liable for indirect or consequential damages.</p>
+<p>The site is provided "as is". We don't guarantee uninterrupted availability or freedom from errors. To the extent permitted by law, we'll not be liable for indirect or consequential damages.</p>
 
 <h2>7. Personal data</h2>
 <p>Processing of your personal data is governed by our <a href="./privacy.html">Privacy Policy</a>, which forms part of these Terms.</p>

@@ -262,6 +262,32 @@ async function generateForClient(env, helpers, clientId, req) {
     VALUES (?, ?, ?, 'blueprint-1', ?, ?, ?, 'draft', 'admin')
   `).bind(id, clientId, version, r2Key, JSON.stringify(intake).slice(0, 4000), env.ANTHROPIC_API_KEY ? "claude-sonnet-4-6" : "fallback").run();
 
+  // ── Auto-mark deliverables that the engine just completed ────────────────
+  const autoKeys = [
+    // Always done when a mockup is generated:
+    "design_brand_colors", "design_typography",
+    "page_home", "page_services", "page_about", "page_contact", "page_location",
+    "feat_whatsapp_btn", "feat_social_bar",
+    "seo_meta_tags", "seo_sitemap", "seo_robots", "seo_structured_data", "seo_speed",
+  ];
+  // Conditional:
+  if (logo) autoKeys.push("design_logo");
+  if (photos.length) autoKeys.push("feat_photo_gallery");
+  if (intake._parsedTestimonials && intake._parsedTestimonials.length) autoKeys.push("feat_testimonials");
+  if (isPro) {
+    if (pdf) autoKeys.push("feat_pdf_download");
+    if (newsletterEnabled) autoKeys.push("feat_email_capture");
+    if ((intake.growth || {}).waCatalogUrl) autoKeys.push("feat_wa_catalog");
+    if ((intake.growth || {}).bookingsUrl) autoKeys.push("feat_booking_system");
+    if (bilingual) autoKeys.push("feat_bilingual");
+    if ((intake.growth || {}).metaPixelId) autoKeys.push("seo_meta_pixel");
+    if ((intake.growth || {}).ga4Id) autoKeys.push("seo_analytics");
+  } else if ((intake.growth || {}).ga4Id) {
+    // Esencial customer who shared a GA4 ID anyway
+    autoKeys.push("seo_analytics");
+  }
+  await autoMarkDeliverables(env, clientId, autoKeys);
+
   return helpers.json({ id, version, html_r2_key: r2Key });
 }
 
@@ -606,15 +632,11 @@ async function preflightMockup(env, helpers, mockupId) {
   } else {
     const html = await obj.text();
     if (!/<h1\b/i.test(html)) errors.push({ code: "no_h1", msg: "No hay <h1> — mal para SEO." });
-    if (!/<meta\s+name=["']description["']/i.test(html)) errors.push({ code: "no_meta_desc", msg: "Falta meta description." });
-    if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "Sin og:image — se verá feo en WhatsApp/Facebook." });
-    // Imgs without alt
+    if (!/<meta\s+name=["']description["']/i.test(html)) errors.push({ code: "no_meta_desc", msg: "Falta meta description." });'    if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "Sin og:image — se verá feo en WhatsApp/Facebook." });'    // Imgs without alt
     const imgMatches = [...html.matchAll(/<img\b[^>]*>/gi)];
-    const imgsNoAlt = imgMatches.filter(m => !/alt=/.test(m[0]) || /alt=["']\s*["']/.test(m[0]));
-    if (imgsNoAlt.length) warnings.push({ code: "imgs_no_alt", msg: `${imgsNoAlt.length} imagen(es) sin texto alt — accesibilidad y SEO.` });
+    const imgsNoAlt = imgMatches.filter(m => !/alt=/.test(m[0]) || /alt=["']\s*["']/.test(m[0]));'    if (imgsNoAlt.length) warnings.push({ code: "imgs_no_alt", msg: `${imgsNoAlt.length} imagen(es) sin texto alt — accesibilidad y SEO.` });
     // No mixed content
-    if (/src=["']http:\/\//i.test(html) || /href=["']http:\/\/(?!schema\.org)/i.test(html)) {
-      warnings.push({ code: "mixed_content", msg: "Hay URLs http:// (no https) en el HTML." });
+    if (/src=["']http:\/\//i.test(html) || /href=["']http:\/\/(?!schema\.org)/i.test(html)) {'      warnings.push({ code: "mixed_content", msg: "Hay URLs http:// (no https) en el HTML." });
     }
     if (!/politica-privacidad/i.test(html)) warnings.push({ code: "no_privacy_link", msg: "No se ve un link a política de privacidad." });
   }
@@ -758,6 +780,16 @@ async function shipMockup(env, helpers, mockupId, req) {
   await env.DB.prepare(
     "UPDATE mockups SET status='shipped', shipped_at=?, shipped_url=? WHERE id=?",
   ).bind(Math.floor(Date.now() / 1000), liveUrl, mockupId).run();
+
+  // ── Auto-mark ship-time deliverables ─────────────────────────────────────
+  const shipKeys = ["setup_ssl", "setup_hosting_year", "close_handover"];
+  // If the client also has a custom domain attached, those setup items are done too
+  const liveRow = await env.DB.prepare("SELECT custom_domain FROM live_sites WHERE client_id = ?")
+    .bind(m.client_id).first();
+  if (liveRow?.custom_domain) {
+    shipKeys.push("setup_domain", "setup_dns");
+  }
+  await autoMarkDeliverables(env, m.client_id, shipKeys);
 
   // Notify client
   if (client.email && env.RESEND_API_KEY) {
@@ -1118,6 +1150,24 @@ async function __cwSend(){
 function safeName(asset) {
   const fn = asset.filename || asset.r2_key.split("/").pop();
   return String(fn).replace(/[^\w.\-]/g, "_");
+}
+
+// ─── Auto-mark deliverables ───────────────────────────────────────────────
+// Read clients.deliverables_state JSON, set each key in `keys` to 'done',
+// write back. Idempotent and merges with whatever Mike manually changed.
+async function autoMarkDeliverables(env, clientId, keys) {
+  if (!keys || !keys.length) return;
+  const row = await env.DB.prepare("SELECT deliverables_state FROM clients WHERE id = ?")
+    .bind(clientId).first();
+  let state = {};
+  try { state = row?.deliverables_state ? JSON.parse(row.deliverables_state) : {}; } catch (_) {}
+  let changed = false;
+  for (const key of keys) {
+    if (state[key] !== "done") { state[key] = "done"; changed = true; }
+  }
+  if (!changed) return;
+  await env.DB.prepare("UPDATE clients SET deliverables_state = ?, updated_at = ? WHERE id = ?")
+    .bind(JSON.stringify(state), Date.now(), clientId).run();
 }
 
 // ─── Newsletter signup (called from deployed customer sites) ───────────────
