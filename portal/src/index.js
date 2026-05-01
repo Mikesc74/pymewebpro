@@ -2161,15 +2161,21 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     }
 
     function Portal({ t, lang, setLang, client, email, data, setData, files, setFiles, section, setSection, onLogout, onSubmit, submitting }) {
-      const sectionKeys = ['business','contact','brand','visual','content','tech'];
-      const sectionIcons = [Brief,Phone,Palette,Img,FT,Settings];
+      const isPro = client && (client.plan === 'pro' || client.plan === 'crecimiento' || client.plan === 'growth');
+      const sectionKeys = isPro
+        ? ['business','contact','brand','visual','content','tech','growth']
+        : ['business','contact','brand','visual','content','tech'];
+      const sectionIcons = isPro
+        ? [Brief,Phone,Palette,Img,FT,Settings,Sparkle]
+        : [Brief,Phone,Palette,Img,FT,Settings];
       const SecIcon = sectionIcons[section];
       const currentKey = sectionKeys[section];
       const sectionFields = {
         business:['bizName','tagline','whatYouDo','audience'],
         contact:['phone','email','address','whatsapp','ig','fb','li','tw'],
         brand:['colors','fonts'], visual:['refSites'],
-        content:['tone','topics','pages'], tech:['domain','hosting','bizEmail']
+        content:['tone','topics','pages'], tech:['domain','hosting','bizEmail'],
+        growth:['bookingsUrl','pdfUrl','pdfLabel','waCatalogUrl','newsletterUrl','ga4Id','metaPixelId','testimonials','faqs']
       };
       const [saveStatus, setSaveStatus] = useState({});
       const saveTimers = useRef({});
@@ -2297,6 +2303,22 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   <Field label={t.fields.domain} value={data.domain||''} onChange={v=>update('domain',v)} placeholder="yoursite.com"/>
                   <Field label={t.fields.hosting} value={data.hosting||''} onChange={v=>update('hosting',v)}/>
                   <Field label={t.fields.bizEmail} value={data.bizEmail||''} onChange={v=>update('bizEmail',v)}/>
+                </>}
+                {currentKey==='growth' && <>
+                  <p style={{margin:'0 0 1rem',color:'rgba(255,255,255,0.55)',fontSize:'0.9rem',fontStyle:'italic'}}>{t.fields.growthIntro}</p>
+                  <Field label={t.fields.bookingsUrl} value={data.bookingsUrl||''} onChange={v=>update('bookingsUrl',v)} placeholder="https://calendly.com/su-negocio"/>
+                  <div style={{display:'grid',gridTemplateColumns:'2fr 1fr',gap:'1rem'}}>
+                    <Field label={t.fields.pdfUrl} value={data.pdfUrl||''} onChange={v=>update('pdfUrl',v)} placeholder="https://..."/>
+                    <Field label={t.fields.pdfLabel} value={data.pdfLabel||''} onChange={v=>update('pdfLabel',v)} placeholder={t.fields.pdfLabelPh}/>
+                  </div>
+                  <Field label={t.fields.waCatalogUrl} value={data.waCatalogUrl||''} onChange={v=>update('waCatalogUrl',v)} placeholder="https://wa.me/c/..."/>
+                  <Field label={t.fields.newsletterUrl} value={data.newsletterUrl||''} onChange={v=>update('newsletterUrl',v)} placeholder="https://..." help={t.fields.newsletterHelp}/>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
+                    <Field label={t.fields.ga4Id} value={data.ga4Id||''} onChange={v=>update('ga4Id',v)} placeholder="G-XXXXXXXXXX" help={t.fields.ga4Help}/>
+                    <Field label={t.fields.metaPixelId} value={data.metaPixelId||''} onChange={v=>update('metaPixelId',v)} placeholder="123456789012345" help={t.fields.metaPixelHelp}/>
+                  </div>
+                  <Field label={t.fields.testimonials} value={data.testimonials||''} onChange={v=>update('testimonials',v)} textarea placeholder={"María Pérez | Excelente servicio, llegamos al doble de clientes | Dueña, Café del Centro\nJorge Ramos | Profesionales y rápidos | Gerente, Logística JR"} help={t.fields.testimonialsHelp}/>
+                  <Field label={t.fields.faqs} value={data.faqs||''} onChange={v=>update('faqs',v)} textarea placeholder={"¿Cuánto tarda el envío? | Entre 2 y 5 días hábiles a nivel nacional.\n¿Tienen garantía? | Sí, 30 días contra defectos de fábrica."} help={t.fields.faqsHelp}/>
                 </>}
               </div>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:'4rem',paddingTop:'2rem',borderTop:'1px solid rgba(255,255,255,0.08)'}}>

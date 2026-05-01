@@ -24,14 +24,19 @@ Reglas:
 Campos básicos (Esencial): businessName, tagline, industry, services, phone, email, address, hours, instagram, facebook, primary, accent, ink, bg, ctaPhone, ctaWhatsapp, testimonials (array de {name, quote, role} si los datos del cliente los incluyen, si no [])`;
 
 const SYSTEM_PROMPT_PRO_EXTRA = `
-ADEMÁS, este cliente es plan CRECIMIENTO (Growth). Si los datos crudos contienen valores para estos, inclúyelos en el JSON; si no existen, omita la clave (NO invente IDs ni URLs):
-- bookingsUrl: URL de Calendly / Cal.com / etc para el sistema de reservas
-- pdfUrl + pdfLabel: link a un catálogo / menú PDF
+ADEMÁS, este cliente es plan CRECIMIENTO (Growth). Los datos del cliente contienen una sección "growth" con campos opcionales. Para cada campo:
+- Si el cliente proporcionó un valor → inclúyalo TAL CUAL (no modifique URLs ni IDs).
+- Si está vacío → OMITA la clave del JSON (no invente URLs/IDs).
+
+Campos esperados de la sección growth:
+- bookingsUrl: URL de Calendly / Cal.com / sistema de reservas
+- pdfUrl + pdfLabel: link a un catálogo / menú PDF y la etiqueta del botón
 - waCatalogUrl: link al catálogo de WhatsApp Business
-- newsletterUrl: endpoint del formulario de suscripción
+- newsletterUrl: endpoint POST del formulario de suscripción
 - ga4Id: ID de Google Analytics 4 (formato G-XXXXXXXX)
-- metaPixelId: ID del Meta Pixel
-- faqs: array de {q, a} si el cliente proporciona preguntas frecuentes`;
+- metaPixelId: ID del Meta Pixel (números)
+
+Adicionalmente, los campos "_parsedTestimonials" y "_parsedFaqs" ya están parseados como arrays de objetos en los datos crudos. Cópialos directamente al JSON como "testimonials" y "faqs" (no los re-parsee, no los modifique). Si están vacíos, devuelva [].`;
 
 function systemPromptFor(plan) {
   const isPro = String(plan || "").toLowerCase() === "pro" || String(plan || "").toLowerCase() === "crecimiento" || String(plan || "").toLowerCase() === "growth";
@@ -157,8 +162,34 @@ async function regenerate(env, helpers, mockupId, req) {
   return generateForClient(env, helpers, m.client_id, req);
 }
 
+function parseTestimonials(text) {
+  if (!text || typeof text !== "string") return [];
+  return text.split(/\r?\n/).map(line => {
+    const parts = line.split("|").map(s => s.trim());
+    if (!parts[0]) return null;
+    return { name: parts[0], quote: parts[1] || "", role: parts[2] || "" };
+  }).filter(t => t && t.quote);
+}
+
+function parseFaqs(text) {
+  if (!text || typeof text !== "string") return [];
+  return text.split(/\r?\n/).map(line => {
+    const idx = line.indexOf("|");
+    if (idx < 0) return null;
+    const q = line.slice(0, idx).trim();
+    const a = line.slice(idx + 1).trim();
+    if (!q || !a) return null;
+    return { q, a };
+  }).filter(Boolean);
+}
+
 async function callClaude(env, intake, plan) {
   const isPro = String(plan || "").toLowerCase() === "pro" || String(plan || "").toLowerCase() === "crecimiento" || String(plan || "").toLowerCase() === "growth";
+  // Always pre-parse Growth structured fields so both Claude and the fallback have them
+  const growth = intake.growth || {};
+  intake._parsedTestimonials = parseTestimonials(growth.testimonials);
+  intake._parsedFaqs = parseFaqs(growth.faqs);
+
   if (!env.ANTHROPIC_API_KEY) {
     // Dev fallback — produce something reasonable from raw intake
     const biz = intake.business || {};
@@ -178,18 +209,18 @@ async function callClaude(env, intake, plan) {
       ctaPhone: (intake.contact || {}).phone,
       ctaWhatsapp: (intake.contact || {}).whatsapp,
       primary: "#003893", accent: "#fcd116", ink: "#0a1840", bg: "#fbfaf6",
-      testimonials: Array.isArray(intake.testimonials) ? intake.testimonials : [],
-      faqs: Array.isArray(intake.faqs) ? intake.faqs : [],
+      testimonials: intake._parsedTestimonials,
+      faqs: intake._parsedFaqs,
     };
     if (isPro) {
-      out.bookingsUrl = tech.bookingsUrl || tech.calendly || content.bookingsUrl;
-      out.pdfUrl = tech.pdfUrl || content.pdfUrl;
-      out.pdfLabel = tech.pdfLabel || content.pdfLabel;
-      out.waCatalogUrl = (intake.contact || {}).waCatalog || tech.waCatalogUrl;
-      out.newsletterUrl = tech.newsletterUrl || content.newsletterUrl;
-      out.newsletterEnabled = !!(out.newsletterUrl || tech.newsletter);
-      out.ga4Id = tech.ga4Id || tech.ga4 || tech.gaId;
-      out.metaPixelId = tech.metaPixelId || tech.fbPixelId || tech.pixelId;
+      out.bookingsUrl = growth.bookingsUrl;
+      out.pdfUrl = growth.pdfUrl;
+      out.pdfLabel = growth.pdfLabel;
+      out.waCatalogUrl = growth.waCatalogUrl;
+      out.newsletterUrl = growth.newsletterUrl;
+      out.newsletterEnabled = !!growth.newsletterUrl;
+      out.ga4Id = growth.ga4Id;
+      out.metaPixelId = growth.metaPixelId;
     }
     return out;
   }
