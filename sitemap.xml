@@ -34,6 +34,14 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Recursos (added 2026-05-01) -->
+  <url>
+    <loc>https://pymewebpro.com/recursos/</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Industry + City Hubs (added 2026-05-01) -->
   <url>
     <loc>https://pymewebpro.com/sitios-web-por-industria/</loc>
