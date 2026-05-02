@@ -72,6 +72,16 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
 .hero h1 .accent{background:linear-gradient(120deg,var(--red) 0%,#ef4444 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;font-weight:800}
 .hero h1 .underline{position:relative;display:inline-block}
 .hero h1 .underline::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:14px;background:rgba(245,180,0,.35);z-index:-1;border-radius:4px}
+.hero-hook{
+  display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px;
+  font-family:'Fraunces',Georgia,serif;font-size:clamp(1.3rem,2.6vw,1.7rem);
+  font-weight:700;color:var(--ink);
+  margin:22px 0 0;padding:12px 18px;
+  background:rgba(252,209,22,.18);border-left:4px solid var(--yellow);
+  border-radius:0 12px 12px 0;line-height:1.25;
+}
+.hero-hook .price{color:var(--blue);font-weight:800}
+.hero-hook .sep{color:var(--muted);font-weight:400}
 .hero-sub{font-size:1.18rem;color:var(--ink-soft);margin-top:24px;max-width:580px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
 .hero-outcomes{list-style:none;padding:0;margin:28px 0 0;display:flex;flex-direction:column;gap:14px;max-width:560px}
@@ -395,13 +405,17 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
 <header class="hero">
 <div class="wrap hero-grid">
 <div class="reveal">
-<span class="eyebrow">● Launch offer · from $390,000 COP</span>
+<span class="eyebrow">● Launch offer — ends Friday, May 8</span>
 <h1 style="margin-top:18px">
         High-end<br/><span class="underline">website.</span><br/>
 <span class="accent">Ridiculously cheap.</span>
 </h1>
+<p class="hero-hook">
+<span class="price">From $390,000 COP</span>
+<span class="sep">·</span> Delivered in 48 hours
+<span class="sep">·</span> 30-day guarantee
+</p>
 <p class="hero-sub">
-        <b>Professional quality, 48-hour delivery, low price: all three, in one package.</b>
         Design, content, hosting, domain and support, all included. You touch nothing,
         no hidden contracts, no paying for what you don't need. Built with AI by our team
         in Medellín: that's how we deliver all three at once.

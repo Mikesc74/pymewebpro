@@ -71,6 +71,16 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
 .hero h1 .accent{background:linear-gradient(120deg,var(--red) 0%,#ef4444 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;font-weight:800}
 .hero h1 .underline{position:relative;display:inline-block}
 .hero h1 .underline::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:14px;background:rgba(245,180,0,.35);z-index:-1;border-radius:4px}
+.hero-hook{
+  display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px;
+  font-family:'Fraunces',Georgia,serif;font-size:clamp(1.3rem,2.6vw,1.7rem);
+  font-weight:700;color:var(--ink);
+  margin:22px 0 0;padding:12px 18px;
+  background:rgba(252,209,22,.18);border-left:4px solid var(--yellow);
+  border-radius:0 12px 12px 0;line-height:1.25;
+}
+.hero-hook .price{color:var(--blue);font-weight:800}
+.hero-hook .sep{color:var(--muted);font-weight:400}
 .hero-sub{font-size:1.18rem;color:var(--ink-soft);margin-top:24px;max-width:580px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
 .hero-outcomes{list-style:none;padding:0;margin:28px 0 0;display:flex;flex-direction:column;gap:14px;max-width:560px}
@@ -400,13 +410,17 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
 <header class="hero">
   <div class="wrap hero-grid">
     <div class="reveal">
-      <span class="eyebrow">● Oferta de lanzamiento · desde $390.000 COP</span>
+      <span class="eyebrow">● Oferta de lanzamiento — termina viernes 8 de mayo</span>
       <h1 style="margin-top:18px">
         Sitio web<br><span class="underline">de primera.</span><br>
         <span class="accent">Ridículamente barato.</span>
       </h1>
+      <p class="hero-hook">
+        <span class="price">Desde $390.000 COP</span>
+        <span class="sep">·</span> Entrega en 48 horas
+        <span class="sep">·</span> Garantía de 30 días
+      </p>
       <p class="hero-sub">
-        <b>Calidad profesional, entrega en 48 horas y precio bajo: las tres cosas, en un solo paquete.</b>
         Diseño, contenido, hosting, dominio y soporte, todo incluido. Sin que usted toque nada,
         sin contratos ocultos, sin pagar por lo que no necesita. Construido con IA por nuestro equipo
         en Medellín: por eso podemos ofrecer las tres a la vez.
