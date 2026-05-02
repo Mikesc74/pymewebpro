@@ -2565,7 +2565,15 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       { key:'domain', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
         q:{es:'¿Tiene un dominio (.com) ya?',en:'Do you already have a domain?'},
         h:{es:'Si lo registró, escríbalo. Si no, sáltelo — le ayudamos a comprarlo y configurarlo.',en:'If registered, type it. Otherwise skip — we help you buy and set it up.'},
-        p:{es:'minegocio.com',en:'mybusiness.com'} },
+        p:{es:'minegocio.com',en:'mybusiness.com'},
+        cta:{
+          href:'https://www.namecheap.com/?aff=7255105',
+          label:{es:'Comprar en Namecheap',en:'Buy at Namecheap'},
+          note:{
+            es:'¿Aún no tiene dominio? Recomendamos Namecheap: ~$50.000 a $150.000 COP/año, queda a su nombre, privacidad WHOIS gratis. Nosotros lo configuramos sin costo adicional.',
+            en:'No domain yet? We recommend Namecheap: ~$15 USD/year, registered in your name, free WHOIS privacy. We configure it at no extra cost.'
+          }
+        } },
       { key:'hosting', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
         q:{es:'¿Tiene hosting actualmente?',en:'Do you currently have hosting?'},
         h:{es:'Si paga hospedaje en algún lado, díganoslo. Si no, sáltelo.',en:'If you pay for hosting somewhere, tell us. Otherwise skip.'},
@@ -2842,7 +2850,13 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 <span style={{fontSize:'.78rem',color:'rgba(255,255,255,0.5)'}}>{step+1} {lang==='es'?'de':'of'} {total}</span>
               </div>
               <h1 className="serif" style={{fontSize:'1.85rem',fontWeight:400,fontStyle:'italic',margin:'0 0 .85rem',lineHeight:1.25}}>{loc(cur.q)}</h1>
-              {loc(cur.h) && <p style={{color:'rgba(255,255,255,0.6)',fontSize:'.95rem',lineHeight:1.6,margin:'0 0 2rem'}}>{loc(cur.h)}</p>}
+              {loc(cur.h) && <p style={{color:'rgba(255,255,255,0.6)',fontSize:'.95rem',lineHeight:1.6,margin:'0 0 1.25rem'}}>{loc(cur.h)}</p>}
+              {cur.cta && (
+                <div style={{background:'rgba(251,191,36,0.07)',border:'1px solid rgba(251,191,36,0.25)',borderRadius:'6px',padding:'1rem 1.15rem',marginBottom:'1.75rem'}}>
+                  <p style={{color:'rgba(255,255,255,0.82)',fontSize:'.9rem',lineHeight:1.6,margin:'0 0 .75rem'}}>{loc(cur.cta.note)}</p>
+                  <a href={cur.cta.href} target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:'.4rem',background:'#fbbf24',color:'#0a0e27',padding:'.6rem 1.1rem',borderRadius:'4px',fontSize:'.86rem',fontWeight:600,textDecoration:'none'}}>{loc(cur.cta.label)} →</a>
+                </div>
+              )}
               <div style={{marginBottom:'2rem'}}>
                 {cur.type === 'text' || cur.type === 'tel' || cur.type === 'email' ? (
                   <input type={cur.type} value={data[cur.key]||''} onChange={e=>setData(p=>({...p,[cur.key]:e.target.value}))} placeholder={loc(cur.p)} style={{...inputStyle,fontSize:'1rem',padding:'1rem 1.1rem'}} autoFocus/>
