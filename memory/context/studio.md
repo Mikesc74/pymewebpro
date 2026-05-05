@@ -115,9 +115,11 @@ Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $117.000
 - Pro balance ($560): `https://wise.com/pay/r/I-G0t2wOE1CRJYI` ← send at launch
 
 **Wompi (LATAM — COP):**
-- Esencial deposit ($117.000): NEEDS NEW LINK (Mike to create in Wompi dashboard) — public site has placeholder
-- Crecimiento deposit ($207.000): `https://checkout.wompi.co/l/kNsvyu` ← on public site (Crecimiento card; was previously the Esencial link, repurposed)
-- Old $324.000 link (`3tNB1l`): obsolete after restructure, can be archived/disabled in Wompi
+- Esencial deposit ($117.000): `https://checkout.wompi.co/l/IjE5K4` ← on public site (Esencial card)
+- Crecimiento deposit ($207.000): `https://checkout.wompi.co/l/xzGeMX` ← on public site (Crecimiento card)
+- Obsolete after restructure (can be archived/disabled in Wompi):
+  - `kNsvyu` was the old Esencial $207.000 link
+  - `3tNB1l` was the old Crecimiento $324.000 link
 
 ### 30-day satisfaction guarantee
 

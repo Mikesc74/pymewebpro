@@ -927,7 +927,7 @@ body.nav-open{overflow:hidden}
     <div class="price-grid geo-co">
       <div class="price-card">
         <div class="head">
-          <div class="name">Esencial</div>
+          <div class="name"><span class="ml-en">Essential</span><span class="ml-es">Esencial</span></div>
           <span class="tag"><span class="ml-en">Clinics &amp; cafés</span><span class="ml-es">Clínicas y cafés</span></span>
         </div>
         <div class="price-amt"><span class="ccy">COP</span>$390.000</div>
@@ -945,15 +945,14 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">48-hour delivery</span><span class="ml-es">Entrega en 48 horas</span></li>
         </ul>
         <div class="cta-row">
-          <!-- TODO: replace with new Wompi link for $117.000 COP Esencial deposit -->
-          <a href="https://checkout.wompi.co/l/PWP_ESENCIAL_117K" target="_blank" rel="noopener" class="btn btn-outline"><span class="ml-en">Pay $117.000 deposit &amp; start</span><span class="ml-es">Pagar depósito $117.000 y empezar</span> <span class="arrow">→</span></a>
+          <a href="https://checkout.wompi.co/l/IjE5K4" target="_blank" rel="noopener" class="btn btn-outline"><span class="ml-en">Pay $117.000 deposit &amp; start</span><span class="ml-es">Pagar depósito $117.000 y empezar</span> <span class="arrow">→</span></a>
           <a href="#cta-final" class="btn btn-link"><span class="ml-en">Or schedule a call →</span><span class="ml-es">O agendar una llamada →</span></a>
         </div>
       </div>
 
       <div class="price-card featured">
         <div class="head">
-          <div class="name" style="color:#fff">Crecimiento</div>
+          <div class="name" style="color:#fff"><span class="ml-en">Growth</span><span class="ml-es">Crecimiento</span></div>
           <span class="tag"><span class="ml-en">Boutique brands &amp; e-comm</span><span class="ml-es">Marcas boutique y e-comm</span></span>
         </div>
         <div class="price-amt"><span class="ccy">COP</span>$690.000</div>
@@ -969,7 +968,7 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">4 rounds of revisions</span><span class="ml-es">4 rondas de revisiones</span></li>
         </ul>
         <div class="cta-row">
-          <a href="https://checkout.wompi.co/l/kNsvyu" target="_blank" rel="noopener" class="btn btn-accent"><span class="ml-en">Pay $207.000 deposit &amp; start</span><span class="ml-es">Pagar depósito $207.000 y empezar</span> <span class="arrow">→</span></a>
+          <a href="https://checkout.wompi.co/l/xzGeMX" target="_blank" rel="noopener" class="btn btn-accent"><span class="ml-en">Pay $207.000 deposit &amp; start</span><span class="ml-es">Pagar depósito $207.000 y empezar</span> <span class="arrow">→</span></a>
           <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)"><span class="ml-en">Or schedule a call →</span><span class="ml-es">O agendar una llamada →</span></a>
         </div>
       </div>
@@ -1200,7 +1199,7 @@ body.nav-open{overflow:hidden}
 
       <div class="cmp-card us">
         <div class="head">
-          <h3><span class="geo-na">PymeWebPro · Pro</span><span class="geo-co">PymeWebPro · Crecimiento</span></h3>
+          <h3><span class="geo-na">PymeWebPro · Pro</span><span class="geo-co"><span class="ml-en">PymeWebPro · Growth</span><span class="ml-es">PymeWebPro · Crecimiento</span></span></h3>
           <div class="price-line"><span class="geo-na"><span class="ccy">CAD</span>$800</span><span class="geo-co"><span class="ccy">COP</span>$690.000</span></div>
         </div>
         <ul>
