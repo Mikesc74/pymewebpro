@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Schedulator, Specials class scheduling for elementary schools</title>
+<meta name="description" content="A drag-and-drop tool for laying out your school's specials schedule. Move one class and every affected teacher's schedule updates instantly. Free demo, no account needed.">
+<meta name="theme-color" content="#0a0e1a">
+<meta property="og:title" content="The Schedulator, Specials class scheduling for elementary schools">
+<meta property="og:description" content="A drag-and-drop scheduling tool built by an elementary PE teacher. Free demo, cloud save with subscription.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://schedulator.net/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="https://schedulator2.vercel.app/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;max-width:100%}
+:root{
+  --bg:#0a0e1a;
+  --bg-2:#0e1320;
+  --card:#131825;
+  --card-2:#161c2c;
+  --line:#1f2939;
+  --line-2:#2a3447;
+  --ink:#f4f4f5;
+  --muted:#a1a1aa;
+  --hint:#71717a;
+  --dim:#52525b;
+  --red:#ef4444;
+  --red-soft:rgba(239,68,68,0.12);
+  --purple:#a855f7;
+  --purple-soft:rgba(168,85,247,0.12);
+  --blue:#3b82f6;
+  --blue-soft:rgba(59,130,246,0.12);
+  --green:#22c55e;
+  --green-soft:rgba(34,197,94,0.12);
+  --display:'Inter Tight','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --max:1200px;
+  --gutter:clamp(20px,4vw,52px);
+  --r:8px;
+  --r-lg:14px;
+}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--ink);
+  font-size:15px;line-height:1.65;font-weight:400;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+input,textarea,select{font-family:inherit;font-size:inherit;color:inherit}
+.container{max-width:var(--max);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);font-weight:700;letter-spacing:-0.025em}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:0.04em;color:var(--muted);
+  padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:var(--card);
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.eyebrow.demo .dot{background:var(--red)}
+.eyebrow.about .dot{background:var(--purple)}
+.eyebrow.tutorial .dot{background:var(--blue)}
+.eyebrow.login .dot{background:var(--green)}
+
+.header{position:sticky;top:0;z-index:50;background:rgba(10,14,26,0.85);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--line)}
+.header-inner{max-width:var(--max);margin:0 auto;padding:14px var(--gutter);display:flex;align-items:center;gap:32px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;font-family:var(--display);font-weight:700;font-size:17px;color:var(--ink);letter-spacing:-0.02em}
+.logo .mark{width:28px;height:28px;border-radius:6px;background:var(--card);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center}
+.logo .mark::after{content:"";width:13px;height:13px;border-radius:3px;background:linear-gradient(135deg, var(--red) 0%, var(--red) 50%, var(--purple) 50%, var(--purple) 100%);box-shadow:1.5px 1.5px 0 var(--blue), 3px 3px 0 var(--green);margin:-3px 3px 3px -3px}
+.nav{display:flex;align-items:center;gap:28px;margin-left:auto}
+.nav a{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--muted);letter-spacing:0;transition:color .15s;display:inline-flex;align-items:center;gap:7px}
+.nav a .nd{width:7px;height:7px;border-radius:50%;flex-shrink:0;opacity:0.7;transition:opacity .15s}
+.nav a:hover{color:var(--ink)}
+.nav a:hover .nd{opacity:1}
+.nav a.demo .nd{background:var(--red)}
+.nav a.about .nd{background:var(--purple)}
+.nav a.tutorial .nd{background:var(--blue)}
+.nav a.login .nd{background:var(--green)}
+.cta-pill{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:8px;background:var(--red);color:#fff;font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:-0.005em;transition:all .15s;border:1px solid var(--red)}
+.cta-pill:hover{background:#dc2626;transform:translateY(-1px)}
+.cta-pill .arrow{font-family:var(--mono);font-size:13px}
+.nav .navlinks{display:flex;gap:28px;align-items:center}
+.menu-toggle{display:none;font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:auto}
+@media (max-width:920px){.nav .navlinks{display:none}.menu-toggle{display:inline-block}}
+
+.hero{position:relative;overflow:hidden;padding:clamp(60px,8vw,110px) 0 clamp(40px,5vw,70px);background:radial-gradient(ellipse 700px 360px at 30% 0%, rgba(59,130,246,0.10) 0%, transparent 65%),radial-gradient(ellipse 600px 360px at 80% 0%, rgba(168,85,247,0.07) 0%, transparent 65%)}
+.hero-grid{max-width:var(--max);margin:0 auto;padding:0 var(--gutter);display:flex;flex-direction:column;align-items:center;text-align:center}
+.hero .eyebrow{margin-bottom:24px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6vw,76px);line-height:1.0;letter-spacing:-0.038em;color:var(--ink);max-width:920px}
+.hero h1 .accent{color:var(--blue)}
+.hero h1 .strike{color:var(--hint);position:relative;display:inline-block}
+.hero h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:6%;background:var(--red);opacity:0.7;border-radius:3px}
+.hero p.lede{margin-top:24px;font-size:clamp(16px,1.4vw,18px);line-height:1.55;color:var(--muted);max-width:680px;font-weight:400}
+.hero-cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 24px;border-radius:8px;font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:-0.005em;cursor:pointer;transition:all .2s;border:1px solid transparent;white-space:nowrap}
+.btn .arrow{font-family:var(--mono);font-size:14px;line-height:1}
+.btn-red{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-red:hover{background:#dc2626;border-color:#dc2626;transform:translateY(-1px)}
+.btn-green{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-green:hover{background:#16a34a;border-color:#16a34a;transform:translateY(-1px)}
+.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-blue:hover{background:#2563eb;border-color:#2563eb;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn-ghost:hover{background:var(--card);border-color:var(--muted)}
+
+.hero-meta{margin-top:32px;display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:center;font-family:var(--mono);font-size:12px;color:var(--hint);font-weight:400}
+.hero-meta .item{display:inline-flex;align-items:center;gap:7px}
+.hero-meta .item svg{color:var(--green)}
+.hero-meta .item strong{color:var(--ink);font-weight:500}
+
+.hero-shot{margin-top:60px;width:100%;max-width:1000px;border:1px solid var(--line-2);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,0.5), 0 8px 24px -8px rgba(59,130,246,0.15);background:var(--card)}
+.hero-shot .bar{padding:11px 16px;background:var(--card-2);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.hero-shot .dots{display:flex;gap:5px}
+.hero-shot .dots span{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
+.hero-shot .url{flex:1;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:5px 14px;color:var(--muted);font-family:var(--mono);font-size:11.5px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.hero-shot .url svg{color:var(--green)}
+
+/* Stylized schedule grid preview (inline, no external dependency) */
+.sched-grid{padding:24px 22px 28px;background:var(--bg);position:relative}
+.sched-grid .toolbar{
+  display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+}
+.sched-grid .toolbar .pill{padding:4px 10px;border:1px solid var(--line-2);border-radius:5px;color:var(--ink);background:var(--card)}
+.sched-grid .toolbar .pill.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sched-grid .toolbar .spacer{flex:1}
+.sched-grid .toolbar .keys{font-size:10.5px;color:var(--hint);font-family:var(--mono)}
+.sched-grid .grid{
+  display:grid;grid-template-columns:80px repeat(5,1fr);gap:6px;
+  font-family:var(--mono);font-size:11px;
+}
+.sched-grid .gh{font-size:10.5px;color:var(--hint);text-transform:uppercase;letter-spacing:0.06em;padding:6px 0;text-align:center}
+.sched-grid .gh.row{text-align:left;padding-left:0}
+.sched-grid .gc{
+  height:36px;border-radius:5px;padding:5px 8px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:500;letter-spacing:0.02em;font-size:10.5px;
+  color:#fff;
+  position:relative;
+}
+.sched-grid .gc.empty{background:var(--card);border:1px dashed var(--line-2);color:var(--hint)}
+.sched-grid .gc.art{background:var(--red)}
+.sched-grid .gc.music{background:var(--purple)}
+.sched-grid .gc.pe{background:var(--blue)}
+.sched-grid .gc.stem{background:var(--green)}
+.sched-grid .gc.span{background:#06b6d4}
+.sched-grid .gc.lib{background:#f59e0b}
+.sched-grid .gc.pulse::after{
+  content:"";position:absolute;inset:-2px;border-radius:7px;
+  border:2px solid var(--blue);
+  animation:hipulse 2s ease-in-out infinite;
+}
+@keyframes hipulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:0;transform:scale(1.08)}}
+.sched-grid .footnote{
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;color:var(--hint);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+}
+.sched-grid .footnote .legend{display:flex;gap:14px;flex-wrap:wrap}
+.sched-grid .footnote .legend span{display:inline-flex;align-items:center;gap:5px}
+.sched-grid .footnote .legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+@media (max-width:680px){
+  .sched-grid .grid{grid-template-columns:60px repeat(5,1fr);gap:4px;font-size:9.5px}
+  .sched-grid .gc{height:28px;padding:3px 5px}
+}
+
+section{padding:clamp(70px,8vw,110px) 0;position:relative}
+.section-head{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:60px;max-width:760px;margin-left:auto;margin-right:auto}
+.section-head .eyebrow{margin-bottom:18px}
+.section-head h2{font-family:var(--display);font-weight:700;font-size:clamp(30px,4vw,50px);line-height:1.05;letter-spacing:-0.032em;color:var(--ink)}
+.section-head h2 .red{color:var(--red)}
+.section-head h2 .purple{color:var(--purple)}
+.section-head h2 .blue{color:var(--blue)}
+.section-head h2 .green{color:var(--green)}
+.section-head p{margin-top:18px;font-size:16px;line-height:1.6;color:var(--muted);max-width:600px}
+
+#demo{background:var(--bg)}
+.demo-card{max-width:920px;margin:0 auto;background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:48px 44px;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.demo-card .body h3{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-0.022em;color:var(--ink);margin-bottom:14px}
+.demo-card .body p{font-size:15px;line-height:1.65;color:var(--muted);margin-bottom:14px}
+.demo-card .body p:last-of-type{margin-bottom:24px}
+.demo-card .body strong{color:var(--ink);font-weight:600}
+.demo-card .body .features{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;margin-bottom:26px}
+.demo-card .body .features div{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.demo-card .body .features svg{color:var(--green);flex-shrink:0}
+.demo-card .visual{display:flex;align-items:center;justify-content:center;width:140px;height:140px;border-radius:50%;background:var(--red-soft);border:2px dashed rgba(239,68,68,0.4);position:relative;flex-shrink:0}
+.demo-card .visual::before{content:"";position:absolute;inset:8px;border-radius:50%;border:1px solid rgba(239,68,68,0.2)}
+.demo-card .visual .label{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--red);font-weight:500;text-align:center;line-height:1.4}
+.demo-card .visual .label strong{display:block;font-family:var(--display);font-size:32px;font-weight:700;color:var(--red);margin-bottom:2px;letter-spacing:-0.02em}
+@media (max-width:780px){.demo-card{grid-template-columns:1fr;gap:30px;padding:36px 28px;text-align:center}.demo-card .visual{margin:0 auto}.demo-card .body .features{grid-template-columns:1fr;text-align:left}}
+
+#about{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start;max-width:1080px;margin:0 auto}
+.about-side{position:sticky;top:90px}
+.about-side .quote{font-family:var(--display);font-style:italic;font-weight:500;font-size:22px;line-height:1.4;color:var(--ink);letter-spacing:-0.018em;margin-bottom:20px;position:relative;padding-left:28px}
+.about-side .quote::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;background:var(--purple);border-radius:2px}
+.about-side .from{font-family:var(--mono);font-size:11.5px;letter-spacing:0.06em;color:var(--purple);text-transform:uppercase;font-weight:500}
+.about-body{display:flex;flex-direction:column;gap:18px;font-size:15.5px;line-height:1.7;color:var(--muted)}
+.about-body p strong{color:var(--ink);font-weight:600}
+.about-body .key{margin-top:14px;padding:24px 26px;background:var(--card);border:1px solid var(--line-2);border-left:3px solid var(--purple);border-radius:var(--r);font-size:15px;line-height:1.6;color:var(--ink);font-weight:400}
+.about-body .key strong{color:var(--purple);font-weight:600}
+@media (max-width:880px){.about-grid{grid-template-columns:1fr;gap:36px}.about-side{position:relative;top:auto}}
+
+#tutorial{background:var(--bg)}
+.tut-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tut-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 26px 26px;display:flex;flex-direction:column;transition:all .25s;cursor:default}
+.tut-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 12px 32px -12px rgba(59,130,246,0.25)}
+.tut-card .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.tut-card .num{width:32px;height:32px;border-radius:8px;background:var(--blue-soft);color:var(--blue);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:600}
+.tut-card .key{font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;color:var(--hint);font-weight:500;padding:4px 9px;background:var(--bg-2);border:1px solid var(--line);border-radius:4px}
+.tut-card h3{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-0.018em;color:var(--ink);margin-bottom:10px;line-height:1.2}
+.tut-card p{font-size:13.5px;line-height:1.65;color:var(--muted)}
+.tut-card p strong{color:var(--ink);font-weight:600}
+.tut-foot{margin-top:32px;text-align:center;font-size:14px;color:var(--muted)}
+.tut-foot strong{color:var(--ink);font-weight:600}
+@media (max-width:880px){.tut-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.tut-grid{grid-template-columns:1fr}}
+
+#login{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.login-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1000px;margin:0 auto}
+.login-card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:36px 32px 34px;display:flex;flex-direction:column}
+.login-card.featured{border-color:var(--green);background:linear-gradient(180deg, rgba(34,197,94,0.04) 0%, var(--card) 100%);position:relative}
+.login-card.featured::before{content:"Recommended";position:absolute;top:-11px;left:24px;font-family:var(--mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;color:var(--bg);background:var(--green);padding:3px 10px;border-radius:4px}
+.login-card .name{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-0.018em;color:var(--ink);margin-bottom:6px}
+.login-card .tag{font-family:var(--mono);font-size:11.5px;color:var(--hint);font-weight:500;margin-bottom:18px}
+.login-card .price{font-family:var(--display);font-weight:700;font-size:38px;color:var(--ink);letter-spacing:-0.03em;line-height:1;display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.login-card .price .ccy{font-family:var(--mono);font-size:0.4em;color:var(--hint);font-weight:500;letter-spacing:0;align-self:flex-start;margin-top:0.4em}
+.login-card .price .free{color:var(--green)}
+.login-card .price-suffix{font-size:13px;color:var(--hint);margin-bottom:24px}
+.login-card ul{list-style:none;display:flex;flex-direction:column;gap:11px;flex:1;padding-top:22px;border-top:1px solid var(--line)}
+.login-card li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--muted);line-height:1.55}
+.login-card li svg{flex-shrink:0;color:var(--green);margin-top:3px}
+.login-card .cta-row{margin-top:26px}
+.login-card .cta-row .btn{width:100%}
+.login-card .fine{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--hint);text-align:center;letter-spacing:0.02em}
+@media (max-width:780px){.login-grid{grid-template-columns:1fr}}
+.login-note{max-width:1000px;margin:32px auto 0;padding:18px 24px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);font-size:13.5px;color:var(--muted);text-align:center;line-height:1.55}
+.login-note strong{color:var(--ink);font-weight:600}
+
+#contact{background:var(--bg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start;max-width:1000px;margin:0 auto}
+.contact-info h2{font-family:var(--display);font-weight:700;font-size:clamp(28px,3.6vw,42px);line-height:1.1;letter-spacing:-0.028em;color:var(--ink);margin-bottom:18px}
+.contact-info h2 .accent{color:var(--blue)}
+.contact-info p{font-size:15px;line-height:1.65;color:var(--muted);margin-bottom:18px}
+.contact-info p strong{color:var(--ink);font-weight:600}
+.contact-info .commits{margin-top:24px;display:flex;flex-direction:column;gap:11px}
+.contact-info .commit{display:flex;align-items:flex-start;gap:11px;font-size:13.5px;color:var(--muted);line-height:1.55}
+.contact-info .commit svg{flex-shrink:0;color:var(--green);margin-top:3px}
+.contact-form{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:32px 30px 28px;display:flex;flex-direction:column;gap:18px}
+.contact-form .field{display:flex;flex-direction:column;gap:6px}
+.contact-form label{font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--muted);font-weight:500;text-transform:uppercase}
+.contact-form input,.contact-form textarea{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:11px 13px;font-size:14.5px;color:var(--ink);font-family:inherit;outline:none;transition:border-color .15s}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--dim);font-family:inherit}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--blue)}
+.contact-form textarea{min-height:100px;resize:vertical;line-height:1.5}
+.contact-form .meeting-toggle{display:flex;align-items:center;gap:11px;padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);cursor:pointer;transition:all .15s}
+.contact-form .meeting-toggle:has(input:checked){border-color:var(--blue);background:var(--blue-soft)}
+.contact-form .meeting-toggle input{width:16px;height:16px;accent-color:var(--blue);cursor:pointer}
+.contact-form .meeting-toggle .lbl{font-size:13.5px;color:var(--ink);font-weight:500}
+.contact-form .meeting-toggle .lbl small{display:block;color:var(--muted);font-weight:400;font-size:12px;margin-top:2px}
+.contact-form .submit-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:6px}
+.contact-form .meta{font-family:var(--mono);font-size:11px;color:var(--hint);letter-spacing:0.02em}
+.contact-success{display:none;margin-top:14px;padding:14px 18px;background:var(--green-soft);border:1px solid rgba(34,197,94,0.4);border-radius:var(--r);font-size:13.5px;color:var(--ink);line-height:1.5}
+.contact-success.show{display:block}
+@media (max-width:880px){.contact-grid{grid-template-columns:1fr;gap:40px}}
+
+#faq{background:var(--bg-2);border-top:1px solid var(--line)}
+.faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{list-style:none;cursor:pointer;padding:22px 0;display:flex;justify-content:space-between;align-items:center;gap:18px;font-family:var(--display);font-weight:600;font-size:16px;color:var(--ink);letter-spacing:-0.014em;transition:color .15s}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{color:var(--blue)}
+.faq-item summary .ico{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--ink);transition:all .2s;font-family:var(--mono);font-size:14px}
+.faq-item[open] summary .ico{background:var(--blue);color:#fff;border-color:var(--blue);transform:rotate(45deg)}
+.faq-item .ans{padding:0 0 22px;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.faq-item .ans a{color:var(--blue);font-weight:500;border-bottom:1px solid rgba(59,130,246,0.4);padding-bottom:1px}
+
+footer{background:var(--bg);color:var(--muted);padding:60px 0 24px;border-top:1px solid var(--line)}
+.foot-grid{max-width:var(--max);margin:0 auto;padding:0 var(--gutter);display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:48px}
+.foot-brand p{margin-top:16px;font-size:13.5px;line-height:1.6;color:var(--muted);max-width:340px}
+.foot-brand .legal{margin-top:18px;font-family:var(--mono);font-size:11.5px;color:var(--hint);line-height:1.6}
+.foot-col h5{font-family:var(--display);font-size:13px;font-weight:600;color:var(--ink);margin-bottom:16px;letter-spacing:-0.005em}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.foot-col a{font-size:13.5px;color:var(--muted);transition:color .15s;display:inline-flex;align-items:center;gap:8px}
+.foot-col a:hover{color:var(--ink)}
+.foot-col a .nd{width:6px;height:6px;border-radius:50%;flex-shrink:0;opacity:0.6}
+.foot-col a:hover .nd{opacity:1}
+.foot-col a.demo .nd{background:var(--red)}
+.foot-col a.about .nd{background:var(--purple)}
+.foot-col a.tutorial .nd{background:var(--blue)}
+.foot-col a.login .nd{background:var(--green)}
+.foot-bot{max-width:var(--max);margin:48px auto 0;padding:22px var(--gutter) 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--hint)}
+.foot-credit{max-width:var(--max);margin:14px auto 0;padding:0 var(--gutter);text-align:center;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:0.04em}
+.foot-credit a{color:var(--blue);font-weight:500}
+@media (max-width:780px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.foot-grid{grid-template-columns:1fr}}
+
+/* ─── Mobile nav drawer ─── */
+.menu-toggle{display:none;align-items:center;justify-content:center;width:42px;height:42px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.10);color:#e8eaed;cursor:pointer;transition:background .15s,border-color .15s;padding:0;margin-left:auto}
+.menu-toggle:hover{border-color:#3ba0ff}
+.menu-toggle .bar{display:block;width:18px;height:2px;background:currentColor;border-radius:1px;transition:transform .25s,opacity .2s}
+.menu-toggle .bar+.bar{margin-top:4px}
+body.nav-open .menu-toggle .bar:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.nav-open .menu-toggle .bar:nth-child(2){opacity:0}
+body.nav-open .menu-toggle .bar:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.nav-scrim{position:fixed;inset:0;background:rgba(0,0,0,0.42);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;z-index:1190}
+body.nav-open .nav-scrim{opacity:1;visibility:visible}
+.nav-drawer{position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);background:#0e1320;box-shadow:-20px 0 50px rgba(0,0,0,0.18);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:1200;display:flex;flex-direction:column;overflow-y:auto;color:#e8eaed}
+body.nav-open .nav-drawer{transform:translateX(0)}
+.nav-drawer .nd-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,0.10);color:#e8eaed}
+.nav-drawer .nd-close{width:38px;height:38px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.10);color:#e8eaed;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;padding:0}
+.nav-drawer .nd-close:hover{border-color:#3ba0ff;color:#3ba0ff}
+.nav-drawer .nd-links{display:flex;flex-direction:column;padding:14px 22px;gap:0}
+.nav-drawer .nd-links a{display:block;padding:14px 4px;font-size:17px;font-weight:600;color:#e8eaed;border-bottom:1px solid rgba(255,255,255,0.10);text-decoration:none}
+.nav-drawer .nd-links a:last-child{border-bottom:none}
+.nav-drawer .nd-links a:hover{color:#3ba0ff}
+.nav-drawer .nd-foot{margin-top:auto;padding:22px;border-top:1px solid rgba(255,255,255,0.10)}
+.nav-drawer .nd-foot .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;background:#3ba0ff;color:#fff;border-radius:10px;font-size:14.5px;font-weight:600;width:100%;text-decoration:none;text-align:center}
+@media (max-width:920px){.menu-toggle{display:inline-flex}}
+body.nav-open{overflow:hidden}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="mark"></div>
+      The Schedulator
+    </a>
+    <button class="menu-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navDrawer"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+    <nav class="nav">
+      <div class="navlinks">
+        <a href="#demo" class="demo"><span class="nd"></span>demo</a>
+        <a href="#about" class="about"><span class="nd"></span>about</a>
+        <a href="#tutorial" class="tutorial"><span class="nd"></span>tutorial</a>
+        <a href="#login" class="login"><span class="nd"></span>login</a>
+      </div>
+      <a href="https://schedulator.net/demo" class="cta-pill" target="_blank" rel="noopener">Try the Demo <span class="arrow">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
+<aside class="nav-drawer" id="navDrawer" role="dialog" aria-label="Navigation" aria-modal="true" aria-hidden="true">
+  <div class="nd-head">
+    <a href="#" class="logo" aria-label="The Schedulator home"><span class="word">The Schedulator</span></a>
+    <button class="nd-close" id="navClose" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="nd-links">
+    <a href="#demo" data-nav-close>Demo</a>
+    <a href="#about" data-nav-close>About</a>
+    <a href="#tutorial" data-nav-close>Tutorial</a>
+    <a href="#pricing" data-nav-close>Pricing</a>
+  </div>
+  <div class="nd-foot">
+    <a href="#login" class="cta" data-nav-close>Log in</a>
+  </div>
+</aside>
+
+
+<section class="hero">
+  <div class="hero-grid">
+    <span class="eyebrow"><span class="dot" style="background:var(--blue)"></span>Built by an elementary PE teacher</span>
+    <h1>Lay out your school's <span class="accent">specials schedule.</span><br>Without the <span class="strike">spreadsheet</span> headache.</h1>
+    <p class="lede">Drag-and-drop. Move one class and every affected schedule updates instantly. Add as many specials as you need, set default and alternate blocks, and export your final schedule as a PDF.</p>
+    <div class="hero-cta">
+      <a href="https://schedulator.net/demo" class="btn btn-red" target="_blank" rel="noopener">Try the Free Demo <span class="arrow">→</span></a>
+      <a href="#tutorial" class="btn btn-ghost">See How it Works</a>
+    </div>
+    <div class="hero-meta">
+      <div class="item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>No <strong>account needed</strong> for demo</div>
+      <div class="item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Runs in your <strong>browser</strong></div>
+      <div class="item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Print to <strong>PDF</strong></div>
+    </div>
+
+    <div class="hero-shot" role="img" aria-label="The Schedulator app, sample weekly specials schedule with color-coded classes">
+      <div class="bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="url"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>schedulator.net/demo</div>
+      </div>
+      <div class="sched-grid">
+        <div class="toolbar">
+          <span class="pill active">Schedule View</span>
+          <span class="pill">Set Up View</span>
+          <span class="spacer"></span>
+          <span class="keys">Alt+V to toggle · Alt+S to save</span>
+        </div>
+        <div class="grid">
+          <div class="gh row">&nbsp;</div>
+          <div class="gh">Mon</div>
+          <div class="gh">Tue</div>
+          <div class="gh">Wed</div>
+          <div class="gh">Thu</div>
+          <div class="gh">Fri</div>
+
+          <div class="gh row">Pre-K</div>
+          <div class="gc art">Art</div>
+          <div class="gc music">Music</div>
+          <div class="gc pe">PE</div>
+          <div class="gc empty"> · </div>
+          <div class="gc stem">STEM</div>
+
+          <div class="gh row">K</div>
+          <div class="gc music">Music</div>
+          <div class="gc pe">PE</div>
+          <div class="gc art">Art</div>
+          <div class="gc stem">STEM</div>
+          <div class="gc lib">Library</div>
+
+          <div class="gh row">1st</div>
+          <div class="gc pe">PE</div>
+          <div class="gc stem">STEM</div>
+          <div class="gc music">Music</div>
+          <div class="gc art">Art</div>
+          <div class="gc span">Spanish</div>
+
+          <div class="gh row">2nd</div>
+          <div class="gc stem">STEM</div>
+          <div class="gc art">Art</div>
+          <div class="gc empty"> · </div>
+          <div class="gc pe pulse">PE</div>
+          <div class="gc music">Music</div>
+
+          <div class="gh row">3rd</div>
+          <div class="gc lib">Library</div>
+          <div class="gc music">Music</div>
+          <div class="gc stem">STEM</div>
+          <div class="gc span">Spanish</div>
+          <div class="gc pe">PE</div>
+
+          <div class="gh row">4th</div>
+          <div class="gc art">Art</div>
+          <div class="gc span">Spanish</div>
+          <div class="gc lib">Library</div>
+          <div class="gc music">Music</div>
+          <div class="gc stem">STEM</div>
+
+          <div class="gh row">5th</div>
+          <div class="gc span">Spanish</div>
+          <div class="gc lib">Library</div>
+          <div class="gc art">Art</div>
+          <div class="gc stem">STEM</div>
+          <div class="gc empty"> · </div>
+        </div>
+        <div class="footnote">
+          <div class="legend">
+            <span><i style="background:var(--red)"></i>Art</span>
+            <span><i style="background:var(--purple)"></i>Music</span>
+            <span><i style="background:var(--blue)"></i>PE</span>
+            <span><i style="background:var(--green)"></i>STEM</span>
+            <span><i style="background:#06b6d4"></i>Spanish</span>
+            <span><i style="background:#f59e0b"></i>Library</span>
+          </div>
+          <div>Add as many specials as your school needs.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow demo"><span class="dot"></span>Demo</span>
+      <h2>Try it. <span class="red">No account, no email.</span></h2>
+      <p>Demo mode is the full app, every tool, every keyboard shortcut, every feature. The only thing you can't do is save to the cloud. You can still download your work as a JSON file or print it as a PDF.</p>
+    </div>
+
+    <div class="demo-card">
+      <div class="body">
+        <h3>What you can do in the demo</h3>
+        <p>Build a complete specials schedule for a real or sample school. Add as many <strong>specials</strong> as you need, configure your <strong>blocks</strong>, name your <strong>teachers</strong>, and use every drag-and-drop tool, including the <strong>Wand</strong> and <strong>click-to-swap</strong> mechanics.</p>
+        <div class="features">
+          <div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Schedule + Set Up views</div>
+          <div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>All editing tools active</div>
+          <div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Download as JSON</div>
+          <div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Print to PDF</div>
+          <div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Upload a saved JSON</div>
+          <div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Keyboard shortcuts</div>
+        </div>
+        <a href="https://schedulator.net/demo" class="btn btn-red" target="_blank" rel="noopener">Open the Demo <span class="arrow">→</span></a>
+      </div>
+      <div class="visual">
+        <div class="label"><strong>$0</strong>full app</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow about"><span class="dot"></span>About</span>
+      <h2>Built by a teacher who got <span class="purple">tired of the schedule.</span></h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-side">
+        <div class="quote">"After watching a colleague spend dozens of hours on the schedule, only to redo it again to satisfy administrative requirements, I decided to build a tool that would make the process faster and easier."</div>
+        <div class="from">Patrick Detzner · Elementary PE Teacher · Founder</div>
+      </div>
+      <div class="about-body">
+        <p>The Schedulator was created by an elementary school <strong>Physical Education teacher</strong> frustrated by the complicated and time-consuming process of creating elementary school specials schedules.</p>
+        <p>After seeing a colleague spend literally dozens of hours working on the schedule, only to have to redo it yet again to satisfy administrative requirements, the founder decided to develop a tool that would make the process faster and easier.</p>
+        <div class="key">
+          The key improvement that the Schedulator offers is that <strong>all changes are immediately and visually updated for all affected teachers.</strong> Move a first-grade teacher's Music special from Monday to Tuesday and the Music teacher's schedule instantly updates to reflect that change. Test different combinations of schedule changes without the headache of double-checking every move.
+        </div>
+        <p>The Schedulator is available as a <strong>free demo</strong>, and a low-priced subscription unlocks <strong>cloud save</strong>, so you can store, modify, and reuse multiple schedules from year to year, accessible from anywhere you sign in.</p>
+        <p style="font-family:var(--mono);font-size:13px;color:var(--hint);margin-top:8px">Made by Streamline Swimming Solutions LLC. No student data, no SIS integration, no FERPA concerns, just the schedule.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tutorial">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow tutorial"><span class="dot"></span>Tutorial</span>
+      <h2>Most of it is self-explanatory. <span class="blue">A few specialized tools</span> are worth showing.</h2>
+      <p>The basics, adding specials, setting blocks, dragging classes, most users figure out in 10 minutes. Here are the specialized tools that take the schedule from "manageable" to "fast."</p>
+    </div>
+
+    <div class="tut-grid">
+      <div class="tut-card">
+        <div class="head">
+          <div class="num">01</div>
+          <div class="key">Click</div>
+        </div>
+        <h3>The Wand Tool</h3>
+        <p>Click the wand icon, pick a <strong>special</strong>, then click empty cells to fill them. Click a filled cell to clear it. The fastest way to lay out a blank schedule. Press <strong>Esc</strong> to deactivate.</p>
+      </div>
+
+      <div class="tut-card">
+        <div class="head">
+          <div class="num">02</div>
+          <div class="key">Click → Click</div>
+        </div>
+        <h3>Swap Classes</h3>
+        <p>Select a class, then click another to <strong>swap their positions.</strong> On the grade-level side, the specials swap. On the specials side, the grade and teacher swap. Useful for testing what-ifs.</p>
+      </div>
+
+      <div class="tut-card">
+        <div class="head">
+          <div class="num">03</div>
+          <div class="key">Right-Click</div>
+        </div>
+        <h3>Block-Time Override</h3>
+        <p>Right-click any class (or Alt+click) to change <strong>just that class's time.</strong> Perfect for early-release Wednesdays or Pre-K's shorter periods, without making a separate row for every variation.</p>
+      </div>
+
+      <div class="tut-card">
+        <div class="head">
+          <div class="num">04</div>
+          <div class="key">Set Up View</div>
+        </div>
+        <h3>Default + Alternate Blocks</h3>
+        <p>Set the standard time period for each grade. Add <strong>alternate blocks</strong> for Pre-K (shorter classes), Wednesdays (early release), or any irregular day. The schedule auto-applies the right block per grade.</p>
+      </div>
+
+      <div class="tut-card">
+        <div class="head">
+          <div class="num">05</div>
+          <div class="key">Alt+S / Alt+C</div>
+        </div>
+        <h3>Cloud Save + Drafts</h3>
+        <p>With a subscription, save schedules to your account. <strong>Save a Copy</strong> creates a draft so you can test changes without losing the original. Rename, organize, and reopen from the file list anytime.</p>
+      </div>
+
+      <div class="tut-card">
+        <div class="head">
+          <div class="num">06</div>
+          <div class="key">Alt+P / Alt+D</div>
+        </div>
+        <h3>Print + Portability</h3>
+        <p>Print to PDF for distribution. Download/upload as <strong>JSON</strong> to move schedules between accounts, share with a colleague, or use without an account in demo mode.</p>
+      </div>
+    </div>
+
+    <div class="tut-foot">
+      <strong>Keyboard-shortcut tip:</strong> Alt+V toggles between Schedule and Set Up views, the single most-used shortcut.
+    </div>
+  </div>
+</section>
+
+<section id="login">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow login"><span class="dot"></span>Login</span>
+      <h2>Get cloud save. <span class="green">Sign in once, work from anywhere.</span></h2>
+      <p>The free demo is the full app, but your work lives only in your browser. A subscription gives you cloud-saved schedules accessible from any device, plus the ability to keep multiple drafts and copies.</p>
+    </div>
+
+    <div class="login-grid">
+      <div class="login-card demo">
+        <div class="name">Free Demo</div>
+        <div class="tag">No account required</div>
+        <div class="price"><span class="free">$0</span></div>
+        <div class="price-suffix">forever</div>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Full app, every tool, every shortcut</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Build unlimited schedules in-browser</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Download/upload as JSON</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Print to PDF</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>No account, no email, no signup</li>
+        </ul>
+        <div class="cta-row">
+          <a href="https://schedulator.net/demo" class="btn btn-ghost" target="_blank" rel="noopener">Open the Demo <span class="arrow">→</span></a>
+        </div>
+      </div>
+
+      <div class="login-card featured">
+        <div class="name">Subscription</div>
+        <div class="tag">Cloud save + multi-device</div>
+        <div class="price"><span class="ccy">USD</span>$14.99<span style="font-size:0.42em;color:var(--hint);font-weight:500;letter-spacing:0;margin-left:4px">/yr</span></div>
+        <div class="price-suffix">~$1.25/month · or $29.99 for 3 years</div>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Everything in Free, plus:</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Cloud save, schedules in your account</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Multiple drafts and copies per schedule</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Access from any browser, any device</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Rename, organize, and reopen instantly</li>
+        </ul>
+        <div class="cta-row">
+          <a href="https://schedulator.net/login" class="btn btn-green" target="_blank" rel="noopener">Sign Up via Stripe <span class="arrow">→</span></a>
+        </div>
+        <div class="fine">Secure checkout · cancel anytime</div>
+      </div>
+    </div>
+
+    <div class="login-note">
+      <strong>What it isn't:</strong> The Schedulator doesn't share schedules with parents, integrate with student-information systems, or handle teacher absences. It's a focused tool for laying out the year's specials schedule. Think of it as a <strong>specialized Google Sheets</strong> for that one job. When you're done, export a PDF and email it to your school.
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="eyebrow"><span class="dot" style="background:var(--blue)"></span>Contact</span>
+        <h2 style="margin-top:18px">Have a question? <span class="accent">Send a note.</span></h2>
+        <p>The form goes straight to Patrick, the founder. Toggle the meeting button below if you'd rather schedule a call instead, and Patrick will follow up with availability.</p>
+        <div class="commits">
+          <div class="commit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Replies usually within 1–2 business days</div>
+          <div class="commit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Direct from the founder, not a queue</div>
+          <div class="commit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>School-district inquiries welcome</div>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="event.preventDefault();this.querySelector('.contact-success').classList.add('show');this.querySelector('button[type=submit]').textContent='Sent ✓';this.querySelector('button[type=submit]').disabled=true;">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="name" required placeholder="Your name">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" required placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label>School / Role (optional)</label>
+          <input type="text" name="school" placeholder="e.g., PE Teacher, Lincoln Elementary">
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea name="message" required placeholder="What would you like to know?"></textarea>
+        </div>
+        <label class="meeting-toggle">
+          <input type="checkbox" name="meeting">
+          <div class="lbl">I'd like to schedule a meeting<small>Patrick will follow up by email with availability</small></div>
+        </label>
+        <div class="submit-row">
+          <span class="meta">→ patrick.detzner@gmail.com</span>
+          <button type="submit" class="btn btn-blue">Send <span class="arrow">→</span></button>
+        </div>
+        <div class="contact-success">Got it. Patrick will reply within a couple business days.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow"><span class="dot" style="background:var(--blue)"></span>Frequently Asked</span>
+      <h2>Common questions, <span class="blue">honest answers.</span></h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Is the free demo really free, with no signup? <span class="ico">+</span></summary>
+        <div class="ans">Yes. Open <a href="https://schedulator.net/demo" target="_blank" rel="noopener">schedulator.net/demo</a> in your browser and start building. No email, no card, no account. Every editing tool works. The only difference vs. the paid version is that your schedules don't sync to a cloud account, you save them locally as JSON files instead.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Does it handle teacher absences or sick days? <span class="ico">+</span></summary>
+        <div class="ans">No. The Schedulator is for laying out the <strong>standard year-long schedule</strong>, which teachers go to which specials on which days. Daily absence rotation is a different problem and isn't part of the tool.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Does it integrate with our SIS (PowerSchool, Infinite Campus)? <span class="ico">+</span></summary>
+        <div class="ans">No, intentionally. The Schedulator doesn't store student data, so there's no roster or grade-book sync. You enter your school's grades, sections, teachers, and specials manually in the Set Up view, and most schools have this entered in under 15 minutes.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What about FERPA / student data privacy? <span class="ico">+</span></summary>
+        <div class="ans">Not applicable. The Schedulator never collects, stores, or processes student information. The only personal data in your account is your email address (for login) and the names of staff you choose to add to schedules.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I share schedules with other staff or parents? <span class="ico">+</span></summary>
+        <div class="ans">Not interactively, there's no real-time collaboration or parent portal. The intended workflow is: build your schedule in the app, <strong>print to PDF</strong>, and email or post the PDF to your school staff. If you want to hand a draft to a colleague for review, you can also <strong>download/upload as JSON</strong>.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How many specials / grades / colors can I add? <span class="ico">+</span></summary>
+        <div class="ans">As many specials as your school needs, Art, Music, PE, STEM, Spanish, Library, Theater, Coding, whatever fits. Same with grade levels and teachers. Multiple colors are available beyond the four defaults, and you can rename and recolor any special at any time.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens to my saved schedules if I cancel my subscription? <span class="ico">+</span></summary>
+        <div class="ans">Download them as JSON files before canceling, that's a permanent local backup. You can re-upload them into the demo or into a re-subscribed account anytime. Cloud-saved schedules become inaccessible while a subscription is paused, but they aren't deleted.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Who built this? <span class="ico">+</span></summary>
+        <div class="ans">Patrick Detzner, an elementary PE teacher who got tired of watching colleagues lose dozens of hours a year to the specials schedule. The Schedulator is operated by Streamline Swimming Solutions LLC.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#" class="logo">
+        <div class="mark"></div>
+        The Schedulator
+      </a>
+      <p>A drag-and-drop scheduling tool for elementary specials, built by an elementary PE teacher who got tired of doing it in spreadsheets.</p>
+      <div class="legal">
+        © 2026 Streamline Swimming Solutions LLC.<br>
+        All rights reserved.
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Product</h5>
+      <ul>
+        <li><a href="#demo" class="demo"><span class="nd"></span>Free Demo</a></li>
+        <li><a href="#about" class="about"><span class="nd"></span>About</a></li>
+        <li><a href="#tutorial" class="tutorial"><span class="nd"></span>Tutorial</a></li>
+        <li><a href="#login" class="login"><span class="nd"></span>Login</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Get in touch</h5>
+      <ul>
+        <li><a href="#contact">Contact Patrick</a></li>
+        <li><a href="https://schedulator.net/demo" target="_blank" rel="noopener">Open the Demo</a></li>
+        <li><a href="https://schedulator.net/login" target="_blank" rel="noopener">Sign Up</a></li>
+        <li><a href="mailto:patrick.detzner@gmail.com">patrick.detzner@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot-bot">
+    <div>The Schedulator · Specials class scheduling for elementary schools</div>
+    <div>schedulator.net</div>
+  </div>
+
+  <div class="foot-credit">
+    Built by <a href="https://pymewebpro.com" rel="noopener">PymeWebPro</a>  ·  <a href="https://pymewebpro.com" rel="noopener" style="opacity:0.85">Want a site like this for your business? pymewebpro.com →</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.querySelectorAll('.faq-item').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if (d.open) {
+        document.querySelectorAll('.faq-item').forEach(function(o){
+          if (o !== d) o.removeAttribute('open');
+        });
+      }
+    });
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  var body=document.body,toggle=document.getElementById('navToggle'),drawer=document.getElementById('navDrawer'),scrim=document.getElementById('navScrim'),closeBtn=document.getElementById('navClose');
+  if(!toggle||!drawer)return;
+  function open(){body.classList.add('nav-open');toggle.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false')}
+  function close(){body.classList.remove('nav-open');toggle.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true')}
+  toggle.addEventListener('click',function(){body.classList.contains('nav-open')?close():open()});
+  if(closeBtn)closeBtn.addEventListener('click',close);
+  if(scrim)scrim.addEventListener('click',close);
+  document.querySelectorAll('[data-nav-close]').forEach(function(a){a.addEventListener('click',close)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&body.classList.contains('nav-open'))close()});
+})();
+</script>
+</body>
+</html>

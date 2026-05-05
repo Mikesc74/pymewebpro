@@ -1,48 +1,27 @@
-// mockups.js — mockup generation, share links, comments, and ship-to-Pages.
-// Designed to be added to pymewebpro-portal as a new module.
+// mockups.js — manual mockup uploads, share links, comments, and ship-to-Pages.
+//
+// As of May 2026, mockups are NO LONGER auto-generated. Mike builds sites by
+// hand in Cowork and uploads the rendered HTML + assets through the admin UI.
+// The auto-gen pipeline (Opus 4.7 + blueprint variants) is archived under
+// src/_archived/ for reference.
 //
 // Reuses portal helpers from utils.js: json, isAdmin, randomToken, uuid, sha256, escapeHtml.
 // Reuses portal bindings: env.DB (D1), env.ASSETS (R2 = pymewebpro-client-assets).
-// New env vars: ANTHROPIC_API_KEY (required for Claude), CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID (required for ship-to-Pages).
+// Env vars: CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID (for ship-to-Pages,
+// custom-domain attach, Email Routing, screenshot capture).
 //
-// Schema (run once against pymewebpro-portal D1):
-//   mockups, mockup_shares, mockup_comments — see mockups-schema.sql
+// R2 layout for manual mockups:
+//   manual/<clientId>/<mockupId>/index.html   — required
+//   manual/<clientId>/<mockupId>/<file>        — optional sibling files
+//
+// Legacy auto-gen mockups still serve fine — their html_r2_key starts with
+// `mockups/...` and assets live at `<prefix>/asset/<name>`. The previewAsset
+// route handles both layouts.
 
-import { BLUEPRINTS } from "./blueprint.js";
-import { renderPrivacyEs, renderPrivacyEn, renderTermsEs, renderTermsEn, renderRobots, renderSitemap } from "./legal.js";
-
-// ─── Helpers (replace these imports with your portal's utils.js exports) ────
-// import { json, isAdmin, randomToken, uuid, sha256, escapeHtml } from "./utils.js";
-// (The portal already exports these — keep this comment for reference when integrating.)
-
-const SYSTEM_PROMPT_BASE = `Eres un editor copy senior de PymeWebPro. Recibes datos crudos de un cliente colombiano (PyME) y devuelves un JSON listo para alimentar un blueprint HTML.
-Reglas:
-- Español colombiano natural, profesional pero cálido. NO suene a IA. Frases cortas.
-- Si datos faltan, INVENTA piezas razonables y conservadoras (no exageres).
-- Servicios: máximo 6, cada uno 2-4 palabras.
-- "tagline": 6-12 palabras, beneficio claro, no cliché.
-- Colores: si el cliente da hex/nombres, conviértelos a hex; si no, elige una paleta apropiada al sector (primary + accent + ink + bg).
-Campos básicos (Esencial): businessName, tagline, industry, services, phone, email, address, hours, instagram, facebook, primary, accent, ink, bg, ctaPhone, ctaWhatsapp, testimonials (array de {name, quote, role} si los datos del cliente los incluyen, si no [])`;
-
-const SYSTEM_PROMPT_PRO_EXTRA = `
-ADEMÁS, este cliente es plan CRECIMIENTO (Growth). Los datos del cliente contienen una sección "growth" con campos opcionales. Para cada campo:
-- Si el cliente proporcionó un valor → inclúyalo TAL CUAL (no modifique URLs ni IDs).
-- Si está vacío → OMITA la clave del JSON (no invente URLs/IDs).
-
-Campos esperados de la sección growth:
-- bookingsUrl: URL de Calendly / Cal.com / sistema de reservas
-- pdfUrl + pdfLabel: link a un catálogo / menú PDF y la etiqueta del botón
-- waCatalogUrl: link al catálogo de WhatsApp Business
-- newsletterUrl: endpoint POST del formulario de suscripción
-- ga4Id: ID de Google Analytics 4 (formato G-XXXXXXXX)
-- metaPixelId: ID del Meta Pixel (números)
-
-Adicionalmente, los campos "_parsedTestimonials" y "_parsedFaqs" ya están parseados como arrays de objetos en los datos crudos. Cópialos directamente al JSON como "testimonials" y "faqs" (no los re-parsee, no los modifique). Si están vacíos, devuelva [].`;
-
-function systemPromptFor(plan) {
-  const isPro = String(plan || "").toLowerCase() === "pro" || String(plan || "").toLowerCase() === "crecimiento" || String(plan || "").toLowerCase() === "growth";
-  return SYSTEM_PROMPT_BASE + (isPro ? "\n\n" + SYSTEM_PROMPT_PRO_EXTRA : "") + `\n\nDevuelve SOLO JSON, sin markdown ni texto adicional.`;
-}
+import { renderRobots, renderSitemap } from "./legal.js";
+// Admin AI chat removed — no Anthropic-in-the-portal. All build work happens in Cowork now.
+// import { handleAdminChat } from "./admin-chat.js";  // archived → src/_archived/admin-chat.js
+import { MANUAL_MOCKUPS } from "./manual-mockups.js";
 
 // ─── Public dispatch (called from index.js) ─────────────────────────────────
 
@@ -55,7 +34,51 @@ export async function handleMockups(req, env, ctx, helpers) {
   // Custom-domain serving — if the request Host matches a custom_domain, route to that client's site
   const reqHost = (req.headers.get("host") || "").toLowerCase().replace(/^www\./, "");
   const knownHosts = ["portal.pymewebpro.com", "pymewebpro.com"];
-  if (m === "GET" && reqHost && !knownHosts.includes(reqHost) && !reqHost.endsWith(".workers.dev")) {
+
+  // ── Manual mockups host (mockups.pymewebpro.com) ─────────────────────────
+  // Custom-built one-off marketing sites (e.g. Schedulator) that bypass the
+  // PYME auto-generator. Keyed by URL slug; HTML is fully self-contained and
+  // lives in src/manual-mockups.js. New mockups can be added by appending to
+  // the MANUAL_MOCKUPS map — no other code changes required.
+  if (m === "GET" && reqHost === "mockups.pymewebpro.com") {
+    const slugMatch = p.match(/^\/([a-z0-9-]+)\/?$/);
+    const slug = slugMatch ? slugMatch[1] : null;
+    if (slug && MANUAL_MOCKUPS[slug]) {
+      return new Response(MANUAL_MOCKUPS[slug], {
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "x-robots-tag": "noindex, nofollow",
+          "cache-control": "public, max-age=300",
+        },
+      });
+    }
+    // Index page listing available mockups
+    if (p === "/" || p === "") {
+      return new Response(`<html><body style="font-family:system-ui;padding:40px;background:#0a0e1a;color:#fff"><h1>PymeWebPro Mockups</h1><ul>${Object.keys(MANUAL_MOCKUPS).map(s => "<li><a href=\"/" + s + "\" style=\"color:#fbbf24\">" + s + "</a></li>").join("")}</ul></body></html>`, { headers: { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex" } });
+    }
+    return new Response("Mockup not found", { status: 404 });
+  }
+
+  // Tenant subdomain: <slug>.sites.pymewebpro.com — every client auto-published here
+  const sitesMatch = reqHost.match(/^([a-z0-9-]+)\.sites\.pymewebpro\.com$/);
+  if (m === "GET" && sitesMatch) {
+    const slug = sitesMatch[1];
+    const exists = await env.DB.prepare(
+      "SELECT slug FROM live_sites WHERE slug = ? AND r2_prefix != ''",
+    ).bind(slug).first();
+    if (exists) {
+      // Mark with X-Robots-Tag: noindex so search engines crawl the real domain instead
+      const resp = await serveLiveSite(env, slug, p === "" ? "/" : p);
+      if (resp && resp.headers && !resp.headers.has("X-Robots-Tag")) {
+        const newHeaders = new Headers(resp.headers);
+        newHeaders.set("X-Robots-Tag", "noindex, nofollow");
+        return new Response(resp.body, { status: resp.status, headers: newHeaders });
+      }
+      return resp;
+    }
+  }
+
+  if (m === "GET" && reqHost && !knownHosts.includes(reqHost) && !reqHost.endsWith(".workers.dev") && !reqHost.endsWith(".sites.pymewebpro.com")) {
     const customSite = await env.DB.prepare(
       "SELECT slug FROM live_sites WHERE custom_domain = ? AND r2_prefix != ''",
     ).bind(reqHost).first();
@@ -73,6 +96,17 @@ export async function handleMockups(req, env, ctx, helpers) {
   if (mt && m === "POST") return newsletterSubscribe(env, helpers, mt[1], req);
   if (mt && m === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders() });
 
+  // Public lead-form endpoint — every customer site posts here; we forward to client's email
+  mt = p.match(/^\/api\/lead\/([A-Za-z0-9-]+)$/);
+  if (mt && m === "POST") return leadFormSubmit(env, helpers, mt[1], req);
+  if (mt && m === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders() });
+
+  // Admin preview wrapper with desktop/tablet/mobile viewport switcher.
+  // Loads the actual mockup inside a constrained iframe so Mike can verify
+  // responsive behaviour without opening DevTools.
+  mt = p.match(/^\/preview-frame\/([A-Za-z0-9_-]+)\/?$/);
+  if (mt && m === "GET") return previewFrame(env, mt[1]);
+
   // Public preview viewer (signed share token)
   mt = p.match(/^\/m\/([A-Za-z0-9_-]+)\/?$/);
   if (mt && m === "GET") return previewIndex(env, helpers, mt[1], "es");
@@ -89,12 +123,29 @@ export async function handleMockups(req, env, ctx, helpers) {
   if (mt && m === "GET") return previewFile(env, mt[1], mt[2]);
 
   // Admin (require isAdmin)
-  if (p.startsWith("/api/admin/mockups") || p.startsWith("/api/admin/clients/") && p.includes("/mockups")) {
+  // This block handles all admin/mockups/* AND any /api/admin/clients/<id>/<sub>
+  // routes registered below (mockups, site/disable, site/enable, domain,
+  // email-forwarding, blueprint). Routes that don't match here fall through
+  // to handleAdmin in index.js via the `return null` at the end of the function.
+  if (p.startsWith("/api/admin/mockups") || p.startsWith("/api/admin/clients/")) {
     if (!helpers.isAdmin(req, env)) return helpers.json({ error: "unauthorized" }, 401);
 
     mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/mockups$/);
-    if (mt && m === "POST") return generateForClient(env, helpers, mt[1], req);
+    // POST (auto-generate) was removed in the May 2026 refactor — manual uploads
+    // are the new path. Mocking this with 410 Gone so any stale clients (browser
+    // tabs, scripts) get a clear signal instead of a confusing 404.
+    if (mt && m === "POST") return helpers.json({ error: "auto_generation_removed", msg: "Auto-generation is no longer supported. Upload mockup files via POST /api/admin/clients/:id/manual-mockup/upload + /finalize." }, 410);
     if (mt && m === "GET") return listForClient(env, helpers, mt[1]);
+
+    // ── Manual mockup upload (replaces auto-gen) ─────────────────────────
+    mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/manual-mockup\/upload$/);
+    if (mt && m === "POST") return manualMockupUpload(env, helpers, mt[1], req);
+
+    mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/manual-mockup\/finalize$/);
+    if (mt && m === "POST") return manualMockupFinalize(env, helpers, mt[1], req);
+
+    mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/manual-mockup\/([A-Za-z0-9-]+)\/file\/(.+)$/);
+    if (mt && m === "DELETE") return manualMockupDeleteFile(env, helpers, mt[1], mt[2], decodeURIComponent(mt[3]));
 
     mt = p.match(/^\/api\/admin\/mockups\/([A-Za-z0-9-]+)$/);
     if (mt && m === "GET") return getMockup(env, helpers, mt[1]);
@@ -105,11 +156,25 @@ export async function handleMockups(req, env, ctx, helpers) {
     mt = p.match(/^\/api\/admin\/mockups\/([A-Za-z0-9-]+)\/comments$/);
     if (mt && m === "GET") return listComments(env, helpers, mt[1]);
 
+    mt = p.match(/^\/api\/admin\/mockups\/([A-Za-z0-9-]+)\/reply$/);
+    if (mt && m === "POST") return postAdminReply(env, helpers, mt[1], req);
+
+    // /regenerate route removed (auto-gen archived). Returns 410 so stale clients see a clear error.
     mt = p.match(/^\/api\/admin\/mockups\/([A-Za-z0-9-]+)\/regenerate$/);
-    if (mt && m === "POST") return regenerate(env, helpers, mt[1], req);
+    if (mt && m === "POST") return helpers.json({ error: "auto_generation_removed", msg: "Regeneration is no longer supported. Upload a new manual mockup version instead." }, 410);
 
     mt = p.match(/^\/api\/admin\/mockups\/([A-Za-z0-9-]+)\/preflight$/);
     if (mt && m === "GET") return preflightMockup(env, helpers, mt[1]);
+
+    // /blueprint route removed (no more blueprint variants). 410 for clarity.
+    mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/blueprint$/);
+    if (mt && m === "PUT") return helpers.json({ error: "blueprints_removed", msg: "Blueprint variants no longer apply (manual-mockup workflow)." }, 410);
+
+    mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/admin-css$/);
+    if (mt && m === "PUT") return setClientAdminCss(env, helpers, mt[1], req);
+
+    mt = p.match(/^\/api\/admin\/mockups\/([A-Za-z0-9-]+)\/push-to-client$/);
+    if (mt && m === "POST") return pushMockupToClient(env, helpers, mt[1]);
 
     mt = p.match(/^\/api\/admin\/mockups\/([A-Za-z0-9-]+)\/ship$/);
     if (mt && m === "POST") return shipMockup(env, helpers, mt[1], req);
@@ -123,284 +188,163 @@ export async function handleMockups(req, env, ctx, helpers) {
     mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/domain$/);
     if (mt && m === "POST") return attachDomain(env, helpers, mt[1], req);
     if (mt && m === "DELETE") return detachDomain(env, helpers, mt[1]);
+
+    mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/email-forwarding$/);
+    if (mt && m === "POST") return enableEmailForwarding(env, helpers, mt[1], req);
+
+    // Admin AI chat endpoint removed — return 410 Gone for any old SPA still calling it
+    if (/^\/api\/admin\/clients\/[A-Za-z0-9-]+\/ai-chat$/.test(p)) {
+      return helpers.json({ error: "removed", msg: "AI chat moved out of the portal. All site building now happens in Cowork." }, 410);
+    }
   }
 
   return null; // fall through to portal's existing dispatcher
 }
 
-// ─── Generation ─────────────────────────────────────────────────────────────
+// ─── Manual mockup upload ───────────────────────────────────────────────────
+// Replaces the legacy auto-gen pipeline (Opus 4.7 + blueprints). The admin
+// builds a site by hand in Cowork, then uploads index.html plus any sibling
+// files (CSS, JS, images, fonts, sub-pages) through the admin SPA.
+//
+// Two-step flow so the client SPA can stream individual files via fetch():
+//   1) POST /upload — one file per call, identified by X-Mockup-Id + X-Filename
+//   2) POST /finalize — once all files are in R2, create the mockups row
+//
+// R2 layout:  manual/<clientId>/<mockupId>/<filename>
+// Mockup row: blueprint_key='manual', html_r2_key='manual/<...>/index.html'
 
-async function generateForClient(env, helpers, clientId, req) {
-  const client = await env.DB.prepare("SELECT id, business_name, plan FROM clients WHERE id = ?")
-    .bind(clientId).first();
-  if (!client) return helpers.json({ error: "client not found" }, 404);
+const MANUAL_UPLOAD_ALLOWED_EXTS = new Set([
+  ".html", ".htm", ".css", ".js", ".mjs",
+  ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico",
+  ".woff", ".woff2", ".ttf", ".otf",
+  ".json", ".xml", ".txt", ".md", ".pdf",
+]);
+const MANUAL_UPLOAD_MAX_BYTES_PER_FILE = 5 * 1024 * 1024; // 5 MB per file
 
-  // Pull intake from `submissions` table (one row per section, each `data` is JSON)
-  const subs = await env.DB.prepare("SELECT section, data FROM submissions WHERE client_id = ?")
-    .bind(clientId).all();
-  const intake = { _client_business_name: client.business_name };
-  for (const row of subs.results || []) {
-    try { intake[row.section] = JSON.parse(row.data); } catch { intake[row.section] = row.data; }
+function isSafeManualFilename(name) {
+  if (!name || typeof name !== "string") return false;
+  if (name.length > 200) return false;
+  if (name.includes("..")) return false;
+  if (name.startsWith("/")) return false;
+  if (name.startsWith(".")) return false;
+  // Allow simple paths like "img/hero.png" (one nested directory deep) but
+  // reject anything weirder.
+  if (!/^[A-Za-z0-9._\-/]+$/.test(name)) return false;
+  if (name.split("/").length > 3) return false;
+  // Extension allowlist
+  const dotIdx = name.lastIndexOf(".");
+  if (dotIdx < 0) return false;
+  const ext = name.slice(dotIdx).toLowerCase();
+  if (!MANUAL_UPLOAD_ALLOWED_EXTS.has(ext)) return false;
+  return true;
+}
+
+function manualR2Prefix(clientId, mockupId) {
+  return `manual/${clientId}/${mockupId}`;
+}
+
+async function manualMockupUpload(env, helpers, clientId, req) {
+  const client = await env.DB.prepare("SELECT id FROM clients WHERE id = ?").bind(clientId).first();
+  if (!client) return helpers.json({ error: "client_not_found" }, 404);
+
+  const mockupId = String(req.headers.get("X-Mockup-Id") || "").trim();
+  const filename = String(req.headers.get("X-Filename") || "").trim();
+  const ct = req.headers.get("Content-Type") || "application/octet-stream";
+
+  if (!/^[A-Za-z0-9-]{8,64}$/.test(mockupId)) {
+    return helpers.json({ error: "invalid_mockup_id", msg: "X-Mockup-Id must be a UUID-shaped string." }, 400);
+  }
+  if (!isSafeManualFilename(filename)) {
+    return helpers.json({ error: "invalid_filename", msg: "Filename rejected (path traversal, disallowed extension, or unsafe chars)." }, 400);
   }
 
-  // Pull asset URLs (logo, photos, pdf) — include alt_text for per-photo accessibility
-  const assets = await env.DB.prepare(
-    "SELECT id, category, filename, r2_key, alt_text FROM files WHERE client_id = ? AND category IN ('logo','photo','pdf') ORDER BY uploaded_at DESC",
-  ).bind(clientId).all();
-  const logo = (assets.results || []).find((a) => a.category === "logo");
-  const photos = (assets.results || []).filter((a) => a.category === "photo").slice(0, 6);
-  const pdf = (assets.results || []).find((a) => a.category === "pdf");
+  const bytes = await req.arrayBuffer();
+  if (bytes.byteLength === 0) return helpers.json({ error: "empty_file" }, 400);
+  if (bytes.byteLength > MANUAL_UPLOAD_MAX_BYTES_PER_FILE) {
+    return helpers.json({ error: "file_too_large", max: MANUAL_UPLOAD_MAX_BYTES_PER_FILE, got: bytes.byteLength }, 413);
+  }
 
-  // Ask Claude for the blueprint input (plan-aware)
-  const plan = String(client.plan || "esencial").toLowerCase();
-  const isPro = plan === "pro" || plan === "crecimiento" || plan === "growth";
-  const filled = await callClaude(env, intake, plan);
-
-  // Wire asset URLs (served via /m/<token>/asset/<filename>)
-  if (logo) filled.logoUrl = `./asset/${encodeURIComponent(safeName(logo))}`;
-  filled.galleryUrls = photos.map((p) => `./asset/${encodeURIComponent(safeName(p))}`);
-  // Per-photo alt text. Preferred source is files.alt_text (set per-photo by the
-  // wizard's PhotosWithAlts step). Fallback for legacy clients: the old
-  // visual.photoAlts newline-separated textarea, mapped by upload order.
-  const fallbackAltLines = String((intake.visual || {}).photoAlts || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-  const bizName = (intake.business||{}).bizName || client.business_name;
-  filled.galleryAlts = photos.map((p, idx) => {
-    if (p.alt_text && String(p.alt_text).trim()) return p.alt_text;
-    if (fallbackAltLines[idx]) return fallbackAltLines[idx];
-    return `${bizName} ${idx + 1}`;
+  const key = `${manualR2Prefix(clientId, mockupId)}/${filename}`;
+  await env.ASSETS.put(key, bytes, {
+    httpMetadata: { contentType: String(ct).split(";")[0].trim() || guessType("/" + filename) },
   });
+  return helpers.json({ ok: true, key, size: bytes.byteLength, mockup_id: mockupId, filename });
+}
 
-  // Always pass through structured trust signals from intake (Claude shouldn't
-  // translate or invent these — they're factual/legal identifiers).
-  // (`business` and `contact` are declared further down for legalData; reuse later.)
-  filled.nit = (intake.business || {}).nit || filled.nit || "";
-  filled.legalRepresentative = (intake.business || {}).legalRepresentative || filled.legalRepresentative || "";
-  filled.address = (intake.contact || {}).address || filled.address || "";
-  filled.camara = (intake.business || {}).camara || ""; // optional Cámara de Comercio line
-  // Override pdfUrl with the uploaded file if present (preferred over any text URL)
-  if (isPro && pdf) {
-    filled.pdfUrl = `./asset/${encodeURIComponent(safeName(pdf))}`;
-    filled.pdfLabel = filled.pdfLabel || (intake.growth || {}).pdfLabel || "PDF";
-  }
-  // Newsletter — wire to portal endpoint when enabled
-  const newsletterEnabled = isPro && ((intake.growth || {}).newsletterEnabled === "1" || (intake.growth || {}).newsletterEnabled === true);
-  if (newsletterEnabled) {
-    filled.newsletterEnabled = true;
-    filled.newsletterEndpoint = `${env.APP_URL || "https://portal.pymewebpro.com"}/api/newsletter/${clientId}`;
-  } else {
-    filled.newsletterEnabled = false;
-    filled.newsletterEndpoint = "";
+async function manualMockupFinalize(env, helpers, clientId, req) {
+  const client = await env.DB.prepare("SELECT id, business_name FROM clients WHERE id = ?").bind(clientId).first();
+  if (!client) return helpers.json({ error: "client_not_found" }, 404);
+
+  const body = await req.json().catch(() => ({}));
+  const mockupId = String(body.mockup_id || "").trim();
+  if (!/^[A-Za-z0-9-]{8,64}$/.test(mockupId)) {
+    return helpers.json({ error: "invalid_mockup_id" }, 400);
   }
 
-  // Bilingual generation (Growth only, when checkbox is on)
-  const bilingual = isPro && (intake.growth || {}).bilingual === "1";
-
-  // Determine version
-  const last = await env.DB.prepare("SELECT MAX(version) as v FROM mockups WHERE client_id = ?")
-    .bind(clientId).first();
-  const version = (last && last.v ? last.v : 0) + 1;
-
-  const id = helpers.uuid();
-  const r2Prefix = `mockups/${clientId}/${id}`;
-  const r2Key = `${r2Prefix}/index.html`;
-
-  // Render Spanish (primary)
-  const render = BLUEPRINTS["blueprint-1"];
-  const filledEs = { ...filled, language: "es" };
-  if (bilingual) filledEs.bilingualAltHref = "./en/";
-  const htmlEs = render(filledEs, { plan });
-  await env.ASSETS.put(r2Key, htmlEs, { httpMetadata: { contentType: "text/html; charset=utf-8" } });
-
-  // Legal data shared by privacy/terms pages
-  const business = intake.business || {};
-  const contact = intake.contact || {};
-  const legalData = {
-    businessName: filledEs.businessName || business.bizName || client.business_name,
-    nit: business.nit || "",
-    legalRepresentative: business.legalRepresentative || "",
-    email: contact.email || "",
-    phone: contact.phone || "",
-    address: contact.address || "",
-    primary: filledEs.primary, ink: filledEs.ink, bg: filledEs.bg,
-  };
-
-  // Spanish legal pages (always)
-  await env.ASSETS.put(`${r2Prefix}/politica-privacidad.html`, renderPrivacyEs(legalData),
-    { httpMetadata: { contentType: "text/html; charset=utf-8" } });
-  await env.ASSETS.put(`${r2Prefix}/terminos.html`, renderTermsEs(legalData),
-    { httpMetadata: { contentType: "text/html; charset=utf-8" } });
-
-  // robots.txt + sitemap.xml — siteUrl placeholder (live URL substituted at ship time)
-  // For preview, we use a relative-ish placeholder; live serving rewrites these via deploy step.
-  const siteUrl = `${env.APP_URL || "https://portal.pymewebpro.com"}/site/{{slug}}`;
-  await env.ASSETS.put(`${r2Prefix}/robots.txt`, renderRobots(siteUrl),
-    { httpMetadata: { contentType: "text/plain; charset=utf-8" } });
-  await env.ASSETS.put(`${r2Prefix}/sitemap.xml`, renderSitemap(siteUrl, bilingual),
-    { httpMetadata: { contentType: "application/xml; charset=utf-8" } });
-
-  // Render English (Growth bilingual only)
-  if (bilingual) {
-    const enFilled = await translateToEnglish(env, filledEs);
-    enFilled.language = "en";
-    enFilled.bilingualAltHref = "../";
-    // EN HTML lives in en/, asset paths go up one level
-    if (logo) enFilled.logoUrl = `../asset/${encodeURIComponent(safeName(logo))}`;
-    enFilled.galleryUrls = photos.map((p) => `../asset/${encodeURIComponent(safeName(p))}`);
-    if (pdf) enFilled.pdfUrl = `../asset/${encodeURIComponent(safeName(pdf))}`;
-    const htmlEn = render(enFilled, { plan });
-    await env.ASSETS.put(`${r2Prefix}/en/index.html`, htmlEn, { httpMetadata: { contentType: "text/html; charset=utf-8" } });
-    await env.ASSETS.put(`${r2Prefix}/en/privacy.html`, renderPrivacyEn(legalData),
-      { httpMetadata: { contentType: "text/html; charset=utf-8" } });
-    await env.ASSETS.put(`${r2Prefix}/en/terms.html`, renderTermsEn(legalData),
-      { httpMetadata: { contentType: "text/html; charset=utf-8" } });
+  // Make sure the upload actually happened (index.html must exist)
+  const indexKey = `${manualR2Prefix(clientId, mockupId)}/index.html`;
+  const indexHead = await env.ASSETS.head(indexKey).catch(() => null);
+  if (!indexHead) {
+    return helpers.json({ error: "no_index_html", msg: "index.html missing in R2 for this mockup ID. Re-upload it before finalizing." }, 400);
   }
 
-  // Copy assets into mockup folder (shared by both languages)
-  for (const a of [logo, ...photos, pdf].filter(Boolean)) {
-    const obj = await env.ASSETS.get(a.r2_key);
-    if (!obj) continue;
-    await env.ASSETS.put(`${r2Prefix}/asset/${safeName(a)}`, obj.body, {
-      httpMetadata: { contentType: obj.httpMetadata?.contentType || "application/octet-stream" },
-    });
+  // Compute the version (1-based, monotonic per client)
+  let version = Number(body.version) | 0;
+  if (!version || version < 1) {
+    const last = await env.DB.prepare("SELECT MAX(version) as v FROM mockups WHERE client_id = ?")
+      .bind(clientId).first();
+    version = (last && last.v ? last.v : 0) + 1;
+  }
+
+  // Avoid creating duplicate rows if the admin double-clicks the finalize button
+  const existing = await env.DB.prepare("SELECT id FROM mockups WHERE id = ?").bind(mockupId).first();
+  if (existing) {
+    const row = await env.DB.prepare("SELECT id, version, status, html_r2_key, blueprint_key, created_at FROM mockups WHERE id = ?")
+      .bind(mockupId).first();
+    return helpers.json({ ok: true, mockup: row, already_existed: true });
   }
 
   await env.DB.prepare(`
     INSERT INTO mockups (id, client_id, version, blueprint_key, html_r2_key, prompt, anthropic_model, status, created_by)
-    VALUES (?, ?, ?, 'blueprint-1', ?, ?, ?, 'draft', 'admin')
-  `).bind(id, clientId, version, r2Key, JSON.stringify(intake).slice(0, 4000), env.ANTHROPIC_API_KEY ? "claude-sonnet-4-6" : "fallback").run();
+    VALUES (?, ?, ?, 'manual', ?, NULL, 'manual-upload', 'draft', 'admin')
+  `).bind(mockupId, clientId, version, indexKey).run();
 
-  // ── Auto-mark deliverables that the engine just completed ────────────────
+  // Auto-mark the deliverables that an uploaded mockup necessarily implies.
+  // Mike still owns whether each one is *actually* satisfied by the upload —
+  // these are reasonable defaults so the deliverables panel doesn't lie.
   const autoKeys = [
-    // Always done when a mockup is generated:
     "design_brand_colors", "design_typography",
     "page_home", "page_services", "page_about", "page_contact", "page_location",
-    "feat_whatsapp_btn", "feat_social_bar",
+    "feat_whatsapp_btn", "feat_social_bar", "feat_contact_form",
     "seo_meta_tags", "seo_sitemap", "seo_robots", "seo_structured_data", "seo_speed",
   ];
-  // Conditional:
-  if (logo) autoKeys.push("design_logo");
-  if (photos.length) autoKeys.push("feat_photo_gallery");
-  if (intake._parsedTestimonials && intake._parsedTestimonials.length) autoKeys.push("feat_testimonials");
-  if (isPro) {
-    if (pdf) autoKeys.push("feat_pdf_download");
-    if (newsletterEnabled) autoKeys.push("feat_email_capture");
-    if ((intake.growth || {}).waCatalogUrl) autoKeys.push("feat_wa_catalog");
-    if ((intake.growth || {}).bookingsUrl) autoKeys.push("feat_booking_system");
-    if (bilingual) autoKeys.push("feat_bilingual");
-    if ((intake.growth || {}).metaPixelId) autoKeys.push("seo_meta_pixel");
-    if ((intake.growth || {}).ga4Id) autoKeys.push("seo_analytics");
-  } else if ((intake.growth || {}).ga4Id) {
-    // Esencial customer who shared a GA4 ID anyway
-    autoKeys.push("seo_analytics");
-  }
   await autoMarkDeliverables(env, clientId, autoKeys);
 
-  return helpers.json({ id, version, html_r2_key: r2Key });
+  const row = await env.DB.prepare("SELECT id, version, status, html_r2_key, blueprint_key, created_at FROM mockups WHERE id = ?")
+    .bind(mockupId).first();
+  return helpers.json({ ok: true, mockup: row });
 }
 
-async function regenerate(env, helpers, mockupId, req) {
-  const m = await env.DB.prepare("SELECT client_id FROM mockups WHERE id = ?").bind(mockupId).first();
-  if (!m) return helpers.json({ error: "not found" }, 404);
-  // Same as generate, but the admin can pass a body { instruction } that gets prepended to intake notes.
-  const body = await req.json().catch(() => ({}));
-  if (body.instruction) {
-    // append instruction into a synthetic submissions row (section='_revision_notes')
-    await env.DB.prepare(`
-      INSERT INTO submissions (client_id, section, data, updated_at)
-      VALUES (?, '_revision_notes', ?, ?)
-      ON CONFLICT(client_id, section) DO UPDATE SET data=excluded.data, updated_at=excluded.updated_at
-    `).bind(m.client_id, JSON.stringify({ note: body.instruction }), Date.now()).run();
-  }
-  return generateForClient(env, helpers, m.client_id, req);
+async function manualMockupDeleteFile(env, helpers, clientId, mockupId, filename) {
+  if (!/^[A-Za-z0-9-]{8,64}$/.test(mockupId)) return helpers.json({ error: "invalid_mockup_id" }, 400);
+  if (!isSafeManualFilename(filename)) return helpers.json({ error: "invalid_filename" }, 400);
+  const key = `${manualR2Prefix(clientId, mockupId)}/${filename}`;
+  await env.ASSETS.delete(key);
+  return helpers.json({ ok: true, key });
 }
 
-function parseTestimonials(text) {
-  if (!text || typeof text !== "string") return [];
-  return text.split(/\r?\n/).map(line => {
-    const parts = line.split("|").map(s => s.trim());
-    if (!parts[0]) return null;
-    return { name: parts[0], quote: parts[1] || "", role: parts[2] || "" };
-  }).filter(t => t && t.quote);
-}
+// ─── Legacy auto-gen entry points (REMOVED — see src/_archived/auto-gen.js) ─
+// generateForClient / regenerate / callClaude / translateToEnglish /
+// parseTestimonials / parseFaqs / setClientBlueprint were here.
+// They are NOT imported anywhere now; the dispatcher returns 410 Gone for
+// the old POST routes so any stale UI surfaces a useful error.
 
-function parseFaqs(text) {
-  if (!text || typeof text !== "string") return [];
-  return text.split(/\r?\n/).map(line => {
-    const idx = line.indexOf("|");
-    if (idx < 0) return null;
-    const q = line.slice(0, idx).trim();
-    const a = line.slice(idx + 1).trim();
-    if (!q || !a) return null;
-    return { q, a };
-  }).filter(Boolean);
-}
-
-async function callClaude(env, intake, plan) {
-  const isPro = String(plan || "").toLowerCase() === "pro" || String(plan || "").toLowerCase() === "crecimiento" || String(plan || "").toLowerCase() === "growth";
-  // Always pre-parse Growth structured fields so both Claude and the fallback have them
-  const growth = intake.growth || {};
-  intake._parsedTestimonials = parseTestimonials(growth.testimonials);
-  intake._parsedFaqs = parseFaqs(growth.faqs);
-
-  if (!env.ANTHROPIC_API_KEY) {
-    // Dev fallback — produce something reasonable from raw intake
-    const biz = intake.business || {};
-    const tech = intake.tech || {};
-    const visual = intake.visual || {};
-    const content = intake.content || {};
-    const out = {
-      businessName: biz.bizName || intake._client_business_name || "Su Negocio",
-      tagline: biz.tagline || biz.whatYouDo || "Su negocio, en línea.",
-      industry: biz.audience || "Servicios",
-      services: String(biz.whatYouDo || "").split(/[\n,]+/).map(s => s.trim()).filter(Boolean).slice(0, 6),
-      phone: (intake.contact || {}).phone,
-      email: (intake.contact || {}).email,
-      address: (intake.contact || {}).address,
-      instagram: (intake.contact || {}).ig,
-      facebook: (intake.contact || {}).fb,
-      ctaPhone: (intake.contact || {}).phone,
-      ctaWhatsapp: (intake.contact || {}).whatsapp,
-      primary: "#003893", accent: "#fcd116", ink: "#0a1840", bg: "#fbfaf6",
-      testimonials: intake._parsedTestimonials,
-      faqs: intake._parsedFaqs,
-    };
-    if (isPro) {
-      out.bookingsUrl = growth.bookingsUrl;
-      out.pdfUrl = growth.pdfUrl;
-      out.pdfLabel = growth.pdfLabel;
-      out.waCatalogUrl = growth.waCatalogUrl;
-      out.newsletterUrl = growth.newsletterUrl;
-      out.newsletterEnabled = !!growth.newsletterUrl;
-      out.ga4Id = growth.ga4Id;
-      out.metaPixelId = growth.metaPixelId;
-    }
-    return out;
-  }
-  const r = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": env.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 2000,
-      system: systemPromptFor(plan),
-      messages: [{ role: "user", content: `Plan: ${isPro ? "CRECIMIENTO" : "ESENCIAL"}\n\nDatos crudos del cliente:\n${JSON.stringify(intake, null, 2)}` }],
-    }),
-  });
-  const j = await r.json();
-  const text = j?.content?.[0]?.text || "{}";
-  const match = text.match(/\{[\s\S]*\}/);
-  try { return JSON.parse(match ? match[0] : "{}"); } catch { return {}; }
-}
 
 // ─── Listing / fetching ─────────────────────────────────────────────────────
 
 async function listForClient(env, helpers, clientId) {
   const rows = await env.DB.prepare(
-    "SELECT id, version, status, html_r2_key, shipped_at, shipped_url, created_at FROM mockups WHERE client_id = ? ORDER BY version DESC",
+    "SELECT id, version, status, html_r2_key, blueprint_key, shipped_at, shipped_url, approved_at, created_at FROM mockups WHERE client_id = ? ORDER BY version DESC",
   ).bind(clientId).all();
   return helpers.json({ mockups: rows.results || [] });
 }
@@ -440,6 +384,89 @@ async function loadShare(env, token) {
   return link;
 }
 
+// Renders an HTML wrapper with desktop/tablet/mobile viewport switcher buttons.
+// The actual mockup loads inside an iframe at the selected width.
+async function previewFrame(env, token) {
+  // Verify the token is still valid before rendering the chrome — avoids the
+  // "frame loads but iframe shows 'Enlace caducado'" confusion.
+  const link = await loadShare(env, token);
+  if (!link) return new Response("Enlace caducado o no válido", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  const safeToken = encodeURIComponent(token);
+  const html = `<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Vista previa · PymeWebPro</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%;background:#0a0e27;color:#fff;font-family:Inter,system-ui,-apple-system,sans-serif}
+  .bar{position:fixed;top:0;left:0;right:0;z-index:10;background:rgba(10,14,39,.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);padding:.6rem 1rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+  .bar .title{font-style:italic;font-family:Georgia,serif;font-size:.95rem;color:rgba(255,255,255,.65);margin-right:auto}
+  .bar .title b{color:#fbbf24;font-style:normal;font-weight:600}
+  .vw-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);padding:.4rem .8rem;border-radius:4px;cursor:pointer;font:inherit;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.35rem}
+  .vw-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+  .vw-btn[data-active="1"]{background:rgba(251,191,36,.15);border-color:#fbbf24;color:#fbbf24}
+  .vw-btn .dim{color:rgba(255,255,255,.4);font-weight:400;text-transform:none;letter-spacing:0}
+  .open-raw{margin-left:auto;color:rgba(255,255,255,.5);text-decoration:none;font-size:.78rem;padding:.4rem .8rem;border-radius:4px;border:1px solid rgba(255,255,255,.12)}
+  .open-raw:hover{color:#fff;background:rgba(255,255,255,.04)}
+  .stage{position:absolute;inset:60px 0 0 0;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:1.5rem;background:repeating-linear-gradient(45deg,rgba(255,255,255,.015) 0 2px,transparent 2px 12px)}
+  .frame{background:#fff;border-radius:8px;box-shadow:0 12px 50px rgba(0,0,0,.4);transition:width .35s cubic-bezier(.4,0,.2,1),height .35s cubic-bezier(.4,0,.2,1);overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+  .frame iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+  /* Sizes match common device viewports — frames keep their TRUE width so the
+     site's media queries fire as they would on a real device. The .stage has
+     overflow:auto, so admins on narrow laptops can horizontally scroll to see
+     the full desktop layout instead of squashing it into mobile. */
+  .vw-desktop .frame{width:1280px;height:820px;flex-shrink:0}
+  .vw-laptop  .frame{width:1024px;height:720px;flex-shrink:0}
+  .vw-tablet  .frame{width:768px;height:1024px;flex-shrink:0}
+  .vw-mobile  .frame{width:375px;height:780px;border-radius:24px;border:6px solid #1a1a2e;flex-shrink:0}
+  /* On phone-size admin viewports, allow tablet/mobile previews to fit */
+  @media (max-width:780px){.vw-tablet .frame,.vw-mobile .frame{max-width:100%}}
+</style>
+</head>
+<body class="vw-desktop">
+  <div class="bar">
+    <div class="title">Vista previa <b>·</b> <span style="color:rgba(255,255,255,.45);font-size:.85rem">solo administradores</span></div>
+    <button class="vw-btn" data-vw="desktop" data-active="1">🖥️ Desktop <span class="dim">1280</span></button>
+    <button class="vw-btn" data-vw="laptop">💻 Laptop <span class="dim">1024</span></button>
+    <button class="vw-btn" data-vw="tablet">📱 Tablet <span class="dim">768</span></button>
+    <button class="vw-btn" data-vw="mobile">📱 Mobile <span class="dim">375</span></button>
+    <a class="open-raw" href="/m/${safeToken}/" target="_blank" rel="noopener">Abrir directo ↗</a>
+  </div>
+  <div class="stage">
+    <div class="frame"><iframe src="/m/${safeToken}/" title="Mockup" loading="eager"></iframe></div>
+  </div>
+  <script>
+  (function(){
+    var body=document.body;
+    var btns=document.querySelectorAll('.vw-btn');
+    function setVw(v){
+      body.className='vw-'+v;
+      btns.forEach(function(b){b.dataset.active = b.dataset.vw===v ? '1' : '';});
+      try{localStorage.setItem('pwp_preview_vw', v);}catch(_){}
+    }
+    var saved=null;try{saved=localStorage.getItem('pwp_preview_vw');}catch(_){}
+    if(saved && ['desktop','laptop','tablet','mobile'].indexOf(saved)>=0) setVw(saved);
+    btns.forEach(function(b){b.addEventListener('click',function(){setVw(b.dataset.vw);});});
+    // Keyboard shortcuts: 1/2/3/4 for the four viewports
+    document.addEventListener('keydown',function(e){
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+      if(e.key==='1')setVw('desktop'); else if(e.key==='2')setVw('laptop');
+      else if(e.key==='3')setVw('tablet'); else if(e.key==='4')setVw('mobile');
+    });
+  })();
+  </script>
+</body></html>`;
+  return new Response(html, {
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+      "cache-control": "no-store",
+      "x-robots-tag": "noindex, nofollow",
+    },
+  });
+}
+
 async function previewIndex(env, helpers, token, language) {
   const link = await loadShare(env, token);
   if (!link) return new Response("Enlace caducado o no válido", { status: 404 });
@@ -466,13 +493,26 @@ async function previewAsset(env, token, name) {
   if (!link) return new Response("not found", { status: 404 });
   const m = await env.DB.prepare("SELECT html_r2_key FROM mockups WHERE id = ?").bind(link.mockup_id).first();
   if (!m) return new Response("not found", { status: 404 });
-  // Assets live at <prefix>/asset/<name>, shared by ES and EN
   const prefix = m.html_r2_key.replace(/\/index\.html$/, "");
-  const obj = await env.ASSETS.get(`${prefix}/asset/${name}`);
-  if (!obj) return new Response("not found", { status: 404 });
-  return new Response(obj.body, {
-    headers: { "content-type": obj.httpMetadata?.contentType || "application/octet-stream" },
-  });
+  // Two layouts in the wild:
+  //   - Auto-gen (legacy):   <prefix>/asset/<name>   (prefix starts with `mockups/...`)
+  //   - Manual upload (new): <prefix>/<name>          (prefix starts with `manual/...`)
+  // Try the manual layout first if the key looks manual; otherwise the legacy
+  // /asset/ subfolder. Fall back to whichever the first miss didn't cover so
+  // mixed setups (custom uploads inside a legacy auto-gen prefix) still resolve.
+  const isManual = prefix.startsWith("manual/");
+  const candidates = isManual
+    ? [`${prefix}/${name}`, `${prefix}/asset/${name}`]
+    : [`${prefix}/asset/${name}`, `${prefix}/${name}`];
+  for (const key of candidates) {
+    const obj = await env.ASSETS.get(key);
+    if (obj) {
+      return new Response(obj.body, {
+        headers: { "content-type": obj.httpMetadata?.contentType || guessType("/" + name) },
+      });
+    }
+  }
+  return new Response("not found", { status: 404 });
 }
 
 // Generic preview file (legal pages, robots.txt, sitemap.xml, etc.)
@@ -488,48 +528,6 @@ async function previewFile(env, token, subpath) {
   return new Response(obj.body, { headers: { "content-type": ct } });
 }
 
-// ─── Bilingual translation via Claude ───────────────────────────────────────
-async function translateToEnglish(env, esFilled) {
-  const out = { ...esFilled };
-  if (!env.ANTHROPIC_API_KEY) {
-    // No-API fallback: shallow English-ish defaults; better than nothing
-    return out;
-  }
-  const TRANSLATABLE = ["tagline", "industry"];
-  const arrayOfObjs = ["testimonials", "faqs"];
-  const sysPrompt = `You translate Colombian Spanish marketing copy into natural US English for a small-business website. Keep brand names, URLs, IDs, hex colors, addresses, and phone numbers EXACTLY as-is. Translate only the human-readable strings provided. Return SOLO JSON con la misma forma del input, sin markdown ni texto adicional.`;
-  const payload = {
-    tagline: esFilled.tagline,
-    industry: esFilled.industry,
-    services: Array.isArray(esFilled.services) ? esFilled.services : [],
-    testimonials: Array.isArray(esFilled.testimonials) ? esFilled.testimonials.map(t => ({ name: t.name, quote: t.quote, role: t.role || "" })) : [],
-    faqs: Array.isArray(esFilled.faqs) ? esFilled.faqs.map(f => ({ q: f.q, a: f.a })) : [],
-    pdfLabel: esFilled.pdfLabel || "",
-  };
-  try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-6", max_tokens: 1500,
-        system: sysPrompt,
-        messages: [{ role: "user", content: `Translate to natural US English (return JSON only):\n${JSON.stringify(payload)}` }],
-      }),
-    });
-    const j = await r.json();
-    const text = j?.content?.[0]?.text || "{}";
-    const match = text.match(/\{[\s\S]*\}/);
-    const t = JSON.parse(match ? match[0] : "{}");
-    if (t.tagline) out.tagline = t.tagline;
-    if (t.industry) out.industry = t.industry;
-    if (Array.isArray(t.services) && t.services.length) out.services = t.services;
-    if (Array.isArray(t.testimonials)) out.testimonials = t.testimonials;
-    if (Array.isArray(t.faqs)) out.faqs = t.faqs;
-    if (t.pdfLabel) out.pdfLabel = t.pdfLabel;
-  } catch (_) { /* fall through with ES values */ }
-  return out;
-}
-
 async function previewComment(env, helpers, token, req) {
   const link = await loadShare(env, token);
   if (!link) return helpers.json({ error: "invalid" }, 401);
@@ -539,6 +537,17 @@ async function previewComment(env, helpers, token, req) {
   await env.DB.prepare(
     "INSERT INTO mockup_comments (id, mockup_id, share_token, section, body, author) VALUES (?, ?, ?, ?, ?, 'client')",
   ).bind(id, link.mockup_id, token, body.section || null, body.comment).run();
+  return helpers.json({ ok: true, id });
+}
+
+async function postAdminReply(env, helpers, mockupId, req) {
+  const body = await req.json().catch(() => ({}));
+  const text = String(body.body || "").trim().slice(0, 4000);
+  if (!text) return helpers.json({ error: "empty" }, 400);
+  const id = helpers.uuid();
+  await env.DB.prepare(
+    "INSERT INTO mockup_comments (id, mockup_id, section, body, author) VALUES (?, ?, NULL, ?, 'admin')",
+  ).bind(id, mockupId, text).run();
   return helpers.json({ ok: true, id });
 }
 
@@ -567,7 +576,7 @@ function contrastRatio(hex1, hex2) {
 }
 
 async function preflightMockup(env, helpers, mockupId) {
-  const m = await env.DB.prepare("SELECT id, client_id, html_r2_key FROM mockups WHERE id = ?")
+  const m = await env.DB.prepare("SELECT id, client_id, html_r2_key, blueprint_key FROM mockups WHERE id = ?")
     .bind(mockupId).first();
   if (!m) return helpers.json({ error: "not found" }, 404);
 
@@ -576,9 +585,29 @@ async function preflightMockup(env, helpers, mockupId) {
   if (!client) return helpers.json({ error: "client not found" }, 404);
   const plan = String(client.plan || "esencial").toLowerCase();
   const isPro = plan === "pro" || plan === "crecimiento" || plan === "growth";
+  const isManual = m.blueprint_key === "manual";
 
   const errors = [];
   const warnings = [];
+
+  // ── Manual mockups: skip the intake-derived checks (no logo/photo/NIT
+  // requirement when the admin hand-built the page). Just verify the HTML
+  // exists in R2 and looks reasonable.
+  if (isManual) {
+    const obj = await env.ASSETS.get(m.html_r2_key);
+    if (!obj) {
+      errors.push({ code: "html_missing", msg: "index.html missing from R2 — re-upload before publishing." });
+    } else {
+      const html = await obj.text();
+      if (!/<h1\b/i.test(html)) warnings.push({ code: "no_h1", msg: "No <h1> tag — bad for SEO." });
+      if (!/<meta\s+name=["']description["']/i.test(html)) warnings.push({ code: "no_meta_desc", msg: "Missing meta description tag." });
+      if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "No og:image — link previews on Slack/WhatsApp/Facebook will look bare." });
+      if (/src=["']http:\/\//i.test(html) || /href=["']http:\/\/(?!schema\.org)/i.test(html)) {
+        warnings.push({ code: "mixed_content", msg: "http:// URLs detected in the HTML (mixed-content risk on https sites)." });
+      }
+    }
+    return helpers.json({ plan, errors, warnings, canShip: errors.length === 0, mockup_kind: "manual" });
+  }
 
   // ── Asset checks ─────────────────────────────────────────────────────────
   const assets = await env.DB.prepare(
@@ -747,6 +776,97 @@ async function deleteR2Prefix(env, prefix) {
   } while (cursor);
 }
 
+// Push a draft mockup to the client portal (gates the iframe via shipped_at).
+// This does NOT publish the production site — that's still shipMockup/launch.
+// Sends "Tu mockup está listo" email via Resend (bilingual for Crecimiento).
+async function pushMockupToClient(env, helpers, mockupId) {
+  const m = await env.DB.prepare("SELECT id, client_id, version, shipped_at FROM mockups WHERE id = ?")
+    .bind(mockupId).first();
+  if (!m) return helpers.json({ error: "not found" }, 404);
+
+  const client = await env.DB.prepare("SELECT id, business_name, email, language, plan FROM clients WHERE id = ?")
+    .bind(m.client_id).first();
+  if (!client) return helpers.json({ error: "client not found" }, 404);
+
+  // Idempotent: if already pushed, just return ok
+  const now = Math.floor(Date.now() / 1000);
+  if (!m.shipped_at) {
+    await env.DB.prepare(
+      "UPDATE mockups SET shipped_at = ? WHERE id = ?",
+    ).bind(now, mockupId).run();
+  }
+
+  // (Project portal auto-mints its own share link on first read; no need here.)
+  const portalUrl = `${env.APP_URL || "https://portal.pymewebpro.com"}/`;
+
+  // Notify client — bilingual for Crecimiento clients, ES otherwise
+  const isPro = client.plan === "pro" || client.plan === "crecimiento" || client.plan === "growth";
+  const isEn = client.language === "en";
+  const subject = isEn
+    ? "Your mockup is ready to review"
+    : "¡Su mockup está listo para revisar!";
+  const htmlEs = `<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:540px;margin:0 auto;padding:24px;color:#1a1a1a">
+    <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:1.8rem;margin:0 0 16px">¡Su mockup está listo!</h1>
+    <p style="line-height:1.6;color:#444">Hola${client.business_name ? ` <strong>${escapeHtml(client.business_name)}</strong>` : ""}, ya puede revisar el primer diseño de su sitio en su Portal del Proyecto.</p>
+    <p style="margin:24px 0"><a href="${portalUrl}" style="display:inline-block;background:#0a0e27;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600">Ver mi mockup →</a></p>
+    <p style="line-height:1.6;color:#666;font-size:.92rem">Desde el portal puede pedir cambios por chat o aprobar el diseño. Tiene <strong>${isPro ? 5 : 2} rondas de cambios</strong> incluidas en su plan.</p>
+    <p style="line-height:1.6;color:#999;font-size:.85rem;margin-top:32px;border-top:1px solid #eee;padding-top:16px">Si no abrió este correo, puede ignorarlo. — PymeWebPro</p>
+  </div>`;
+  const htmlEn = `<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:540px;margin:0 auto;padding:24px;color:#1a1a1a">
+    <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:1.8rem;margin:0 0 16px">Your mockup is ready</h1>
+    <p style="line-height:1.6;color:#444">Hi${client.business_name ? ` <strong>${escapeHtml(client.business_name)}</strong>` : ""}, the first design of your site is ready to review in your Project Portal.</p>
+    <p style="margin:24px 0"><a href="${portalUrl}" style="display:inline-block;background:#0a0e27;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600">View my mockup →</a></p>
+    <p style="line-height:1.6;color:#666;font-size:.92rem">From the portal you can request changes via chat or approve the design. You have <strong>${isPro ? 5 : 2} revision rounds</strong> included in your plan.</p>
+    <p style="line-height:1.6;color:#999;font-size:.85rem;margin-top:32px;border-top:1px solid #eee;padding-top:16px">If you didn't expect this email, you can ignore it. — PymeWebPro</p>
+  </div>`;
+  const html = isEn ? htmlEn : htmlEs;
+
+  // Send the "mockup ready" email and AWAIT + log the result so we can debug
+  // when emails don't land. The fire-and-forget pattern was hiding silent failures.
+  let emailResult = { sent: false, reason: null };
+  if (!client.email) {
+    emailResult.reason = "no_client_email";
+  } else if (!env.RESEND_API_KEY) {
+    emailResult.reason = "resend_key_missing";
+  } else {
+    try {
+      const r = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
+        body: JSON.stringify({
+          from: env.FROM_EMAIL || "PymeWebPro <noreply@pymewebpro.com>",
+          to: [client.email],
+          subject,
+          html,
+        }),
+      });
+      const txt = await r.text().catch(() => "");
+      if (r.ok) {
+        emailResult.sent = true;
+        try { emailResult.resend_id = JSON.parse(txt).id; } catch (_) {}
+      } else {
+        emailResult.reason = `resend_status_${r.status}`;
+        emailResult.detail = txt.slice(0, 400);
+      }
+    } catch (e) {
+      emailResult.reason = "fetch_threw";
+      emailResult.detail = String(e && e.message || e);
+    }
+  }
+
+  // Audit-log the result so failed sends are visible without leaving the portal
+  try {
+    await env.DB.prepare(
+      "INSERT INTO audit_log (client_id, event, metadata, created_at) VALUES (?, 'mockup_pushed_email', ?, ?)",
+    ).bind(client.id, JSON.stringify({ to: client.email, mockup_id: mockupId, ...emailResult }), Math.floor(Date.now()/1000)).run();
+  } catch (_) {}
+
+  return helpers.json({ ok: true, shipped_at: m.shipped_at || now, email: emailResult });
+}
+
+// Tiny HTML escaper for the email template
+function escapeHtml(s) { return String(s||"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c]); }
+
 async function shipMockup(env, helpers, mockupId, req) {
   // Block if pre-flight has errors
   const pf = await preflightMockup(env, helpers, mockupId);
@@ -786,7 +906,9 @@ async function shipMockup(env, helpers, mockupId, req) {
       updated_at = excluded.updated_at
   `).bind(slug, m.client_id, mockupId, dstPrefix, isBilingual ? 1 : 0, Math.floor(Date.now() / 1000)).run();
 
-  const liveUrl = `${env.APP_URL || "https://portal.pymewebpro.com"}/site/${slug}/`;
+  // Default published URL is the tenant subdomain; clients can attach their own
+  // custom domain afterwards via the admin Domain Panel.
+  const liveUrl = `https://${slug}.sites.pymewebpro.com/`;
 
   await env.DB.prepare(
     "UPDATE mockups SET status='shipped', shipped_at=?, shipped_url=? WHERE id=?",
@@ -952,6 +1074,135 @@ async function attachDomain(env, helpers, clientId, req) {
   }
 
   return helpers.json({ ok: true, domain, status, msg, nameservers });
+}
+
+// ─── Email Forwarding (Cloudflare Email Routing) ─────────────────────────
+// Enables Email Routing on the client's zone and creates rule(s):
+//   <localPart>@<domain>  →  <forwardTo>
+// Multiple local parts supported via comma-separated string ("hola, info, ventas").
+// Cloudflare emails the destination address a verification link — the client (or you)
+// must click it before forwarding actually fires.
+async function enableEmailForwarding(env, helpers, clientId, req) {
+  const body = await req.json().catch(() => ({}));
+  const localParts = String(body.localParts || "").split(",").map(s => s.trim().toLowerCase()).filter(Boolean);
+  const forwardTo = String(body.forwardTo || "").trim().toLowerCase();
+  if (!localParts.length || !forwardTo || !forwardTo.includes("@")) {
+    return helpers.json({ error: "invalid_input", msg: "Necesito el alias (ej. 'hola, info') y el correo destino." }, 400);
+  }
+  // Validate each local part
+  for (const lp of localParts) {
+    if (!/^[a-z0-9._-]+$/.test(lp)) {
+      return helpers.json({ error: "invalid_local_part", msg: `Alias inválido: "${lp}". Solo letras, números, punto, guion y guion bajo.` }, 400);
+    }
+  }
+
+  // Look up the client's domain
+  const live = await env.DB.prepare("SELECT custom_domain FROM live_sites WHERE client_id = ?").bind(clientId).first();
+  const domain = live?.custom_domain;
+  if (!domain) {
+    return helpers.json({ error: "no_domain", msg: "Adjunte primero un dominio al cliente." }, 400);
+  }
+
+  if (!env.CLOUDFLARE_API_TOKEN) {
+    return helpers.json({ error: "no_token", msg: "CLOUDFLARE_API_TOKEN no configurado en wrangler. Configure el secret y reintente." }, 500);
+  }
+
+  const cfHeaders = { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" };
+  const log = [];
+
+  try {
+    // 1) Find the zone
+    const zonesRes = await fetch(`https://api.cloudflare.com/client/v4/zones?name=${encodeURIComponent(domain)}`, { headers: cfHeaders });
+    const zonesJson = await zonesRes.json();
+    const zone = zonesJson?.result?.[0];
+    if (!zone) return helpers.json({ error: "zone_not_found", msg: `No encontré la zona ${domain} en Cloudflare.` }, 404);
+    log.push(`Zone found: ${zone.id}`);
+
+    // 2) Enable Email Routing on the zone (idempotent — code 1004 = already enabled)
+    const enableRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/email/routing/enable`, {
+      method: "POST", headers: cfHeaders,
+    });
+    const enableJson = await enableRes.json();
+    if (enableJson.success || enableJson?.errors?.[0]?.code === 1004) {
+      log.push("Email Routing enabled");
+    } else {
+      log.push("Enable warning: " + (enableJson?.errors?.[0]?.message || "unknown"));
+    }
+
+    // 3) Add MX/SPF DNS records (idempotent — Cloudflare API handles duplicates)
+    const dnsRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/email/routing/dns`, {
+      method: "POST", headers: cfHeaders,
+    });
+    const dnsJson = await dnsRes.json();
+    log.push(dnsJson.success ? "MX records added" : "MX warning: " + (dnsJson?.errors?.[0]?.message || ""));
+
+    // 4) Register the destination address — sends a verification email
+    const destRes = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/email/routing/addresses`, {
+      method: "POST", headers: cfHeaders,
+      body: JSON.stringify({ email: forwardTo }),
+    });
+    const destJson = await destRes.json();
+    let destinationVerified = false;
+    if (destJson.success) {
+      log.push(`Destination ${forwardTo} created — verification email sent`);
+    } else if (destJson?.errors?.[0]?.code === 1003 /* already exists */) {
+      log.push(`Destination ${forwardTo} already registered`);
+      destinationVerified = true;
+    } else {
+      log.push("Destination warning: " + (destJson?.errors?.[0]?.message || ""));
+    }
+
+    // 5) Create a rule for each local part: <local>@<domain> → <forwardTo>
+    for (const lp of localParts) {
+      const ruleRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/email/routing/rules`, {
+        method: "POST", headers: cfHeaders,
+        body: JSON.stringify({
+          name: `Forward ${lp}@${domain}`,
+          enabled: true,
+          matchers: [{ type: "literal", field: "to", value: `${lp}@${domain}` }],
+          actions: [{ type: "forward", value: [forwardTo] }],
+        }),
+      });
+      const ruleJson = await ruleRes.json();
+      log.push(ruleJson.success
+        ? `Rule created: ${lp}@${domain} → ${forwardTo}`
+        : `Rule failed (${lp}): ` + (ruleJson?.errors?.[0]?.message || "unknown"));
+    }
+
+    // 6) Persist the config + auto-mark the deliverable
+    await env.DB.prepare(`
+      UPDATE clients SET
+        deliverables_state = json_patch(coalesce(deliverables_state, '{}'), ?)
+      WHERE id = ?
+    `).bind(JSON.stringify({ setup_email_forward: { status: "done", note: `${localParts.join(", ")}@${domain} → ${forwardTo}` } }), clientId).run().catch(() => {});
+
+    return helpers.json({
+      ok: true,
+      domain, localParts, forwardTo,
+      destination_verified: destinationVerified,
+      verification_note: destinationVerified
+        ? "Reenvío activo. Pruebe enviando un correo a " + localParts[0] + "@" + domain + "."
+        : "Cloudflare envió un correo de verificación a " + forwardTo + ". El reenvío empieza a funcionar después de hacer clic en ese link.",
+      log,
+    });
+  } catch (e) {
+    return helpers.json({ error: "api_error", msg: "Error llamando Cloudflare: " + e.message, log }, 500);
+  }
+}
+
+// Admin pastes raw CSS that gets injected at the END of <head> on every
+// rendered page for this client. Total visual control — overrides anything
+// the blueprint sets. Capped at 64KB to keep R2 / D1 sane.
+async function setClientAdminCss(env, helpers, clientId, req) {
+  const body = await req.json().catch(() => ({}));
+  const css = String(body.admin_css || "").slice(0, 64 * 1024);
+  // Strip any </style> sequences — would break the wrapping <style> tag.
+  // Also strip any <script> tags as a defense-in-depth measure (CSS shouldn't
+  // contain scripts, but admin-pasted content shouldn't be a vector either).
+  const safe = css.replace(/<\/style>/gi, "").replace(/<script[\s\S]*?<\/script>/gi, "");
+  const r = await env.DB.prepare("UPDATE clients SET admin_css = ?, updated_at = ? WHERE id = ?")
+    .bind(safe || null, Date.now(), clientId).run();
+  return helpers.json({ ok: true, length: safe.length, changes: r.meta?.changes ?? 0 });
 }
 
 async function detachDomain(env, helpers, clientId) {
@@ -1250,6 +1501,79 @@ async function newsletterSubscribe(env, helpers, clientId, req) {
                <p><strong>${name ? helpers.escapeHtml(name) + " · " : ""}${helpers.escapeHtml(email)}</strong></p>
                <p>Esta persona aceptó recibir sus comunicaciones.</p>
                <p style="color:#666;font-size:.85rem">— PymeWebPro</p>`,
+      }),
+    }).catch(() => {});
+  }
+
+  return new Response(JSON.stringify({ ok: true }), { headers: { "content-type": "application/json", ...cors } });
+}
+
+// ─── Lead-form forwarder ────────────────────────────────────────────────────
+// Customer sites POST contact-form submissions here; we email the client.
+// Honeypot + Habeas Data consent + size limits, no DB write (just an email).
+async function leadFormSubmit(env, helpers, clientId, req) {
+  const cors = corsHeaders();
+  const client = await env.DB.prepare("SELECT id, email, business_name FROM clients WHERE id = ?")
+    .bind(clientId).first();
+  if (!client) return new Response(JSON.stringify({ error: "client not found" }), { status: 404, headers: { "content-type": "application/json", ...cors } });
+
+  let body = {};
+  const ct = req.headers.get("content-type") || "";
+  if (ct.includes("application/json")) body = await req.json().catch(() => ({}));
+  else if (ct.includes("form")) {
+    const fd = await req.formData();
+    body = Object.fromEntries(fd.entries());
+  }
+
+  // Honeypot
+  if (body.company_url) {
+    return new Response(JSON.stringify({ ok: true }), { headers: { "content-type": "application/json", ...cors } });
+  }
+  // Habeas Data consent
+  if (body.habeas_data_accepted !== true && body.habeas_data_accepted !== "true" && body.habeas_data_accepted !== "on") {
+    return new Response(JSON.stringify({ error: "habeas_data_required" }), { status: 400, headers: { "content-type": "application/json", ...cors } });
+  }
+
+  const name = String(body.name || "").trim().slice(0, 120);
+  const email = String(body.email || "").trim().toLowerCase().slice(0, 200);
+  const phone = String(body.phone || "").trim().slice(0, 60);
+  const message = String(body.message || "").trim().slice(0, 4000);
+  const source = String(body.source || "").trim().slice(0, 500);
+
+  if (!name || !email || !email.includes("@") || !message) {
+    return new Response(JSON.stringify({ error: "invalid_fields" }), { status: 400, headers: { "content-type": "application/json", ...cors } });
+  }
+
+  // Audit log so the client can come back if their email server eats one
+  try {
+    await env.DB.prepare(`
+      INSERT INTO audit_log (id, client_id, action, payload_json, created_at)
+      VALUES (?, ?, 'lead_form_submission', ?, ?)
+    `).bind(helpers.uuid(), clientId, JSON.stringify({ name, email, phone, message, source }), Math.floor(Date.now()/1000)).run();
+  } catch (_) { /* table optional */ }
+
+  // Forward to client's email
+  if (env.RESEND_API_KEY && client.email) {
+    const replyTo = email; // so client can reply directly to the lead
+    fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        from: env.FROM_EMAIL || "PymeWebPro <noreply@pymewebpro.com>",
+        to: [client.email],
+        reply_to: replyTo,
+        subject: `Nuevo lead desde su sitio: ${name}`,
+        html: `<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:540px;margin:0 auto;padding:24px;color:#1a1a1a">
+          <h2 style="margin:0 0 16px;font-family:Georgia,serif">Nuevo lead desde su sitio</h2>
+          <table style="width:100%;border-collapse:collapse;margin:0 0 16px">
+            <tr><td style="padding:6px 0;color:#666;width:90px">Nombre:</td><td style="padding:6px 0;font-weight:600">${helpers.escapeHtml(name)}</td></tr>
+            <tr><td style="padding:6px 0;color:#666">Correo:</td><td style="padding:6px 0"><a href="mailto:${helpers.escapeHtml(email)}">${helpers.escapeHtml(email)}</a></td></tr>
+            ${phone ? `<tr><td style="padding:6px 0;color:#666">Teléfono:</td><td style="padding:6px 0"><a href="tel:${helpers.escapeHtml(phone)}">${helpers.escapeHtml(phone)}</a></td></tr>` : ""}
+            ${source ? `<tr><td style="padding:6px 0;color:#666">Página:</td><td style="padding:6px 0;color:#999;font-size:.85rem">${helpers.escapeHtml(source)}</td></tr>` : ""}
+          </table>
+          <div style="background:#f7f5f0;border-left:3px solid #fbbf24;padding:14px 18px;border-radius:4px;white-space:pre-wrap;line-height:1.5">${helpers.escapeHtml(message)}</div>
+          <p style="margin:24px 0 0;color:#999;font-size:.82rem">Puede responder directamente a este correo — irá al lead.<br>— PymeWebPro</p>
+        </div>`,
       }),
     }).catch(() => {});
   }

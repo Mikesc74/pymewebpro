@@ -1,0 +1,770 @@
+From c90dbda97a228095e392e6855d3195b90af029b9 Mon Sep 17 00:00:00 2001
+From: Mike Chartrand <mike@mikec.pro>
+Date: Sat, 2 May 2026 00:30:56 +0000
+Subject: [PATCH 1/3] =?UTF-8?q?Add=20/recursos/=20page=20with=205=20guide?=
+ =?UTF-8?q?=20cards=20(2=20Disponible,=203=20Pr=C3=B3ximamente)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- /recursos/index.html: directory page with WhatsApp + direct PDF buttons
+- /recursos/guia-dominio.pdf: 6-page guide with Namecheap affiliate link
+- /recursos/guia-google-sin-pagar.pdf: 9-page SEO guide with action plan
+- Homepage footer link added under Servicios
+- sitemap.xml updated
+---
+ index.html                         |  47 ++++++
+ recursos/guia-dominio.pdf          | 187 +++++++++++++++++++++
+ recursos/guia-google-sin-pagar.pdf | 250 +++++++++++++++++++++++++++++
+ recursos/index.html                | 203 +++++++++++++++++++++++
+ sitemap.xml                        |   8 +
+ 5 files changed, 695 insertions(+)
+ create mode 100644 recursos/guia-dominio.pdf
+ create mode 100644 recursos/guia-google-sin-pagar.pdf
+ create mode 100644 recursos/index.html
+
+diff --git a/index.html b/index.html
+index ab582e7..3ec031b 100644
+--- a/index.html
++++ b/index.html
+@@ -1032,6 +1032,52 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
+   </div>
+ </section>
+ 
++<!-- RECURSOS GRATIS -->
++<section class="resources" style="padding:60px 0 70px;border-top:1px solid var(--line);background:var(--bg-2)">
++  <div class="wrap">
++    <div style="text-align:center;max-width:680px;margin:0 auto 32px">
++      <span class="eyebrow">Recursos gratis</span>
++      <h2 style="margin-top:14px;font-size:clamp(1.6rem,2.8vw,2.2rem)">Guías prácticas, sin registros.</h2>
++      <p style="color:var(--ink-soft);font-size:1rem;margin-top:14px">Cinco guías cortas para PyMEs colombianas. Descárguelas directo, sin formularios.</p>
++    </div>
++    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:1080px;margin:0 auto" class="rsr-grid">
++      <a href="/recursos/guia-dominio.pdf" download style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 16px;color:var(--ink);transition:all .15s ease;display:block;text-align:left">
++        <div style="font-size:1.5rem;margin-bottom:10px">🌐</div>
++        <div style="font-size:.92rem;font-weight:700;line-height:1.25;margin-bottom:8px;color:var(--ink)">Cómo elegir su dominio</div>
++        <div style="font-size:.7rem;color:#22c55e;font-weight:700;letter-spacing:.08em">DESCARGAR PDF ↓</div>
++      </a>
++      <a href="/recursos/" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 16px;color:var(--muted);transition:all .15s ease;display:block;text-align:left;opacity:.7">
++        <div style="font-size:1.5rem;margin-bottom:10px">📋</div>
++        <div style="font-size:.92rem;font-weight:700;line-height:1.25;margin-bottom:8px">Checklist antes de lanzar</div>
++        <div style="font-size:.7rem;color:var(--muted);font-weight:700;letter-spacing:.08em">PRÓXIMAMENTE</div>
++      </a>
++      <a href="/recursos/" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 16px;color:var(--muted);transition:all .15s ease;display:block;text-align:left;opacity:.7">
++        <div style="font-size:1.5rem;margin-bottom:10px">⚖️</div>
++        <div style="font-size:.92rem;font-weight:700;line-height:1.25;margin-bottom:8px">PymeWebPro vs Wix vs agencia</div>
++        <div style="font-size:.7rem;color:var(--muted);font-weight:700;letter-spacing:.08em">PRÓXIMAMENTE</div>
++      </a>
++      <a href="/recursos/" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 16px;color:var(--muted);transition:all .15s ease;display:block;text-align:left;opacity:.7">
++        <div style="font-size:1.5rem;margin-bottom:10px">🛡️</div>
++        <div style="font-size:.92rem;font-weight:700;line-height:1.25;margin-bottom:8px">Habeas data y formularios</div>
++        <div style="font-size:.7rem;color:var(--muted);font-weight:700;letter-spacing:.08em">PRÓXIMAMENTE</div>
++      </a>
++      <a href="/recursos/guia-google-sin-pagar.pdf" download style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 16px;color:var(--ink);transition:all .15s ease;display:block;text-align:left">
++        <div style="font-size:1.5rem;margin-bottom:10px">🎯</div>
++        <div style="font-size:.92rem;font-weight:700;line-height:1.25;margin-bottom:8px">Aparecer en Google sin pagar</div>
++        <div style="font-size:.7rem;color:#22c55e;font-weight:700;letter-spacing:.08em">DESCARGAR PDF ↓</div>
++      </a>
++    </div>
++    <p style="text-align:center;margin-top:24px;font-size:.92rem;color:var(--muted)">
++      <a href="/recursos/" style="color:var(--blue);font-weight:600">Ver todas las guías →</a>
++    </p>
++  </div>
++</section>
++
++<style>
++@media (max-width: 880px) { .rsr-grid { grid-template-columns: repeat(2, 1fr) !important; } }
++@media (max-width: 480px) { .rsr-grid { grid-template-columns: 1fr !important; } }
++</style>
++
+ </main>
+ 
+ <!-- FOOTER -->
+@@ -1048,6 +1094,7 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
+         <a href="#trabajo">Trabajo</a>
+         <a href="#proceso">Cómo funciona</a>
+         <a href="/sitios-web-por-industria/">Por industria y ciudad</a>
++        <a href="/recursos/">Recursos gratis</a>
+         <a href="#contacto">Hablemos</a>
+       </div>
+       <div class="foot-col">
+diff --git a/recursos/guia-dominio.pdf b/recursos/guia-dominio.pdf
+new file mode 100644
+index 0000000..260247e
+--- /dev/null
++++ b/recursos/guia-dominio.pdf
+@@ -0,0 +1,187 @@
++%PDF-1.4
++%���� ReportLab Generated PDF document (opensource)
++1 0 obj
++<<
++/F1 2 0 R /F2 3 0 R /F3 4 0 R /F4 5 0 R
++>>
++endobj
++2 0 obj
++<<
++/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
++>>
++endobj
++3 0 obj
++<<
++/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
++>>
++endobj
++4 0 obj
++<<
++/BaseFont /Times-Bold /Encoding /WinAnsiEncoding /Name /F3 /Subtype /Type1 /Type /Font
++>>
++endobj
++5 0 obj
++<<
++/BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding /Name /F4 /Subtype /Type1 /Type /Font
++>>
++endobj
++6 0 obj
++<<
++/Contents 15 0 R /MediaBox [ 0 0 612 792 ] /Parent 14 0 R /Resources <<
++/ExtGState <<
++/gRLs0 <<
++/ca .12
++>> /gRLs1 <<
++/ca 1
++>>
++>> /Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++7 0 obj
++<<
++/Contents 16 0 R /MediaBox [ 0 0 612 792 ] /Parent 14 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++8 0 obj
++<<
++/Contents 17 0 R /MediaBox [ 0 0 612 792 ] /Parent 14 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++9 0 obj
++<<
++/Contents 18 0 R /MediaBox [ 0 0 612 792 ] /Parent 14 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++10 0 obj
++<<
++/Contents 19 0 R /MediaBox [ 0 0 612 792 ] /Parent 14 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++11 0 obj
++<<
++/Contents 20 0 R /MediaBox [ 0 0 612 792 ] /Parent 14 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++12 0 obj
++<<
++/PageMode /UseNone /Pages 14 0 R /Type /Catalog
++>>
++endobj
++13 0 obj
++<<
++/Author (PymeWebPro) /CreationDate (D:20260502003018+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260502003018+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
++  /Subject (\(unspecified\)) /Title (C\363mo elegir y registrar su dominio) /Trapped /False
++>>
++endobj
++14 0 obj
++<<
++/Count 6 /Kids [ 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R 11 0 R ] /Type /Pages
++>>
++endobj
++15 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 839
++>>
++stream
++Gat$u95i9E&AJ$CbV9g;h:]8UKITA\7>/TZ0=eU<2AjDVYZ"Bu4gQ*Z2,Y>!=n4c=p!(]>MnnSppb++I:DmDe7R."-,G8KQZ<N]/#tphPW.7o$;aIH]Q5aL]8KEd"R91*/*ZhKt(6m/Gj/G@e^kCjLHdT8k1(c*kA$.baT_+@9KHL7L63s#-#]u+j=qtqW'hfRf.[V3I/-!XS*89NqA3V6LMNFAsBdGGXXO7riE(nLf!\]9n7)kK27q"hbNW#d#$)rJ9o#`COmO45>V3"1@S5MJ5JR^UgA,!&"c/!.5D%.Fm/1g3I'(lYKX''W?-(BkqF"1fE;Hmm'XP3>bFk^ogF\/-s;IBZ-E?c_TU)fm:$V-;5__ap$VF[SIbGZ!@Pn\j>4HLZ5$+m1C]naF7)L<BO`EeT76/jm3#-/eFO\iA/=q#*%Wo@cU8GGPod0bgi<5XT>U'#>nBb0M;/;jt!PZ$^q3nrTN(XjM+cKN",)AE_Qaj!9n=Z,.3ITNs2h3gA=Rs/FfD"H8jmKp<r<Rta!`q2Q^EZ-28,1.l78:8WV($T5Rd>,Lf'8]_?3!!2FD5>`C*86BO=<,M9p3E.Fo(hUaK;.$XeO,bVGrMC`/;&?Ij=(m]3nSbWrN7Tljoa,XadQgVfB-)ID-GiqKE#u^Bn1KIJ%kQ`YP_p&UO2GOQ>L^&rOP+W"GN^5KRWQ!g!oiSGN2qU%6&\r@mGGGRGsMR.iJm9J"]@I]eGM0%6^N=f-F$PS8c;_?Q\n-j*BV^O8RYT%L76^/P%(ti[W0\p^_c;,!N/48s;GhS8ZTF$ll@*!5a]Sr(::SN$W&BQI0AHanGq$^C<P<Rf~>endstream
++endobj
++16 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1489
++>>
++stream
++Gatm:gN)%,&:N/3m%]_`:]S0&V4D/P:-5%=D6%T$JOrC$L)66oAc29c$]5X`fM4KPaL5c4fX#quln/uDI$FZ#=%)L9o[@`9Pbu]c<%()egsG_+-.4?05t3%mdP+KCOu1]T7!HDL6q!YK2+8Z7OiDs0U*r/fQZTtT32]bM6=uoh.1%$:/>[O)nmInAO!R5@_SWT>\]%$J-'FWR's/!BQ2PM@%W1fl2P4[SG4[=^5n]98FV70$@AM'*ftMdW^64n?&F9HdjA!$=+2fTZP6`I):3\omFS("D6S1_Ba%Q"G[Qtm4%GB1t>t[uCik+M\do&,$d8[8lQf5VK]]VBcKK`9$+$JZaa(O&S.;rH&cE%RoFds!`D;C]Lf?;G=5hYH@LMelCDtZIM/3g;7fAZq<-8H>kA;bR:=X!)DnqrSi9[jACc2-#<.I8d:b)^L,1&P4T0s7",oR7`MFoTL;Nsj09I(mCUK5e\U<SV6V+<Ici`5U)Sp<[$7,e(ZLJ8B'm6TsP'[d,;%1bClec,lH_X0C6Gm@.Isi?37**W0Y"MGp3<f:R'PSJ4u&,X^+3-5A702e,(6,@s2qRFI%U_oDF"e*WaXJ"ODE/>]&W[5Q>OlQ'2qj^$VhPOf/>\[o7eD0nQ4'McgSZL3I<CF_3aC?`R'XkT$*j5>rpKG6#"p9$>#K7LkFa\=ec,<:oEn:oX.ek8Ykf%%;mR.=n`EpkTElr-++\M[Id+']n(>8S(<ENnQP$G(HE#U0%sCT`sX*So,gM#q'FiPDQ!B'E^XY,RD*4`sU9NX>Q.8'S%1:=Y&^k`cmS*_!P/e:WCK^(V4jrF9k@I1(AmVDI&oDMG-:<_$>RATeiMrZ:SX6.[.E[R$j4k7`[T1uOufA-!5"QYFDpC:JK;,79?,iBmk)],(2mRLX`q7ke1;]e-dTG"msdfres-c:<GL`S>=^H0JE?h)A4GL>e2P>mn6M]@)-`$TU?d.M?sr&<o<0(*Q,.<E%P99];#7#$lpG2%Ah1S#5p\I6AaW20BA\.4pS4\Ob:o;a%M]>@G_97tr#i]!7cY*nc2:$k6K\Mrt/VRmnZ.+%c&&?K%B$fp>s*7r&Li1/Z>_A&XSha`=`O>RsH#Pr[jHTJ%bSRmQf+%.cC3\Df;CNI]%/8DV.t(J+t^m-F4:,'7=c7<A96^gT'_a<HTFk*aNmE;e?IJG'r%4<38;WO9*[]9;%!H%%:.#FI^"cSH9(69L7)="d%$ej#-_Sqh^Xo3L@qnBD)1XQ!^RkVRT.^)%(U2@_r->I9_eGTJ2<)DCb;>$mW>;1b+J(_L'd-L]cq=X[k2ai0A3lG2)u[R\@IRYB.7@JI,>oG:$+7sAmke6[.5>Z;7E(2'aS8.N[aDEkM`D!L.rV?(=a^@>1q/r+:s^j$p%!K.=Oc"m)7T\X)H3&?2XB3BN5$SE=s'>L.^V"$2gdaR#BEd96Tj^([38Pe#a+g6<+VF>d8-I4>>gL$JbocIB9$Y-jj&c~>endstream
++endobj
++17 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1627
++>>
++stream
++Gatm;=``=U&:W67fS=Q<af#ITSpbA=\/f3u\$=IB]g*j=_S\_F.E1PTmfGU>gCg>V4W9`mJA&\QDm<h<n\a/>,R=*]%Ng15^c9P>^c^Vmr#.3N',&7r'etduN'+q,KMf[A%sNLsL_&Ai"o'-l5"C/DHp;At);J!nb&J0sTs;X?"GHY/Nkh_Dc5;>hfqKa,D;igBFiu6D(^U;3k:k_>cdat^gmIXqbTC6lU%(f1&IKW]%m?Of1R,jEYFgg=B/Cr!#!4M*Otn,Z(I<_CJU#[6%X;63gcnTJa!ljt@&X'6+TddmTJEq+#/5`+B2ombT\;_9k.8pc_`J4<_qYoY[ue4u6i?uZN&l5p2kC%f;#seg+9^>rU6a?5cSp=RZLNl`h8G\ph?Pd^r&Er$"X1l(dXVI&[eMr'ZGN\A/2'3r]TBPP=C9r*lP0"po9!=Q"3d4+;Vo?7r<YYp?<l;n/Hcm!E3g+?h8@df?[pqW5MaU<#C_'>cO4*3T_E$)i:d_,NB72/[GD2W]Q$4*._o]oaROVo2Ibfb^YWCJkLFW-BS-M,qpqk/4DeILb_m&H_JL.bCpRj,0YNbee4*H2Sn_8)\h%g6g(k!tA-)?ipadk9,',:I"a[kI)1cQ0WEq$Kn=0V]iA$CE._nJa'@N;?5&RJ0W"cOjaUA^In-<<P7!;NM$I^9Lej.b8f_[j$67#j:5O/cT]%WC&?=o(R_s#/2CD]DHTI9ZdaXulT!#Z[,_YtGEBb[X49X"V$*WWGHfEF;_G9V:9(%JqC`1F1WQM[&%(e^;%SOaG8O;Kk7H*8K\D1=oJ[\Vi:\g1Sc?;iT-b9lnjN>2OX#KJ&Q3.=_*FnnngI$TPK1C*GVi[Rrqq2I6%n9Mk:c*BQ`h\F>p<qQVPCe*[8d>!J5`'8JM*$[l/9ohYSZ0:kpo-pAt/iXBu7;b,C#]!YqoN&(eUf[dl=hqAt5:0!,ISX$LAWV?J0$:9>Q[0Y#hVo8R0SOV]c=VSiI\j(,T2>c=]/&!+`_10>PtROUIW01":01r@pR-?>7.ja<jL@<,s(%jUW0NjQjI[;h[5@Q";p?GO-BY'[o"3>kbL?T"g&>!?qNt4aF)UQf8X2)6)RWM=WTc"V$>W51-+;<,,mBURqM,o/7^%UP4F5HbopXbAK+-.k)<0L'-=th:?<60'*d&3[[-T6adDY[#d&3L^b)K>s1QgG8l:L0eZ@%A'rfrS1M9K;M5@<pWE-1C$cf<9pP.,ksY2*bN1<8uU0]XXOgP<JeXAFHu$]"\k=m^D9[8GSIB%?9r4`nSfS/iJH7!-EXH['pIDLCHgpiNF<k#@IPlZ+ou(^oY!VfM_'(LD4GTZ#.oPjYrMP#H]Lojr['Q@8LF;JVma-KQ1>H,sr/@E0c9++H:)ggFq;]Y.NU&bnI:Q@:gA7BTN?CO'CE&WFDCaS5g81^!n`lR)TYI'kCEPX3SHVY/O(.`[!l53fQ?Ou.f7""u-O[E'-P:B_9\HQl4/]$e!.W1q8n`lmi\X%J=W@KI*HS9\/'H72QSJm<V382a\;W`eM3L(-<u.rlcDM_35T'"Vrb36sEK;Ze0YO4n$,DTLKH:8+\1MP4G^p$2:=8>@a^"TC#!7\=Fjf*YcFQ)O-t&2<njl=eb^~>endstream
++endobj
++18 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 2007
++>>
++stream
++Gatm<968iG&AII3m%FYEUX0/$nk>s(;E&=19q5=L>]bNg84J=:(m)&`r;(jB.8%#p.qq-f7g^?MMu=\)R$!FOk5NUUU/s-3rf[p%BXT$!GnJ<Hl"i9KZ>&HV;t@4NMaBm>RUnc%e&OBl0;dKdU,\l(%e)eRELc^Z9=c*gGV<G2H2]X0/0cg(rFn`53HE4CR^ub<Qh@n.RIt.ETF(5<KOtsYlaodEMQ>Ip,FX%Sfo*#=OG.C>?4s&2b\S2i9p6_aHR_5NVd>>$DC+gn?#>?-P73SqMgW-W_W,&C`'5#$$@Hc\,hq9bcbh$01l5*]V4ft+phX-O%5fXcF=!3b^V%7>G<M!R0BcX.^:K@)T:-?JaR"n5%C]UdRKlDVF<ac.S)<\lr/$_&NAu/="aiZHd8o>3U\/+gMRB=1i[(6LY5=k,;"m8Z3)--3p"A!5mf5I=4I\O@?Vpg0l,S8*Xm>!=ni`PTO0+WgnFIc>&k;2o:NCfG4&!68+dQ[qLOmX]k/&_XOAP6m`p\-unnZ)-"*K03Y-(9=i["+t=7M<^=D[kSh?i*.HK28Dl3CFP>p)=X8Bm=;DttCg+r?+qp`,/EZk89f(Yiu@\GPHj_$]D6/p2:_3M$:BKIV5C)fj-+5ch:T=Q+EHA#cr1(9rX<)#dekd86uGD?Qn_6FDq74I64)kk!R'IpLLNn5_G(+7%K#A'+95Q/QJ,1a/i%@2AdQ/Pn8]#7=.k'54Yu8Ce+TU>sbc*E)%O]VVe^]@s.5$HpH$^hM?a`d8U=95(aQPp"nB8d@rn8^MhS?Dc-FJiB-c8$>rf^<]8l'GaE\S`uQk*K)h?3'`9qr/MHJ7b%O;esHs@Y_b8-ZUL&sH,\`qUd,P;>_BeoUbKZ\98No-Go/7c-#QIc43%48ce"hReF"KV-WCF(H>27U!95@Z<oCb&#:\PE^gH'&5*P":/Q^Bj80Q+q%TNg3jTHi*<63$@N8n0/_NDKmH&L67.Z+kJfKq*:!;S#NpE1QsHh@)?O:OH7>sa7DO-]tR(tfs^*pVII5PRh6#MhF<@4ZL3@6t[F!1%EVZr/J'kdN8J;!#R$EZoMV"^PH+K*Il3)e!V00QjNAlnZ@a+T.=#J&io@Lr9Oo>@$kdCt%\_`^:(ce]?<=XI"T1k8JkO[S5>*jb6mZjiTPm;S),8JT"X2@CFtt!G@lD3UG^4g2a**2%;,YG@#?H%)0K3$t1&=*uRD,+h+O3O$)ssqTt;dE<@&-Dn]7^"$rSe.?ktCW[kUFB-A$7Dk2ul't5:k]&%.C!ms<r\[4_%JLFa>ZVFBec%)mtI'6/1GPlFbY=/8T5+dK/q`:>]S\\^W=E0PZOuV<>Ej%LQF9'ZAAGZAG[cH*ANU03Dg:ed?]?]:)Q'L(PjTTA&/n-J9]9(lWggNC<EUs?$[VmW$V%kX,,Mnd7@0-BMOL(cE\U3s\`Jkn(AUhZWf.#!E]LV\6?>(oL"uo8k=E'4"!+GXlU1R'>Lt'p)$f<,h"j+IZ*/)WtJ7FX(_B*UGlQVA6Jb,9FG'BTIs-Z@HRHh4AIDaX4'O-!,!Yg][EJeL<@KGK^TpKr/GS<>iX/0h4[2RKTN@\n3:,EXMWAR.b+U2&g+%<oD"n4%O@A=aZ&^F+%ln9LjdeA1<e<r+o^hs026H*1YUtpI@X&9qQS5&a;?C%FKn%aJfg2)O`k&Ns_Dp%EL!hY*S'V:rVe<S\(b=d3bh%q_6^'h;.?hFa5qX_rY'*sj#n<##%+'@l$AJ!pj.X<X-GJkK\)iqtjZCZsi4)$a`?/Ut@=^55L4[7ZT1K9(d5J/)jY6<#_eTU;`W7cU)X`h!MUiO&d(ge^S-\/DVJ6UT*ZKV\M?ljE"<d\uIhua(P<est)FQU%)$OnVk$g"e1j2M:I]R_dh/^ImD[tiW,X\)j(F/"r]M2PqtD%s2^%N8]`D;C^%+5br3HM9>)a1q/`i`@+8A*1fn)Z)IB^[/a\o*5q!UoL?@[/4'aEii\Uo^?)W2\3$/5C!'Xqk;EPntM^m~>endstream
++endobj
++19 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1521
++>>
++stream
++Gatm:9lo&I&A@C2m%FZpUS%b)ePd,_D)7B4)d@#0\j.Ml,:*@.,itu>^(6mNlr[.IeS&brU9OOg]skW7']?t/s.Uid2l.UFiP\*Ph@krQ9[aM/R1<=_c@]e(/C3lHil&,b&#4eqIiYbHSd(XHR'J!UJXV`Ihcs6)2deT]ns!61N]GFBKh3uDaY!c]=\*%p.q&0"(V]#N=>":0=dILCVVuQ$b9o;W>'!-]0/WXA7i(VCMhn3<(+7n6$2?L9`TO/Yo3fcT'RPpp'rF/'+/LtA'8lro3T9-u(+0&6HlN?,S>M)#Y@g]NeV7T\(Wt0p/DclI$;4)`V5]_\cc\CB]]VD;=Lb'[?[B`l%q``gF*HX^iJnYI=dWeh/#cb#r:KpLJ"Z/8ipb20o'J+V#E^)5gRk;[C<_?pV6DPc%q$od*l))RQGsg"AE,b$L[ZbP\b*GE"9@l<%thBqlba0[qE1I`$2lu32ke>8n#()B&!DFZlNMeqh#TM"ni_l?`t4q.#9aF;KS6//`la%OA>er])m60m>%OO6@4TgNY0Of`G95&=G<k<qk\Hu5hr]q;c?jG2^<nPuN?F#HGT;Ab#CQ'5YA7&iSS_rG[4M]:O]Sk;i=2'8.R@MeFeQ`fgrVO)'ckU2_7=IVd!@)kFH#7.j#./0:*&Dk`srY+4buEcOH!uUZ1+]aK1=m8;pVQc\MGNU[%]C9&FQf%dRkuW4]eSiPhSfbnGPu%db)rUYXWLs'Lq,0LrRLXn`5#o6Vj5JY%_H=V6[C?JYLjm!lSV^#g888NB(r<Tu14#Rqecl'G"r\e7L!6jd`;AFKMNT;9W6ES<Gqf8UOLPf>QRihErA[)Fq8T(\5,a1BJeW-@6?cf;5c^"ATbp:K(g)]GH$MM2OE,(e>R<l/(&r33V<Hh,7G.B-`t;b5RVu@iL7dZ_8LT=!3@JpD'Km>qpY0Zt^mM*H/`THpWu+:?XMQ6J*rsmEMRgcm3';h3rC7o4'8jq#scYHBflV6L+3?(I40i(c$'o4ZYVQ<98?S<Ip<."-8YhM#AZ.5o?J:83Zk3DP<qG0Z^YdX`@m9VSP_O0Jd^.XkHtC74\SQE$bPP`rPNn3I%EdQ((SD7N6RQ"qXergs"u+gW@"uN=-sf7Z3fH!Y59^/(shkV5FEHA96E":@6&#IF:"Pj.df:Vo#GoHoMB/1RcAS;9en?235N:m%m^bYtIsBT>03p^H2l\atM8iG=isQ*r0Fk2\EMDApl)[<gThYYrM"EG[@AdNS.OCj]qUnV.M1A&QP*pi<$boV8Z&GMQKDG&MDo3<k?6PNU[s'q4O/]V&'srRQcU4((X:oTcbqgBN=)7oc=gMjUqBKS:GfOc7$E"S4PBsa6e1oMP;VS<<C.51Zg3qGOlEFr,PGTZXdDq^8AMD(q7,t`I58TW';L]0<o5^i;1rCr4S')kdlre-LH">#l_]6`?o_3<PV/\5WJc\jekDBT?VQg'!,>s%tao1G$;F)IbFOF//`lemLtPY(6ID/1PgKTqd?<b%K6B>+*3h~>endstream
++endobj
++20 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1484
++>>
++stream
++Gatn%>BALf'Z],,'^)/#1o6[IX]?(+l*MmZ'5(3M$E[\5ZChBEURNQKL49!uG9mA/E1CWs!K"L[lgL?L5o_!*IV0PGmh:$ELEPR'A5:!S5#"5iq4u'*@Dq8h=;46='Z@j:nt`"p54k5:0>3m?:SI?`+X<hXp-#6lO("Y.!b-Q@$P=!B'H]eD/UC0[7mj24Z`)E.@F:NTKa*-_!DP?7Qg;kC1"3EXI\b'f:#7^m8KgGm/FYu5$*/f=@F3+40?G#Xa:t0#;8Qp6[OYYg&L8%]\b2Js>_\hrSTs&PC`!;ei^\2JOBFjr22e9)2-"nPb=Yi8Y:)$/,Z"-i3uN8ZF'g]+%Cph.&cY'R6`([QM7nGoW"@d15tLWYntiL=gRnCuOM.0(E&0oY3ZEYkacF-[Z64h(+V.ZTCba4d'sc,9QO3gZ'Wj:@na1m+aKt.Vq[*FY<Suu>nS<OBiU;]rbK2bM^DgPIBYD7FRH>XU1r"k@<k[B=QZ116QCcS()6#9fe<N5?!W.`hMDnQUcL@d=:\[<F_(9@LSo&KX_UBFUe\94$J"0=B;D#7tYNr#3rOBG&8e#I9WRb!8B`X.TaXdH.VXXgPPl%%KS`KFQEiYNuAo^B$AE-t1XNWd]Q.`7Kf*e,a23gU!X*SL>!A/FP9qYVL(l\u:^ChM$q1lcm'ukV5G/427@$I&'*@c/0AVa*!2ZO4]E\t(om4/U8^Nh!]H+Wk82XX8kQD!.gb[+KT>8n_`8H51;OrL^]gaST%O*B"g$]TDB(fH[L=`H31<ipQW0T7L\9csVP"0(h;*?kB21jIDiWA??B2nBuZLkS=(CJo\[`\U*PFiVG;@AXo:&sJTRVHE-Ubk_O:<_MMG7KogT%'?nk'UuJ1*?)&%*Z'hrP:s?Z()MU@K;iLKeMG`9/6Gj<pmW#o4B\a8#GEGfAi4_#F:?l]>c4J37,2<p,a]d%D85YRSF2+dho*k7gpb&`q>;&9<[G8%Ar<hhXO+(qc]9WIhhA2%'8:`f+Kb3%_O?>M!u\[M$&^9TMsA-O=X@`Q<N_g-%CUPa\m4*@]Xeq)nKeZUCr?[,IlXCU:olBRR=Fl0Sp'EUSXTlM1E+oS]:j/^(@QS"/^0,h=rBdGq(,eti6^PFp+h>TRa,]4cOues]%\s>bUgkP)h"FM2rQf.X,V%U(Q7"BQfFl.$YmTU3lZ(+os0$JQLp@J8TJ'G33H\`k8c;B'>>!\\/dK@1a>5hVnRSg(R<cYZ5MbN@shq>B)_W*Rq%Fb%crOG;+?EL47aA;IFNmL(tumErFn)PQ\g!->asWr4RNG[\9gcqpq+_rkrTROYAqt$2:Lmbg=tH@q@k<b_9je6?F!6)([bdd$ea=bNd,O*cK"6`TBETcE)`XK1-nuihek"MFC3NDn9m!CNb:2c!]@YJBBZttQ@=Wljd8F"V^iH"U[t"IOs`c/+$il&CPX]&Re[J7a;O027T\3#>2*82q^6<C2P\e!&)l.S_u~>endstream
++endobj
++xref
++0 21
++0000000000 65535 f 
++0000000061 00000 n 
++0000000122 00000 n 
++0000000229 00000 n 
++0000000341 00000 n 
++0000000449 00000 n 
++0000000564 00000 n 
++0000000816 00000 n 
++0000001011 00000 n 
++0000001206 00000 n 
++0000001401 00000 n 
++0000001597 00000 n 
++0000001793 00000 n 
++0000001863 00000 n 
++0000002165 00000 n 
++0000002257 00000 n 
++0000003187 00000 n 
++0000004768 00000 n 
++0000006487 00000 n 
++0000008586 00000 n 
++0000010199 00000 n 
++trailer
++<<
++/ID 
++[<6ffc037653f9da55ba6af8b2867bbb62><6ffc037653f9da55ba6af8b2867bbb62>]
++% ReportLab generated PDF document -- digest (opensource)
++
++/Info 13 0 R
++/Root 12 0 R
++/Size 21
++>>
++startxref
++11775
++%%EOF
+diff --git a/recursos/guia-google-sin-pagar.pdf b/recursos/guia-google-sin-pagar.pdf
+new file mode 100644
+index 0000000..68fe290
+--- /dev/null
++++ b/recursos/guia-google-sin-pagar.pdf
+@@ -0,0 +1,250 @@
++%PDF-1.4
++%���� ReportLab Generated PDF document (opensource)
++1 0 obj
++<<
++/F1 2 0 R /F2 3 0 R /F3 4 0 R /F4 5 0 R /F5 12 0 R
++>>
++endobj
++2 0 obj
++<<
++/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
++>>
++endobj
++3 0 obj
++<<
++/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
++>>
++endobj
++4 0 obj
++<<
++/BaseFont /Times-Bold /Encoding /WinAnsiEncoding /Name /F3 /Subtype /Type1 /Type /Font
++>>
++endobj
++5 0 obj
++<<
++/BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding /Name /F4 /Subtype /Type1 /Type /Font
++>>
++endobj
++6 0 obj
++<<
++/Contents 19 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/ExtGState <<
++/gRLs0 <<
++/ca .12
++>> /gRLs1 <<
++/ca 1
++>>
++>> /Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++7 0 obj
++<<
++/Contents 20 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++8 0 obj
++<<
++/Contents 21 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++9 0 obj
++<<
++/Contents 22 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++10 0 obj
++<<
++/Contents 23 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++11 0 obj
++<<
++/Contents 24 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++12 0 obj
++<<
++/BaseFont /ZapfDingbats /Name /F5 /Subtype /Type1 /Type /Font
++>>
++endobj
++13 0 obj
++<<
++/Contents 25 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++14 0 obj
++<<
++/Contents 26 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++15 0 obj
++<<
++/Contents 27 0 R /MediaBox [ 0 0 612 792 ] /Parent 18 0 R /Resources <<
++/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
++>> /Rotate 0 /Trans <<
++
++>> 
++  /Type /Page
++>>
++endobj
++16 0 obj
++<<
++/PageMode /UseNone /Pages 18 0 R /Type /Catalog
++>>
++endobj
++17 0 obj
++<<
++/Author (PymeWebPro) /CreationDate (D:20260502003018+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260502003018+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
++  /Subject (\(unspecified\)) /Title (C\363mo aparecer en Google sin pagar publicidad) /Trapped /False
++>>
++endobj
++18 0 obj
++<<
++/Count 9 /Kids [ 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R 11 0 R 13 0 R 14 0 R 15 0 R ] /Type /Pages
++>>
++endobj
++19 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 837
++>>
++stream
++Gat$u92F;-&AJ$CbV>s:ZEm@(eeFrX,q<S;`$LbhR+03<?meD@qp'(!A#'[8[cDk\l^O;\N54\snBEG5mjVN@5X5A7';/eAdVG5J&PHRZ;$!e(-A#9n/2tpnU,j,119i*<F*P9PQrcTVN$ere"su0&ihNq>P)3Qi@M\\b'U2qP#S7+]"peQ,!.jRC8#uQi[=W)pBa'^f>Eutc&)4Pg!pMM:(BJP-;-F:M#cfe./0#<ZKYXo;&<UrIO/&q\WQ+q$3#5BoModKI*-k5?oI,D=\EB+9M%!j*'0UNRS6t)(=#VX3$Y*Ub\!Et*YZT3!]:\?S6XnhK2^k>m`r\VnE8fh`DO/lpLJ8T8&Lmrb5SZ1D;DpQ?e:-?^dVtS"M;Mjk<,rij_S)+AYQtL)6TTZTNG\,m0U_c,#@Co+773/U%YDNs8!QNmnUMB<g<WC%>XT32M)/=dZ%`Tg;.Hs\:H4WD3^^=%"\C0=2Q2gFp3nadP3R_gVli=*0:uLOV3+a[DX6"=bM-Nj-@$&YVV.40E75OZCu*+=Cu!-"kEtaiBU-U#4_CW"'JcR77+db2jJkHbn1=9KWO7B!**2YM.%AGG'X`(&qt=g^6.V8poh`0PFT[TE[Hh5PjrGn:Y0Q8'ZHo69StOg#Ijp`4J_TO`h$<<0lV7Q+"8:2D[scXO[kt\jq87((*-f4JG"'j\9f(-U5NQ1ue?05DL,91`<M.AM:gZA_qXMohr^)[GH"J*"&UI":IhP':E52WVLRmbFSJL)^EP$+sh83615n_KY=+7TsJ)F7<nSuedMsheOO%!)oqUO)C@7G6CU8*jUUl<k[R`[,V*C9<.1:CNH~>endstream
++endobj
++20 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1566
++>>
++stream
++Gatm;gN)%,&:N/3lq8^DlCn:IH:j`eS!f;-33i&:(PkBp-7$BgU/U7@HPWDJ3PNS&Fu6X8!o1sZB6RcQ&g-4bk;CZ1(&dZh+r/Ji,H44%ZoXu2eO!fi9SQ1Q=dhdQ,*?J?&B=AAog6UhD.+lR.#e>A:fA?Hj1:u.Ktr%d8k@$7Uf9f-LugCe[TIce!A1u<.C.>;*ih"H2OZ%V-FBf;W4AnP2m[C*pFE@0e*?`?=fB1o,`r4D'J">OeM<QZX2jQW\J-c]h/ac\=7;UhP73aK7$9>R*"UL@I[^'d=c,c+b2LlNR"Vjlh<<GNVBoa:[<"cJW%0GW]$N#drOOKMEhbS&&q,iCO+%e#?j,@?4nen%HIrW]hRE_Pj$Ro',Uq-KZ!6&_H$f-1^jDSu-tio2V\k"Kb?l't@nDP_;jiFE!lf9fJUr:WTuC^YV/#Y"-D^rD/F9Y=N0af8Z25cFL:g:-ki1[Jg\3)Y-[RK'iU_]V,amFOWq+he1jBLm'fum-n+cJG/aHdnWA?t]2m*f!*!7/Kq!O0,64G*oEZBE$WL+>_o=4sGT=e"J;?dDo1Vib+=^1[2HlTjHN5q!XF-\<3dIo&K<Gou"l`\!q:HCuY]]sg!H!?:Ys.4#KH]>C'=%-KUd(8]8OH5h')G53p)'&*#5FUn(gYUpd-g2"7G#[e%eAl+u+$!EPVCW^GjfR2s6'mCHg[^s%`o,b_g2,!a^lfaF708U?g`_&uL*5+C3e2^M"TunkGN*FortCX,e)@IeH8W>oQ+>Hck+O1)FYD?t*#(TCXe*E'<KO)E46D'"j6Xd9BkggPj]6^N9gs=2KXP!+H!@FE`dd.>"^REYn2tG6RPj_2Y?diQou9]#QaSN)(*p+I9BTnsWX9AsmBaDK4J"F=0l)DKH&5kMCcArRlP>Bt1B02pURF-c,dg"4@O0`)D3W"$\4&;61l2uuN\R:)1k&6sX_YJX+,D2"-7M+!gAStY6a[SYVt]SeFkqRP#E!S8*QAN=``DrJ[NH'qhRFBo_.p!\<X(GjQTVt@JuNmnJN(8_[;!0nII[#3:J;8YCLXSi3QtfFN4>;c$jEW+Up\L_<2KQAZ+WkgJ/B/W;]*^&V(M:kXY:*GL\Oc`bh$?kKL:E@=O5Y?LaGgUs-p@DThhBH[5jQ^g6_utA52#"rW1mO)KDpLmKHlM9,BPMVqj(O3mF4Y9,Y]W;3E.9W&N6$Pge%UbR`udW%Uj<6V/Za!u.DSn*U0"9_CQA0]c/,,aNG#iQ2lTL5_8#GTjuS9_aA34'&JWO3\Wj>FI3"8p]!=nIdRg_Ea-6T9DN"8O2Z7i69R`XtCQ7cD+=hNGF(pODihcA^Zh26')W]bhVU7b26t=%s&X"hBXe99Bs-kfeAgB37%'/s7*86#,@HY;%51*N)A&HFO@[\,p*!(Xkc7c8p>W1FWTom5*NaS+tNNF6Xt^Cd-SA9,:M*Ej/0u.QK\n;N\RAMN%90Z\Y@jU]?<F,=pmBnRhBpO!d(5&EGN<b=F]Ao1INtQDFHID:s%7orssld7QkJg9>9juO6uAom:UH'[+kT=m<AOsMgka[j?\\~>endstream
++endobj
++21 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1729
++>>
++stream
++Gatm;9lo&I&A@sBm%Ksu*=Y@)><15*mIoJ6Bqf]qcip.O)'4r;#h!GXlh_HnBIT7KVY+WBU.'%kG2IYYTVMQ0l2MM6dAo:@\<J7+RU;8;783;'\sT+HI$P#bN's9!E?n+dGofE]^&Rb!,kUo6VBi#i$1U8L8WjV9-%.`dGV540M-q)lR?Io?@$X`t54b7t2"Q%t+s6NqcZ4QT5uT5<Pi`]T2I@s4=YD^nI89B<RfCk^Me&&@,gnB)'?Su3EgDaUj^[gl0G=bUh:Y11[b;04V)]``L]bqmYWU(FjPPZPd[>pQ?4O.T;&WH#e4)=,cjf6.I^O?)C3$2KNEWB;2VkYqKitD*?D9q=nC<RE&IueSQbN1n#<cON3T&I>4kGI&&Z-GnSZZ2YIbqj8*Q<AqHRNP3,"E'h:?52`gLY)R>dGOf.0PUe!sf>5#7t(%V/[i;h;kO,&;in=hEL*q!0Fkl,RF:[Y0Q:fq:5;qfB;dL&OkZJMtauMgtDW:I(hn.VB^[_"b.%-mQj63O>0.sa"V2c<<kBpkNH2]Y>)"8M;;#Z^\`XF8KMeimHpLd^'ZXSn#P=<6!k*Fiu)ST6;@[@",kDBo'KDiJpPU_B;"$kk6aX!gPa7"$nus-P`$q]C4j,K(.h*E])RO8^@Q/ck'kbcfgC>?d]O=.]I<$8?'_u_nE=t0TrQSED+6qPrK=V:DHk"MXk1!8f!5%^ROX]p!$5.Lg<lfn;phT8',#0g;7a&E5jE,d$G(24_Qh59R`;jkomqHhj0mj.8kZ<1em=hgf-%#b%u+>uNC3Bk-V3'4fqsH#(/ZVsURN!i"qY'<*rLi:Q2nerY"^W/a@U(R<M!#_ZISB\4&PKS<@tna_d:kpb#*aaSa$UJ3#Q<9*J@$RC>I^G'-P3N#fq7V*0b^'lap5BkY2P(+%q55;UB40U@\ni;h3Vqo^)ri0m`_jh5,$n1;5^!$#=sj'h!^a'Y>JGNN#le'U\o)!K>[]G&NN7_'8B7W@P;m<+1$oe@SK?,n6DGqURQrKO]QS4LSU`HQ+tNFS1O=\X+#I^X88l>HnI)TO2f;S5CeU%^!(]Yo8"j_&"IuM.(jln1]8'_F$VU[e5@/fESKZ^+MsmBuN7emFj`6'!XrZ*2E4h0(,dp.qJ4uBljbPf0,di]Q'kK;PWu&m$-jEEj\lUkS7041lTf?]V)g>VEpLCCiQ@VeR3qHo31B)\teBLfSoaaFHrm%P];;3-pKUqU*P'u-6baj=[;$(l&;c'%6@hCU@"DQ:o$1(08uKWKM-DgF6EFEBre(-[<5EZfcnm_UC3hhN?8O%K?!53mSj5-=`ehlSO4?%Hg'7^\^U9d@2il*@&;[sQF&ohp.LrZBoFbXN=K=e]uBSA,g#6U8R\2T#tZkkPA]fIT5^WHXiJYBJZck[@OXt\T1$E*;.<"(Cr!ChF/pca_%o$,@g5lLd*Q]5p0HM#<.""fkac^NhG!1[.1^IK\1Y:tDO:(bEC5aJD%8AS:M4k+OR(J=NXl;nL'q?PCoH8.0Rrl`@7NIXW]32^V49[TQ\iLtb-c1-RWQesKD;*gb9NagI32EJ@F0u`o]#],G\*I/N<':]o[#irLEiQ<2FU*9Iel`0oqr%LLhV]ca!\AMgOY35O2iqNMHi3?3*X%13BOlWi>i;RmkF*d^gkM;61o.S[iEZO[0A6rK0pt&L#Z<tO#&H`S+b3uVuBa[=SYVYBT1a\XNN0JZ;,'4!:A&8cN~>endstream
++endobj
++22 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1935
++>>
++stream
++Gb!<NgMYb8&;KZH'SBYiJ]i(ZP]Ds;M&W70K>^eeZun$&jBAEHmP6maFe6>I/5K/[`CV'QW"$oQQ^jJ7q<"<7+;_f0IO56GZSh^RM]h!+qLV,n"LL@dj7UW!//PJ(,\I]B!ah$&0,C-$dcnrC'@MZ(VD+Z&o^G15@CYO)F#odNGg@$83USX6@R6"j]#t7WgR33HdF.l3SOMuT[m_AS)i]La8$jm^?JZC]KA)QTq17*u[!pe!jpOEIabdYi#R.h[`A/A!MpL&mma;EHfc;G8@Z"I_I^FW:EWVSO:3bQT^$s4hqpEgu`82Q,TDOaX(m:_s<2(j?RU-o=bn\csVG_;C7:j*QZQr1T]!p(>-*Z&5I)kQ:D_Gtq*tg_QH4+'390MHnkhM)*U2-SE=oZ.Lp_CpJI-j5H&qq<8#^.c6T+-iM1%lNtOV7b'giic9lL+e]0TL`eo\RMW\d)\QO52Ja&ci8]5Bm'D?RI@MZT;7&I_MQ6c@&cadEC"hlPIT3oEVSmpWhVYHaeHHo'4QOMq(R5Dt3]rFAXkapXs/G64CF*I;GM8o0"&MWN$^&&[J",EUIh+,[/g/=%#"P-%_uZ+VkOts8/hPb*tI<NZ4nB>fcpWgH.!d)WIMbUK-,@8enb&Ourgp$L9IFCC/LKF$C3n]l+W3Xj#\3)*/q'74GkCnQt)eX0d'6\>HQHeOC%<S_#41@&uHq:Y[JkLbbO$J)hqX8(MS8@!'ra#44m&9A1)L$6Eb.JaUSHZ$ZrBRW:cb[SGmHq$`V[JUE49nc)^%@>jJp76^J*pj('YiSGc<4k*UZTAC4tKM6LEpO)a:FbVA#njDLK(7jRf4:H?:PnG_?R\FVP/YMQUl.I@j:2`g[Jo0S6iO\P0II5H@[AD(nagQbS:=JE]mqf,Fg=2rk/uQ)&O*+C+'g1Tqe;Y_RPaV@R)j=q^7b:ef-<1j".]@A;n,Or+aP=$t.@k"'%=q5jV4IZZ.[=V8/@PZ1`c>LF;DhTl^bL0YQo=V*Fj5jkH!;4Y20cu*1=%QQ?]m/40VbmNA3$Bcmf=k>L0_W5YCpC7*sC"GBhE3Kb(3GL?b-B;fG$)Jajf)ZVrukBefY/1>2i3%3_#5?Qcp!Rf#'=13JSO:e8QuEd?'4?fFhN^YfsWtD;G\@muqtuUCF]X+>B`<6Xh$]%1UDC,1H<\)&6/4/-$`i<$?&@C*>CKZb#35TS?%J0NB88e#CkdX1?k\5Ii.Y#jPH9@ocjlMoYC/<H0Y,R.E_%0t@^T.A,q,n\W/@+QCfD,HeiF`T*A%/PX\5D8IL`p![u&KgSAk%dNKR&'bP"]ts9D]ME$W<-R5_`3&\/V/5Es=Y_u`j=*K?3KLSJY0kgU.7,;srMhlqduNGoL@*Y]kkrg9P;K/"[*k*`Sn!:_UIT04)?Xkl1aHR,)qK-!@>*94ZB7T,EH%4@K1f5J`4g(S)u@/%;2/eB-)SNfRgs,5#4_tm<\YVXMDi$+dDG<ui(@Y`@p@]CTg+>D'PW=t'GbIRH\]4<@R?bO'mB;(rp"D!rTK8PreeIkK=.50i>.oW#7$TC$IguA_bG@DSi](l/:[6agUm7S4`Q!j0D)u?mq=`NNN98G4,CTcheQA#.9-.qb?@9ZWIr4u%@M+.Hpb]giblPWoE,bb=93e%c-=]>^a^=(Zr3uL(gN#IRV`MI4bX*;lACX.]B:oF8*KeZ,G1qhKaW$Wk-boC)CnI%KC9nFoh_\@%TtnY^c.`;cGRFcPm=[8Gs@\V6_At`0AHl2(ISMD'TrEF'OHSlV9I?$mLj,V-1*fg+=c8;Ho4'R<R1)N/#XEt'Vu77?Y$HO[DN<?K<Z=&A5Xqr]FMO&+NEI:52&MKjE(+]0ZgKbLL+Re;m?UHbSDOM^>j_GhqdZ^7t9G[3KF-P(Lt*=3Z(WA\i7jj8fgOsGEH-\HJl^i_GQ8+p+O4gI&R~>endstream
++endobj
++23 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 782
++>>
++stream
++GatU0a_oie'YN`^k3*!u/!=)7>LB/S;"To=\bSQbZm.r&'Zt<TI!m)NGu9+q/S`-(_.@68]TG0_)E^,4$[aDnkrT+d.+dA`92PW+[k_Em:pDRe<3?kU_/cB*9Q>7iYnYM]LGV;g$G'W-VJ;R/\;qK_'0HATMhH-T-ITD#E188;#o%q@Anp>"ANn6,TG_BfL=0Nc]NFcA<eK^&T\Q9S3[g1sjq93YH'32D'D!D0iUcg5H!IS<MS1-@<GsPLAYo_N/;\f:T]7dDl/0>#XC)@,eaR]11MM4"5s&!_#LhY/ml.AbfQ7u&7QV%U<SLJIXm9,`DmgduT1C:Uo><D0s$,cT;^fC8ZekQ]/4Gj,^J),cj6-7#5FD1omjUO+2=dOd]g.%(NlU^TA]TP#B4YeJmKfBsVt/=d=GR(RS/kl`aJd>SIAE8e=C4L:5WW,diugrfP0R#@ip=a\VMaAlI`06i+r1gt5J:%E$hndaIX%PKk2LR!Pa'ZfmJC8`*EkUhQI/Me3)-NPKo9DYC!9Nf:/E\.&t\GT&L^!aDn^X%gmN0G]38/&N#eG!p0"c"lUTG/M8EckoZ2WGZS)^A;bjh!ES%:]9"U5RL#e]RBZG()W1s:!dP1'nL':"UeJbKldBB,2S(]m/Bsh`']O5BBD)r?CfQY[]Ve]3g[\8*A$kJmmgCrAYWps88B=>D&-Q9#(/nMmiO0ieHpT!bj2lI\eH>2kVgtG`>@rZRVJ'`]B<eJ`U]+?8MKrI%ZlFP?$j'k,TMpI0=gOJ"m%0P!r](T@O~>endstream
++endobj
++24 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1537
++>>
++stream
++Gatm:gQ(#H&:O:SbY&PGF]hSk[80L82[HXuY1"SF?RTX>@7l@`.;t;qI>=&gh9Et*"C3QdBmH,i3G2sB+eh1BId7d-nHOI>MZ]#KEreC3$#Imp]ihS6/0[pm/+Okr**?M]Yt3iudfiD'e"VIOJNSqV647L29^`nF(Q@e$49H@a$0MJr3/u&^lu!E*`D?bG&M#28[*5GP][;\E4G-?9bPlR@T<RU_GmKlMYk`R'9Q6+%?s0!I.JI^(?=pNlI[>I(Pq8bBY;p%!Bs4!B=[A@)-'?Lnkd\^oo_ZjjXCMXPOi*eqObqY>m%qZ>/RSfZNS/"KV`O&':0QlUPub;-A90!CUD*k''>`Z7r9tW/s$+npc+*6^2k]p?!,U[H#Iq]iORA1!Rm-o0h;"3G8g8;9+hM@^j5P#/b:2%*b#h+7VY,`J7f5b%Zo$*lS58#:XRqko9D6$q_S8tKgq-o_adC]V%*kJ^T"Tf,erO7O4F7C<hlbqo,M5+_^KABHfW8FBH*\4th`e[gdqegW.]t=lj1;Q*Y(B<dcig34,85'Qm!MUo(mG&QGm1&e<3*aS`ip-E$,YX"p'sm]^j&aH0u`/TV!#\L/_$KsCqa^4gf"0Jptg1W`:*pomLc$SIKc@[U-k))QO_@O>ESF#9AS5)]+q!Qb(l8f.tNppr(jN$V%pmUm7:L?9F"b46__bM0*gf=3nj6*<8/?Ra=Hl/+S8\PlO2nZ6>;i05q("<"%"qc&0hTG,jmP.q$=u;Jmlb=r/KEX?.%Pe7hjkQb!QL)A9@)S#VM087uTE\i$sBs:+rTWT^*1/7^03'0;emWF%bMp`uSURp<]1-Fc'il=+iff;QC1*b?F]Gej8UDQV&@P"X8MJYN,rKnLpW%2_pP$9=pBDJU1jNC3ip(7&'>I'(-mtf>`e/*JD=jCmiEi%&PbNjr3o!97)QN\2_KF,jpZHR)'FnC>D-j.])[e$YA.5GAmkJL*%q];$'g8NFH#(PJ3LVkbhcMmSkW3D5kW<6FE6(Va3gWFR"CGkB(<kKQ;oG.1?sP.r[^LCS<21<+f68&,B6$N@%\-]VB?-0(gF:\0[.0RWJnkSd6QnjG*q,:Q>Y/>ESIae!UqmjOi\3AhRkUB[YOn`6dEK<g0mQ_J19XHXg&0GU9c!/4!BR8H=$a=40uR3>#U4I7FI]V^qPYUWVqZ#ZtkeAL^EX%rN+5\jPRapd\$^fn?*r([4#u;t4uDR*@h8#.8(hm;CT_;((jZdDYC%_%(Hbm9M;Vi^^c8KOJSYSCbdTo>/W:3Hhec*DXEG;:&h?>uE3Cs)t^W8J-!q>H*&Ba.SJI&[\8]!1Nb74<Y,17Rr+TZLm",O\kStn$/.lbU@t`j$["$hbQaLP7i;mD:Hj]l7S?#Q(GKOBN0s6VlomnJb<PcrS2dTI0Ue\BFO\P9+?:QXeLaG*I?r7(oF\L)qW5T>"?=k'E6ibDc$$H].M;aqTKE+!6mK#d#e`qetK]lQ\J%SL5%_]pIc,;NUj7'HStMAhs4Pb"hg3B]'[C6r5\`N5:ld9_l--.~>endstream
++endobj
++25 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1317
++>>
++stream
++Gb!$E9lK&M&;KZQ'ltc7Diq?$8:C0\2Ft:\ZH_gW^%k"BN0ai>.[64JrUh2RMJOZFh*iuT!"m,0R<`Ed%`<hV&*n_G)W93br:h35QGDi&QllHB=)^0hOJ49S07ag_+ZKRe(Ic2>q##S-;L"Wi8-S'gJd6$]dpa.u\=!mjQ`pl(/HoVfO<gZ6!F\"QSL%,+^*kE7?T?;bYbKO(OZ\8!%F\oplR,sq_7tWU*R)7T7)g+j3KPf67EV>Db0"P-c]6[kZm7)Xh/PcGYBS7_X?aro"HCP)\+;^Rs-n;*Pshi>%2X)Wn_/V3AC*pRcjnoZ^U+n_j.MN-)5-4DCQquC`LbG/-0VZg3(\kcpVT2hs!N-"R1sXL0D.%a!:qJZ!?SXQanFor`NMhhn_,3R,o1N[+lBR&0R;N@jet&7)9EFtS>QW0et4."BqC0O%Go`.H@j)0^$*1d6O\K6pJ[MuFFEpoG'sH/f/NK8^=i&Q$%H9+cEbjh;:)f?`Pso.@F7#0HJc'%>>W&!/Ne+nrk+!?c7.eEFQ>gmR&<-"f.3@'2T3U'8J;L]`e`NG0J?oT&ecq<OI7qS0tnS/dOmV6\0@sP2Soj5?257>*?L>Dhk%lF3>W)B*>Z/-iB^[M(oIt*B?VqK=m2,O.gbN_h!2e&5M9]tXnbJYd`VhpY?''qHe,g,MJijIH6oi_BVAKtMLeEXA]2Fr=UIgWQ&`I7k6Cj-O)GdDQ5uiAAPlB^8SHAkGgq^3gr_*SR?a%uqRG%""l9m1q?t-X7Sg*dYNAZ@@JX+cH=[-d'#\`uH6t/WPZXfLh[b%,Xe#&?FbdtLK<](`e(Df>Bk)7g1P2hf:7fN%b"AQo[(ZmBk36Ijf7Sb%_('Q,:JjGm6/Zt%hBF`gK=4sslk$97ekjIM\]o#&';t@IF`rHgg(Pa.]Jr:lj51\F(VXcR7*/T2YZ8oFf!p(*]!ZP$q7GZR7:%%okQa_Ya>rE;HhnYZ/im\gYTnh+"8&]'T7L0UV7%QQeek*F@`d,J$m"fK&+CU7o_o;_>$/b!no(;s)i%SSP@JKiP1V>U)-mI2&:qe+'oaE7cWOG49k?shN,aK,16j2*-0)5IQ6hfQ:6@qO9;m!6:D"kXoDh0Dcu4o:TTPkX;dZd)N40JT\#GA+In&/P;UP!gJs+qr,Yhijp<1fm/hMJCfE2ogll=$u/(k)CFh9_ZkoNP=]EUh#^?="C72YNTQ$*?B-s9V@DVh"&]9+6Rs3ho]V+9brY=^iSp$<)h]Q?p,0.4$$=h.6S<:P\?U+sc?B\r'rd2df[WI*,!"!$>u^+o0m@6>WY'MSK0RWRq!~>endstream
++endobj
++26 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 1492
++>>
++stream
++Gatm;gJ['$&:O:SoHQr4b$9&5;h0t3<08cbp#_*tYr*@qP"%MX6hpOA1D0bpYltl/X)*&6h.QSSmN-@Wq!dddDMV&SoZJ>H\=hpmnMlD?GsUW:7?eTKP6FC#QH,.ePi]H;$%;f_L_>#9[$8Ln,m##(8s4RLY3F+R_EPe7MHCI3Sl6mI<oddMMr79*&U^i3++7RbO0H:EPXekKbD)%ga$r;W<G0QP[(N0qcN>rEAL8iu72@9+]4&?C-i8:`IEm]u_-p\1M:SPLBjRYs/5m6=Ir`DHR>L!Ak%.^a0n4>#ZYPuO`fTJMeSB"n\+J(89s)N;/Tkg'/9T]I?*1/*Q*1\/PCaAE=@Qa.IWu:+s$,^U;riDe<TnjYLos18&`)c]=73QLPOAe6IdWo&!^od#ne[V,/Y89)):"\U1eJp!N&(_Jr%eU1ajN0/UGk@c>sP[!kM>>#&HK=bJ&Kdo>iuoFH#`D3IQs`oZa2m"V3%<UpqFW.?iJMro"S8ocQM3JK#I1A!\"2&X6m<JL2YV@$tDrd7Phal2Yd8kL?0'u*Z%KMN(8Z\OdI4W1W#S15iC`+M\oqqN*&6id?f`\W=@Z6;BsV,X(Z@?U/I1u]qUKN8"u"u^JRr\iXoU+?g1Vgn"qlok314m#V:P_Vo,guXOOB\0l_h_mhVmSjdg;,QW#&*\jl\kQ'hqZP/fY9Q)%jrf%uS\,$Ibti[b4Ji:,M,_!+=rC'KU?hC0@'3?6[CK#9CF&VES-cuc\`nN7SOdk+1LG)e2W\Z'=,",COX<6MUML@`Ff*7aA7YsAB*A5VK8.,i2<`cKcMgT+6"\#lOY+AgF8fm#LoX))A&1%hD#%\jN?p)\q7s/Q]3$qIZ5o(a$JpH..Mi@NYJGausp&:S>A:&h,+PX@tGk1tJcEKVDuHIFpgfiAk+iMa(_UCe+LcYB?YMpERZnN0n:q1$hA;6*0],.MLZhrm-(%(*1"o=Y@/SQA49luf".9E:cK(*hI_>e\Zd<aIKbK"a*=Df6irlL]&2>.&cYf?]4=JI'6Q>/kqg_(6@8W6!9*,3E?i/7cR,,E'<U:pD*r9Tt+Mi%j((OSJ`&oe2<jIB'u[&4stSUOfTk@*J52HE1*3%Z0T+DG@=OBK7sT5DT\7"*P>mWcm,AaZ\Pla<O"`2+*jY7"+Q)"-#ZN>HPQ+M1&b%FC1;!C1B]K*oE7Fg8<rM%L%Y44.HB5IM<t>#>r:Y[]Fl<IqjUhqq-j?q;0<2%atC.[0_'-@qs3pD<A`1AR0dZDLDo_KuOX,3or];n*F'[')c)Ph-Ff4ZoVG;5TN2BpgeOb_rYnBm_S3W3,[!FWj$Mu?6Ra&oWn6WF^JA6QEP3'U%#-C#fiPL/^p#qDkTIk)Z#?dehYR8iZQMEFGjq$6Z$]Tg`QE_([AF8\$J%947\KHjgObLa\,OhKSkdICZ"t9cnc[438;7mQb0gi(Kn]TbkrD1cA;8UPpt"kTCBn92#V*ObJE>kJem5E'!JFD~>endstream
++endobj
++27 0 obj
++<<
++/Filter [ /ASCII85Decode /FlateDecode ] /Length 841
++>>
++stream
++GatU0bAQ&g&A7<Zk0SaM\h"qt*iHG<df;gf-B3R_Ea`M4<Zm6V*XS"5mo#HY.3,]C":54Qh3jh)PlR^P%,\,h:1s@k<Bs+!((_Vs1&I"&=hp1Wi@5"(iZqJ)/5?hW1k&a69]Ik+TL6Y$;EtPjPAsmd3a`XL70LWZ:l#6JC7ZbcQGEPJOUbK`,pO1BMij<$)@70LR$F&g:SiKH[rp`f@WmO[adSV1.TTr>N'f0Z$l<WbbqEDH06kVr'tX^f10<nA=&D;P_*[Q?#@1E9e:3fk74AV`5n.Hc.T3*qWD-kYgV?k"E,Jf\[!@AZ/5:c.^Ff"-T:>XBTgr<@W#mK98+DArT`+npVjoO4#7&\(I=N7S`P@,.3n&O=4T#HS?LL$;.&BCN3M_"imt8lm=L/8op"ujHI?m>D%*Z>C7,Q'SR$A2D&n0i%htptpYrE'bOD?5$hubPkP1kJLNRMjbH-OoL4''L&pQZ)j*\!_&E[0W>Wm<95htIn?_ho@>\e_\hd'oR:J)%*uMOjn_@O,pn'lf;B7bC^\PU@g03NCrE?/n`tVSX321,!]`WWW':AMOWtO>"6$JJnquGBEh#k&-(#<Ju7X2ZrBn_5BGAfXC1%qW+r%MnH8mjAjs&@^t_[Ah.)SWHWa@\;E'<K>t?cVF-^d:EH-Q1j5un?dU;odohpDC3rm`%E>(.;!I&!D<D[QU6IIZ3R3(Y:+=VaFbM!B5-JI>deN<_k'<FR2bNC?;iNC([5)%b\ZT?JN)<fHG<1K<![4J`Nhq,cFTR>RS4']56lmA59nU4.H[#+K[ena\I9_e-p1ln[eR4*U/jJ"KHabor0B96j#Jk>d^O8?~>endstream
++endobj
++xref
++0 28
++0000000000 65535 f 
++0000000061 00000 n 
++0000000133 00000 n 
++0000000240 00000 n 
++0000000352 00000 n 
++0000000460 00000 n 
++0000000575 00000 n 
++0000000827 00000 n 
++0000001022 00000 n 
++0000001217 00000 n 
++0000001412 00000 n 
++0000001608 00000 n 
++0000001804 00000 n 
++0000001888 00000 n 
++0000002084 00000 n 
++0000002280 00000 n 
++0000002476 00000 n 
++0000002546 00000 n 
++0000002858 00000 n 
++0000002971 00000 n 
++0000003899 00000 n 
++0000005557 00000 n 
++0000007378 00000 n 
++0000009405 00000 n 
++0000010278 00000 n 
++0000011907 00000 n 
++0000013316 00000 n 
++0000014900 00000 n 
++trailer
++<<
++/ID 
++[<202ac0aadef23dcd33bd21102c0949ca><202ac0aadef23dcd33bd21102c0949ca>]
++% ReportLab generated PDF document -- digest (opensource)
++
++/Info 17 0 R
++/Root 16 0 R
++/Size 28
++>>
++startxref
++15832
++%%EOF
+diff --git a/recursos/index.html b/recursos/index.html
+new file mode 100644
+index 0000000..e3cc38a
+--- /dev/null
++++ b/recursos/index.html
+@@ -0,0 +1,203 @@
++<!doctype html>
++<html lang="es">
++<head>
++<meta charset="utf-8" />
++<meta name="viewport" content="width=device-width,initial-scale=1" />
++<title>Recursos gratis para PyMEs colombianas | PymeWebPro</title>
++<meta name="description" content="Guías prácticas y gratis para dueños de pequeños negocios en Colombia: dominios, habeas data, SEO local, cómo lanzar su sitio web. Descarga directa, sin registros." />
++<meta name="theme-color" content="#0a1840" />
++<link rel="canonical" href="https://pymewebpro.com/recursos/" />
++<link rel="icon" type="image/png" sizes="192x192" href="https://pymewebpro.com/favicon-192.png">
++<link rel="preconnect" href="https://fonts.googleapis.com">
++<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
++<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
++<style>
++  :root{
++    --bg:#fbfaf6; --ink:#0a1840; --ink-soft:#26345e; --muted:#5e6883;
++    --line:#e5e0c9; --blue:#003893; --blue-soft:#e3eaf7;
++    --red:#ce1126; --red-soft:#fde2e6; --gold:#d4a017;
++    --yellow:#fcd116; --yellow-soft:#fef3c7;
++  }
++  *{box-sizing:border-box;margin:0;padding:0}
++  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
++  h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.02em;line-height:1.15;font-weight:700}
++  h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
++  h2{font-size:clamp(1.6rem,2.8vw,2.2rem)}
++  h3{font-size:1.15rem;font-weight:700}
++  a{color:inherit;text-decoration:none}
++  ul{list-style:none}
++  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
++
++  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:10px;font-weight:600;font-size:.95rem;font-family:inherit;border:none;cursor:pointer;transition:all .15s ease}
++  .btn-primary{background:var(--red);color:#fff}
++  .btn-primary:hover{transform:translateY(-1px);background:#a30d1f}
++  .btn-soon{background:#fff;color:var(--muted);border:1.5px solid var(--line);width:100%;cursor:not-allowed;font-weight:600}
++  .btn-soon:hover{background:#fff;transform:none}
++  .btn-pdf{background:var(--ink);color:#fff;width:100%;font-size:.95rem;padding:13px 22px}
++  .btn-pdf:hover{background:#000;transform:translateY(-1px)}
++
++  .nav{position:sticky;top:0;z-index:50;background:rgba(251,250,246,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
++  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
++  .brand{font-weight:800;font-size:1.4rem;letter-spacing:-.03em;line-height:1}
++  .brand .pyme{color:var(--ink)} .brand .web{color:var(--gold)} .brand .tld{color:var(--muted);font-weight:600;font-size:.85rem}
++
++  .crumbs{padding:18px 0 0;font-size:.85rem;color:var(--muted)}
++  .crumbs a{color:var(--muted)} .crumbs a:hover{color:var(--ink)}
++  .crumbs .sep{margin:0 6px;color:var(--line)}
++
++  .hero{padding:50px 0 60px}
++  .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);padding:6px 14px;border-radius:999px;margin-bottom:18px}
++  .hero h1{max-width:780px}
++  .hero h1 .accent{font-style:italic;color:var(--red)}
++  .hero p.lead{font-size:1.12rem;color:var(--ink-soft);margin-top:22px;max-width:680px}
++  .hero p.lead b{color:var(--ink);font-weight:600}
++
++  .gating-note{
++    background:var(--yellow-soft);border:1px solid #f7e3a0;border-radius:10px;
++    padding:14px 18px;margin-top:24px;max-width:640px;
++    font-size:.92rem;color:#5d4500;display:flex;gap:12px;align-items:flex-start;
++  }
++  .gating-note::before{content:"💡";font-size:1.2rem}
++
++  .sec{padding:50px 0;border-top:1px solid var(--line)}
++  .sec h2{margin-bottom:14px}
++  .sec .lead{color:var(--ink-soft);font-size:1rem;max-width:680px;margin-bottom:32px}
++
++  .guides{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
++  .guide{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 26px;display:flex;flex-direction:column;transition:all .15s ease;border-top:4px solid var(--blue)}
++  .guide:nth-child(2){border-top-color:var(--red)}
++  .guide:nth-child(3){border-top-color:var(--gold)}
++  .guide:nth-child(4){border-top-color:#047857}
++  .guide:nth-child(5){border-top-color:#0891b2}
++  .guide:hover{transform:translateY(-2px);box-shadow:0 16px 40px -16px rgba(10,24,64,.18)}
++  .guide-num{font-family:'Fraunces',serif;font-style:italic;font-size:.85rem;color:var(--muted);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
++  .guide-icon{font-size:1.6rem;margin-bottom:14px;display:block}
++  .guide h3{font-family:'Fraunces',serif;font-size:1.25rem;margin-bottom:10px;color:var(--ink)}
++  .guide-desc{font-size:.92rem;color:var(--ink-soft);margin-bottom:14px;flex-grow:1}
++  .guide-meta{font-size:.78rem;color:var(--muted);margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap}
++  .guide-meta span{display:inline-flex;align-items:center;gap:4px}
++
++  .callout{background:#fff;border:1px solid var(--line);border-radius:14px;padding:30px 32px;margin-top:36px;text-align:center}
++  .callout h3{font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:10px}
++  .callout p{color:var(--ink-soft);font-size:.95rem;margin-bottom:18px;max-width:520px;margin-left:auto;margin-right:auto}
++
++  footer{background:#fff;border-top:1px solid var(--line);padding:40px 0 30px;font-size:.9rem;color:var(--muted)}
++  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
++  .foot-row a{color:var(--ink-soft)} .foot-row a:hover{color:var(--ink)}
++  .foot-row b{color:var(--ink)}
++
++  @media (max-width:780px){
++    .guides{grid-template-columns:1fr}
++  }
++</style>
++</head>
++<body>
++
++<nav class="nav">
++  <div class="wrap nav-inner">
++    <a href="https://pymewebpro.com/" class="brand"><span class="pyme">pyme</span><span class="web">webpro</span><span class="tld">.com</span></a>
++    <a class="btn btn-primary" href="https://pymewebpro.com/#contacto">Reservar cupo</a>
++  </div>
++</nav>
++
++<div class="wrap">
++  <nav class="crumbs" aria-label="Ruta de navegación">
++    <a href="https://pymewebpro.com/">Inicio</a>
++    <span class="sep">›</span>
++    <span style="color:var(--ink)">Recursos</span>
++  </nav>
++</div>
++
++<header class="hero">
++  <div class="wrap">
++    <span class="eyebrow">Gratis · Para PyMEs colombianas</span>
++    <h1>Recursos prácticos para <span class="accent">su negocio.</span></h1>
++    <p class="lead"><b>Cinco guías cortas, escritas por nosotros, con respuestas concretas.</b> Sin formularios, sin registros, sin spam. Si una guía está disponible, simplemente descárguela.</p>
++  </div>
++</header>
++
++<section class="sec">
++  <div class="wrap">
++    <h2>Cinco guías para empezar.</h2>
++    <p class="lead">Cada una responde una pregunta que sus colegas dueños de negocio nos hacen al menos una vez por semana.</p>
++    <div class="guides">
++
++      <article class="guide">
++        <span class="guide-num">Guía 01 · Disponible</span>
++        <span class="guide-icon">🌐</span>
++        <h3>Cómo elegir y registrar su dominio</h3>
++        <p class="guide-desc">.com, .co, .com.co: cuál conviene a su negocio. Cómo registrarlo a su nombre en Namecheap (no al nuestro), cuánto cuesta al año y qué hacer si el suyo ya está tomado.</p>
++        <div class="guide-meta">
++          <span>📄 PDF</span>
++          <span>⏱️ 8 min de lectura</span>
++        </div>
++        <a class="btn btn-pdf" href="https://pymewebpro.com/recursos/guia-dominio.pdf" download>Descargar PDF ↓</a>
++      </article>
++
++      <article class="guide">
++        <span class="guide-num">Guía 02 · Próximamente</span>
++        <span class="guide-icon">📋</span>
++        <h3>Checklist antes de lanzar su sitio</h3>
++        <p class="guide-desc">Logo, fotos, textos, áreas de servicio, redes sociales, mapa, formas de pago. Una lista clara de lo que necesita preparar antes de empezar, para que el proyecto no se atrase.</p>
++        <div class="guide-meta">
++          <span>📄 4 páginas</span>
++          <span>⏱️ 5 min de lectura</span>
++        </div>
++        <button class="btn btn-soon" disabled>Próximamente</button>
++      </article>
++
++      <article class="guide">
++        <span class="guide-num">Guía 03 · Próximamente</span>
++        <span class="guide-icon">⚖️</span>
++        <h3>PymeWebPro vs Wix vs agencia</h3>
++        <p class="guide-desc">Comparativa honesta: cuánto cuesta cada opción al año, cuánto tiempo toma, de quién queda el sitio, qué pasa si quiere cambiar de proveedor. Sin marketing, con números reales.</p>
++        <div class="guide-meta">
++          <span>📄 5 páginas</span>
++          <span>⏱️ 7 min de lectura</span>
++        </div>
++        <button class="btn btn-soon" disabled>Próximamente</button>
++      </article>
++
++      <article class="guide">
++        <span class="guide-num">Guía 04 · Próximamente</span>
++        <span class="guide-icon">🛡️</span>
++        <h3>Habeas data y formularios en Colombia</h3>
++        <p class="guide-desc">Lo que pide la Ley 1581 de 2012 y el Decreto 1377: aviso de tratamiento, política de datos, consentimiento explícito. Plantilla lista para copiar al pie del formulario.</p>
++        <div class="guide-meta">
++          <span>📄 5 páginas + plantilla</span>
++          <span>⏱️ 6 min de lectura</span>
++        </div>
++        <button class="btn btn-soon" disabled>Próximamente</button>
++      </article>
++
++      <article class="guide">
++        <span class="guide-num">Guía 05 · Disponible</span>
++        <span class="guide-icon">🎯</span>
++        <h3>Cómo aparecer en Google sin pagar</h3>
++        <p class="guide-desc">SEO local para PyMEs: Google Business Profile, reseñas, palabras clave por barrio, schema básico. Lo que sus competidores no están haciendo y por eso no salen primeros.</p>
++        <div class="guide-meta">
++          <span>📄 PDF</span>
++          <span>⏱️ 10 min de lectura</span>
++        </div>
++        <a class="btn btn-pdf" href="https://pymewebpro.com/recursos/guia-google-sin-pagar.pdf" download>Descargar PDF ↓</a>
++      </article>
++
++    </div>
++
++    <div class="callout">
++      <h3>Vuelva pronto.</h3>
++      <p>Las tres guías marcadas como Próximamente se publican aquí en las próximas semanas. Si quiere un sitio web mientras tanto, los planes están en la página principal.</p>
++      <a class="btn btn-primary" href="https://pymewebpro.com/#paquetes">Ver planes →</a>
++    </div>
++  </div>
++</section>
++
++<footer>
++  <div class="wrap foot-row">
++    <span>© 2026 <b>PymeWebPro</b> · NORTE SUR CONSULTING S.A.S. · Medellín, Colombia</span>
++    <span><a href="https://pymewebpro.com/">Inicio</a> · <a href="https://pymewebpro.com/sitios-web-por-industria/">Industrias</a> · <a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a></span>
++  </div>
++</footer>
++
++</body>
++</html>
+diff --git a/sitemap.xml b/sitemap.xml
+index a951592..49763b7 100644
+--- a/sitemap.xml
++++ b/sitemap.xml
+@@ -34,6 +34,14 @@
+     <priority>0.3</priority>
+   </url>
+ 
++  <!-- Recursos (added 2026-05-01) -->
++  <url>
++    <loc>https://pymewebpro.com/recursos/</loc>
++    <lastmod>2026-05-01</lastmod>
++    <changefreq>monthly</changefreq>
++    <priority>0.7</priority>
++  </url>
++
+   <!-- Industry + City Hubs (added 2026-05-01) -->
+   <url>
+     <loc>https://pymewebpro.com/sitios-web-por-industria/</loc>
+-- 
+2.34.1
+

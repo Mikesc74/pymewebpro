@@ -158,7 +158,7 @@ There are **three** entry points:
 1. Form POSTs to `/api/contact` (Cloudflare Pages Function — `functions/api/contact.js`).
 2. Function checks honeypot (`website` hidden field). If filled → silent 200, drop. Bot defense.
 3. Validates required fields: nombre, email, whatsapp.
-4. Sends rich admin email to `mike@mikec.pro` (Resend) with all selections.
+4. Sends rich admin email to `ventas@pymewebpro.com` (Resend) with all selections.
 5. Sends customer auto-confirmation in Spanish.
 6. Forwards lead silently to portal `/api/leads` with `silent_notify: true` and the structured `extra` field (plan, hosting, tipo).
 7. Receives back `lead_id` from portal.

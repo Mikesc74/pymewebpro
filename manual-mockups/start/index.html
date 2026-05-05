@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Start here, PymeWebPro · From sign-up to live site in 5 business days</title>
+<meta name="description" content="Step-by-step walkthrough of how a PymeWebPro project goes from first conversation to live website. Seven concrete steps, real timelines, no surprises.">
+<meta name="theme-color" content="#0A0A0B">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%230A0A0B%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2240%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-monospace%2CSFMono-Regular%2CMenlo%2Cmonospace%22%20font-size%3D%2218%22%20font-weight%3D%22600%22%20fill%3D%22%23FAFAF7%22%3E%3Ctspan%20fill%3D%22%23FF5C2E%22%3E%26lt%3B%3C/tspan%3Epwp%3Ctspan%20fill%3D%22%23FF5C2E%22%3E/%26gt%3B%3C/tspan%3E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;max-width:100%}
+:root{
+  --bg:#FFFFFF;
+  --paper:#FAF9F6;
+  --soft:#F4F2ED;
+  --ink:#0A0A0B;
+  --smoke:#1F1F22;
+  --slate:#52525B;
+  --gray:#8B8B92;
+  --line:#E8E8EA;
+  --line-soft:#F0F0F2;
+  --accent:#FF5C2E;
+  --accent-deep:#E84A1E;
+  --accent-soft:#FFE9E0;
+  --tech:#0066FF;
+  --green:#00B779;
+  --display:'Inter Tight','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --max:1080px;
+  --gutter:clamp(20px,4vw,52px);
+  --r:10px;
+}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--ink);
+  font-size:15px;line-height:1.6;font-weight:400;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+.container{max-width:var(--max);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);font-weight:700;letter-spacing:-0.025em}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:0.06em;color:var(--slate);
+  padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:var(--bg);text-transform:uppercase;
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:var(--max);margin:0 auto;
+  padding:14px var(--gutter);
+  display:flex;align-items:center;gap:24px;
+}
+.logo{display:inline-flex;align-items:baseline;gap:0;flex-shrink:0;font-family:var(--display);font-weight:700;font-size:18px;color:var(--ink);letter-spacing:-0.024em;line-height:1}
+.logo .br{font-family:var(--mono);font-weight:500;color:var(--gray);font-size:0.92em}
+.logo .word{margin:0 1.5px}
+.logo:hover .br{color:var(--accent)}
+.crumb{font-family:var(--mono);font-size:11.5px;color:var(--gray);letter-spacing:0.04em;margin-left:auto}
+.crumb .arrow{margin:0 8px;opacity:0.5}
+.crumb a:hover{color:var(--ink)}
+
+.hero{padding:clamp(70px,9vw,120px) 0 clamp(50px,6vw,80px);text-align:center;background:linear-gradient(180deg,var(--bg) 0%,var(--paper) 100%)}
+.hero .eyebrow{margin-bottom:24px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(38px,5.4vw,68px);line-height:1.02;letter-spacing:-0.035em;max-width:780px;margin:0 auto}
+.hero h1 .accent{color:var(--accent)}
+.hero p.lede{margin:24px auto 0;font-size:17px;line-height:1.55;color:var(--slate);max-width:580px;font-weight:400}
+.hero-meta{margin-top:32px;display:inline-flex;gap:24px;flex-wrap:wrap;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--gray)}
+.hero-meta strong{color:var(--ink);font-weight:600}
+
+.steps{padding:clamp(60px,8vw,100px) 0}
+.step{
+  display:grid;grid-template-columns:120px 1fr auto;gap:36px;
+  padding:42px 0;border-bottom:1px solid var(--line);
+  align-items:start;
+}
+.step:first-of-type{border-top:1px solid var(--line)}
+.step .num{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(64px,7vw,96px);line-height:0.85;letter-spacing:-0.05em;
+  color:var(--ink);
+  display:flex;align-items:flex-start;
+}
+.step.done .num{color:var(--accent)}
+.step .body h2{font-family:var(--display);font-weight:700;font-size:clamp(24px,2.8vw,34px);letter-spacing:-0.028em;color:var(--ink);margin-bottom:8px;line-height:1.15}
+.step .body h2 .accent{color:var(--accent-deep)}
+.step .body .time{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;
+  margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;
+}
+.step .body .time::before{content:"";width:18px;height:1px;background:var(--accent)}
+.step .body p{font-size:15.5px;line-height:1.7;color:var(--slate);margin-bottom:14px;max-width:560px}
+.step .body p strong{color:var(--ink);font-weight:600}
+.step .body .deliver{
+  margin-top:18px;padding:14px 18px;background:var(--paper);border-left:3px solid var(--accent);border-radius:6px;
+  font-size:14px;color:var(--smoke);line-height:1.55;
+}
+.step .body .deliver strong{font-family:var(--mono);font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;display:block;margin-bottom:5px}
+.step .action{
+  align-self:start;flex-shrink:0;
+}
+.step .action .btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:8px;
+  font-family:var(--display);font-size:13.5px;font-weight:600;letter-spacing:-0.005em;
+  cursor:pointer;transition:all .15s;border:1.5px solid transparent;white-space:nowrap;
+}
+.step .action .btn-primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.step .action .btn-primary:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-1px)}
+.step .action .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+.step .action .btn-ghost:hover{border-color:var(--ink)}
+.step .action .arrow{font-family:var(--mono);font-size:14px}
+.step .action .meta{margin-top:8px;font-family:var(--mono);font-size:10.5px;color:var(--gray);text-align:right;letter-spacing:0.04em}
+
+@media (max-width:780px){
+  .step{grid-template-columns:1fr;gap:14px;padding:36px 0}
+  .step .num{font-size:48px;line-height:1}
+  .step .action{align-self:stretch}
+  .step .action .btn{width:100%}
+  .step .action .meta{text-align:center}
+}
+
+.cta-final{
+  background:linear-gradient(135deg, var(--ink) 0%, #1F1F22 100%);
+  color:#fff;padding:clamp(80px,9vw,120px) var(--gutter);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-final::before{
+  content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:800px;height:800px;
+  background:radial-gradient(circle,rgba(255,92,46,0.18) 0%,transparent 65%);
+  pointer-events:none;
+}
+.cta-final .inner{max-width:700px;margin:0 auto;position:relative}
+.cta-final h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,52px);line-height:1.05;letter-spacing:-0.032em;color:#fff}
+.cta-final h2 .accent{color:var(--accent)}
+.cta-final p{margin-top:20px;font-size:16px;line-height:1.55;color:rgba(255,255,255,0.7);max-width:520px;margin-left:auto;margin-right:auto}
+.cta-final .btn-row{margin-top:32px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.cta-final .btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:14px 28px;border-radius:10px;
+  font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:-0.005em;
+  cursor:pointer;transition:all .2s;border:1.5px solid transparent;
+}
+.cta-final .btn-accent{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cta-final .btn-accent:hover{background:#fff;color:var(--ink);border-color:#fff}
+.cta-final .btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,0.25)}
+.cta-final .btn-outline:hover{background:rgba(255,255,255,0.08);border-color:#fff}
+.cta-final .arrow{font-family:var(--mono)}
+
+footer{background:var(--bg);color:var(--slate);padding:50px 0 24px;border-top:1px solid var(--line);text-align:center}
+footer .credit{font-family:var(--mono);font-size:11.5px;color:var(--gray);letter-spacing:0.04em}
+footer .credit a{color:var(--accent);font-weight:500}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="https://mockups.pymewebpro.com/pymewebpro-ca/" class="logo" aria-label="PymeWebPro home">
+      <span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span>
+    </a>
+    <div class="crumb">
+      <a href="https://mockups.pymewebpro.com/pymewebpro-ca/">Home</a><span class="arrow">›</span>Start
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow"><span class="dot"></span>Start here</span>
+    <h1>From your first message to <span class="accent">a live site</span> in 5 business days.</h1>
+    <p class="lede">Seven concrete steps. Real timelines. No surprise invoices, no scope creep, no agency theater. Walk through what happens, then book the discovery call.</p>
+    <div class="hero-meta">
+      <span><strong>Timeline:</strong> 5 business days</span>
+      <span><strong>Your time:</strong> ~2 hours total</span>
+      <span><strong>Cost:</strong> $500–$800 CAD</span>
+    </div>
+  </div>
+</section>
+
+<section class="steps">
+  <div class="container">
+
+    <div class="step">
+      <div class="num">01</div>
+      <div class="body">
+        <div class="time">Day 0 · 20 minutes · No commitment</div>
+        <h2>Book the <span class="accent">discovery call.</span></h2>
+        <p>A 20-minute call to talk through your business, what you want the site to do, and which tier (Essential or Pro) fits. We'll quote you in writing within 24 hours, including a hard timeline.</p>
+        <p>Bring: a rough sense of who your customers are and what you'd want different from your current site (or the lack of one).</p>
+        <div class="deliver">
+          <strong>What you get</strong>
+          A written quote in your inbox within 24 hours. No call follow-ups, no haggling.
+        </div>
+      </div>
+      <div class="action">
+        <a href="#" class="btn btn-primary">Book a 20-min call <span class="arrow">→</span></a>
+        <div class="meta">opens calendar</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">02</div>
+      <div class="body">
+        <div class="time">Day 0–1 · Within 1 business day</div>
+        <h2>Sign the agreement, <span class="accent">pay the 50% deposit.</span></h2>
+        <p>We send the service agreement (a clean two-page contract, signed digitally via DocuSign) along with the first invoice. The invoice is paid via credit card, Apple/Google Pay, or wire to our Wise Business account. <strong>No design or development work begins until the deposit clears.</strong></p>
+        <div class="deliver">
+          <strong>What you get</strong>
+          Signed agreement + paid invoice in your records. Project officially kicks off.
+        </div>
+      </div>
+      <div class="action">
+        <a href="#" class="btn btn-ghost">See sample contract <span class="arrow">↗</span></a>
+        <div class="meta">PDF preview</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">03</div>
+      <div class="body">
+        <div class="time">Day 1 · 30–45 minutes</div>
+        <h2>Submit your content via <span class="accent">the wizard.</span></h2>
+        <p>You fill in a guided wizard with your services, photos, copy, brand cues, and any specific sections you want. It's tutorial-format with progress checkpoints, autosaves, and clear prompts at each step. Most people finish in 30 minutes.</p>
+        <p>If you don't have professional photos, we'll use a curated Pexels selection and you can swap them later.</p>
+        <div class="deliver">
+          <strong>What you get</strong>
+          A summary of everything you submitted, sent to your email for confirmation.
+        </div>
+      </div>
+      <div class="action">
+        <a href="#" class="btn btn-ghost">See wizard preview <span class="arrow">↗</span></a>
+        <div class="meta">demo only</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">04</div>
+      <div class="body">
+        <div class="time">Day 1–2 · 24 to 48 hours</div>
+        <h2>We design and build. <span class="accent">In one focused day.</span></h2>
+        <p>This is on us. By end-of-day-two, you get a private preview link with the fully interactive site, hosted on a staging URL. No screenshots, no Figma reviews, no PDF mockups. The actual site, on real infrastructure, in your browser.</p>
+        <div class="deliver">
+          <strong>What you get</strong>
+          A private staging URL (still on our domain at this point). Live, fast, real.
+        </div>
+      </div>
+      <div class="action">
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500">Nothing for you to do here.</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">05</div>
+      <div class="body">
+        <div class="time">Day 3 · 1–2 business days</div>
+        <h2>Walk through it, <span class="accent">send notes.</span></h2>
+        <p>Open the staging link, click around, send notes. Whatever format works for you, text, voice memo, marked-up screenshots, even a WhatsApp video walkthrough. We iterate same-day on most revisions. Two rounds included on Essential, four on Pro.</p>
+        <p>If something needs scoped beyond the included revisions, we quote it before doing it.</p>
+        <div class="deliver">
+          <strong>What you get</strong>
+          The site refined to your taste, ready for launch sign-off.
+        </div>
+      </div>
+      <div class="action">
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500">Send feedback any way you want.</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">06</div>
+      <div class="body">
+        <div class="time">Day 4 · Within 24 hours of approval</div>
+        <h2>Pay the final 50%. <span class="accent">We point your domain.</span></h2>
+        <p>You approve the site. We send the second invoice. Once it clears, we point your custom domain at the production deployment, configure SSL, push the build to Cloudflare's global edge network, and submit it to Google for indexing.</p>
+        <p><strong>The site doesn't go live on your domain until the final invoice clears.</strong> This protects both of us, you don't pay until you're happy, and we don't ship until we're paid.</p>
+        <div class="deliver">
+          <strong>What you get</strong>
+          Your live site at your domain, served from 330+ Cloudflare edge locations.
+        </div>
+      </div>
+      <div class="action">
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500">Invoice arrives in your inbox.</span>
+      </div>
+    </div>
+
+    <div class="step done">
+      <div class="num">07</div>
+      <div class="body">
+        <div class="time">Day 5 onward · Live · 30-day guarantee active</div>
+        <h2><span class="accent">You're live.</span> 30-day guarantee starts.</h2>
+        <p>Your site is live. The 30-day satisfaction guarantee starts the moment your domain resolves to the production build. If you're not happy for any reason during those 30 days, we take the site offline and refund you in full within 14 business days, no questions asked.</p>
+        <p>After 30 days, hosting continues at the included rate (1 year Essential, 2 years Pro). After that, $15/month or $180/year. Cancel anytime.</p>
+        <div class="deliver">
+          <strong>What you have</strong>
+          A live site, a 30-day refund window, and the source code as a portable archive in case you ever want to migrate.
+        </div>
+      </div>
+      <div class="action">
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--green);font-weight:600;font-family:var(--display)">→ This is where you want to be.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="inner">
+    <h2>Step one is <span class="accent">a 20-minute call.</span></h2>
+    <p>Everything above starts there. No commitment, no awkward sales pitch, just a quick conversation to see if we're the right fit and a written quote within 24 hours.</p>
+    <div class="btn-row">
+      <a href="#" class="btn btn-accent">Book the call <span class="arrow">→</span></a>
+      <a href="https://mockups.pymewebpro.com/pymewebpro-ca/#pricing" class="btn btn-outline">See pricing first</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="credit">
+    Built by <a href="https://pymewebpro.com" rel="noopener">PymeWebPro</a>  ·  <a href="https://pymewebpro.com" rel="noopener" style="opacity:0.85">Want a site like this for your business? pymewebpro.com →</a>
+  </div>
+</footer>
+
+</body>
+</html>

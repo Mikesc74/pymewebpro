@@ -1,0 +1,172 @@
+# Brand Identity · PymeWebPro
+
+The visual + verbal system. Use this for anything ABOUT PymeWebPro itself.
+Per-client brand systems live in `memory/projects/<slug>.md`.
+
+## Logo system
+
+### Primary wordmark · `<pymewebpro/>`
+- Use: site header, footer, email signature, business cards, invoices, slide decks
+- Font: Inter Tight, weight 700, letter-spacing -0.024em
+- Brackets `<` and `/>` in JetBrains Mono, weight 500, color `var(--gray)` (or `#8B8B92`)
+- Wordmark in `var(--ink)` (or `#0A0A0B`)
+- Hover: brackets shift to accent orange `#FF5C2E`
+
+### Square monogram · `<pwp/>`
+- Use: favicon, social profile pic, app icon, anywhere wordmark < 14px
+- Brackets in accent orange (small format needs the color hit)
+- Letters in white on dark background
+- Square (rx=12) for app icons, circle for IG/X profile pics
+
+### What never to do
+- Never recolor the wordmark itself (always primary ink)
+- Never put `.com` or any TLD inside the mark
+- Never use the old "P-monogram-with-orange-dot" lockup
+- Never use a stamp/seal/border around the wordmark
+
+## Color palette (PymeWebPro itself)
+
+| Token | Hex | Use |
+|-------|-----|-----|
+| `--bg` | `#FFFFFF` | Page background |
+| `--paper` | `#FAF9F6` | Section break / soft surface |
+| `--soft` | `#F4F2ED` | Card hover |
+| `--ink` | `#0A0A0B` | Primary text + dark sections |
+| `--smoke` | `#1F1F22` | Slightly lighter text |
+| `--slate` | `#52525B` | Body copy on light |
+| `--gray` | `#8B8B92` | Muted / brackets |
+| `--line` | `#E8E8EA` | Borders |
+| `--accent` | `#FF5C2E` | Single warm orange (CTAs, dot accents, brackets in small format) |
+| `--accent-deep` | `#E84A1E` | Hover state |
+| `--accent-soft` | `#FFE9E0` | Background tint of accent |
+| `--green` | `#00B779` | "Live" / success state |
+
+## Typography
+
+| Stack | Use | Notes |
+|-------|-----|-------|
+| Inter Tight (400, 500, 600, 700) | Display headlines, logo wordmark | Tight tracking (-0.025 to -0.038em) |
+| Inter (400, 500, 600, 700) | Body, UI, nav | Default weight 400 |
+| JetBrains Mono (400, 500) | Numbers, technical labels, eyebrows, code, brackets in logo | Adds engineering credibility |
+
+### Type scale
+- H1: clamp(40px, 6.4vw, 82px) · weight 700 · -0.038em
+- H2: clamp(32px, 4.4vw, 54px) · weight 700 · -0.032em
+- H3: clamp(22, 2.6vw, 28px) · weight 600 · -0.025em
+- Body: 15px · weight 400 · 1.6 line-height
+- Eyebrow: 12px mono · weight 500 · 0.04em letter-spacing · sentence case (NOT all caps)
+- Mono labels: 11px · weight 500 · 0.14em letter-spacing · uppercase OK
+
+## Layout grid
+
+- Max width: `1280px` (some sites use `1320px` or `1340px` for slightly looser)
+- Gutter: `clamp(20px, 4vw, 52px)`
+- Border-radius: 10px default (`--r`), 6px for small (`--r-sm`)
+- Section padding: `clamp(80px, 9vw, 130px) 0`
+
+## Visual references (mood)
+
+When in doubt, look at:
+- Linear (linear.app) — tightest type, most restrained
+- Vercel (vercel.com) — geometric sans + monospace
+- Stripe (stripe.com) — gradients done well
+- Cal.com — clean SMB-friendly
+- Brookfield — corporate gravitas (when needed)
+
+## Common UI patterns we use
+
+### Eyebrow tag
+```html
+<span class="eyebrow"><span class="dot"></span>Section name</span>
+```
+Mono font, hairline accent rule before text, sentence case.
+
+### Section head with side prose
+Two-column layout: big H2 on left, supporting paragraph on right. Used for ALL content sections.
+
+### "Honest pitch" three-column
+Three cells with i/ii/iii numbering, each starting with a category label, followed by H3 with accent emphasis, paragraph, and small footnote tag at bottom.
+
+### Comparison table
+Side-by-side cards (e.g., Toronto Agency vs PymeWebPro). One card with red X overlay (`vector-effect="non-scaling-stroke"` SVG line) for "not us." Stamp ribbon in corner.
+
+### Live preview "browser frame"
+Faux URL bar at top with three dots, secured padlock icon, URL, and live badge. Below: 4-column stat grid (LCP, Lighthouse, edge locations, uptime).
+
+### Bracket-locked logo
+Always assemble as three spans: bracket, word, bracket. Brackets in monospace color tertiary, word in primary ink.
+
+## Voice / tone
+
+| Do | Don't |
+|----|-------|
+| Use contractions (we're, it's) | Avoid contractions |
+| Show real numbers (LCP 0.84s) | Make vague claims (super fast) |
+| Honest framing ("Here's why we cost less") | Aspirational fluff ("Disrupting the industry") |
+| Sentence case for everything except mono labels | Title Case Headings |
+| Direct, low-friction CTAs ("Book a 20-min call") | Vague CTAs ("Get started today") |
+| Acknowledge tradeoffs explicitly | Pretend there are no tradeoffs |
+| Commas, periods, colons, " · " separators | **Em dashes (the long dash). Never. Anywhere.** |
+| Plain language | "delve", "tapestry", "navigate" (metaphorical), "in the realm of", "embark on a journey", "a testament to", "fast-paced world" |
+
+## Hard rule · No em dashes
+
+Mike has banned the em dash character (the long dash) from every site we ship and every chat response. It's the single most reliable tell that copy was generated by AI. Use one of these instead:
+
+- **Comma** (most common): "We design, hand-code, and deploy"
+- **Period + new sentence**: "Pricing is in CAD. Payment via Stripe."
+- **Colon**: "What it isn't: a CMS replacement."
+- **Parentheses**: "Pricing in CAD (or USD for US clients)"
+- **Mid-dot " · "** for setting off subtitles or metadata in mono labels: "Cloudflare Workers · Edge compute"
+
+This rule applies to:
+- All HTML files in `manual-mockups/`
+- All JS modules (where they wrap HTML)
+- All marketing copy (pymewebpro.com, social posts, outreach scripts)
+- All chat responses to Mike
+
+Other AI tells to avoid: "delve", "tapestry", "navigate" (metaphorical), "in the realm of", "embark on a journey", "a testament to", "stands as", "fast-paced world", "in today's", "leverage" (as a verb), "pivotal", "vibrant ecosystem", "rich tapestry".
+
+## Hard rule · No mobile horizontal-scroll
+
+Every site MUST set `overflow-x: hidden` on **both `html` and `body`**, plus `max-width: 100%` on `html`. Body alone is not enough — sticky-positioned elements (typical for our headers) break out of body's overflow context and cause horizontal scrolling on mobile.
+
+Required CSS at the top of every site's `<style>` block:
+
+```css
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+  /* plus the usual font-smoothing, text-rendering, etc. */
+}
+body {
+  overflow-x: hidden;
+  /* plus typography defaults */
+}
+```
+
+**This was a real production bug** (May 2026) — six client mockups shipped with mobile horizontal-scroll because we only had it on body. Don't repeat it.
+
+## Hard rule · No third-party screenshot services on client sites
+
+**Never** use thum.io, urlbox, screenshotmachine, microlink, or any other "give us a URL, we'll return a PNG" service in a site we're shipping to a client (or to mockups.pymewebpro.com).
+
+**Why:** They paywall, rate-limit, or shut down. When that happens, every site referencing them shows a "Image not authorized — please sign up for a paid account" placeholder where the client's hero or portfolio thumbnail should be. Catastrophic for credibility.
+
+**What to use instead:**
+- **Manual screenshots** — take once, base64-embed into HTML or save as static asset in `manual-mockups/<slug>/photos/`. One-time effort, zero ongoing cost, works forever.
+- **Inline CSS/SVG mockups** — for product UIs (like Schedulator's schedule grid), build a stylized HTML representation. Often looks better than a screenshot anyway because it stays sharp at any size and matches the surrounding design system.
+- **Brand-colored gradient cards with text** — for portfolio thumbnails when you don't have screenshots yet. The PymeWebPro CA portfolio uses this pattern: dark/light gradient + brand wordmark + tagline.
+- **Cloudflare Browser Rendering API** — if we ever need on-demand screenshots in production, build it on the existing Workers stack, cache to R2. We own the pipeline.
+
+**This rule has bitten us once already** (May 2026, thum.io paywalled the Schedulator demo URL and the PymeWebPro CA portfolio thumbnails — every card showed "Image not authorized"). Don't repeat it.
+
+## "Why we cost less" — the conversion paragraph
+
+Always include three pillars on any pitch site:
+1. **Geography** — Canadian-led. Built in Medellín. Real, structural cost advantage.
+2. **Tooling** — Anthropic AI as design partner. Capability still novel in 2026.
+3. **Stack** — No WordPress. No subscriptions. Smaller cost base, smaller invoice.
+
+This is the conversion driver on the PymeWebPro CA site. Don't bury it; put it in the top half.

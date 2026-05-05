@@ -5,7 +5,7 @@
 // Required environment variable (set in Cloudflare Pages → Settings → Environment variables):
 //   RESEND_API_KEY   — from resend.com (free tier covers 3,000 emails/mo)
 // Optional:
-//   ADMIN_EMAIL      — defaults to mike@mikec.pro
+//   ADMIN_EMAIL      — defaults to ventas@pymewebpro.com
 //   FROM_EMAIL       — defaults to "PymeWebPro <noreply@pymewebpro.com>"
 //   PORTAL_URL       — defaults to https://portal.pymewebpro.com
 
@@ -107,7 +107,7 @@ export async function onRequestPost(context) {
     );
   }
 
-  const ADMIN_EMAIL = env.ADMIN_EMAIL || "mike@mikec.pro";
+  const ADMIN_EMAIL = env.ADMIN_EMAIL || "ventas@pymewebpro.com";
   const FROM_EMAIL = env.FROM_EMAIL || "PymeWebPro <noreply@pymewebpro.com>";
 
   const adminHtml = `

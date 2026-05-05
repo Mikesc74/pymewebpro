@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PymeWebPro · Su sitio web profesional, terminado. Desde $390.000 COP.</title>
+<meta name="description" content="Sitio web profesional para PyMEs en Colombia. Diseño, configuración de dominio, GA4 y soporte de lanzamiento incluidos. En vivo en 48h. Desde $390.000 COP." />
+<meta name="theme-color" content="#0a1f1a" />
+<meta name="impact-site-verification" value="284057a1-1793-498a-a24c-4ca0cb695bc8" />
+<!-- Open Graph (Facebook, LinkedIn, WhatsApp link previews) -->
+<meta property="og:title" content="PymeWebPro · Su sitio web profesional, terminado. Desde $390.000 COP." />
+<meta property="og:description" content="Calidad profesional, entrega en 48 horas y precio bajo: las tres cosas en un solo paquete. Todo incluido. Oferta de lanzamiento desde $390.000 COP." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://pymewebpro.com/" />
+<meta property="og:image" content="https://pymewebpro.com/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="PymeWebPro" />
+<meta property="og:locale" content="es_CO" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:site_name" content="PymeWebPro" />
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PymeWebPro · Su sitio web profesional, terminado. Desde $390.000 COP." />
+<meta name="twitter:description" content="Calidad profesional, entrega en 48 horas y precio bajo: las tres cosas en un solo paquete. Todo incluido. Oferta de lanzamiento desde $390.000 COP." />
+<meta name="twitter:image" content="https://pymewebpro.com/og-image.jpg" />
+<link rel="canonical" href="https://pymewebpro.com/" />
+<link rel="alternate" hreflang="es" href="https://pymewebpro.com/" />
+<link rel="alternate" hreflang="es-CO" href="https://pymewebpro.com/" />
+<link rel="alternate" hreflang="en" href="https://pymewebpro.com/en/" />
+<link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfaf6;--bg-2:#f5f0e0;--ink:#0a1840;--ink-soft:#26345e;--muted:#5e6883;--line:#e5e0c9;--blue:#003893;--blue-2:#06245a;--blue-soft:#e3eaf7;--red:#ce1126;--red-2:#a30d1f;--yellow:#fcd116;--yellow-2:#e4ba00;--white:#fff;--shadow:0 30px 80px -30px rgba(10,24,64,.25);--green:var(--blue);--green-2:var(--blue-2);--green-soft:var(--blue-soft);--coral:var(--red);--coral-2:var(--red-2);--amber:var(--yellow)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0}
+h1{font-size:clamp(2.6rem,6.5vw,5.4rem);font-weight:800}
+h2{font-size:clamp(2rem,4.6vw,3.6rem)}
+h3{font-size:1.4rem;font-weight:600}
+p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.skip-link{position:absolute;left:-9999px;background:var(--blue);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-weight:600;z-index:100;text-decoration:none}
+.skip-link:focus{left:0;top:0;outline:3px solid var(--yellow)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--green);background:var(--green-soft);padding:6px 14px;border-radius:999px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 26px;border-radius:14px;font-weight:600;font-size:1rem;transition:transform .2s ease,box-shadow .2s ease,background .2s ease;cursor:pointer;border:none}
+.btn-primary{background:var(--coral);color:#fff;box-shadow:0 14px 30px -14px rgba(206,17,38,.55)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(14px);background:rgba(251,248,243,.78);border-bottom:1px solid rgba(10,31,26,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;min-height:80px;padding:12px 16px}
+.brand{display:inline-flex;align-items:baseline;gap:0;letter-spacing:-.03em;line-height:1;text-decoration:none;transition:opacity .15s}
+.brand:hover{opacity:.75}
+.brand .br{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:500;font-size:1.5rem;color:var(--muted);letter-spacing:0;transition:color .2s}
+.brand:hover .br{color:#d4a017}
+.brand .word{font-family:'Inter',sans-serif;font-weight:800;font-size:1.7rem;color:var(--ink);letter-spacing:-.04em;margin:0 2px}
+.nav-links{display:flex;gap:34px;font-size:.95rem;font-weight:400;color:var(--ink-soft)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.nav-toggle{display:none;background:transparent;border:1px solid var(--line);width:44px;height:44px;border-radius:10px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0}
+.nav-toggle-bar{display:block;width:20px;height:2px;background:var(--ink)}
+.mobile-nav{display:none}
+.lang-toggle{background:transparent;border:1px solid var(--line);color:var(--ink);font:600 .82rem 'Inter',sans-serif;letter-spacing:.05em;padding:11px 16px;border-radius:24px;display:inline-flex;align-items:center;gap:6px;min-height:44px;text-decoration:none}
+.hero{position:relative;padding:80px 0 60px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 85% 10%,rgba(252,209,22,.18),transparent 70%),radial-gradient(50% 50% at 5% 90%,rgba(0,56,147,.10),transparent 70%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative}
+.hero h1 .accent{background:linear-gradient(120deg,var(--red) 0%,#ef4444 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;font-weight:800}
+.hero h1 .underline{position:relative;display:inline-block}
+.hero h1 .underline::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:14px;background:rgba(245,180,0,.35);z-index:-1;border-radius:4px}
+.hero-hook{
+  display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px;
+  font-family:'Fraunces',Georgia,serif;font-size:clamp(1.3rem,2.6vw,1.7rem);
+  font-weight:700;color:var(--ink);
+  margin:22px 0 0;padding:12px 18px;
+  background:rgba(252,209,22,.18);border-left:4px solid var(--yellow);
+  border-radius:0 12px 12px 0;line-height:1.25;
+}
+.hero-hook .price{color:var(--blue);font-weight:800}
+.hero-hook .sep{color:var(--muted);font-weight:400}
+.hero-sub{font-size:1.18rem;color:var(--ink-soft);margin-top:24px;max-width:580px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.hero-outcomes{list-style:none;padding:0;margin:28px 0 0;display:flex;flex-direction:column;gap:14px;max-width:560px}
+.hero-outcomes li{display:flex;gap:16px;align-items:flex-start}
+.ho-num{font-family:'Fraunces',serif;font-style:italic;font-weight:800;font-size:1.15rem;color:var(--blue);line-height:1.4;flex-shrink:0;min-width:26px}
+.ho-text{color:var(--ink);font-size:1rem;line-height:1.55}.ho-text b{color:var(--ink);font-weight:600}
+.phone-frame{position:relative;width:100%;max-width:320px;margin:0 auto;background:#0a1840;padding:10px;border-radius:40px;box-shadow:var(--shadow);transform:rotate(.5deg)}
+.phone-frame img{display:block;width:100%;height:auto;border-radius:30px;background:#fff}
+.phone-frame::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#0a1840;border-radius:14px;z-index:2}
+.float-tag{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:10px;z-index:3}
+.float-tag .pulse{width:8px;height:8px;border-radius:50%;background:#22c55e}
+.tag-a{top:-18px;left:-18px;transform:rotate(-3deg)}
+.tag-b{bottom:-18px;right:-12px;transform:rotate(2deg)}
+.float-photo{position:absolute;right:-30px;bottom:-40px;width:170px;height:200px;border-radius:18px;overflow:hidden;border:6px solid var(--bg);box-shadow:var(--shadow);transform:rotate(4deg);z-index:2}
+.float-photo img{width:100%;height:100%;object-fit:cover;object-position:left center}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px}.tag-a,.tag-b,.float-photo{display:none}}
+@media(max-width:880px){.nav-links,.nav-cta .btn-ghost{display:none}.nav-toggle{display:inline-flex}}
+@media(max-width:600px){.brand .word{font-size:1.35rem}.brand .br{font-size:1.2rem}.nav-inner{min-height:64px;padding:12px 8px}}
+</style>
+<link rel="preload" href="/styles.css" as="style">
+<link rel="stylesheet" href="/styles.css">
+
+
+<!-- ============================================================
+     Structured data (JSON-LD)
+     - Organization + LocalBusiness describe the business behind PymeWebPro
+     - Two Service entries describe the offerings (web design + hosting)
+     - FAQPage mirrors the 3 visible FAQs lower on the page
+     If you change visible FAQ copy, update the FAQPage block too.
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://pymewebpro.com/#organization",
+  "name": "PymeWebPro",
+  "legalName": "NORTE SUR CONSULTING S.A.S.",
+  "url": "https://pymewebpro.com/",
+  "logo": "https://pymewebpro.com/favicon-192.png",
+  "image": "https://pymewebpro.com/og-image.jpg",
+  "description": "Diseñamos sitios web profesionales para pequeños negocios en Colombia. Diseño, hospedaje y soporte: todo en un solo lugar.",
+  "email": "ventas@pymewebpro.com",
+  "telephone": "+57-301-404-7722",
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Medellín",
+    "addressRegion": "Antioquia",
+    "addressCountry": "CO"
+  },
+  "sameAs": [
+    "https://share.google/I3DtMCnKpFCMruO4K"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://pymewebpro.com/#localbusiness",
+  "name": "PymeWebPro",
+  "image": "https://pymewebpro.com/og-image.jpg",
+  "url": "https://pymewebpro.com/",
+  "telephone": "+57-301-404-7722",
+  "email": "ventas@pymewebpro.com",
+  "priceRange": "COP$390.000–COP$690.000",
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Medellín",
+    "addressRegion": "Antioquia",
+    "addressCountry": "CO"
+  },
+  "parentOrganization": { "@id": "https://pymewebpro.com/#organization" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://pymewebpro.com/#service-web-design",
+  "serviceType": "Diseño y desarrollo de sitios web",
+  "name": "Diseño de sitio web profesional",
+  "description": "Sitio web profesional para pequeños negocios en Colombia, listo en 48 horas. Plan Esencial ($390k): una página con seis secciones, en español, formulario al correo del cliente, botón de WhatsApp, Google Business Profile, GA4 y Meta Pixel listos, configuración de dominio incluida (cliente lo compra en Namecheap), 2 rondas de cambios. Plan Crecimiento ($690k): todo lo anterior más blog, galería ampliada, descargas en PDF, equipo y FAQ, bilingüe español + inglés, 1 año de hosting incluido y 5 rondas de cambios.",
+  "provider": { "@id": "https://pymewebpro.com/#organization" },
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Plan Esencial",
+      "price": "390000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/#paquetes",
+      "availability": "https://schema.org/InStock",
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "CO",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Plan Crecimiento",
+      "price": "690000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/#paquetes",
+      "availability": "https://schema.org/InStock",
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "CO",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://pymewebpro.com/#service-hosting",
+  "serviceType": "Hosting administrado",
+  "name": "Hosting + soporte mensual",
+  "description": "Hospedaje administrado, certificado SSL, copias de seguridad, monitoreo y cambios menores incluidos. Cancelable cuando quiera, sin contrato.",
+  "provider": { "@id": "https://pymewebpro.com/#organization" },
+  "areaServed": { "@type": "Country", "name": "Colombia" },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Hosting mensual",
+      "price": "30000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/hosting.html",
+      "availability": "https://schema.org/InStock"
+    },
+    {
+      "@type": "Offer",
+      "name": "Hosting anual prepagado",
+      "price": "270000",
+      "priceCurrency": "COP",
+      "url": "https://pymewebpro.com/hosting.html",
+      "availability": "https://schema.org/InStock"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": "https://pymewebpro.com/#breadcrumbs",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://pymewebpro.com/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://pymewebpro.com/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta y puedo pagar a cuotas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oferta de lanzamiento. Pago único desde $390.000 COP (Esencial) hasta $690.000 COP (Crecimiento, incluye un año de hosting). Puede diferir el pago a 3, 6 o más cuotas con su tarjeta de crédito; la disponibilidad y el número de cuotas dependen de su banco. Arrancamos el mismo día del pago."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿En cuánto tiempo está mi sitio en vivo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "48 horas para ambos planes, contadas desde que recibimos su pack de materiales (logo, fotos, textos). Si nos demoramos por culpa nuestra, le devolvemos el 100%."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es un sitio de varias páginas o de una sola?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Construimos sitios de una sola página con múltiples secciones. El plan Esencial trae 6 secciones (hero, servicios, testimonios, galería, formulario y pie); el plan Crecimiento agrega blog, galería ampliada, descargas en PDF, equipo y FAQ — todo en la misma página. Es el formato que usan hoy Apple, Stripe y la mayoría de sitios SaaS modernos. ¿Necesita algo más a la medida (e-commerce, múltiples sucursales, integraciones especiales)? Escríbanos por WhatsApp y con gusto le armamos una cotización."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito saber de tecnología para tener el sitio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Nos encargamos de todo lo técnico: hospedaje, certificado de seguridad, código, diseño y el correo profesional info@sunegocio.com. El dominio lo compra usted directamente al registrador (~$50.000-$150.000 COP/año) y queda a su nombre. Recomendamos Namecheap por su confiabilidad y soporte de .com, .co y .com.co; nosotros lo configuramos sin costo adicional. Cuando necesite cambios después del lanzamiento, los hacemos nosotros como parte del Plan Hosting (cambios menores cada mes incluidos, cancelable cuando quiera)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Y si todavía no tengo dominio? ¿Cuándo puedo ver el sitio en vivo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El día del lanzamiento publicamos su sitio en un subdominio gratis tipo tunegocio.sites.pymewebpro.com — algo que puede compartir de inmediato por WhatsApp, redes o tarjetas. Mientras tanto usted compra su dominio propio en Namecheap (recomendamos .com, .co o .com.co; ~$50.000-$150.000 COP/año, queda a su nombre) y nosotros lo conectamos sin costo adicional. La configuración del dominio está incluida en ambos planes; lo único que no incluye el plan Esencial ($390.000 COP) es el hosting recurrente — ese es opcional. El plan Crecimiento sí incluye 1 año de hosting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si no tengo logo, textos o fotos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No se preocupe. Si aún no tiene logo, lance con un logo de texto (su nombre con tipografía limpia) que se ve profesional desde el día uno; cuando consiga uno definitivo, lo cambiamos. Para las fotos usamos imágenes libres de derechos sin costo adicional. Si prefiere fotos profesionales de su negocio, podemos coordinar una sesión local con un fotógrafo (cotización aparte). Los textos los redactamos nosotros con base en lo que nos cuente de su negocio. Usted aprueba todo antes de publicar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Sirve para mi tipo de negocio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con restaurantes, clínicas, abogados, inmobiliarias, salones, ferreterías, consultorías y más. La estructura se adapta: servicios y testimonios para negocios de servicio, ubicación y horarios para negocios locales, productos y carrito para venta en línea. Todos los planes incluyen mapa de Google y botón de WhatsApp."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si no me gusta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Garantía de 30 días: si dentro de los 30 días siguientes a la entrega no está satisfecho, le devolvemos el 100% del pago, sin preguntas. Durante la construcción incluimos rondas de cambios para que el sitio quede como usted quiere (2 rondas en Esencial, 5 en Crecimiento)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Los precios incluyen IVA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Todos los precios publicados incluyen IVA. Lo que ve en el sitio es lo que paga, sin sorpresas al final."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿De quién es el sitio y el dominio cuando termine?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Suyo. Por defecto el dominio lo compra usted en su propio registrador y queda a su nombre, no al nuestro — recomendamos Namecheap (confiable, soporte 24/7 y privacidad WHOIS gratis). Nosotros lo conectamos sin costo. El código vive en GitHub bajo su cuenta o se lo entregamos completo. Las fotos, los textos y el correo profesional son suyos al pagar. No hay candados, no hay rentas escondidas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo migrar después a otro proveedor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cuando quiera. Le entregamos los archivos completos del sitio, las credenciales del dominio y todos los accesos. Cualquier desarrollador o agencia puede continuar el trabajo. Si decide irse, le ayudamos con la transición durante 30 días, sin costo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Funciona con DIAN y facturación electrónica?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Por cada pago le emitimos cuenta de cobro o factura, según necesite su negocio. Si requiere factura electrónica con CUFE, lo coordinamos al momento de la facturación. Para integraciones directas al sitio (por ejemplo, e-commerce con emisión automática), trabajamos con su proveedor existente: Siigo, Alegra, ContaPyme, FacturaTech u otros."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo funciona el soporte y los cambios después del lanzamiento?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si está en Plan Hosting (mensual o anual), soporte por WhatsApp y cambios menores cada mes incluidos mientras esté activo (textos, fotos, horarios, ofertas, banners). Si pagó sin hosting, incluimos soporte técnico durante los 30 días posteriores al lanzamiento; después, agregue un Plan Hosting cuando necesite cambios o soporte continuo, cancelable cuando quiera. Para rediseños grandes o secciones nuevas, le cotizamos como proyecto aparte, sin compromiso."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<noscript>
+  <div style="background:#ce1126;color:#fff;text-align:center;padding:14px 20px;font-size:.95rem;line-height:1.5;font-family:'Inter',system-ui,sans-serif">
+    <strong>JavaScript está desactivado.</strong> El formulario no funcionará. Escríbanos directamente:
+    <!--email_off--><a href="mailto:ventas@pymewebpro.com" style="color:#fff;text-decoration:underline;font-weight:600">ventas@pymewebpro.com</a><!--/email_off-->
+    ·
+    <a href="https://wa.me/573014047722?text=Hola%2C%20quiero%20un%20sitio%20web%20para%20mi%20negocio." style="color:#fff;text-decoration:underline;font-weight:600">WhatsApp +57 301 404 7722</a>
+  </div>
+</noscript>
+
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand" aria-label="PymeWebPro.com">
+      <span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span>
+    </a>
+    <div class="nav-links">
+      <a href="#trabajo">Trabajo</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#paquetes">Planes</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/en/" class="lang-toggle" lang="en" hreflang="en" aria-label="Switch to English">
+        <span class="lang-current">ES</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-other">EN</span>
+      </a>
+      <button id="navToggle" class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <a href="#trabajo">Trabajo</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#paquetes">Planes</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">● Oferta de lanzamiento — termina viernes 8 de mayo</span>
+      <h1 style="margin-top:18px">
+        Sitio web<br><span class="underline">de primera.</span><br>
+        <span class="accent">Ridículamente barato.</span>
+      </h1>
+      <p class="hero-hook">
+        <span class="price">Desde $390.000 COP</span>
+        <span class="sep">·</span> Entrega en 48 horas
+        <span class="sep">·</span> Garantía de 30 días
+      </p>
+      <p class="hero-sub">
+        Diseño, contenido, configuración de dominio y soporte de lanzamiento, todo listo. Sin que usted toque nada,
+        sin contratos ocultos, sin pagar por lo que no necesita. Construido con IA por nuestro equipo
+        en Medellín: por eso podemos ofrecer las tres a la vez.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contacto" style="padding:18px 32px;font-size:1.05rem">
+          Quiero mi sitio web
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href="#paquetes" style="padding:18px 28px;font-size:1.05rem">Ver planes y precios</a>
+      </div>
+    </div>
+
+    <div class="reveal" style="position:relative">
+      <div class="float-tag tag-a">
+        <span class="pulse"></span>
+        Nuevo lead recibido
+      </div>
+      <div class="phone-frame">
+        <picture>
+          <source srcset="/photos/pymewebpro-mobile-es.webp" type="image/webp">
+          <img src="/photos/pymewebpro-mobile-es.jpg" alt="Vista en celular del sitio pymewebpro.com en español" width="680" height="1472" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HOW IT WORKS -->
+<section id="proceso" class="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow dark">Cómo funciona</span>
+      <h2 style="margin-top:18px">Su sitio en vivo en <em style="color:var(--amber);font-style:italic">48 horas</em>. O le devolvemos el dinero.</h2>
+    </div>
+    <div class="how-grid">
+      <article class="step reveal">
+        <div class="num">01</div>
+        <div class="timing">2 minutos</div>
+        <h3>Reserve su cupo</h3>
+        <ul>
+          <li>Llene el formulario (o hablemos por WhatsApp si tiene preguntas)</li>
+          <li>Elija plan: Esencial o Crecimiento</li>
+          <li>Pague en línea: tarjeta, Nequi o cuotas</li>
+        </ul>
+      </article>
+      <article class="step reveal">
+        <div class="num">02</div>
+        <div class="timing">A su ritmo</div>
+        <h3>Envíe su pack de materiales</h3>
+        <ul>
+          <li>Le enviamos un enlace privado a su correo</li>
+          <li>Sube logo, fotos y contenido de su negocio</li>
+          <li>Cuando esté listo, dale enviar (ahí arranca el reloj de 48 horas)</li>
+        </ul>
+      </article>
+      <article class="step reveal">
+        <div class="num">03</div>
+        <div class="timing">En menos de 48 horas</div>
+        <h3>Construimos su sitio</h3>
+        <ul>
+          <li>Diseñamos a partir de su visión y materiales</li>
+          <li>Escribimos los textos (o pulimos los suyos)</li>
+          <li>Conectamos WhatsApp, Google Maps y Analytics</li>
+        </ul>
+      </article>
+      <article class="step reveal">
+        <div class="num">04</div>
+        <div class="timing">Día del lanzamiento</div>
+        <h3>Salimos al aire</h3>
+        <ul>
+          <li>Su sitio publicado en sunegocio.com</li>
+          <li>Empieza a recibir visitas</li>
+          <li>Soporte permanente por WhatsApp</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TRABAJO -->
+<section id="trabajo" class="cases">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
+      <span class="eyebrow">Trabajo</span>
+      <h2 style="margin-top:18px">Sitios reales,<br>en vivo y en Google.</h2>
+      <p>Cada sitio se construye en GitHub y se sirve a través de Cloudflare, el CDN más rápido y seguro del planeta. La IA hace el trabajo pesado, por eso podemos entregarle un sitio de calidad empresarial, del tipo que antes costaba decenas de millones de pesos, a un precio que cualquier negocio puede pagar.</p>
+    </div>
+    <div class="cases-grid reveal">
+
+      <article class="case-card">
+        <div class="case-thumb"><picture>
+          <source srcset="screenshots/inviersol.webp" type="image/webp">
+          <img src="screenshots/inviersol.jpg" alt="inviersol.com" loading="lazy" decoding="async" width="800" height="651">
+        </picture></div>
+        <div class="case-body">
+          <span class="case-tag">Industria · Antioquia</span>
+          <h3>inviersol.com</h3>
+          <p>Empresa con más de 19 años fabricando e instalando parasoles, toldos y cubiertas. Sitio con horarios, galería de proyectos y botón directo de WhatsApp.</p>
+          <ul class="case-pills">
+            <li>SSL + Cloudflare</li><li>Mobile-ready</li><li>Mapa + WhatsApp</li><li>Galería</li>
+          </ul>
+          <a class="case-cta" href="https://inviersol.com" target="_blank" rel="noopener noreferrer">Visitar inviersol.com →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-thumb"><picture>
+          <source srcset="screenshots/barranquilla-guide.webp" type="image/webp">
+          <img src="screenshots/barranquilla-guide.jpg" alt="barranquilla.guide" loading="lazy" decoding="async" width="800" height="533">
+        </picture></div>
+        <div class="case-body">
+          <span class="case-tag">Guía local · Barranquilla</span>
+          <h3>barranquilla.guide</h3>
+          <p>Guía de Barranquilla para residentes y visitantes. Barrios, restaurantes, eventos del Carnaval, vida cotidiana en la ciudad, con SEO local desde el primer día.</p>
+          <ul class="case-pills">
+            <li>SEO local</li><li>Mobile-ready</li><li>SSL + Cloudflare</li><li>Schema.org</li>
+          </ul>
+          <a class="case-cta" href="https://barranquilla.guide" target="_blank" rel="noopener noreferrer">Visitar barranquilla.guide →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-thumb"><picture>
+          <source srcset="screenshots/nortesurconsulting.webp" type="image/webp">
+          <img src="screenshots/nortesurconsulting.jpg" alt="nortesurconsulting.com" loading="lazy" decoding="async" width="800" height="533">
+        </picture></div>
+        <div class="case-body">
+          <span class="case-tag">B2B · Consultoría</span>
+          <h3>nortesurconsulting.com</h3>
+          <p>Sitio corporativo de consultoría. Diseño limpio, bilingüe ES/EN, enfocado en generar contactos calificados y comunicar credibilidad.</p>
+          <ul class="case-pills">
+            <li>Bilingüe ES + EN</li><li>0,3s respuesta servidor</li><li>SSL</li><li>0 scripts pesados</li>
+          </ul>
+          <a class="case-cta" href="https://nortesurconsulting.com" target="_blank" rel="noopener noreferrer">Visitar nortesurconsulting.com →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- NOSOTROS -->
+<style>
+  #nosotros{padding-top:48px !important;padding-bottom:48px !important}
+  #nosotros .section-head{margin-bottom:24px !important}
+  #nosotros .section-head h2{font-size:clamp(1.5rem,2.8vw,2rem)}
+  #nosotros .section-head p{font-size:.95rem;margin-top:8px}
+  #nosotros .team-grid{grid-template-columns:1fr 1fr;gap:14px}
+  #nosotros .team-card{flex-direction:row !important;gap:18px;align-items:center;padding:18px 20px !important;text-align:left !important}
+  #nosotros .team-photo{width:72px !important;height:72px !important;border-width:2px;flex-shrink:0}
+  #nosotros .team-name{font-size:1.05rem !important;margin-bottom:2px}
+  #nosotros .team-role{font-size:.82rem !important;margin-bottom:4px}
+  #nosotros .team-bio{font-size:.85rem !important;line-height:1.45 !important;margin-bottom:4px !important}
+  #nosotros .team-loc{font-size:.78rem !important}
+  @media (max-width:680px){
+    #nosotros .team-grid{grid-template-columns:1fr}
+  }
+</style>
+<section id="nosotros" class="nosotros">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:780px">
+      <span class="eyebrow">Nosotros</span>
+      <h2 style="margin-top:18px">Hecho a la medida<br>desde Medellín.</h2>
+      <p>Solo entregamos sitios de alta calidad, y los respaldamos con soporte personal de primer nivel desde nuestro equipo aquí en Medellín.</p>
+    </div>
+    <div class="team-grid reveal">
+      <article class="team-card">
+        <div class="team-photo"><picture>
+          <source srcset="/team/mike.webp" type="image/webp">
+          <img src="/team/mike.jpg" alt="Mike Chartrand, co-fundador de PymeWebPro" loading="lazy" decoding="async" width="300" height="300">
+        </picture></div>
+        <div class="team-meta">
+          <h3 class="team-name">Mike Chartrand <span class="team-flag" aria-label="Canadiense" title="Canadiense">🇨🇦</span></h3>
+          <p class="team-role">Co-fundador &amp; Diseñador</p>
+          <p class="team-bio">Construye y diseña los sitios. Diseño limpio, código rápido, todo lo técnico: dominios, hospedaje, certificados.</p>
+          <p class="team-loc"><span class="team-pin">📍</span>Medellín, Colombia</p>
+        </div>
+      </article>
+      <article class="team-card">
+        <div class="team-photo"><picture>
+          <source srcset="/team/santiago.webp" type="image/webp">
+          <img src="/team/santiago.jpg" alt="Santiago Santos, co-fundador de PymeWebPro" loading="lazy" decoding="async" width="300" height="300">
+        </picture></div>
+        <div class="team-meta">
+          <h3 class="team-name">Santiago Santos <span class="team-flag" aria-label="Colombiano" title="Colombiano">🇨🇴</span></h3>
+          <p class="team-role">Co-fundador</p>
+          <p class="team-bio">Estrategia, ventas y la voz al otro lado del WhatsApp. Habla con cada cliente para entender el negocio antes de empezar.</p>
+          <p class="team-loc"><span class="team-pin">📍</span>Medellín, Colombia</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TECNOLOGÍA -->
+<style>
+  #tecnologia{padding-top:56px !important;padding-bottom:56px !important}
+  #tecnologia .section-head{margin-bottom:30px !important}
+  #tecnologia .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+  #tecnologia .section-head p{font-size:.95rem;margin-top:10px;max-width:680px}
+  #tecnologia .tech-grid{grid-template-columns:repeat(4,1fr);gap:12px}
+  #tecnologia .tech-card{padding:18px 16px !important}
+  #tecnologia .tech-ico{font-size:1.4rem !important;margin-bottom:6px !important}
+  #tecnologia .tech-card h3{font-size:1rem !important;margin-bottom:2px}
+  #tecnologia .tech-sub{font-size:.76rem !important;margin-bottom:6px}
+  #tecnologia .tech-card p{font-size:.84rem !important;line-height:1.45 !important}
+  @media (max-width:780px){
+    #tecnologia .tech-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+<section id="tecnologia" class="tech">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;max-width:820px">
+      <span class="eyebrow">El stack</span>
+      <h2 style="margin-top:18px">Construido con<br>tecnología de primera.</h2>
+      <p>Sin atajos, sin "constructor visual" frágil, sin código de mala calidad que se rompe en seis meses. Su sitio se construye con las mismas herramientas que usan Netflix, Shopify y otras de las empresas más grandes del mundo.</p>
+    </div>
+    <div class="tech-grid reveal">
+      <article class="tech-card">
+        <div class="tech-ico">⚙️</div>
+        <h3>GitHub</h3>
+        <span class="tech-sub">Código y versiones</span>
+        <p>Cada cambio queda registrado, nada se pierde. Su código es suyo: se lo entregamos al final y puede llevarlo a otro proveedor cuando quiera.</p>
+      </article>
+      <article class="tech-card">
+        <div class="tech-ico">⚡</div>
+        <h3>Cloudflare</h3>
+        <span class="tech-sub">Hosting + CDN</span>
+        <p>El CDN más rápido y seguro del planeta. Carga en menos de un segundo desde cualquier ciudad, con SSL/HTTPS, protección anti-ataques y respaldo automático incluidos.</p>
+      </article>
+      <article class="tech-card">
+        <div class="tech-ico">🤖</div>
+        <h3>IA generativa</h3>
+        <span class="tech-sub">Diseño y desarrollo</span>
+        <p>Lo que antes tomaba semanas a un equipo de agencia, lo entregamos en horas. Calidad de agencia, sin el costo de agencia.</p>
+      </article>
+      <article class="tech-card">
+        <div class="tech-ico">💳</div>
+        <h3>Wompi</h3>
+        <span class="tech-sub">Pagos · Bancolombia</span>
+        <p>Si vende en línea, sus clientes pagan con tarjeta, Nequi, Daviplata, PSE, transferencia, efectivo o créditos Bancolombia. Cifrado de extremo a extremo, sin redirecciones extrañas.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="paquetes" class="pricing">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+      <span class="eyebrow">Planes y precios</span>
+      <h2 style="margin-top:18px">Pague una vez. Su sitio es suyo.</h2>
+      <p>Diseño, contenido, configuración de dominio y soporte de lanzamiento, todo listo. Calidad de agencia, entrega en 48 horas y precio Colombia: las tres cosas, sin contratos mensuales obligatorios y sin que usted toque nada. Construido con IA por nuestro equipo en Medellín. Si además quiere que mantengamos su sitio cada mes, agregue el Plan Hosting opcional, cancelable cuando quiera.</p>
+      <div class="trust-row">
+        <span class="trust-chip"><span class="tc-ico">⚡</span><b>Entrega en 48 horas</b> o reembolso</span>
+        <span class="trust-chip"><span class="tc-ico">🛡</span><b>Garantía 30 días</b></span>
+      </div>
+    </div>
+    <div class="price-grid price-grid-3">
+      <article class="price-card reveal">
+        <div class="price-tier-label">Sitio web</div>
+        <div class="price-name">Esencial</div>
+        <div class="price-amt"><b>$390.000</b><span>COP</span></div>
+        <div class="price-iva" style="display:flex;flex-direction:column;gap:2px;align-items:center"><span style="text-decoration:line-through;color:var(--muted);font-size:.85rem">antes $890.000</span><span>IVA incluido · oferta de lanzamiento</span></div>
+        <div class="price-guarantee"><span aria-hidden="true">✓</span> Garantía de 30 días</div>
+        <div class="price-delivery"><span class="pd-ico">⚡</span><strong>Entrega en 48 horas</strong>, o le devolvemos el dinero</div>
+        <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
+        <ul class="price-feats">
+          <li><b>1 página, 6 secciones exactas:</b> hero, servicios, testimonios, galería, formulario y pie</li>
+          <li><b>En español</b> (un solo idioma)</li>
+          <li><b>Formulario de contacto</b> que envía los leads directo a su correo</li>
+          <li><b>Botón de WhatsApp</b> para que sus clientes le escriban al instante</li>
+          <li><b>Google Business Profile</b> configurado por nosotros</li>
+          <li>Listo para <b>GA4 + Meta Pixel</b> (nos pasa los IDs en el intake)</li>
+          <li><b>Configuración de dominio incluida</b> (usted lo compra en Namecheap, nosotros lo conectamos)</li>
+          <li>Hosting Cloudflare <em>opcional</em> (no incluido en los $390k)</li>
+          <li><b>2 rondas de cambios</b> incluidas</li>
+          <li>SEO básico + cumplimiento legal listos de fábrica</li>
+          <li><strong>Garantía de 30 días</strong> · le devolvemos el dinero si no le gusta</li>
+        </ul>
+        <details class="price-more">
+          <summary>Ver todo lo incluido</summary>
+          <ul class="price-feats price-feats-more">
+            <li>Correo profesional <b>info@sunegocio.com</b> redirigido a su Gmail</li>
+            <li>Mapa de Google integrado + diseño listo para celular</li>
+            <li>SSL/HTTPS incluido + indexado en Google en 7 días</li>
+            <li>Barra social: WhatsApp, Instagram, Facebook y Maps en un clic</li>
+            <li>Meta tags optimizadas por sección + sitemap automático</li>
+            <li>Carga en menos de 1 segundo</li>
+            <li>El dominio queda a su nombre (registro ~$50k–$150k/año en Namecheap)</li>
+            <li>Mientras conectamos el dominio, su sitio sale en vivo en un subdominio gratis: <code>tunegocio.sites.pymewebpro.com</code></li>
+            <li>+ Google Analytics, Search Console, sitemap.xml y robots.txt configurados</li>
+          </ul>
+        </details>
+        <div class="price-ctas">
+          <a class="btn btn-talk" href="https://portal.pymewebpro.com/go/whatsapp?campaign=plan_esencial&text=Hola%2C%20me%20interesa%20el%20plan%20Esencial%20(%24390k%20oferta%20de%20lanzamiento).%20Quisiera%20hacer%20unas%20preguntas%20antes%20de%20avanzar." target="_blank" rel="noopener noreferrer">Hablar por WhatsApp <small>· respuesta en minutos</small></a>
+          <a class="btn btn-reserve" href="#contacto" data-plan="esencial" data-hosting="none">Reservar mi cupo →</a>
+        </div>
+      </article>
+
+      <article class="price-card featured reveal">
+        <span class="price-badge">★ Más completo</span>
+        <div class="price-tier-label">Sitio web</div>
+        <div class="price-name">Crecimiento</div>
+        <div class="price-amt"><b>$690.000</b><span>COP</span></div>
+        <div class="price-iva" style="display:flex;flex-direction:column;gap:2px;align-items:center"><span style="text-decoration:line-through;color:var(--muted);font-size:.85rem">antes $1.790.000</span><span>IVA incluido · oferta de lanzamiento</span></div>
+        <div class="price-guarantee"><span aria-hidden="true">✓</span> Garantía de 30 días</div>
+        <div class="price-delivery"><span class="pd-ico">⚡</span><strong>Entrega en 48 horas</strong>, o le devolvemos el dinero</div>
+        <div class="price-host">pago <b>único</b>, sin pagos mensuales</div>
+        <ul class="price-feats">
+          <li><b>Todo lo del plan Esencial</b>, más:</li>
+          <li><b>Secciones adicionales:</b> blog, galería ampliada, descargas en PDF, equipo y FAQ</li>
+          <li><b>Bilingüe español + inglés</b> (la traducción la hacemos nosotros, usted no aporta el inglés)</li>
+          <li><strong>1 año de hosting incluido</strong> (valor $360.000 COP)</li>
+          <li><b>5 rondas de cambios</b> incluidas</li>
+          <li><strong>Garantía de 30 días</strong> · le devolvemos el dinero si no le gusta</li>
+        </ul>
+        <details class="price-more">
+          <summary>Ver todo lo incluido</summary>
+          <ul class="price-feats price-feats-more">
+            <li>Sección de blog para publicar novedades, ofertas o noticias</li>
+            <li>Galería de fotos ampliada (más espacio para mostrar su negocio)</li>
+            <li>Sección de equipo con fotos y bios</li>
+            <li>FAQ con preguntas frecuentes de sus clientes</li>
+            <li>Formulario de contacto con confirmación automática</li>
+            <li>Datos estructurados para resultados enriquecidos en Google</li>
+            <li>Optimización de Core Web Vitals (velocidad y rendimiento)</li>
+            <li>Search Console, sitemap.xml y robots.txt configurados</li>
+          </ul>
+        </details>
+        <div class="price-ctas">
+          <a class="btn btn-talk" href="https://portal.pymewebpro.com/go/whatsapp?campaign=plan_crecimiento&text=Hola%2C%20me%20interesa%20el%20plan%20Crecimiento%20(%24690k%20oferta%20de%20lanzamiento).%20Quisiera%20hacer%20unas%20preguntas%20antes%20de%20avanzar." target="_blank" rel="noopener noreferrer">Hablar por WhatsApp <small>· respuesta en minutos</small></a>
+          <a class="btn btn-reserve btn-reserve-featured" href="#contacto" data-plan="crecimiento" data-hosting="annual">Reservar mi cupo →</a>
+        </div>
+      </article>
+
+      <article class="price-card price-card-support reveal">
+        <span class="price-badge support-badge">Opcional</span>
+        <div class="price-tier-label">Hospedaje + soporte</div>
+        <div class="price-name">Plan Hosting</div>
+        <div class="price-amt"><b>$30.000</b><span>COP/mes</span></div>
+        <div class="price-iva">IVA incluido</div>
+        <div class="price-host">cancele cuando quiera, <b>sin contrato</b></div>
+        <div class="price-annual">
+          <span class="annual-tag">Mejor valor</span>
+          <b>$270.000 COP / año prepagado</b>
+          <span class="annual-save">Ahorra $90.000 (3 meses gratis)</span>
+        </div>
+        <ul class="price-feats">
+          <li><b>Hospedaje ultrarrápido</b> en Cloudflare (99.9% uptime)</li>
+          <li>Pequeños cambios cada mes (horarios, fotos, textos, ofertas)</li>
+          <li>Respuesta prioritaria por WhatsApp</li>
+          <li><b>Sin contrato</b> · cancele cuando quiera</li>
+        </ul>
+        <details class="price-more">
+          <summary>Ver todo lo incluido</summary>
+          <ul class="price-feats price-feats-more">
+            <li>Protección anti-ataques (DDoS, hackers, bots)</li>
+            <li>Monitoreo 24/7 + alertas si su sitio cae</li>
+            <li>Backups automáticos diarios</li>
+            <li>Reporte mensual de visitas</li>
+            <li>Carga en menos de 1 segundo desde cualquier ciudad de Colombia</li>
+          </ul>
+        </details>
+        <a class="btn btn-yellow" href="#contacto">Agregar Plan Hosting</a>
+      </article>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.92rem;margin-top:36px">
+      ¿Aún no sabe cuál? Escríbanos por WhatsApp y le recomendamos el indicado, sin compromiso.
+    </p>
+
+    <div class="pay-strip">
+      <strong>Pagos seguros vía Wompi</strong> (Bancolombia)
+      <div class="pay-methods">
+        <span class="pay-method">Tarjeta crédito / débito</span>
+        <span class="pay-method">Nequi</span>
+        <span class="pay-method">Daviplata</span>
+        <span class="pay-method">Transferencia</span>
+        <span class="pay-method">PSE</span>
+        <span class="pay-method">Efectivo</span>
+        <span class="pay-method">Créditos Bancolombia</span>
+        <span class="pay-method">Hasta 36 cuotas</span>
+      </div>
+    </div>
+
+    <div class="trust-strip">
+      <span class="trust-pill">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.485 1.929a.75.75 0 0 1 .086 1.057l-7 8.5a.75.75 0 0 1-1.114.05l-3-3a.75.75 0 0 1 1.06-1.06l2.42 2.42 6.49-7.881a.75.75 0 0 1 1.058-.086Z"/></svg>
+        Empresa registrada · NIT 901.956.771-1
+      </span>
+      <span class="trust-pill">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.485 1.929a.75.75 0 0 1 .086 1.057l-7 8.5a.75.75 0 0 1-1.114.05l-3-3a.75.75 0 0 1 1.06-1.06l2.42 2.42 6.49-7.881a.75.75 0 0 1 1.058-.086Z"/></svg>
+        Cámara de Comercio de Medellín · matrícula 21-817900-12
+      </span>
+      <span class="trust-pill">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 1a3 3 0 0 0-3 3v3H4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a3 3 0 0 0-3-3Zm-1.5 3a1.5 1.5 0 1 1 3 0v3h-3V4Z"/></svg>
+        SSL/HTTPS · pagos cifrados de extremo a extremo
+      </span>
+      <span class="trust-pill">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.485 1.929a.75.75 0 0 1 .086 1.057l-7 8.5a.75.75 0 0 1-1.114.05l-3-3a.75.75 0 0 1 1.06-1.06l2.42 2.42 6.49-7.881a.75.75 0 0 1 1.058-.086Z"/></svg>
+        Garantía de 30 días o le devolvemos el dinero
+      </span>
+    </div>
+
+    <p style="text-align:center;color:var(--muted);font-size:.86rem;margin-top:24px">
+      Atendemos PyMEs en <strong>Bogotá, Medellín, Cali, Barranquilla, Cartagena</strong> y todo Colombia.
+    </p>
+  </div>
+</section>
+
+<!-- DOMAIN PANEL -->
+<section style="padding:50px 0;border-top:1px solid var(--line);background:#fff8e1">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;max-width:1080px;margin:0 auto" class="dp-grid">
+      <div>
+        <span class="eyebrow" style="background:#fef3c7;color:#92400e">Sobre el dominio</span>
+        <h2 style="margin-top:14px;font-size:clamp(1.6rem,2.6vw,2.1rem)">¿Y el dominio dónde se compra?</h2>
+        <p style="color:var(--ink-soft);margin-top:14px;font-size:1rem;max-width:560px">
+          Usted lo compra directamente al registrador. Recomendamos <strong>Namecheap</strong>: confiable, soporte 24/7 y la privacidad WHOIS es gratis (otros la cobran). El costo va de <strong>$50.000 a $150.000 COP/año</strong> según la extensión. <strong>Queda a su nombre</strong>, no al nuestro.
+        </p>
+        <p style="color:var(--ink-soft);margin-top:10px;font-size:.95rem;max-width:560px">
+          Una vez registrado, nosotros lo configuramos sin costo cuando usted contrata cualquier plan. Sin tarifas ocultas.
+        </p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 26px;box-shadow:0 14px 30px -14px rgba(10,24,64,.12)">
+        <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:800;line-height:1.2;margin-bottom:6px">Comprar en Namecheap</div>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:18px">15 minutos. Tarjeta internacional o PayPal. Cuenta a su nombre.</p>
+        <a href="https://www.namecheap.com/?aff=7255105" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;font-size:.95rem;padding:14px 20px">
+          Ir a Namecheap →
+        </a>
+        <p style="color:var(--muted);font-size:.78rem;margin-top:12px;text-align:center">
+          ¿Quiere la guía paso a paso primero? <a href="/recursos/guia-dominio.pdf" download style="color:var(--blue);font-weight:600">Descargar PDF →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@media (max-width:780px){.dp-grid{grid-template-columns:1fr !important}}</style>
+
+<!-- TESTIMONIAL / FAQ-LITE -->
+<style>
+  .network .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  @media (max-width:780px){.network .faq-grid{grid-template-columns:1fr}}
+</style>
+<section class="network">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2 style="margin-top:18px">Lo que nos preguntan<br>los dueños de negocio.</h2>
+    </div>
+    <div class="faq-grid">
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Cuánto cuesta y puedo pagar a cuotas?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body"><strong>Oferta de lanzamiento.</strong> Pago único desde $390.000 COP (Esencial) hasta $690.000 COP (Crecimiento, incluye un año de hosting). Puede diferir el pago a 3, 6 o más cuotas con su tarjeta de crédito; la disponibilidad y el número de cuotas dependen de su banco y se acuerdan directamente entre usted y el banco al momento del pago. Arrancamos el mismo día del pago.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿En cuánto tiempo está mi sitio en vivo?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">48 horas para ambos planes, contadas desde que recibimos su pack de materiales (logo, fotos, textos). Si nos demoramos por culpa nuestra, le devolvemos el 100%.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Es un sitio de varias páginas o de una sola?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">Construimos <strong>sitios de una sola página con múltiples secciones</strong>. El plan Esencial trae 6 secciones (hero, servicios, testimonios, galería, formulario y pie); el plan Crecimiento agrega blog, galería ampliada, descargas en PDF, equipo y FAQ — todo en la misma página. Es el formato que usan hoy Apple, Stripe y la mayoría de sitios SaaS modernos: cargan rápido, lucen profesional y dirigen al visitante directo al WhatsApp o a la llamada. ¿Necesita algo más a la medida (e-commerce, múltiples sucursales, integraciones especiales)? Escríbanos por WhatsApp y con gusto le armamos una cotización.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Necesito saber de tecnología para tener el sitio?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">No. Nos encargamos de todo lo técnico: hospedaje, certificado de seguridad, código, diseño y el correo profesional <strong>info@sunegocio.com</strong>. El dominio lo compra usted directamente al registrador (~$50.000-$150.000 COP/año) y queda a su nombre. Recomendamos <a href="https://www.namecheap.com/?aff=7255105" target="_blank" rel="noopener">Namecheap</a> por su confiabilidad y soporte de .com, .co y .com.co; nosotros lo configuramos sin costo adicional. Cuando necesite cambios después del lanzamiento, los hacemos nosotros como parte del Plan Hosting (cambios menores cada mes incluidos, cancelable cuando quiera).</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Y si todavía no tengo dominio? ¿Cuándo puedo ver el sitio en vivo?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">El día del lanzamiento publicamos su sitio en un subdominio gratis tipo <code>tunegocio.sites.pymewebpro.com</code> — algo que puede compartir de inmediato por WhatsApp, redes o tarjetas. Mientras tanto usted compra su dominio propio en <a href="https://www.namecheap.com/?aff=7255105" target="_blank" rel="noopener">Namecheap</a> (recomendamos .com, .co o .com.co; ~$50.000-$150.000 COP/año, queda a su nombre) y nosotros lo conectamos sin costo adicional. La <b>configuración del dominio está incluida en ambos planes</b>; lo único que no incluye el plan Esencial ($390k) es el hosting recurrente — ese es opcional. El plan Crecimiento sí incluye 1 año de hosting.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Qué pasa si no tengo logo, textos o fotos?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">No se preocupe. Si aún no tiene logo, lance con un logo de texto (su nombre con tipografía limpia) que se ve profesional desde el día uno; cuando consiga uno definitivo, lo cambiamos. Para las fotos usamos imágenes libres de derechos sin costo adicional. Si prefiere fotos profesionales de su negocio, podemos coordinar una sesión local con un fotógrafo (cotización aparte). Los textos los redactamos nosotros con base en lo que nos cuente de su negocio. Usted aprueba todo antes de publicar.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Sirve para mi tipo de negocio?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">Sí. Trabajamos con restaurantes, clínicas, abogados, inmobiliarias, salones, ferreterías, consultorías y más. La estructura se adapta: si es de servicios mostramos servicios y testimonios, si es local mostramos ubicación y horarios, si vende en línea mostramos productos y carrito. Todos los planes incluyen mapa de Google y botón de WhatsApp.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Qué pasa si no me gusta?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body"><strong>Garantía de 30 días.</strong> Si dentro de los 30 días siguientes a la entrega no está satisfecho, le devolvemos el 100% del pago, sin preguntas. Durante la construcción incluimos rondas de cambios para que el sitio quede como usted quiere (2 rondas en Esencial, 5 en Crecimiento). El objetivo es que lance feliz.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Los precios incluyen IVA?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">Sí. Todos los precios publicados incluyen IVA. Lo que ve en el sitio es lo que paga, sin sorpresas al final.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿De quién es el sitio y el dominio cuando termine?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">Suyo. <b>Por defecto el dominio lo compra usted</b> en su propio registrador y queda a su nombre, no al nuestro — recomendamos <a href="https://www.namecheap.com/?aff=7255105" target="_blank" rel="noopener">Namecheap</a> (confiable, soporte 24/7 y privacidad WHOIS gratis). Nosotros lo conectamos sin costo. El código vive en GitHub bajo su cuenta o se lo entregamos completo. Las fotos, los textos y el correo profesional son suyos al pagar. No hay candados, no hay rentas escondidas.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Puedo migrar después a otro proveedor?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">Cuando quiera. Le entregamos los archivos completos del sitio, las credenciales del dominio y todos los accesos. Cualquier desarrollador o agencia puede continuar el trabajo. Si decide irse, le ayudamos con la transición durante 30 días, sin costo.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Funciona con DIAN y facturación electrónica?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">Por cada pago le emitimos cuenta de cobro o factura, según necesite su negocio. Si requiere factura electrónica con CUFE, lo coordinamos al momento de la facturación. Para integraciones directas de facturación electrónica al sitio (por ejemplo, e-commerce con emisión automática), trabajamos con su proveedor existente: Siigo, Alegra, ContaPyme, FacturaTech u otros.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>
+          <span>¿Cómo funciona el soporte y los cambios después del lanzamiento?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <p class="faq-body">Si está en Plan Hosting (mensual o anual), soporte por WhatsApp y cambios menores cada mes incluidos mientras esté activo (textos, fotos, horarios, ofertas, banners). Si pagó sin hosting, incluimos soporte técnico durante los 30 días posteriores al lanzamiento; después, agregue un Plan Hosting cuando necesite cambios o soporte continuo, cancelable cuando quiera. Para rediseños grandes o secciones nuevas, le cotizamos como proyecto aparte, sin compromiso.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / FORM -->
+<section id="contacto" class="cta">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <div class="cta-grid">
+        <div>
+          <span class="eyebrow dark">Contacto</span>
+          <h2 style="margin-top:18px;font-size:clamp(2rem,4vw,3.2rem)">Reserve<br>su cupo.</h2>
+          <p class="cta-sub">Elija un plan, llene 3 datos, al pago. En menos de 30 segundos.</p>
+
+          <div class="cta-plan-cards">
+            <!-- a) Esencial sin hosting -->
+            <button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-hosting="none" data-focus="form">
+              <div class="cta-plan-row">
+                <div class="cta-plan-info">
+                  <div class="cta-plan-name">Esencial</div>
+                  <div class="cta-plan-desc">Sin hosting</div>
+                </div>
+                <div class="cta-plan-price">
+                  <b>$390.000</b>
+                  <small>COP única vez</small>
+                </div>
+              </div>
+            </button>
+
+            <!-- b) Esencial + Hosting mensual -->
+            <button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-hosting="monthly" data-focus="form">
+              <div class="cta-plan-row">
+                <div class="cta-plan-info">
+                  <div class="cta-plan-name">Esencial + Hosting mensual</div>
+                  <div class="cta-plan-desc">Pago único + suscripción</div>
+                </div>
+                <div class="cta-plan-price">
+                  <b>$390.000</b>
+                  <small>+ $30.000/mes</small>
+                </div>
+              </div>
+            </button>
+
+            <!-- c) Esencial + Hosting anual -->
+            <button type="button" class="cta-plan-card btn-reserve" data-plan="esencial" data-hosting="annual" data-focus="form">
+              <div class="cta-plan-row">
+                <div class="cta-plan-info">
+                  <div class="cta-plan-name">Esencial + Hosting anual</div>
+                  <div class="cta-plan-desc">Mejor valor · ahorra $90k</div>
+                </div>
+                <div class="cta-plan-price">
+                  <b>$660.000</b>
+                  <small>COP única vez</small>
+                </div>
+              </div>
+            </button>
+
+            <!-- d) Crecimiento -->
+            <button type="button" class="cta-plan-card cta-plan-card-featured btn-reserve" data-plan="crecimiento" data-hosting="annual" data-focus="form">
+              <span class="cta-plan-badge">★ Más completo</span>
+              <div class="cta-plan-row">
+                <div class="cta-plan-info">
+                  <div class="cta-plan-name">Crecimiento</div>
+                  <div class="cta-plan-desc">Sitio completo + 1 año hosting</div>
+                </div>
+                <div class="cta-plan-price">
+                  <b>$690.000</b>
+                  <small>COP única vez</small>
+                </div>
+              </div>
+            </button>
+          </div>
+
+          <p class="cta-wa-fallback">
+            ¿Tiene preguntas antes de pagar?
+            <a href="https://portal.pymewebpro.com/go/whatsapp?campaign=contact_section&text=Hola%2C%20tengo%20preguntas%20antes%20de%20decidir%20mi%20plan." target="_blank" rel="noopener noreferrer">Escríbanos por WhatsApp →</a>
+          </p>
+        </div>
+
+        <form class="form" id="contactForm" action="/api/contact" method="post">
+          <div class="form-fields">
+            <h3 style="font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;margin:0 0 6px;color:var(--ink);letter-spacing:-.01em">Sus datos</h3>
+            <p class="lead">Nombre, correo y WhatsApp. Listo, lo enviamos al pago.</p>
+            <!-- Honeypot: humans don't fill this; bots do. Submission is silently dropped if filled. -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+            <div class="field">
+              <label for="nombre">Su nombre</label>
+              <input id="nombre" name="nombre" type="text" required placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="field">
+              <label for="email">Correo</label>
+              <input id="email" name="email" type="email" required placeholder="correo@ejemplo.com">
+            </div>
+            <div class="field">
+              <label for="whatsapp">WhatsApp</label>
+              <input id="whatsapp" name="whatsapp" type="tel" required placeholder="+57 300 000 0000">
+            </div>
+
+            <div class="form-plan-summary is-empty" id="planSummary">
+              <span><b>Plan:</b> <span id="planSummaryName">elija un paquete a la izquierda</span></span>
+              <button type="button" class="change-plan" id="changePlan" style="display:none">cambiar</button>
+            </div>
+            <input type="hidden" name="plan" id="planHidden" value="">
+            <input type="hidden" name="hosting" id="hostingHidden" value="">
+
+            <button type="submit" class="btn btn-primary" id="contactSubmit" data-pay-label="Continuar al pago →" data-talk-label="Enviar, me contactan hoy mismo →" disabled>Elija un plan primero</button>
+            <p class="form-foot">Sus datos no se comparten con nadie. Sin compromiso.<br><strong>Garantía de 30 días</strong> · si no le gusta su sitio, le devolvemos su dinero.</p>
+          </div>
+          <div class="form-success">
+            <div class="check-ico">✓</div>
+            <h3 style="margin-bottom:10px">¡Listo, recibimos su mensaje!</h3>
+            <p style="color:var(--muted)">Le enviamos al pago en un momento.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ¿ATENDEMOS SU INDUSTRIA? -->
+<section class="industries" style="padding:60px 0 50px;border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div style="text-align:center;max-width:680px;margin:0 auto 28px">
+      <span class="eyebrow">Por industria</span>
+      <h2 style="margin-top:14px;font-size:clamp(1.6rem,2.8vw,2.2rem)">Atendemos todas las industrias.</h2>
+      <p style="color:var(--ink-soft);font-size:1rem;margin-top:14px">Estas cuatro son las que más nos buscan, con páginas específicas en Medellín, Bogotá y Barranquilla. Si su negocio no aparece aquí, también lo atendemos: escríbanos.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:880px;margin:0 auto">
+      <a href="/sitios-web-por-industria/#abogados" style="background:#fff;border:1px solid var(--line);padding:18px 14px;border-radius:10px;text-align:center;font-weight:600;color:var(--ink);font-size:.95rem">⚖️ Abogados</a>
+      <a href="/sitios-web-por-industria/#dentales" style="background:#fff;border:1px solid var(--line);padding:18px 14px;border-radius:10px;text-align:center;font-weight:600;color:var(--ink);font-size:.95rem">🦷 Clínicas dentales</a>
+      <a href="/sitios-web-por-industria/#turismo" style="background:#fff;border:1px solid var(--line);padding:18px 14px;border-radius:10px;text-align:center;font-weight:600;color:var(--ink);font-size:.95rem">🌎 Empresas de turismo</a>
+      <a href="/sitios-web-por-industria/#hoteles" style="background:#fff;border:1px solid var(--line);padding:18px 14px;border-radius:10px;text-align:center;font-weight:600;color:var(--ink);font-size:.95rem">🏨 Hoteles boutique</a>
+    </div>
+    <p style="text-align:center;margin-top:20px;font-size:.92rem;color:var(--muted)">
+      <a href="/sitios-web-por-industria/" style="color:var(--blue);font-weight:600">Ver todas las industrias y ciudades →</a>
+    </p>
+  </div>
+</section>
+
+<!-- DOMAIN MINI CARD (above footer) -->
+<section style="padding:36px 0;border-top:1px solid var(--line);background:#fff8e1">
+  <div class="wrap">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;max-width:1080px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 26px;box-shadow:0 10px 28px -16px rgba(10,24,64,.12)">
+      <div style="flex:1;min-width:260px">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#92400e;margin-bottom:4px">Sobre el dominio</div>
+        <div style="font-family:'Fraunces',serif;font-size:1.15rem;font-weight:800;line-height:1.25;color:var(--ink)">Compre su dominio en Namecheap, queda a su nombre.</div>
+        <div style="color:var(--ink-soft);font-size:.88rem;margin-top:4px">~$50.000 a $150.000 COP/año. Nosotros lo configuramos sin costo cuando contrata.</div>
+      </div>
+      <a href="https://www.namecheap.com/?aff=7255105" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:.92rem;padding:12px 22px;white-space:nowrap">Ir a Namecheap →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand"><span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span></div>
+        <p style="margin-top:14px">Sitios web profesionales para pequeños negocios en Colombia. Diseño, hospedaje y soporte: todo en un solo lugar.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Servicios</h4>
+        <a href="#paquetes">Planes y precios</a>
+        <a href="#trabajo">Trabajo</a>
+        <a href="#proceso">Cómo funciona</a>
+        <a href="/sitios-web-por-industria/">Por industria y ciudad</a>
+        <a href="/recursos/">Recursos gratis</a>
+        <a href="#contacto">Hablemos</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="/politica-de-datos">Política de tratamiento de datos</a>
+        <a href="/terminos">Términos y condiciones</a>
+        <!--email_off--><a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a><!--/email_off-->
+        <a href="https://share.google/I3DtMCnKpFCMruO4K" target="_blank" rel="noopener noreferrer">Ver en Google Maps →</a>
+      </div>
+    </div>
+    <address class="foot-legal" style="font-style:normal">
+      <div><b>PymeWebPro · NORTE SUR CONSULTING S.A.S.</b></div>
+      <div>NIT 901.956.771-1</div>
+      <div>Cámara de Comercio de Medellín · matrícula 21-817900-12</div>
+      <div>Medellín, Antioquia, Colombia</div>
+      <div><a href="tel:+573014047722">+57 301 404 7722</a> · <!--email_off--><a href="mailto:ventas@pymewebpro.com">ventas@pymewebpro.com</a><!--/email_off--></div>
+    </address>
+    <div class="foot-bottom">
+      <span>© 2026 PymeWebPro.com · Pensado y construido para el negocio colombiano.</span>
+      <span>Hecho con <span style="color:#ce1126">❤</span> en Colombia</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://portal.pymewebpro.com/go/whatsapp?campaign=floater&text=Hola%2C%20tengo%20un%20negocio%20en%20Colombia%20y%20quiero%20un%20sitio%20web." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- Cookie / data-treatment consent banner (Ley 1581 + Decreto 1377).
+     Hidden by default; main.js reveals it on first visit and stores the
+     user's choice in localStorage under 'pwp_consent'. Future analytics
+     trackers (GA4, Meta Pixel, etc.) must check window.__pwpConsent ===
+     'accepted' before firing. -->
+<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Aviso de cookies y datos" hidden>
+  <div class="cookie-banner-inner">
+    <p>
+      Usamos cookies para entender cómo se usa el sitio y mejorar su experiencia. Sus datos se tratan según nuestra <a href="/politica-de-datos.html">Política de Tratamiento de Datos</a>.
+    </p>
+    <div class="cookie-actions">
+      <button type="button" class="btn-cookie btn-cookie-reject" id="cookieReject">Rechazar</button>
+      <button type="button" class="btn-cookie btn-cookie-accept" id="cookieAccept">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<script src="/main.js" defer></script>
+<script src="/analytics.js" defer></script>
+
+</body>
+</html>

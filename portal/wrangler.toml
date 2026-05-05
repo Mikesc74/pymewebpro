@@ -4,8 +4,13 @@ compatibility_date = "2026-04-01"
 account_id = "c98561adefb602704d4e7a6a1b7e7597"
 
 # Custom domain route (already configured on the live Worker — keep here for parity)
+# *.sites.pymewebpro.com is the tenant namespace — every client site auto-publishes
+# to <slug>.sites.pymewebpro.com with no per-client DNS work. Requires a wildcard
+# DNS record (CNAME *.sites pymewebpro-portal.workers.dev) configured one-time on the zone.
 routes = [
   { pattern = "portal.pymewebpro.com/*", zone_name = "pymewebpro.com" },
+  { pattern = "*.sites.pymewebpro.com/*", zone_name = "pymewebpro.com" },
+  { pattern = "mockups.pymewebpro.com/*", zone_name = "pymewebpro.com" },
 ]
 
 # --- Bindings (discovered from the live deployment 2026-04-30) ------------
@@ -28,7 +33,7 @@ bucket_name = "pymewebpro-client-assets"
 [vars]
 APP_URL = "https://portal.pymewebpro.com"
 FROM_EMAIL = "PymeWebPro <noreply@pymewebpro.com>"
-ADMIN_EMAIL = "mike@mikec.pro"
+ADMIN_EMAIL = "ventas@pymewebpro.com"
 WHATSAPP_NUMBER = "+573014047722"
 
 # --- Secrets (NOT stored here — set via wrangler) -------------------------

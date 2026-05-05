@@ -211,7 +211,189 @@ async function handleClient(request, env) {
   if (path === "/api/client/files" && method === "GET") return await listFiles(session, env);
   const altMatch = path.match(/^\/api\/client\/files\/([a-zA-Z0-9-]+)\/alt$/);
   if (altMatch && method === "PUT") return await updateFileAlt(request, session, env, altMatch[1]);
+  if (path === "/api/client/project" && method === "GET") return await getClientProject(session, env);
+  if (path === "/api/client/project/comment" && method === "POST") return await postClientComment(request, session, env);
+  if (path === "/api/client/project/approve" && method === "POST") return await approveCurrentMockup(session, env);
+  if (path === "/api/client/project/upgrade" && method === "POST") return await checkoutUpgrade(session, env);
+  if (path === "/api/client/project/hosting" && method === "POST") return await checkoutHosting(request, session, env);
   return json({ error: "Not found" }, 404);
+}
+
+// ─── Customer project portal endpoints ─────────────────────────────────────
+async function getClientProject(session, env) {
+  const client = await env.DB.prepare("SELECT id, email, business_name, plan, status, language FROM clients WHERE id = ?")
+    .bind(session.client_id).first();
+  if (!client) return json({ error: "client not found" }, 404);
+
+  // Latest mockup
+  const mockup = await env.DB.prepare(
+    "SELECT id, version, status, shipped_url, shipped_at, approved_at, created_at FROM mockups WHERE client_id = ? AND shipped_at IS NOT NULL ORDER BY version DESC LIMIT 1",
+  ).bind(client.id).first();
+
+  // Count of pushed-to-client mockups → revision rounds used.
+  // Round 1 = initial push; round N>1 = revision pushes.
+  const shippedCountRow = await env.DB.prepare(
+    "SELECT COUNT(*) AS n FROM mockups WHERE client_id = ? AND shipped_at IS NOT NULL",
+  ).bind(client.id).first();
+  const shippedCount = shippedCountRow ? Number(shippedCountRow.n || 0) : 0;
+  const isPro = client.plan === "pro" || client.plan === "crecimiento" || client.plan === "growth";
+  const revisionsTotal = isPro ? 5 : 2;
+  const revisionsUsed = Math.max(0, shippedCount - 1);  // first push is the initial, not a "revision"
+  const revisionsRemaining = Math.max(0, revisionsTotal - revisionsUsed);
+
+  // Comments thread (both directions: client + admin) — keyed to latest pushed mockup
+  const commentsRes = mockup ? await env.DB.prepare(
+    "SELECT id, body, author, created_at FROM mockup_comments WHERE mockup_id = ? ORDER BY created_at ASC",
+  ).bind(mockup.id).all() : { results: [] };
+
+  // Auto-mint a long-lived share link for in-portal preview if needed (60 days)
+  let previewUrl = null;
+  if (mockup) {
+    let shareRow = await env.DB.prepare(
+      "SELECT token, expires_at FROM mockup_shares WHERE mockup_id = ? AND revoked = 0 AND expires_at > ? ORDER BY expires_at DESC LIMIT 1",
+    ).bind(mockup.id, Math.floor(Date.now()/1000)).first();
+    if (!shareRow) {
+      const token = randomToken(20);
+      const expires = Math.floor(Date.now()/1000) + 60 * 86400;
+      await env.DB.prepare(
+        "INSERT INTO mockup_shares (token, mockup_id, expires_at) VALUES (?, ?, ?)",
+      ).bind(token, mockup.id, expires).run();
+      shareRow = { token, expires_at: expires };
+    }
+    previewUrl = `${env.APP_URL || "https://portal.pymewebpro.com"}/m/${shareRow.token}/`;
+  }
+
+  // Live site URL (if shipped) — custom domain wins; otherwise the included
+  // <slug>.sites.pymewebpro.com tenant subdomain (clean, brandable, free).
+  const live = await env.DB.prepare(
+    "SELECT slug, custom_domain FROM live_sites WHERE client_id = ? AND r2_prefix != ''",
+  ).bind(client.id).first();
+  const liveUrl = live
+    ? (live.custom_domain ? `https://${live.custom_domain}` : `https://${live.slug}.sites.pymewebpro.com/`)
+    : null;
+
+  // Derive state — mockup iframe only appears AFTER admin "Push to client" (shipped_at IS NOT NULL)
+  let state = "intake_in_progress";
+  if (client.status === "submitted") {
+    if (!mockup) state = "waiting_for_mockup";       // 48h countdown shown
+    else if (live && live.r2_prefix) state = "live";
+    else if (mockup.approved_at) state = "approved_building";
+    else state = "reviewing_mockup";
+  } else if (client.status === "active" || (live && live.r2_prefix)) {
+    state = "live";
+  }
+
+  return json({
+    client,
+    project: {
+      state,
+      submitted_at: client.submitted_at || null,           // ms epoch — front-end derives 48h countdown
+      mockup: mockup ? { id: mockup.id, version: mockup.version, status: mockup.status, approved_at: mockup.approved_at, shipped_at: mockup.shipped_at, preview_url: previewUrl } : null,
+      live_url: liveUrl,
+      comments: commentsRes.results || [],
+      revisions: { used: revisionsUsed, total: revisionsTotal, remaining: revisionsRemaining },
+    },
+    options: {
+      can_upgrade: !isPro,
+      upgrade_amount_cop: 300000,  // $390k → $690k
+      hosting_monthly_cop: 30000,
+      hosting_annual_cop: 270000,
+    },
+  });
+}
+
+async function postClientComment(request, session, env) {
+  const body = await request.json().catch(() => ({}));
+  const text = String(body.body || "").trim().slice(0, 4000);
+  if (!text) return json({ error: "empty" }, 400);
+  const mockup = await env.DB.prepare(
+    "SELECT id FROM mockups WHERE client_id = ? ORDER BY version DESC LIMIT 1",
+  ).bind(session.client_id).first();
+  if (!mockup) return json({ error: "no mockup yet" }, 404);
+  const id = uuid();
+  await env.DB.prepare(
+    "INSERT INTO mockup_comments (id, mockup_id, section, body, author) VALUES (?, ?, NULL, ?, 'client')",
+  ).bind(id, mockup.id, text).run();
+  // Notify admin
+  if (env.ADMIN_EMAIL && env.RESEND_API_KEY) {
+    sendEmail(env, {
+      to: env.ADMIN_EMAIL,
+      subject: `💬 Client comment — ${session.business_name || session.email}`,
+      html: `<p>New comment in the client portal:</p><blockquote>${escapeHtml(text)}</blockquote><p><a href="${env.APP_URL}/admin/clients/${session.client_id}">Open client →</a></p>`,
+    }).catch(() => {});
+  }
+  return json({ ok: true, id });
+}
+
+async function approveCurrentMockup(session, env) {
+  const mockup = await env.DB.prepare(
+    "SELECT id, version FROM mockups WHERE client_id = ? ORDER BY version DESC LIMIT 1",
+  ).bind(session.client_id).first();
+  if (!mockup) return json({ error: "no mockup yet" }, 404);
+  await env.DB.prepare(
+    "UPDATE mockups SET status = 'approved', approved_at = ? WHERE id = ?",
+  ).bind(Math.floor(Date.now()/1000), mockup.id).run();
+
+  // Auto-mark "Design approved by client" deliverable
+  await env.DB.prepare(`
+    UPDATE clients SET
+      deliverables_state = json_patch(coalesce(deliverables_state, '{}'), ?)
+    WHERE id = ?
+  `).bind(JSON.stringify({ design_approved: { status: "done", note: "Approved by client v" + mockup.version } }), session.client_id).run().catch(() => {});
+
+  if (env.ADMIN_EMAIL && env.RESEND_API_KEY) {
+    sendEmail(env, {
+      to: env.ADMIN_EMAIL,
+      subject: `✓ Client approved mockup v${mockup.version}`,
+      html: `<p>${escapeHtml(session.business_name || session.email)} approved the mockup. Ready to launch.</p><p><a href="${env.APP_URL}/admin/clients/${session.client_id}">Open client →</a></p>`,
+    }).catch(() => {});
+  }
+  return json({ ok: true });
+}
+
+async function checkoutUpgrade(session, env) {
+  if (!env.WOMPI_PUBLIC_KEY || !env.WOMPI_INTEGRITY) return json({ error: "Payments not configured" }, 503);
+  const reference = `pwp-upg-${session.client_id}-${Date.now().toString(36)}`;
+  const amountInCents = 300000 * 100;  // $300k delta
+  const sig = await sha256(`${reference}${amountInCents}COP${env.WOMPI_INTEGRITY}`);
+  const now = Date.now();
+  await env.DB.prepare(
+    `INSERT INTO payments (id, lead_id, reference, amount_cents, currency, plan, hosting, status, created_at, updated_at)
+     VALUES (?, '', ?, ?, 'COP', 'upgrade', 'none', 'pending', ?, ?)`
+  ).bind(uuid(), reference, amountInCents, now, now).run();
+  const params = new URLSearchParams({
+    "public-key": env.WOMPI_PUBLIC_KEY,
+    "currency": "COP",
+    "amount-in-cents": String(amountInCents),
+    "reference": reference,
+    "signature:integrity": sig,
+    "redirect-url": `${env.APP_URL}/?upgrade=back`,
+  });
+  return json({ ok: true, checkout_url: `https://checkout.wompi.co/p/?${params.toString()}`, reference });
+}
+
+async function checkoutHosting(request, session, env) {
+  if (!env.WOMPI_PUBLIC_KEY || !env.WOMPI_INTEGRITY) return json({ error: "Payments not configured" }, 503);
+  const body = await request.json().catch(() => ({}));
+  const period = body.period === "monthly" ? "monthly" : "annual";
+  const amount_cop = period === "annual" ? 270000 : 30000;
+  const reference = `pwp-host-${period}-${session.client_id}-${Date.now().toString(36)}`;
+  const amountInCents = amount_cop * 100;
+  const sig = await sha256(`${reference}${amountInCents}COP${env.WOMPI_INTEGRITY}`);
+  const now = Date.now();
+  await env.DB.prepare(
+    `INSERT INTO payments (id, lead_id, reference, amount_cents, currency, plan, hosting, status, created_at, updated_at)
+     VALUES (?, '', ?, ?, 'COP', 'hosting', ?, 'pending', ?, ?)`
+  ).bind(uuid(), reference, amountInCents, period, now, now).run();
+  const params = new URLSearchParams({
+    "public-key": env.WOMPI_PUBLIC_KEY,
+    "currency": "COP",
+    "amount-in-cents": String(amountInCents),
+    "reference": reference,
+    "signature:integrity": sig,
+    "redirect-url": `${env.APP_URL}/?hosting=back`,
+  });
+  return json({ ok: true, checkout_url: `https://checkout.wompi.co/p/?${params.toString()}`, reference });
 }
 
 async function updateFileAlt(request, session, env, fileId) {
@@ -284,68 +466,68 @@ async function listFiles(session, env) {
 // src/deliverables.js
 const DELIVERABLES = [
   // SETUP
-  { key: "setup_domain", group: "setup", plan: "esencial", label: "Dominio configurado y a nombre del cliente" },
-  { key: "setup_dns", group: "setup", plan: "esencial", label: "DNS apuntando a Cloudflare" },
-  { key: "setup_ssl", group: "setup", plan: "esencial", label: "Certificado SSL / HTTPS activo" },
-  { key: "setup_email_forward", group: "setup", plan: "esencial", label: "Reenvío de correo info@cliente.com → Gmail" },
-  { key: "setup_hosting_year", group: "setup", plan: "pro", label: "1 año de hosting incluido configurado" },
+  { key: "setup_domain", group: "setup", plan: "esencial", label: "Domain configured and registered to client" },
+  { key: "setup_dns", group: "setup", plan: "esencial", label: "DNS pointing to Cloudflare" },
+  { key: "setup_ssl", group: "setup", plan: "esencial", label: "SSL / HTTPS certificate active" },
+  { key: "setup_email_forward", group: "setup", plan: "esencial", label: "Email forwarding info@client.com → Gmail" },
+  { key: "setup_hosting_year", group: "setup", plan: "pro", label: "1 year of hosting included, configured" },
   // DESIGN
-  { key: "design_logo", group: "design", plan: "esencial", label: "Logo cargado / preparado" },
-  { key: "design_logo_refresh", group: "design", plan: "pro", label: "Logo nuevo o refresh diseñado (IA-asistido)" },
-  { key: "design_brand_colors", group: "design", plan: "esencial", label: "Colores de marca aplicados" },
-  { key: "design_typography", group: "design", plan: "esencial", label: "Tipografía elegida y aplicada" },
-  { key: "design_approved", group: "design", plan: "esencial", label: "Diseño aprobado por el cliente" },
+  { key: "design_logo", group: "design", plan: "esencial", label: "Logo uploaded / prepared" },
+  { key: "design_logo_refresh", group: "design", plan: "pro", label: "New logo or refresh designed (AI-assisted)" },
+  { key: "design_brand_colors", group: "design", plan: "esencial", label: "Brand colors applied" },
+  { key: "design_typography", group: "design", plan: "esencial", label: "Typography chosen and applied" },
+  { key: "design_approved", group: "design", plan: "esencial", label: "Design approved by client" },
   // PAGES CORE
-  { key: "page_home", group: "pages", plan: "esencial", label: "Inicio" },
-  { key: "page_services", group: "pages", plan: "esencial", label: "Servicios / productos" },
-  { key: "page_about", group: "pages", plan: "esencial", label: "Sobre nosotros" },
-  { key: "page_contact", group: "pages", plan: "esencial", label: "Contacto" },
-  { key: "page_location", group: "pages", plan: "esencial", label: "Ubicación + mapa" },
+  { key: "page_home", group: "pages", plan: "esencial", label: "Home" },
+  { key: "page_services", group: "pages", plan: "esencial", label: "Services / products" },
+  { key: "page_about", group: "pages", plan: "esencial", label: "About us" },
+  { key: "page_contact", group: "pages", plan: "esencial", label: "Contact" },
+  { key: "page_location", group: "pages", plan: "esencial", label: "Location + map" },
   // PAGES EXTRA
-  { key: "page_blog", group: "pages", plan: "pro", label: "Blog / Noticias (publicable por el cliente)" },
-  { key: "page_gallery_pro", group: "pages", plan: "pro", label: "Galería ampliada" },
-  { key: "page_bookings", group: "pages", plan: "pro", label: "Reservas / agendamiento" },
-  { key: "page_reviews", group: "pages", plan: "pro", label: "Reseñas / testimonios destacados" },
-  { key: "page_team", group: "pages", plan: "pro", label: "Equipo" },
+  { key: "page_blog", group: "pages", plan: "pro", label: "Blog / News (client-publishable)" },
+  { key: "page_gallery_pro", group: "pages", plan: "pro", label: "Extended gallery" },
+  { key: "page_bookings", group: "pages", plan: "pro", label: "Bookings / scheduling" },
+  { key: "page_reviews", group: "pages", plan: "pro", label: "Reviews / featured testimonials" },
+  { key: "page_team", group: "pages", plan: "pro", label: "Team" },
   { key: "page_faq", group: "pages", plan: "pro", label: "FAQ" },
   // FEATURES
-  { key: "feat_whatsapp_btn", group: "features", plan: "esencial", label: "Botón de WhatsApp" },
-  { key: "feat_google_map", group: "features", plan: "esencial", label: "Mapa de Google integrado" },
-  { key: "feat_social_bar", group: "features", plan: "esencial", label: "Barra social (WhatsApp, IG, FB, Maps)" },
-  { key: "feat_photo_gallery", group: "features", plan: "esencial", label: "Galería de fotos" },
-  { key: "feat_testimonials", group: "features", plan: "esencial", label: "Sección de testimonios" },
-  { key: "feat_contact_form", group: "features", plan: "esencial", label: "Formulario de contacto + auto-confirmación" },
-  { key: "feat_pdf_download", group: "features", plan: "pro", label: "PDF descargable (menú / catálogo / ficha)" },
-  { key: "feat_email_capture", group: "features", plan: "pro", label: "Captura de correos (newsletter / promos)" },
-  { key: "feat_wa_catalog", group: "features", plan: "pro", label: "Catálogo de WhatsApp Business enlazado" },
-  { key: "feat_booking_system", group: "features", plan: "pro", label: "Sistema de agendamiento integrado" },
-  { key: "feat_bilingual", group: "features", plan: "pro", label: "Versión bilingüe ES + EN" },
+  { key: "feat_whatsapp_btn", group: "features", plan: "esencial", label: "WhatsApp button" },
+  { key: "feat_google_map", group: "features", plan: "esencial", label: "Google Maps embedded" },
+  { key: "feat_social_bar", group: "features", plan: "esencial", label: "Social bar (WhatsApp, IG, FB, Maps)" },
+  { key: "feat_photo_gallery", group: "features", plan: "esencial", label: "Photo gallery" },
+  { key: "feat_testimonials", group: "features", plan: "esencial", label: "Testimonials section" },
+  { key: "feat_contact_form", group: "features", plan: "esencial", label: "Contact form + auto-confirmation" },
+  { key: "feat_pdf_download", group: "features", plan: "pro", label: "Downloadable PDF (menu / catalog / spec sheet)" },
+  { key: "feat_email_capture", group: "features", plan: "pro", label: "Email capture (newsletter / promos)" },
+  { key: "feat_wa_catalog", group: "features", plan: "pro", label: "WhatsApp Business catalog linked" },
+  { key: "feat_booking_system", group: "features", plan: "pro", label: "Integrated booking system" },
+  { key: "feat_bilingual", group: "features", plan: "pro", label: "Bilingual ES + EN version" },
   // SEO & ANALYTICS
-  { key: "seo_meta_tags", group: "seo", plan: "esencial", label: "Meta tags optimizadas por página" },
-  { key: "seo_sitemap", group: "seo", plan: "esencial", label: "sitemap.xml automático" },
-  { key: "seo_robots", group: "seo", plan: "esencial", label: "robots.txt configurado" },
-  { key: "seo_indexed", group: "seo", plan: "esencial", label: "Indexado en Google (≤7 días)" },
-  { key: "seo_search_console", group: "seo", plan: "esencial", label: "Google Search Console configurada" },
-  { key: "seo_analytics", group: "seo", plan: "esencial", label: "Google Analytics 4 instalado" },
-  { key: "seo_structured_data", group: "seo", plan: "pro", label: "Datos estructurados (Schema.org)" },
-  { key: "seo_gbp", group: "seo", plan: "pro", label: "Google Business Profile verificado" },
-  { key: "seo_meta_pixel", group: "seo", plan: "pro", label: "Meta Pixel instalado" },
-  { key: "seo_ga4_goals", group: "seo", plan: "pro", label: "Metas de conversión en GA4" },
-  { key: "seo_speed", group: "seo", plan: "pro", label: "Velocidad <1s / Core Web Vitals" },
-  // CIERRE
-  { key: "close_training", group: "close", plan: "esencial", label: "Capacitación al cliente (30 min)" },
-  { key: "close_handover", group: "close", plan: "esencial", label: "Documentación entregada" },
-  { key: "close_support_active", group: "close", plan: "esencial", label: "Soporte por WhatsApp activo" },
-  { key: "close_revisions", group: "close", plan: "esencial", label: "Rondas de cambios completadas" }
+  { key: "seo_meta_tags", group: "seo", plan: "esencial", label: "Meta tags optimized per page" },
+  { key: "seo_sitemap", group: "seo", plan: "esencial", label: "Automatic sitemap.xml" },
+  { key: "seo_robots", group: "seo", plan: "esencial", label: "robots.txt configured" },
+  { key: "seo_indexed", group: "seo", plan: "esencial", label: "Indexed on Google (≤7 days)" },
+  { key: "seo_search_console", group: "seo", plan: "esencial", label: "Google Search Console set up" },
+  { key: "seo_analytics", group: "seo", plan: "esencial", label: "Google Analytics 4 installed" },
+  { key: "seo_structured_data", group: "seo", plan: "pro", label: "Structured data (Schema.org)" },
+  { key: "seo_gbp", group: "seo", plan: "pro", label: "Google Business Profile verified" },
+  { key: "seo_meta_pixel", group: "seo", plan: "pro", label: "Meta Pixel installed" },
+  { key: "seo_ga4_goals", group: "seo", plan: "pro", label: "GA4 conversion goals" },
+  { key: "seo_speed", group: "seo", plan: "pro", label: "Speed <1s / Core Web Vitals" },
+  // CLOSEOUT
+  { key: "close_training", group: "close", plan: "esencial", label: "Client training (30 min)" },
+  { key: "close_handover", group: "close", plan: "esencial", label: "Documentation delivered" },
+  { key: "close_support_active", group: "close", plan: "esencial", label: "WhatsApp support active" },
+  { key: "close_revisions", group: "close", plan: "esencial", label: "Revision rounds completed" }
 ];
 const GROUP_LABELS = {
-  setup: "Configuración técnica", design: "Diseño y marca", pages: "Secciones",
-  features: "Funcionalidades", seo: "SEO + Analytics", close: "Cierre y entrega"
+  setup: "Technical setup", design: "Design & branding", pages: "Sections",
+  features: "Features", seo: "SEO + Analytics", close: "Closeout & handover"
 };
 const STATUS_LABELS = {
-  pending: { label: "Pendiente", color: "#94a3b8", icon: "○" },
-  in_progress: { label: "En curso", color: "#fbbf24", icon: "◐" },
-  done: { label: "Listo", color: "#10b981", icon: "✓" },
+  pending: { label: "Pending", color: "#94a3b8", icon: "○" },
+  in_progress: { label: "In progress", color: "#fbbf24", icon: "◐" },
+  done: { label: "Done", color: "#10b981", icon: "✓" },
   na: { label: "N/A", color: "#475569", icon: "–" }
 };
 function deliverablesForPlan(plan) {
@@ -381,6 +563,8 @@ async function handleAdmin(request, env) {
   if (idMatch && method === "DELETE") return await deleteClient(env, idMatch[1]);
   const resendMatch = path.match(/^\/api\/admin\/clients\/([a-f0-9-]+)\/resend$/);
   if (resendMatch && method === "POST") return await resendInvite(env, resendMatch[1]);
+  const previewSessionMatch = path.match(/^\/api\/admin\/clients\/([a-f0-9-]+)\/preview-session$/);
+  if (previewSessionMatch && method === "POST") return await mintPreviewSession(env, previewSessionMatch[1]);
   if (path === "/api/admin/deliverables/schema" && method === "GET") {
     return json({ deliverables: DELIVERABLES, groups: GROUP_LABELS, statuses: STATUS_LABELS });
   }
@@ -490,7 +674,12 @@ async function getClientDetail(env, id) {
   if (!client) return json({ error: "Client not found" }, 404);
   const submissions = await env.DB.prepare("SELECT section, data, updated_at FROM submissions WHERE client_id = ?").bind(id).all();
   const sections = {};
-  for (const row of submissions.results || []) sections[row.section] = { data: JSON.parse(row.data), updated_at: row.updated_at };
+  // Internal sections (prefixed with _, e.g. _revision_notes) are workflow metadata
+  // and contain nested objects — don't expose them to the SPA, which renders flat.
+  for (const row of submissions.results || []) {
+    if (row.section && row.section.startsWith("_")) continue;
+    sections[row.section] = { data: JSON.parse(row.data), updated_at: row.updated_at };
+  }
   const files = await env.DB.prepare("SELECT id, category, filename, r2_key, mime_type, size_bytes, uploaded_at, alt_text FROM files WHERE client_id = ? ORDER BY uploaded_at DESC").bind(id).all();
   let plan = client.plan;
   if (!plan) {
@@ -543,6 +732,22 @@ async function deleteClient(env, id) {
   await env.DB.prepare("DELETE FROM clients WHERE id = ?").bind(id).run();
   return json({ ok: true });
 }
+// Mints a 24h session token in D1 for the given client and returns a URL the
+// admin can open to view the portal AS that client (no email round-trip).
+async function mintPreviewSession(env, id) {
+  const client = await env.DB.prepare("SELECT id FROM clients WHERE id = ?").bind(id).first();
+  if (!client) return json({ error: "Client not found" }, 404);
+  const token = randomToken(24);
+  const now = Date.now();
+  const expires = now + 24 * 3600 * 1000;  // 24h
+  await env.DB.prepare(
+    "INSERT INTO sessions (token, client_id, expires_at, created_at) VALUES (?, ?, ?, ?)",
+  ).bind(token, id, expires, now).run();
+  await logEvent(env, id, "admin_preview_session_minted");
+  const url = `${env.APP_URL || "https://portal.pymewebpro.com"}/?session=${token}`;
+  return json({ ok: true, url, expires_at: expires });
+}
+
 async function resendInvite(env, id) {
   const client = await env.DB.prepare("SELECT * FROM clients WHERE id = ?").bind(id).first();
   if (!client) return json({ error: "Client not found" }, 404);
@@ -1023,8 +1228,97 @@ async function handleWompiWebhook(request, env) {
   await env.DB.prepare(
     `UPDATE payments SET wompi_transaction_id = ?, status = ?, paid_at = COALESCE(paid_at, ?), raw_event = ?, updated_at = ? WHERE id = ?`
   ).bind(wompiId || null, newStatus, paidAt, JSON.stringify(body), now, payment.id).run();
-  if (newStatus === "approved") await convertLeadOnApproval(env, payment);
+  if (newStatus === "approved") {
+    // Branch on payment kind so the right fulfillment runs.
+    if (payment.plan === "upgrade") await processUpgradePayment(env, payment);
+    else if (payment.plan === "hosting") await processHostingPayment(env, payment);
+    else await convertLeadOnApproval(env, payment);
+  }
   return json({ ok: true, status: newStatus });
+}
+
+// Upgrade payment (Esencial → Crecimiento). Reference format: pwp-upg-<clientId>-<rand>
+async function processUpgradePayment(env, payment) {
+  // Extract client_id from the reference
+  const m = String(payment.reference || "").match(/^pwp-upg-([a-f0-9-]+)-/);
+  if (!m) { console.warn("upgrade payment reference malformed", payment.reference); return; }
+  const clientId = m[1];
+  const client = await env.DB.prepare("SELECT id, email, business_name, plan FROM clients WHERE id = ?").bind(clientId).first();
+  if (!client) return;
+  if (client.plan === "pro") return; // already upgraded — idempotent
+
+  await env.DB.prepare("UPDATE clients SET plan = 'pro', updated_at = ? WHERE id = ?")
+    .bind(Date.now(), clientId).run();
+  await logEvent(env, clientId, "plan_upgraded", { payment_id: payment.id, amount_cents: payment.amount_cents });
+
+  // Email customer
+  if (client.email && env.RESEND_API_KEY) {
+    sendEmail(env, {
+      to: client.email,
+      subject: "Plan actualizado a Crecimiento ✓",
+      html: `<div style="font-family:system-ui;max-width:540px;margin:0 auto;padding:24px;color:#0a1840">
+        <h1 style="font-family:Georgia,serif">¡Su plan se actualizó a Crecimiento!</h1>
+        <p>Ahora su sitio incluye las secciones extra (blog, galería ampliada, descargas en PDF, equipo y FAQ), versión bilingüe español + inglés (la traducción la hacemos nosotros), 1 año de hosting incluido y 5 rondas de cambios en total.</p>
+        <p>En las próximas horas regeneraremos su mockup con las nuevas funciones y le compartiremos el nuevo enlace de revisión.</p>
+        <p>— Equipo PymeWebPro</p>
+      </div>`,
+    }).catch(() => {});
+  }
+  // Email admin to regen
+  if (env.ADMIN_EMAIL) {
+    sendEmail(env, {
+      to: env.ADMIN_EMAIL,
+      subject: `🆙 Upgrade paid — regenerate mockup for ${client.business_name || client.email}`,
+      html: `<p><strong>${escapeHtml(client.business_name || client.email)}</strong> paid the upgrade to Growth.</p>
+        <p>Plan in DB: <code>pro</code>. <a href="${env.APP_URL}/admin/clients/${clientId}">Open client</a> and click "Generate new version".</p>`,
+    }).catch(() => {});
+  }
+}
+
+// Hosting payment. Reference: pwp-host-<period>-<clientId>-<rand>
+// period in {monthly, annual}
+async function processHostingPayment(env, payment) {
+  const m = String(payment.reference || "").match(/^pwp-host-(monthly|annual)-([a-f0-9-]+)-/);
+  if (!m) { console.warn("hosting payment reference malformed", payment.reference); return; }
+  const period = m[1];
+  const clientId = m[2];
+  const client = await env.DB.prepare("SELECT id, email, business_name, hosting_expires_at FROM clients WHERE id = ?").bind(clientId).first();
+  if (!client) return;
+
+  // Extend from MAX(now, current expiry) to avoid skipping time when paying early
+  const now = Math.floor(Date.now() / 1000);
+  const start = Math.max(now, client.hosting_expires_at || 0);
+  const days = period === "annual" ? 365 : 30;
+  const newExpiry = start + days * 86400;
+
+  await env.DB.prepare("UPDATE clients SET hosting_expires_at = ?, hosting_period = ?, updated_at = ? WHERE id = ?")
+    .bind(newExpiry, period, Date.now(), clientId).run();
+  await logEvent(env, clientId, "hosting_paid", { payment_id: payment.id, period, expires_at: newExpiry, amount_cents: payment.amount_cents });
+
+  // Mirror into the legacy hosting_payments table (different schema — has wompi_reference UNIQUE).
+  // This is best-effort historical bookkeeping; the canonical record is in `payments` + `clients.hosting_expires_at`.
+  try {
+    await env.DB.prepare(
+      `INSERT INTO hosting_payments (id, wompi_reference, wompi_transaction_id, customer_email, amount_cents, plan, status, created_at, paid_at)
+       VALUES (?, ?, ?, ?, ?, ?, 'approved', ?, ?)`
+    ).bind(uuid(), payment.reference, payment.wompi_transaction_id || null, client.email, payment.amount_cents, period === "annual" ? "anual" : "mensual", payment.created_at || Date.now(), now).run();
+  } catch (e) { /* row may already exist on retry — ignore */ }
+
+  // Email customer
+  if (client.email && env.RESEND_API_KEY) {
+    const periodLabel = period === "annual" ? "anual" : "mensual";
+    const expiresStr = new Date(newExpiry * 1000).toLocaleDateString("es-CO");
+    sendEmail(env, {
+      to: client.email,
+      subject: "Plan Hosting activo ✓",
+      html: `<div style="font-family:system-ui;max-width:540px;margin:0 auto;padding:24px;color:#0a1840">
+        <h1 style="font-family:Georgia,serif">¡Su Plan Hosting (${periodLabel}) está activo!</h1>
+        <p>Vigencia hasta: <strong>${expiresStr}</strong></p>
+        <p>Esto incluye: hospedaje administrado, certificado SSL, copias de seguridad, monitoreo y cambios mensuales incluidos. Cancele cuando quiera, sin contrato.</p>
+        <p>— Equipo PymeWebPro</p>
+      </div>`,
+    }).catch(() => {});
+  }
 }
 
 async function convertLeadOnApproval(env, payment) {
@@ -1294,20 +1588,46 @@ const FRONTEND_HTML = `<!DOCTYPE html>
   <title>PymeWebPro Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
+    :root{
+      --pwp-ink:#1A2032;
+      --pwp-slate:#5A6478;
+      --pwp-mute:#8A93A6;
+      --pwp-line:#E7E6E1;
+      --pwp-line-soft:#F1F0EB;
+      --pwp-bg:#FAFAF7;
+      --pwp-surface:#FFFFFF;
+      --pwp-surface-2:#F6F5F0;
+      --pwp-accent:#FF5C2E;
+      --pwp-accent-soft:#FFEDE5;
+      --pwp-accent-deep:#E6451A;
+      --pwp-success:#10B981;
+      --pwp-warn:#F59E0B;
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; background: #0a0e27; font-family: 'Inter', sans-serif; color: #fff; }
-    .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+    html, body { margin: 0; background: var(--pwp-bg); font-family: 'Inter', system-ui, sans-serif; color: var(--pwp-ink); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-size: 15px; line-height: 1.55; letter-spacing: -0.005em; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Inter Tight', system-ui, sans-serif; letter-spacing: -0.02em; color: var(--pwp-ink); font-weight: 700; }
+    .serif { font-family: 'Inter Tight', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.015em; }
     .spin { animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    input, textarea { font-family: inherit; }
-    input:focus, textarea:focus { border-color: #fbbf24 !important; }
-    button:not(:disabled):hover { filter: brightness(1.1); }
+    input, textarea, select { font-family: inherit; color: var(--pwp-ink); background: var(--pwp-surface); border: 1px solid var(--pwp-line); border-radius: 10px; transition: border-color .15s, box-shadow .15s; }
+    input:focus, textarea:focus, select:focus { border-color: var(--pwp-accent) !important; outline: none; box-shadow: 0 0 0 3px var(--pwp-accent-soft); }
+    button { font-family: inherit; }
+    button:not(:disabled):hover { filter: brightness(1.04); }
     button:disabled { cursor: not-allowed; opacity: 0.5; }
+    a { color: var(--pwp-accent-deep); text-decoration: none; }
+    a:hover { color: var(--pwp-accent); }
+    code { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; background: var(--pwp-surface-2); padding: 2px 6px; border-radius: 6px; color: var(--pwp-ink); }
+    ::selection { background: var(--pwp-accent-soft); color: var(--pwp-ink); }
+    /* scrollbar polish */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-thumb { background: rgba(26,32,50,0.18); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(26,32,50,0.32); }
   </style>
 </head>
 <body>
@@ -1316,6 +1636,23 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     const { useState, useEffect, useCallback, useRef } = React;
     const SESSION_KEY = 'pwp_session';
     const ADMIN_KEY = 'pwp_admin';
+
+    // ─── Bootstrap session from URL (?session=TOKEN or ?admin=TOKEN) ───
+    // Lets us hand out a one-click test/preview URL without DevTools steps.
+    (function bootstrapTokensFromUrl() {
+      try {
+        const qs = new URLSearchParams(window.location.search);
+        const s = qs.get("session");
+        const a = qs.get("admin");
+        let touched = false;
+        if (s) { localStorage.setItem(SESSION_KEY, s); qs.delete("session"); touched = true; }
+        if (a) { localStorage.setItem(ADMIN_KEY, a);   qs.delete("admin");   touched = true; }
+        if (touched) {
+          const next = window.location.pathname + (qs.toString() ? "?" + qs.toString() : "") + window.location.hash;
+          window.history.replaceState({}, "", next);
+        }
+      } catch (e) { /* ignore */ }
+    })();
 
     // ─── ICON COMPONENTS (inline SVG to avoid lucide CDN) ──────────────
     const Icon = ({ d, size = 18, color = 'currentColor', strokeWidth = 2 }) => (
@@ -1426,7 +1763,13 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         Object.values(res.sections || {}).forEach(s => Object.assign(flat, s.data || {}));
         setData(flat);
         try { const f = await api('/api/client/files'); setFiles(f.files || []); } catch {}
-        setStage('portal');
+        // If the client already submitted, jump straight to the Project Portal —
+        // otherwise show the wizard so they can continue / complete intake.
+        if (res.client && (res.client.status === 'submitted' || res.client.status === 'active')) {
+          setStage('submitted');
+        } else {
+          setStage('portal');
+        }
       }
 
       async function handleSendLink() {
@@ -1448,10 +1791,10 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         catch (e) { setError(e.message); setStage('portal'); }
       }
 
-      if (stage === 'loading' || stage === 'verifying') return <Center><Loader size={32} color="#fbbf24" className="spin" /><p style={{color:'rgba(255,255,255,0.6)',marginTop:'1.5rem'}}>{t.verifying}</p></Center>;
+      if (stage === 'loading' || stage === 'verifying') return <Center><Loader size={32} color="#FF5C2E" className="spin" /><p style={{color:'rgba(26,32,50,0.6)',marginTop:'1.5rem'}}>{t.verifying}</p></Center>;
       if (stage === 'login' || stage === 'sending') return <LoginScreen t={t} lang={lang} setLang={setLang} email={email} setEmail={setEmail} onSubmit={handleSendLink} loading={stage==='sending'} error={error} />;
       if (stage === 'linksent') return <LinkSent t={t} email={email} onBack={() => setStage('login')} />;
-      if (stage === 'submitted') return <Submitted t={t} />;
+      if (stage === 'submitted') return <ProjectPortal t={t} lang={lang} setLang={setLang} client={client} email={client?.email} onLogout={handleLogout} />;
       return <Portal t={t} lang={lang} setLang={setLang} client={client} email={client?.email} data={data} setData={setData} files={files} setFiles={setFiles} section={section} setSection={setSection} onLogout={handleLogout} onSubmit={handleSubmit} submitting={stage==='submitting'} />;
     }
 
@@ -1536,9 +1879,9 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             <Orbs />
             <div style={{maxWidth:'440px',width:'100%',position:'relative',zIndex:1}}>
               <div style={{textAlign:'center',marginBottom:'3rem'}}>
-                <Shield size={32} color="#fbbf24" />
+                <Shield size={32} color="#FF5C2E" />
                 <h1 className="serif" style={{...titleStyle,fontSize:'2.5rem',marginTop:'1rem'}}>Admin</h1>
-                <p style={{color:'rgba(255,255,255,0.5)',fontSize:'0.9rem'}}>PymeWebPro Console</p>
+                <p style={{color:'rgba(26,32,50,0.5)',fontSize:'0.9rem'}}>PymeWebPro Console</p>
               </div>
               <div style={cardStyle}>
                 <input type="password" value={tokenInput} onChange={e=>setTokenInput(e.target.value)} placeholder="Admin token" onKeyDown={e=>e.key==='Enter'&&tryLogin()} style={inputStyle} />
@@ -1550,52 +1893,64 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         );
       }
 
-      if (detail) return <ClientDetail detail={detail} onBack={() => setRoute('/admin')} onRefresh={() => adminApi('/api/admin/clients/' + clientDetailMatch[1]).then(setDetail)} />;
-      if (leadDetail) return <LeadDetail lead={leadDetail} onBack={() => setRoute('/admin/leads')} onRefresh={() => adminApi('/api/admin/leads/' + leadDetailMatch[1]).then(r => setLeadDetail(r.lead))} setRoute={setRoute} />;
-
+      // Top nav button — used across all views (list AND detail) so admin always
+      // has one-click access to Clients / Leads / WhatsApp regardless of where they are.
       const tabBtn = (id, label, Icon, count) => (
         <button onClick={() => setRoute('/admin' + (id==='clients'?'':'/'+id))} style={{
-          background: tab===id ? 'rgba(251,191,36,0.12)' : 'transparent',
-          color: tab===id ? '#fbbf24' : 'rgba(255,255,255,0.55)',
-          border: '1px solid ' + (tab===id ? 'rgba(251,191,36,0.3)' : 'rgba(255,255,255,0.08)'),
-          padding: '0.55rem 1.1rem', borderRadius: '4px', cursor: 'pointer',
-          fontSize: '0.85rem', letterSpacing: '0.08em', textTransform: 'uppercase',
-          display: 'inline-flex', alignItems: 'center', gap: '0.5rem'
+          background: tab===id ? 'rgba(255,92,46,0.12)' : 'transparent',
+          color: tab===id ? '#FF5C2E' : 'rgba(26,32,50,0.55)',
+          border: '1px solid ' + (tab===id ? 'rgba(255,92,46,0.3)' : 'rgba(26,32,50,0.08)'),
+          padding: '0.4rem 0.85rem', borderRadius: '4px', cursor: 'pointer',
+          fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase',
+          display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+          fontFamily: 'inherit'
         }}>
-          <Icon size={14} /> {label}{typeof count === 'number' ? ' (' + count + ')' : ''}
+          <Icon size={13} /> {label}{typeof count === 'number' ? ' (' + count + ')' : ''}
         </button>
       );
 
-      return (
-        <div style={{minHeight:'100vh',background:'#0a0e27'}}>
-          <header style={headerStyle}>
-            <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
-              <Shield size={18} color="#fbbf24" />
-              <span className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>Pyme<span style={{color:'#fbbf24'}}>WebPro</span> · Admin</span>
+      // Persistent admin chrome — always-on header + nav, content slot below.
+      const Shell = ({ children }) => (
+        <div style={{minHeight:'100vh',background:'#FAFAF7'}}>
+          <header style={{...headerStyle, position:'sticky', top:0, zIndex:50, backdropFilter:'blur(8px)', background:'rgba(10,14,39,0.92)'}}>
+            <div style={{display:'flex',alignItems:'center',gap:'1.25rem',flex:1,minWidth:0}}>
+              <button onClick={()=>setRoute('/admin')} title="Home" style={{display:'flex',alignItems:'center',gap:'0.6rem',background:'transparent',border:'none',cursor:'pointer',padding:0,fontFamily:'inherit'}}>
+                <Shield size={18} color="#FF5C2E" />
+                <span className="serif" style={{fontSize:'1.15rem',color:'#1A2032',whiteSpace:'nowrap'}}>Pyme<span style={{color:'#FF5C2E'}}>WebPro</span> · Admin</span>
+              </button>
+              <div style={{display:'flex',gap:'.4rem',flexWrap:'wrap'}}>
+                {tabBtn('clients', 'Clients', Users, clients.length || undefined)}
+                {tabBtn('leads', 'Leads', Tag, (leadCounts.new || 0) + (leadCounts.contacted || 0) || undefined)}
+                {tabBtn('clicks', 'WhatsApp', MsgIcon)}
+              </div>
             </div>
-            <div style={{display:'flex',gap:'0.75rem'}}>
-              {tab === 'clients' && (
+            <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
+              {tab === 'clients' && !detail && !leadDetail && (
                 <>
-                  <button onClick={async()=>{await adminApi('/api/admin/check-all-sites',{method:'POST'});loadClients();}} style={ghostBtn} title="Verificar el estado de todos los sitios"><Sparkle size={14} /> Verificar sitios</button>
-                  <button onClick={() => setShowInvite(true)} style={primaryBtn}><Plus size={14} /> Invite Client</button>
+                  <button onClick={async()=>{await adminApi('/api/admin/check-all-sites',{method:'POST'});loadClients();}} style={{...ghostBtn,padding:'0.4rem 0.75rem',fontSize:'0.78rem'}} title="Check the health of all sites"><Sparkle size={13} /> Check sites</button>
+                  <button onClick={() => setShowInvite(true)} style={{...primaryBtn,padding:'0.4rem 0.85rem',fontSize:'0.78rem'}}><Plus size={13} /> Invite Client</button>
                 </>
               )}
-              <button onClick={() => { localStorage.removeItem(ADMIN_KEY); setAuthed(false); }} style={ghostBtn}>Sign Out</button>
+              <button onClick={() => { localStorage.removeItem(ADMIN_KEY); setAuthed(false); }} style={{...ghostBtn,padding:'0.4rem 0.75rem',fontSize:'0.78rem'}}>Sign Out</button>
             </div>
           </header>
-          <main style={{padding:'3rem 2rem',maxWidth:'1200px',margin:'0 auto'}}>
-            <div style={{display:'flex',gap:'0.5rem',marginBottom:'2rem',flexWrap:'wrap'}}>
-              {tabBtn('clients', 'Clients', Users, clients.length || undefined)}
-              {tabBtn('leads', 'Leads', Tag, (leadCounts.new || 0) + (leadCounts.contacted || 0) || undefined)}
-              {tabBtn('clicks', 'WhatsApp', MsgIcon)}
-            </div>
+          {children}
+        </div>
+      );
+
+      if (detail) return <Shell><ClientDetail detail={detail} onBack={() => setRoute('/admin')} onRefresh={() => adminApi('/api/admin/clients/' + clientDetailMatch[1]).then(setDetail)} /></Shell>;
+      if (leadDetail) return <Shell><LeadDetail lead={leadDetail} onBack={() => setRoute('/admin/leads')} onRefresh={() => adminApi('/api/admin/leads/' + leadDetailMatch[1]).then(r => setLeadDetail(r.lead))} setRoute={setRoute} /></Shell>;
+
+      return (
+        <Shell>
+          <main style={{padding:'2.5rem 2rem',maxWidth:'1200px',margin:'0 auto'}}>
 
             {tab === 'clients' && (
               <>
-                <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:'0 0 2rem'}}>Clients</h1>
-                {loading ? <Loader size={24} className="spin" color="#fbbf24" /> : (
+                <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:'0 0 2rem'}}>Clients</h1>
+                {loading ? <Loader size={24} className="spin" color="#FF5C2E" /> : (
                   clients.length === 0 ? (
-                    <div style={{textAlign:'center',padding:'4rem',color:'rgba(255,255,255,0.4)'}}>
+                    <div style={{textAlign:'center',padding:'4rem',color:'rgba(26,32,50,0.4)'}}>
                       No clients yet. Invite your first one →
                     </div>
                   ) : (
@@ -1610,21 +1965,21 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             {tab === 'leads' && (
               <>
                 <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',margin:'0 0 1.5rem'}}>
-                  <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:0}}>Leads</h1>
+                  <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:0}}>Leads</h1>
                   <div style={{display:'flex',gap:'0.4rem'}}>
                     {['', 'new', 'contacted', 'converted', 'dismissed'].map(s => (
                       <button key={s||'all'} onClick={() => setStatusFilter(s)} style={{
-                        background: statusFilter===s ? 'rgba(251,191,36,0.12)' : 'transparent',
-                        color: statusFilter===s ? '#fbbf24' : 'rgba(255,255,255,0.5)',
-                        border: '1px solid ' + (statusFilter===s ? 'rgba(251,191,36,0.3)' : 'rgba(255,255,255,0.08)'),
+                        background: statusFilter===s ? 'rgba(255,92,46,0.12)' : 'transparent',
+                        color: statusFilter===s ? '#FF5C2E' : 'rgba(26,32,50,0.5)',
+                        border: '1px solid ' + (statusFilter===s ? 'rgba(255,92,46,0.3)' : 'rgba(26,32,50,0.08)'),
                         padding: '0.35rem 0.75rem', borderRadius: '3px', cursor:'pointer', fontSize:'0.75rem', textTransform:'capitalize'
                       }}>{s || 'all'}{leadCounts[s] ? ' (' + leadCounts[s] + ')' : ''}</button>
                     ))}
                   </div>
                 </div>
-                {loading ? <Loader size={24} className="spin" color="#fbbf24" /> : (
+                {loading ? <Loader size={24} className="spin" color="#FF5C2E" /> : (
                   leads.length === 0 ? (
-                    <div style={{textAlign:'center',padding:'4rem',color:'rgba(255,255,255,0.4)'}}>
+                    <div style={{textAlign:'center',padding:'4rem',color:'rgba(26,32,50,0.4)'}}>
                       No leads yet. They'll appear here as the contact form fires.'
                     </div>
                   ) : (
@@ -1638,17 +1993,17 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
             {tab === 'clicks' && (
               <>
-                <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:'0 0 0.5rem'}}>WhatsApp Clicks</h1>
-                <p style={{color:'rgba(255,255,255,0.5)',marginBottom:'2rem',fontSize:'0.9rem'}}>Anonymous click attribution — your <code style={{color:'#fbbf24'}}>/go/whatsapp?campaign=…</code> redirect.</p>
-                {loading ? <Loader size={24} className="spin" color="#fbbf24" /> : clicks.length === 0 ? (
-                  <div style={{textAlign:'center',padding:'4rem',color:'rgba(255,255,255,0.4)'}}>No clicks logged yet.</div>
+                <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:'0 0 0.5rem'}}>WhatsApp Clicks</h1>
+                <p style={{color:'rgba(26,32,50,0.5)',marginBottom:'2rem',fontSize:'0.9rem'}}>Anonymous click attribution — your <code style={{color:'#FF5C2E'}}>/go/whatsapp?campaign=…</code> redirect.</p>
+                {loading ? <Loader size={24} className="spin" color="#FF5C2E" /> : clicks.length === 0 ? (
+                  <div style={{textAlign:'center',padding:'4rem',color:'rgba(26,32,50,0.4)'}}>No clicks logged yet.</div>
                 ) : (
                   <div style={{display:'flex',flexDirection:'column',gap:'0.4rem'}}>
                     {clicks.map(c => (
-                      <div key={c.id} style={{display:'grid',gridTemplateColumns:'160px 140px 1fr',gap:'1rem',padding:'0.85rem 1rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'2px',fontSize:'0.85rem'}}>
-                        <span style={{color:'rgba(255,255,255,0.5)'}}>{new Date(c.created_at).toLocaleString()}</span>
-                        <span style={{color:'#fbbf24'}}>{c.campaign || '(none)'}</span>
-                        <span style={{color:'rgba(255,255,255,0.4)',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{c.referrer || '—'}</span>
+                      <div key={c.id} style={{display:'grid',gridTemplateColumns:'160px 140px 1fr',gap:'1rem',padding:'0.85rem 1rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'2px',fontSize:'0.85rem'}}>
+                        <span style={{color:'rgba(26,32,50,0.5)'}}>{new Date(c.created_at).toLocaleString('en-US')}</span>
+                        <span style={{color:'#FF5C2E'}}>{c.campaign || '(none)'}</span>
+                        <span style={{color:'rgba(26,32,50,0.4)',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{c.referrer || '—'}</span>
                       </div>
                     ))}
                   </div>
@@ -1657,31 +2012,31 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             )}
           </main>
           {showInvite && <InviteModal onClose={() => setShowInvite(false)} onCreated={() => { setShowInvite(false); loadClients(); }} />}
-        </div>
+        </Shell>
       );
     }
 
     function LeadRow({ l, onClick }) {
-      const statusColor = { new: '#fbbf24', contacted: '#60a5fa', converted: '#10b981', dismissed: '#94a3b8' }[l.status] || '#94a3b8';
+      const statusColor = { new: '#FF5C2E', contacted: '#60a5fa', converted: '#10b981', dismissed: '#94a3b8' }[l.status] || '#94a3b8';
       const sourceLabel = { contact_form: 'Form', whatsapp_click: 'WA click', whatsapp_message: 'WhatsApp', manual: 'Manual' }[l.source] || l.source;
-      const planLabel = l.plan === 'esencial' ? 'Esencial' : l.plan === 'pro' ? 'Pro' : '—';
-      const hostingLabel = l.hosting === 'annual' ? '+ host anual' : l.hosting === 'monthly' ? '+ host mensual' : '';
+      const planLabel = l.plan === 'esencial' ? 'Essential' : l.plan === 'pro' ? 'Pro' : '—';
+      const hostingLabel = l.hosting === 'annual' ? '+ annual host' : l.hosting === 'monthly' ? '+ monthly host' : '';
       return (
-        <div onClick={onClick} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto auto',gap:'1.25rem',alignItems:'center',padding:'1.25rem 1.5rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',cursor:'pointer'}}>
+        <div onClick={onClick} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto auto',gap:'1.25rem',alignItems:'center',padding:'1.25rem 1.5rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px',cursor:'pointer'}}>
           <div>
-            <div className="serif" style={{fontSize:'1.1rem',fontStyle:'italic',marginBottom:'0.2rem'}}>{l.business_name || l.name || '(no name)'}</div>
-            <div style={{color:'rgba(255,255,255,0.5)',fontSize:'0.85rem'}}>{l.email}{l.phone ? ' · ' + l.phone : ''}</div>
+            <div className="serif" style={{fontSize:'1.1rem',marginBottom:'0.2rem'}}>{l.business_name || l.name || '(no name)'}</div>
+            <div style={{color:'rgba(26,32,50,0.5)',fontSize:'0.85rem'}}>{l.email}{l.phone ? ' · ' + l.phone : ''}</div>
           </div>
           <div style={{textAlign:'right',minWidth:'80px'}}>
-            <div style={{fontSize:'0.85rem',color:l.plan?'#fbbf24':'rgba(255,255,255,0.3)'}}>{planLabel}</div>
-            {hostingLabel ? <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)'}}>{hostingLabel}</div> : null}
+            <div style={{fontSize:'0.85rem',color:l.plan?'#FF5C2E':'rgba(26,32,50,0.3)'}}>{planLabel}</div>
+            {hostingLabel ? <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.4)'}}>{hostingLabel}</div> : null}
           </div>
-          <span style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.5)',textTransform:'uppercase',letterSpacing:'0.1em'}}>{sourceLabel}</span>
+          <span style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.5)',textTransform:'uppercase',letterSpacing:'0.1em'}}>{sourceLabel}</span>
           <div style={{display:'flex',alignItems:'center',gap:'0.5rem'}}>
             <div style={{width:'8px',height:'8px',borderRadius:'50%',background:statusColor}} />
-            <span style={{fontSize:'0.8rem',color:'rgba(255,255,255,0.6)',textTransform:'capitalize'}}>{l.status}</span>
+            <span style={{fontSize:'0.8rem',color:'rgba(26,32,50,0.6)',textTransform:'capitalize'}}>{l.status}</span>
           </div>
-          <span style={{fontSize:'0.75rem',color:'rgba(255,255,255,0.4)'}}>{new Date(l.created_at).toLocaleDateString()}</span>
+          <span style={{fontSize:'0.75rem',color:'rgba(26,32,50,0.4)'}}>{new Date(l.created_at).toLocaleDateString('en-US')}</span>
         </div>
       );
     }
@@ -1717,23 +2072,23 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       }
 
       return (
-        <div style={{minHeight:'100vh',background:'#0a0e27'}}>
+        <div style={{minHeight:'100vh',background:'#FAFAF7'}}>
           <header style={headerStyle}>
             <button onClick={onBack} style={ghostBtn}><ChevL size={14} /> All Leads</button>
-            <div className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>{lead.business_name || lead.name || lead.email}</div>
+            <div className="serif" style={{fontSize:'1.25rem'}}>{lead.business_name || lead.name || lead.email}</div>
             <div style={{width:'120px'}}/>
           </header>
           <main style={{padding:'3rem 2rem',maxWidth:'900px',margin:'0 auto'}}>
             <div style={{display:'flex',alignItems:'baseline',gap:'1rem',marginBottom:'2rem'}}>
-              <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:0}}>{lead.business_name || lead.name || '(no name)'}</h1>
+              <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:0}}>{lead.business_name || lead.name || '(no name)'}</h1>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem',marginBottom:'2rem'}}>
               <Stat label="Source" value={(lead.source || '').replace('_',' ')} />
-              <Stat label="Language" value={lead.language === 'es' ? 'Español' : 'English'} />
-              <Stat label="Created" value={new Date(lead.created_at).toLocaleDateString()} />
+              <Stat label="Language" value={lead.language === 'es' ? 'Spanish' : 'English'} />
+              <Stat label="Created" value={new Date(lead.created_at).toLocaleDateString('en-US')} />
             </div>
 
-            <div style={{padding:'1.5rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',marginBottom:'2rem'}}>
+            <div style={{padding:'1.5rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px',marginBottom:'2rem'}}>
               {lead.email && <LeadField k="Email" v={lead.email} />}
               {lead.phone && <LeadField k="Phone" v={lead.phone} />}
               {lead.business_name && <LeadField k="Business" v={lead.business_name} />}
@@ -1744,25 +2099,25 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               {lead.metadata && lead.metadata.extra && Object.entries(lead.metadata.extra).filter(([_,v])=>v).map(([k,v]) => <LeadField key={k} k={k} v={v} />)}
             </div>
 
-            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',marginBottom:'1rem'}}>Status</h2>
+            <h2 className="serif" style={{fontSize:'1.5rem',marginBottom:'1rem'}}>Status</h2>
             <div style={{display:'flex',gap:'0.5rem',marginBottom:'1.5rem',flexWrap:'wrap'}}>
               {['new','contacted','converted','dismissed'].map(s => (
                 <button key={s} onClick={() => setStatus(s)} disabled={s==='converted' && lead.status !== 'converted'} style={{
-                  background: status===s ? 'rgba(251,191,36,0.12)' : 'transparent',
-                  color: status===s ? '#fbbf24' : 'rgba(255,255,255,0.6)',
-                  border: '1px solid ' + (status===s ? 'rgba(251,191,36,0.3)' : 'rgba(255,255,255,0.08)'),
+                  background: status===s ? 'rgba(255,92,46,0.12)' : 'transparent',
+                  color: status===s ? '#FF5C2E' : 'rgba(26,32,50,0.6)',
+                  border: '1px solid ' + (status===s ? 'rgba(255,92,46,0.3)' : 'rgba(26,32,50,0.08)'),
                   padding: '0.5rem 1rem', borderRadius: '3px', cursor: s==='converted' && lead.status !== 'converted' ? 'not-allowed':'pointer', textTransform:'capitalize', opacity: s==='converted' && lead.status !== 'converted' ? 0.4 : 1
                 }}>{s}</button>
               ))}
             </div>
 
-            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',marginBottom:'1rem'}}>Notes</h2>
+            <h2 className="serif" style={{fontSize:'1.5rem',marginBottom:'1rem'}}>Notes</h2>
             <textarea value={notes} onChange={e=>setNotes(e.target.value)} rows={5} placeholder="Internal notes — only visible to admins" style={{...inputStyle, fontFamily:'inherit', resize:'vertical'}} />
 
             <div style={{display:'flex',gap:'0.75rem',marginTop:'2rem',flexWrap:'wrap'}}>
               <button onClick={save} disabled={saving} style={primaryBtn}>{saving ? 'Saving…' : 'Save'}</button>
               {lead.status !== 'converted' && (
-                <button onClick={convert} disabled={converting} style={{...primaryBtn,background:'#10b981',color:'#fff'}}>
+                <button onClick={convert} disabled={converting} style={{...primaryBtn,background:'#10B981',color:'#FFFFFF'}}>
                   {converting ? 'Converting…' : <><ArrowRight size={14}/> Convert to Client</>}
                 </button>
               )}
@@ -1781,8 +2136,8 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     function LeadField({ k, v }) {
       return (
         <div style={{marginBottom:'0.75rem'}}>
-          <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)',marginBottom:'0.25rem',textTransform:'uppercase',letterSpacing:'0.1em'}}>{k}</div>
-          <div style={{color:'rgba(255,255,255,0.9)',whiteSpace:'pre-wrap'}}>{v}</div>
+          <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.4)',marginBottom:'0.25rem',textTransform:'uppercase',letterSpacing:'0.1em'}}>{k}</div>
+          <div style={{color:'rgba(26,32,50,0.9)',whiteSpace:'pre-wrap'}}>{v}</div>
         </div>
       );
     }
@@ -1792,17 +2147,24 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const isPro = c.plan === 'pro' || c.plan === 'crecimiento' || c.plan === 'growth';
       const totalSections = isPro ? 7 : 6;
       const pct = Math.round((sections / totalSections) * 100);
-      const statusColor = { invited: '#94a3b8', in_progress: '#fbbf24', submitted: '#10b981', active: '#10b981' }[c.status] || '#94a3b8';
+      const statusColor = { invited: '#94a3b8', in_progress: '#FF5C2E', submitted: '#10b981', active: '#10b981' }[c.status] || '#94a3b8';
 
       // Site health pill
       const sh = c.site_health;
       const healthOk = sh && sh.ok && sh.total_ms != null && sh.total_ms < 2500;
       const healthSlow = sh && sh.ok && sh.total_ms != null && sh.total_ms >= 2500;
       const healthBad = sh && !sh.ok;
-      const healthColor = healthOk ? '#10b981' : healthSlow ? '#fbbf24' : healthBad ? '#fca5a5' : 'rgba(255,255,255,0.18)';
+      const healthColor = healthOk ? '#10b981' : healthSlow ? '#FF5C2E' : healthBad ? '#fca5a5' : 'rgba(26,32,50,0.18)';
       const healthLabel = sh ? (sh.ok ? (sh.total_ms < 1000 ? '<1s' : (sh.total_ms/1000).toFixed(1) + 's') : (sh.status_code || 'down')) : '—';
 
       async function resend(e) { e.stopPropagation(); await adminApi('/api/admin/clients/' + c.id + '/resend', { method: 'POST' }); alert('Magic link resent to ' + c.email); }
+      async function openAsClient(e) {
+        e.stopPropagation();
+        try {
+          const r = await adminApi('/api/admin/clients/' + c.id + '/preview-session', { method: 'POST' });
+          if (r && r.url) window.open(r.url, '_blank', 'noopener');
+        } catch (err) { alert("Couldn't open client portal: " + err.message); }
+      }
       async function del(e) {
         e.stopPropagation();
         if (!confirm('Delete ' + (c.business_name || c.email) + '? This removes all data and uploaded files.')) return;
@@ -1810,30 +2172,31 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         onRefresh();
       }
       return (
-        <div onClick={onClick} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto auto',gap:'1.25rem',alignItems:'center',padding:'1.25rem 1.5rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',cursor:'pointer',transition:'all 0.2s'}}>
+        <div onClick={onClick} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto auto',gap:'1.25rem',alignItems:'center',padding:'1.25rem 1.5rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px',cursor:'pointer',transition:'all 0.2s'}}>
           <div>
-            <div className="serif" style={{fontSize:'1.15rem',fontStyle:'italic',marginBottom:'0.25rem'}}>{c.business_name || '(unnamed)'}</div>
-            <div style={{color:'rgba(255,255,255,0.5)',fontSize:'0.85rem'}}>
-              {c.site_url ? <span style={{color:'rgba(255,255,255,0.6)'}}>{c.site_url.replace(/^https?:\\/\\//,'')}</span> : c.email}
+            <div className="serif" style={{fontSize:'1.15rem',marginBottom:'0.25rem'}}>{c.business_name || '(unnamed)'}</div>
+            <div style={{color:'rgba(26,32,50,0.5)',fontSize:'0.85rem'}}>
+              {c.site_url ? <span style={{color:'rgba(26,32,50,0.6)'}}>{c.site_url.replace(/^https?:\\/\\//,'')}</span> : c.email}
             </div>
           </div>
           {c.site_url && (
-            <div style={{display:'flex',alignItems:'center',gap:'0.4rem',padding:'3px 9px',borderRadius:'12px',background:'rgba(255,255,255,0.04)',border:'1px solid '+healthColor+'55'}} title={sh ? 'Last check: '+new Date(sh.checked_at).toLocaleString() : 'Not yet checked'}>
+            <div style={{display:'flex',alignItems:'center',gap:'0.4rem',padding:'3px 9px',borderRadius:'12px',background:'rgba(26,32,50,0.04)',border:'1px solid '+healthColor+'55'}} title={sh ? 'Last check: '+new Date(sh.checked_at).toLocaleString('en-US') : 'Not yet checked'}>
               <div style={{width:'6px',height:'6px',borderRadius:'50%',background:healthColor}} />
-              <span style={{fontSize:'0.72rem',color:'rgba(255,255,255,0.7)',fontFamily:'ui-monospace,monospace'}}>{healthLabel}</span>
+              <span style={{fontSize:'0.72rem',color:'rgba(26,32,50,0.7)',fontFamily:'ui-monospace,monospace'}}>{healthLabel}</span>
             </div>
           )}
           <div style={{display:'flex',alignItems:'center',gap:'0.5rem'}}>
             <div style={{width:'8px',height:'8px',borderRadius:'50%',background:statusColor}} />
-            <span style={{fontSize:'0.8rem',color:'rgba(255,255,255,0.6)',textTransform:'capitalize'}}>{c.status.replace('_',' ')}</span>
+            <span style={{fontSize:'0.8rem',color:'rgba(26,32,50,0.6)',textTransform:'capitalize'}}>{c.status.replace('_',' ')}</span>
           </div>
           <div style={{minWidth:'120px'}}>
-            <div style={{height:'4px',background:'rgba(255,255,255,0.08)',borderRadius:'2px',overflow:'hidden'}}>
-              <div style={{height:'100%',width:pct+'%',background:'#fbbf24'}} />
+            <div style={{height:'4px',background:'rgba(26,32,50,0.08)',borderRadius:'2px',overflow:'hidden'}}>
+              <div style={{height:'100%',width:pct+'%',background:'#FF5C2E'}} />
             </div>
-            <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)',marginTop:'0.25rem',textAlign:'right'}}>{sections}/{totalSections} secciones · {c.file_count || 0} archivos</div>
+            <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.4)',marginTop:'0.25rem',textAlign:'right'}}>{sections}/{totalSections} sections · {c.file_count || 0} files</div>
           </div>
           <div style={{display:'flex',gap:'0.5rem'}}>
+            <button onClick={openAsClient} title="Open client portal as this client (new tab)" style={{...iconBtn,color:'#FF5C2E',borderColor:'rgba(255,92,46,0.3)'}}>👁</button>
             <button onClick={resend} title="Resend invite" style={iconBtn}><Mail size={14} /></button>
             <button onClick={del} title="Delete" style={{...iconBtn,color:'#fca5a5'}}><Trash size={14} /></button>
           </div>
@@ -1844,29 +2207,31 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     function ClientDetail({ detail, onBack, onRefresh }) {
       const { client, sections, files, deliverables } = detail;
       return (
-        <div style={{minHeight:'100vh',background:'#0a0e27'}}>
+        <div style={{minHeight:'100vh',background:'#FAFAF7'}}>
           <header style={headerStyle}>
             <button onClick={onBack} style={ghostBtn}><ChevL size={14} /> All Clients</button>
-            <div className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>{client.business_name || client.email}</div>
+            <div className="serif" style={{fontSize:'1.25rem'}}>{client.business_name || client.email}</div>
             <div style={{width:'120px'}}/>
           </header>
           <main style={{padding:'3rem 2rem',maxWidth:'1000px',margin:'0 auto'}}>
             <div style={{display:'flex',alignItems:'baseline',gap:'1rem',marginBottom:'2rem'}}>
-              <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:0}}>{client.business_name || '(unnamed)'}</h1>
-              <span style={{color:'rgba(255,255,255,0.5)',fontSize:'0.9rem'}}>{client.email}</span>
+              <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:0}}>{client.business_name || '(unnamed)'}</h1>
+              <span style={{color:'rgba(26,32,50,0.5)',fontSize:'0.9rem'}}>{client.email}</span>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1rem',marginBottom:'3rem'}}>
-              <Stat label="Plan" value={deliverables?.plan === 'pro' ? 'Crecimiento' : deliverables?.plan === 'esencial' ? 'Esencial' : '—'} />
+              <Stat label="Plan" value={deliverables?.plan === 'pro' ? 'Growth' : deliverables?.plan === 'esencial' ? 'Essential' : '—'} />
               <Stat label="Status" value={client.status.replace('_',' ')} />
-              <Stat label="Language" value={client.language === 'es' ? 'Español' : 'English'} />
-              <Stat label="Submitted" value={client.submitted_at ? new Date(client.submitted_at).toLocaleDateString() : '—'} />
+              <Stat label="Language" value={client.language === 'es' ? 'Spanish' : 'English'} />
+              <Stat label="Submitted" value={client.submitted_at ? new Date(client.submitted_at).toLocaleDateString('en-US') : '—'} />
             </div>
 
             <SiteHealthPanel client={client} onChange={onRefresh} />
 
             <DomainPanel client={client} onChange={onRefresh} />
+            <EmailForwardingPanel client={client} sections={sections} />
+            <CustomCssPanel client={client} onRefresh={onRefresh} />
 
-            <MockupsPanel client={client} />
+            <MockupsPanel client={client} onRefresh={onRefresh} />
 
             {deliverables && (
               <DeliverablesPanel
@@ -1875,31 +2240,38 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 onChange={onRefresh}
               />
             )}
-            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',marginBottom:'1rem'}}>Intake Data</h2>
+            <h2 className="serif" style={{fontSize:'1.5rem',marginBottom:'1rem'}}>Intake Data</h2>
             {Object.keys(sections).length === 0 ? (
-              <div style={{padding:'2rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',color:'rgba(255,255,255,0.5)',textAlign:'center'}}>No sections filled yet.</div>
-            ) : Object.entries(sections).map(([key, s]) => (
-              <div key={key} style={{marginBottom:'1.5rem',padding:'1.5rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px'}}>
-                <div style={{fontSize:'0.7rem',letterSpacing:'0.2em',color:'#fbbf24',textTransform:'uppercase',marginBottom:'1rem'}}>{key}</div>
-                {Object.entries(s.data || {}).map(([k,v]) => v ? (
-                  <div key={k} style={{marginBottom:'0.75rem'}}>
-                    <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)',marginBottom:'0.25rem',textTransform:'uppercase',letterSpacing:'0.1em'}}>{k}</div>
-                    <div style={{color:'rgba(255,255,255,0.9)',whiteSpace:'pre-wrap'}}>{v}</div>
-                  </div>
-                ) : null)}
+              <div style={{padding:'2rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',color:'rgba(26,32,50,0.5)',textAlign:'center'}}>No sections filled yet.</div>
+            ) : Object.entries(sections).filter(([key]) => !key.startsWith('_')).map(([key, s]) => (
+              <div key={key} style={{marginBottom:'1.5rem',padding:'1.5rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
+                <div style={{fontSize:'0.7rem',letterSpacing:'0.2em',color:'#FF5C2E',textTransform:'uppercase',marginBottom:'1rem'}}>{key}</div>
+                {Object.entries(s.data || {}).map(([k,v]) => {
+                  if (!v) return null;
+                  // Defensive: stringify any non-primitive values so an object never reaches React as a child
+                  const display = (typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean')
+                    ? String(v)
+                    : JSON.stringify(v);
+                  return (
+                    <div key={k} style={{marginBottom:'0.75rem'}}>
+                      <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.4)',marginBottom:'0.25rem',textTransform:'uppercase',letterSpacing:'0.1em'}}>{k}</div>
+                      <div style={{color:'rgba(26,32,50,0.9)',whiteSpace:'pre-wrap'}}>{display}</div>
+                    </div>
+                  );
+                })}
               </div>
             ))}
-            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',marginTop:'3rem',marginBottom:'1rem'}}>Files ({files.length})</h2>
+            <h2 className="serif" style={{fontSize:'1.5rem',marginTop:'3rem',marginBottom:'1rem'}}>Files ({files.length})</h2>
             {files.length === 0 ? (
-              <div style={{padding:'2rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',color:'rgba(255,255,255,0.5)',textAlign:'center'}}>No files uploaded.</div>
+              <div style={{padding:'2rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',color:'rgba(26,32,50,0.5)',textAlign:'center'}}>No files uploaded.</div>
             ) : (
               <div style={{display:'flex',flexDirection:'column',gap:'0.5rem'}}>
                 {files.map(f => (
-                  <div key={f.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.85rem 1rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'2px'}}>
+                  <div key={f.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.85rem 1rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'2px'}}>
                     <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
-                      <span style={{fontSize:'0.7rem',color:'#fbbf24',textTransform:'uppercase',letterSpacing:'0.1em',padding:'0.2rem 0.5rem',background:'rgba(251,191,36,0.1)',borderRadius:'2px'}}>{f.category}</span>
-                      <span style={{color:'rgba(255,255,255,0.85)'}}>{f.filename}</span>
-                      <span style={{fontSize:'0.75rem',color:'rgba(255,255,255,0.4)'}}>{formatSize(f.size_bytes)}</span>
+                      <span style={{fontSize:'0.7rem',color:'#FF5C2E',textTransform:'uppercase',letterSpacing:'0.1em',padding:'0.2rem 0.5rem',background:'rgba(255,92,46,0.1)',borderRadius:'2px'}}>{f.category}</span>
+                      <span style={{color:'rgba(26,32,50,0.85)'}}>{f.filename}</span>
+                      <span style={{fontSize:'0.75rem',color:'rgba(26,32,50,0.4)'}}>{formatSize(f.size_bytes)}</span>
                     </div>
                     <a href={'/api/files/' + f.id + '?admin_token=' + encodeURIComponent(localStorage.getItem(ADMIN_KEY) || '')} target="_blank" rel="noopener" style={{...iconBtn,textDecoration:'none',display:'inline-flex',alignItems:'center'}}><Download size={14} /></a>
                   </div>
@@ -1911,6 +2283,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       );
     }
 
+    // ─── AI Assistant Chat Panel (per-client, admin-only) ──────────────────
     function SiteHealthPanel({ client, onChange }) {
       const [siteUrl, setSiteUrl] = useState(client.site_url || '');
       const [editing, setEditing] = useState(!client.site_url);
@@ -1926,7 +2299,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           });
           setEditing(false);
           await onChange();
-        } catch (e) { alert('No se pudo guardar: ' + e.message); }
+        } catch (e) { alert("Couldn't save: " + e.message); }
         finally { setSavingUrl(false); }
       }
       async function check() {
@@ -1942,47 +2315,47 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const total = health?.total_ms;
       const sizeKB = health?.content_length ? (health.content_length / 1024).toFixed(0) : null;
       const ok = health?.ok;
-      const dotColor = !health ? 'rgba(255,255,255,0.2)' : ok ? (total < 1500 ? '#10b981' : total < 3000 ? '#fbbf24' : '#fca5a5') : '#fca5a5';
-      const banner = !health ? 'No verificado todavía' :
-                     ok ? ('Sitio funcionando · ' + total + 'ms total') :
-                     ('Sitio caído / error: ' + (health.status_code || health.error || 'sin respuesta'));
+      const dotColor = !health ? 'rgba(26,32,50,0.2)' : ok ? (total < 1500 ? '#10b981' : total < 3000 ? '#FF5C2E' : '#fca5a5') : '#fca5a5';
+      const banner = !health ? 'Not checked yet' :
+                     ok ? ('Site up · ' + total + 'ms total') :
+                     ('Site down / error: ' + (health.status_code || health.error || 'no response'));
 
       return (
         <div style={{marginBottom:'2.5rem'}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem'}}>
-            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',margin:0}}>Salud del sitio</h2>
+            <h2 className="serif" style={{fontSize:'1.5rem',margin:0}}>Site health</h2>
             {client.site_url && !editing && (
               <button onClick={check} disabled={checking} style={{...primaryBtn,padding:'8px 16px',fontSize:'0.85rem'}}>
-                {checking ? 'Verificando…' : 'Verificar ahora'}
+                {checking ? 'Checking…' : 'Verify now'}
               </button>
             )}
           </div>
 
           {editing ? (
-            <div style={{padding:'1.5rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px'}}>
-              <div style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.6)',marginBottom:'0.5rem'}}>URL del sitio en vivo</div>
+            <div style={{padding:'1.5rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
+              <div style={{fontSize:'0.85rem',color:'rgba(26,32,50,0.6)',marginBottom:'0.5rem'}}>Live site URL</div>
               <div style={{display:'flex',gap:'0.5rem'}}>
-                <input value={siteUrl} onChange={e=>setSiteUrl(e.target.value)} placeholder="https://sunegocio.com" style={{...inputStyle, flex:1}} />
-                <button onClick={saveUrl} disabled={savingUrl} style={primaryBtn}>{savingUrl ? 'Guardando…' : 'Guardar'}</button>
-                {client.site_url && <button onClick={()=>{setSiteUrl(client.site_url);setEditing(false);}} style={ghostBtn}>Cancelar</button>}
+                <input value={siteUrl} onChange={e=>setSiteUrl(e.target.value)} placeholder="https://yourbusiness.com" style={{...inputStyle, flex:1}} />
+                <button onClick={saveUrl} disabled={savingUrl} style={primaryBtn}>{savingUrl ? 'Saving…' : 'Save'}</button>
+                {client.site_url && <button onClick={()=>{setSiteUrl(client.site_url);setEditing(false);}} style={ghostBtn}>Cancel</button>}
               </div>
             </div>
           ) : (
             <>
-              <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'1rem 1.25rem',background:'rgba(255,255,255,0.03)',border:'1px solid '+dotColor+'55',borderRadius:'6px',marginBottom:'1rem'}}>
+              <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'1rem 1.25rem',background:'rgba(26,32,50,0.03)',border:'1px solid '+dotColor+'55',borderRadius:'6px',marginBottom:'1rem'}}>
                 <div style={{width:'12px',height:'12px',borderRadius:'50%',background:dotColor,flexShrink:0,boxShadow:'0 0 0 4px '+dotColor+'22'}} />
                 <div style={{flex:1}}>
-                  <a href={client.site_url} target="_blank" rel="noopener" style={{color:'#fbbf24',textDecoration:'none',fontWeight:600}}>{client.site_url} →</a>
-                  <div style={{fontSize:'0.8rem',color:'rgba(255,255,255,0.55)',marginTop:'0.15rem'}}>{banner}{health?.checked_at && ' · ' + new Date(health.checked_at).toLocaleString()}</div>
+                  <a href={client.site_url} target="_blank" rel="noopener" style={{color:'#FF5C2E',textDecoration:'none',fontWeight:600}}>{client.site_url} →</a>
+                  <div style={{fontSize:'0.8rem',color:'rgba(26,32,50,0.55)',marginTop:'0.15rem'}}>{banner}{health?.checked_at && ' · ' + new Date(health.checked_at).toLocaleString('en-US')}</div>
                 </div>
-                <button onClick={()=>setEditing(true)} style={{...ghostBtn,padding:'6px 12px',fontSize:'0.78rem'}}>Editar URL</button>
+                <button onClick={()=>setEditing(true)} style={{...ghostBtn,padding:'6px 12px',fontSize:'0.78rem'}}>Edit URL</button>
               </div>
 
               {health && (
                 <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'0.75rem'}}>
                   <HealthStat label="TTFB" value={ttfb != null ? ttfb + ' ms' : '—'} hint="time to first byte" good={ttfb != null && ttfb < 800} bad={ttfb != null && ttfb > 1500} />
                   <HealthStat label="Total" value={total != null ? total + ' ms' : '—'} hint="full response" good={total != null && total < 1500} bad={total != null && total > 3000} />
-                  <HealthStat label="Tamaño" value={sizeKB != null ? sizeKB + ' KB' : '—'} hint="HTML payload" good={sizeKB && +sizeKB < 200} bad={sizeKB && +sizeKB > 500} />
+                  <HealthStat label="Size" value={sizeKB != null ? sizeKB + ' KB' : '—'} hint="HTML payload" good={sizeKB && +sizeKB < 200} bad={sizeKB && +sizeKB > 500} />
                   <HealthStat label="Status" value={health.status_code || (health.error ? 'error' : '—')} hint={health.server || ''} good={ok} bad={!ok} />
                 </div>
               )}
@@ -1993,12 +2366,12 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     }
 
     function HealthStat({ label, value, hint, good, bad }) {
-      const color = good ? '#10b981' : bad ? '#fca5a5' : 'rgba(255,255,255,0.85)';
+      const color = good ? '#10b981' : bad ? '#fca5a5' : 'rgba(26,32,50,0.85)';
       return (
-        <div style={{padding:'0.85rem 1rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px'}}>
-          <div style={{fontSize:'0.65rem',letterSpacing:'0.18em',color:'rgba(255,255,255,0.4)',textTransform:'uppercase',marginBottom:'0.35rem'}}>{label}</div>
-          <div className="serif" style={{fontSize:'1.25rem',color,fontStyle:'italic',fontFamily:'ui-monospace,monospace',fontWeight:600}}>{value}</div>
-          {hint && <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)',marginTop:'0.2rem'}}>{hint}</div>}
+        <div style={{padding:'0.85rem 1rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
+          <div style={{fontSize:'0.65rem',letterSpacing:'0.18em',color:'rgba(26,32,50,0.4)',textTransform:'uppercase',marginBottom:'0.35rem'}}>{label}</div>
+          <div className="serif" style={{fontSize:'1.25rem',color,fontFamily:'ui-monospace,monospace',fontWeight:600}}>{value}</div>
+          {hint && <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.4)',marginTop:'0.2rem'}}>{hint}</div>}
         </div>
       );
     }
@@ -2012,10 +2385,10 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       async function attach() {
         const clean = domain.trim().toLowerCase().replace(/^https?:\\/\\//, '').replace(/\\/.*$/, '').replace(/^www\\./, '');
         if (!clean || !/^[a-z0-9][a-z0-9.-]+\\.[a-z]{2,}$/.test(clean)) {
-          alert('Formato inválido. Use: minegocio.com');
+          alert('Invalid format. Use: yourbusiness.com');
           return;
         }
-        if (!confirm('¿Adjuntar el dominio ' + clean + ' a este cliente? (Cloudflare zone + Worker route + DNS records)')) return;
+        if (!confirm('Attach the domain ' + clean + ' to this client? (Cloudflare zone + Worker route + DNS records)')) return;
         setWorking(true); setResult(null);
         try {
           const r = await adminApi('/api/admin/clients/' + client.id + '/domain', {
@@ -2027,7 +2400,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         finally { setWorking(false); }
       }
       async function detach() {
-        if (!confirm('¿Desvincular el dominio? El sitio dejará de servir en él pero seguirá en /site/<slug>/.')) return;
+        if (!confirm("Detach the domain? The site won't serve on it anymore but will still be at /site/<slug>/.")) return;
         try {
           await adminApi('/api/admin/clients/' + client.id + '/domain', { method: 'DELETE' });
           setDomain(''); setResult(null); await onChange();
@@ -2036,22 +2409,22 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       return (
         <div style={{marginBottom:'2.5rem'}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem'}}>
-            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',margin:0}}>Dominio del cliente</h2>
+            <h2 className="serif" style={{fontSize:'1.5rem',margin:0}}>Customer domain</h2>
             {currentDomain && <span style={{fontSize:'0.75rem',padding:'0.25rem 0.7rem',borderRadius:'999px',background:'rgba(16,185,129,0.18)',color:'#10b981',fontWeight:600}}>{currentDomain}</span>}
           </div>
-          <div style={{padding:'1.25rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px'}}>
-            <p style={{margin:'0 0 1rem',fontSize:'.88rem',color:'rgba(255,255,255,0.7)',lineHeight:1.55}}>Cuando esté listo el dominio (registrado en cualquier registrador), pegue el nombre aquí y haga clic en Adjuntar. El portal lo agrega a Cloudflare, crea el Worker route, configura el SSL automáticamente y le devuelve los nameservers que el cliente debe poner en su registrador.</p>
+          <div style={{padding:'1.25rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
+            <p style={{margin:'0 0 1rem',fontSize:'.88rem',color:'rgba(26,32,50,0.7)',lineHeight:1.55}}>Once the domain is ready (registered at any registrar), paste the name here and click Attach. The portal adds it to Cloudflare, creates the Worker route, sets up SSL automatically, and returns the nameservers the client needs to configure at their registrar.</p>
             <div style={{display:'flex',gap:'0.5rem',flexWrap:'wrap'}}>
-              <input value={domain} onChange={e=>setDomain(e.target.value)} placeholder="minegocio.com" style={{...inputStyle,flex:1,minWidth:220}}/>
-              <button onClick={attach} disabled={working} style={primaryBtn}>{working ? 'Adjuntando…' : 'Adjuntar'}</button>
-              {currentDomain && <button onClick={detach} style={ghostBtn}>Desvincular</button>}
+              <input value={domain} onChange={e=>setDomain(e.target.value)} placeholder="yourbusiness.com" style={{...inputStyle,flex:1,minWidth:220}}/>
+              <button onClick={attach} disabled={working} style={primaryBtn}>{working ? 'Attaching…' : 'Attach'}</button>
+              {currentDomain && <button onClick={detach} style={ghostBtn}>Detach</button>}
             </div>
             {result && (
-              <div style={{marginTop:'1rem',padding:'0.85rem 1rem',background:result.status==='ready'?'rgba(16,185,129,0.08)':'rgba(251,191,36,0.08)',border:'1px solid '+(result.status==='ready'?'rgba(16,185,129,0.3)':'rgba(251,191,36,0.3)'),borderRadius:'6px',fontSize:'0.9rem'}}>
-                <div style={{color:result.status==='ready'?'#10b981':'#fbbf24',fontWeight:600,marginBottom:'0.4rem'}}>Estado: {result.status}</div>
-                <div style={{color:'rgba(255,255,255,0.85)',lineHeight:1.5}}>{result.msg}</div>
+              <div style={{marginTop:'1rem',padding:'0.85rem 1rem',background:result.status==='ready'?'rgba(16,185,129,0.08)':'rgba(255,92,46,0.08)',border:'1px solid '+(result.status==='ready'?'rgba(16,185,129,0.3)':'rgba(255,92,46,0.3)'),borderRadius:'6px',fontSize:'0.9rem'}}>
+                <div style={{color:result.status==='ready'?'#10b981':'#FF5C2E',fontWeight:600,marginBottom:'0.4rem'}}>Status: {result.status}</div>
+                <div style={{color:'rgba(26,32,50,0.85)',lineHeight:1.5}}>{result.msg}</div>
                 {result.nameservers && result.nameservers.length > 0 && (
-                  <div style={{marginTop:'0.5rem',padding:'0.6rem 0.8rem',background:'rgba(0,0,0,0.3)',borderRadius:'4px',fontFamily:'ui-monospace,monospace',fontSize:'0.85rem'}}>
+                  <div style={{marginTop:'0.5rem',padding:'0.6rem 0.8rem',background:'#F6F5F0',borderRadius:'4px',fontFamily:'ui-monospace,monospace',fontSize:'0.85rem'}}>
                     {result.nameservers.map((ns, i) => (<div key={i}>{ns}</div>))}
                   </div>
                 )}
@@ -2062,15 +2435,126 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       );
     }
 
-    function MockupsPanel({ client }) {
+    function EmailForwardingPanel({ client, sections }) {
+      // Pre-fill from the client's tech intake (already loaded via parent ClientDetail)
+      const tech = (sections && sections.tech && sections.tech.data) || {};
+      const [localParts, setLocalParts] = useState(tech.emailLocalPart || "");
+      const [forwardTo, setForwardTo] = useState(tech.emailForwardTo || "");
+      const [working, setWorking] = useState(false);
+      const [result, setResult] = useState(null);
+      const hasDomain = !!client.custom_domain;
+
+      async function enable() {
+        const lps = localParts.trim();
+        const dest = forwardTo.trim().toLowerCase();
+        if (!lps || !dest || !dest.includes('@')) { alert('Missing data. I need aliases and a destination email.'); return; }
+        if (!confirm("Enable forwarding " + lps + "@" + client.custom_domain + " → " + dest + "?\\nCloudflare will send a verification email to " + dest + " — the client must click it.")) return;
+        setWorking(true); setResult(null);
+        try {
+          const r = await adminApi('/api/admin/clients/' + client.id + '/email-forwarding', {
+            method: 'POST', body: JSON.stringify({ localParts: lps, forwardTo: dest })
+          });
+          setResult(r);
+        } catch (e) { alert('Error: ' + e.message); }
+        finally { setWorking(false); }
+      }
+
+      return (
+        <div style={{marginBottom:'2.5rem'}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem'}}>
+            <h2 className="serif" style={{fontSize:'1.5rem',margin:0}}>Email forwarding</h2>
+            <span style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.45)',letterSpacing:'.1em',textTransform:'uppercase'}}>Cloudflare Email Routing · free</span>
+          </div>
+          <div style={{padding:'1.25rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
+            {!hasDomain ? (
+              <p style={{margin:0,color:'rgba(26,32,50,0.55)',fontSize:'.9rem'}}>Attach a domain first before configuring forwarding.</p>
+            ) : (
+              <>
+                <p style={{margin:'0 0 1rem',fontSize:'.88rem',color:'rgba(26,32,50,0.7)',lineHeight:1.55}}>{"Enables Cloudflare's free email forwarding. The client will get a verification email at the destination — without that click, forwarding won't work."}</p>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.6rem',marginBottom:'.75rem'}}>
+                  <div>
+                    <label style={{fontSize:'.75rem',color:'rgba(26,32,50,0.55)',display:'block',marginBottom:'.25rem'}}>{"Aliases (comma-separated)"}</label>
+                    <input value={localParts} onChange={e=>setLocalParts(e.target.value)} placeholder="hello, info, sales" style={inputStyle}/>
+                    <div style={{fontSize:'.75rem',color:'rgba(26,32,50,0.4)',marginTop:'.3rem'}}>{"→ " + (localParts.split(',').map(s=>s.trim()).filter(Boolean).join('@'+(client.custom_domain||'domain.com')+', ') || 'alias') + "@" + (client.custom_domain || 'domain.com')}</div>
+                  </div>
+                  <div>
+                    <label style={{fontSize:'.75rem',color:'rgba(26,32,50,0.55)',display:'block',marginBottom:'.25rem'}}>{"Destination (client's Gmail/Outlook)"}</label>
+                    <input value={forwardTo} onChange={e=>setForwardTo(e.target.value)} placeholder="client@gmail.com" style={inputStyle}/>
+                  </div>
+                </div>
+                <button onClick={enable} disabled={working} style={primaryBtn}>{working ? 'Configuring…' : 'Enable forwarding'}</button>
+                {result && (
+                  <div style={{marginTop:'1rem',padding:'.85rem 1rem',background:result.ok?'rgba(16,185,129,0.08)':'rgba(252,165,165,0.08)',border:'1px solid '+(result.ok?'rgba(16,185,129,0.3)':'rgba(252,165,165,0.4)'),borderRadius:'6px',fontSize:'.9rem'}}>
+                    <div style={{color:result.ok?'#10b981':'#fca5a5',fontWeight:600,marginBottom:'.4rem'}}>{result.ok ? '✓ Configured' : 'Error'}</div>
+                    <div style={{color:'rgba(26,32,50,0.85)',lineHeight:1.5}}>{result.verification_note || result.msg}</div>
+                    {result.log && (
+                      <details style={{marginTop:'.5rem'}}>
+                        <summary style={{fontSize:'.78rem',color:'rgba(26,32,50,0.5)',cursor:'pointer'}}>Technical details</summary>
+                        <pre style={{margin:'.5rem 0 0',padding:'.6rem',background:'#F6F5F0',borderRadius:'4px',fontSize:'.78rem',overflow:'auto'}}>{result.log.join('\\n')}</pre>
+                      </details>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function CustomCssPanel({ client, onRefresh }) {
+      const [css, setCss] = useState(client.admin_css || '');
+      const [saving, setSaving] = useState(false);
+      const [savedAt, setSavedAt] = useState(null);
+      const [open, setOpen] = useState(!!client.admin_css);
+
+      async function save() {
+        setSaving(true);
+        try {
+          const r = await adminApi('/api/admin/clients/' + client.id + '/admin-css', {
+            method: 'PUT', body: JSON.stringify({ admin_css: css })
+          });
+          setSavedAt(Date.now());
+          if (onRefresh) await onRefresh();
+        } catch (e) { alert('Save failed: ' + e.message); }
+        finally { setSaving(false); }
+      }
+      function clear() {
+        if (!confirm('Clear all custom CSS for this client?')) return;
+        setCss('');
+        setTimeout(save, 0);
+      }
+      return (
+        <div style={{marginBottom:'2.5rem'}}>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem'}}>
+            <h2 className="serif" style={{fontSize:'1.5rem',margin:0}}>Custom CSS</h2>
+            <button onClick={()=>setOpen(o=>!o)} style={{...ghostBtn,fontSize:'.78rem'}}>{open ? 'Hide' : 'Show'}{client.admin_css ? ' · active' : ''}</button>
+          </div>
+          {open && (
+            <div style={{padding:'1.25rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
+              <p style={{margin:'0 0 .85rem',fontSize:'.88rem',color:'rgba(26,32,50,0.7)',lineHeight:1.55}}>{"Inject raw CSS at the end of every rendered page for this client. Overrides anything in the blueprint. Use this for one-off visual tweaks the AI can't express via the JSON schema. Examples:"}</p>
+              <pre style={{margin:'0 0 .85rem',padding:'.7rem .9rem',background:'#F6F5F0',border:'1px solid rgba(26,32,50,0.06)',borderRadius:'4px',fontSize:'.78rem',color:'rgba(26,32,50,0.6)',whiteSpace:'pre-wrap',fontFamily:'ui-monospace,monospace'}}>{".hero h1 { color: #FF5C2E; -webkit-text-stroke: 1.5px #ef4444; paint-order: stroke fill; }\\n.hero-bg { opacity: .05; }\\n.btn { border-radius: 999px; }"}</pre>
+              <textarea value={css} onChange={e=>setCss(e.target.value)} rows={10} placeholder="/* Paste CSS here. Saved per-client. Re-generate the mockup to apply. */" style={{...inputStyle,fontFamily:'ui-monospace,SFMono-Regular,monospace',fontSize:'.85rem',resize:'vertical',padding:'.85rem 1rem'}} spellCheck="false"/>
+              <div style={{display:'flex',gap:'.5rem',alignItems:'center',marginTop:'.85rem'}}>
+                <button onClick={save} disabled={saving} style={primaryBtn}>{saving ? 'Saving…' : 'Save'}</button>
+                {client.admin_css && <button onClick={clear} style={{...ghostBtn,color:'#fca5a5',borderColor:'rgba(252,165,165,0.4)'}}>Clear</button>}
+                {savedAt && <span style={{fontSize:'.78rem',color:'#10b981'}}>✓ Saved · re-generate mockup to apply</span>}
+                <span style={{marginLeft:'auto',fontSize:'.72rem',color:'rgba(26,32,50,0.4)'}}>{css.length} chars · max 64 KB</span>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function MockupsPanel({ client, onRefresh }) {
       const [mockups, setMockups] = useState([]);
       const [comments, setComments] = useState({});
       const [preflight, setPreflight] = useState(null);
       const [loading, setLoading] = useState(false);
-      const [generating, setGenerating] = useState(false);
       const [shareUrls, setShareUrls] = useState({});
       const [shipping, setShipping] = useState({});
-      const [revInst, setRevInst] = useState({});
+      const [uploadOpen, setUploadOpen] = useState(false);
 
       async function load() {
         setLoading(true);
@@ -2094,14 +2578,6 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       }
       useEffect(() => { load(); }, [client.id]);
 
-      async function generate() {
-        setGenerating(true);
-        try {
-          await adminApi('/api/admin/clients/' + client.id + '/mockups', { method: 'POST' });
-          await load();
-        } catch (e) { alert('No se pudo generar: ' + e.message); }
-        finally { setGenerating(false); }
-      }
       async function share(mid) {
         try {
           const r = await adminApi('/api/admin/mockups/' + mid + '/share', { method: 'POST', body: JSON.stringify({ ttl_days: 7 }) });
@@ -2109,140 +2585,343 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           try { await navigator.clipboard.writeText(r.url); } catch (_) {}
         } catch (e) { alert('Error: ' + e.message); }
       }
-      async function regen(mid) {
-        const inst = (revInst[mid] || '').trim();
-        if (!confirm('¿Regenerar el mockup' + (inst ? ' con la nota: "' + inst + '"' : '') + '?')) return;
+      async function preview(mid) {
         try {
-          await adminApi('/api/admin/mockups/' + mid + '/regenerate', { method: 'POST', body: JSON.stringify({ instruction: inst }) });
-          setRevInst(r => ({ ...r, [mid]: '' }));
-          await load();
+          const r = await adminApi('/api/admin/mockups/' + mid + '/share', { method: 'POST', body: JSON.stringify({ ttl_days: 1 }) });
+          const wrap = String(r.url || '').split('/m/').join('/preview-frame/');
+          window.open(wrap || r.url, '_blank', 'noopener');
         } catch (e) { alert('Error: ' + e.message); }
       }
       async function ship(mid) {
-        if (!confirm('¿Lanzar este mockup como sitio final? (crea proyecto Pages)')) return;
+        if (!confirm('Publish live? The client must have approved the design first.')) return;
         setShipping(s => ({ ...s, [mid]: true }));
         try {
           const r = await adminApi('/api/admin/mockups/' + mid + '/ship', { method: 'POST' });
-          alert('Lanzado: ' + r.url + (r.note ? '\\n\\n' + r.note : ''));
+          alert('Published: ' + r.url + (r.note ? '\\n\\n' + r.note : ''));
           await load();
         } catch (e) {
-          // 422 = preflight failed
           if (e.message && e.message.includes('preflight')) {
-            alert('No se puede lanzar: hay errores en la verificación previa. Vea la lista arriba y arregle antes de continuar.');
+            alert("Can't publish: preflight has errors. See the list above and fix them before continuing.");
           } else {
             alert('Error: ' + e.message);
           }
         }
         finally { setShipping(s => ({ ...s, [mid]: false })); }
       }
+      async function pushToClient(mid) {
+        if (!confirm("Send this mockup to the client? They'll get a 'Your mockup is ready' email.")) return;
+        setShipping(s => ({ ...s, [mid]: true }));
+        try {
+          await adminApi('/api/admin/mockups/' + mid + '/push-to-client', { method: 'POST' });
+          alert("Mockup sent to client. They've received an email and can now see it in their Project Portal.");
+          await load();
+        } catch (e) { alert('Error: ' + e.message); }
+        finally { setShipping(s => ({ ...s, [mid]: false })); }
+      }
       const latestMockupId = mockups[0]?.id;
       const preflightForLatest = preflight && preflight.mockupId === latestMockupId ? preflight : null;
       const canShipLatest = preflightForLatest ? preflightForLatest.canShip : true;
       const hasShippedMockup = mockups.some(m => m.status === 'shipped');
+      const [adminReply, setAdminReply] = useState({});
+      async function sendAdminReply(mid) {
+        const text = (adminReply[mid] || '').trim();
+        if (!text) return;
+        try {
+          await adminApi('/api/admin/mockups/' + mid + '/reply', { method: 'POST', body: JSON.stringify({ body: text }) });
+          setAdminReply(r => ({ ...r, [mid]: '' }));
+          await load();
+        } catch (e) { alert('Error: ' + e.message); }
+      }
 
       async function disableSite() {
-        const reason = prompt('Razón para bajar el sitio (refund / fraud / customer_request):', 'refund');
+        const reason = prompt('Reason for taking the site down (refund / fraud / customer_request):', 'refund');
         if (reason === null) return;
-        if (!confirm('¿Confirmar? El sitio en vivo dejará de estar accesible (HTTP 410).')) return;
+        if (!confirm('Confirm? The live site will no longer be accessible (HTTP 410).')) return;
         try {
           await adminApi('/api/admin/clients/' + client.id + '/site/disable', { method: 'POST', body: JSON.stringify({ reason }) });
-          alert('Sitio bajado. Verá una página de "Sitio no disponible" en el slug.');
+          alert('Site taken down. A "Site unavailable" page will show on the slug.');
           await load();
         } catch (e) { alert('Error: ' + e.message); }
       }
       async function enableSite() {
-        if (!confirm('¿Reactivar el sitio?')) return;
+        if (!confirm('Re-activate the site?')) return;
         try {
           await adminApi('/api/admin/clients/' + client.id + '/site/enable', { method: 'POST' });
-          alert('Sitio reactivado.');
+          alert('Site re-activated.');
           await load();
         } catch (e) { alert('Error: ' + e.message); }
       }
 
-      const planLabel = client.plan === 'pro' ? 'Crecimiento' : client.plan === 'esencial' ? 'Esencial' : '—';
-      const planColor = client.plan === 'pro' ? '#10b981' : '#fbbf24';
+      const planLabel = client.plan === 'pro' ? 'Growth' : client.plan === 'esencial' ? 'Essential' : '—';
+      const planColor = client.plan === 'pro' ? '#10b981' : '#FF5C2E';
+      const isProClient = client.plan === 'pro' || client.plan === 'crecimiento' || client.plan === 'growth';
+      const revisionsTotal = isProClient ? 5 : 2;
+      const pushedCount = mockups.filter(m => m.shipped_at).length;
+      const revisionsUsed = Math.max(0, pushedCount - 1);
+      const revisionsRemaining = Math.max(0, revisionsTotal - revisionsUsed);
+      const revColor = revisionsRemaining === 0 ? '#fca5a5' : revisionsRemaining === 1 ? '#FF5C2E' : '#10b981';
+      const nextVersion = (mockups[0]?.version || 0) + 1;
+
+      function blueprintBadge(m) {
+        if (!m.blueprint_key) return null;
+        const isManual = m.blueprint_key === 'manual';
+        const label = isManual ? 'MANUAL' : m.blueprint_key.replace('blueprint-','').toUpperCase();
+        const color = isManual ? '#7dd3fc' : 'rgba(26,32,50,0.45)';
+        const border = isManual ? 'rgba(125,211,252,0.45)' : 'rgba(26,32,50,0.15)';
+        const bg = isManual ? 'rgba(125,211,252,0.08)' : 'transparent';
+        return <span style={{marginLeft:'0.6rem',fontSize:'0.65rem',color,padding:'1px 6px',border:'1px solid '+border,background:bg,borderRadius:'3px',letterSpacing:'.05em'}} title={isManual ? 'Hand-built mockup uploaded by admin' : 'Legacy auto-gen template'}>{label}</span>;
+      }
+
       return (
         <div style={{marginBottom:'2.5rem'}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem',flexWrap:'wrap',gap:'0.75rem'}}>
-            <div style={{display:'flex',alignItems:'baseline',gap:'0.85rem'}}>
-              <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',margin:0}}>Mockups</h2>
+            <div style={{display:'flex',alignItems:'baseline',gap:'0.85rem',flexWrap:'wrap'}}>
+              <h2 className="serif" style={{fontSize:'1.5rem',margin:0}}>Mockups</h2>
               <span style={{fontSize:'0.7rem',padding:'0.25rem 0.7rem',borderRadius:'999px',background:planColor+'22',color:planColor,letterSpacing:'0.12em',textTransform:'uppercase',fontWeight:600}}>Plan: {planLabel}</span>
+              <span style={{fontSize:'0.7rem',padding:'0.25rem 0.7rem',borderRadius:'999px',background:revColor+'22',color:revColor,letterSpacing:'0.12em',textTransform:'uppercase',fontWeight:600}} title={"Every time you send a mockup to the client counts as 1 round"}>{"Revisions: " + revisionsRemaining + "/" + revisionsTotal + " remaining"}</span>
             </div>
             <div style={{display:'flex',gap:'0.5rem',flexWrap:'wrap'}}>
-              <button onClick={generate} disabled={generating} style={primaryBtn}>
-                {generating ? 'Generando…' : (mockups.length ? 'Generar nueva versión' : 'Generar mockup')}
+              <button onClick={()=>setUploadOpen(true)} style={primaryBtn}>
+                {mockups.length ? '⇧ Upload mockup v' + nextVersion : '⇧ Upload mockup files'}
               </button>
-              {hasShippedMockup && <button onClick={disableSite} style={{...ghostBtn,color:'#fca5a5',borderColor:'rgba(252,165,165,0.4)'}}>Bajar sitio (refund)</button>}
-              {hasShippedMockup && <button onClick={enableSite} style={{...ghostBtn,fontSize:'0.78rem'}}>Reactivar</button>}
+              {hasShippedMockup && <button onClick={disableSite} style={{...ghostBtn,color:'#fca5a5',borderColor:'rgba(252,165,165,0.4)'}}>Take site down (refund)</button>}
+              {hasShippedMockup && <button onClick={enableSite} style={{...ghostBtn,fontSize:'0.78rem'}}>Re-activate</button>}
             </div>
           </div>
+          {uploadOpen && <UploadMockupModal client={client} nextVersion={nextVersion} onClose={()=>setUploadOpen(false)} onDone={async () => { setUploadOpen(false); await load(); if (onRefresh) await onRefresh(); }} />}
           {loading ? (
-            <div style={{padding:'1rem',color:'rgba(255,255,255,0.5)'}}>Cargando…</div>
+            <div style={{padding:'1rem',color:'rgba(26,32,50,0.5)'}}>Loading…</div>
           ) : mockups.length === 0 ? (
-            <div style={{padding:'2rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',color:'rgba(255,255,255,0.5)',textAlign:'center',borderRadius:'4px'}}>
-              Sin mockups todavía. Haga clic en "Generar mockup" para crear el primero.
+            <div style={{padding:'2rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',color:'rgba(26,32,50,0.5)',textAlign:'center',borderRadius:'4px'}}>
+              No mockups yet. Build the site in Cowork, then click "Upload mockup files" to drop the rendered HTML and assets here.
             </div>
           ) : mockups.map(m => (
-            <div key={m.id} style={{marginBottom:'1rem',padding:'1.25rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'6px'}}>
+            <div key={m.id} style={{marginBottom:'1rem',padding:'1.25rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'6px'}}>
               <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'0.75rem',flexWrap:'wrap',gap:'0.5rem'}}>
                 <div>
-                  <span style={{fontSize:'0.95rem',fontWeight:600,color:'#fbbf24'}}>v{m.version}</span>
-                  <span style={{marginLeft:'0.75rem',fontSize:'0.75rem',color:'rgba(255,255,255,0.5)',textTransform:'uppercase',letterSpacing:'0.1em'}}>{m.status}</span>
-                  <span style={{marginLeft:'0.75rem',fontSize:'0.75rem',color:'rgba(255,255,255,0.4)'}}>{new Date(m.created_at*1000).toLocaleString()}</span>
+                  <span style={{fontSize:'0.95rem',fontWeight:600,color:'#FF5C2E'}}>v{m.version}</span>
+                  <span style={{marginLeft:'0.75rem',fontSize:'0.75rem',color:'rgba(26,32,50,0.5)',textTransform:'uppercase',letterSpacing:'0.1em'}}>{m.status}</span>
+                  {blueprintBadge(m)}
+                  <span style={{marginLeft:'0.75rem',fontSize:'0.75rem',color:'rgba(26,32,50,0.4)'}}>{new Date(m.created_at*1000).toLocaleString('en-US')}</span>
                 </div>
-                <div style={{display:'flex',gap:'0.5rem'}}>
-                  <button onClick={()=>share(m.id)} style={ghostBtn}>Compartir (7 días)</button>
-                  <button onClick={()=>ship(m.id)} disabled={shipping[m.id] || (m.id===latestMockupId && !canShipLatest)} title={(m.id===latestMockupId && !canShipLatest) ? 'Verificación previa con errores — arregle antes de lanzar' : ''} style={{...primaryBtn,padding:'8px 14px',fontSize:'0.8rem',opacity:(m.id===latestMockupId && !canShipLatest)?0.4:1}}>
-                    {shipping[m.id] ? 'Lanzando…' : (m.status==='shipped' ? 'Re-lanzar' : 'Lanzar final')}
-                  </button>
+                <div style={{display:'flex',gap:'0.5rem',flexWrap:'wrap'}}>
+                  <button onClick={()=>preview(m.id)} style={{...ghostBtn,borderColor:'#FF5C2E',color:'#FF5C2E'}}>👁 Preview</button>
+                  <button onClick={()=>share(m.id)} style={ghostBtn}>Share (7 days)</button>
+                  {!m.shipped_at && (
+                    <button onClick={()=>pushToClient(m.id)} disabled={shipping[m.id]} style={{...primaryBtn,padding:'8px 14px',fontSize:'0.8rem',background:'#FF5C2E',color:'#FAFAF7'}}>
+                      {shipping[m.id] ? 'Sending…' : '→ Send to client'}
+                    </button>
+                  )}
+                  {m.shipped_at && !m.approved_at && (
+                    <span style={{padding:'8px 14px',fontSize:'0.78rem',color:'rgba(26,32,50,0.6)',}}>Waiting for client approval…</span>
+                  )}
+                  {(m.approved_at || m.status==='shipped' && m.id===latestMockupId) && (
+                    <button onClick={()=>ship(m.id)} disabled={shipping[m.id] || (m.id===latestMockupId && !canShipLatest)} title={(m.id===latestMockupId && !canShipLatest) ? 'Preflight has errors — fix before publishing' : (!m.approved_at ? "Client hasn't approved yet" : '')} style={{...primaryBtn,padding:'8px 14px',fontSize:'0.8rem',opacity:(m.id===latestMockupId && !canShipLatest)?0.4:1}}>
+                      {shipping[m.id] ? 'Publishing…' : (m.status==='shipped' && m.shipped_url ? 'Re-publish' : 'Publish live')}
+                    </button>
+                  )}
                 </div>
               </div>
               {m.id===latestMockupId && preflightForLatest && (preflightForLatest.errors.length>0 || preflightForLatest.warnings.length>0) && (
                 <div style={{marginTop:'0.5rem',marginBottom:'0.75rem'}}>
                   {preflightForLatest.errors.length>0 && (
                     <div style={{padding:'0.75rem 1rem',background:'rgba(252,165,165,0.08)',border:'1px solid rgba(252,165,165,0.4)',borderRadius:'4px',marginBottom:'0.5rem'}}>
-                      <div style={{fontSize:'0.7rem',color:'#fca5a5',textTransform:'uppercase',letterSpacing:'0.12em',fontWeight:600,marginBottom:'0.4rem'}}>{preflightForLatest.errors.length} error(es) — bloquea lanzamiento</div>
-                      {preflightForLatest.errors.map((e,idx)=>(<div key={idx} style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.85)',padding:'0.2rem 0'}}>✗ {e.msg}</div>))}
+                      <div style={{fontSize:'0.7rem',color:'#fca5a5',textTransform:'uppercase',letterSpacing:'0.12em',fontWeight:600,marginBottom:'0.4rem'}}>{preflightForLatest.errors.length} error(s) — blocks launch</div>
+                      {preflightForLatest.errors.map((e,idx)=>(<div key={idx} style={{fontSize:'0.85rem',color:'rgba(26,32,50,0.85)',padding:'0.2rem 0'}}>✗ {e.msg}</div>))}
                     </div>
                   )}
                   {preflightForLatest.warnings.length>0 && (
-                    <div style={{padding:'0.75rem 1rem',background:'rgba(251,191,36,0.08)',border:'1px solid rgba(251,191,36,0.3)',borderRadius:'4px'}}>
-                      <div style={{fontSize:'0.7rem',color:'#fbbf24',textTransform:'uppercase',letterSpacing:'0.12em',fontWeight:600,marginBottom:'0.4rem'}}>{preflightForLatest.warnings.length} advertencia(s) — no bloquea</div>
-                      {preflightForLatest.warnings.map((w,idx)=>(<div key={idx} style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.75)',padding:'0.2rem 0'}}>⚠ {w.msg}</div>))}
+                    <div style={{padding:'0.75rem 1rem',background:'rgba(255,92,46,0.08)',border:'1px solid rgba(255,92,46,0.3)',borderRadius:'4px'}}>
+                      <div style={{fontSize:'0.7rem',color:'#FF5C2E',textTransform:'uppercase',letterSpacing:'0.12em',fontWeight:600,marginBottom:'0.4rem'}}>{preflightForLatest.warnings.length} warning(s) — non-blocking</div>
+                      {preflightForLatest.warnings.map((w,idx)=>(<div key={idx} style={{fontSize:'0.85rem',color:'rgba(26,32,50,0.75)',padding:'0.2rem 0'}}>⚠ {w.msg}</div>))}
                     </div>
                   )}
                 </div>
               )}
               {m.id===latestMockupId && preflightForLatest && preflightForLatest.errors.length===0 && preflightForLatest.warnings.length===0 && (
-                <div style={{padding:'0.5rem 0.85rem',background:'rgba(16,185,129,0.08)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem',color:'#10b981'}}>✓ Verificación previa: todo en orden, listo para lanzar.</div>
+                <div style={{padding:'0.5rem 0.85rem',background:'rgba(16,185,129,0.08)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem',color:'#10b981'}}>✓ Preflight: all clear, ready to launch.</div>
               )}
               {shareUrls[m.id] && (
-                <div style={{padding:'0.6rem 0.85rem',background:'rgba(251,191,36,0.08)',border:'1px solid rgba(251,191,36,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem'}}>
-                  <span style={{color:'rgba(255,255,255,0.6)'}}>Enlace temp (copiado):</span> <a href={shareUrls[m.id]} target="_blank" rel="noopener" style={{color:'#fbbf24'}}>{shareUrls[m.id]}</a>
+                <div style={{padding:'0.6rem 0.85rem',background:'rgba(255,92,46,0.08)',border:'1px solid rgba(255,92,46,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem'}}>
+                  <span style={{color:'rgba(26,32,50,0.6)'}}>Temp link (copied):</span> <a href={shareUrls[m.id]} target="_blank" rel="noopener" style={{color:'#FF5C2E'}}>{shareUrls[m.id]}</a>
                 </div>
               )}
               {m.shipped_url && (
                 <div style={{padding:'0.6rem 0.85rem',background:'rgba(16,185,129,0.08)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'4px',marginBottom:'0.75rem',fontSize:'0.85rem'}}>
-                  <span style={{color:'rgba(255,255,255,0.6)'}}>En vivo:</span> <a href={m.shipped_url} target="_blank" rel="noopener" style={{color:'#10b981'}}>{m.shipped_url}</a>
+                  <span style={{color:'rgba(26,32,50,0.6)'}}>Live:</span> <a href={m.shipped_url} target="_blank" rel="noopener" style={{color:'#10b981'}}>{m.shipped_url}</a>
                 </div>
               )}
               {(comments[m.id] || []).length > 0 && (
-                <div style={{marginTop:'0.75rem',padding:'0.75rem',background:'rgba(0,0,0,0.2)',borderRadius:'4px'}}>
-                  <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.5)',marginBottom:'0.5rem',textTransform:'uppercase',letterSpacing:'0.12em'}}>Comentarios del cliente</div>
+                <div style={{marginTop:'0.75rem',padding:'0.75rem',background:'#F6F5F0',borderRadius:'4px'}}>
+                  <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.5)',marginBottom:'0.5rem',textTransform:'uppercase',letterSpacing:'0.12em'}}>Chat with client</div>
                   {comments[m.id].map(c => (
-                    <div key={c.id} style={{padding:'0.5rem 0',borderBottom:'1px solid rgba(255,255,255,0.05)'}}>
-                      <div style={{fontSize:'0.7rem',color:'rgba(255,255,255,0.4)'}}>{c.section || 'general'} · {new Date(c.created_at*1000).toLocaleString()}</div>
-                      <div style={{color:'rgba(255,255,255,0.85)',fontSize:'0.9rem',marginTop:'0.2rem',whiteSpace:'pre-wrap'}}>{c.body}</div>
+                    <div key={c.id} style={{padding:'0.5rem 0',borderBottom:'1px solid rgba(26,32,50,0.05)'}}>
+                      <div style={{fontSize:'0.7rem',color:c.author==='admin'?'#FF5C2E':'rgba(26,32,50,0.4)'}}>{c.author==='admin'?'You (admin)':'Client'} · {new Date(c.created_at*1000).toLocaleString('en-US')}</div>
+                      <div style={{color:'rgba(26,32,50,0.85)',fontSize:'0.9rem',marginTop:'0.2rem',whiteSpace:'pre-wrap'}}>{c.body}</div>
                     </div>
                   ))}
                 </div>
               )}
-              <div style={{display:'flex',gap:'0.5rem',marginTop:'0.75rem'}}>
-                <input value={revInst[m.id] || ''} onChange={e=>setRevInst(r=>({...r,[m.id]:e.target.value}))} placeholder="Nota para regenerar (opcional)…" style={{...inputStyle,padding:'0.5rem 0.75rem',flex:1,fontSize:'0.85rem'}} />
-                <button onClick={()=>regen(m.id)} style={ghostBtn}>Regenerar</button>
+              <div style={{display:'flex',gap:'0.5rem',marginTop:'0.5rem'}}>
+                <input value={adminReply[m.id] || ''} onChange={e=>setAdminReply(r=>({...r,[m.id]:e.target.value}))} placeholder={"Reply to client…" + (m.id !== latestMockupId ? " (older mockup)" : "")} style={{...inputStyle,padding:'0.5rem 0.75rem',flex:1,fontSize:'0.85rem'}}
+                  onKeyDown={(e)=>{ if (e.key==='Enter' && (adminReply[m.id]||'').trim()) sendAdminReply(m.id); }} />
+                <button onClick={()=>sendAdminReply(m.id)} style={ghostBtn}>Send</button>
               </div>
             </div>
           ))}
+        </div>
+      );
+    }
+
+    // ─── Upload Mockup Modal ──────────────────────────────────────────────
+    // Pick (or drop) files → POST each to /manual-mockup/upload → POST /finalize.
+    // Required: index.html.   Cap: 10 MB total.   Per-file cap: 5 MB.
+    function UploadMockupModal({ client, nextVersion, onClose, onDone }) {
+      const [files, setFiles] = useState([]); // [{file, status, error}]
+      const [submitting, setSubmitting] = useState(false);
+      const [progressMsg, setProgressMsg] = useState('');
+      const inputRef = useRef(null);
+      const dropRef = useRef(null);
+      const TOTAL_CAP = 10 * 1024 * 1024;
+
+      function addFiles(list) {
+        const arr = Array.from(list || []);
+        setFiles(prev => {
+          const seen = new Set(prev.map(p => p.file.name));
+          const merged = [...prev];
+          for (const f of arr) {
+            if (seen.has(f.name)) continue;
+            merged.push({ file: f, status: 'pending', error: null });
+          }
+          return merged;
+        });
+      }
+      function removeFile(name) {
+        setFiles(prev => prev.filter(p => p.file.name !== name));
+      }
+      function onDrop(e) {
+        e.preventDefault(); e.stopPropagation();
+        if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+      }
+      function onDragOver(e) { e.preventDefault(); }
+
+      const totalBytes = files.reduce((s, f) => s + f.file.size, 0);
+      const overCap = totalBytes > TOTAL_CAP;
+      const hasIndexHtml = files.some(f => f.file.name === 'index.html');
+
+      async function submit() {
+        if (!hasIndexHtml) { alert('index.html is required.'); return; }
+        if (overCap) { alert('Total upload exceeds 10 MB cap.'); return; }
+        if (submitting) return;
+
+        // Generate a UUID client-side for this mockup
+        let mockupId = '';
+        try { mockupId = crypto.randomUUID(); }
+        catch (_) { mockupId = 'm-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10); }
+
+        setSubmitting(true);
+        try {
+          // Upload each file in sequence so users see incremental progress
+          for (let i = 0; i < files.length; i++) {
+            const entry = files[i];
+            setProgressMsg('Uploading ' + entry.file.name + ' (' + (i+1) + '/' + files.length + ')…');
+            setFiles(prev => prev.map(p => p.file.name === entry.file.name ? {...p, status:'uploading', error:null} : p));
+            try {
+              const buf = await entry.file.arrayBuffer();
+              const tokenForUpload = localStorage.getItem(ADMIN_KEY) || '';
+              const r = await fetch('/api/admin/clients/' + client.id + '/manual-mockup/upload', {
+                method: 'POST',
+                headers: {
+                  'Authorization': 'Bearer ' + tokenForUpload,
+                  'Content-Type': entry.file.type || 'application/octet-stream',
+                  'X-Mockup-Id': mockupId,
+                  'X-Filename': entry.file.name,
+                },
+                body: buf,
+              });
+              if (!r.ok) {
+                const j = await r.json().catch(() => ({}));
+                throw new Error(j.msg || j.error || ('HTTP ' + r.status));
+              }
+              setFiles(prev => prev.map(p => p.file.name === entry.file.name ? {...p, status:'done'} : p));
+            } catch (e) {
+              setFiles(prev => prev.map(p => p.file.name === entry.file.name ? {...p, status:'error', error:e.message} : p));
+              throw new Error('Upload failed for ' + entry.file.name + ': ' + e.message);
+            }
+          }
+          setProgressMsg('Finalizing…');
+          const fin = await adminApi('/api/admin/clients/' + client.id + '/manual-mockup/finalize', {
+            method: 'POST',
+            body: JSON.stringify({ mockup_id: mockupId, version: nextVersion }),
+          });
+          setProgressMsg('Done. Mockup v' + (fin.mockup?.version || nextVersion) + ' created.');
+          await onDone();
+        } catch (e) {
+          alert('Upload failed: ' + e.message);
+        } finally {
+          setSubmitting(false);
+        }
+      }
+
+      const overlay = {
+        position:'fixed',inset:0,background:'rgba(0,0,0,0.7)',zIndex:200,
+        display:'flex',alignItems:'center',justifyContent:'center',padding:'1.5rem',
+      };
+      const card = {
+        background:'#FAFAF7',border:'1px solid rgba(26,32,50,0.12)',borderRadius:'8px',
+        width:'min(640px, 100%)',maxHeight:'85vh',display:'flex',flexDirection:'column',overflow:'hidden',
+      };
+      function fmtSize(n) {
+        if (n < 1024) return n + ' B';
+        if (n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
+        return (n/(1024*1024)).toFixed(2) + ' MB';
+      }
+      return (
+        <div style={overlay} onClick={(e)=>{ if (e.target === e.currentTarget && !submitting) onClose(); }}>
+          <div style={card}>
+            <div style={{padding:'1rem 1.25rem',borderBottom:'1px solid rgba(26,32,50,0.08)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <div>
+                <h3 style={{margin:0,fontSize:'1.1rem',color:'#1A2032'}}>Upload mockup files</h3>
+                <div style={{fontSize:'0.78rem',color:'rgba(26,32,50,0.55)',marginTop:'0.2rem'}}>v{nextVersion} for <strong>{client.business_name || client.email}</strong> · index.html required · 10 MB total cap</div>
+              </div>
+              <button onClick={onClose} disabled={submitting} style={{...iconBtn,padding:'4px 10px',fontSize:'1.2rem'}}>×</button>
+            </div>
+            <div style={{padding:'1.25rem',overflowY:'auto',flex:1}}>
+              <div ref={dropRef} onDrop={onDrop} onDragOver={onDragOver}
+                style={{border:'2px dashed rgba(26,32,50,0.2)',borderRadius:'8px',padding:'2rem 1rem',textAlign:'center',marginBottom:'1rem',cursor:'pointer'}}
+                onClick={()=>inputRef.current && inputRef.current.click()}>
+                <div style={{fontSize:'0.95rem',color:'rgba(26,32,50,0.85)',marginBottom:'0.4rem'}}>Drag &amp; drop files here, or click to browse</div>
+                <div style={{fontSize:'0.75rem',color:'rgba(26,32,50,0.45)'}}>HTML, CSS, JS, images, fonts, sub-pages — index.html is required.</div>
+                <input ref={inputRef} type="file" multiple style={{display:'none'}}
+                  onChange={(e)=>{ addFiles(e.target.files); e.target.value=''; }} />
+              </div>
+              {files.length > 0 && (
+                <div style={{border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px',background:'#F6F5F0'}}>
+                  {files.map((f,idx)=>(
+                    <div key={f.file.name} style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.5rem 0.75rem',borderBottom:idx===files.length-1?'none':'1px solid rgba(26,32,50,0.05)'}}>
+                      <span style={{flex:1,fontSize:'0.85rem',color:f.file.name==='index.html'?'#FF5C2E':'rgba(26,32,50,0.85)',fontFamily:'ui-monospace,SFMono-Regular,Menlo,monospace'}}>{f.file.name}{f.file.name==='index.html' && <span style={{marginLeft:'0.4rem',fontSize:'0.65rem',color:'#FF5C2E'}}>(required)</span>}</span>
+                      <span style={{fontSize:'0.75rem',color:'rgba(26,32,50,0.55)',whiteSpace:'nowrap'}}>{fmtSize(f.file.size)}</span>
+                      <span style={{fontSize:'0.7rem',color:f.status==='done'?'#10b981':f.status==='error'?'#fca5a5':f.status==='uploading'?'#FF5C2E':'rgba(26,32,50,0.45)',minWidth:'56px',textAlign:'right'}}>{f.status==='pending'?'queued':f.status}</span>
+                      <button onClick={()=>removeFile(f.file.name)} disabled={submitting} title="Remove" style={{...iconBtn,padding:'2px 8px',fontSize:'0.85rem'}}>×</button>
+                    </div>
+                  ))}
+                  <div style={{padding:'0.5rem 0.75rem',fontSize:'0.75rem',color:overCap?'#fca5a5':'rgba(26,32,50,0.5)',borderTop:'1px solid rgba(26,32,50,0.05)'}}>
+                    Total: {fmtSize(totalBytes)} {overCap && <span> · OVER CAP (10 MB)</span>}
+                  </div>
+                </div>
+              )}
+              {!hasIndexHtml && files.length > 0 && (
+                <div style={{marginTop:'0.6rem',fontSize:'0.78rem',color:'#fca5a5'}}>⚠ index.html not in the list yet — required.</div>
+              )}
+              {progressMsg && <div style={{marginTop:'0.75rem',fontSize:'0.85rem',color:'#FF5C2E'}}>{progressMsg}</div>}
+            </div>
+            <div style={{padding:'0.85rem 1.25rem',borderTop:'1px solid rgba(26,32,50,0.08)',display:'flex',justifyContent:'flex-end',gap:'0.5rem'}}>
+              <button onClick={onClose} disabled={submitting} style={ghostBtn}>Cancel</button>
+              <button onClick={submit} disabled={submitting || !hasIndexHtml || files.length===0 || overCap} style={primaryBtn}>
+                {submitting ? 'Uploading…' : 'Create mockup v' + nextVersion}
+              </button>
+            </div>
+          </div>
         </div>
       );
     }
@@ -2269,7 +2948,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           });
           if (res.summary) setSummary(res.summary);
         } catch (e) {
-          alert('No se pudo actualizar: ' + e.message);
+          alert("Couldn't update: " + e.message);
           // Roll back
           setItems(prev => prev.map(it => it.key === key ? deliverables.items.find(d => d.key === key) : it));
         }
@@ -2282,26 +2961,26 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       return (
         <div style={{marginBottom:'3rem'}}>
           <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:'1rem'}}>
-            <h2 className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',margin:0}}>Entregables</h2>
-            <div style={{display:'flex',alignItems:'center',gap:'0.75rem',fontSize:'0.85rem',color:'rgba(255,255,255,0.7)'}}>
-              <span><b style={{color:'#10b981'}}>{summary.done}</b> listos</span>
-              <span style={{color:'rgba(255,255,255,0.3)'}}>·</span>
-              <span><b style={{color:'#fbbf24'}}>{summary.in_progress}</b> en curso</span>
-              <span style={{color:'rgba(255,255,255,0.3)'}}>·</span>
-              <span><b style={{color:'#94a3b8'}}>{summary.pending}</b> pendientes</span>
-              {summary.na > 0 && <><span style={{color:'rgba(255,255,255,0.3)'}}>·</span><span><b style={{color:'#475569'}}>{summary.na}</b> N/A</span></>}
+            <h2 className="serif" style={{fontSize:'1.5rem',margin:0}}>Deliverables</h2>
+            <div style={{display:'flex',alignItems:'center',gap:'0.75rem',fontSize:'0.85rem',color:'rgba(26,32,50,0.7)'}}>
+              <span><b style={{color:'#10b981'}}>{summary.done}</b> done</span>
+              <span style={{color:'rgba(26,32,50,0.3)'}}>·</span>
+              <span><b style={{color:'#FF5C2E'}}>{summary.in_progress}</b> in progress</span>
+              <span style={{color:'rgba(26,32,50,0.3)'}}>·</span>
+              <span><b style={{color:'#94a3b8'}}>{summary.pending}</b> pending</span>
+              {summary.na > 0 && <><span style={{color:'rgba(26,32,50,0.3)'}}>·</span><span><b style={{color:'#475569'}}>{summary.na}</b> N/A</span></>}
             </div>
           </div>
 
           {/* Progress bar */}
-          <div style={{height:'6px',background:'rgba(255,255,255,0.08)',borderRadius:'3px',overflow:'hidden',marginBottom:'1.5rem'}}>
-            <div style={{height:'100%',width:summary.pct+'%',background:'linear-gradient(90deg,#fbbf24,#10b981)',transition:'width .25s'}}/>
+          <div style={{height:'6px',background:'rgba(26,32,50,0.08)',borderRadius:'3px',overflow:'hidden',marginBottom:'1.5rem'}}>
+            <div style={{height:'100%',width:summary.pct+'%',background:'linear-gradient(90deg,#FF5C2E,#10b981)',transition:'width .25s'}}/>
           </div>
-          <div style={{textAlign:'right',fontSize:'0.75rem',color:'rgba(255,255,255,0.4)',marginTop:'-1rem',marginBottom:'1.5rem'}}>{summary.pct}% completo</div>
+          <div style={{textAlign:'right',fontSize:'0.75rem',color:'rgba(26,32,50,0.4)',marginTop:'-1rem',marginBottom:'1.5rem'}}>{summary.pct}% complete</div>
 
           {Object.entries(grouped).map(([gKey, gItems]) => (
             <div key={gKey} style={{marginBottom:'2rem'}}>
-              <div style={{fontSize:'0.7rem',letterSpacing:'0.18em',color:'#fbbf24',textTransform:'uppercase',marginBottom:'0.75rem'}}>
+              <div style={{fontSize:'0.7rem',letterSpacing:'0.18em',color:'#FF5C2E',textTransform:'uppercase',marginBottom:'0.75rem'}}>
                 {groups[gKey] || gKey}
               </div>
               <div style={{display:'flex',flexDirection:'column',gap:'0.4rem'}}>
@@ -2309,29 +2988,40 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   <div key={it.key} style={{
                     display:'grid',gridTemplateColumns:'24px 1fr auto',gap:'0.75rem',alignItems:'center',
                     padding:'0.6rem 0.85rem',
-                    background:it.status==='done' ? 'rgba(16,185,129,0.06)' : it.status==='in_progress' ? 'rgba(251,191,36,0.06)' : 'rgba(255,255,255,0.03)',
-                    border:'1px solid '+(it.status==='done' ? 'rgba(16,185,129,0.25)' : it.status==='in_progress' ? 'rgba(251,191,36,0.25)' : 'rgba(255,255,255,0.08)'),
+                    background:it.status==='done' ? 'rgba(16,185,129,0.06)' : it.status==='in_progress' ? 'rgba(255,92,46,0.06)' : 'rgba(26,32,50,0.03)',
+                    border:'1px solid '+(it.status==='done' ? 'rgba(16,185,129,0.25)' : it.status==='in_progress' ? 'rgba(255,92,46,0.25)' : 'rgba(26,32,50,0.08)'),
                     borderRadius:'3px'
                   }}>
                     <span style={{color:statusColor(it.status),fontSize:'1rem',textAlign:'center',fontWeight:700}}>{statusIcon(it.status)}</span>
                     <span style={{
-                      color: it.status==='na' ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.92)',
+                      color: it.status==='na' ? 'rgba(26,32,50,0.35)' : 'rgba(26,32,50,0.92)',
                       textDecoration: it.status==='done' ? 'none' : 'none',
                       fontSize:'0.92rem'
                     }}>
                       {it.label}
-                      {it.plan === 'pro' && <span style={{marginLeft:'0.5rem',fontSize:'0.65rem',padding:'1px 6px',border:'1px solid rgba(252,209,22,0.4)',color:'#fcd116',borderRadius:'3px',letterSpacing:'0.08em',textTransform:'uppercase'}}>Crecimiento</span>}
+                      {it.plan === 'pro' && <span style={{marginLeft:'0.5rem',fontSize:'0.65rem',padding:'1px 6px',border:'1px solid rgba(252,209,22,0.4)',color:'#fcd116',borderRadius:'3px',letterSpacing:'0.08em',textTransform:'uppercase'}}>Growth</span>}
                     </span>
                     <select value={it.status} onChange={e => setStatus(it.key, e.target.value)} style={{
-                      background:'rgba(255,255,255,0.05)',color:'#fff',
-                      border:'1px solid rgba(255,255,255,0.12)',
+                      background: it.status==='pending' ? 'rgba(251,113,133,0.18)'
+                                : it.status==='in_progress' ? 'rgba(255,92,46,0.18)'
+                                : it.status==='done' ? 'rgba(16,185,129,0.18)'
+                                : 'rgba(26,32,50,0.05)',
+                      color: it.status==='pending' ? '#fda4af'
+                           : it.status==='in_progress' ? '#FF5C2E'
+                           : it.status==='done' ? '#10b981'
+                           : 'rgba(26,32,50,0.6)',
+                      border: '1px solid ' + (
+                        it.status==='pending' ? 'rgba(251,113,133,0.45)'
+                      : it.status==='in_progress' ? 'rgba(255,92,46,0.5)'
+                      : it.status==='done' ? 'rgba(16,185,129,0.45)'
+                      : 'rgba(26,32,50,0.12)'),
                       borderRadius:'3px',padding:'4px 8px',fontSize:'0.78rem',
-                      cursor:'pointer',fontFamily:'inherit'
+                      cursor:'pointer',fontFamily:'inherit',fontWeight:600
                     }}>
-                      <option value="pending">Pendiente</option>
-                      <option value="in_progress">En curso</option>
-                      <option value="done">Listo</option>
-                      <option value="na">N/A</option>
+                      <option value="pending" style={{background:'#FFFFFF',color:'#1A2032'}}>Pending</option>
+                      <option value="in_progress" style={{background:'#FFFFFF',color:'#1A2032'}}>In progress</option>
+                      <option value="done" style={{background:'#FFFFFF',color:'#1A2032'}}>Done</option>
+                      <option value="na" style={{background:'#FFFFFF',color:'#1A2032'}}>N/A</option>
                     </select>
                   </div>
                 ))}
@@ -2344,9 +3034,9 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
     function Stat({ label, value }) {
       return (
-        <div style={{padding:'1.25rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px'}}>
-          <div style={{fontSize:'0.7rem',letterSpacing:'0.2em',color:'rgba(255,255,255,0.4)',textTransform:'uppercase',marginBottom:'0.5rem'}}>{label}</div>
-          <div className="serif" style={{fontSize:'1.5rem',fontStyle:'italic',color:'#fff',textTransform:'capitalize'}}>{value}</div>
+        <div style={{padding:'1.25rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
+          <div style={{fontSize:'0.7rem',letterSpacing:'0.2em',color:'rgba(26,32,50,0.4)',textTransform:'uppercase',marginBottom:'0.5rem'}}>{label}</div>
+          <div className="serif" style={{fontSize:'1.5rem',color:'#1A2032',textTransform:'capitalize'}}>{value}</div>
         </div>
       );
     }
@@ -2370,14 +3060,14 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       }
       return (
         <div onClick={onClose} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(8px)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:100,padding:'2rem'}}>
-          <div onClick={e=>e.stopPropagation()} style={{maxWidth:'480px',width:'100%',background:'#0a0e27',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'4px',padding:'2.5rem'}}>
-            <h2 className="serif" style={{fontSize:'1.75rem',fontStyle:'italic',margin:'0 0 1.5rem'}}>Invite Client</h2>
+          <div onClick={e=>e.stopPropagation()} style={{maxWidth:'480px',width:'100%',background:'#FAFAF7',border:'1px solid rgba(26,32,50,0.1)',borderRadius:'4px',padding:'2.5rem'}}>
+            <h2 className="serif" style={{fontSize:'1.75rem',margin:'0 0 1.5rem'}}>Invite Client</h2>
             {result ? (
               <>
                 <div style={{padding:'1rem',background:'rgba(16,185,129,0.1)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'2px',marginBottom:'1rem',fontSize:'0.9rem'}}>
                   <Check size={14} style={{display:'inline',marginRight:'0.5rem'}} color="#10b981" /> Invite sent
                 </div>
-                <div style={{fontSize:'0.75rem',color:'rgba(255,255,255,0.5)',marginBottom:'0.5rem'}}>Direct invite link (also emailed):</div>
+                <div style={{fontSize:'0.75rem',color:'rgba(26,32,50,0.5)',marginBottom:'0.5rem'}}>Direct invite link (also emailed):</div>
                 <div style={{display:'flex',gap:'0.5rem',marginBottom:'1.5rem'}}>
                   <input readOnly value={result.invite_url} style={{...inputStyle,fontSize:'0.75rem'}} />
                   <button onClick={()=>navigator.clipboard.writeText(result.invite_url)} style={iconBtn}><Copy size={14}/></button>
@@ -2393,7 +3083,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                     <label style={fieldLabel}>Language</label>
                     <div style={{display:'flex',gap:'0.5rem'}}>
                       {['en','es'].map(l => (
-                        <button key={l} onClick={()=>setLanguage(l)} style={{flex:1,padding:'0.75rem',background:language===l?'rgba(251,191,36,0.15)':'rgba(255,255,255,0.03)',border:'1px solid '+(language===l?'#fbbf24':'rgba(255,255,255,0.1)'),color:language===l?'#fbbf24':'rgba(255,255,255,0.7)',borderRadius:'2px',cursor:'pointer',fontFamily:'inherit'}}>{l==='en'?'English':'Español'}</button>
+                        <button key={l} onClick={()=>setLanguage(l)} style={{flex:1,padding:'0.75rem',background:language===l?'rgba(255,92,46,0.15)':'rgba(26,32,50,0.03)',border:'1px solid '+(language===l?'#FF5C2E':'rgba(26,32,50,0.1)'),color:language===l?'#FF5C2E':'rgba(26,32,50,0.7)',borderRadius:'2px',cursor:'pointer',fontFamily:'inherit'}}>{l==='en'?'English':'Español'}</button>
                       ))}
                     </div>
                   </div>
@@ -2419,17 +3109,17 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           <div style={{maxWidth:'440px',width:'100%',position:'relative',zIndex:1}}>
             <div style={{textAlign:'center',marginBottom:'3rem'}}>
               <div style={{display:'inline-flex',alignItems:'center',gap:'0.5rem',marginBottom:'1.5rem'}}>
-                <Sparkle size={20} color="#fbbf24"/>
-                <span style={{color:'#fbbf24',letterSpacing:'0.3em',fontSize:'0.75rem',textTransform:'uppercase'}}>{t.tagline}</span>
+                <Sparkle size={20} color="#FF5C2E"/>
+                <span style={{color:'#FF5C2E',letterSpacing:'0.3em',fontSize:'0.75rem',textTransform:'uppercase'}}>{t.tagline}</span>
               </div>
-              <h1 className="serif" style={titleStyle}>Pyme<span style={{color:'#fbbf24'}}>WebPro</span></h1>
-              <div style={{height:'1px',width:'60px',background:'#fbbf24',margin:'1.5rem auto'}}/>
-              <p style={{color:'rgba(255,255,255,0.7)',fontSize:'1rem',margin:0}}>{t.loginTitle}</p>
-              <p style={{color:'rgba(255,255,255,0.4)',fontSize:'0.9rem',marginTop:'0.5rem'}}>{t.loginSub}</p>
+              <h1 className="serif" style={titleStyle}>Pyme<span style={{color:'#FF5C2E'}}>WebPro</span></h1>
+              <div style={{height:'1px',width:'60px',background:'#FF5C2E',margin:'1.5rem auto'}}/>
+              <p style={{color:'rgba(26,32,50,0.7)',fontSize:'1rem',margin:0}}>{t.loginTitle}</p>
+              <p style={{color:'rgba(26,32,50,0.4)',fontSize:'0.9rem',marginTop:'0.5rem'}}>{t.loginSub}</p>
             </div>
             <div style={cardStyle}>
               <div style={{position:'relative',marginBottom:'1.5rem'}}>
-                <Mail size={18} style={{position:'absolute',left:'1rem',top:'50%',transform:'translateY(-50%)',color:'rgba(255,255,255,0.4)'}}/>
+                <Mail size={18} style={{position:'absolute',left:'1rem',top:'50%',transform:'translateY(-50%)',color:'rgba(26,32,50,0.4)'}}/>
                 <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder={t.emailPh} disabled={loading} onKeyDown={e=>e.key==='Enter'&&onSubmit()} style={{...inputStyle,paddingLeft:'3rem'}}/>
               </div>
               {error && <div style={{background:'rgba(239,68,68,0.1)',border:'1px solid rgba(239,68,68,0.3)',color:'#fca5a5',padding:'0.75rem 1rem',borderRadius:'2px',fontSize:'0.85rem',marginBottom:'1rem',display:'flex',alignItems:'center',gap:'0.5rem'}}><Alert size={16}/>{error}</div>}
@@ -2444,10 +3134,10 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       return (
         <Center>
           <div style={{maxWidth:'440px',textAlign:'center'}}>
-            <div style={{width:'80px',height:'80px',borderRadius:'50%',background:'rgba(251,191,36,0.1)',border:'1px solid #fbbf24',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 2rem'}}><Mail size={32} color="#fbbf24"/></div>
-            <h2 className="serif" style={{color:'#fff',fontSize:'2rem',fontStyle:'italic',margin:0}}>{t.linkSent}</h2>
-            <p style={{color:'rgba(255,255,255,0.6)',marginTop:'1rem'}}>{t.linkSentSub}</p>
-            <p style={{color:'#fbbf24',fontSize:'1.1rem',marginTop:'0.5rem'}}>{email}</p>
+            <div style={{width:'80px',height:'80px',borderRadius:'50%',background:'rgba(255,92,46,0.1)',border:'1px solid #FF5C2E',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 2rem'}}><Mail size={32} color="#FF5C2E"/></div>
+            <h2 className="serif" style={{color:'#1A2032',fontSize:'2rem',margin:0}}>{t.linkSent}</h2>
+            <p style={{color:'rgba(26,32,50,0.6)',marginTop:'1rem'}}>{t.linkSentSub}</p>
+            <p style={{color:'#FF5C2E',fontSize:'1.1rem',marginTop:'0.5rem'}}>{email}</p>
             <button onClick={onBack} style={{...ghostBtn,marginTop:'3rem'}}>{t.backToLogin}</button>
           </div>
         </Center>
@@ -2458,11 +3148,256 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       return (
         <Center>
           <div style={{maxWidth:'500px',textAlign:'center'}}>
-            <div style={{width:'100px',height:'100px',borderRadius:'50%',background:'#fbbf24',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 2rem'}}><Check size={48} color="#0a0e27" strokeWidth={3}/></div>
-            <h2 className="serif" style={{color:'#fff',fontSize:'2.5rem',fontStyle:'italic',margin:0}}>{t.submitted}</h2>
-            <p style={{color:'rgba(255,255,255,0.6)',marginTop:'1.5rem',fontSize:'1.05rem',lineHeight:1.6}}>{t.submittedSub}</p>
+            <div style={{width:'100px',height:'100px',borderRadius:'50%',background:'#FF5C2E',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 2rem'}}><Check size={48} color="#FAFAF7" strokeWidth={3}/></div>
+            <h2 className="serif" style={{color:'#1A2032',fontSize:'2.5rem',margin:0}}>{t.submitted}</h2>
+            <p style={{color:'rgba(26,32,50,0.6)',marginTop:'1.5rem',fontSize:'1.05rem',lineHeight:1.6}}>{t.submittedSub}</p>
           </div>
         </Center>
+      );
+    }
+
+    // Customer-facing post-submit portal: mockup preview + chat + approve + upsells
+    function ProjectPortal({ t, lang, setLang, client, email, onLogout }) {
+      const [data, setData] = useState(null);
+      const [loading, setLoading] = useState(true);
+      const [posting, setPosting] = useState(false);
+      const [msg, setMsg] = useState("");
+      const [viewport, setViewport] = useState("desktop");
+      const isEs = lang !== "en";
+
+      async function load() {
+        try {
+          const r = await api("/api/client/project");
+          setData(r);
+        } catch (e) { console.error(e); }
+        finally { setLoading(false); }
+      }
+      useEffect(() => { load(); const id = setInterval(load, 30000); return () => clearInterval(id); }, []);
+
+      async function send() {
+        const text = msg.trim();
+        if (!text) return;
+        setPosting(true);
+        try {
+          await api("/api/client/project/comment", { method: "POST", body: JSON.stringify({ body: text }) });
+          setMsg("");
+          await load();
+        } catch (e) { alert("Error: " + e.message); }
+        finally { setPosting(false); }
+      }
+      async function approve() {
+        const ok = confirm(isEs ? "¿Aprobar este diseño? Procederemos a lanzarlo en vivo." : "Approve this design? We will proceed to launch it.");
+        if (!ok) return;
+        try { await api("/api/client/project/approve", { method: "POST" }); await load(); }
+        catch (e) { alert("Error: " + e.message); }
+      }
+      async function upgrade() {
+        try {
+          const r = await api("/api/client/project/upgrade", { method: "POST" });
+          if (r.checkout_url) location.href = r.checkout_url;
+        } catch (e) { alert("Error: " + e.message); }
+      }
+      async function buyHosting(period) {
+        try {
+          const r = await api("/api/client/project/hosting", { method: "POST", body: JSON.stringify({ period }) });
+          if (r.checkout_url) location.href = r.checkout_url;
+        } catch (e) { alert("Error: " + e.message); }
+      }
+
+      if (loading) return <Center><div style={{color:"rgba(26,32,50,0.5)"}}>{isEs ? "Cargando…" : "Loading…"}</div></Center>;
+      if (!data) return <Center><div style={{color:"#fca5a5"}}>{isEs ? "No se pudo cargar el proyecto." : "Could not load project."}</div></Center>;
+
+      const project = data.project || {};
+      const opts = data.options || {};
+      const state = project.state;
+
+      // Shared header
+      const Header = () => (
+        <header style={headerStyle}>
+          <div style={{display:"flex",alignItems:"center",gap:"0.75rem"}}>
+            <Sparkle size={18} color="#FF5C2E"/>
+            <span className="serif" style={{fontSize:"1.25rem"}}>Pyme<span style={{color:"#FF5C2E"}}>WebPro</span></span>
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:"1rem"}}>
+            <button onClick={()=>setLang(lang==="en"?"es":"en")} style={langBtn}>{lang==="en"?"ES":"EN"}</button>
+            <span style={{color:"rgba(26,32,50,0.5)",fontSize:"0.85rem"}}>{email}</span>
+            <button onClick={onLogout} style={{background:"transparent",border:"none",color:"rgba(26,32,50,0.4)",cursor:"pointer"}}><LogOut size={18}/></button>
+          </div>
+        </header>
+      );
+
+      // ─── State: waiting for mockup (48h live countdown) ──────────────
+      if (state === "waiting_for_mockup") {
+        return <WaitingForMockup project={project} opts={opts} isEs={isEs} email={email} t={t} lang={lang} setLang={setLang} onLogout={onLogout} />;
+      }
+
+      // ─── State: live ──────────────────────────────────────────────────
+      if (state === "live") {
+        return (
+          <div style={{minHeight:"100vh",background:"#FAFAF7",color:"#1A2032"}}>
+            <Header/>
+            <main style={{padding:"4rem 2rem",maxWidth:"720px",margin:"0 auto",textAlign:"center"}}>
+              <div style={{width:"100px",height:"100px",borderRadius:"50%",background:"#10b981",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 2rem"}}><Check size={48} color="#FAFAF7" strokeWidth={3}/></div>
+              <h1 className="serif" style={{fontSize:"2.6rem",fontWeight:400,margin:"0 0 1.25rem"}}>{isEs ? "¡Su sitio está en vivo!" : "Your site is live!"}</h1>
+              {project.live_url && <p style={{margin:"0 0 2rem"}}><a href={project.live_url} target="_blank" rel="noopener" style={{color:"#FF5C2E",fontSize:"1.15rem",fontWeight:600}}>{project.live_url} →</a></p>}
+              <p style={{color:"rgba(26,32,50,0.65)",lineHeight:1.65,marginBottom:"2.5rem"}}>{isEs ? "Cualquier cambio o duda, escríbanos en el chat más abajo. Estamos a su lado." : "Any changes or questions? Message us in the chat below. We are here to help."}</p>
+              <ChatPanel comments={project.comments || []} onSend={send} value={msg} onChange={setMsg} posting={posting} t={t} lang={lang}/>
+            </main>
+          </div>
+        );
+      }
+
+      // ─── State: approved, building ────────────────────────────────────
+      if (state === "approved_building") {
+        return (
+          <div style={{minHeight:"100vh",background:"#FAFAF7",color:"#1A2032"}}>
+            <Header/>
+            <main style={{padding:"4rem 2rem",maxWidth:"640px",margin:"0 auto"}}>
+              <div style={{textAlign:"center"}}>
+                <div style={{width:"80px",height:"80px",borderRadius:"50%",background:"rgba(16,185,129,0.18)",border:"1px solid #10b981",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 2rem"}}><Check size={32} color="#10b981"/></div>
+                <h1 className="serif" style={{fontSize:"2.4rem",fontWeight:400,margin:"0 0 1.25rem",textAlign:"center"}}>{isEs ? "Diseño aprobado — estamos en los últimos detalles" : "Design approved — we are finishing up"}</h1>
+                <p style={{color:"rgba(26,32,50,0.65)",lineHeight:1.65,marginBottom:"2rem",textAlign:"center"}}>{isEs ? "Le notificamos por correo cuando su sitio esté en vivo." : "We will email you when your site is live."}</p>
+              </div>
+              <ChatPanel comments={project.comments || []} onSend={send} value={msg} onChange={setMsg} posting={posting} t={t} lang={lang}/>
+            </main>
+          </div>
+        );
+      }
+
+      // ─── State: reviewing mockup (the main interactive state) ────────
+      const previewWidths = { desktop: "100%", tablet: "768px", mobile: "375px" };
+      return (
+        <div style={{minHeight:"100vh",background:"#FAFAF7",color:"#1A2032"}}>
+          <Header/>
+          <main style={{padding:"2rem",maxWidth:"1280px",margin:"0 auto"}}>
+            <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",marginBottom:"1.5rem",flexWrap:"wrap",gap:"1rem"}}>
+              <div>
+                <h1 className="serif" style={{fontSize:"2rem",fontWeight:400,margin:0}}>{isEs ? "Su mockup está listo" : "Your mockup is ready"}</h1>
+                <p style={{color:"rgba(26,32,50,0.6)",marginTop:".4rem",fontSize:".95rem"}}>{isEs ? "Versión " : "Version "}{(project.mockup && project.mockup.version) || 1} · {isEs ? "revíselo, pida cambios o apruébelo abajo" : "review it, request changes, or approve below"}</p>
+                {project.revisions && (
+                  <p style={{color:"rgba(26,32,50,0.5)",marginTop:".25rem",fontSize:".82rem"}}>
+                    {isEs
+                      ? ("Ronda de revisión " + (project.revisions.used + 1) + " de " + (project.revisions.total + 1) + " · " + project.revisions.remaining + " ronda" + (project.revisions.remaining===1?"":"s") + " restante" + (project.revisions.remaining===1?"":"s"))
+                      : ("Revision round " + (project.revisions.used + 1) + " of " + (project.revisions.total + 1) + " · " + project.revisions.remaining + " round" + (project.revisions.remaining===1?"":"s") + " remaining")}
+                  </p>
+                )}
+              </div>
+              <div style={{display:"flex",gap:".4rem"}}>
+                {["desktop","tablet","mobile"].map(v => (
+                  <button key={v} onClick={()=>setViewport(v)} style={{padding:".5rem 1rem",background:viewport===v?"rgba(255,92,46,0.15)":"rgba(26,32,50,0.04)",border:"1px solid "+(viewport===v?"#FF5C2E":"rgba(26,32,50,0.1)"),color:viewport===v?"#FF5C2E":"rgba(26,32,50,0.6)",borderRadius:"4px",cursor:"pointer",fontFamily:"inherit",fontSize:".82rem",textTransform:"capitalize"}}>{v}</button>
+                ))}
+              </div>
+            </div>
+
+            <div style={{display:"grid",gridTemplateColumns:"minmax(0, 1fr) 360px",gap:"1.5rem"}}>
+              {/* Mockup iframe */}
+              <div style={{background:"#0f1640",border:"1px solid rgba(26,32,50,0.08)",borderRadius:"6px",padding:"1rem",display:"flex",justifyContent:"center"}}>
+                {project.mockup && project.mockup.preview_url ? (
+                  <iframe src={project.mockup.preview_url} style={{width:previewWidths[viewport],maxWidth:"100%",height:"720px",border:0,borderRadius:"4px",background:"#fff",transition:"width .3s"}} title="Mockup preview" />
+                ) : <div style={{padding:"3rem",color:"rgba(26,32,50,0.4)"}}>{isEs ? "Mockup no disponible" : "Mockup not available"}</div>}
+              </div>
+
+              {/* Right side — chat + approve + upsells */}
+              <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
+                <button onClick={approve} style={{...primaryBtn,width:"100%",padding:"1.1rem",fontSize:".95rem"}}>
+                  <Check size={18} strokeWidth={3}/> {isEs ? "Aprobar este diseño" : "Approve this design"}
+                </button>
+                <ChatPanel comments={project.comments || []} onSend={send} value={msg} onChange={setMsg} posting={posting} t={t} lang={lang}/>
+
+                {/* Upsells */}
+                {opts.can_upgrade && (
+                  <div style={{padding:"1.25rem",background:"rgba(255,92,46,0.06)",border:"1px solid rgba(255,92,46,0.25)",borderRadius:"6px"}}>
+                    <div style={{fontSize:".7rem",letterSpacing:".15em",color:"#FF5C2E",textTransform:"uppercase",marginBottom:".4rem",fontWeight:600}}>{isEs ? "Mejorar a Crecimiento" : "Upgrade to Growth"}</div>
+                    <div style={{fontSize:".88rem",color:"rgba(26,32,50,0.8)",lineHeight:1.5,marginBottom:".75rem"}}>{isEs ? "Blog, galería ampliada, descargas en PDF, equipo y FAQ. Bilingüe ES + EN. 1 año de hosting incluido. 5 rondas de cambios en total." : "Blog, extended gallery, PDF downloads, team and FAQ. Bilingual ES + EN. 1 year of hosting included. 5 revision rounds total."}</div>
+                    <button onClick={upgrade} style={{...primaryBtn,width:"100%",fontSize:".85rem",padding:".75rem"}}>{"+ $" + (opts.upgrade_amount_cop||0).toLocaleString("es-CO") + " COP"}</button>
+                  </div>
+                )}
+                <div style={{padding:"1.25rem",background:"rgba(26,32,50,0.03)",border:"1px solid rgba(26,32,50,0.08)",borderRadius:"6px"}}>
+                  <div style={{fontSize:".7rem",letterSpacing:".15em",color:"rgba(26,32,50,0.5)",textTransform:"uppercase",marginBottom:".4rem",fontWeight:600}}>{isEs ? "Plan Hosting" : "Hosting Plan"}</div>
+                  <div style={{fontSize:".88rem",color:"rgba(26,32,50,0.8)",lineHeight:1.5,marginBottom:".75rem"}}>{isEs ? "Hospedaje + cambios mensuales + soporte. Cancele cuando quiera." : "Hosting + monthly changes + support. Cancel anytime."}</div>
+                  <div style={{display:"flex",gap:".5rem"}}>
+                    <button onClick={()=>buyHosting("monthly")} style={{...ghostBtn,flex:1,fontSize:".8rem",padding:".7rem .5rem"}}>{"$" + (opts.hosting_monthly_cop||0).toLocaleString("es-CO") + "/mes"}</button>
+                    <button onClick={()=>buyHosting("annual")} style={{...primaryBtn,flex:1,fontSize:".8rem",padding:".7rem .5rem"}}>{"$" + (opts.hosting_annual_cop||0).toLocaleString("es-CO") + "/año"}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    // 48-hour countdown screen shown immediately after intake submission,
+    // before admin pushes the mockup. Auto-refreshes every minute so the
+    // clock stays current and the page transitions when the mockup ships.
+    function WaitingForMockup({ project, opts, isEs, email, t, lang, setLang, onLogout }) {
+      const submittedAt = Number(project.submitted_at || Date.now());
+      const deadline = submittedAt + 48 * 3600 * 1000;
+      const [tick, setTick] = useState(Date.now());
+      useEffect(() => { const id = setInterval(() => setTick(Date.now()), 60000); return () => clearInterval(id); }, []);
+      const remainingMs = Math.max(0, deadline - tick);
+      const hours = Math.floor(remainingMs / 3600000);
+      const minutes = Math.floor((remainingMs % 3600000) / 60000);
+      const overdue = remainingMs === 0;
+      return (
+        <div style={{minHeight:"100vh",background:"#FAFAF7",color:"#1A2032"}}>
+          <header style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"1.25rem 2rem",borderBottom:"1px solid rgba(26,32,50,0.06)"}}>
+            <div style={{display:"flex",alignItems:"center",gap:"0.75rem"}}>
+              <Sparkle size={18} color="#FF5C2E"/>
+              <span className="serif" style={{fontSize:"1.25rem"}}>Pyme<span style={{color:"#FF5C2E"}}>WebPro</span></span>
+            </div>
+            <div style={{display:"flex",alignItems:"center",gap:"1rem"}}>
+              <button onClick={()=>setLang(lang==="en"?"es":"en")} style={{background:"transparent",border:"1px solid rgba(26,32,50,0.15)",color:"rgba(26,32,50,0.7)",padding:".4rem .8rem",borderRadius:"4px",fontSize:".82rem",cursor:"pointer"}}>{lang==="en"?"ES":"EN"}</button>
+              <span style={{color:"rgba(26,32,50,0.5)",fontSize:"0.85rem"}}>{email}</span>
+              <button onClick={onLogout} style={{background:"transparent",border:"none",color:"rgba(26,32,50,0.4)",cursor:"pointer"}}><LogOut size={18}/></button>
+            </div>
+          </header>
+          <main style={{padding:"4rem 2rem",maxWidth:"640px",margin:"0 auto",textAlign:"center"}}>
+            <div style={{width:"80px",height:"80px",borderRadius:"50%",background:"rgba(255,92,46,0.12)",border:"1px solid #FF5C2E",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 2rem"}}><Loader size={32} color="#FF5C2E" className="spin"/></div>
+            <h1 className="serif" style={{fontSize:"2.4rem",fontWeight:400,margin:"0 0 1.25rem"}}>{isEs ? "Estamos preparando su mockup" : "We're preparing your mockup"}</h1>
+            {!overdue ? (
+              <>
+                <div style={{fontFamily:"Fraunces, serif",fontSize:"3.5rem",fontWeight:300,color:"#FF5C2E",margin:"1rem 0 .5rem",letterSpacing:".02em"}}>{hours}<span style={{fontSize:"1.4rem",color:"rgba(26,32,50,0.5)",margin:"0 .35rem"}}>{isEs?"h":"h"}</span>{minutes}<span style={{fontSize:"1.4rem",color:"rgba(26,32,50,0.5)",margin:"0 .35rem"}}>m</span></div>
+                <p style={{color:"rgba(26,32,50,0.6)",fontSize:".88rem",marginBottom:"2rem"}}>{isEs ? "tiempo estimado restante" : "estimated time remaining"}</p>
+              </>
+            ) : (
+              <p style={{color:"#FF5C2E",fontSize:"1.05rem",marginBottom:"2rem"}}>{isEs ? "Lo estamos finalizando — recibirá el aviso pronto." : "We're finalising it — you'll get the notice shortly."}</p>
+            )}
+            <p style={{color:"rgba(26,32,50,0.7)",fontSize:"1.05rem",lineHeight:1.65,margin:"0 0 2rem"}}>{isEs ? "Le enviaremos un correo cuando esté listo para revisar. Esta página se actualiza sola." : "We'll email you when it's ready to review. This page refreshes itself."}</p>
+            <p style={{color:"rgba(26,32,50,0.45)",fontSize:".9rem"}}>{isEs ? "¿Olvidó algo? " : "Forgot something? "}<a href="#" onClick={(e)=>{e.preventDefault();location.reload();}} style={{color:"#FF5C2E"}}>{isEs ? "Editar mis datos" : "Edit my info"}</a></p>
+          </main>
+        </div>
+      );
+    }
+
+    // Reusable chat thread for the project portal
+    function ChatPanel({ comments, onSend, value, onChange, posting, t, lang }) {
+      const isEs = lang !== "en";
+      return (
+        <div style={{background:"rgba(26,32,50,0.03)",border:"1px solid rgba(26,32,50,0.08)",borderRadius:"6px",padding:"1rem"}}>
+          <div style={{fontSize:".7rem",letterSpacing:".15em",color:"rgba(26,32,50,0.5)",textTransform:"uppercase",marginBottom:".75rem",fontWeight:600}}>{isEs ? "Chat con el equipo" : "Chat with the team"}</div>
+          <div style={{maxHeight:"320px",overflowY:"auto",display:"flex",flexDirection:"column",gap:".5rem",marginBottom:".75rem"}}>
+            {(comments || []).length === 0 ? (
+              <div style={{color:"rgba(26,32,50,0.7)",fontSize:".85rem",padding:".75rem .9rem",background:"rgba(255,92,46,0.06)",border:"1px solid rgba(255,92,46,0.2)",borderRadius:"6px",lineHeight:"1.5"}}>{isEs ? "Aún no hay mensajes. Si quiere algún cambio, escríbalo abajo. PymeWebPro responde dentro de 24 horas hábiles." : "No messages yet. Type below if you want changes. PymeWebPro replies within 24 business hours."}</div>
+            ) : (
+              <>
+                {(comments || []).map(c => (
+                  <div key={c.id} style={{padding:".6rem .8rem",background:c.author==="admin"?"rgba(255,92,46,0.08)":"rgba(26,32,50,0.04)",border:"1px solid "+(c.author==="admin"?"rgba(255,92,46,0.2)":"rgba(26,32,50,0.06)"),borderRadius:"4px"}}>
+                    <div style={{fontSize:".7rem",color:c.author==="admin"?"#FF5C2E":"rgba(26,32,50,0.45)",marginBottom:".2rem",fontWeight:600}}>{c.author==="admin"?"PymeWebPro":(isEs?"Usted":"You")} · {new Date(c.created_at*1000).toLocaleString(isEs?"es-CO":"en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}</div>
+                    <div style={{color:"rgba(26,32,50,0.9)",fontSize:".9rem",whiteSpace:"pre-wrap",wordBreak:"break-word"}}>{c.body}</div>
+                  </div>
+                ))}
+                {!comments.some(c => c.author === "admin") && (
+                  <div style={{marginTop:".25rem",color:"rgba(255,92,46,0.75)",fontSize:".78rem",padding:".5rem .75rem",borderLeft:"2px solid rgba(255,92,46,0.4)",lineHeight:"1.45"}}>{isEs ? "PymeWebPro está revisando, le respondemos dentro de 24 horas hábiles." : "PymeWebPro is reviewing, we'll reply within 24 business hours."}</div>
+                )}
+              </>
+            )}
+          </div>
+          <textarea value={value} onChange={(e)=>onChange(e.target.value)} placeholder={isEs?"Escriba su mensaje…":"Type your message…"} rows={3} style={{...inputStyle,resize:"vertical",fontSize:".9rem",padding:".7rem .85rem"}}/>
+          <div style={{display:"flex",justifyContent:"flex-end",marginTop:".5rem"}}>
+            <button onClick={onSend} disabled={posting || !value.trim()} style={{...primaryBtn,fontSize:".82rem",padding:".55rem 1.1rem"}}>{posting?(isEs?"Enviando…":"Sending…"):(isEs?"Enviar":"Send")}</button>
+          </div>
+        </div>
       );
     }
 
@@ -2578,47 +3513,51 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         q:{es:'¿Tiene hosting actualmente?',en:'Do you currently have hosting?'},
         h:{es:'Si paga hospedaje en algún lado, díganoslo. Si no, sáltelo.',en:'If you pay for hosting somewhere, tell us. Otherwise skip.'},
         p:{es:'',en:''} },
-      { key:'bizEmail', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
-        q:{es:'¿Cómo quiere su correo profesional?',en:'How do you want your professional email?'},
-        h:{es:'Ejemplo: info@sunegocio.com. Si tiene preferencias distintas, descríbalas.',en:"Example: info@yourbusiness.com. If you've other preferences, describe."},
-        p:{es:'info@sunegocio.com',en:'info@yourbusiness.com'} },
+      // Email forwarding — free via Cloudflare Email Routing once we attach the domain.
+      // Two clean inputs replace the old open-ended bizEmail prompt.
+      { key:'emailLocalPart', section:'tech', group:{es:'Correo profesional',en:'Professional email'}, type:'text',
+        q:{es:'¿Qué dirección de correo quiere en su dominio?',en:'What email address do you want on your domain?'},
+        h:{es:'Solo la parte antes del @. Ejemplos: hola, info, contacto, ventas. Si tiene varios en mente, sepárelos por comas.',en:'Just the part before the @. Examples: hello, info, contact, sales. Separate multiple with commas.'},
+        p:{es:'hola',en:'hello'} },
+      { key:'emailForwardTo', section:'tech', group:{es:'Correo profesional',en:'Professional email'}, type:'text',
+        q:{es:'¿A dónde lo reenviamos?',en:'Where should it forward to?'},
+        h:{es:'Su correo personal donde revisa todos los días (Gmail, Outlook, etc). El reenvío es gratuito vía Cloudflare. ¿Quiere un buzón completo? Le ayudamos a configurar Google Workspace ($7/usuario/mes).',en:'Your personal inbox you check daily (Gmail, Outlook, etc). Forwarding is free via Cloudflare. Want a full mailbox? We can help you set up Google Workspace ($7/user/month).'},
+        p:{es:'tu@gmail.com',en:'you@gmail.com'} },
 
-      // Crecimiento (proOnly)
-      { key:'bilingual', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'yesno', proOnly:true,
-        q:{es:'¿Quiere también una versión en inglés?',en:'Do you want an English version too?'},
-        h:{es:'Generamos /es y /en automáticamente, traducidas profesionalmente.',en:'We auto-generate /es and /en, professionally translated.'} },
-      { key:'bookingsUrl', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
-        q:{es:'¿Tiene un sistema de reservas?',en:"Do you've a booking system?"},
-        h:{es:'Pegue su URL de Calendly, Cal.com o similar. Lo embebemos en su sitio.',en:'Paste your Calendly, Cal.com or similar URL. We embed it.'},
-        p:{es:'https://calendly.com/...',en:'https://calendly.com/...'} },
-      { key:'__pdfUpload', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'file', category:'pdf', proOnly:true,
-        q:{es:'¿Tiene un menú o catálogo en PDF?',en:"Do you've a menu or catalog PDF?"},
-        h:{es:'Lo añadimos como botón de descarga en su sitio.',en:'We add it as a download button.'},
-        accept:'application/pdf' },
-      { key:'pdfLabel', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
-        q:{es:'¿Cómo se llama el PDF?',en:"What's the PDF called?"},
-        h:{es:'Ejemplo: Menú · Catálogo 2026 · Ficha técnica.',en:'Example: Menu · 2026 Catalog · Spec sheet.'},
-        p:{es:'Menú',en:'Menu'} },
-      { key:'waCatalogUrl', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
-        q:{es:'¿Catálogo de WhatsApp Business?',en:'WhatsApp Business catalog?'},
-        h:{es:'Si tiene catálogo en WA Business, pegue el link.',en:"If you've a WA Business catalog, paste the link."},
-        p:{es:'https://wa.me/c/...',en:'https://wa.me/c/...'} },
-      { key:'newsletterEnabled', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'yesno', proOnly:true,
-        q:{es:'¿Quiere un formulario de newsletter?',en:'Do you want a newsletter signup form?'},
-        h:{es:'Los suscriptores se guardan; le notificamos cada nuevo registro.',en:'Subscribers are saved; we notify you on each signup.'} },
-      { key:'ga4Id', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
+      // Tracking IDs — both plans (Esencial gets the site wired for GA4/Meta too)
+      { key:'ga4Id', section:'tech', group:{es:'Analítica y marketing',en:'Analytics & marketing'}, type:'text',
         q:{es:'¿ID de Google Analytics 4?',en:'Google Analytics 4 ID?'},
         h:{es:'Formato G-XXXXXXXXXX. Sáltelo si no tiene cuenta — se la creamos.',en:"Format G-XXXXXXXXXX. Skip if you don't have one — we set it up."},
         p:{es:'G-XXXXXXXXXX',en:'G-XXXXXXXXXX'} },
-      { key:'metaPixelId', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'text', proOnly:true,
+      { key:'metaPixelId', section:'tech', group:{es:'Analítica y marketing',en:'Analytics & marketing'}, type:'text',
         q:{es:'¿ID del Meta Pixel?',en:'Meta Pixel ID?'},
         h:{es:'15-16 dígitos. Solo si corre ads en Facebook o Instagram.',en:'15-16 digits. Only if you run Facebook or Instagram ads.'},
         p:{es:'1234567890123456',en:'1234567890123456'} },
-      { key:'testimonials', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'textarea', proOnly:true,
-        q:{es:'¿Tiene testimonios reales?',en:"Do you've real testimonials?"},
+
+      // Testimonials — both plans (it's a core Esencial section)
+      { key:'testimonials', section:'content', group:{es:'Testimonios',en:'Testimonials'}, type:'textarea',
+        q:{es:'¿Tiene testimonios reales de clientes?',en:"Do you have real customer testimonials?"},
         h:{es:'Uno por línea, formato: Nombre | Cita | Rol. Solo testimonios reales con permiso.',en:'One per line: Name | Quote | Role. Only real testimonials with permission.'},
         p:{es:'María Pérez | Excelente servicio | Cliente desde 2022',en:'María Pérez | Excellent service | Customer since 2022'} },
-      { key:'faqs', section:'growth', group:{es:'Funciones Crecimiento',en:'Growth features'}, type:'textarea', proOnly:true,
+
+      // Crecimiento extras (proOnly): blog · extended gallery · PDF downloads · team · FAQ
+      { key:'blogTopics', section:'growth', group:{es:'Blog',en:'Blog'}, type:'textarea', proOnly:true,
+        q:{es:'¿Sobre qué temas quiere publicar en el blog?',en:'What topics do you want to blog about?'},
+        h:{es:'Liste 3-6 temas o títulos iniciales. Nosotros redactamos los primeros artículos.',en:"List 3-6 topics or initial titles. We'll write the first posts."},
+        p:{es:'Cómo elegir el mejor café · Tips de barismo · Recetas con espresso',en:'How to choose the best coffee · Barista tips · Espresso recipes'} },
+      { key:'__pdfUpload', section:'growth', group:{es:'Descargas en PDF',en:'PDF downloads'}, type:'file', category:'pdf', proOnly:true,
+        q:{es:'Suba los PDFs descargables (menú, catálogo, ficha técnica…)',en:'Upload downloadable PDFs (menu, catalog, spec sheet…)'},
+        h:{es:'Puede subir varios. Aparecen como botones de descarga en una sección dedicada.',en:'You can upload several. They appear as download buttons in a dedicated section.'},
+        accept:'application/pdf' },
+      { key:'pdfLabel', section:'growth', group:{es:'Descargas en PDF',en:'PDF downloads'}, type:'text', proOnly:true,
+        q:{es:'Título de la sección de descargas',en:'Downloads section title'},
+        h:{es:'Ejemplo: "Descargue nuestro menú", "Catálogo 2026".',en:'Example: "Download our menu", "2026 Catalog".'},
+        p:{es:'Descargas',en:'Downloads'} },
+      { key:'teamBios', section:'growth', group:{es:'Equipo',en:'Team'}, type:'textarea', proOnly:true,
+        q:{es:'¿Quiénes forman su equipo?',en:'Who is on your team?'},
+        h:{es:'Una persona por línea, formato: Nombre | Rol | Bio corta. Suba sus fotos en el paso de fotos.',en:'One person per line: Name | Role | Short bio. Upload their photos in the photo step.'},
+        p:{es:'Ana Gómez | Fundadora y barista jefe | 10 años en café de especialidad',en:'Ana Gómez | Founder & head barista | 10 years in specialty coffee'} },
+      { key:'faqs', section:'growth', group:{es:'Preguntas frecuentes',en:'FAQ'}, type:'textarea', proOnly:true,
         q:{es:'¿Preguntas frecuentes que recibe?',en:'Frequently asked questions you receive?'},
         h:{es:'Una por línea, formato: ¿Pregunta? | Respuesta.',en:'One per line: Question? | Answer.'},
         p:{es:'¿Hacen domicilios? | Sí, en toda Medellín.',en:'Do you deliver? | Yes, anywhere in Medellín.'} },
@@ -2725,15 +3664,15 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             <button onClick={()=>setLang(lang==='en'?'es':'en')} style={{position:'absolute',top:'2rem',right:'2rem',...langBtn,zIndex:10}}>{lang==='en'?'ES':'EN'}</button>
             <div style={{maxWidth:'560px',width:'100%',position:'relative',zIndex:1}}>
               <div style={{textAlign:'center',marginBottom:'2.5rem'}}>
-                <Sparkle size={48} color="#fbbf24"/>
+                <Sparkle size={48} color="#FF5C2E"/>
               </div>
               <h1 className="serif" style={{...titleStyle,fontSize:'3rem',textAlign:'center',marginBottom:'1.5rem'}}>{lang==='es'?'¡Bienvenido!':'Welcome!'}</h1>
-              <p style={{color:'rgba(255,255,255,0.75)',fontSize:'1.05rem',lineHeight:1.65,textAlign:'center',marginBottom:'1rem'}}>
+              <p style={{color:'rgba(26,32,50,0.75)',fontSize:'1.05rem',lineHeight:1.65,textAlign:'center',marginBottom:'1rem'}}>
                 {lang==='es'
                   ? 'Vamos a poner su sitio en línea. Esto le toma unos 15 minutos.'
                   : "Let's get your site online. About 15 minutes."}
               </p>
-              <p style={{color:'rgba(255,255,255,0.55)',fontSize:'.95rem',lineHeight:1.65,textAlign:'center',marginBottom:'2.5rem'}}>
+              <p style={{color:'rgba(26,32,50,0.55)',fontSize:'.95rem',lineHeight:1.65,textAlign:'center',marginBottom:'2.5rem'}}>
                 {lang==='es'
                   ? 'Cada pregunta es opcional — si no sabe la respuesta, salte y nosotros lo manejamos. Sus respuestas se guardan a medida que escribe.'
                   : "Every question is optional — if you don't know, skip and we handle it. Your answers save as you type."}
@@ -2743,7 +3682,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   {lang==='es'?'Empezar':"Let's start"} <ChevR size={16}/>
                 </button>
               </div>
-              <p style={{textAlign:'center',marginTop:'2rem',fontSize:'.8rem',color:'rgba(255,255,255,0.35)'}}>
+              <p style={{textAlign:'center',marginTop:'2rem',fontSize:'.8rem',color:'rgba(26,32,50,0.35)'}}>
                 {client && client.plan ? ('Plan: ' + ((client.plan==='pro'||client.plan==='crecimiento')?'Crecimiento':'Esencial')) : ''}
               </p>
             </div>
@@ -2761,28 +3700,28 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           groups[g].items.push({ ...s, idx });
         });
         return (
-          <div style={{minHeight:'100vh',background:'#0a0e27',color:'#fff'}}>
+          <div style={{minHeight:'100vh',background:'#FAFAF7',color:'#1A2032'}}>
             <header style={headerStyle}>
               <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
-                <Sparkle size={18} color="#fbbf24"/>
-                <span className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>Pyme<span style={{color:'#fbbf24'}}>WebPro</span></span>
+                <Sparkle size={18} color="#FF5C2E"/>
+                <span className="serif" style={{fontSize:'1.25rem'}}>Pyme<span style={{color:'#FF5C2E'}}>WebPro</span></span>
               </div>
               <div style={{display:'flex',alignItems:'center',gap:'1rem'}}>
                 <button onClick={()=>setLang(lang==='en'?'es':'en')} style={langBtn}>{lang==='en'?'ES':'EN'}</button>
-                <span style={{color:'rgba(255,255,255,0.5)',fontSize:'.85rem'}}>{email}</span>
-                <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
+                <span style={{color:'rgba(26,32,50,0.5)',fontSize:'.85rem'}}>{email}</span>
+                <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(26,32,50,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
               </div>
             </header>
             <main style={{padding:'3rem 2rem',maxWidth:'780px',margin:'0 auto'}}>
-              <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:'0 0 1rem'}}>{lang==='es'?'Revisión final':'Final review'}</h1>
-              <p style={{color:'rgba(255,255,255,0.65)',marginBottom:'2.5rem',lineHeight:1.6}}>
+              <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:'0 0 1rem'}}>{lang==='es'?'Revisión final':'Final review'}</h1>
+              <p style={{color:'rgba(26,32,50,0.65)',marginBottom:'2.5rem',lineHeight:1.6}}>
                 {lang==='es'
                   ? 'Repase sus respuestas. Puede editar cualquier campo antes de enviar.'
                   : 'Review your answers. You can edit any field before submitting.'}
               </p>
               {Object.entries(groups).map(([gKey, g]) => (
                 <div key={gKey} style={{marginBottom:'2rem'}}>
-                  <div style={{fontSize:'.7rem',letterSpacing:'.2em',color:'#fbbf24',textTransform:'uppercase',marginBottom:'.75rem'}}>{g.label}</div>
+                  <div style={{fontSize:'.7rem',letterSpacing:'.2em',color:'#FF5C2E',textTransform:'uppercase',marginBottom:'.75rem'}}>{g.label}</div>
                   {g.items.map(s => {
                     let answer;
                     if (s.key === '__logoUpload') answer = files.filter(f => f.category === 'logo').map(f => f.filename).join(', ');
@@ -2792,20 +3731,20 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                     else answer = data[s.key] || '';
                     const isSet = answer && String(answer).trim();
                     return (
-                      <div key={s.key} onClick={()=>jumpTo(s.idx)} style={{padding:'.85rem 1rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',marginBottom:'.4rem',cursor:'pointer',display:'flex',justifyContent:'space-between',alignItems:'center',gap:'.75rem'}}>
+                      <div key={s.key} onClick={()=>jumpTo(s.idx)} style={{padding:'.85rem 1rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px',marginBottom:'.4rem',cursor:'pointer',display:'flex',justifyContent:'space-between',alignItems:'center',gap:'.75rem'}}>
                         <div style={{flex:1,minWidth:0}}>
-                          <div style={{fontSize:'.78rem',color:'rgba(255,255,255,0.5)',marginBottom:'.2rem'}}>{loc(s.q)}</div>
-                          <div style={{color:isSet?'rgba(255,255,255,0.9)':'rgba(255,255,255,0.35)',fontStyle:isSet?'normal':'italic',whiteSpace:'pre-wrap',wordBreak:'break-word',fontSize:'.92rem'}}>
+                          <div style={{fontSize:'.78rem',color:'rgba(26,32,50,0.5)',marginBottom:'.2rem'}}>{loc(s.q)}</div>
+                          <div style={{color:isSet?'rgba(26,32,50,0.9)':'rgba(26,32,50,0.35)',fontStyle:isSet?'normal':'italic',whiteSpace:'pre-wrap',wordBreak:'break-word',fontSize:'.92rem'}}>
                             {isSet ? String(answer) : (lang==='es'?'(saltado)':'(skipped)')}
                           </div>
                         </div>
-                        <span style={{color:'#fbbf24',fontSize:'.78rem',whiteSpace:'nowrap'}}>{lang==='es'?'Editar':'Edit'} →</span>
+                        <span style={{color:'#FF5C2E',fontSize:'.78rem',whiteSpace:'nowrap'}}>{lang==='es'?'Editar':'Edit'} →</span>
                       </div>
                     );
                   })}
                 </div>
               ))}
-              <div style={{display:'flex',gap:'.75rem',marginTop:'2rem',paddingTop:'1.5rem',borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+              <div style={{display:'flex',gap:'.75rem',marginTop:'2rem',paddingTop:'1.5rem',borderTop:'1px solid rgba(26,32,50,0.08)'}}>
                 <button onClick={()=>{ setStep(0); setView('step'); }} style={{...secondaryBtn,flex:1}}>
                   <ChevL size={16}/> {lang==='es'?'Volver al inicio':'Back to start'}
                 </button>
@@ -2825,36 +3764,36 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const backLabel = lang==='es' ? 'Atrás' : 'Back';
 
       return (
-        <div style={{minHeight:'100vh',background:'#0a0e27',color:'#fff',display:'flex',flexDirection:'column'}}>
+        <div style={{minHeight:'100vh',background:'#FAFAF7',color:'#1A2032',display:'flex',flexDirection:'column'}}>
           <header style={headerStyle}>
             <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
-              <Sparkle size={18} color="#fbbf24"/>
-              <span className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>Pyme<span style={{color:'#fbbf24'}}>WebPro</span></span>
+              <Sparkle size={18} color="#FF5C2E"/>
+              <span className="serif" style={{fontSize:'1.25rem'}}>Pyme<span style={{color:'#FF5C2E'}}>WebPro</span></span>
             </div>
             <div style={{display:'flex',alignItems:'center',gap:'1rem'}}>
-              {saving && <span style={{color:'rgba(255,255,255,0.4)',fontSize:'.78rem'}}><Loader size={12} className="spin"/> {t.saving}</span>}
+              {saving && <span style={{color:'rgba(26,32,50,0.4)',fontSize:'.78rem'}}><Loader size={12} className="spin"/> {t.saving}</span>}
               <button onClick={()=>setLang(lang==='en'?'es':'en')} style={langBtn}>{lang==='en'?'ES':'EN'}</button>
-              <span style={{color:'rgba(255,255,255,0.5)',fontSize:'.85rem'}}>{email}</span>
-              <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
+              <span style={{color:'rgba(26,32,50,0.5)',fontSize:'.85rem'}}>{email}</span>
+              <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(26,32,50,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
             </div>
           </header>
-          <div style={{height:'4px',background:'rgba(255,255,255,0.06)',position:'relative'}}>
-            <div style={{position:'absolute',inset:0,width:progress+'%',background:'linear-gradient(90deg,#fbbf24,#f59e0b)',transition:'width .4s'}}/>
+          <div style={{height:'4px',background:'rgba(26,32,50,0.06)',position:'relative'}}>
+            <div style={{position:'absolute',inset:0,width:progress+'%',background:'linear-gradient(90deg,#FF5C2E,#f59e0b)',transition:'width .4s'}}/>
           </div>
           <main style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',padding:'2rem',position:'relative'}}>
             <Orbs/>
             <div style={{maxWidth:'620px',width:'100%',position:'relative',zIndex:1}}>
               <div style={{display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'.75rem'}}>
-                <span style={{fontSize:'.7rem',letterSpacing:'.2em',textTransform:'uppercase',color:'#fbbf24',fontWeight:600}}>{loc(cur.group)}</span>
-                <span style={{color:'rgba(255,255,255,0.3)'}}>·</span>
-                <span style={{fontSize:'.78rem',color:'rgba(255,255,255,0.5)'}}>{step+1} {lang==='es'?'de':'of'} {total}</span>
+                <span style={{fontSize:'.7rem',letterSpacing:'.2em',textTransform:'uppercase',color:'#FF5C2E',fontWeight:600}}>{loc(cur.group)}</span>
+                <span style={{color:'rgba(26,32,50,0.3)'}}>·</span>
+                <span style={{fontSize:'.78rem',color:'rgba(26,32,50,0.5)'}}>{step+1} {lang==='es'?'de':'of'} {total}</span>
               </div>
-              <h1 className="serif" style={{fontSize:'1.85rem',fontWeight:400,fontStyle:'italic',margin:'0 0 .85rem',lineHeight:1.25}}>{loc(cur.q)}</h1>
-              {loc(cur.h) && <p style={{color:'rgba(255,255,255,0.6)',fontSize:'.95rem',lineHeight:1.6,margin:'0 0 1.25rem'}}>{loc(cur.h)}</p>}
+              <h1 className="serif" style={{fontSize:'1.85rem',fontWeight:400,margin:'0 0 .85rem',lineHeight:1.25}}>{loc(cur.q)}</h1>
+              {loc(cur.h) && <p style={{color:'rgba(26,32,50,0.6)',fontSize:'.95rem',lineHeight:1.6,margin:'0 0 1.25rem'}}>{loc(cur.h)}</p>}
               {cur.cta && (
-                <div style={{background:'rgba(251,191,36,0.07)',border:'1px solid rgba(251,191,36,0.25)',borderRadius:'6px',padding:'1rem 1.15rem',marginBottom:'1.75rem'}}>
-                  <p style={{color:'rgba(255,255,255,0.82)',fontSize:'.9rem',lineHeight:1.6,margin:'0 0 .75rem'}}>{loc(cur.cta.note)}</p>
-                  <a href={cur.cta.href} target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:'.4rem',background:'#fbbf24',color:'#0a0e27',padding:'.6rem 1.1rem',borderRadius:'4px',fontSize:'.86rem',fontWeight:600,textDecoration:'none'}}>{loc(cur.cta.label)} →</a>
+                <div style={{background:'rgba(255,92,46,0.07)',border:'1px solid rgba(255,92,46,0.25)',borderRadius:'6px',padding:'1rem 1.15rem',marginBottom:'1.75rem'}}>
+                  <p style={{color:'rgba(26,32,50,0.82)',fontSize:'.9rem',lineHeight:1.6,margin:'0 0 .75rem'}}>{loc(cur.cta.note)}</p>
+                  <a href={cur.cta.href} target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:'.4rem',background:'#FF5C2E',color:'#FAFAF7',padding:'.6rem 1.1rem',borderRadius:'4px',fontSize:'.86rem',fontWeight:600,textDecoration:'none'}}>{loc(cur.cta.label)} →</a>
                 </div>
               )}
               <div style={{marginBottom:'2rem'}}>
@@ -2866,7 +3805,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   <div style={{display:'flex',gap:'.75rem'}}>
                     {[['1', lang==='es'?'Sí':'Yes'], ['0', 'No']].map(([v,lbl]) => {
                       const active = data[cur.key] === v;
-                      return <button key={v} onClick={()=>setData(p=>({...p,[cur.key]:v}))} style={{flex:1,padding:'1.1rem',background:active?'rgba(251,191,36,0.15)':'rgba(255,255,255,0.03)',border:'1px solid '+(active?'#fbbf24':'rgba(255,255,255,0.1)'),color:active?'#fbbf24':'rgba(255,255,255,0.85)',borderRadius:'4px',cursor:'pointer',fontFamily:'inherit',fontSize:'1.1rem',fontWeight:500}}>{lbl}</button>;
+                      return <button key={v} onClick={()=>setData(p=>({...p,[cur.key]:v}))} style={{flex:1,padding:'1.1rem',background:active?'rgba(255,92,46,0.15)':'rgba(26,32,50,0.03)',border:'1px solid '+(active?'#FF5C2E':'rgba(26,32,50,0.1)'),color:active?'#FF5C2E':'rgba(26,32,50,0.85)',borderRadius:'4px',cursor:'pointer',fontFamily:'inherit',fontSize:'1.1rem',fontWeight:500}}>{lbl}</button>;
                     })}
                   </div>
                 ) : cur.type === 'file' ? (
@@ -2910,7 +3849,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         business:['bizName','tagline','whatYouDo','audience','nit','legalRepresentative'],
         contact:['phone','email','address','whatsapp','ig','fb','li','tw'],
         brand:['colors','fonts'], visual:['refSites'],
-        content:['tone','topics','pages'], tech:['domain','hosting','bizEmail'],
+        content:['tone','topics','pages'], tech:['domain','hosting','emailLocalPart','emailForwardTo'],
         growth:['bilingual','bookingsUrl','pdfLabel','waCatalogUrl','newsletterEnabled','ga4Id','metaPixelId','testimonials','faqs']
       };
       const [saveStatus, setSaveStatus] = useState({});
@@ -2964,55 +3903,55 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const isFirstVisit = filledCount === 0 && !welcomeDismissed;
 
       return (
-        <div style={{minHeight:'100vh',background:'#0a0e27',color:'#fff'}}>
+        <div style={{minHeight:'100vh',background:'#FAFAF7',color:'#1A2032'}}>
           <header style={headerStyle}>
             <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
-              <Sparkle size={18} color="#fbbf24"/>
-              <span className="serif" style={{fontStyle:'italic',fontSize:'1.25rem'}}>Pyme<span style={{color:'#fbbf24'}}>WebPro</span></span>
+              <Sparkle size={18} color="#FF5C2E"/>
+              <span className="serif" style={{fontSize:'1.25rem'}}>Pyme<span style={{color:'#FF5C2E'}}>WebPro</span></span>
             </div>
             <div style={{display:'flex',alignItems:'center',gap:'1rem'}}>
               <SaveInd status={saveStatus[currentKey]} t={t}/>
               <button onClick={()=>setLang(lang==='en'?'es':'en')} style={langBtn}>{lang==='en'?'ES':'EN'}</button>
-              <span style={{color:'rgba(255,255,255,0.5)',fontSize:'0.85rem'}}>{email}</span>
-              <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
+              <span style={{color:'rgba(26,32,50,0.5)',fontSize:'0.85rem'}}>{email}</span>
+              <button onClick={onLogout} style={{background:'transparent',border:'none',color:'rgba(26,32,50,0.4)',cursor:'pointer'}}><LogOut size={18}/></button>
             </div>
           </header>
           <div style={{display:'grid',gridTemplateColumns:'280px 1fr',minHeight:'calc(100vh - 70px)'}}>
-            <aside style={{borderRight:'1px solid rgba(255,255,255,0.08)',padding:'2rem 1rem',background:'rgba(0,0,0,0.2)'}}>
+            <aside style={{borderRight:'1px solid rgba(26,32,50,0.08)',padding:'2rem 1rem',background:'#F6F5F0'}}>
               <div style={{padding:'0 1rem',marginBottom:'2rem'}}>
-                <div style={{fontSize:'0.7rem',letterSpacing:'0.2em',color:'rgba(255,255,255,0.4)',textTransform:'uppercase',marginBottom:'0.5rem'}}>{t.progress}</div>
-                <div style={{height:'6px',background:'rgba(255,255,255,0.08)',borderRadius:'3px',overflow:'hidden'}}>
-                  <div style={{height:'100%',width:progress+'%',background:'linear-gradient(90deg,#fbbf24,#f59e0b)',transition:'width 0.4s'}}/>
+                <div style={{fontSize:'0.7rem',letterSpacing:'0.2em',color:'rgba(26,32,50,0.4)',textTransform:'uppercase',marginBottom:'0.5rem'}}>{t.progress}</div>
+                <div style={{height:'6px',background:'rgba(26,32,50,0.08)',borderRadius:'3px',overflow:'hidden'}}>
+                  <div style={{height:'100%',width:progress+'%',background:'linear-gradient(90deg,#FF5C2E,#f59e0b)',transition:'width 0.4s'}}/>
                 </div>
-                <div style={{fontSize:'0.8rem',color:'#fbbf24',marginTop:'0.5rem'}}>{progress}% {t.complete}</div>
+                <div style={{fontSize:'0.8rem',color:'#FF5C2E',marginTop:'0.5rem'}}>{progress}% {t.complete}</div>
               </div>
               {sectionKeys.map((key,i) => {
                 const Ic = sectionIcons[i]; const active = i===section;
                 const started = sectionStarted(key);
-                return <button key={key} onClick={()=>setSection(i)} title={started ? t.sectionDone : ''} style={{width:'100%',display:'flex',alignItems:'center',gap:'0.75rem',padding:'0.85rem 1rem',marginBottom:'0.25rem',background:active?'rgba(251,191,36,0.1)':'transparent',border:'none',borderLeft:active?'2px solid #fbbf24':'2px solid transparent',color:active?'#fbbf24':'rgba(255,255,255,0.7)',cursor:'pointer',fontFamily:'inherit',fontSize:'0.9rem',textAlign:'left'}}>
+                return <button key={key} onClick={()=>setSection(i)} title={started ? t.sectionDone : ''} style={{width:'100%',display:'flex',alignItems:'center',gap:'0.75rem',padding:'0.85rem 1rem',marginBottom:'0.25rem',background:active?'rgba(255,92,46,0.1)':'transparent',border:'none',borderLeft:active?'2px solid #FF5C2E':'2px solid transparent',color:active?'#FF5C2E':'rgba(26,32,50,0.7)',cursor:'pointer',fontFamily:'inherit',fontSize:'0.9rem',textAlign:'left'}}>
                   <Ic size={16}/>
                   <span style={{flex:1}}>{t.sections[key]}</span>
                   {started && <span aria-label={t.sectionDone} style={{display:'inline-flex',alignItems:'center',justifyContent:'center',width:'18px',height:'18px',borderRadius:'50%',background:'rgba(16,185,129,0.18)',color:'#10b981',fontSize:'0.75rem',fontWeight:700}}>✓</span>}
                 </button>;
               })}
-              <div style={{padding:'1rem',marginTop:'1.5rem',color:'rgba(255,255,255,0.4)',fontSize:'0.78rem',lineHeight:1.5}}>
+              <div style={{padding:'1rem',marginTop:'1.5rem',color:'rgba(26,32,50,0.4)',fontSize:'0.78rem',lineHeight:1.5}}>
                 {t.welcomeBody.split('. ')[1] || ''}
               </div>
             </aside>
             <main style={{padding:'3rem 4rem',maxWidth:'900px'}}>
               <div style={{display:'flex',alignItems:'center',gap:'1rem',marginBottom:'0.5rem'}}>
-                <SecIcon size={24} color="#fbbf24"/>
-                <span style={{fontSize:'0.75rem',letterSpacing:'0.2em',color:'rgba(255,255,255,0.4)',textTransform:'uppercase'}}>{section+1} / {sectionKeys.length}</span>
+                <SecIcon size={24} color="#FF5C2E"/>
+                <span style={{fontSize:'0.75rem',letterSpacing:'0.2em',color:'rgba(26,32,50,0.4)',textTransform:'uppercase'}}>{section+1} / {sectionKeys.length}</span>
               </div>
-              <h1 className="serif" style={{fontSize:'2.5rem',fontStyle:'italic',fontWeight:400,margin:'0 0 1rem'}}>{t.sections[currentKey]}</h1>
-              <p style={{color:'rgba(255,255,255,0.65)',fontSize:'1rem',lineHeight:1.55,margin:'0 0 2.5rem',maxWidth:'640px'}}>{(t.intros && t.intros[currentKey]) || ''}</p>
+              <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:'0 0 1rem'}}>{t.sections[currentKey]}</h1>
+              <p style={{color:'rgba(26,32,50,0.65)',fontSize:'1rem',lineHeight:1.55,margin:'0 0 2.5rem',maxWidth:'640px'}}>{(t.intros && t.intros[currentKey]) || ''}</p>
               {isFirstVisit && (
-                <div style={{padding:'1.5rem 1.75rem',background:'linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02))',border:'1px solid rgba(251,191,36,0.25)',borderRadius:'8px',marginBottom:'2.5rem',display:'flex',gap:'1rem',alignItems:'flex-start'}}>
-                  <Sparkle size={20} color="#fbbf24" style={{marginTop:'2px',flexShrink:0}}/>
+                <div style={{padding:'1.5rem 1.75rem',background:'linear-gradient(135deg,rgba(255,92,46,0.08),rgba(255,92,46,0.02))',border:'1px solid rgba(255,92,46,0.25)',borderRadius:'8px',marginBottom:'2.5rem',display:'flex',gap:'1rem',alignItems:'flex-start'}}>
+                  <Sparkle size={20} color="#FF5C2E" style={{marginTop:'2px',flexShrink:0}}/>
                   <div style={{flex:1}}>
-                    <div className="serif" style={{fontStyle:'italic',fontSize:'1.15rem',color:'#fbbf24',marginBottom:'0.4rem'}}>{t.welcomeTitle}</div>
-                    <div style={{color:'rgba(255,255,255,0.75)',fontSize:'0.92rem',lineHeight:1.55}}>{t.welcomeBody}</div>
-                    <button onClick={()=>setWelcomeDismissed(true)} style={{marginTop:'1rem',background:'#fbbf24',color:'#0a0e27',border:0,padding:'0.6rem 1.2rem',borderRadius:'4px',fontWeight:600,cursor:'pointer',fontFamily:'inherit',fontSize:'0.85rem'}}>{t.welcomeCta} →</button>
+                    <div className="serif" style={{fontSize:'1.15rem',color:'#FF5C2E',marginBottom:'0.4rem'}}>{t.welcomeTitle}</div>
+                    <div style={{color:'rgba(26,32,50,0.75)',fontSize:'0.92rem',lineHeight:1.55}}>{t.welcomeBody}</div>
+                    <button onClick={()=>setWelcomeDismissed(true)} style={{marginTop:'1rem',background:'#FF5C2E',color:'#FAFAF7',border:0,padding:'0.6rem 1.2rem',borderRadius:'4px',fontWeight:600,cursor:'pointer',fontFamily:'inherit',fontSize:'0.85rem'}}>{t.welcomeCta} →</button>
                   </div>
                 </div>
               )}
@@ -3061,20 +4000,20 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   <Field label={t.fields.bizEmail} value={data.bizEmail||''} onChange={v=>update('bizEmail',v)}/>
                 </>}
                 {currentKey==='growth' && <>
-                  <p style={{margin:'0 0 1rem',color:'rgba(255,255,255,0.55)',fontSize:'0.9rem',fontStyle:'italic'}}>{t.fields.growthIntro}</p>
-                  <label style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.85rem 1rem',background:'rgba(251,191,36,0.06)',border:'1px solid rgba(251,191,36,0.2)',borderRadius:'4px',cursor:'pointer'}}>
+                  <p style={{margin:'0 0 1rem',color:'rgba(26,32,50,0.55)',fontSize:'0.9rem',}}>{t.fields.growthIntro}</p>
+                  <label style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.85rem 1rem',background:'rgba(255,92,46,0.06)',border:'1px solid rgba(255,92,46,0.2)',borderRadius:'4px',cursor:'pointer'}}>
                     <input type="checkbox" checked={data.bilingual==='1'} onChange={e=>update('bilingual',e.target.checked?'1':'')}/>
-                    <span style={{color:'rgba(255,255,255,0.85)',fontSize:'0.9rem'}}>{t.fields.bilingualLabel}</span>
+                    <span style={{color:'rgba(26,32,50,0.85)',fontSize:'0.9rem'}}>{t.fields.bilingualLabel}</span>
                   </label>
                   <Field label={t.fields.bookingsUrl} value={data.bookingsUrl||''} onChange={v=>update('bookingsUrl',v)} placeholder="https://calendly.com/su-negocio"/>
                   <FileDrop label={t.fields.pdfUp} dragText={t.dragDrop} category="pdf" files={files.filter(f=>f.category==='pdf')} onUpload={handleFileUpload} onDelete={handleFileDelete} accept="application/pdf"/>
                   <Field label={t.fields.pdfLabel} value={data.pdfLabel||''} onChange={v=>update('pdfLabel',v)} placeholder={t.fields.pdfLabelPh}/>
                   <Field label={t.fields.waCatalogUrl} value={data.waCatalogUrl||''} onChange={v=>update('waCatalogUrl',v)} placeholder="https://wa.me/c/..."/>
-                  <label style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.85rem 1rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',cursor:'pointer'}}>
+                  <label style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.85rem 1rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px',cursor:'pointer'}}>
                     <input type="checkbox" checked={data.newsletterEnabled==='1'} onChange={e=>update('newsletterEnabled',e.target.checked?'1':'')}/>
-                    <span style={{color:'rgba(255,255,255,0.85)',fontSize:'0.9rem'}}>{t.fields.newsletterEnableLabel}</span>
+                    <span style={{color:'rgba(26,32,50,0.85)',fontSize:'0.9rem'}}>{t.fields.newsletterEnableLabel}</span>
                   </label>
-                  {data.newsletterEnabled==='1' && <p style={{margin:'-0.5rem 0 0',fontSize:'0.78rem',color:'rgba(255,255,255,0.45)'}}>{t.fields.newsletterHelp}</p>}
+                  {data.newsletterEnabled==='1' && <p style={{margin:'-0.5rem 0 0',fontSize:'0.78rem',color:'rgba(26,32,50,0.45)'}}>{t.fields.newsletterHelp}</p>}
                   <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                     <Field label={t.fields.ga4Id} value={data.ga4Id||''} onChange={v=>update('ga4Id',v)} placeholder="G-XXXXXXXXXX" help={t.fields.ga4Help}/>
                     <Field label={t.fields.metaPixelId} value={data.metaPixelId||''} onChange={v=>update('metaPixelId',v)} placeholder="123456789012345" help={t.fields.metaPixelHelp}/>
@@ -3083,7 +4022,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   <Field label={t.fields.faqs} value={data.faqs||''} onChange={v=>update('faqs',v)} textarea placeholder={"¿Cuánto tarda el envío? | Entre 2 y 5 días hábiles a nivel nacional.\\n¿Tienen garantía? | Sí, 30 días contra defectos de fábrica."} help={t.fields.faqsHelp}/>
                 </>}
               </div>
-              <div style={{display:'flex',justifyContent:'space-between',marginTop:'4rem',paddingTop:'2rem',borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+              <div style={{display:'flex',justifyContent:'space-between',marginTop:'4rem',paddingTop:'2rem',borderTop:'1px solid rgba(26,32,50,0.08)'}}>
                 <button onClick={()=>setSection(Math.max(0,section-1))} disabled={section===0} style={{...secondaryBtn,opacity:section===0?0.3:1}}><ChevL size={16}/>{t.back}</button>
                 {section<sectionKeys.length-1
                   ? <button onClick={()=>setSection(section+1)} style={primaryBtn}>{t.next}<ChevR size={16}/></button>
@@ -3103,7 +4042,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           {textarea
             ? <textarea value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} rows={3} style={{...inputStyle,resize:'vertical'}}/>
             : <input value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} style={inputStyle}/>}
-          {help && <div style={{fontSize:'0.75rem',color:'rgba(255,255,255,0.35)',marginTop:'0.4rem',fontStyle:'italic'}}>{help}</div>}
+          {help && <div style={{fontSize:'0.75rem',color:'rgba(26,32,50,0.35)',marginTop:'0.4rem',}}>{help}</div>}
         </div>
       );
     }
@@ -3122,22 +4061,22 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             onDragLeave={()=>setDrag(false)}
             onDrop={(e)=>{e.preventDefault();setDrag(false);if(e.dataTransfer.files)handleFiles(e.dataTransfer.files);}}
             onClick={()=>inputRef.current && inputRef.current.click()}
-            style={{padding:'1.5rem',background:drag?'rgba(251,191,36,0.08)':'rgba(255,255,255,0.03)',border:'2px dashed '+(drag?'#fbbf24':'rgba(255,255,255,0.15)'),borderRadius:'4px',cursor:'pointer',textAlign:'center',marginBottom:'1rem'}}>
-            <Upload size={20} color="#fbbf24" />
-            <div style={{color:'rgba(255,255,255,0.7)',fontSize:'.9rem',marginTop:'.5rem'}}>{dragText}</div>
+            style={{padding:'1.5rem',background:drag?'rgba(255,92,46,0.08)':'rgba(26,32,50,0.03)',border:'2px dashed '+(drag?'#FF5C2E':'rgba(26,32,50,0.15)'),borderRadius:'4px',cursor:'pointer',textAlign:'center',marginBottom:'1rem'}}>
+            <Upload size={20} color="#FF5C2E" />
+            <div style={{color:'rgba(26,32,50,0.7)',fontSize:'.9rem',marginTop:'.5rem'}}>{dragText}</div>
             <input ref={inputRef} type="file" accept={accept} multiple={!!multi} style={{display:'none'}} onChange={(e)=>{if(e.target.files)handleFiles(e.target.files);e.target.value='';}}/>
           </div>
           {files.length === 0 ? null : (
             <div style={{display:'flex',flexDirection:'column',gap:'.6rem'}}>
               {files.map(f => (
-                <div key={f.id} style={{display:'flex',gap:'.75rem',alignItems:'flex-start',padding:'.7rem .85rem',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px'}}>
+                <div key={f.id} style={{display:'flex',gap:'.75rem',alignItems:'flex-start',padding:'.7rem .85rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'4px'}}>
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'.4rem'}}>
                       {f.uploading
-                        ? <Loader size={14} className="spin" color="#fbbf24"/>
+                        ? <Loader size={14} className="spin" color="#FF5C2E"/>
                         : <Check size={14} color="#10b981"/>}
-                      <span style={{fontSize:'.85rem',color:'rgba(255,255,255,0.85)',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{f.filename}</span>
-                      <span style={{fontSize:'.7rem',color:'rgba(255,255,255,0.4)',whiteSpace:'nowrap'}}>{formatSize(f.size_bytes)}</span>
+                      <span style={{fontSize:'.85rem',color:'rgba(26,32,50,0.85)',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{f.filename}</span>
+                      <span style={{fontSize:'.7rem',color:'rgba(26,32,50,0.4)',whiteSpace:'nowrap'}}>{formatSize(f.size_bytes)}</span>
                     </div>
                     {!f.uploading && (
                       <input
@@ -3150,7 +4089,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                     )}
                   </div>
                   {!f.uploading && (
-                    <button onClick={()=>onDelete(f.id)} style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',cursor:'pointer',padding:'.3rem',marginTop:'.2rem'}} aria-label="Delete"><Trash size={14}/></button>
+                    <button onClick={()=>onDelete(f.id)} style={{background:'transparent',border:'none',color:'rgba(26,32,50,0.4)',cursor:'pointer',padding:'.3rem',marginTop:'.2rem'}} aria-label="Delete"><Trash size={14}/></button>
                   )}
                 </div>
               ))}
@@ -3168,21 +4107,21 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         <div>
           <label style={fieldLabel}>{label}</label>
           <div onClick={()=>inputRef.current?.click()} onDragOver={e=>{e.preventDefault();setDragging(true);}} onDragLeave={()=>setDragging(false)} onDrop={e=>{e.preventDefault();setDragging(false);handleFiles(e.dataTransfer.files);}}
-            style={{border:dragging?'1px solid #fbbf24':'1px dashed rgba(251,191,36,0.4)',background:dragging?'rgba(251,191,36,0.08)':'rgba(251,191,36,0.03)',padding:'2.5rem',borderRadius:'2px',textAlign:'center',cursor:'pointer',transition:'all 0.2s'}}>
-            <Upload size={28} color="#fbbf24" style={{marginBottom:'0.75rem'}}/>
-            <div style={{color:'rgba(255,255,255,0.6)',fontSize:'0.9rem'}}>{dragText}</div>
+            style={{border:dragging?'1px solid #FF5C2E':'1px dashed rgba(255,92,46,0.4)',background:dragging?'rgba(255,92,46,0.08)':'rgba(255,92,46,0.03)',padding:'2.5rem',borderRadius:'2px',textAlign:'center',cursor:'pointer',transition:'all 0.2s'}}>
+            <Upload size={28} color="#FF5C2E" style={{marginBottom:'0.75rem'}}/>
+            <div style={{color:'rgba(26,32,50,0.6)',fontSize:'0.9rem'}}>{dragText}</div>
             <input ref={inputRef} type="file" accept={accept} multiple={multi} onChange={e=>handleFiles(e.target.files)} style={{display:'none'}}/>
           </div>
           {files.length>0 && (
             <div style={{marginTop:'1rem',display:'flex',flexDirection:'column',gap:'0.5rem'}}>
               {files.map(f => (
-                <div key={f.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1rem',background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'2px'}}>
+                <div key={f.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1rem',background:'rgba(26,32,50,0.04)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'2px'}}>
                   <div style={{display:'flex',alignItems:'center',gap:'0.75rem',minWidth:0}}>
-                    {f.uploading ? <Loader size={16} className="spin" color="#fbbf24"/> : <Check size={16} color="#fbbf24"/>}
-                    <span style={{color:'rgba(255,255,255,0.85)',fontSize:'0.9rem',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{f.filename}</span>
-                    {f.size_bytes && <span style={{color:'rgba(255,255,255,0.4)',fontSize:'0.75rem'}}>{formatSize(f.size_bytes)}</span>}
+                    {f.uploading ? <Loader size={16} className="spin" color="#FF5C2E"/> : <Check size={16} color="#FF5C2E"/>}
+                    <span style={{color:'rgba(26,32,50,0.85)',fontSize:'0.9rem',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{f.filename}</span>
+                    {f.size_bytes && <span style={{color:'rgba(26,32,50,0.4)',fontSize:'0.75rem'}}>{formatSize(f.size_bytes)}</span>}
                   </div>
-                  {!f.uploading && <button onClick={()=>onDelete(f.id)} style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',cursor:'pointer',padding:'0.25rem'}}><Trash size={14}/></button>}
+                  {!f.uploading && <button onClick={()=>onDelete(f.id)} style={{background:'transparent',border:'none',color:'rgba(26,32,50,0.4)',cursor:'pointer',padding:'0.25rem'}}><Trash size={14}/></button>}
                 </div>
               ))}
             </div>
@@ -3194,8 +4133,8 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     function SaveInd({ status, t }) {
       if (!status) return null;
       const map = {
-        saving:{text:t.saving,color:'rgba(255,255,255,0.5)',ic:<Loader size={12} className="spin"/>},
-        saved:{text:t.saved,color:'#fbbf24',ic:<Check size={12}/>},
+        saving:{text:t.saving,color:'rgba(26,32,50,0.5)',ic:<Loader size={12} className="spin"/>},
+        saved:{text:t.saved,color:'#FF5C2E',ic:<Check size={12}/>},
         error:{text:t.saveError,color:'#ef4444',ic:<Alert size={12}/>}
       };
       const c = map[status]; if (!c) return null;
@@ -3205,23 +4144,23 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     function Center({ children }) { return <div style={pageStyle}><Orbs/>{children}</div>; }
     function Orbs() {
       return <>
-        <div style={{position:'absolute',top:'10%',left:'5%',width:'300px',height:'300px',borderRadius:'50%',background:'radial-gradient(circle,rgba(251,191,36,0.15) 0%,transparent 70%)',filter:'blur(40px)',pointerEvents:'none'}}/>
-        <div style={{position:'absolute',bottom:'10%',right:'5%',width:'400px',height:'400px',borderRadius:'50%',background:'radial-gradient(circle,rgba(168,85,247,0.2) 0%,transparent 70%)',filter:'blur(50px)',pointerEvents:'none'}}/>
+        <div style={{position:'absolute',top:'-10%',left:'-5%',width:'420px',height:'420px',borderRadius:'50%',background:'radial-gradient(circle,rgba(255,92,46,0.10) 0%,transparent 65%)',filter:'blur(60px)',pointerEvents:'none'}}/>
+        <div style={{position:'absolute',bottom:'-10%',right:'-5%',width:'480px',height:'480px',borderRadius:'50%',background:'radial-gradient(circle,rgba(255,205,160,0.30) 0%,transparent 70%)',filter:'blur(70px)',pointerEvents:'none'}}/>
       </>;
     }
     function formatSize(b) { if (!b) return ''; if (b<1024) return b+' B'; if (b<1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
 
-    const pageStyle = { minHeight:'100vh',background:'linear-gradient(135deg,#0a0e27 0%,#1a1d3a 50%,#2d1b4e 100%)',display:'flex',alignItems:'center',justifyContent:'center',padding:'2rem',position:'relative',overflow:'hidden' };
-    const titleStyle = { fontSize:'3.5rem',fontWeight:400,color:'#fff',margin:0,letterSpacing:'-0.02em',fontStyle:'italic' };
-    const cardStyle = { background:'rgba(255,255,255,0.03)',backdropFilter:'blur(20px)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:'4px',padding:'2.5rem' };
-    const inputStyle = { width:'100%',background:'rgba(0,0,0,0.3)',border:'1px solid rgba(255,255,255,0.1)',color:'#fff',padding:'0.85rem',borderRadius:'2px',fontSize:'0.95rem',boxSizing:'border-box',outline:'none' };
-    const fieldLabel = { display:'block',fontSize:'0.75rem',letterSpacing:'0.15em',textTransform:'uppercase',color:'rgba(255,255,255,0.5)',marginBottom:'0.5rem' };
-    const primaryBtn = { display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'0.5rem',background:'#fbbf24',color:'#0a0e27',border:'none',padding:'0.85rem 1.5rem',borderRadius:'2px',cursor:'pointer',fontFamily:'inherit',fontWeight:600,fontSize:'0.85rem',letterSpacing:'0.1em',textTransform:'uppercase' };
-    const secondaryBtn = { display:'inline-flex',alignItems:'center',gap:'0.5rem',background:'transparent',border:'1px solid rgba(255,255,255,0.15)',color:'rgba(255,255,255,0.7)',padding:'0.85rem 1.5rem',borderRadius:'2px',cursor:'pointer',fontFamily:'inherit',fontSize:'0.85rem',letterSpacing:'0.1em' };
-    const ghostBtn = { display:'inline-flex',alignItems:'center',gap:'0.5rem',background:'transparent',color:'rgba(255,255,255,0.7)',border:'1px solid rgba(255,255,255,0.2)',padding:'0.6rem 1.25rem',borderRadius:'2px',cursor:'pointer',fontFamily:'inherit',fontSize:'0.85rem' };
-    const langBtn = { background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.15)',color:'#fbbf24',padding:'0.4rem 0.9rem',borderRadius:'999px',cursor:'pointer',fontFamily:'inherit',fontSize:'0.75rem' };
-    const headerStyle = { borderBottom:'1px solid rgba(255,255,255,0.08)',padding:'1.25rem 2rem',display:'flex',alignItems:'center',justifyContent:'space-between',background:'rgba(0,0,0,0.3)' };
-    const iconBtn = { background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.1)',color:'rgba(255,255,255,0.7)',padding:'0.5rem',borderRadius:'2px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center' };
+    const pageStyle = { minHeight:'100vh',background:'#FAFAF7',display:'flex',alignItems:'center',justifyContent:'center',padding:'2rem',position:'relative',overflow:'hidden' };
+    const titleStyle = { fontSize:'3rem',fontWeight:700,color:'#1A2032',margin:0,letterSpacing:'-0.025em',fontFamily:"'Inter Tight', system-ui, sans-serif",lineHeight:1.05 };
+    const cardStyle = { background:'#FFFFFF',border:'1px solid #E7E6E1',borderRadius:'14px',padding:'2.5rem',boxShadow:'0 1px 2px rgba(26,32,50,0.04)' };
+    const inputStyle = { width:'100%',background:'#FFFFFF',border:'1px solid #E7E6E1',color:'#1A2032',padding:'0.9rem 1rem',borderRadius:'10px',fontSize:'0.95rem',boxSizing:'border-box',outline:'none',transition:'border-color .15s, box-shadow .15s' };
+    const fieldLabel = { display:'block',fontSize:'0.78rem',fontWeight:600,letterSpacing:'0.02em',color:'#5A6478',marginBottom:'0.5rem' };
+    const primaryBtn = { display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'0.5rem',background:'#FF5C2E',color:'#FFFFFF',border:'none',padding:'0.85rem 1.5rem',borderRadius:'10px',cursor:'pointer',fontFamily:'inherit',fontWeight:600,fontSize:'0.92rem',letterSpacing:'-0.005em',boxShadow:'0 1px 2px rgba(230,69,26,0.25)' };
+    const secondaryBtn = { display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'0.5rem',background:'#FFFFFF',border:'1px solid #E7E6E1',color:'#1A2032',padding:'0.85rem 1.5rem',borderRadius:'10px',cursor:'pointer',fontFamily:'inherit',fontWeight:600,fontSize:'0.92rem',letterSpacing:'-0.005em' };
+    const ghostBtn = { display:'inline-flex',alignItems:'center',gap:'0.5rem',background:'transparent',color:'#5A6478',border:'1px solid #E7E6E1',padding:'0.6rem 1.1rem',borderRadius:'10px',cursor:'pointer',fontFamily:'inherit',fontSize:'0.88rem',fontWeight:500 };
+    const langBtn = { background:'#F6F5F0',border:'1px solid #E7E6E1',color:'#FF5C2E',padding:'0.4rem 0.9rem',borderRadius:'999px',cursor:'pointer',fontFamily:'inherit',fontSize:'0.78rem',fontWeight:600 };
+    const headerStyle = { borderBottom:'1px solid #E7E6E1',padding:'1.1rem 2rem',display:'flex',alignItems:'center',justifyContent:'space-between',background:'rgba(255,255,255,0.85)',backdropFilter:'saturate(180%) blur(12px)',position:'sticky',top:0,zIndex:50 };
+    const iconBtn = { background:'#F6F5F0',border:'1px solid #E7E6E1',color:'#5A6478',padding:'0.55rem',borderRadius:'10px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center' };
 
     ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
   </script>

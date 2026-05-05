@@ -1,0 +1,27 @@
+From cc35abd92c6ccac2779a327ccf58582f2f9d2915 Mon Sep 17 00:00:00 2001
+From: Mike Chartrand <mike@mikec.pro>
+Date: Sat, 2 May 2026 02:05:22 +0000
+Subject: [PATCH 3/3] Homepage FAQ: two columns on desktop, single on mobile
+
+---
+ index.html | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/index.html b/index.html
+index 9e8903a..3335638 100644
+--- a/index.html
++++ b/index.html
+@@ -831,6 +831,10 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
+ <style>@media (max-width:780px){.dp-grid{grid-template-columns:1fr !important}}</style>
+ 
+ <!-- TESTIMONIAL / FAQ-LITE -->
++<style>
++  .network .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
++  @media (max-width:780px){.network .faq-grid{grid-template-columns:1fr}}
++</style>
+ <section class="network">
+   <div class="wrap">
+     <div class="section-head reveal">
+-- 
+2.34.1
+

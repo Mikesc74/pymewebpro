@@ -1,0 +1,100 @@
+From 28da0b7513119ff36c54eec59139bcc7184df2c0 Mon Sep 17 00:00:00 2001
+From: Mike Chartrand <mike@mikec.pro>
+Date: Sat, 2 May 2026 01:53:24 +0000
+Subject: [PATCH 2/3] Domain guidance: homepage panel + portal CTA, both
+ linking Namecheap
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- Homepage: new '¿Y el dominio dónde se compra?' panel after pricing,
+  before FAQ. Explains Namecheap (privacy WHOIS free, your name on the
+  registration), with affiliate-tagged 'Ir a Namecheap' button and a
+  secondary PDF download link.
+- Portal: domain step in WIZARD_STEPS now carries a 'cta' object. The
+  Portal renderer shows a styled callout below the helper text with a
+  'Comprar en Namecheap' button when cta is present. Bilingual (ES/EN).
+---
+ index.html          | 29 +++++++++++++++++++++++++++++
+ portal/src/index.js | 18 ++++++++++++++++--
+ 2 files changed, 45 insertions(+), 2 deletions(-)
+
+diff --git a/index.html b/index.html
+index 3ec031b..9e8903a 100644
+--- a/index.html
++++ b/index.html
+@@ -801,6 +801,35 @@ p{margin:0}a{color:inherit;text-decoration:none}img{max-width:100%;display:block
+   </div>
+ </section>
+ 
++<!-- DOMAIN PANEL -->
++<section style="padding:50px 0;border-top:1px solid var(--line);background:#fff8e1">
++  <div class="wrap">
++    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;max-width:1080px;margin:0 auto" class="dp-grid">
++      <div>
++        <span class="eyebrow" style="background:#fef3c7;color:#92400e">Sobre el dominio</span>
++        <h2 style="margin-top:14px;font-size:clamp(1.6rem,2.6vw,2.1rem)">¿Y el dominio dónde se compra?</h2>
++        <p style="color:var(--ink-soft);margin-top:14px;font-size:1rem;max-width:560px">
++          Usted lo compra directamente al registrador. Recomendamos <strong>Namecheap</strong>: confiable, soporte 24/7 y la privacidad WHOIS es gratis (otros la cobran). El costo va de <strong>$50.000 a $150.000 COP/año</strong> según la extensión. <strong>Queda a su nombre</strong>, no al nuestro.
++        </p>
++        <p style="color:var(--ink-soft);margin-top:10px;font-size:.95rem;max-width:560px">
++          Una vez registrado, nosotros lo configuramos sin costo cuando usted contrata cualquier plan. Sin tarifas ocultas.
++        </p>
++      </div>
++      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 26px;box-shadow:0 14px 30px -14px rgba(10,24,64,.12)">
++        <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:800;line-height:1.2;margin-bottom:6px">Comprar en Namecheap</div>
++        <p style="color:var(--muted);font-size:.88rem;margin-bottom:18px">15 minutos. Tarjeta internacional o PayPal. Cuenta a su nombre.</p>
++        <a href="https://www.namecheap.com/?aff=7255105" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;font-size:.95rem;padding:14px 20px">
++          Ir a Namecheap →
++        </a>
++        <p style="color:var(--muted);font-size:.78rem;margin-top:12px;text-align:center">
++          ¿Quiere la guía paso a paso primero? <a href="/recursos/guia-dominio.pdf" download style="color:var(--blue);font-weight:600">Descargar PDF →</a>
++        </p>
++      </div>
++    </div>
++  </div>
++</section>
++<style>@media (max-width:780px){.dp-grid{grid-template-columns:1fr !important}}</style>
++
+ <!-- TESTIMONIAL / FAQ-LITE -->
+ <section class="network">
+   <div class="wrap">
+diff --git a/portal/src/index.js b/portal/src/index.js
+index 38b1058..01c536c 100644
+--- a/portal/src/index.js
++++ b/portal/src/index.js
+@@ -2565,7 +2565,15 @@ const FRONTEND_HTML = `<!DOCTYPE html>
+       { key:'domain', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
+         q:{es:'¿Tiene un dominio (.com) ya?',en:'Do you already have a domain?'},
+         h:{es:'Si lo registró, escríbalo. Si no, sáltelo — le ayudamos a comprarlo y configurarlo.',en:'If registered, type it. Otherwise skip — we help you buy and set it up.'},
+-        p:{es:'minegocio.com',en:'mybusiness.com'} },
++        p:{es:'minegocio.com',en:'mybusiness.com'},
++        cta:{
++          href:'https://www.namecheap.com/?aff=7255105',
++          label:{es:'Comprar en Namecheap',en:'Buy at Namecheap'},
++          note:{
++            es:'¿Aún no tiene dominio? Recomendamos Namecheap: ~$50.000 a $150.000 COP/año, queda a su nombre, privacidad WHOIS gratis. Nosotros lo configuramos sin costo adicional.',
++            en:'No domain yet? We recommend Namecheap: ~$15 USD/year, registered in your name, free WHOIS privacy. We configure it at no extra cost.'
++          }
++        } },
+       { key:'hosting', section:'tech', group:{es:'Dominio y técnico',en:'Domain & technical'}, type:'text',
+         q:{es:'¿Tiene hosting actualmente?',en:'Do you currently have hosting?'},
+         h:{es:'Si paga hospedaje en algún lado, díganoslo. Si no, sáltelo.',en:'If you pay for hosting somewhere, tell us. Otherwise skip.'},
+@@ -2842,7 +2850,13 @@ const FRONTEND_HTML = `<!DOCTYPE html>
+                 <span style={{fontSize:'.78rem',color:'rgba(255,255,255,0.5)'}}>{step+1} {lang==='es'?'de':'of'} {total}</span>
+               </div>
+               <h1 className="serif" style={{fontSize:'1.85rem',fontWeight:400,fontStyle:'italic',margin:'0 0 .85rem',lineHeight:1.25}}>{loc(cur.q)}</h1>
+-              {loc(cur.h) && <p style={{color:'rgba(255,255,255,0.6)',fontSize:'.95rem',lineHeight:1.6,margin:'0 0 2rem'}}>{loc(cur.h)}</p>}
++              {loc(cur.h) && <p style={{color:'rgba(255,255,255,0.6)',fontSize:'.95rem',lineHeight:1.6,margin:'0 0 1.25rem'}}>{loc(cur.h)}</p>}
++              {cur.cta && (
++                <div style={{background:'rgba(251,191,36,0.07)',border:'1px solid rgba(251,191,36,0.25)',borderRadius:'6px',padding:'1rem 1.15rem',marginBottom:'1.75rem'}}>
++                  <p style={{color:'rgba(255,255,255,0.82)',fontSize:'.9rem',lineHeight:1.6,margin:'0 0 .75rem'}}>{loc(cur.cta.note)}</p>
++                  <a href={cur.cta.href} target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:'.4rem',background:'#fbbf24',color:'#0a0e27',padding:'.6rem 1.1rem',borderRadius:'4px',fontSize:'.86rem',fontWeight:600,textDecoration:'none'}}>{loc(cur.cta.label)} →</a>
++                </div>
++              )}
+               <div style={{marginBottom:'2rem'}}>
+                 {cur.type === 'text' || cur.type === 'tel' || cur.type === 'email' ? (
+                   <input type={cur.type} value={data[cur.key]||''} onChange={e=>setData(p=>({...p,[cur.key]:e.target.value}))} placeholder={loc(cur.p)} style={{...inputStyle,fontSize:'1rem',padding:'1rem 1.1rem'}} autoFocus/>
+-- 
+2.34.1
+

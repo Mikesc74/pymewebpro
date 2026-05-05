@@ -87,6 +87,27 @@ function main() {
     console.error("[check-spa] FRONTEND_HTML not found in src/index.js");
     process.exit(2);
   }
+
+  // Layer 1 — outer-template-literal sanity. The FRONTEND_HTML body must not
+  // contain unescaped `${` or backticks; those would be interpreted by the
+  // OUTER JS template literal at worker-load time, which usually crashes the
+  // worker upload (ReferenceError) before any browser sees the JSX.
+  const unescapedInterp = [];
+  for (let i = 0; i < fhtml.length; i++) {
+    if (fhtml[i] === "\\") { i++; continue; }
+    if (fhtml[i] === "$" && fhtml[i + 1] === "{") unescapedInterp.push(i);
+  }
+  if (unescapedInterp.length > 0) {
+    console.error("[check-spa] " + unescapedInterp.length + " unescaped `${` inside FRONTEND_HTML — this will crash worker upload.");
+    for (const pos of unescapedInterp.slice(0, 5)) {
+      const before = fhtml.slice(Math.max(0, pos - 60), pos);
+      const after = fhtml.slice(pos, pos + 80);
+      console.error("    near: …" + before.replace(/\n/g, "\\n") + ">>>" + after.replace(/\n/g, "\\n") + "…");
+    }
+    console.error("\nFix: replace `${expr}` with JSX string concat — `\"text \" + expr + \" more\"` — or escape the dollar as \\${ if you really want a literal `${` to render.");
+    process.exit(1);
+  }
+
   const html = unescapeTemplateLiteral(fhtml);
   const babel = extractBabelScript(html);
   if (!babel) {
