@@ -352,8 +352,10 @@ section{padding:clamp(80px,9vw,130px) 0}
 .price-card li{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--smoke);line-height:1.5}
 .price-card.featured li{color:rgba(255,255,255,0.85)}
 .price-card li svg{flex-shrink:0;color:var(--green);margin-top:3px}
-.price-card .cta-row{margin-top:30px}
+.price-card .cta-row{margin-top:30px;display:flex;flex-direction:column;gap:10px;align-items:center}
 .price-card .cta-row .btn{width:100%}
+.price-card .cta-row .btn-link{display:inline-flex;align-items:center;justify-content:center;width:auto;padding:6px 4px;background:transparent;border:none;color:var(--gray);font-family:var(--mono);font-size:12px;letter-spacing:0.04em;font-weight:500;text-decoration:none}
+.price-card .cta-row .btn-link:hover{color:var(--accent-deep)}
 @media (max-width:780px){.price-grid{grid-template-columns:1fr}}
 
 .price-foot{
@@ -663,7 +665,7 @@ body.nav-open{overflow:hidden}
         <button data-l="en" type="button" aria-label="English">EN</button>
         <button data-l="es" type="button" aria-label="Español">ES</button>
       </div>
-      <a href="#cta-final" class="cta"><span class="ml-en">Get a Quote</span><span class="ml-es">Cotizar</span> <span class="arrow">→</span></a>
+      <a href="#pricing" class="cta"><span class="ml-en">Buy now</span><span class="ml-es">Comprar</span> <span class="arrow">→</span></a>
     </nav>
   </div>
 </header>
@@ -688,7 +690,7 @@ body.nav-open{overflow:hidden}
       <button data-l="en" type="button" aria-label="English">EN</button>
       <button data-l="es" type="button" aria-label="Español">ES</button>
     </div>
-    <a href="#cta-final" class="cta" data-nav-close><span class="ml-en">Get a Quote</span><span class="ml-es">Cotizar</span> <span class="arrow">→</span></a>
+    <a href="#pricing" class="cta" data-nav-close><span class="ml-en">Buy now</span><span class="ml-es">Comprar</span> <span class="arrow">→</span></a>
   </div>
 </aside>
 
@@ -699,8 +701,8 @@ body.nav-open{overflow:hidden}
     <h1><span class="ml-en">Enterprise-grade websites at <span class="accent">small-business prices.</span></span><span class="ml-es">Sitios web nivel enterprise, a <span class="accent">precios de pyme.</span></span></h1>
     <p class="lede"><span class="ml-en">Custom-coded, hand-designed, deployed on Cloudflare's edge network. Sub-second load times, perfect Lighthouse scores, A+ security headers, built in 48 hours, not 8 weeks. Starting at $500 CAD.</span><span class="ml-es">Código a la medida, diseño hecho a mano, desplegado en la red edge de Cloudflare. Carga sub-segundo, Lighthouse perfecto, encabezados de seguridad A+. Construido en 48 horas, no 8 semanas. Desde $690.000 COP.</span></p>
     <div class="hero-cta">
-      <a href="#cta-final" class="btn btn-primary"><span class="ml-en">Book a 20-min Call</span><span class="ml-es">Agendar llamada de 20 min</span> <span class="arrow">→</span></a>
-      <a href="#portfolio" class="btn btn-outline"><span class="ml-en">See Recent Work</span><span class="ml-es">Ver trabajo reciente</span></a>
+      <a href="#pricing" class="btn btn-primary"><span class="ml-en">See pricing &amp; start</span><span class="ml-es">Ver precios y empezar</span> <span class="arrow">→</span></a>
+      <a href="#cta-final" class="btn btn-outline"><span class="ml-en">Or schedule a call</span><span class="ml-es">O agendar una llamada</span></a>
     </div>
     <div class="hero-meta">
       <div class="item"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Lighthouse <strong>100/100/100</strong></div>
@@ -853,14 +855,15 @@ body.nav-open{overflow:hidden}
       <p>No phased proposals, no "design phase" upsells, no surprise hosting bills. Two tiers, pick the one that matches your business.</p>
     </div>
 
-    <div class="price-grid">
+    <!-- EN pricing grid -->
+    <div class="price-grid ml-en">
       <div class="price-card">
         <div class="head">
           <div class="name">Essential</div>
           <span class="tag">Most clinics & cafés</span>
         </div>
         <div class="price-amt"><span class="ccy">CAD</span>$500</div>
-        <div class="price-suffix">one-time · 1 year hosting included</div>
+        <div class="price-suffix">one-time · 1 year hosting included · $150 deposit to start</div>
         <p class="desc">A premium one-page marketing site with everything an SMB actually needs. Perfect for clinics, restaurants, salons, studios, and service businesses.</p>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Single-page multi-section custom site</li>
@@ -874,7 +877,9 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>48-hour delivery</li>
         </ul>
         <div class="cta-row">
-          <a href="#cta-final" class="btn btn-outline">Start with Essential <span class="arrow">→</span></a>
+          <!-- TODO: replace with real Wise pay-link for $150 CAD Essential deposit -->
+          <a href="https://wise.com/pay/business/pymewebpro?ref=essential-deposit" class="btn btn-outline">Pay $150 deposit &amp; start <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link">Or schedule a call →</a>
         </div>
       </div>
 
@@ -884,7 +889,7 @@ body.nav-open{overflow:hidden}
           <span class="tag">Boutique brands &amp; e-comm</span>
         </div>
         <div class="price-amt"><span class="ccy">CAD</span>$800</div>
-        <div class="price-suffix">one-time · 2 years hosting included</div>
+        <div class="price-suffix">one-time · 2 years hosting included · $240 deposit to start</div>
         <p class="desc">Multi-section site with integrations, bilingual support, advanced forms, and ongoing edits. For brands that need a real digital presence.</p>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Everything in Essential, plus:</li>
@@ -896,7 +901,62 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>4 rounds of revisions</li>
         </ul>
         <div class="cta-row">
-          <a href="#cta-final" class="btn btn-accent">Start with Pro <span class="arrow">→</span></a>
+          <!-- TODO: replace with real Wise pay-link for $240 CAD Pro deposit -->
+          <a href="https://wise.com/pay/business/pymewebpro?ref=pro-deposit" class="btn btn-accent">Pay $240 deposit &amp; start <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">Or schedule a call →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ES pricing grid -->
+    <div class="price-grid ml-es">
+      <div class="price-card">
+        <div class="head">
+          <div class="name">Esencial</div>
+          <span class="tag">Clínicas y cafés</span>
+        </div>
+        <div class="price-amt"><span class="ccy">COP</span>$690.000</div>
+        <div class="price-suffix">pago único · 1 año de hosting incluido · depósito de $207.000 para empezar</div>
+        <p class="desc">Sitio de marketing de una página con todo lo que una pyme necesita. Ideal para clínicas, restaurantes, salones, estudios y servicios.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Sitio de una sola página con múltiples secciones</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Hosting Cloudflare · 1 año incluido</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Configuración de dominio propio y SSL</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Responsive · todos los dispositivos</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Lighthouse 100 · carga sub-1s</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Formulario de contacto y reenvío de correo</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Analítica respetuosa con la privacidad</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>2 rondas de revisiones</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Entrega en 48 horas</li>
+        </ul>
+        <div class="cta-row">
+          <!-- TODO: replace with real Wompi link for $207.000 COP Esencial deposit -->
+          <a href="https://checkout.wompi.co/l/PWP_ESENCIAL_DEPOSITO" class="btn btn-outline">Pagar depósito $207.000 y empezar <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link">O agendar una llamada →</a>
+        </div>
+      </div>
+
+      <div class="price-card featured">
+        <div class="head">
+          <div class="name" style="color:#fff">Crecimiento</div>
+          <span class="tag">Marcas boutique y e-comm</span>
+        </div>
+        <div class="price-amt"><span class="ccy">COP</span>$1.080.000</div>
+        <div class="price-suffix">pago único · 2 años de hosting incluido · depósito de $324.000 para empezar</div>
+        <p class="desc">Sitio multi-sección con integraciones, soporte bilingüe, formularios avanzados y ediciones continuas. Para marcas que necesitan presencia digital real.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Todo lo de Esencial, más:</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Bilingüe ES / EN</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Hosting Cloudflare · 2 años incluidos</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Integración de reservas o pagos</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Captura newsletter y sync con CRM</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Schema markup · SEO avanzado</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>4 rondas de revisiones</li>
+        </ul>
+        <div class="cta-row">
+          <!-- TODO: replace with real Wompi link for $324.000 COP Crecimiento deposit -->
+          <a href="https://checkout.wompi.co/l/PWP_CRECIMIENTO_DEPOSITO" class="btn btn-accent">Pagar depósito $324.000 y empezar <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">O agendar una llamada →</a>
         </div>
       </div>
     </div>
@@ -908,7 +968,7 @@ body.nav-open{overflow:hidden}
 
     <div class="price-foot" style="margin-top:12px">
       <div class="ico" style="background:rgba(0,183,121,0.12);color:var(--green)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 9h20M5 9V7a2 2 0 012-2h10a2 2 0 012 2v2M5 9v10a2 2 0 002 2h10a2 2 0 002-2V9M9 14h6"/></svg></div>
-      <div><strong>CAD or USD pricing · 50% deposit, 50% on launch.</strong> Pay by credit card, Apple Pay, Google Pay, or direct wire via our Wise Business account. <strong>30-day money-back guarantee</strong> after launch. Hosting included for the first 1–2 years; $15/mo or $180/yr after that.</div>
+      <div><span class="ml-en"><strong>CAD or USD pricing · 30% deposit to start, 70% on launch.</strong> Pay by credit card, Apple Pay, Google Pay, or direct wire via our Wise Business account. <strong>30-day money-back guarantee</strong> after launch. Hosting included for the first 1–2 years; $15/mo or $180/yr after that.</span><span class="ml-es"><strong>Precio en COP · 30% de depósito para empezar, 70% al lanzar.</strong> Pago con tarjeta, PSE, o transferencia bancaria vía Wompi. <strong>Garantía de devolución de 30 días</strong> tras el lanzamiento. Hosting incluido los primeros 1–2 años; $60.000 COP/mes o $720.000 COP/año después.</span></div>
     </div>
   </div>
 </section>
@@ -1157,7 +1217,7 @@ body.nav-open{overflow:hidden}
       </details>
       <details class="faq-item">
         <summary>How does payment work? <span class="ico">+</span></summary>
-        <div class="ans">50% deposit on signing (we don't start design or development until the deposit clears). 50% on launch (we hold the finished site on a staging URL and don't connect your domain until the second payment lands). Both invoices accept credit cards, Apple Pay, Google Pay, or direct wire via our Wise Business account.</div>
+        <div class="ans"><span class="ml-en">30% deposit to start (we don't begin design or development until the deposit clears) and 70% on launch (we hold the finished site on a staging URL and don't connect your domain until the balance lands). NA clients pay via Wise Business: credit card, Apple Pay, Google Pay, or direct wire in CAD or USD. Latin American clients pay via Wompi: card, PSE, or bank transfer in COP.</span><span class="ml-es">30% de depósito para empezar (no iniciamos diseño ni desarrollo hasta que el depósito se confirma) y 70% al lanzar (mantenemos el sitio terminado en una URL de staging y no conectamos su dominio hasta que el saldo llega). Clientes en Colombia pagan vía Wompi: tarjeta, PSE o transferencia bancaria en COP. Clientes en Norteamérica pagan vía Wise Business en CAD o USD.</span></div>
       </details>
       <details class="faq-item">
         <summary>Do I own the site? Can I move it later? <span class="ico">+</span></summary>
@@ -1182,17 +1242,18 @@ body.nav-open{overflow:hidden}
 <!-- ─── Final CTA ─── -->
 <section class="cta-final" id="cta-final">
   <div class="inner">
-    <span class="eyebrow"><span class="dot live"></span><span class="ml-en">Now booking · July 2026</span><span class="ml-es">Cupos abiertos · julio 2026</span></span>
-    <h2><span class="ml-en">20 minutes. <span class="accent">A free quote.</span> No commitment.</span><span class="ml-es">20 minutos. <span class="accent">Cotización gratis.</span> Sin compromiso.</span></h2>
-    <p><span class="ml-en">Book a short call, we'll talk through what you need, give you a hard quote, and tell you honestly if we're the right fit.</span><span class="ml-es">Agende una llamada corta. Hablamos de lo que necesita, le damos cotización por escrito, y le decimos honestamente si encajamos para su proyecto.</span></p>
+    <span class="eyebrow"><span class="dot live"></span><span class="ml-en">Have questions first?</span><span class="ml-es">¿Tiene preguntas?</span></span>
+    <h2><span class="ml-en">Not sure which tier? <span class="accent">Let's talk.</span></span><span class="ml-es">¿Dudas sobre el plan? <span class="accent">Hablemos.</span></span></h2>
+    <p><span class="ml-en">If you'd rather chat before paying, book a 20-minute call or email us. No sales pressure. We'll point you to the right tier and answer anything technical.</span><span class="ml-es">Si prefiere hablar antes de pagar, agende una llamada de 20 minutos o escríbanos. Sin presión de ventas. Le indicamos el plan correcto y resolvemos cualquier duda técnica.</span></p>
     <div class="btn-row">
-      <a href="#" class="btn btn-accent"><span class="ml-en">Book Discovery Call</span><span class="ml-es">Agendar llamada</span> <span class="arrow">→</span></a>
-      <a href="mailto:hello@pymewebpro.com" class="btn btn-outline">Email hello@pymewebpro.com</a>
+      <!-- TODO: replace with real Cal.com / Calendly link -->
+      <a href="https://cal.com/pymewebpro/discovery" class="btn btn-accent"><span class="ml-en">Schedule a 20-min call</span><span class="ml-es">Agendar llamada de 20 min</span> <span class="arrow">→</span></a>
+      <a href="mailto:hello@pymewebpro.com" class="btn btn-outline"><span class="ml-en">Email hello@pymewebpro.com</span><span class="ml-es">Escribir a hola@pymewebpro.com</span></a>
     </div>
     <div class="meta">
-      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>20-min call</div>
-      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Free written quote</div>
-      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>No contract until you say go</div>
+      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">20-min call</span><span class="ml-es">Llamada de 20 min</span></div>
+      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Zero sales pressure</span><span class="ml-es">Cero presión de ventas</span></div>
+      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Or just buy above</span><span class="ml-es">O compre arriba</span></div>
     </div>
   </div>
 </section>

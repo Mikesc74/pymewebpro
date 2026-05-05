@@ -86,11 +86,16 @@ Display NIT on:
 | Maintenance add-on | $35 CAD/mo (optional, on top of hosting) | Monthly content updates, security patches, minor design adjustments |
 | Ad-hoc edits | $75 CAD/hr (30-min minimum) | One-off changes, no commitment |
 
-### Payment terms (Canadian/NA clients)
+### Payment terms (both markets)
 
-- **50% deposit on signing** — no design or development work starts until deposit clears
-- **50% on launch** — site sits on staging URL until paid; DNS to client domain not connected until full payment clears
-- Wise Business invoicing supports milestone billing (two separate invoices)
+- **30% deposit to start** — no design or development work begins until deposit clears
+- **70% on launch** — site sits on staging URL until paid; DNS to client domain not connected until balance clears
+- NA: Wise Business in CAD or USD (cards, Apple/Google Pay, wires) — milestone billing supported
+- LATAM: Wompi in COP (cards, PSE, bank transfer)
+
+Switched from 50/50 to 30/70 on 2026-05-05. A productized $500-800 / $690.000-1.080.000 build doesn't need an agency-style 50% deposit; the lower barrier to start makes the buy decision easier while DNS gating on the 70% balance still protects against non-payment.
+
+Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $207.000 COP · Crecimiento $324.000 COP.
 
 ### 30-day satisfaction guarantee
 

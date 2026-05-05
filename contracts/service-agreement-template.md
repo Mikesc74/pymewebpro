@@ -55,20 +55,21 @@ Revision cycles will be completed within forty-eight (48) hours of the Client pr
 
 **Total Fee:** [AMOUNT] [CAD or USD] (the "**Fee**").
 
-**Payment Schedule.** The Fee is paid in two equal milestones:
+**Payment Schedule.** The Fee is paid in two milestones:
 
-1. **50% deposit on signing.** No design or development work begins until this deposit is received.
-2. **50% on launch.** The completed site is hosted on a staging URL until the second payment is received. The Studio will not connect the Website to the Client's custom domain (DNS configuration) until full payment clears.
+1. **30% deposit to start.** No design or development work begins until this deposit is received.
+2. **70% on launch.** The completed site is hosted on a staging URL until the balance is received. The Studio will not connect the Website to the Client's custom domain (DNS configuration) until the balance clears.
 
 **Payment Methods.** The Client may pay by:
 
-- Credit card, debit card, Apple Pay, or Google Pay through the Studio's Wise Business invoicing portal
+- Credit card, debit card, Apple Pay, or Google Pay through the Studio's Wise Business invoicing portal (CAD or USD)
 - Direct bank wire to the Studio's Wise Business CAD or USD account
+- For Colombian clients: card, PSE, or bank transfer through the Studio's Wompi payment portal (COP)
 - Other method as mutually agreed in writing
 
-Wire details are provided on each issued invoice.
+Wire details and Wompi payment links are provided on each issued invoice.
 
-**Late Payment.** Invoices are due within seven (7) days of issue. Past-due deposit invoices delay project kickoff. Past-due final invoices delay DNS connection. Past-due balances after thirty (30) days accrue interest at 1.5% per month, calculated daily.
+**Late Payment.** Invoices are due within seven (7) days of issue. Past-due deposit invoices delay project kickoff. Past-due balance invoices delay DNS connection (the site stays on the staging URL). Past-due balances after thirty (30) days accrue interest at 1.5% per month, calculated daily.
 
 **30-Day Satisfaction Guarantee.** For thirty (30) days following launch, if the Client is not satisfied with the Website for any reason, the Client may request a full refund. Upon request, the Studio will:
 
@@ -78,7 +79,7 @@ Wire details are provided on each issued invoice.
 
 This guarantee is the Client's exclusive refund remedy. After thirty (30) days post-launch, the Fee is non-refundable.
 
-**Pre-Launch Cancellation.** If the Client terminates this Agreement before the initial preview is delivered, the Studio will refund the full deposit paid. After delivery of the initial preview but before launch, the Studio will refund 50% of the deposit (representing the work already performed).
+**Pre-Launch Cancellation.** If the Client terminates this Agreement before the initial preview is delivered, the Studio will refund the full deposit paid. After delivery of the initial preview but before launch, the deposit is non-refundable (representing the design and development work already performed); the 70% balance is not invoiced if the Client does not proceed to launch.
 
 ## 5. Revisions
 

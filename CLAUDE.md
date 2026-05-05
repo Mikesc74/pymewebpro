@@ -46,12 +46,15 @@ Both addresses appear in the public footer. Mike personally works from Medellín
 - Optional maintenance add-on: **$35/mo on top of hosting** (monthly content updates, security patches, minor design)
 - Ad-hoc edits: **$75/hr CAD** (30-min minimum)
 
-## Payment terms (NA market)
+## Payment terms (both markets)
 
-- **50% deposit on signing** — no work starts until cleared
-- **50% on launch** — DNS to client domain not connected until cleared
-- Wise Business invoicing (cards, Apple/Google Pay, wires) — milestone billing supported
+- **30% deposit to start** — no design or development begins until deposit clears (NA: $150 Essential / $240 Pro · LATAM: $207.000 Esencial / $324.000 Crecimiento)
+- **70% on launch** — site sits on staging URL; DNS to client domain not connected until balance clears
+- NA: Wise Business invoicing (cards, Apple/Google Pay, wires) in CAD or USD
+- LATAM: Wompi (cards, PSE, bank transfer) in COP
 - **30-day money-back guarantee post-launch:** site goes offline + full refund within 14 days if client unhappy. After 30 days, fee is non-refundable.
+
+Switched from 50/50 to 30/70 on 2026-05-05. Lower psychological barrier to start (productized service, not custom agency build), DNS gating on the 70% balance still protects against non-payment.
 
 → Full strategy + economics: `memory/context/studio.md`
 
