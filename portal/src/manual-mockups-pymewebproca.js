@@ -9,11 +9,11 @@ export const pymewebproCaHtml = `
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PymeWebPro, <span class="ml-en">Custom</span><span class="ml-es">A medida</span> websites for Canadian businesses · From $500 CAD · Built on Cloudflare</title>
-<meta name="description" content="Canadian-owned web studio building enterprise-grade custom sites for North American small businesses. Hand-built on Cloudflare, deployed in <span class="ml-en">48 hours</span><span class="ml-es">48 horas</span>, sub-1-second load times. Starting at $500 CAD. Based in Medellín, leveraging Anthropic AI to deliver agency-quality work without the agency markup.">
+<title>PymeWebPro · Custom websites for SMBs · From $500 CAD or $690.000 COP · Built on Cloudflare</title>
+<meta name="description" content="Canadian-owned web studio building enterprise-grade custom sites for SMBs across North America and Latin America. Hand-built on Cloudflare, deployed in 48 hours, sub-1-second load times. Starting at $500 CAD or $690.000 COP. Based in Medellín, powered by Anthropic AI to deliver agency-quality work without the agency markup.">
 <meta name="theme-color" content="#0A0A0B">
-<meta property="og:title" content="PymeWebPro, Enterprise web studio at SMB pricing">
-<meta property="og:description" content="Custom sites for Canadian businesses, $500 CAD. Cloudflare hosted, sub-1s load, Lighthouse 100. Canadian-owned, Medellín-based, AI-leveraged.">
+<meta property="og:title" content="PymeWebPro · Enterprise web studio at SMB pricing">
+<meta property="og:description" content="Custom sites for SMBs, from $500 CAD or $690.000 COP. Cloudflare hosted, sub-1s load, Lighthouse 100. Canadian-owned, Medellín-based, powered by Anthropic AI.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%230A0A0B%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2240%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-monospace%2CSFMono-Regular%2CMenlo%2Cmonospace%22%20font-size%3D%2218%22%20font-weight%3D%22600%22%20fill%3D%22%23FAFAF7%22%3E%3Ctspan%20fill%3D%22%23FF5C2E%22%3E%26lt%3B%3C/tspan%3Epwp%3Ctspan%20fill%3D%22%23FF5C2E%22%3E/%26gt%3B%3C/tspan%3E%3C/text%3E%3C/svg%3E">
