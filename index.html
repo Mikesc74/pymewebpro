@@ -67,6 +67,9 @@ h1,h2,h3,h4,h5{font-family:var(--display);color:var(--ink);font-weight:700;lette
 
 /* ─── Bilingual switching ──────────────────────────── */
 html.lang-en .ml-es,html.lang-es .ml-en{display:none!important}
+/* Geo-locked content: pricing follows visitor country, not language. NA is default until JS detects Colombia. */
+html:not(.geo-co) .geo-co{display:none!important}
+html.geo-co .geo-na{display:none!important}
 .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--bg);font-family:var(--mono);font-size:11px;letter-spacing:0.04em;font-weight:600;flex-shrink:0;margin-right:6px}
 .lang-toggle button{padding:5px 11px;border-radius:999px;background:transparent;color:var(--gray);cursor:pointer;border:0;font:inherit;letter-spacing:inherit;font-weight:inherit;transition:all .2s}
 html.lang-en .lang-toggle button[data-l="en"],html.lang-es .lang-toggle button[data-l="es"]{background:var(--ink);color:#fff}
@@ -650,7 +653,7 @@ body.nav-open{overflow:hidden}
 <body>
 
 <div class="topbar">
-  <span class="ml-en"><strong>Now booking <span class="accent">July 2026</span> builds</strong><span class="sep">·</span>48-hour delivery<span class="sep">·</span>From <strong class="accent">$500 CAD</strong></span><span class="ml-es"><strong>Cupos abiertos <span class="accent">julio 2026</span></strong><span class="sep">·</span>Entrega en 48 horas<span class="sep">·</span>Desde <strong class="accent">$690.000 COP</strong></span>
+  <span class="ml-en"><strong>Now booking <span class="accent">July 2026</span> builds</strong><span class="sep">·</span>48-hour delivery<span class="sep">·</span>From <strong class="accent"><span class="geo-na">$500 CAD</span><span class="geo-co">$690.000 COP</span></strong></span><span class="ml-es"><strong>Cupos abiertos <span class="accent">julio 2026</span></strong><span class="sep">·</span>Entrega en 48 horas<span class="sep">·</span>Desde <strong class="accent"><span class="geo-na">$500 CAD</span><span class="geo-co">$690.000 COP</span></strong></span>
 </div>
 
 <header class="header">
@@ -707,7 +710,7 @@ body.nav-open{overflow:hidden}
   <div class="hero-grid">
     <span class="eyebrow"><span class="dot live"></span><span class="ml-en">Canadian-owned · Built in Medellín · Powered by Anthropic</span><span class="ml-es">Liderazgo canadiense · Construido en Medellín · Impulsado por Anthropic</span></span>
     <h1><span class="ml-en">Enterprise-grade websites at <span class="accent">small-business prices.</span></span><span class="ml-es">Sitios web nivel enterprise, a <span class="accent">precios de pyme.</span></span></h1>
-    <p class="lede"><span class="ml-en">Custom-coded, hand-designed, deployed on Cloudflare's edge network. Sub-second load times, perfect Lighthouse scores, A+ security headers, built in 48 hours, not 8 weeks. Starting at $500 CAD.</span><span class="ml-es">Código a la medida, diseño hecho a mano, desplegado en la red edge de Cloudflare. Carga sub-segundo, Lighthouse perfecto, encabezados de seguridad A+. Construido en 48 horas, no 8 semanas. Desde $690.000 COP.</span></p>
+    <p class="lede"><span class="ml-en">Custom-coded, hand-designed, deployed on Cloudflare's edge network. Sub-second load times, perfect Lighthouse scores, A+ security headers, built in 48 hours, not 8 weeks. Starting at <span class="geo-na">$500 CAD</span><span class="geo-co">$690.000 COP</span>.</span><span class="ml-es">Código a la medida, diseño hecho a mano, desplegado en la red edge de Cloudflare. Carga sub-segundo, Lighthouse perfecto, encabezados de seguridad A+. Construido en 48 horas, no 8 semanas. Desde <span class="geo-na">$500 CAD</span><span class="geo-co">$690.000 COP</span>.</span></p>
     <div class="hero-cta">
       <a href="#pricing" class="btn btn-primary"><span class="ml-en">See pricing &amp; start</span><span class="ml-es">Ver precios y empezar</span> <span class="arrow">→</span></a>
       <a href="#cta-final" class="btn btn-outline"><span class="ml-en">Or schedule a call</span><span class="ml-es">O agendar una llamada</span></a>
@@ -863,111 +866,111 @@ body.nav-open{overflow:hidden}
       <p><span class="ml-en">No phased proposals, no "design phase" upsells, no surprise hosting bills. Two tiers, pick the one that matches your business.</span><span class="ml-es">Sin propuestas por fases, sin upsells de "fase de diseño", sin sorpresas de hosting. Dos planes, elija el que se adapte a su negocio.</span></p>
     </div>
 
-    <!-- EN pricing grid -->
-    <div class="price-grid ml-en">
+    <!-- NA pricing grid (CAD · Wise) - shown to non-Colombia visitors -->
+    <div class="price-grid geo-na">
       <div class="price-card">
         <div class="head">
           <div class="name">Essential</div>
-          <span class="tag">Most clinics & cafés</span>
+          <span class="tag"><span class="ml-en">Most clinics &amp; cafés</span><span class="ml-es">Clínicas y cafés</span></span>
         </div>
         <div class="price-amt"><span class="ccy">CAD</span>$500</div>
-        <div class="price-suffix">one-time · 1 year hosting included · $150 deposit to start</div>
-        <p class="desc">A premium one-page marketing site with everything an SMB actually needs. Perfect for clinics, restaurants, salons, studios, and service businesses.</p>
+        <div class="price-suffix"><span class="ml-en">one-time · 1 year hosting included · $150 deposit to start</span><span class="ml-es">pago único · 1 año de hosting incluido · depósito de $150 para empezar</span></div>
+        <p class="desc"><span class="ml-en">A premium one-page marketing site with everything an SMB actually needs. Perfect for clinics, restaurants, salons, studios, and service businesses.</span><span class="ml-es">Sitio de marketing premium de una página con todo lo que una pyme necesita. Ideal para clínicas, restaurantes, salones, estudios y servicios.</span></p>
         <ul>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Single-page multi-section custom site</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Cloudflare hosting · 1 year included</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Custom domain setup &amp; SSL</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Mobile responsive · all devices</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Lighthouse 100 · Sub-1s load</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Contact form &amp; email forwarding</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Privacy-first analytics</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>2 rounds of revisions</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>48-hour delivery</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Single-page multi-section custom site</span><span class="ml-es">Sitio de una sola página con múltiples secciones</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Cloudflare hosting · 1 year included</span><span class="ml-es">Hosting Cloudflare · 1 año incluido</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Custom domain setup &amp; SSL</span><span class="ml-es">Configuración de dominio propio y SSL</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Mobile responsive · all devices</span><span class="ml-es">Responsive · todos los dispositivos</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Lighthouse 100 · Sub-1s load</span><span class="ml-es">Lighthouse 100 · carga sub-1s</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Contact form &amp; email forwarding</span><span class="ml-es">Formulario de contacto y reenvío de correo</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Privacy-first analytics</span><span class="ml-es">Analítica respetuosa con la privacidad</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">2 rounds of revisions</span><span class="ml-es">2 rondas de revisiones</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">48-hour delivery</span><span class="ml-es">Entrega en 48 horas</span></li>
         </ul>
         <div class="cta-row">
-          <a href="https://wise.com/pay/r/rhZaZERQUcEuitY" target="_blank" rel="noopener" class="btn btn-outline">Pay $150 deposit &amp; start <span class="arrow">→</span></a>
-          <a href="#cta-final" class="btn btn-link">Or schedule a call →</a>
+          <a href="https://wise.com/pay/r/rhZaZERQUcEuitY" target="_blank" rel="noopener" class="btn btn-outline"><span class="ml-en">Pay $150 deposit &amp; start</span><span class="ml-es">Pagar depósito $150 y empezar</span> <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link"><span class="ml-en">Or schedule a call →</span><span class="ml-es">O agendar una llamada →</span></a>
         </div>
       </div>
 
       <div class="price-card featured">
         <div class="head">
           <div class="name" style="color:#fff">Pro</div>
-          <span class="tag">Boutique brands &amp; e-comm</span>
+          <span class="tag"><span class="ml-en">Boutique brands &amp; e-comm</span><span class="ml-es">Marcas boutique y e-comm</span></span>
         </div>
         <div class="price-amt"><span class="ccy">CAD</span>$800</div>
-        <div class="price-suffix">one-time · 2 years hosting included · $240 deposit to start</div>
-        <p class="desc">Multi-section site with integrations, bilingual support, advanced forms, and ongoing edits. For brands that need a real digital presence.</p>
+        <div class="price-suffix"><span class="ml-en">one-time · 2 years hosting included · $240 deposit to start</span><span class="ml-es">pago único · 2 años de hosting incluido · depósito de $240 para empezar</span></div>
+        <p class="desc"><span class="ml-en">Multi-section site with integrations, bilingual support, advanced forms, and ongoing edits. For brands that need a real digital presence.</span><span class="ml-es">Sitio multi-sección con integraciones, soporte bilingüe, formularios avanzados y ediciones continuas. Para marcas que necesitan presencia digital real.</span></p>
         <ul>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Everything in Essential, plus:</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Bilingual EN / FR or EN / ES</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Cloudflare hosting · 2 years included</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Booking / payment integration</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Newsletter capture &amp; CRM sync</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Schema markup · advanced SEO</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>4 rounds of revisions</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Everything in Essential, plus:</span><span class="ml-es">Todo lo de Essential, más:</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Bilingual EN / FR or EN / ES</span><span class="ml-es">Bilingüe EN / FR o EN / ES</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Cloudflare hosting · 2 years included</span><span class="ml-es">Hosting Cloudflare · 2 años incluidos</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Booking / payment integration</span><span class="ml-es">Integración de reservas o pagos</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Newsletter capture &amp; CRM sync</span><span class="ml-es">Captura newsletter y sync con CRM</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Schema markup · advanced SEO</span><span class="ml-es">Schema markup · SEO avanzado</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">4 rounds of revisions</span><span class="ml-es">4 rondas de revisiones</span></li>
         </ul>
         <div class="cta-row">
-          <a href="https://wise.com/pay/r/qYRloHLYQcF098c" target="_blank" rel="noopener" class="btn btn-accent">Pay $240 deposit &amp; start <span class="arrow">→</span></a>
-          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">Or schedule a call →</a>
+          <a href="https://wise.com/pay/r/qYRloHLYQcF098c" target="_blank" rel="noopener" class="btn btn-accent"><span class="ml-en">Pay $240 deposit &amp; start</span><span class="ml-es">Pagar depósito $240 y empezar</span> <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)"><span class="ml-en">Or schedule a call →</span><span class="ml-es">O agendar una llamada →</span></a>
         </div>
       </div>
     </div>
 
-    <!-- ES pricing grid -->
-    <div class="price-grid ml-es">
+    <!-- LATAM pricing grid (COP · Wompi) - shown to Colombia visitors -->
+    <div class="price-grid geo-co">
       <div class="price-card">
         <div class="head">
           <div class="name">Esencial</div>
-          <span class="tag">Clínicas y cafés</span>
+          <span class="tag"><span class="ml-en">Clinics &amp; cafés</span><span class="ml-es">Clínicas y cafés</span></span>
         </div>
         <div class="price-amt"><span class="ccy">COP</span>$690.000</div>
-        <div class="price-suffix">pago único · 1 año de hosting incluido · depósito de $207.000 para empezar</div>
-        <p class="desc">Sitio de marketing de una página con todo lo que una pyme necesita. Ideal para clínicas, restaurantes, salones, estudios y servicios.</p>
+        <div class="price-suffix"><span class="ml-en">one-time · 1 year hosting included · $207.000 deposit to start</span><span class="ml-es">pago único · 1 año de hosting incluido · depósito de $207.000 para empezar</span></div>
+        <p class="desc"><span class="ml-en">A premium one-page marketing site with everything an SMB actually needs. Perfect for clinics, restaurants, salons, studios, and service businesses.</span><span class="ml-es">Sitio de marketing premium de una página con todo lo que una pyme necesita. Ideal para clínicas, restaurantes, salones, estudios y servicios.</span></p>
         <ul>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Sitio de una sola página con múltiples secciones</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Hosting Cloudflare · 1 año incluido</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Configuración de dominio propio y SSL</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Responsive · todos los dispositivos</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Lighthouse 100 · carga sub-1s</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Formulario de contacto y reenvío de correo</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Analítica respetuosa con la privacidad</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>2 rondas de revisiones</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Entrega en 48 horas</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Single-page multi-section custom site</span><span class="ml-es">Sitio de una sola página con múltiples secciones</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Cloudflare hosting · 1 year included</span><span class="ml-es">Hosting Cloudflare · 1 año incluido</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Custom domain setup &amp; SSL</span><span class="ml-es">Configuración de dominio propio y SSL</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Mobile responsive · all devices</span><span class="ml-es">Responsive · todos los dispositivos</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Lighthouse 100 · Sub-1s load</span><span class="ml-es">Lighthouse 100 · carga sub-1s</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Contact form &amp; email forwarding</span><span class="ml-es">Formulario de contacto y reenvío de correo</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Privacy-first analytics</span><span class="ml-es">Analítica respetuosa con la privacidad</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">2 rounds of revisions</span><span class="ml-es">2 rondas de revisiones</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">48-hour delivery</span><span class="ml-es">Entrega en 48 horas</span></li>
         </ul>
         <div class="cta-row">
-          <a href="https://checkout.wompi.co/l/kNsvyu" target="_blank" rel="noopener" class="btn btn-outline">Pagar depósito $207.000 y empezar <span class="arrow">→</span></a>
-          <a href="#cta-final" class="btn btn-link">O agendar una llamada →</a>
+          <a href="https://checkout.wompi.co/l/kNsvyu" target="_blank" rel="noopener" class="btn btn-outline"><span class="ml-en">Pay $207.000 deposit &amp; start</span><span class="ml-es">Pagar depósito $207.000 y empezar</span> <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link"><span class="ml-en">Or schedule a call →</span><span class="ml-es">O agendar una llamada →</span></a>
         </div>
       </div>
 
       <div class="price-card featured">
         <div class="head">
           <div class="name" style="color:#fff">Crecimiento</div>
-          <span class="tag">Marcas boutique y e-comm</span>
+          <span class="tag"><span class="ml-en">Boutique brands &amp; e-comm</span><span class="ml-es">Marcas boutique y e-comm</span></span>
         </div>
         <div class="price-amt"><span class="ccy">COP</span>$1.080.000</div>
-        <div class="price-suffix">pago único · 2 años de hosting incluido · depósito de $324.000 para empezar</div>
-        <p class="desc">Sitio multi-sección con integraciones, soporte bilingüe, formularios avanzados y ediciones continuas. Para marcas que necesitan presencia digital real.</p>
+        <div class="price-suffix"><span class="ml-en">one-time · 2 years hosting included · $324.000 deposit to start</span><span class="ml-es">pago único · 2 años de hosting incluido · depósito de $324.000 para empezar</span></div>
+        <p class="desc"><span class="ml-en">Multi-section site with integrations, bilingual support, advanced forms, and ongoing edits. For brands that need a real digital presence.</span><span class="ml-es">Sitio multi-sección con integraciones, soporte bilingüe, formularios avanzados y ediciones continuas. Para marcas que necesitan presencia digital real.</span></p>
         <ul>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Todo lo de Esencial, más:</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Bilingüe ES / EN</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Hosting Cloudflare · 2 años incluidos</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Integración de reservas o pagos</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Captura newsletter y sync con CRM</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Schema markup · SEO avanzado</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>4 rondas de revisiones</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Everything in Esencial, plus:</span><span class="ml-es">Todo lo de Esencial, más:</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Bilingual ES / EN</span><span class="ml-es">Bilingüe ES / EN</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Cloudflare hosting · 2 years included</span><span class="ml-es">Hosting Cloudflare · 2 años incluidos</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Booking / payment integration</span><span class="ml-es">Integración de reservas o pagos</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Newsletter capture &amp; CRM sync</span><span class="ml-es">Captura newsletter y sync con CRM</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Schema markup · advanced SEO</span><span class="ml-es">Schema markup · SEO avanzado</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">4 rounds of revisions</span><span class="ml-es">4 rondas de revisiones</span></li>
         </ul>
         <div class="cta-row">
-          <a href="https://checkout.wompi.co/l/3tNB1l" target="_blank" rel="noopener" class="btn btn-accent">Pagar depósito $324.000 y empezar <span class="arrow">→</span></a>
-          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">O agendar una llamada →</a>
+          <a href="https://checkout.wompi.co/l/3tNB1l" target="_blank" rel="noopener" class="btn btn-accent"><span class="ml-en">Pay $324.000 deposit &amp; start</span><span class="ml-es">Pagar depósito $324.000 y empezar</span> <span class="arrow">→</span></a>
+          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)"><span class="ml-en">Or schedule a call →</span><span class="ml-es">O agendar una llamada →</span></a>
         </div>
       </div>
     </div>
 
     <div class="price-foot">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A5.2 5.2 0 0112 5a5.2 5.2 0 018 5.2c0 7.3-8 11.8-8 11.8z"/></svg></div>
-      <div><strong><span class="ml-en">What an equivalent site would cost in Toronto:</span><span class="ml-es">Lo que costaría un sitio equivalente en Toronto:</span></strong> <span class="ml-en">$4.500–$12.000 CAD with a 6–10 week timeline. Same code, same hosting, same security headers, we just don't have the agency overhead to pass along.</span><span class="ml-es">$4.500–$12.000 CAD con plazo de 6–10 semanas. Mismo código, mismo hosting, mismos encabezados de seguridad, simplemente no tenemos el sobrecosto de agencia que trasladar.</span></div>
+      <div><strong><span class="ml-en">What an equivalent site would cost from a Toronto agency:</span><span class="ml-es">Lo que costaría un sitio equivalente en una agencia de Toronto:</span></strong> <span class="geo-na ml-en">$5,000–$12,000 CAD with a 6–10 week timeline. Same code, same hosting, same security headers, we just don't have the agency overhead to pass along.</span><span class="geo-na ml-es">$5.000–$12.000 CAD con plazo de 6–10 semanas. Mismo código, mismo hosting, mismos encabezados de seguridad, simplemente no tenemos el sobrecosto de agencia que trasladar.</span><span class="geo-co ml-en">$15.000.000–$36.000.000 COP with a 6–10 week timeline. Same code, same hosting, same security headers, we just don't have the agency overhead to pass along.</span><span class="geo-co ml-es">$15.000.000–$36.000.000 COP con plazo de 6–10 semanas. Mismo código, mismo hosting, mismos encabezados de seguridad, simplemente no tenemos el sobrecosto de agencia que trasladar.</span></div>
     </div>
 
     <div class="price-foot" style="margin-top:12px">
@@ -1174,7 +1177,7 @@ body.nav-open{overflow:hidden}
         </svg>
         <div class="head">
           <h3><span class="ml-en">Toronto Agency</span><span class="ml-es">Agencia de Toronto</span></h3>
-          <div class="price-line"><span class="ccy">CAD</span>$5K–$12K</div>
+          <div class="price-line"><span class="geo-na"><span class="ccy">CAD</span>$5K–$12K</span><span class="geo-co"><span class="ccy">COP</span>$15M–$36M</span></div>
         </div>
         <ul>
           <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Custom-designed marketing site</span><span class="ml-es">Sitio de marketing diseñado a medida</span></li>
@@ -1182,7 +1185,7 @@ body.nav-open{overflow:hidden}
           <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">WordPress (CVE patches every Tuesday)</span><span class="ml-es">WordPress (parches CVE cada martes)</span></li>
           <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">$120/mo hosting + plugin subscriptions</span><span class="ml-es">$120/mes de hosting + suscripciones de plugins</span></li>
           <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">3-second LCP (typical Wordpress)</span><span class="ml-es">LCP de 3 segundos (típico de WordPress)</span></li>
-          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">3 rounds of revisions ($800/round after)</span><span class="ml-es">3 rondas de revisión ($800/ronda extra)</span></li>
+          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">3 rounds of revisions ($800 CAD/round after)</span><span class="ml-es">3 rondas de revisión ($2.400.000 COP/ronda extra)</span></li>
           <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">Cookie-banner-required analytics</span><span class="ml-es">Analítica que exige banner de cookies</span></li>
         </ul>
         <div class="timeline"><span class="ml-en">Timeline</span><span class="ml-es">Plazo</span>: <strong><span class="ml-en">6–10 weeks</span><span class="ml-es">6–10 semanas</span></strong> · <span class="ml-en">Project manager included whether you want one or not</span><span class="ml-es">Project manager incluido aunque no lo quiera</span></div>
@@ -1190,8 +1193,8 @@ body.nav-open{overflow:hidden}
 
       <div class="cmp-card us">
         <div class="head">
-          <h3><span class="ml-en">PymeWebPro · Pro</span><span class="ml-es">PymeWebPro · Crecimiento</span></h3>
-          <div class="price-line"><span class="ml-en"><span class="ccy">CAD</span>$800</span><span class="ml-es"><span class="ccy">COP</span>$1.080.000</span></div>
+          <h3><span class="geo-na">PymeWebPro · Pro</span><span class="geo-co">PymeWebPro · Crecimiento</span></h3>
+          <div class="price-line"><span class="geo-na"><span class="ccy">CAD</span>$800</span><span class="geo-co"><span class="ccy">COP</span>$1.080.000</span></div>
         </div>
         <ul>
           <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Custom-designed multi-section site</span><span class="ml-es">Sitio multi-sección diseñado a medida</span></li>
@@ -1354,6 +1357,35 @@ body.nav-open{overflow:hidden}
 </footer>
 
 <script>
+(function(){
+  // Geo-detect via Cloudflare's /cdn-cgi/trace endpoint. Pricing follows visitor country.
+  // Default = NA pricing (CAD). If country is CO, switch to COP.
+  // Cache the result in localStorage for 24h to avoid repeated trace calls.
+  var html = document.documentElement;
+  var cached = null;
+  try {
+    var raw = localStorage.getItem('pwp-geo');
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      if (parsed && parsed.t && (Date.now() - parsed.t) < 86400000) cached = parsed.c;
+    }
+  } catch(e){}
+  function applyGeo(country){
+    html.classList.remove('geo-co','geo-na');
+    html.classList.add(country === 'CO' ? 'geo-co' : 'geo-na');
+  }
+  if (cached) {
+    applyGeo(cached);
+  } else {
+    applyGeo('XX'); // default to NA until trace returns
+    fetch('/cdn-cgi/trace').then(function(r){return r.text();}).then(function(t){
+      var m = t.match(/loc=(\w+)/);
+      var country = m ? m[1] : 'XX';
+      try { localStorage.setItem('pwp-geo', JSON.stringify({c:country, t:Date.now()})); } catch(e){}
+      applyGeo(country);
+    }).catch(function(){ applyGeo('XX'); });
+  }
+})();
 (function(){
   var saved = localStorage.getItem('pwp-lang');
   var browser = (navigator.language || 'en').slice(0,2).toLowerCase();
