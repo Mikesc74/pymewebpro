@@ -669,7 +669,7 @@ body.nav-open{overflow:hidden}
 
 <header class="header">
   <div class="header-inner">
-    <a href="#" class="logo" aria-label="PymeWebPro home">
+    <a href="/" class="logo" aria-label="PymeWebPro home">
       <span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span>
     </a>
     <button class="menu-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navDrawer">
@@ -695,7 +695,7 @@ body.nav-open{overflow:hidden}
 <div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
 <aside class="nav-drawer" id="navDrawer" role="dialog" aria-label="Navigation" aria-modal="true">
   <div class="nd-head">
-    <a href="#" class="logo" aria-label="PymeWebPro home">
+    <a href="/" class="logo" aria-label="PymeWebPro home">
       <span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span>
     </a>
     <button class="nd-close" id="navClose" aria-label="Close menu">&times;</button>
@@ -834,7 +834,7 @@ body.nav-open{overflow:hidden}
         <div class="stack-item">
           <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
           <div class="body">
-            <h4><span class="ml-en">Privacy-first analytics · GDPR/PIPEDA-compliant</span><span class="ml-es">Analítica con privacidad · cumple GDPR / PIPEDA / Habeas Data</span></h4>
+            <h4><span class="ml-en">Privacy-first analytics · GDPR + Habeas Data compliant</span><span class="ml-es">Analítica con privacidad · cumple GDPR + Habeas Data</span></h4>
             <p><span class="ml-en">Cloudflare Web Analytics, no cookies, no fingerprints, no consent banner needed in Canada or the EU. You get the data, your visitors keep their privacy.</span><span class="ml-es">Cloudflare Web Analytics, sin cookies, sin fingerprints, sin banner de consentimiento. Usted obtiene los datos, sus visitantes conservan su privacidad.</span></p>
           </div>
           <span class="badge">Active</span>
@@ -1297,7 +1297,7 @@ body.nav-open{overflow:hidden}
 <footer>
   <div class="foot-grid">
     <div class="foot-brand">
-      <a href="#" class="logo" aria-label="PymeWebPro home">
+      <a href="/" class="logo" aria-label="PymeWebPro home">
         <span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span>
       </a>
       <p><span class="ml-en">Canadian-led web studio building enterprise-grade sites for SMBs across North America and Latin America. Hand-crafted in Medellín, deployed on Cloudflare's global edge.</span><span class="ml-es">Estudio web liderado por canadiense que construye sitios nivel enterprise para pymes en Norteamérica y Latinoamérica. Hecho a mano en Medellín, desplegado en la red edge global de Cloudflare.</span></p>
@@ -1319,21 +1319,18 @@ body.nav-open{overflow:hidden}
     <div class="foot-col">
       <h5><span class="ml-en">Studio</span><span class="ml-es">Estudio</span></h5>
       <ul>
-        <li><a href="#"><span class="ml-en">About</span><span class="ml-es">Acerca</span></a></li>
-        <li><a href="#"><span class="ml-en">Why Medellín</span><span class="ml-es">Por qué Medellín</span></a></li>
-        <li><a href="#"><span class="ml-en">Powered by Anthropic</span><span class="ml-es">Impulsado por Anthropic</span></a></li>
-        <li><a href="#"><span class="ml-en">Press</span><span class="ml-es">Prensa</span></a></li>
+        <li><a href="#honest"><span class="ml-en">About PymeWebPro</span><span class="ml-es">Acerca de PymeWebPro</span></a></li>
+        <li><a href="https://mockups.pymewebpro.com" target="_blank" rel="noopener"><span class="ml-en">Mockups gallery</span><span class="ml-es">Galería de mockups</span></a></li>
+        <li><a href="/recursos/"><span class="ml-en">Resources</span><span class="ml-es">Recursos</span></a></li>
         <li><a href="#cta-final"><span class="ml-en">Contact</span><span class="ml-es">Contacto</span></a></li>
       </ul>
     </div>
     <div class="foot-col">
-      <h5>Legal</h5>
+      <h5><span class="ml-en">Legal</span><span class="ml-es">Legal</span></h5>
       <ul>
-        <li><a href="#">Privacy Policy (PIPEDA)</a></li>
-        <li><a href="#">Terms of Service</a></li>
-        <li><a href="#">Master Services Agreement</a></li>
-        <li><a href="#">Acceptable Use</a></li>
-        <li><a href="#">Status</a></li>
+        <li><a href="/politica-de-datos.html"><span class="ml-en">Privacy Policy (Ley 1581)</span><span class="ml-es">Política de Datos (Ley 1581)</span></a></li>
+        <li><a href="/terminos.html"><span class="ml-en">Terms of Service</span><span class="ml-es">Términos y Condiciones</span></a></li>
+        <li><a href="/hosting.html"><span class="ml-en">Hosting Policy</span><span class="ml-es">Política de Hosting</span></a></li>
       </ul>
     </div>
   </div>

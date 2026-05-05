@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="lang-en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Start here, PymeWebPro · From sign-up to live site in 5 business days</title>
+<title>Start here · PymeWebPro · From sign-up to live site in 5 business days</title>
 <meta name="description" content="Step-by-step walkthrough of how a PymeWebPro project goes from first conversation to live website. Seven concrete steps, real timelines, no surprises.">
 <meta name="theme-color" content="#0A0A0B">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%230A0A0B%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2240%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-monospace%2CSFMono-Regular%2CMenlo%2Cmonospace%22%20font-size%3D%2218%22%20font-weight%3D%22600%22%20fill%3D%22%23FAFAF7%22%3E%3Ctspan%20fill%3D%22%23FF5C2E%22%3E%26lt%3B%3C/tspan%3Epwp%3Ctspan%20fill%3D%22%23FF5C2E%22%3E/%26gt%3B%3C/tspan%3E%3C/text%3E%3C/svg%3E">
@@ -13,6 +13,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;max-width:100%}
+html.lang-en .ml-es,html.lang-es .ml-en{display:none!important}
 :root{
   --bg:#FFFFFF;
   --paper:#FAF9F6;
@@ -67,9 +68,12 @@ h1,h2,h3,h4{font-family:var(--display);color:var(--ink);font-weight:700;letter-s
 .logo .br{font-family:var(--mono);font-weight:500;color:var(--gray);font-size:0.92em}
 .logo .word{margin:0 1.5px}
 .logo:hover .br{color:var(--accent)}
-.crumb{font-family:var(--mono);font-size:11.5px;color:var(--gray);letter-spacing:0.04em;margin-left:auto}
+.crumb{font-family:var(--mono);font-size:11.5px;color:var(--gray);letter-spacing:0.04em;margin-left:auto;display:flex;align-items:center;gap:14px}
 .crumb .arrow{margin:0 8px;opacity:0.5}
 .crumb a:hover{color:var(--ink)}
+.lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--bg);font-family:var(--mono);font-size:11px;letter-spacing:0.04em;font-weight:600;flex-shrink:0}
+.lang-toggle button{padding:5px 11px;border-radius:999px;background:transparent;color:var(--gray);cursor:pointer;border:0;font:inherit;letter-spacing:inherit;font-weight:inherit;transition:all .2s}
+html.lang-en .lang-toggle button[data-l="en"],html.lang-es .lang-toggle button[data-l="es"]{background:var(--ink);color:#fff}
 
 .hero{padding:clamp(70px,9vw,120px) 0 clamp(50px,6vw,80px);text-align:center;background:linear-gradient(180deg,var(--bg) 0%,var(--paper) 100%)}
 .hero .eyebrow{margin-bottom:24px}
@@ -168,24 +172,28 @@ footer .credit a{color:var(--accent);font-weight:500}
 
 <header class="header">
   <div class="header-inner">
-    <a href="https://mockups.pymewebpro.com/pymewebpro-ca/" class="logo" aria-label="PymeWebPro home">
+    <a href="https://pymewebpro.com" class="logo" aria-label="PymeWebPro home">
       <span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span>
     </a>
     <div class="crumb">
-      <a href="https://mockups.pymewebpro.com/pymewebpro-ca/">Home</a><span class="arrow">›</span>Start
+      <span><a href="https://pymewebpro.com"><span class="ml-en">Home</span><span class="ml-es">Inicio</span></a><span class="arrow">›</span><span class="ml-en">Start</span><span class="ml-es">Empezar</span></span>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button data-l="en" type="button" aria-label="English">EN</button>
+        <button data-l="es" type="button" aria-label="Español">ES</button>
+      </div>
     </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="container">
-    <span class="eyebrow"><span class="dot"></span>Start here</span>
-    <h1>From your first message to <span class="accent">a live site</span> in 5 business days.</h1>
-    <p class="lede">Seven concrete steps. Real timelines. No surprise invoices, no scope creep, no agency theater. Walk through what happens, then book the discovery call.</p>
+    <span class="eyebrow"><span class="dot"></span><span class="ml-en">Start here</span><span class="ml-es">Empiece aquí</span></span>
+    <h1><span class="ml-en">From your first message to <span class="accent">a live site</span> in 5 business days.</span><span class="ml-es">De su primer mensaje a <span class="accent">un sitio en vivo</span> en 5 días hábiles.</span></h1>
+    <p class="lede"><span class="ml-en">Seven concrete steps. Real timelines. No surprise invoices, no scope creep, no agency theater. Walk through what happens, then book the discovery call.</span><span class="ml-es">Siete pasos concretos. Plazos reales. Sin facturas sorpresa, sin scope creep, sin teatro de agencia. Recorra lo que sucede, después agende la llamada de descubrimiento.</span></p>
     <div class="hero-meta">
-      <span><strong>Timeline:</strong> 5 business days</span>
-      <span><strong>Your time:</strong> ~2 hours total</span>
-      <span><strong>Cost:</strong> $500–$800 CAD</span>
+      <span><strong><span class="ml-en">Timeline:</span><span class="ml-es">Plazo:</span></strong> <span class="ml-en">5 business days</span><span class="ml-es">5 días hábiles</span></span>
+      <span><strong><span class="ml-en">Your time:</span><span class="ml-es">Su tiempo:</span></strong> <span class="ml-en">~2 hours total</span><span class="ml-es">~2 horas en total</span></span>
+      <span><strong><span class="ml-en">Cost:</span><span class="ml-es">Inversión:</span></strong> <span class="ml-en">$500–$800 CAD</span><span class="ml-es">$390.000–$690.000 COP</span></span>
     </div>
   </div>
 </section>
@@ -196,120 +204,119 @@ footer .credit a{color:var(--accent);font-weight:500}
     <div class="step">
       <div class="num">01</div>
       <div class="body">
-        <div class="time">Day 0 · 20 minutes · No commitment</div>
-        <h2>Book the <span class="accent">discovery call.</span></h2>
-        <p>A 20-minute call to talk through your business, what you want the site to do, and which tier (Essential or Pro) fits. We'll quote you in writing within 24 hours, including a hard timeline.</p>
-        <p>Bring: a rough sense of who your customers are and what you'd want different from your current site (or the lack of one).</p>
+        <div class="time"><span class="ml-en">Day 0 · 15 minutes · No commitment</span><span class="ml-es">Día 0 · 15 minutos · Sin compromiso</span></div>
+        <h2><span class="ml-en">Book the <span class="accent">discovery call.</span></span><span class="ml-es">Agende la <span class="accent">llamada de descubrimiento.</span></span></h2>
+        <p><span class="ml-en">A 15-minute call to talk through your business, what you want the site to do, and which tier (Essential or Pro) fits. We'll point you at the right tier on the same call.</span><span class="ml-es">Una llamada de 15 minutos para hablar de su negocio, qué quiere que haga el sitio, y cuál plan (Esencial o Crecimiento) le conviene. Le indicamos el plan correcto en la misma llamada.</span></p>
+        <p><span class="ml-en">Bring: a rough sense of who your customers are and what you'd want different from your current site (or the lack of one).</span><span class="ml-es">Traiga: una idea aproximada de quiénes son sus clientes y qué querría diferente de su sitio actual (o de no tenerlo).</span></p>
         <div class="deliver">
-          <strong>What you get</strong>
-          A written quote in your inbox within 24 hours. No call follow-ups, no haggling.
+          <strong><span class="ml-en">What you get</span><span class="ml-es">Lo que recibe</span></strong>
+          <span class="ml-en">A clear recommendation on Essential vs Pro and a direct pay-link to start. No follow-up calls, no haggling.</span><span class="ml-es">Una recomendación clara entre Esencial y Crecimiento y un enlace directo de pago para empezar. Sin llamadas de seguimiento, sin regateos.</span>
         </div>
       </div>
       <div class="action">
-        <a href="#" class="btn btn-primary">Book a 20-min call <span class="arrow">→</span></a>
-        <div class="meta">opens calendar</div>
+        <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener" class="btn btn-primary ml-en">Book a 15-min call <span class="arrow">→</span></a>
+        <a href="https://wa.me/573014047722" target="_blank" rel="noopener" class="btn btn-primary ml-es">WhatsApp con Santiago <span class="arrow">→</span></a>
+        <div class="meta"><span class="ml-en">opens calendar</span><span class="ml-es">abre WhatsApp</span></div>
       </div>
     </div>
 
     <div class="step">
       <div class="num">02</div>
       <div class="body">
-        <div class="time">Day 0–1 · Within 1 business day</div>
-        <h2>Sign the agreement, <span class="accent">pay the 50% deposit.</span></h2>
-        <p>We send the service agreement (a clean two-page contract, signed digitally via DocuSign) along with the first invoice. The invoice is paid via credit card, Apple/Google Pay, or wire to our Wise Business account. <strong>No design or development work begins until the deposit clears.</strong></p>
+        <div class="time"><span class="ml-en">Day 0–1 · Within 1 business day</span><span class="ml-es">Día 0–1 · En 1 día hábil</span></div>
+        <h2><span class="ml-en">Pay the <span class="accent">30% deposit.</span></span><span class="ml-es">Pague el <span class="accent">depósito del 30%.</span></span></h2>
+        <p><span class="ml-en">A direct pay-link from the pricing card or final-CTA section. NA clients pay via Wise Business (credit card, Apple/Google Pay, or wire in CAD/USD). Latin American clients pay via Wompi (card, PSE, or bank transfer in COP). <strong>No design or development work begins until the deposit clears.</strong></span><span class="ml-es">Un enlace de pago directo desde la tarjeta de precios o la sección final de CTA. Los clientes en Colombia pagan vía Wompi (tarjeta, PSE, o transferencia bancaria en COP). Los clientes en Norteamérica pagan vía Wise Business (tarjeta, Apple/Google Pay, o transferencia en CAD/USD). <strong>No iniciamos diseño ni desarrollo hasta que el depósito se confirme.</strong></span></p>
         <div class="deliver">
-          <strong>What you get</strong>
-          Signed agreement + paid invoice in your records. Project officially kicks off.
+          <strong><span class="ml-en">What you get</span><span class="ml-es">Lo que recibe</span></strong>
+          <span class="ml-en">Receipt + project officially kicks off. We send a welcome email with the wizard link.</span><span class="ml-es">Recibo + el proyecto se inicia oficialmente. Le enviamos un correo de bienvenida con el enlace al wizard.</span>
         </div>
       </div>
       <div class="action">
-        <a href="#" class="btn btn-ghost">See sample contract <span class="arrow">↗</span></a>
-        <div class="meta">PDF preview</div>
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500"><span class="ml-en">Pay-links live on the homepage.</span><span class="ml-es">Enlaces de pago en la página principal.</span></span>
       </div>
     </div>
 
     <div class="step">
       <div class="num">03</div>
       <div class="body">
-        <div class="time">Day 1 · 30–45 minutes</div>
-        <h2>Submit your content via <span class="accent">the wizard.</span></h2>
-        <p>You fill in a guided wizard with your services, photos, copy, brand cues, and any specific sections you want. It's tutorial-format with progress checkpoints, autosaves, and clear prompts at each step. Most people finish in 30 minutes.</p>
-        <p>If you don't have professional photos, we'll use a curated Pexels selection and you can swap them later.</p>
+        <div class="time"><span class="ml-en">Day 1 · 30–45 minutes</span><span class="ml-es">Día 1 · 30–45 minutos</span></div>
+        <h2><span class="ml-en">Submit your content via <span class="accent">the wizard.</span></span><span class="ml-es">Envíe su contenido vía <span class="accent">el wizard.</span></span></h2>
+        <p><span class="ml-en">You fill in a guided wizard with your services, photos, copy, brand cues, and any specific sections you want. It's tutorial-format with progress checkpoints, autosaves, and clear prompts at each step. Most people finish in 30 minutes.</span><span class="ml-es">Usted completa un wizard guiado con sus servicios, fotos, textos, pistas de marca, y las secciones específicas que quiera. Es formato tutorial con puntos de control de progreso, guardado automático, y instrucciones claras en cada paso. La mayoría termina en 30 minutos.</span></p>
+        <p><span class="ml-en">If you don't have professional photos, we'll use a curated Pexels selection and you can swap them later.</span><span class="ml-es">Si no tiene fotos profesionales, usamos una selección curada de Pexels y puede reemplazarlas después.</span></p>
         <div class="deliver">
-          <strong>What you get</strong>
-          A summary of everything you submitted, sent to your email for confirmation.
+          <strong><span class="ml-en">What you get</span><span class="ml-es">Lo que recibe</span></strong>
+          <span class="ml-en">A summary of everything you submitted, sent to your email for confirmation.</span><span class="ml-es">Un resumen de todo lo que envió, mandado a su correo para confirmación.</span>
         </div>
       </div>
       <div class="action">
-        <a href="#" class="btn btn-ghost">See wizard preview <span class="arrow">↗</span></a>
-        <div class="meta">demo only</div>
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500"><span class="ml-en">Wizard link arrives by email.</span><span class="ml-es">El enlace al wizard llega por correo.</span></span>
       </div>
     </div>
 
     <div class="step">
       <div class="num">04</div>
       <div class="body">
-        <div class="time">Day 1–2 · 24 to 48 hours</div>
-        <h2>We design and build. <span class="accent">In one focused day.</span></h2>
-        <p>This is on us. By end-of-day-two, you get a private preview link with the fully interactive site, hosted on a staging URL. No screenshots, no Figma reviews, no PDF mockups. The actual site, on real infrastructure, in your browser.</p>
+        <div class="time"><span class="ml-en">Day 1–2 · 24 to 48 hours</span><span class="ml-es">Día 1–2 · 24 a 48 horas</span></div>
+        <h2><span class="ml-en">We design and build. <span class="accent">In one focused day.</span></span><span class="ml-es">Diseñamos y construimos. <span class="accent">En un día enfocado.</span></span></h2>
+        <p><span class="ml-en">This is on us. By end-of-day-two, you log into your customer portal and see the live, fully interactive site right there. No screenshots, no Figma reviews, no PDF mockups. The actual site, on real infrastructure, in your browser.</span><span class="ml-es">Esto va por nuestra cuenta. Al final del día dos, usted entra a su portal de cliente y ve el sitio en vivo, totalmente interactivo, allí mismo. Sin pantallazos, sin revisiones de Figma, sin mockups en PDF. El sitio real, en infraestructura real, en su navegador.</span></p>
         <div class="deliver">
-          <strong>What you get</strong>
-          A private staging URL (still on our domain at this point). Live, fast, real.
+          <strong><span class="ml-en">What you get</span><span class="ml-es">Lo que recibe</span></strong>
+          <span class="ml-en">A private staging URL inside your portal. Live, fast, real.</span><span class="ml-es">Una URL de staging privada dentro de su portal. En vivo, rápida, real.</span>
         </div>
       </div>
       <div class="action">
-        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500">Nothing for you to do here.</span>
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500"><span class="ml-en">Nothing for you to do here.</span><span class="ml-es">Nada que hacer en este paso.</span></span>
       </div>
     </div>
 
     <div class="step">
       <div class="num">05</div>
       <div class="body">
-        <div class="time">Day 3 · 1–2 business days</div>
-        <h2>Walk through it, <span class="accent">send notes.</span></h2>
-        <p>Open the staging link, click around, send notes. Whatever format works for you, text, voice memo, marked-up screenshots, even a WhatsApp video walkthrough. We iterate same-day on most revisions. Two rounds included on Essential, four on Pro.</p>
-        <p>If something needs scoped beyond the included revisions, we quote it before doing it.</p>
+        <div class="time"><span class="ml-en">Day 3 · 1–2 business days</span><span class="ml-es">Día 3 · 1–2 días hábiles</span></div>
+        <h2><span class="ml-en">Walk through it, <span class="accent">send notes.</span></span><span class="ml-es">Recorra el sitio, <span class="accent">envíe notas.</span></span></h2>
+        <p><span class="ml-en">Open the staging link, click around, send notes. Whatever format works for you, text, voice memo, marked-up screenshots, even a WhatsApp video walkthrough. We iterate same-day on most revisions.</span><span class="ml-es">Abra el enlace de staging, navegue, envíe notas. El formato que le funcione: texto, audio, pantallazos anotados, hasta un recorrido en video por WhatsApp. Iteramos el mismo día en la mayoría de revisiones.</span></p>
+        <p><span class="ml-en">If something needs scoped beyond the included revisions, we quote it before doing it.</span><span class="ml-es">Si algo requiere alcance más allá de las revisiones incluidas, lo cotizamos antes de hacerlo.</span></p>
         <div class="deliver">
-          <strong>What you get</strong>
-          The site refined to your taste, ready for launch sign-off.
+          <strong><span class="ml-en">What you get</span><span class="ml-es">Lo que recibe</span></strong>
+          <span class="ml-en">The site refined to your taste, ready for launch sign-off.</span><span class="ml-es">El sitio refinado a su gusto, listo para aprobar el lanzamiento.</span>
         </div>
       </div>
       <div class="action">
-        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500">Send feedback any way you want.</span>
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500"><span class="ml-en">Send feedback any way you want.</span><span class="ml-es">Envíe comentarios como prefiera.</span></span>
       </div>
     </div>
 
     <div class="step">
       <div class="num">06</div>
       <div class="body">
-        <div class="time">Day 4 · Within 24 hours of approval</div>
-        <h2>Pay the final 50%. <span class="accent">We point your domain.</span></h2>
-        <p>You approve the site. We send the second invoice. Once it clears, we point your custom domain at the production deployment, configure SSL, push the build to Cloudflare's global edge network, and submit it to Google for indexing.</p>
-        <p><strong>The site doesn't go live on your domain until the final invoice clears.</strong> This protects both of us, you don't pay until you're happy, and we don't ship until we're paid.</p>
+        <div class="time"><span class="ml-en">Day 4 · Within 24 hours of approval</span><span class="ml-es">Día 4 · En 24 horas tras aprobación</span></div>
+        <h2><span class="ml-en">Pay the final 70%. <span class="accent">We point your domain.</span></span><span class="ml-es">Pague el 70% final. <span class="accent">Apuntamos su dominio.</span></span></h2>
+        <p><span class="ml-en">You approve the site. We send the second pay-link. Once it clears, we point your custom domain at the production deployment, configure SSL, push the build to Cloudflare's global edge network, and submit it to Google for indexing.</span><span class="ml-es">Usted aprueba el sitio. Le enviamos el segundo enlace de pago. Una vez se confirme, apuntamos su dominio personalizado a la implementación de producción, configuramos SSL, publicamos el build en la red edge global de Cloudflare, y lo enviamos a Google para indexación.</span></p>
+        <p><span class="ml-en"><strong>The site doesn't go live on your domain until the final invoice clears.</strong> This protects both of us, you don't pay until you're happy, and we don't ship until we're paid.</span><span class="ml-es"><strong>El sitio no se publica en su dominio hasta que el saldo final se confirme.</strong> Esto nos protege a ambos: usted no paga hasta estar contento, y nosotros no publicamos hasta estar pagados.</span></p>
         <div class="deliver">
-          <strong>What you get</strong>
-          Your live site at your domain, served from 330+ Cloudflare edge locations.
+          <strong><span class="ml-en">What you get</span><span class="ml-es">Lo que recibe</span></strong>
+          <span class="ml-en">Your live site at your domain, served from 330+ Cloudflare edge locations.</span><span class="ml-es">Su sitio en vivo en su dominio, servido desde 330+ ubicaciones edge de Cloudflare.</span>
         </div>
       </div>
       <div class="action">
-        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500">Invoice arrives in your inbox.</span>
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--slate);font-style:italic;font-family:var(--display);font-weight:500"><span class="ml-en">Pay-link arrives in your inbox.</span><span class="ml-es">El enlace de pago llega a su correo.</span></span>
       </div>
     </div>
 
     <div class="step done">
       <div class="num">07</div>
       <div class="body">
-        <div class="time">Day 5 onward · Live · 30-day guarantee active</div>
-        <h2><span class="accent">You're live.</span> 30-day guarantee starts.</h2>
-        <p>Your site is live. The 30-day satisfaction guarantee starts the moment your domain resolves to the production build. If you're not happy for any reason during those 30 days, we take the site offline and refund you in full within 14 business days, no questions asked.</p>
-        <p>After 30 days, hosting continues at the included rate (1 year Essential, 2 years Pro). After that, $15/month or $180/year. Cancel anytime.</p>
+        <div class="time"><span class="ml-en">Day 5 onward · Live · 30-day guarantee active</span><span class="ml-es">Día 5 en adelante · En vivo · garantía de 30 días activa</span></div>
+        <h2><span class="ml-en"><span class="accent">You're live.</span> 30-day guarantee starts.</span><span class="ml-es"><span class="accent">Está en vivo.</span> Empieza la garantía de 30 días.</span></h2>
+        <p><span class="ml-en">Your site is live. The 30-day satisfaction guarantee starts the moment your domain resolves to the production build. If you're not happy for any reason during those 30 days, we take the site offline and refund the full amount paid. No questions, no haggling.</span><span class="ml-es">Su sitio está en vivo. La garantía de satisfacción de 30 días empieza en el momento en que su dominio resuelve al build de producción. Si no está contento por cualquier razón durante esos 30 días, bajamos el sitio y devolvemos el monto total pagado. Sin preguntas, sin regateos.</span></p>
+        <p><span class="ml-en">Free revisions continue for 1 week after launch on Essential, 2 weeks on Pro. After that, ad-hoc edits at $75/hr CAD with a 30-min minimum. Hosting and maintenance are bundled at one flat rate, included for 1 year on Essential or 2 years on Pro, then continues month-to-month.</span><span class="ml-es">Las revisiones gratis continúan durante 1 semana post-lanzamiento en Esencial, 2 semanas en Crecimiento. Después, ediciones puntuales a $75/hr CAD con mínimo de 30 minutos. Hosting y mantenimiento van en un solo cargo, incluido por 1 año en Esencial o 2 años en Crecimiento, después continúa mes a mes.</span></p>
         <div class="deliver">
-          <strong>What you have</strong>
-          A live site, a 30-day refund window, and the source code as a portable archive in case you ever want to migrate.
+          <strong><span class="ml-en">What you have</span><span class="ml-es">Lo que tiene</span></strong>
+          <span class="ml-en">A live site, a 30-day refund window, and the source code as a portable archive in case you ever want to migrate.</span><span class="ml-es">Un sitio en vivo, una ventana de reembolso de 30 días, y el código fuente como archivo portable por si alguna vez quiere migrar.</span>
         </div>
       </div>
       <div class="action">
-        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--green);font-weight:600;font-family:var(--display)">→ This is where you want to be.</span>
+        <span class="meta" style="text-align:center;display:block;font-size:12px;color:var(--green);font-weight:600;font-family:var(--display)"><span class="ml-en">→ This is where you want to be.</span><span class="ml-es">→ Aquí es donde quiere estar.</span></span>
       </div>
     </div>
 
@@ -318,20 +325,40 @@ footer .credit a{color:var(--accent);font-weight:500}
 
 <section class="cta-final">
   <div class="inner">
-    <h2>Step one is <span class="accent">a 20-minute call.</span></h2>
-    <p>Everything above starts there. No commitment, no awkward sales pitch, just a quick conversation to see if we're the right fit and a written quote within 24 hours.</p>
+    <h2><span class="ml-en">Step one is <span class="accent">a 15-minute call.</span></span><span class="ml-es">El paso uno es <span class="accent">una llamada de 15 minutos.</span></span></h2>
+    <p><span class="ml-en">Everything above starts there. No commitment, no awkward sales pitch, just a quick conversation to see if we're the right fit.</span><span class="ml-es">Todo lo de arriba empieza ahí. Sin compromiso, sin pitch incómodo de ventas, solo una conversación corta para ver si somos el ajuste correcto.</span></p>
     <div class="btn-row">
-      <a href="#" class="btn btn-accent">Book the call <span class="arrow">→</span></a>
-      <a href="https://mockups.pymewebpro.com/pymewebpro-ca/#pricing" class="btn btn-outline">See pricing first</a>
+      <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener" class="btn btn-accent ml-en">Book the call <span class="arrow">→</span></a>
+      <a href="https://wa.me/573014047722" target="_blank" rel="noopener" class="btn btn-accent ml-es">WhatsApp con Santiago <span class="arrow">→</span></a>
+      <a href="https://pymewebpro.com/#pricing" class="btn btn-outline"><span class="ml-en">See pricing first</span><span class="ml-es">Ver precios primero</span></a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="credit">
-    Built by <a href="https://pymewebpro.com" rel="noopener">PymeWebPro</a>  ·  <a href="https://pymewebpro.com" rel="noopener" style="opacity:0.85">Want a site like this for your business? pymewebpro.com →</a>
+    <span class="ml-en">Built by</span><span class="ml-es">Sitio web por</span> <a href="https://pymewebpro.com" rel="noopener">PymeWebPro</a>  ·  <a href="https://pymewebpro.com" rel="noopener" style="opacity:0.85"><span class="ml-en">Want a site like this for your business? pymewebpro.com →</span><span class="ml-es">¿Quiere un sitio así para su negocio? pymewebpro.com →</span></a>
   </div>
 </footer>
 
+<script>
+(function(){
+  var saved = localStorage.getItem('pwp-lang');
+  var browser = (navigator.language || 'en').slice(0,2).toLowerCase();
+  var lang = saved || (browser === 'es' ? 'es' : 'en');
+  document.documentElement.classList.remove('lang-en','lang-es');
+  document.documentElement.classList.add('lang-' + lang);
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var l = b.getAttribute('data-l');
+      document.documentElement.classList.remove('lang-en','lang-es');
+      document.documentElement.classList.add('lang-' + l);
+      document.documentElement.lang = l;
+      localStorage.setItem('pwp-lang', l);
+    });
+  });
+})();
+</script>
 </body>
 </html>
