@@ -1023,9 +1023,9 @@ body.nav-open{overflow:hidden}
     <div class="proc-list">
       <div class="proc-step">
         <div class="num">1</div>
-        <div class="time">Day 0 · 20 min</div>
+        <div class="time">Day 0 · 15 min</div>
         <h4>The Brief</h4>
-        <p>20-minute call. We capture your services, audience, brand cues, and the few things you'd want differently from your competition. That's all the brief we need.</p>
+        <p>15-minute call. We capture your services, audience, brand cues, and the few things you'd want differently from your competition. That's all the brief we need.</p>
       </div>
       <div class="proc-step">
         <div class="num">2</div>
@@ -1116,7 +1116,7 @@ body.nav-open{overflow:hidden}
         </div>
         <div class="info" style="text-align:center;width:100%">
           <h4 style="text-align:center">Get in line</h4>
-          <p>July 2026 builds open. Reserve your slot in 20 minutes.</p>
+          <p>July 2026 builds open. Reserve your slot in 15 minutes.</p>
         </div>
       </a>
     </div>
@@ -1250,14 +1250,13 @@ body.nav-open{overflow:hidden}
   <div class="inner">
     <span class="eyebrow"><span class="dot live"></span><span class="ml-en">Have questions first?</span><span class="ml-es">¿Tiene preguntas?</span></span>
     <h2><span class="ml-en">Not sure which tier? <span class="accent">Let's talk.</span></span><span class="ml-es">¿Dudas sobre el plan? <span class="accent">Hablemos.</span></span></h2>
-    <p><span class="ml-en">If you'd rather chat before paying, book a 20-minute call or email us. No sales pressure. We'll point you to the right tier and answer anything technical.</span><span class="ml-es">Si prefiere hablar antes de pagar, agende una llamada de 20 minutos o escríbanos. Sin presión de ventas. Le indicamos el plan correcto y resolvemos cualquier duda técnica.</span></p>
+    <p><span class="ml-en">If you'd rather chat before paying, book a 15-minute call or email us. No sales pressure. We'll point you to the right tier and answer anything technical.</span><span class="ml-es">Si prefiere hablar antes de pagar, agende una llamada de 15 minutos o escríbanos. Sin presión de ventas. Le indicamos el plan correcto y resolvemos cualquier duda técnica.</span></p>
     <div class="btn-row">
-      <!-- TODO: replace with real Cal.com / Calendly link -->
-      <a href="https://cal.com/pymewebpro/discovery" class="btn btn-accent"><span class="ml-en">Schedule a 20-min call</span><span class="ml-es">Agendar llamada de 20 min</span> <span class="arrow">→</span></a>
+      <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener" class="btn btn-accent"><span class="ml-en">Schedule a 15-min call</span><span class="ml-es">Agendar llamada de 15 min</span> <span class="arrow">→</span></a>
       <a href="mailto:hello@pymewebpro.com" class="btn btn-outline"><span class="ml-en">Email hello@pymewebpro.com</span><span class="ml-es">Escribir a hola@pymewebpro.com</span></a>
     </div>
     <div class="meta">
-      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">20-min call</span><span class="ml-es">Llamada de 20 min</span></div>
+      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">15-min call</span><span class="ml-es">Llamada de 15 min</span></div>
       <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Zero sales pressure</span><span class="ml-es">Cero presión de ventas</span></div>
       <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Or just buy above</span><span class="ml-es">O compre arriba</span></div>
     </div>
