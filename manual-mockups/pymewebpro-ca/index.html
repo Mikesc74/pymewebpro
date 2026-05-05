@@ -98,7 +98,11 @@ html.lang-en .lang-toggle button[data-l="en"],html.lang-es .lang-toggle button[d
   backdrop-filter:blur(20px) saturate(160%);
   -webkit-backdrop-filter:blur(20px) saturate(160%);
   border-bottom:1px solid var(--line);
+  transition:transform .28s cubic-bezier(.4,0,.2,1), box-shadow .25s;
+  will-change:transform;
 }
+.header.header--hidden{transform:translateY(-100%)}
+.header.header--scrolled{box-shadow:0 1px 12px rgba(11,18,32,0.06)}
 .header-inner{
   max-width:var(--max);margin:0 auto;
   padding:14px var(--gutter);
@@ -468,26 +472,30 @@ section{padding:clamp(80px,9vw,130px) 0}
 
 /* ─── Testimonial ──────────────────────────────────── */
 .testimonial{background:var(--bg);padding:clamp(70px,8vw,110px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.testimonial-inner{max-width:880px;margin:0 auto;padding:0 var(--gutter);text-align:center}
-.testimonial .eyebrow{margin-bottom:28px}
-.testimonial blockquote{
+.testimonial-inner{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.testimonial-head{text-align:center;margin-bottom:48px}
+.testimonial .eyebrow{margin-bottom:0}
+.testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;align-items:stretch}
+@media (max-width:880px){.testimonial-grid{grid-template-columns:1fr;gap:20px}}
+.testimonial-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:36px 32px;display:flex;flex-direction:column;text-align:left;box-shadow:0 1px 2px rgba(11,18,32,0.04)}
+.testimonial-card blockquote{
   font-family:var(--display);font-weight:500;
-  font-size:clamp(22px,2.6vw,32px);
-  line-height:1.4;letter-spacing:-0.022em;color:var(--ink);
-  margin:0;quotes:none;
+  font-size:clamp(17px,1.6vw,21px);
+  line-height:1.5;letter-spacing:-0.012em;color:var(--ink);
+  margin:0 0 24px 0;quotes:none;flex:1;
 }
-.testimonial blockquote::before{
-  content:"";display:block;width:40px;height:2px;background:var(--accent);margin:0 auto 28px;
+.testimonial-card blockquote::before{
+  content:"";display:block;width:36px;height:2px;background:var(--accent);margin-bottom:22px;
 }
-.testimonial blockquote .accent{color:var(--accent-deep)}
-.testimonial cite{
-  display:block;margin-top:32px;font-style:normal;
-  font-family:var(--mono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--slate);font-weight:600;
+.testimonial-card blockquote .accent{color:var(--accent-deep)}
+.testimonial-card cite{
+  display:block;margin-top:auto;padding-top:20px;border-top:1px solid var(--line);font-style:normal;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--slate);font-weight:600;
 }
-.testimonial cite .name{color:var(--ink);font-weight:700;display:block;font-family:var(--display);font-size:14px;letter-spacing:-0.005em;text-transform:none;margin-bottom:4px}
-.testimonial cite .role{display:block}
-.testimonial-link{margin-top:24px;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;font-weight:500}
-.testimonial-link a{color:var(--accent-deep);font-weight:600}
+.testimonial-card cite .name{color:var(--ink);font-weight:700;display:block;font-family:var(--display);font-size:15px;letter-spacing:-0.005em;text-transform:none;margin-bottom:4px}
+.testimonial-card cite .role{display:block}
+.testimonial-card .link{margin-top:14px;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;font-weight:500}
+.testimonial-card .link a{color:var(--accent-deep);font-weight:600}
 
 /* ─── Comparison ─────────────────────────────────── */
 .compare{background:var(--ink);color:#fff;position:relative;overflow:hidden}
@@ -1116,16 +1124,34 @@ body.nav-open{overflow:hidden}
 <!-- ─── Testimonial ─── -->
 <section class="testimonial">
   <div class="testimonial-inner">
-    <span class="eyebrow"><span class="dot"></span><span class="ml-en">What clients say</span><span class="ml-es">Lo que dicen los clientes</span></span>
-    <blockquote>
-      <span class="ml-en">I'm an elementary PE teacher who built a SaaS for school admins, and I needed a marketing site that didn't look like every other Stripe-template launch page. <span class="accent">Mike got the brief on the first call and shipped a polished v1 in 48 hours.</span> Half the price of what a Toronto agency wanted, faster turnaround, and source code I could take with me, pretty hard to argue with that.</span><span class="ml-es">Soy profesor de educación física de primaria y construí un SaaS para administradores escolares. Necesitaba un sitio de marketing que no se viera como otra plantilla de Stripe. <span class="accent">Mike entendió el brief en la primera llamada y lanzó un v1 pulido en 48 horas.</span> La mitad del precio que pedía una agencia de Toronto, entrega más rápida, y código fuente que me podía llevar conmigo, difícil de discutir con eso.</span>
-    </blockquote>
-    <cite>
-      <span class="name">Patrick Detzner</span>
-      <span class="role"><span class="ml-en">Founder · The Schedulator</span><span class="ml-es">Fundador · The Schedulator</span></span>
-    </cite>
-    <div class="testimonial-link">
-      <span class="ml-en">See Patrick's site →</span><span class="ml-es">Vea el sitio de Patrick →</span> <a href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">mockups.pymewebpro.com/schedulator</a>
+    <div class="testimonial-head">
+      <span class="eyebrow"><span class="dot"></span><span class="ml-en">What clients say</span><span class="ml-es">Lo que dicen los clientes</span></span>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <blockquote>
+          <span class="ml-en">I'm an elementary PE teacher who built a SaaS for school admins, and I needed a marketing site that didn't look like every other Stripe-template launch page. <span class="accent">Mike got the brief on the first call and shipped a polished v1 in 48 hours.</span> Half the price of what a Toronto agency wanted, faster turnaround, and source code I could take with me, pretty hard to argue with that.</span><span class="ml-es">Soy profesor de educación física de primaria y construí un SaaS para administradores escolares. Necesitaba un sitio de marketing que no se viera como otra plantilla de Stripe. <span class="accent">Mike entendió el brief en la primera llamada y lanzó un v1 pulido en 48 horas.</span> La mitad del precio que pedía una agencia de Toronto, entrega más rápida, y código fuente que me podía llevar conmigo, difícil de discutir con eso.</span>
+        </blockquote>
+        <cite>
+          <span class="name">Patrick Detzner</span>
+          <span class="role"><span class="ml-en">Founder · The Schedulator</span><span class="ml-es">Fundador · The Schedulator</span></span>
+        </cite>
+        <div class="link">
+          <span class="ml-en">See his site →</span><span class="ml-es">Vea su sitio →</span> <a href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">schedulator</a>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <blockquote>
+          <span class="ml-en"><span class="accent">Super happy with the final product</span> from Mike and team at PymeWebPro. The whole process was straightforward and fast. They understood exactly what I needed and delivered a clean, professional site in just a couple of days. Highly recommended.</span><span class="ml-es"><span class="accent">Súper contento con el producto final</span> de Mike y el equipo de PymeWebPro. Todo el proceso fue directo y rápido. Entendieron exactamente lo que necesitaba y entregaron un sitio limpio y profesional en solo un par de días. Muy recomendados.</span>
+        </blockquote>
+        <cite>
+          <span class="name">Orlando de La Flor Ferrari</span>
+          <span class="role"><span class="ml-en">Blue Whale International</span><span class="ml-es">Blue Whale International</span></span>
+        </cite>
+        <div class="link">
+          <span class="ml-en">See his site →</span><span class="ml-es">Vea su sitio →</span> <a href="https://mockups.pymewebpro.com/blue-whale-international/" target="_blank" rel="noopener">blue-whale-international</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1366,6 +1392,35 @@ body.nav-open{overflow:hidden}
   if(scrim) scrim.addEventListener('click', close);
   document.querySelectorAll('[data-nav-close]').forEach(function(a){ a.addEventListener('click', close); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && body.classList.contains('nav-open')) close(); });
+})();
+(function(){
+  var header = document.querySelector('.header');
+  if(!header) return;
+  var lastY = window.pageYOffset || 0;
+  var ticking = false;
+  var THRESHOLD = 80;       // ignore scrolls under this many px from top
+  var DELTA = 6;            // ignore tiny scroll jitters
+  function onScroll(){
+    var y = window.pageYOffset || 0;
+    if (Math.abs(y - lastY) < DELTA) { ticking = false; return; }
+    if (y < THRESHOLD) {
+      header.classList.remove('header--hidden');
+      header.classList.remove('header--scrolled');
+    } else if (y > lastY) {
+      // scrolling down — hide
+      header.classList.add('header--hidden');
+      header.classList.add('header--scrolled');
+    } else {
+      // scrolling up — show
+      header.classList.remove('header--hidden');
+      header.classList.add('header--scrolled');
+    }
+    lastY = y;
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking) { window.requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
 })();
 </script>
 </body>
