@@ -117,6 +117,8 @@ Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $117.000
 **Wompi (LATAM — COP):**
 - Esencial deposit ($117.000): `https://checkout.wompi.co/l/IjE5K4` ← on public site (Esencial card)
 - Crecimiento deposit ($207.000): `https://checkout.wompi.co/l/xzGeMX` ← on public site (Crecimiento card)
+- Esencial balance ($273.000): `https://checkout.wompi.co/l/HdCwpF` ← email at launch
+- Crecimiento balance ($483.000): `https://checkout.wompi.co/l/VdGy5L` ← email at launch
 - Obsolete after restructure (can be archived/disabled in Wompi):
   - `kNsvyu` was the old Esencial $207.000 link
   - `3tNB1l` was the old Crecimiento $324.000 link
