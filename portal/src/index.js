@@ -35,6 +35,20 @@ function cors(response) {
   headers.set("Access-Control-Allow-Origin", "*");
   headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  return withSecurityHeaders(new Response(response.body, { status: response.status, headers }));
+}
+// Apply baseline security headers to every Worker response.
+// HSTS preload directives match the apex (_headers on Cloudflare Pages) so that
+// mockups.pymewebpro.com, portal.pymewebpro.com, and *.sites.pymewebpro.com
+// emit the same protection regardless of which subdomain a fresh visitor lands on first.
+function withSecurityHeaders(response) {
+  const headers = new Headers(response.headers);
+  if (!headers.has("Strict-Transport-Security")) {
+    headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+  }
+  if (!headers.has("X-Content-Type-Options")) headers.set("X-Content-Type-Options", "nosniff");
+  if (!headers.has("Referrer-Policy")) headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  // X-Frame-Options is path-specific (admin SPA may iframe project portals); leave unset by default.
   return new Response(response.body, { status: response.status, headers });
 }
 function uuid() {
@@ -4192,7 +4206,7 @@ const src_default = {
       if (path.startsWith("/api/files/")) return cors(await handleFiles(request, env, ctx));
       if (path.startsWith("/api/")) return cors(json({ error: "Not found" }, 404));
       // SPA fallthrough
-      return new Response(FRONTEND_HTML, {
+      return withSecurityHeaders(new Response(FRONTEND_HTML, {
         headers: {
           "Content-Type": "text/html; charset=utf-8",
           "Cache-Control": "public, max-age=300",
@@ -4200,7 +4214,7 @@ const src_default = {
           "X-Frame-Options": "DENY",
           "Referrer-Policy": "strict-origin-when-cross-origin"
         }
-      });
+      }));
     } catch (err) {
       console.error("Worker error:", err, err.stack);
       return cors(json({ error: "Internal server error", detail: err.message }, 500));
