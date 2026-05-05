@@ -104,7 +104,11 @@ html.lang-en .lang-toggle button[data-l="en"],html.lang-es .lang-toggle button[d
   backdrop-filter:blur(20px) saturate(160%);
   -webkit-backdrop-filter:blur(20px) saturate(160%);
   border-bottom:1px solid var(--line);
+  transition:transform .28s cubic-bezier(.4,0,.2,1), box-shadow .25s;
+  will-change:transform;
 }
+.header.header--hidden{transform:translateY(-100%)}
+.header.header--scrolled{box-shadow:0 1px 12px rgba(11,18,32,0.06)}
 .header-inner{
   max-width:var(--max);margin:0 auto;
   padding:14px var(--gutter);
@@ -1394,6 +1398,35 @@ body.nav-open{overflow:hidden}
   if(scrim) scrim.addEventListener('click', close);
   document.querySelectorAll('[data-nav-close]').forEach(function(a){ a.addEventListener('click', close); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && body.classList.contains('nav-open')) close(); });
+})();
+(function(){
+  var header = document.querySelector('.header');
+  if(!header) return;
+  var lastY = window.pageYOffset || 0;
+  var ticking = false;
+  var THRESHOLD = 80;       // ignore scrolls under this many px from top
+  var DELTA = 6;            // ignore tiny scroll jitters
+  function onScroll(){
+    var y = window.pageYOffset || 0;
+    if (Math.abs(y - lastY) < DELTA) { ticking = false; return; }
+    if (y < THRESHOLD) {
+      header.classList.remove('header--hidden');
+      header.classList.remove('header--scrolled');
+    } else if (y > lastY) {
+      // scrolling down -> hide
+      header.classList.add('header--hidden');
+      header.classList.add('header--scrolled');
+    } else {
+      // scrolling up -> show
+      header.classList.remove('header--hidden');
+      header.classList.add('header--scrolled');
+    }
+    lastY = y;
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking) { window.requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
 })();
 </script>
 </body>

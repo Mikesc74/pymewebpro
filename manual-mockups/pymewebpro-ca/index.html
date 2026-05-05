@@ -1407,11 +1407,11 @@ body.nav-open{overflow:hidden}
       header.classList.remove('header--hidden');
       header.classList.remove('header--scrolled');
     } else if (y > lastY) {
-      // scrolling down — hide
+      // scrolling down -> hide
       header.classList.add('header--hidden');
       header.classList.add('header--scrolled');
     } else {
-      // scrolling up — show
+      // scrolling up -> show
       header.classList.remove('header--hidden');
       header.classList.add('header--scrolled');
     }
