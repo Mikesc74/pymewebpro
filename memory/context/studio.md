@@ -95,7 +95,16 @@ Display NIT on:
 
 Switched from 50/50 to 30/70 on 2026-05-05. A productized $500-800 / $690.000-1.080.000 build doesn't need an agency-style 50% deposit; the lower barrier to start makes the buy decision easier while DNS gating on the 70% balance still protects against non-payment.
 
-Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $207.000 COP · Crecimiento $324.000 COP.
+Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $117.000 COP · Crecimiento $207.000 COP.
+
+### Pricing structure (set 2026-05-05, restructured to lower COP tiers)
+
+| Market | Tier | Full price | 30% deposit | 70% balance | Hosting included |
+|---|---|---|---|---|---|
+| Canada / NA | Essential | $500 CAD | $150 CAD | $350 CAD | 1 year |
+| Canada / NA | Pro | $800 CAD | $240 CAD | $560 CAD | 2 years |
+| Colombia | Esencial | $390.000 COP | $117.000 COP | $273.000 COP | 1 year |
+| Colombia | Crecimiento | $690.000 COP | $207.000 COP | $483.000 COP | 2 years |
 
 ### Live pay-links (set 2026-05-05)
 
@@ -106,8 +115,9 @@ Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $207.000
 - Pro balance ($560): `https://wise.com/pay/r/I-G0t2wOE1CRJYI` ← send at launch
 
 **Wompi (LATAM — COP):**
-- Esencial deposit ($207.000): `https://checkout.wompi.co/l/kNsvyu` ← on public site (Esencial card)
-- Crecimiento deposit ($324.000): `https://checkout.wompi.co/l/3tNB1l` ← on public site (Crecimiento card)
+- Esencial deposit ($117.000): NEEDS NEW LINK (Mike to create in Wompi dashboard) — public site has placeholder
+- Crecimiento deposit ($207.000): `https://checkout.wompi.co/l/kNsvyu` ← on public site (Crecimiento card; was previously the Esencial link, repurposed)
+- Old $324.000 link (`3tNB1l`): obsolete after restructure, can be archived/disabled in Wompi
 
 ### 30-day satisfaction guarantee
 

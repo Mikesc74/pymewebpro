@@ -32,8 +32,8 @@ Both addresses appear in the public footer. Mike personally works from Medellín
 
 | Market | Tier | Price |
 |--------|------|-------|
-| Colombia | Esencial | $690.000 COP one-time (incl. 1 yr hosting) |
-| Colombia | Esencial alt | $390.000 COP + $30.000 COP/mo hosting |
+| Colombia | Esencial | $390.000 COP one-time (incl. 1 yr hosting) |
+| Colombia | Crecimiento | $690.000 COP one-time (incl. 2 yr hosting) |
 | Canada / NA | Essential | $500 CAD one-time (incl. 1 yr hosting) |
 | Canada / NA | Pro | $800 CAD one-time (incl. 2 yr hosting) |
 
@@ -48,7 +48,7 @@ Both addresses appear in the public footer. Mike personally works from Medellín
 
 ## Payment terms (both markets)
 
-- **30% deposit to start** — no design or development begins until deposit clears (NA: $150 Essential / $240 Pro · LATAM: $207.000 Esencial / $324.000 Crecimiento)
+- **30% deposit to start** — no design or development begins until deposit clears (NA: $150 Essential / $240 Pro · LATAM: $117.000 Esencial / $207.000 Crecimiento)
 - **70% on launch** — site sits on staging URL; DNS to client domain not connected until balance clears
 - NA: Wise Business invoicing (cards, Apple/Google Pay, wires) in CAD or USD
 - LATAM: Wompi (cards, PSE, bank transfer) in COP
