@@ -17,12 +17,12 @@
 #    if 'src=' not in (m.group(1) or '') and m.group(2).strip()]"
 
 /*
-  Strict-Transport-Security: max-age=31536000
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=(), browsing-topics=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-sCqmJXNHEBoEhn+RcmjrbHjJ3QGXn3kpvgouD4TXcaU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-TJ0RWNb7cO67tslkbPl+k+rVoDwXss6E+gcEiNlOzxo=' 'sha256-rWFB3t/iDfofT3ogSqeEebp3+8u6zPJt+3DtDnSgZb4=' 'sha256-5DJZoASK/LxSgtR4p9obPoWO5U+cnjxTNHiZKorum7c=' 'sha256-+u/6uQuNWmfH5bFaP1H4vMSHj1BY/JVd6+3VP2dwyKU=' 'sha256-PnBPewdaylJvq6Kh8oPKaV2O/dD7PDyvCieCNNDNJio=' 'sha256-sCqmJXNHEBoEhn+RcmjrbHjJ3QGXn3kpvgouD4TXcaU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
 
