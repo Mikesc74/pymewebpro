@@ -9,8 +9,8 @@ export const pymewebproCaHtml = `
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PymeWebPro, Custom websites for Canadian businesses · From $500 CAD · Built on Cloudflare</title>
-<meta name="description" content="Canadian-owned web studio building enterprise-grade custom sites for North American small businesses. Hand-built on Cloudflare, deployed in 48 hours, sub-1-second load times. Starting at $500 CAD. Based in Medellín, leveraging Anthropic AI to deliver agency-quality work without the agency markup.">
+<title>PymeWebPro, <span class="ml-en">Custom</span><span class="ml-es">A medida</span> websites for Canadian businesses · From $500 CAD · Built on Cloudflare</title>
+<meta name="description" content="Canadian-owned web studio building enterprise-grade custom sites for North American small businesses. Hand-built on Cloudflare, deployed in <span class="ml-en">48 hours</span><span class="ml-es">48 horas</span>, sub-1-second load times. Starting at $500 CAD. Based in Medellín, leveraging Anthropic AI to deliver agency-quality work without the agency markup.">
 <meta name="theme-color" content="#0A0A0B">
 <meta property="og:title" content="PymeWebPro, Enterprise web studio at SMB pricing">
 <meta property="og:description" content="Custom sites for Canadian businesses, $500 CAD. Cloudflare hosted, sub-1s load, Lighthouse 100. Canadian-owned, Medellín-based, AI-leveraged.">
@@ -426,7 +426,7 @@ section{padding:clamp(80px,9vw,130px) 0}
 .proc-cta h3 .accent{color:var(--accent)}
 @media (max-width:780px){.proc-list{grid-template-columns:1fr;gap:42px}.proc-list::before{display:none}.proc-step .num{width:64px;height:64px;font-size:28px;margin-bottom:20px}}
 
-/* ─── Portfolio ─────────────────────────────────────── */
+/* ─── <span class="ml-en">Portfolio</span><span class="ml-es">Portafolio</span> ─────────────────────────────────────── */
 .portfolio{background:var(--bg)}
 .port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .port-card{
@@ -726,24 +726,24 @@ body.nav-open{overflow:hidden}
       </div>
       <div class="hp-content">
         <div class="hp-stat">
-          <span class="l">LCP · Largest Paint</span>
+          <span class="l"><span class="ml-en">LCP · Largest Paint</span><span class="ml-es">LCP · Pintado más grande</span></span>
           <span class="v">0.84<span class="unit">s</span></span>
-          <span class="d">95th percentile across 14-day field data.</span>
+          <span class="d"><span class="ml-en">95th percentile across 14-day field data.</span><span class="ml-es">Percentil 95 sobre datos reales de 14 días.</span></span>
         </div>
         <div class="hp-stat">
-          <span class="l">Lighthouse · Mobile</span>
+          <span class="l"><span class="ml-en">Lighthouse · Mobile</span><span class="ml-es">Lighthouse · Móvil</span></span>
           <span class="v"><span class="accent">100</span><span class="unit">/100</span></span>
-          <span class="d">Performance, Accessibility, Best Practices, SEO.</span>
+          <span class="d"><span class="ml-en"><span class="ml-en">Performance</span><span class="ml-es">Rendimiento</span>, <span class="ml-en">Accessibility</span><span class="ml-es">Accesibilidad</span>, <span class="ml-en">Best Practices</span><span class="ml-es">Buenas prácticas</span>, <span class="ml-en">SEO</span><span class="ml-es">SEO</span>.</span><span class="ml-es">Rendimiento, Accesibilidad, Buenas prácticas, SEO.</span></span>
         </div>
         <div class="hp-stat">
-          <span class="l">Edge Locations</span>
+          <span class="l"><span class="ml-en">Edge Locations</span><span class="ml-es">Ubicaciones edge</span></span>
           <span class="v">330<span class="unit">+</span></span>
-          <span class="d">Cloudflare's global anycast network.</span>
+          <span class="d"><span class="ml-en">Cloudflare's global anycast network.</span><span class="ml-es">Red global anycast de Cloudflare.</span></span>
         </div>
         <div class="hp-stat">
-          <span class="l">Uptime · Last 90d</span>
+          <span class="l"><span class="ml-en">Uptime · Last 90d</span><span class="ml-es">Uptime · Últimos 90 días</span></span>
           <span class="v">99.99<span class="unit">%</span></span>
-          <span class="d">Backed by Cloudflare's 100% uptime SLA.</span>
+          <span class="d"><span class="ml-en">Backed by Cloudflare's 100% uptime SLA.</span><span class="ml-es">Respaldado por el SLA de uptime 100% de Cloudflare.</span></span>
         </div>
       </div>
     </div>
@@ -753,7 +753,7 @@ body.nav-open{overflow:hidden}
 <!-- ─── Logos / trust ─── -->
 <div class="logos">
   <div class="logos-inner">
-    <span class="logos-tag">Built on the same stack as</span>
+    <span class="logos-tag"><span class="ml-en">Built on the same stack as</span><span class="ml-es">Construido con la misma tecnología que</span></span>
     <div class="logos-row">
       <span>Cloudflare</span>
       <span>Anthropic</span>
@@ -768,9 +768,9 @@ body.nav-open{overflow:hidden}
 <section class="stack" id="stack">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow"><span class="dot"></span>Engineering</span>
+      <span class="eyebrow"><span class="dot"></span><span class="ml-en">Engineering</span><span class="ml-es">Ingeniería</span></span>
       <h2>The same infrastructure Fortune 500s pay <span class="accent">millions</span> for.</h2>
-      <p>Every site we build runs on Cloudflare's edge network, the same one that serves Shopify, Discord, OpenAI, and Anthropic. You get enterprise-grade performance and security as a baseline, not an upsell.</p>
+      <p><span class="ml-en">Every site we build runs on Cloudflare's edge network, the same one that serves Shopify, Discord, OpenAI, and Anthropic. You get enterprise-grade performance and security as a baseline, not an upsell.</span><span class="ml-es">Cada sitio que construimos corre en la red edge de Cloudflare, la misma que sirve a Shopify, Discord, OpenAI y Anthropic. Rendimiento y seguridad nivel enterprise como base, no como upsell.</span></p>
     </div>
 
     <div class="stack-grid">
@@ -778,56 +778,56 @@ body.nav-open{overflow:hidden}
         <div class="stack-item">
           <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12c0-4.97-4.03-9-9-9-2.5 0-4.76 1.02-6.4 2.66"/><path d="M3 12c0 4.97 4.03 9 9 9 2.5 0 4.76-1.02 6.4-2.66"/><path d="M3 8l3-2v4M21 16l-3 2v-4"/></svg></div>
           <div class="body">
-            <h4>Cloudflare Workers · Edge compute</h4>
-            <p>Server-side rendering at 330+ locations worldwide. Your site loads in under a second from Toronto, Tokyo, or Tegucigalpa.</p>
+            <h4><span class="ml-en">Cloudflare Workers · Edge compute</span><span class="ml-es">Cloudflare Workers · Cómputo edge</span></h4>
+            <p><span class="ml-en">Server-side rendering at 330+ locations worldwide. Your site loads in under a second from Toronto, Tokyo, or Tegucigalpa.</span><span class="ml-es">Renderizado del lado servidor en 330+ ubicaciones globales. Su sitio carga en menos de un segundo desde Bogotá, Tokio o Toronto.</span></p>
           </div>
-          <span class="badge">Active</span>
+          <span class="badge"><span class="ml-en">Active</span><span class="ml-es">Activo</span></span>
         </div>
         <div class="stack-item">
           <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
           <div class="body">
-            <h4>Automatic SSL · A+ headers · DDoS protection</h4>
-            <p>HTTPS by default, HSTS preload, CSP hash-locked, X-Frame, Referrer-Policy, all configured to qualys.ssllabs.com A+ on day one.</p>
+            <h4><span class="ml-en">Automatic SSL · A+ headers · DDoS protection</span><span class="ml-es">SSL automático · Cabeceras A+ · Protección DDoS</span></h4>
+            <p><span class="ml-en">HTTPS by default, HSTS preload, CSP hash-locked, X-Frame, Referrer-Policy, all configured to qualys.ssllabs.com A+ on day one.</span><span class="ml-es">HTTPS por defecto, HSTS preload, CSP con hash, X-Frame, Referrer-Policy, todo configurado al nivel A+ de qualys.ssllabs.com desde el día uno.</span></p>
           </div>
           <span class="badge">Active</span>
         </div>
         <div class="stack-item">
           <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
           <div class="body">
-            <h4>Sub-second load · CDN-cached assets</h4>
-            <p>Critical CSS inlined, fonts preconnected, images width/height locked, lazy-loaded below the fold. Lighthouse 100s aren't lucky, they're built in.</p>
+            <h4><span class="ml-en">Sub-second load · CDN-cached assets</span><span class="ml-es">Carga sub-segundo · Assets en caché CDN</span></h4>
+            <p><span class="ml-en">Critical CSS inlined, fonts preconnected, images width/height locked, lazy-loaded below the fold. Lighthouse 100s aren't lucky, they're built in.</span><span class="ml-es">CSS crítico inline, fuentes pre-conectadas, imágenes con ancho/alto fijos, lazy-loading debajo del fold. Los 100 de Lighthouse no son suerte, están diseñados así.</span></p>
           </div>
           <span class="badge accent">&lt; 0.9s LCP</span>
         </div>
         <div class="stack-item">
           <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
           <div class="body">
-            <h4>Hand-coded HTML · No WordPress, no themes</h4>
-            <p>Every line written for you. No plugin sprawl, no theme bloat, no security CVEs to patch every Tuesday. Your site outlives the next CMS trend.</p>
+            <h4><span class="ml-en">Hand-coded HTML · No WordPress, no themes</span><span class="ml-es">HTML hecho a mano · Sin WordPress, sin temas</span></h4>
+            <p><span class="ml-en">Every line written for you. No plugin sprawl, no theme bloat, no security CVEs to patch every Tuesday. Your site outlives the next CMS trend.</span><span class="ml-es">Cada línea escrita para usted. Sin plugins acumulados, sin temas pesados, sin parches de seguridad cada martes. Su sitio sobrevive a la próxima moda de CMS.</span></p>
           </div>
           <span class="badge">Custom</span>
         </div>
         <div class="stack-item">
           <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
           <div class="body">
-            <h4>Schema.org markup · Open Graph · SEO baseline</h4>
-            <p>Service / Organization / FAQ JSON-LD, Open Graph for previews on every platform, sitemap, robots.txt, canonical headers, all present at launch.</p>
+            <h4><span class="ml-en">Schema.org markup · Open Graph · SEO baseline</span><span class="ml-es">Schema.org · Open Graph · SEO base</span></h4>
+            <p><span class="ml-en">Service / Organization / FAQ JSON-LD, Open Graph for previews on every platform, sitemap, robots.txt, canonical headers, all present at launch.</span><span class="ml-es">JSON-LD de Service / Organization / FAQ, Open Graph para previews en cada plataforma, sitemap, robots.txt, encabezados canónicos, todo presente al lanzar.</span></p>
           </div>
           <span class="badge">Active</span>
         </div>
         <div class="stack-item">
           <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
           <div class="body">
-            <h4>Privacy-first analytics · GDPR/PIPEDA-compliant</h4>
-            <p>Cloudflare Web Analytics, no cookies, no fingerprints, no consent banner needed in Canada or the EU. You get the data, your visitors keep their privacy.</p>
+            <h4><span class="ml-en">Privacy-first analytics · GDPR/PIPEDA-compliant</span><span class="ml-es">Analítica con privacidad · cumple GDPR / PIPEDA / Habeas Data</span></h4>
+            <p><span class="ml-en">Cloudflare Web Analytics, no cookies, no fingerprints, no consent banner needed in Canada or the EU. You get the data, your visitors keep their privacy.</span><span class="ml-es">Cloudflare Web Analytics, sin cookies, sin fingerprints, sin banner de consentimiento. Usted obtiene los datos, sus visitantes conservan su privacidad.</span></p>
           </div>
           <span class="badge">Active</span>
         </div>
       </div>
 
       <aside class="stack-card">
-        <h3>Production scores</h3>
-        <p class="sub">Real numbers from sites we've shipped. Pulled from Cloudflare RUM and Google Lighthouse.</p>
+        <h3><span class="ml-en">Production scores</span><span class="ml-es">Puntajes en producción</span></h3>
+        <p class="sub"><span class="ml-en">Real numbers from sites we've shipped. Pulled from Cloudflare RUM and Google Lighthouse.</span><span class="ml-es">Números reales de sitios que hemos lanzado. Tomados de Cloudflare RUM y Google Lighthouse.</span></p>
         <div class="scores">
           <div class="score">
             <div class="v"><span class="accent">100</span></div>
@@ -846,7 +846,7 @@ body.nav-open{overflow:hidden}
             <div class="l">SEO</div>
           </div>
         </div>
-        <div class="perf">Live deployment · LCP 0.84s · TTFB 42ms</div>
+        <div class="perf"><span class="ml-en">Live deployment · LCP 0.84s · TTFB 42ms</span><span class="ml-es">Sitio en producción · LCP 0.84s · TTFB 42ms</span></div>
       </aside>
     </div>
   </div>
@@ -857,8 +857,8 @@ body.nav-open{overflow:hidden}
   <div class="container">
     <div class="section-head center">
       <span class="eyebrow"><span class="dot"></span>Pricing</span>
-      <h2>One price. <span class="accent">Everything included.</span></h2>
-      <p>No phased proposals, no "design phase" upsells, no surprise hosting bills. Two tiers, pick the one that matches your business.</p>
+      <h2><span class="ml-en">One price.</span><span class="ml-es">Un precio.</span> <span class="accent"><span class="ml-en">Everything included.</span><span class="ml-es">Todo incluido.</span></span></h2>
+      <p><span class="ml-en">No phased proposals, no "design phase" upsells, no surprise hosting bills. Two tiers, pick the one that matches your business.</span><span class="ml-es">Sin propuestas por fases, sin upsells de "fase de diseño", sin sorpresas de hosting. Dos planes, elija el que se adapte a su negocio.</span></p>
     </div>
 
     <!-- EN pricing grid -->
@@ -883,8 +883,7 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>48-hour delivery</li>
         </ul>
         <div class="cta-row">
-          <!-- TODO: replace with real Wise pay-link for $150 CAD Essential deposit -->
-          <a href="https://wise.com/pay/business/pymewebpro?ref=essential-deposit" class="btn btn-outline">Pay $150 deposit &amp; start <span class="arrow">→</span></a>
+          <a href="https://wise.com/pay/r/rhZaZERQUcEuitY" target="_blank" rel="noopener" class="btn btn-outline">Pay $150 deposit &amp; start <span class="arrow">→</span></a>
           <a href="#cta-final" class="btn btn-link">Or schedule a call →</a>
         </div>
       </div>
@@ -907,8 +906,7 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>4 rounds of revisions</li>
         </ul>
         <div class="cta-row">
-          <!-- TODO: replace with real Wise pay-link for $240 CAD Pro deposit -->
-          <a href="https://wise.com/pay/business/pymewebpro?ref=pro-deposit" class="btn btn-accent">Pay $240 deposit &amp; start <span class="arrow">→</span></a>
+          <a href="https://wise.com/pay/r/qYRloHLYQcF098c" target="_blank" rel="noopener" class="btn btn-accent">Pay $240 deposit &amp; start <span class="arrow">→</span></a>
           <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">Or schedule a call →</a>
         </div>
       </div>
@@ -936,8 +934,7 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Entrega en 48 horas</li>
         </ul>
         <div class="cta-row">
-          <!-- TODO: replace with real Wompi link for $207.000 COP Esencial deposit -->
-          <a href="https://checkout.wompi.co/l/PWP_ESENCIAL_DEPOSITO" class="btn btn-outline">Pagar depósito $207.000 y empezar <span class="arrow">→</span></a>
+          <a href="https://checkout.wompi.co/l/kNsvyu" target="_blank" rel="noopener" class="btn btn-outline">Pagar depósito $207.000 y empezar <span class="arrow">→</span></a>
           <a href="#cta-final" class="btn btn-link">O agendar una llamada →</a>
         </div>
       </div>
@@ -960,8 +957,7 @@ body.nav-open{overflow:hidden}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>4 rondas de revisiones</li>
         </ul>
         <div class="cta-row">
-          <!-- TODO: replace with real Wompi link for $324.000 COP Crecimiento deposit -->
-          <a href="https://checkout.wompi.co/l/PWP_CRECIMIENTO_DEPOSITO" class="btn btn-accent">Pagar depósito $324.000 y empezar <span class="arrow">→</span></a>
+          <a href="https://checkout.wompi.co/l/3tNB1l" target="_blank" rel="noopener" class="btn btn-accent">Pagar depósito $324.000 y empezar <span class="arrow">→</span></a>
           <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">O agendar una llamada →</a>
         </div>
       </div>
@@ -969,7 +965,7 @@ body.nav-open{overflow:hidden}
 
     <div class="price-foot">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A5.2 5.2 0 0112 5a5.2 5.2 0 018 5.2c0 7.3-8 11.8-8 11.8z"/></svg></div>
-      <div><strong>What an equivalent site would cost in Toronto:</strong> $4.500–$12.000 CAD with a 6–10 week timeline. Same code, same hosting, same security headers, we just don't have the agency overhead to pass along.</div>
+      <div><strong><span class="ml-en">What an equivalent site would cost in Toronto:</span><span class="ml-es">Lo que costaría un sitio equivalente en Toronto:</span></strong> <span class="ml-en">$4.500–$12.000 CAD with a 6–10 week timeline. Same code, same hosting, same security headers, we just don't have the agency overhead to pass along.</span><span class="ml-es">$4.500–$12.000 CAD con plazo de 6–10 semanas. Mismo código, mismo hosting, mismos encabezados de seguridad, simplemente no tenemos el sobrecosto de agencia que trasladar.</span></div>
     </div>
 
     <div class="price-foot" style="margin-top:12px">
@@ -984,28 +980,28 @@ body.nav-open{overflow:hidden}
   <div class="container">
     <div class="section-head center">
       <span class="eyebrow"><span class="dot"></span><span class="ml-en">The Honest Pitch</span><span class="ml-es">El argumento honesto</span></span>
-      <h2>Why we can charge a tenth of what an agency does <span class="accent">, without cutting corners.</span></h2>
-      <p>Most of what you pay an agency isn't the design or the code. It's the studio in Toronto, the project managers, the unbillable Tuesdays. We built around all three.</p>
+      <h2><span class="ml-en">Why we can charge a tenth of what an agency does <span class="accent">, without cutting corners.</span></span><span class="ml-es">Por qué podemos cobrar la décima parte que una agencia <span class="accent">, sin recortar calidad.</span></span></h2>
+      <p><span class="ml-en">Most of what you pay an agency isn't the design or the code. It's the studio in Toronto, the project managers, the unbillable Tuesdays. We built around all three.</span><span class="ml-es">La mayor parte de lo que le paga a una agencia no es el diseño ni el código. Es el estudio en Toronto, los project managers, los martes no facturables. Nosotros estructuramos el negocio sin esos tres.</span></p>
     </div>
 
     <div class="honest-grid">
       <div class="honest-cell">
-        <div class="num">01 · Geography</div>
-        <h3>Canadian-led. <span class="accent">Built in Medellín.</span></h3>
-        <p>You're working with a Canadian-owned studio, with multi-currency banking through Wise Business (CAD and USD). Invoicing in your currency, payment by credit card or wire. The actual work happens in Medellín, where rent and salaries cost a fifth of what they do in Toronto. We pass that delta straight through to you.</p>
-        <span class="tag">Real, structural cost advantage</span>
+        <div class="num">01 · <span class="ml-en">Geography</span><span class="ml-es">Geografía</span></div>
+        <h3><span class="ml-en">Canadian-led. <span class="accent">Built in Medellín.</span></span><span class="ml-es">Liderazgo canadiense. <span class="accent">Construido en Medellín.</span></span></h3>
+        <p><span class="ml-en">You're working with a Canadian-owned studio, with multi-currency banking through Wise Business (CAD and USD). Invoicing in your currency, payment by credit card or wire. The actual work happens in Medellín, where rent and salaries cost a fifth of what they do in Toronto. We pass that delta straight through to you.</span><span class="ml-es">Trabaja con un estudio de propiedad canadiense, con banca multi-moneda vía Wise Business (CAD y USD) y vía Wompi en COP. Facturación en su moneda, pago con tarjeta o transferencia. El trabajo se hace en Medellín, donde los costos operativos son una quinta parte de los de Toronto. Esa diferencia se la trasladamos directamente.</span></p>
+        <span class="tag"><span class="ml-en">Real, structural cost advantage</span><span class="ml-es">Ventaja estructural de costos</span></span>
       </div>
       <div class="honest-cell">
-        <div class="num">02 · Tooling</div>
-        <h3>Anthropic AI as our <span class="accent">design partner.</span></h3>
-        <p>We use Claude, the same AI behind serious enterprise products, as a force multiplier through every step of the build. What used to take a designer two weeks now takes two days. The output is hand-tuned, but the speed is real.</p>
-        <span class="tag">Capability that's still novel in 2026</span>
+        <div class="num">02 · <span class="ml-en">Tooling</span><span class="ml-es">Herramientas</span></div>
+        <h3><span class="ml-en">Anthropic AI as our <span class="accent">design partner.</span></span><span class="ml-es">IA de Anthropic como <span class="accent">copiloto de diseño.</span></span></h3>
+        <p><span class="ml-en">We use Claude, the same AI behind serious enterprise products, as a force multiplier through every step of the build. What used to take a designer two weeks now takes two days. The output is hand-tuned, but the speed is real.</span><span class="ml-es">Usamos Claude, la misma IA detrás de productos enterprise serios, como multiplicador de fuerza en cada paso de la construcción. Lo que a un diseñador le tomaba dos semanas, hoy toma dos días. El resultado se ajusta a mano, pero la velocidad es real.</span></p>
+        <span class="tag"><span class="ml-en">Capability that's still novel in 2026</span><span class="ml-es">Una capacidad que sigue siendo novedosa en 2026</span></span>
       </div>
       <div class="honest-cell">
-        <div class="num">03 · Stack</div>
-        <h3>No WordPress. <span class="accent">No subscriptions.</span></h3>
-        <p>We don't need a $200/mo CMS, a $99/mo hosting plan, a $40/mo plugin license, or a $25/mo backup service. Cloudflare hosts everything for cents per month. You don't subsidize tooling we never use.</p>
-        <span class="tag">Smaller cost base, smaller invoice</span>
+        <div class="num">03 · <span class="ml-en">Stack</span><span class="ml-es">Tecnología</span></div>
+        <h3><span class="ml-en">No WordPress. <span class="accent">No subscriptions.</span></span><span class="ml-es">Sin WordPress. <span class="accent">Sin suscripciones.</span></span></h3>
+        <p><span class="ml-en">We don't need a $200/mo CMS, a $99/mo hosting plan, a $40/mo plugin license, or a $25/mo backup service. Cloudflare hosts everything for cents per month. You don't subsidize tooling we never use.</span><span class="ml-es">No necesitamos un CMS de $200/mes, un hosting de $99/mes, una licencia de plugin de $40/mes ni un servicio de respaldo de $25/mes. Cloudflare aloja todo por centavos al mes. Usted no subsidia herramientas que nunca usamos.</span></p>
+        <span class="tag"><span class="ml-en">Smaller cost base, smaller invoice</span><span class="ml-es">Menor base de costos, factura más baja</span></span>
       </div>
     </div>
   </div>
@@ -1015,42 +1011,42 @@ body.nav-open{overflow:hidden}
 <section class="process" id="process">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow"><span class="dot"></span>Process</span>
-      <h2>From brief to live site, <span class="accent">in 48 hours.</span></h2>
-      <p>No discovery sprints, no Figma reviews, no Slack channels. Three short conversations, one live website.</p>
+      <span class="eyebrow"><span class="dot"></span><span class="ml-en">Process</span><span class="ml-es">Proceso</span></span>
+      <h2><span class="ml-en">From brief to live site, <span class="accent">in 48 hours.</span></span><span class="ml-es">Del brief al sitio en vivo, <span class="accent">en 48 horas.</span></span></h2>
+      <p><span class="ml-en">No discovery sprints, no Figma reviews, no Slack channels. Three short conversations, one live website.</span><span class="ml-es">Sin sprints de descubrimiento, sin revisiones de Figma, sin canales de Slack. Tres conversaciones cortas, un sitio web en vivo.</span></p>
     </div>
 
     <div class="proc-list">
       <div class="proc-step">
         <div class="num">1</div>
-        <div class="time">Day 0 · 15 min</div>
-        <h4>The Brief</h4>
-        <p>15-minute call. We capture your services, audience, brand cues, and the few things you'd want differently from your competition. That's all the brief we need.</p>
+        <div class="time"><span class="ml-en">Day 0 · 15 min</span><span class="ml-es">Día 0 · 15 min</span></div>
+        <h4><span class="ml-en">The Brief</span><span class="ml-es">El brief</span></h4>
+        <p><span class="ml-en">15-minute call. We capture your services, audience, brand cues, and the few things you'd want differently from your competition. That's all the brief we need.</span><span class="ml-es">Llamada de 15 minutos. Capturamos sus servicios, audiencia, pistas de marca, y las pocas cosas que querría diferentes a su competencia. Ese es todo el brief que necesitamos.</span></p>
       </div>
       <div class="proc-step">
         <div class="num">2</div>
-        <div class="time">Day 1 · 24 hr</div>
-        <h4>The Build</h4>
-        <p>We design and code the site in one focused day. You get a private preview link by end-of-day-one, fully interactive, on your real domain or ours.</p>
+        <div class="time"><span class="ml-en">Day 1 · 24 hr</span><span class="ml-es">Día 1 · 24 hr</span></div>
+        <h4><span class="ml-en">The Build</span><span class="ml-es">La construcción</span></h4>
+        <p><span class="ml-en">We design and code the site in one focused day. You get a private preview link by end-of-day-one, fully interactive, on your real domain or ours.</span><span class="ml-es">Diseñamos y programamos el sitio en un día enfocado. Recibe un enlace de preview privado al final del día uno, totalmente interactivo, en su dominio real o en el nuestro.</span></p>
       </div>
       <div class="proc-step">
         <div class="num">3</div>
-        <div class="time">Day 2 · 24 hr</div>
-        <h4>The Revision</h4>
-        <p>You walk through it, send notes (text, voice, even WhatsApp screenshots). We iterate live the same day. Two rounds included on Essential, four on Pro.</p>
+        <div class="time"><span class="ml-en">Day 2 · 24 hr</span><span class="ml-es">Día 2 · 24 hr</span></div>
+        <h4><span class="ml-en">The Revision</span><span class="ml-es">La revisión</span></h4>
+        <p><span class="ml-en">You walk through it, send notes (text, voice, even WhatsApp screenshots). We iterate live the same day. Two rounds included on Essential, four on Pro.</span><span class="ml-es">Lo recorre, envía notas (texto, voz, incluso pantallazos de WhatsApp). Iteramos en vivo el mismo día. Dos rondas incluidas en Esencial, cuatro en Crecimiento.</span></p>
       </div>
       <div class="proc-step">
         <div class="num accent">4</div>
-        <div class="time">Day 2 · Live</div>
-        <h4>Deploy</h4>
-        <p>We point your domain to Cloudflare, configure SSL, push the production build. Your site is live, fast, and indexed by Google within an hour.</p>
+        <div class="time"><span class="ml-en">Day 2 · Live</span><span class="ml-es">Día 2 · En vivo</span></div>
+        <h4><span class="ml-en">Deploy</span><span class="ml-es">Despliegue</span></h4>
+        <p><span class="ml-en">We point your domain to Cloudflare, configure SSL, push the production build. Your site is live, fast, and indexed by Google within an hour.</span><span class="ml-es">Apuntamos su dominio a Cloudflare, configuramos SSL, publicamos el build de producción. Su sitio está en vivo, rápido e indexado por Google en una hora.</span></p>
       </div>
     </div>
 
     <div class="proc-cta">
-      <span class="pre">Ready to start</span>
-      <h3>Walk through the full step-by-step <span class="accent">on the Start page →</span></h3>
-      <a href="https://mockups.pymewebpro.com/start/" class="btn btn-primary" target="_blank" rel="noopener">Open the Start guide <span class="arrow">→</span></a>
+      <span class="pre"><span class="ml-en">Ready to start</span><span class="ml-es">Listo para empezar</span></span>
+      <h3><span class="ml-en">Walk through the full step-by-step <span class="accent">on the Start page →</span></span><span class="ml-es">Recorra el paso a paso completo <span class="accent">en la página Start →</span></span></h3>
+      <a href="https://mockups.pymewebpro.com/start/" class="btn btn-primary" target="_blank" rel="noopener"><span class="ml-en">Open the Start guide</span><span class="ml-es">Abrir la guía Start</span> <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -1059,9 +1055,9 @@ body.nav-open{overflow:hidden}
 <section class="portfolio" id="portfolio">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow"><span class="dot"></span>Recent Work</span>
-      <h2>Five sites shipped in the last <span class="accent">30 days.</span></h2>
-      <p>A range of categories, all built on the same stack and process.</p>
+      <span class="eyebrow"><span class="dot"></span><span class="ml-en">Recent Work</span><span class="ml-es">Trabajo reciente</span></span>
+      <h2><span class="ml-en">Five sites shipped in the last <span class="accent">30 days.</span></span><span class="ml-es">Cinco sitios lanzados en los últimos <span class="accent">30 días.</span></span></h2>
+      <p><span class="ml-en">A range of categories, all built on the same stack and process.</span><span class="ml-es">Variedad de sectores, todos construidos con la misma tecnología y proceso.</span></p>
     </div>
 
     <div class="port-grid">
@@ -1069,35 +1065,35 @@ body.nav-open{overflow:hidden}
         <div class="preview"><span>DAGA<span class="em">Parfum</span></span></div>
         <div class="info">
           <div class="head"><h4>Daga Parfum</h4><span class="sector">E-commerce</span></div>
-          <p>Luxury fragrance brand from Medellín, full e-commerce with product cards, cart, discovery set.</p>
-          <div class="meta"><span>Cormorant + Inter</span><span>Cart drawer</span><span>Sub-1s</span></div>
+          <p><span class="ml-en">Luxury fragrance brand from Medellín, full e-commerce with product cards, cart, discovery set.</span><span class="ml-es">Marca de fragancias de lujo de Medellín, e-commerce completo con cards de producto, carrito y discovery set.</span></p>
+          <div class="meta"><span>Cormorant + Inter</span><span><span class="ml-en">Cart drawer</span><span class="ml-es">Carrito lateral</span></span><span>Sub-1s</span></div>
         </div>
       </a>
 
       <a class="port-card bwi" href="https://mockups.pymewebpro.com/blue-whale-international/" target="_blank" rel="noopener">
         <div class="preview"><span>BWI<span class="em">A universe of opportunities</span></span></div>
         <div class="info">
-          <div class="head"><h4>Blue Whale International</h4><span class="sector">Finance</span></div>
-          <p>$1B AUM finance group across LATAM. Corporate site with resume upload &amp; careers form.</p>
-          <div class="meta"><span>Inter Tight</span><span>File upload</span><span>5 sections</span></div>
+          <div class="head"><h4>Blue Whale International</h4><span class="sector"><span class="ml-en">Finance</span><span class="ml-es">Finanzas</span></span></div>
+          <p><span class="ml-en">$1B AUM finance group across LATAM. Corporate site with resume upload &amp; careers form.</span><span class="ml-es">Grupo financiero con $1B AUM en LATAM. Sitio corporativo con subida de hoja de vida y formulario de carreras.</span></p>
+          <div class="meta"><span>Inter Tight</span><span><span class="ml-en">File upload</span><span class="ml-es">Subida de archivos</span></span><span><span class="ml-en">5 sections</span><span class="ml-es">5 secciones</span></span></div>
         </div>
       </a>
 
       <a class="port-card dental" href="https://mockups.pymewebpro.com/espacio-dental/" target="_blank" rel="noopener">
         <div class="preview"><span>Espacio<span class="em">Dental</span></span></div>
         <div class="info">
-          <div class="head"><h4>Espacio Dental</h4><span class="sector">Healthcare</span></div>
-          <p>Modern dental clinic in Medellín positioned for expat patients. WhatsApp-first booking.</p>
-          <div class="meta"><span>Manrope</span><span>USD pricing</span><span>WhatsApp</span></div>
+          <div class="head"><h4>Espacio Dental</h4><span class="sector"><span class="ml-en">Healthcare</span><span class="ml-es">Salud</span></span></div>
+          <p><span class="ml-en">Modern dental clinic in Medellín positioned for expat patients. WhatsApp-first booking.</span><span class="ml-es">Clínica dental moderna en Medellín, posicionada para pacientes expatriados. Reservas vía WhatsApp.</span></p>
+          <div class="meta"><span>Manrope</span><span><span class="ml-en">USD pricing</span><span class="ml-es">Precios en USD</span></span><span>WhatsApp</span></div>
         </div>
       </a>
 
       <a class="port-card blues" href="https://mockups.pymewebpro.com/blues-kitchen/" target="_blank" rel="noopener">
         <div class="preview"><span>The Blues<span class="em">Kitchen</span></span></div>
         <div class="info">
-          <div class="head"><h4>The Blues Kitchen</h4><span class="sector">Events</span></div>
-          <p>Wedding &amp; events venue in Bogotá. Photo gallery, lead form, full Spanish localization.</p>
-          <div class="meta"><span>Embedded photos</span><span>Lead form</span><span>SEO ready</span></div>
+          <div class="head"><h4>The Blues Kitchen</h4><span class="sector"><span class="ml-en">Events</span><span class="ml-es">Eventos</span></span></div>
+          <p><span class="ml-en">Wedding &amp; events venue in Bogotá. Photo gallery, lead form, full Spanish localization.</span><span class="ml-es">Salón de bodas y eventos en Bogotá. Galería de fotos, formulario de leads, localización completa en español.</span></p>
+          <div class="meta"><span><span class="ml-en">Embedded photos</span><span class="ml-es">Fotos embebidas</span></span><span><span class="ml-en">Lead form</span><span class="ml-es">Formulario de leads</span></span><span><span class="ml-en">SEO ready</span><span class="ml-es">Listo para SEO</span></span></div>
         </div>
       </a>
 
@@ -1105,18 +1101,18 @@ body.nav-open{overflow:hidden}
         <div class="preview"><span>The<span class="em">Schedulator</span></span></div>
         <div class="info">
           <div class="head"><h4>The Schedulator</h4><span class="sector">B2B SaaS</span></div>
-          <p>SaaS marketing site for elementary-school admins. Drag-and-drop scheduling product page.</p>
-          <div class="meta"><span>Dark theme</span><span>Long-form</span><span>Demo CTA</span></div>
+          <p><span class="ml-en">SaaS marketing site for elementary-school admins. Drag-and-drop scheduling product page.</span><span class="ml-es">Sitio de marketing SaaS para administradores de escuelas primarias. Página de producto con scheduling de arrastrar y soltar.</span></p>
+          <div class="meta"><span><span class="ml-en">Dark theme</span><span class="ml-es">Tema oscuro</span></span><span><span class="ml-en">Long-form</span><span class="ml-es">Long-form</span></span><span>Demo CTA</span></div>
         </div>
       </a>
 
       <a class="port-card" href="#cta-final" style="background:linear-gradient(135deg, var(--soft) 0%, var(--paper) 100%);align-items:center;justify-content:center;display:flex;flex-direction:column;border-style:dashed">
         <div class="preview" style="background:transparent;color:var(--ink);font-size:24px">
-          <span>Your site<span class="em">+ 6 days from now</span></span>
+          <span><span class="ml-en">Your site</span><span class="ml-es">Su sitio</span><span class="em"><span class="ml-en">+ 6 days from now</span><span class="ml-es">+ 6 días a partir de hoy</span></span></span>
         </div>
         <div class="info" style="text-align:center;width:100%">
-          <h4 style="text-align:center">Get in line</h4>
-          <p>July 2026 builds open. Reserve your slot in 15 minutes.</p>
+          <h4 style="text-align:center"><span class="ml-en">Get in line</span><span class="ml-es">Sume su cupo</span></h4>
+          <p><span class="ml-en">July 2026 builds open. Reserve your slot in 15 minutes.</span><span class="ml-es">Cupos abiertos para julio 2026. Reserve su lugar en 15 minutos.</span></p>
         </div>
       </a>
     </div>
@@ -1126,16 +1122,16 @@ body.nav-open{overflow:hidden}
 <!-- ─── Testimonial ─── -->
 <section class="testimonial">
   <div class="testimonial-inner">
-    <span class="eyebrow"><span class="dot"></span>What clients say</span>
+    <span class="eyebrow"><span class="dot"></span><span class="ml-en">What clients say</span><span class="ml-es">Lo que dicen los clientes</span></span>
     <blockquote>
-      I'm an elementary PE teacher who built a SaaS for school admins, and I needed a marketing site that didn't look like every other Stripe-template launch page. <span class="accent">Mike got the brief on the first call and shipped a polished v1 in 48 hours.</span> Half the price of what a Toronto agency wanted, faster turnaround, and source code I could take with me, pretty hard to argue with that.
+      <span class="ml-en">I'm an elementary PE teacher who built a SaaS for school admins, and I needed a marketing site that didn't look like every other Stripe-template launch page. <span class="accent">Mike got the brief on the first call and shipped a polished v1 in 48 hours.</span> Half the price of what a Toronto agency wanted, faster turnaround, and source code I could take with me, pretty hard to argue with that.</span><span class="ml-es">Soy profesor de educación física de primaria y construí un SaaS para administradores escolares. Necesitaba un sitio de marketing que no se viera como otra plantilla de Stripe. <span class="accent">Mike entendió el brief en la primera llamada y lanzó un v1 pulido en 48 horas.</span> La mitad del precio que pedía una agencia de Toronto, entrega más rápida, y código fuente que me podía llevar conmigo, difícil de discutir con eso.</span>
     </blockquote>
     <cite>
       <span class="name">Patrick Detzner</span>
-      <span class="role">Founder · The Schedulator</span>
+      <span class="role"><span class="ml-en">Founder · The Schedulator</span><span class="ml-es">Fundador · The Schedulator</span></span>
     </cite>
     <div class="testimonial-link">
-      See Patrick's site → <a href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">mockups.pymewebpro.com/schedulator</a>
+      <span class="ml-en">See Patrick's site →</span><span class="ml-es">Vea el sitio de Patrick →</span> <a href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">mockups.pymewebpro.com/schedulator</a>
     </div>
   </div>
 </section>
@@ -1144,49 +1140,49 @@ body.nav-open{overflow:hidden}
 <section class="compare">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.85)"><span class="dot"></span>Apples to Apples</span>
-      <h2>Same site. <span class="accent">Different invoice.</span></h2>
-      <p>Side-by-side: a typical Toronto agency proposal for a 5-section marketing site, vs. our Pro tier. Same code quality, same hosting, same security baseline.</p>
+      <span class="eyebrow" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.85)"><span class="dot"></span><span class="ml-en">Apples to Apples</span><span class="ml-es">Manzanas con manzanas</span></span>
+      <h2><span class="ml-en">Same site. <span class="accent">Different invoice.</span></span><span class="ml-es">Mismo sitio. <span class="accent">Factura distinta.</span></span></h2>
+      <p><span class="ml-en">Side-by-side: a typical Toronto agency proposal for a 5-section marketing site, vs. our Pro tier. Same code quality, same hosting, same security baseline.</span><span class="ml-es">Lado a lado: una propuesta típica de agencia de Toronto para un sitio de 5 secciones, vs. nuestro plan Crecimiento. Misma calidad de código, mismo hosting, mismo nivel de seguridad.</span></p>
     </div>
 
     <div class="cmp-grid">
       <div class="cmp-card them">
-        <span class="stamp">Not us</span>
+        <span class="stamp"><span class="ml-en">Not us</span><span class="ml-es">No nosotros</span></span>
         <svg class="x-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <line x1="2" y1="2" x2="98" y2="98" stroke="#FF4C4C" stroke-width="5" opacity="0.75" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
           <line x1="98" y1="2" x2="2" y2="98" stroke="#FF4C4C" stroke-width="5" opacity="0.75" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
         </svg>
         <div class="head">
-          <h3>Toronto Agency</h3>
+          <h3><span class="ml-en">Toronto Agency</span><span class="ml-es">Agencia de Toronto</span></h3>
           <div class="price-line"><span class="ccy">CAD</span>$8,500</div>
         </div>
         <ul>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Custom-designed marketing site</li>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Mobile responsive</li>
-          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>WordPress (CVE patches every Tuesday)</li>
-          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>$120/mo hosting + plugin subscriptions</li>
-          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>3-second LCP (typical Wordpress)</li>
-          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>3 rounds of revisions ($800/round after)</li>
-          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Cookie-banner-required analytics</li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Custom-designed marketing site</span><span class="ml-es">Sitio de marketing diseñado a medida</span></li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Mobile responsive</span><span class="ml-es">Responsive móvil</span></li>
+          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">WordPress (CVE patches every Tuesday)</span><span class="ml-es">WordPress (parches CVE cada martes)</span></li>
+          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">$120/mo hosting + plugin subscriptions</span><span class="ml-es">$120/mes de hosting + suscripciones de plugins</span></li>
+          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">3-second LCP (typical Wordpress)</span><span class="ml-es">LCP de 3 segundos (típico de WordPress)</span></li>
+          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">3 rounds of revisions ($800/round after)</span><span class="ml-es">3 rondas de revisión ($800/ronda extra)</span></li>
+          <li class="no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg><span class="ml-en">Cookie-banner-required analytics</span><span class="ml-es">Analítica que exige banner de cookies</span></li>
         </ul>
-        <div class="timeline">Timeline: <strong>6–10 weeks</strong> · Project manager included whether you want one or not</div>
+        <div class="timeline"><span class="ml-en">Timeline</span><span class="ml-es">Plazo</span>: <strong><span class="ml-en">6–10 weeks</span><span class="ml-es">6–10 semanas</span></strong> · <span class="ml-en">Project manager included whether you want one or not</span><span class="ml-es">Project manager incluido aunque no lo quiera</span></div>
       </div>
 
       <div class="cmp-card us">
         <div class="head">
-          <h3>PymeWebPro · Pro</h3>
-          <div class="price-line"><span class="ccy">CAD</span>$800</div>
+          <h3><span class="ml-en">PymeWebPro · Pro</span><span class="ml-es">PymeWebPro · Crecimiento</span></h3>
+          <div class="price-line"><span class="ml-en"><span class="ccy">CAD</span>$800</span><span class="ml-es"><span class="ccy">COP</span>$1.080.000</span></div>
         </div>
         <ul>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Custom-designed multi-section site</li>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Mobile responsive · Lighthouse 100</li>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Hand-coded HTML · zero dependencies</li>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Cloudflare hosting · 2 years included</li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Custom-designed multi-section site</span><span class="ml-es">Sitio multi-sección diseñado a medida</span></li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Mobile responsive · Lighthouse 100</span><span class="ml-es">Responsive móvil · Lighthouse 100</span></li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Hand-coded HTML · zero dependencies</span><span class="ml-es">HTML hecho a mano · sin dependencias</span></li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Cloudflare hosting · 2 years included</span><span class="ml-es">Hosting Cloudflare · 2 años incluidos</span></li>
           <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>LCP &lt; 0.9s · TTFB &lt; 50ms</li>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>4 rounds of revisions · 3 months edits</li>
-          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Privacy-first analytics, no banner needed</li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">4 rounds of revisions · 3 months edits</span><span class="ml-es">4 rondas de revisión · 3 meses de ediciones</span></li>
+          <li class="yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Privacy-first analytics, no banner needed</span><span class="ml-es">Analítica con privacidad, sin banner</span></li>
         </ul>
-        <div class="timeline">Timeline: <strong>48 hours</strong> · You talk directly with the people building it</div>
+        <div class="timeline"><span class="ml-en">Timeline: <strong>48 hours</strong> · You talk directly with the people building it</span><span class="ml-es">Plazo: <strong>48 horas</strong> · Habla directamente con quien construye su sitio</span></div>
       </div>
     </div>
   </div>
@@ -1196,50 +1192,50 @@ body.nav-open{overflow:hidden}
 <section class="faq" id="faq">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow"><span class="dot"></span>Common Questions</span>
-      <h2>What people ask before they <span class="accent">say yes.</span></h2>
+      <span class="eyebrow"><span class="dot"></span><span class="ml-en">Common Questions</span><span class="ml-es">Preguntas frecuentes</span></span>
+      <h2><span class="ml-en">What people ask before they <span class="accent">say yes.</span></span><span class="ml-es">Lo que la gente pregunta antes de <span class="accent">decir que sí.</span></span></h2>
     </div>
 
     <div class="faq-list">
       <details class="faq-item">
-        <summary>Is the price really $500 CAD? What's the catch? <span class="ico">+</span></summary>
-        <div class="ans">No catch, that's the price for the Essential tier, all-in. The reason it works is structural: we're a Canadian-owned studio operating from Medellín, with a small senior team using Anthropic AI as a multiplier. Every line of code is hand-tuned, but our cost base is a fraction of a Toronto agency's. We pass the delta straight through.</div>
+        <summary><span class="ml-en">Is the price really $500 CAD? What's the catch?</span><span class="ml-es">¿De verdad cuesta $690.000 COP? ¿Cuál es el truco?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">No catch, that's the price for the Essential tier, all-in. The reason it works is structural: we're a Canadian-owned studio operating from Medellín, with a small senior team using Anthropic AI as a multiplier. Every line of code is hand-tuned, but our cost base is a fraction of a Toronto agency's. We pass the delta straight through.</span><span class="ml-es">Sin truco, ese es el precio del plan Esencial, todo incluido. Funciona por una razón estructural: somos un estudio canadiense operando desde Medellín, con un equipo pequeño de seniors usando IA de Anthropic como multiplicador. Cada línea de código se escribe a mano, pero nuestra base de costos es una fracción de la de una agencia de Toronto. Esa diferencia se la trasladamos directamente.</span></div>
       </details>
       <details class="faq-item">
-        <summary>You said Canadian-owned, but built in Medellín. How does that work? <span class="ico">+</span></summary>
-        <div class="ans">You're working with a Canadian-owned studio operating from Medellín. Pricing in CAD or USD, payment by credit card, Apple Pay, or direct wire via our Wise Business account. Contracts in English, signed digitally, governed by the laws of your home province (or Ontario by default). The build team is in Medellín, same English-speaking time zone, same business norms, no offshore-handoff awkwardness.</div>
+        <summary><span class="ml-en">You said Canadian-owned, but built in Medellín. How does that work?</span><span class="ml-es">Dijeron canadiense pero construido en Medellín. ¿Cómo funciona?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">You're working with a Canadian-owned studio operating from Medellín. Pricing in CAD or USD, payment by credit card, Apple Pay, or direct wire via our Wise Business account. Contracts in English, signed digitally, governed by the laws of your home province (or Ontario by default). The build team is in Medellín, same English-speaking time zone, same business norms, no offshore-handoff awkwardness.</span><span class="ml-es">Trabaja con un estudio de propiedad canadiense que opera desde Medellín. En LATAM facturamos en COP vía Wompi (tarjeta, PSE, transferencia). En Norteamérica facturamos en CAD o USD vía Wise Business (tarjeta, Apple Pay, transferencia directa). Contratos en español o inglés, firmados digitalmente, bajo la ley colombiana o canadiense según corresponda.</span></div>
       </details>
       <details class="faq-item">
-        <summary>What does "powered by Anthropic AI" actually mean for me? <span class="ico">+</span></summary>
-        <div class="ans">Claude, Anthropic's flagship model, is used through every step of design and build, the same way modern engineering teams use it internally. It doesn't replace the designer or the developer; it makes them dramatically faster. The result is a hand-crafted site delivered in 48 hours instead of six weeks. You're not buying AI-generated slop, you're buying senior craft accelerated by serious tooling.</div>
+        <summary><span class="ml-en">What does "powered by Anthropic AI" actually mean for me?</span><span class="ml-es">¿Qué significa exactamente "impulsado por IA de Anthropic"?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">Claude, Anthropic's flagship model, is used through every step of design and build, the same way modern engineering teams use it internally. It doesn't replace the designer or the developer; it makes them dramatically faster. The result is a hand-crafted site delivered in 48 hours instead of six weeks. You're not buying AI-generated slop, you're buying senior craft accelerated by serious tooling.</span><span class="ml-es">Claude, el modelo principal de Anthropic, se usa en cada paso del diseño y la construcción, igual que lo usan los equipos de ingeniería modernos. No reemplaza al diseñador ni al desarrollador; los hace dramáticamente más rápidos. El resultado es un sitio hecho a mano en 48 horas en lugar de seis semanas. No está comprando contenido generado por IA, está comprando trabajo de seniors acelerado por herramientas serias.</span></div>
       </details>
       <details class="faq-item">
-        <summary>What if I don't like the first version? <span class="ico">+</span></summary>
-        <div class="ans">Two rounds of revisions are included on Essential, four on Pro. We work fast, most revisions ship the same day. If after revisions you're still not satisfied, our 30-day post-launch guarantee covers you (see next).</div>
+        <summary><span class="ml-en">What if I don't like the first version?</span><span class="ml-es">¿Y si no me gusta la primera versión?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">Two rounds of revisions are included on Essential, four on Pro. We work fast, most revisions ship the same day. If after revisions you're still not satisfied, our 30-day post-launch guarantee covers you (see next).</span><span class="ml-es">Dos rondas de revisión incluidas en Esencial, cuatro en Crecimiento. Trabajamos rápido, la mayoría de revisiones se aplican el mismo día. Si después de las revisiones sigue sin estar satisfecho, nuestra garantía de 30 días post-lanzamiento lo cubre (ver siguiente).</span></div>
       </details>
       <details class="faq-item">
-        <summary>Is there a money-back guarantee? <span class="ico">+</span></summary>
-        <div class="ans">Yes. If you're not happy with the launched site for any reason within 30 days, we take it offline and refund the full fee within 14 days. No questions, no haggling. We also hand you a portable archive of the work in case you want to take it elsewhere. After 30 days the fee is non-refundable, but ongoing hosting is always month-to-month and cancellable anytime.</div>
+        <summary><span class="ml-en">Is there a money-back guarantee?</span><span class="ml-es">¿Hay garantía de devolución?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">Yes. If you're not happy with the launched site for any reason within 30 days, we take it offline and refund the full fee within 14 days. No questions, no haggling. We also hand you a portable archive of the work in case you want to take it elsewhere. After 30 days the fee is non-refundable, but ongoing hosting is always month-to-month and cancellable anytime.</span><span class="ml-es">Sí. Si no está contento con el sitio lanzado por cualquier razón dentro de 30 días, lo bajamos y devolvemos el monto completo en 14 días. Sin preguntas, sin regateos. También le entregamos un archivo portable del trabajo por si quiere llevárselo a otro lado. Después de 30 días el monto es no reembolsable, pero el hosting es mes a mes y cancelable cuando quiera.</span></div>
       </details>
       <details class="faq-item">
-        <summary>How does payment work? <span class="ico">+</span></summary>
+        <summary><span class="ml-en">How does payment work?</span><span class="ml-es">¿Cómo funciona el pago?</span> <span class="ico">+</span></summary>
         <div class="ans"><span class="ml-en">30% deposit to start (we don't begin design or development until the deposit clears) and 70% on launch (we hold the finished site on a staging URL and don't connect your domain until the balance lands). NA clients pay via Wise Business: credit card, Apple Pay, Google Pay, or direct wire in CAD or USD. Latin American clients pay via Wompi: card, PSE, or bank transfer in COP.</span><span class="ml-es">30% de depósito para empezar (no iniciamos diseño ni desarrollo hasta que el depósito se confirma) y 70% al lanzar (mantenemos el sitio terminado en una URL de staging y no conectamos su dominio hasta que el saldo llega). Clientes en Colombia pagan vía Wompi: tarjeta, PSE o transferencia bancaria en COP. Clientes en Norteamérica pagan vía Wise Business en CAD o USD.</span></div>
       </details>
       <details class="faq-item">
-        <summary>Do I own the site? Can I move it later? <span class="ico">+</span></summary>
-        <div class="ans">You own everything. Source code, copy, designs, domain. If you ever want to leave, we package the full source as a portable archive, it'll run on any host that supports Cloudflare Workers, Netlify, Vercel, or even a basic static server. We don't lock you in.</div>
+        <summary><span class="ml-en">Do I own the site? Can I move it later?</span><span class="ml-es">¿El sitio es mío? ¿Puedo moverlo después?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">You own everything. Source code, copy, designs, domain. If you ever want to leave, we package the full source as a portable archive, it'll run on any host that supports Cloudflare Workers, Netlify, Vercel, or even a basic static server. We don't lock you in.</span><span class="ml-es">Es todo suyo. Código fuente, textos, diseños, dominio. Si alguna vez quiere irse, empaquetamos el código completo como archivo portable, corre en cualquier host que soporte Cloudflare Workers, Netlify, Vercel o incluso un servidor estático básico. No lo encerramos.</span></div>
       </details>
       <details class="faq-item">
-        <summary>Can you do French / bilingual sites? <span class="ico">+</span></summary>
-        <div class="ans">Yes, bilingual EN/FR is included in the Pro tier. We handle the translation, the language toggle, the SEO hreflang tags, and the OG metadata for both languages. Quebec-compliant by design.</div>
+        <summary><span class="ml-en">Can you do French / bilingual sites?</span><span class="ml-es">¿Hacen sitios bilingües (ES/EN)?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">Yes, bilingual EN/FR or EN/ES is included in the Pro tier. We handle the translation, the language toggle, the SEO hreflang tags, and the OG metadata for both languages. Quebec-compliant by design.</span><span class="ml-es">Sí, bilingüe ES/EN está incluido en el plan Crecimiento. Manejamos la traducción, el switch de idioma, las etiquetas hreflang para SEO y los metadatos Open Graph en ambos idiomas.</span></div>
       </details>
       <details class="faq-item">
-        <summary>What about ongoing updates after launch? <span class="ico">+</span></summary>
-        <div class="ans">Hosting is $15/mo (or $180/yr) after the included period. Ad-hoc edits are billed at $75/hr with a 30-min minimum. If you want regular updates, the optional maintenance add-on is $35/mo on top of hosting and covers monthly content updates, security patches, and minor design adjustments.</div>
+        <summary><span class="ml-en">What about ongoing updates after launch?</span><span class="ml-es">¿Qué pasa con actualizaciones después del lanzamiento?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">Hosting is $15/mo (or $180/yr) after the included period. Ad-hoc edits are billed at $75/hr with a 30-min minimum. If you want regular updates, the optional maintenance add-on is $35/mo on top of hosting and covers monthly content updates, security patches, and minor design adjustments.</span><span class="ml-es">El hosting es $60.000 COP/mes (o $720.000 COP/año) después del período incluido. Las ediciones puntuales se cobran a $75/hr CAD con mínimo de 30 minutos. Si quiere actualizaciones regulares, el add-on opcional de mantenimiento es $35/mes sobre el hosting y cubre cambios mensuales de contenido, parches de seguridad y ajustes menores de diseño.</span></div>
       </details>
       <details class="faq-item">
-        <summary>Do you do e-commerce integration? <span class="ico">+</span></summary>
-        <div class="ans">Yes. We integrate any major payment processor into your site, Stripe, PayPal, Square, Wise, or Wompi for Latin American businesses. You provide your own merchant account, we build the checkout flow. For straightforward catalogs (under 50 products), this is included in the Pro tier. For full Shopify-replacement projects, that's a custom quote, but typically lands at $1,500–2,500 CAD vs. an agency's $10,000+.</div>
+        <summary><span class="ml-en">Do you do e-commerce integration?</span><span class="ml-es">¿Hacen integraciones de e-commerce?</span> <span class="ico">+</span></summary>
+        <div class="ans"><span class="ml-en">Yes. We integrate any major payment processor into your site, Stripe, PayPal, Square, Wise, or Wompi for Latin American businesses. You provide your own merchant account, we build the checkout flow. For straightforward catalogs (under 50 products), this is included in the Pro tier. For full Shopify-replacement projects, that's a custom quote, but typically lands at $1,500–2,500 CAD vs. an agency's $10,000+.</span><span class="ml-es">Sí. Integramos cualquier procesador de pagos importante: Stripe, PayPal, Square, Wise, o Wompi para negocios en Latinoamérica. Usted aporta su cuenta de comercio, nosotros construimos el flujo de checkout. Para catálogos directos (menos de 50 productos), esto está incluido en el plan Crecimiento. Para proyectos de reemplazo completo tipo Shopify, es cotización custom, pero suele caer en $1.500–2.500 CAD vs. los $10.000+ de una agencia.</span></div>
       </details>
     </div>
   </div>
@@ -1250,13 +1246,15 @@ body.nav-open{overflow:hidden}
   <div class="inner">
     <span class="eyebrow"><span class="dot live"></span><span class="ml-en">Have questions first?</span><span class="ml-es">¿Tiene preguntas?</span></span>
     <h2><span class="ml-en">Not sure which tier? <span class="accent">Let's talk.</span></span><span class="ml-es">¿Dudas sobre el plan? <span class="accent">Hablemos.</span></span></h2>
-    <p><span class="ml-en">If you'd rather chat before paying, book a 15-minute call or email us. No sales pressure. We'll point you to the right tier and answer anything technical.</span><span class="ml-es">Si prefiere hablar antes de pagar, agende una llamada de 15 minutos o escríbanos. Sin presión de ventas. Le indicamos el plan correcto y resolvemos cualquier duda técnica.</span></p>
+    <p><span class="ml-en">If you'd rather chat before paying, book a 15-minute call with Mike (Canadian founder) or send us an email. No sales pressure. We'll point you to the right tier and answer anything technical.</span><span class="ml-es">Si prefiere hablar antes de pagar, escríbale a Santiago por WhatsApp o envíenos un correo. Sin presión de ventas. Le indicamos el plan correcto y resolvemos cualquier duda técnica.</span></p>
     <div class="btn-row">
-      <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener" class="btn btn-accent"><span class="ml-en">Schedule a 15-min call</span><span class="ml-es">Agendar llamada de 15 min</span> <span class="arrow">→</span></a>
-      <a href="mailto:hello@pymewebpro.com" class="btn btn-outline"><span class="ml-en">Email hello@pymewebpro.com</span><span class="ml-es">Escribir a hola@pymewebpro.com</span></a>
+      <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener" class="btn btn-accent ml-en">Schedule a 15-min call with Mike <span class="arrow">→</span></a>
+      <a href="https://wa.me/573014047722" target="_blank" rel="noopener" class="btn btn-accent ml-es">Hablar con Santiago por WhatsApp <span class="arrow">→</span></a>
+      <a href="mailto:hello@pymewebpro.com" class="btn btn-outline ml-en">Email hello@pymewebpro.com</a>
+      <a href="mailto:hola@pymewebpro.com" class="btn btn-outline ml-es">Escribir a hola@pymewebpro.com</a>
     </div>
     <div class="meta">
-      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">15-min call</span><span class="ml-es">Llamada de 15 min</span></div>
+      <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">15-min call</span><span class="ml-es">WhatsApp directo</span></div>
       <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Zero sales pressure</span><span class="ml-es">Cero presión de ventas</span></div>
       <div class="item"><svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span class="ml-en">Or just buy above</span><span class="ml-es">O compre arriba</span></div>
     </div>

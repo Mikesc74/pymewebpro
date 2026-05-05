@@ -97,6 +97,18 @@ Switched from 50/50 to 30/70 on 2026-05-05. A productized $500-800 / $690.000-1.
 
 Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $207.000 COP · Crecimiento $324.000 COP.
 
+### Live pay-links (set 2026-05-05)
+
+**Wise (NA — CAD):**
+- Essential deposit ($150): `https://wise.com/pay/r/rhZaZERQUcEuitY` ← on public site (Essential card)
+- Pro deposit ($240): `https://wise.com/pay/r/qYRloHLYQcF098c` ← on public site (Pro card)
+- Essential balance ($350): `https://wise.com/pay/r/4fQsK_MOcPZwagQ` ← send at launch
+- Pro balance ($560): `https://wise.com/pay/r/I-G0t2wOE1CRJYI` ← send at launch
+
+**Wompi (LATAM — COP):**
+- Esencial deposit ($207.000): `https://checkout.wompi.co/l/kNsvyu` ← on public site (Esencial card)
+- Crecimiento deposit ($324.000): `https://checkout.wompi.co/l/3tNB1l` ← on public site (Crecimiento card)
+
 ### 30-day satisfaction guarantee
 
 For 30 days after launch, if the client is unhappy for any reason, we:
