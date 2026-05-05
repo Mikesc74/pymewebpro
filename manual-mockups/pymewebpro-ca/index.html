@@ -75,7 +75,7 @@ html.geo-co .geo-na{display:none!important}
 html.lang-en .lang-toggle button[data-l="en"],html.lang-es .lang-toggle button[data-l="es"]{background:var(--ink);color:#fff}
 
 /* Two-locations footer block */
-.locations{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;padding:28px 0;margin-top:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.locations{max-width:var(--max);margin:24px auto 0;padding:28px var(--gutter);display:grid;grid-template-columns:repeat(2,1fr);gap:30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .locations .loc{display:flex;align-items:flex-start;gap:14px}
 .locations .loc .ico{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.04em}
 .locations .loc .h{font-family:var(--display);font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:-0.01em}
@@ -1335,7 +1335,6 @@ body.nav-open{overflow:hidden}
       <div>
         <div class="h">London, Ontario</div>
         <div class="city"><span class="ml-en">Canada</span><span class="ml-es">Canadá</span></div>
-        <div class="role"><span class="ml-en">North American operations · client communications · contracts &amp; billing in CAD/USD via Wise.</span><span class="ml-es">Operaciones en Norteamérica · comunicación con clientes · contratos y facturación en CAD/USD vía Wise.</span></div>
       </div>
     </div>
     <div class="loc">
@@ -1343,7 +1342,6 @@ body.nav-open{overflow:hidden}
       <div>
         <div class="h">Medellín, Antioquia</div>
         <div class="city"><span class="ml-en">Colombia</span><span class="ml-es">Colombia</span></div>
-        <div class="role"><span class="ml-en">Build studio · design, code &amp; deploy · Latin American clients billed in COP via Wompi.</span><span class="ml-es">Estudio de producción · diseño, código y despliegue · clientes latinoamericanos facturados en COP vía Wompi.</span></div>
       </div>
     </div>
   </div>
