@@ -159,6 +159,17 @@ These are non-negotiable. If a brief asks for something that violates these, pus
 7. **Sub-1s LCP is a baseline, not a stretch goal.** Critical CSS inlined, fonts preconnected, images width/height locked, lazy-loading below the fold, no render-blocking JS.
 8. **Self-contained single-file HTML.** All CSS in `<style>`, all JS in `<script>`. The mockup pipeline wraps each file as a JS template literal — external dependencies break this.
 9. **Lighthouse 100 across Performance, Accessibility, Best Practices, SEO** at launch. If any score drops below 95, fix before shipping.
+10. **Schema.org JSON-LD baseline.** Every site ships with at minimum: Organization, WebSite, Service (one per pricing tier), and FAQPage blocks. Inline `<script type="application/ld+json">` in head. Any inline JSON-LD must have its SHA-256 hash added to the CSP allowlist in `_headers` for sites served by Cloudflare Pages.
+11. **Security headers baseline (Cloudflare Pages sites).** `_headers` must include: `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, a `Permissions-Policy` zeroing out unused features, and a `Content-Security-Policy` with hash-locked inline scripts. Goal is qualys.ssllabs.com A+ on day one.
+
+### Pre-deploy validation
+
+Run `npm run check` from `portal/`. The check pipeline includes:
+- `check:worker` — every JS file in src/ parses cleanly
+- `check:spa` — the Babel-transpiled SPA template literal parses cleanly
+- `check:standards` — every `manual-mockups/<slug>/index.html` validates against the build constraints above
+
+Any failure blocks deploy. Don't bypass with `--no-verify` — fix the underlying issue.
 
 ## Brand voice rules
 
