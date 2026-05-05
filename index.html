@@ -1356,31 +1356,27 @@ body.nav-open{overflow:hidden}
 (function(){
   // Geo-detect via Cloudflare's /cdn-cgi/trace endpoint. Pricing follows visitor country.
   // Default = NA pricing (CAD). If country is CO, switch to COP.
-  // Cache the result in localStorage for 24h to avoid repeated trace calls.
+  // No cache - trace is sub-millisecond and we want fresh detection every page load.
+  // URL override: ?country=CO or ?country=CA forces a country (handy for testing).
   var html = document.documentElement;
-  var cached = null;
-  try {
-    var raw = localStorage.getItem('pwp-geo');
-    if (raw) {
-      var parsed = JSON.parse(raw);
-      if (parsed && parsed.t && (Date.now() - parsed.t) < 86400000) cached = parsed.c;
-    }
-  } catch(e){}
   function applyGeo(country){
     html.classList.remove('geo-co','geo-na');
     html.classList.add(country === 'CO' ? 'geo-co' : 'geo-na');
   }
-  if (cached) {
-    applyGeo(cached);
-  } else {
-    applyGeo('XX'); // default to NA until trace returns
-    fetch('/cdn-cgi/trace').then(function(r){return r.text();}).then(function(t){
-      var m = t.match(/loc=(\w+)/);
-      var country = m ? m[1] : 'XX';
-      try { localStorage.setItem('pwp-geo', JSON.stringify({c:country, t:Date.now()})); } catch(e){}
-      applyGeo(country);
-    }).catch(function(){ applyGeo('XX'); });
-  }
+  // Check URL override first
+  try {
+    var qs = new URLSearchParams(window.location.search);
+    var override = qs.get('country');
+    if (override) { applyGeo(override.toUpperCase()); return; }
+  } catch(e){}
+  // Clear any old cached value from previous version
+  try { localStorage.removeItem('pwp-geo'); } catch(e){}
+  // Default to NA until trace returns
+  applyGeo('XX');
+  fetch('/cdn-cgi/trace').then(function(r){return r.text();}).then(function(t){
+    var m = t.match(/loc=(\w+)/);
+    applyGeo(m ? m[1] : 'XX');
+  }).catch(function(){ applyGeo('XX'); });
 })();
 (function(){
   var saved = localStorage.getItem('pwp-lang');
