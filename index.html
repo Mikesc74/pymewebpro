@@ -100,6 +100,16 @@ html.lang-en .ml-es,html.lang-es .ml-en{display:none!important}
 /* No-JS fallback message */
 .noscript-banner{background:var(--ink);color:#fff;padding:12px 20px;text-align:center;font-family:var(--mono);font-size:13px;line-height:1.5}
 .noscript-banner a{color:var(--accent);text-decoration:underline}
+/* Utility classes (refactored from inline style= attrs to satisfy strict-CSP) */
+.u-fg-white{color:#fff}
+.u-fg-white-soft{color:rgba(255,255,255,0.75)}
+.u-mt-12{margin-top:12px}
+.u-ico-green{background:rgba(0,183,121,0.12);color:var(--green)}
+.u-cta-card{background:linear-gradient(135deg,var(--soft) 0%,var(--paper) 100%);align-items:center;justify-content:center;display:flex;flex-direction:column;border-style:dashed}
+.u-cta-card-preview{background:transparent;color:var(--ink);font-size:24px}
+.u-cta-card-info{text-align:center;width:100%}
+.u-center{text-align:center}
+.u-eyebrow-on-dark{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.85)}
 /* Geo-locked content: pricing follows visitor country, not language. NA is default until JS detects Colombia. */
 html:not(.geo-co) .geo-co{display:none!important}
 html.geo-co .geo-na{display:none!important}
@@ -933,7 +943,7 @@ body.nav-open{overflow:hidden}
 
       <div class="price-card featured">
         <div class="head">
-          <div class="name" style="color:#fff">Pro</div>
+          <div class="name u-fg-white">Pro</div>
           <span class="tag">Boutique brands &amp; e-comm</span>
         </div>
         <div class="price-amt"><span class="ccy">CAD</span>$800</div>
@@ -950,7 +960,7 @@ body.nav-open{overflow:hidden}
         </ul>
         <div class="cta-row">
           <a href="https://wise.com/pay/r/qYRloHLYQcF098c" target="_blank" rel="noopener" class="btn btn-accent">Pay $240 deposit &amp; start <span class="arrow">→</span></a>
-          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">Or schedule a call →</a>
+          <a href="#cta-final" class="btn btn-link u-fg-white-soft">Or schedule a call →</a>
         </div>
       </div>
     </div>
@@ -984,7 +994,7 @@ body.nav-open{overflow:hidden}
 
       <div class="price-card featured">
         <div class="head">
-          <div class="name" style="color:#fff">Pro</div>
+          <div class="name u-fg-white">Pro</div>
           <span class="tag">Boutique brands &amp; e-comm</span>
         </div>
         <div class="price-amt"><span class="ccy">COP</span>$690.000</div>
@@ -1001,7 +1011,7 @@ body.nav-open{overflow:hidden}
         </ul>
         <div class="cta-row">
           <a href="https://checkout.wompi.co/l/xzGeMX" target="_blank" rel="noopener" class="btn btn-accent">Pay $207.000 deposit &amp; start <span class="arrow">→</span></a>
-          <a href="#cta-final" class="btn btn-link" style="color:rgba(255,255,255,0.75)">Or schedule a call →</a>
+          <a href="#cta-final" class="btn btn-link u-fg-white-soft">Or schedule a call →</a>
         </div>
       </div>
     </div>
@@ -1011,8 +1021,8 @@ body.nav-open{overflow:hidden}
       <div><strong><span class="geo-na">What an equivalent site would cost from a Toronto agency:</span><span class="geo-co">What a similar site would cost from a big agency:</span></strong> <span class="geo-na ml-en">$5,000–$12,000 CAD with a 6–10 week timeline. Same code, same hosting, same security headers, we just don't have the agency overhead to pass along.</span><span class="geo-na ml-es">$5.000–$12.000 CAD con plazo de 6–10 semanas. Mismo código, mismo hosting, mismos encabezados de seguridad, simplemente no tenemos el sobrecosto de agencia que trasladar.</span><span class="geo-co ml-en">$5.000.000–$15.000.000 COP with a 6–10 week timeline. Same code, same hosting, same security headers, we just don't have the agency overhead to pass along.</span><span class="geo-co ml-es">$5.000.000–$15.000.000 COP con plazo de 6–10 semanas. Mismo código, mismo hosting, mismos encabezados de seguridad, simplemente no tenemos el sobrecosto de agencia que trasladar.</span></div>
     </div>
 
-    <div class="price-foot" style="margin-top:12px">
-      <div class="ico" style="background:rgba(0,183,121,0.12);color:var(--green)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 9h20M5 9V7a2 2 0 012-2h10a2 2 0 012 2v2M5 9v10a2 2 0 002 2h10a2 2 0 002-2V9M9 14h6"/></svg></div>
+    <div class="price-foot u-mt-12">
+      <div class="ico u-ico-green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 9h20M5 9V7a2 2 0 012-2h10a2 2 0 012 2v2M5 9v10a2 2 0 002 2h10a2 2 0 002-2V9M9 14h6"/></svg></div>
       <div><strong>CAD or USD pricing · 30% deposit to start, 70% on launch.</strong> Pay by credit card, Apple Pay, Google Pay, or direct wire via our Wise Business account. <strong>30-day money-back guarantee</strong> after launch. Hosting included for the first 1–2 years; $15/mo or $180/yr after that.</div>
     </div>
   </div>
@@ -1149,12 +1159,12 @@ body.nav-open{overflow:hidden}
         </div>
       </a>
 
-      <a class="port-card" href="#cta-final" style="background:linear-gradient(135deg, var(--soft) 0%, var(--paper) 100%);align-items:center;justify-content:center;display:flex;flex-direction:column;border-style:dashed">
-        <div class="preview" style="background:transparent;color:var(--ink);font-size:24px">
+      <a class="port-card u-cta-card" href="#cta-final">
+        <div class="preview u-cta-card-preview">
           <span>Your site<span class="em">+ 6 days from now</span></span>
         </div>
-        <div class="info" style="text-align:center;width:100%">
-          <h3 style="text-align:center">Get in line</h3>
+        <div class="info u-cta-card-info">
+          <h3 class="u-center">Get in line</h3>
           <p>Booking now. Pay deposit, brief us, live in 48 hours.</p>
         </div>
       </a>
@@ -1201,7 +1211,7 @@ body.nav-open{overflow:hidden}
 <section class="compare">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.85)"><span class="dot"></span>Apples to Apples</span>
+      <span class="eyebrow u-eyebrow-on-dark"><span class="dot"></span>Apples to Apples</span>
       <h2>Same site. <span class="accent">Different invoice.</span></h2>
       <p>Side-by-side: a typical Toronto agency proposal for a 5-section marketing site, vs. our Pro tier. Same code quality, same hosting, same security baseline.</p>
     </div>

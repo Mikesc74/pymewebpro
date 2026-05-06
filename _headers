@@ -7,9 +7,15 @@
 # with a more specific pattern below (Pages picks the most specific match).
 #
 # CSP NOTE: script-src has SHA-256 hashes for each inline <script> block in
-# index.html. If you edit ANY inline-script content (including whitespace),
+# every HTML file. If you edit ANY inline-script content (including whitespace),
 # the hash changes and the browser will refuse to execute the block. Recompute
 # all inline-script hashes with:
+#
+# style-src kept at 'unsafe-inline' deliberately. Each page has its own inline
+# <style> block (24+ unique style hashes across the site), and every CSS edit
+# would require recomputing all of them. The XSS exfil vector for inline styles
+# is `background: url(attacker)` — already closed by `img-src 'self' data:`.
+# All inline style= attributes have been refactored to utility classes.
 #
 #   python3 -c "import re,hashlib,base64; html=open('index.html').read();
 #   [print(\"'sha256-\"+base64.b64encode(hashlib.sha256(m.group(2).encode()).digest()).decode()+\"'\")
