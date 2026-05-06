@@ -1,23 +1,16 @@
-// functions/api/lead.js — Cloudflare Pages Function for the v4 lead form.
+// functions/api/lead.js — DEPRECATED.
 //
-// Receives the POST from Section 06 (The Ask), validates, honeypot-checks,
-// rate-limits per IP via KV (optional), and emails the lead to both founders.
+// The v4 page now POSTs lead submissions directly to the portal worker at
+// https://portal.pymewebpro.com/api/leads, which handles validation, D1
+// persistence, admin notifications, and (after payment) the magic-link
+// invite. This Pages Function is no longer hit by any page on the site.
 //
-// Default recipients (hardcoded fallback):
-//   ventas@pymewebpro.com
-//   mike@mikec.pro
-//
-// Environment variables (set in Cloudflare Pages dashboard -> Settings -> Environment variables):
-//   RESEND_API_KEY       Required for emails to actually send (https://resend.com)
-//   RESEND_FROM          From address (e.g. "PymeWebPro <leads@pymewebpro.com>"). Defaults to onboarding@resend.dev for testing.
-//   LEAD_NOTIFY_EMAIL    (Optional) Override recipients, comma-separated. Defaults to ventas@pymewebpro.com,mike@mikec.pro
-//   LEAD_WEBHOOK_URL     (Optional) Also POST to a Slack/Discord/Make/Zapier webhook
-//
-// Optional KV binding (Pages Settings -> Functions -> KV namespace bindings):
-//   LEADS_KV             Bind to enable per-IP rate limiting (5 submissions / hour)
+// Kept as a passthrough for any stale forms or external callers that still
+// POST here: it forwards the body to the portal and returns the same
+// response. Safe to delete once you've verified nothing in the wild posts
+// to /api/lead anymore (check Cloudflare Pages logs).
 
-const DEFAULT_RECIPIENTS = ["ventas@pymewebpro.com", "mike@mikec.pro"];
-const DEFAULT_FROM = "PymeWebPro Leads <onboarding@resend.dev>"; // override with RESEND_FROM once DNS verified
+const PORTAL_LEADS_URL = "https://portal.pymewebpro.com/api/leads";
 
 const ALLOWED_ORIGINS = [
   "https://pymewebpro.com",
@@ -39,152 +32,41 @@ export async function onRequestOptions({ request }) {
   return new Response(null, { status: 204, headers: corsHeaders(request.headers.get("Origin")) });
 }
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request }) {
   const origin = request.headers.get("Origin") || "";
   const headers = { "Content-Type": "application/json", ...corsHeaders(origin) };
 
-  let data;
+  let payload;
   try {
     const ct = request.headers.get("Content-Type") || "";
     if (ct.includes("application/json")) {
-      data = await request.json();
+      payload = await request.json();
     } else {
       const fd = await request.formData();
-      data = Object.fromEntries(fd.entries());
+      payload = Object.fromEntries(fd.entries());
     }
   } catch (e) {
     return new Response(JSON.stringify({ error: "Invalid body" }), { status: 400, headers });
   }
 
-  // Honeypot: real humans never fill this hidden field.
-  if (data.company_website && String(data.company_website).trim().length > 0) {
-    return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
+  // Map legacy field name from the old form (`about`) to the portal's `message`
+  if (payload.about && !payload.message) payload.message = payload.about;
+  if (!payload.source) payload.source = "pymewebpro_legacy_api_lead";
+
+  try {
+    const resp = await fetch(PORTAL_LEADS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const body = await resp.text();
+    return new Response(body, {
+      status: resp.status,
+      headers: { ...headers, "Content-Type": resp.headers.get("Content-Type") || "application/json" },
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: "Upstream portal unreachable", detail: String(e && e.message) }), {
+      status: 502, headers,
+    });
   }
-
-  // Validate
-  const required = ["name", "email", "about"];
-  const missing = required.filter(k => !data[k] || String(data[k]).trim().length === 0);
-  if (missing.length) {
-    return new Response(JSON.stringify({ error: "Missing fields: " + missing.join(", ") }), { status: 400, headers });
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(data.email))) {
-    return new Response(JSON.stringify({ error: "Invalid email" }), { status: 400, headers });
-  }
-
-  // Rate limit per IP (5/hour) if KV is bound
-  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-  if (env.LEADS_KV) {
-    const key = "rl:" + ip;
-    const count = parseInt((await env.LEADS_KV.get(key)) || "0", 10);
-    if (count >= 5) {
-      return new Response(JSON.stringify({ error: "Rate limited" }), { status: 429, headers });
-    }
-    await env.LEADS_KV.put(key, String(count + 1), { expirationTtl: 3600 });
-  }
-
-  const country = request.headers.get("CF-IPCountry") || "XX";
-  const ua = request.headers.get("User-Agent") || "";
-  const ts = new Date().toISOString();
-  const referer = request.headers.get("Referer") || "";
-
-  const lead = {
-    ts,
-    ip,
-    country,
-    referer,
-    name: String(data.name).slice(0, 200),
-    email: String(data.email).slice(0, 200),
-    about: String(data.about).slice(0, 3000),
-    ua,
-  };
-
-  // Always log so leads are recoverable from wrangler tail even if email fails.
-  console.log("[lead]", JSON.stringify(lead));
-
-  // Email via Resend
-  let emailSent = false;
-  if (env.RESEND_API_KEY) {
-    const recipients = (env.LEAD_NOTIFY_EMAIL || DEFAULT_RECIPIENTS.join(","))
-      .split(",")
-      .map(s => s.trim())
-      .filter(Boolean);
-    const from = env.RESEND_FROM || DEFAULT_FROM;
-    const subject = "New lead: " + lead.name + " (" + lead.country + ")";
-    const html = "<h2>New PymeWebPro lead</h2>"
-      + "<p><b>Name:</b> " + esc(lead.name) + "</p>"
-      + '<p><b>Email:</b> <a href="mailto:' + esc(lead.email) + '">' + esc(lead.email) + "</a></p>"
-      + "<p><b>About:</b><br>" + esc(lead.about).replace(/\n/g, "<br>") + "</p>"
-      + (lead.referer ? "<p><b>Came from:</b> " + esc(lead.referer) + "</p>" : "")
-      + '<hr><p style="color:#888;font-size:12px">' + esc(lead.country) + " &middot; " + esc(lead.ip) + " &middot; " + esc(lead.ts) + "</p>";
-    const text = [
-      "New PymeWebPro lead (" + lead.country + ")",
-      "",
-      "Name:  " + lead.name,
-      "Email: " + lead.email,
-      "",
-      "About:",
-      lead.about,
-      "",
-      lead.referer ? "Came from: " + lead.referer : "",
-      "",
-      lead.country + " | " + lead.ip + " | " + lead.ts,
-    ].filter(Boolean).join("\n");
-    try {
-      const resp = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer " + env.RESEND_API_KEY,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from,
-          to: recipients,
-          reply_to: lead.email,
-          subject,
-          html,
-          text,
-        }),
-      });
-      emailSent = resp.ok;
-      if (!resp.ok) {
-        const body = await resp.text();
-        console.error("[lead] resend failed:", resp.status, body);
-      }
-    } catch (e) {
-      console.error("[lead] resend error:", e && e.message);
-    }
-  } else {
-    console.warn("[lead] RESEND_API_KEY not set; lead logged but not emailed");
-  }
-
-  // Optional secondary webhook (Slack / Discord / Make / Zapier)
-  if (env.LEAD_WEBHOOK_URL) {
-    const text = [
-      "*New PymeWebPro lead* (" + lead.country + ")",
-      "*Name:* " + lead.name,
-      "*Email:* " + lead.email,
-      "*About:* " + lead.about,
-      "_at_ " + lead.ts,
-    ].join("\n");
-    try {
-      await fetch(env.LEAD_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, content: text, lead }),
-      });
-    } catch (e) {
-      console.error("[lead] webhook error:", e && e.message);
-    }
-  }
-
-  return new Response(JSON.stringify({ ok: true, emailSent }), { status: 200, headers });
-}
-
-function esc(s) {
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }

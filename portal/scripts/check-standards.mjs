@@ -22,6 +22,7 @@ const FULL_SITE_EXEMPT = new Set(["start", "_template"]);
 // Default to assuming a site doesn't unless flagged.
 const COLOMBIAN_SITES = new Set([
   "blues-kitchen", "daga-parfum", "espacio-dental", "marena", "pymewebpro-ca",
+  "pymewebpro-v4", "pymewebpro-v4-es",
 ]);
 
 const checks = [

@@ -1,11 +1,28 @@
-// build-bilingual.mjs — split a bilingual source HTML into two SEO-clean files.
+// build-bilingual.mjs — generate prod root files from the v4 mockup sources.
 //
-// Reads:  manual-mockups/pymewebpro-ca/index.html (single source of truth, has ml-en/ml-es spans
-//         and data-lang attrs on title/description/OG meta).
-// Writes: index.html       (EN-only DOM, <html lang="en">, EN canonical)
-//         es/index.html    (ES-only DOM, <html lang="es">, ES canonical)
+// Reads:
+//   manual-mockups/pymewebpro-v4/index.html      (EN source, lives at mockups.pymewebpro.com/pymewebpro-v4/)
+//   manual-mockups/pymewebpro-v4-es/index.html   (ES source)
+//
+// Writes:
+//   index.html       (EN-only DOM, served at https://pymewebpro.com/)
+//   es/index.html    (ES-only DOM, served at https://pymewebpro.com/es/)
+//
+// Transforms applied to both files (same as old promote-v4.mjs):
+//   mockups.pymewebpro.com/pymewebpro-v4-es/  -> pymewebpro.com/es/
+//   mockups.pymewebpro.com/pymewebpro-v4/     -> pymewebpro.com/
+//   "./mike.jpg"     -> "/screenshots/mike.jpg"
+//   "./santiago.jpg" -> "/screenshots/santiago.jpg"
+//   /pymewebpro-v4-es/   -> /es/        (lang switcher hrefs)
+//   /pymewebpro-v4/      -> /
 //
 // Usage:  node scripts/build-bilingual.mjs
+//
+// History: this used to merge a dual-DOM source (pymewebpro-ca) into two
+// language-specific outputs. v4 ships as two separate files, so the merge
+// step is gone — this script now just promotes the v4 mockups to prod with
+// the URL adjustments needed for the apex domain. The old merge logic is
+// preserved in git history if you need it for a future bilingual source.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -13,168 +30,45 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const SOURCE = path.join(ROOT, "manual-mockups/pymewebpro-ca/index.html");
+
+const EN_SRC = path.join(ROOT, "manual-mockups/pymewebpro-v4/index.html");
+const ES_SRC = path.join(ROOT, "manual-mockups/pymewebpro-v4-es/index.html");
 const OUT_EN = path.join(ROOT, "index.html");
 const OUT_ES = path.join(ROOT, "es/index.html");
 
-function buildVariant(html, keepLang) {
-  const dropLang = keepLang === "en" ? "es" : "en";
+function transform(html) {
+  return html
+    .replace(/https:\/\/mockups\.pymewebpro\.com\/pymewebpro-v4-es\//g, "https://pymewebpro.com/es/")
+    .replace(/https:\/\/mockups\.pymewebpro\.com\/pymewebpro-v4\//g, "https://pymewebpro.com/")
+    .replace(/"\.\/mike\.jpg"/g, '"/screenshots/mike.jpg"')
+    .replace(/"\.\/santiago\.jpg"/g, '"/screenshots/santiago.jpg"')
+    .replace(/\/pymewebpro-v4-es\//g, "/es/")
+    .replace(/\/pymewebpro-v4\//g, "/");
+}
 
-  // 1. Set <html lang="..."> and class for the chosen language
-  let out = html.replace(
-    /<html\b[^>]*>/i,
-    `<html lang="${keepLang}" class="lang-${keepLang}">`
-  );
-
-  // 2. Drop any <title>/<meta>/<link>/<script> tag tagged with the OTHER language.
-  // <script type="application/ld+json" data-lang="es">…</script> in the EN
-  // build is dropped wholesale (and vice-versa) so each locale ships only
-  // the schema block in its own language — fixes audit §4.1 (Spanish FAQ
-  // schema was rendering in English).
-  out = out.replace(
-    new RegExp(`<title\\s+data-lang="${dropLang}"[^>]*>[\\s\\S]*?<\\/title>`, "g"),
-    ""
-  );
-  out = out.replace(
-    new RegExp(`<meta\\s+[^>]*data-lang="${dropLang}"[^>]*>`, "g"),
-    ""
-  );
-  out = out.replace(
-    new RegExp(`<script[^>]*\\sdata-lang="${dropLang}"[^>]*>[\\s\\S]*?<\\/script>`, "g"),
-    ""
-  );
-
-  // 3. Strip data-lang attribute from kept tags (clean output)
-  out = out.replace(
-    new RegExp(`(<title|<meta|<script)([^>]*)\\sdata-lang="${keepLang}"`, "g"),
-    "$1$2"
-  );
-
-  // 4+5. Strip drop-lang blocks and unwrap keep-lang blocks. Loop until stable
-  // because the source can have nested ml-en inside ml-en (or similar).
-  for (let i = 0; i < 5; i++) {
-    const before = out;
-    out = stripMlSpans(out, dropLang);
-    out = unwrapMlSpans(out, keepLang);
-    if (out === before) break;
+function build(src, dst, label) {
+  if (!fs.existsSync(src)) {
+    console.error(`[build-bilingual] FAIL: source missing — ${path.relative(ROOT, src)}`);
+    process.exit(1);
   }
-
-  // 6. Add canonical URL pointing to self
-  const canonical = keepLang === "en"
-    ? "https://pymewebpro.com/"
-    : "https://pymewebpro.com/es/";
-  out = out.replace(
-    /<link rel="alternate" hreflang="x-default"[^>]*>/,
-    (m) => m + `\n<link rel="canonical" href="${canonical}">`
-  );
-
-  // 7. Mark the active language toggle as "current"
-  // <a href="/" data-l="en">EN</a>  → add aria-current="page" if active
-  const activeHref = keepLang === "en" ? "/" : "/es/";
-  out = out.replace(
-    new RegExp(`(<a\\s+href="${escapeRegex(activeHref)}"\\s+data-l="${keepLang}"[^>]*)>`, "g"),
-    `$1 aria-current="page">`
-  );
-
-  return out;
+  let html = fs.readFileSync(src, "utf-8");
+  html = transform(html);
+  const dstDir = path.dirname(dst);
+  if (!fs.existsSync(dstDir)) fs.mkdirSync(dstDir, { recursive: true });
+  fs.writeFileSync(dst, html);
+  const sizeKB = (fs.statSync(dst).size / 1024).toFixed(1);
+  const emDashes = (html.match(/—|&mdash;|&#8212;/g) || []).length;
+  const status = emDashes === 0 ? "OK" : `WARN ${emDashes} em dashes`;
+  console.log(`[build-bilingual] ${label}: ${sizeKB} KB → ${path.relative(ROOT, dst)}  (${status})`);
+  return { html, emDashes };
 }
 
-function escapeRegex(s) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+const enResult = build(EN_SRC, OUT_EN, "EN");
+const esResult = build(ES_SRC, OUT_ES, "ES");
 
-// Strip <span class="ml-XX">...</span> blocks. Handles single-level nesting by
-// finding the matching </span> with depth tracking.
-function stripMlSpans(html, lang) {
-  const open = new RegExp(`<span\\s+class="ml-${lang}"[^>]*>`, "g");
-  let result = "";
-  let cursor = 0;
-  let m;
-  while ((m = open.exec(html)) !== null) {
-    result += html.slice(cursor, m.index);
-    // Find matching </span>
-    let depth = 1;
-    let scan = open.lastIndex;
-    while (depth > 0 && scan < html.length) {
-      const nextOpen = html.indexOf("<span", scan);
-      const nextClose = html.indexOf("</span>", scan);
-      if (nextClose === -1) break;
-      if (nextOpen !== -1 && nextOpen < nextClose) {
-        depth++;
-        scan = nextOpen + 5;
-      } else {
-        depth--;
-        scan = nextClose + "</span>".length;
-        if (depth === 0) {
-          cursor = scan;
-          open.lastIndex = scan;
-          break;
-        }
-      }
-    }
-  }
-  result += html.slice(cursor);
-  return result;
-}
-
-// Unwrap <span class="ml-KEEP">CONTENT</span> → CONTENT (preserve inner HTML).
-function unwrapMlSpans(html, lang) {
-  const open = new RegExp(`<span\\s+class="ml-${lang}"[^>]*>`, "g");
-  let result = "";
-  let cursor = 0;
-  let m;
-  while ((m = open.exec(html)) !== null) {
-    result += html.slice(cursor, m.index);
-    // Find matching </span>
-    let depth = 1;
-    let scan = open.lastIndex;
-    let innerStart = scan;
-    while (depth > 0 && scan < html.length) {
-      const nextOpen = html.indexOf("<span", scan);
-      const nextClose = html.indexOf("</span>", scan);
-      if (nextClose === -1) break;
-      if (nextOpen !== -1 && nextOpen < nextClose) {
-        depth++;
-        scan = nextOpen + 5;
-      } else {
-        depth--;
-        if (depth === 0) {
-          result += html.slice(innerStart, nextClose);
-          cursor = nextClose + "</span>".length;
-          open.lastIndex = cursor;
-          break;
-        }
-        scan = nextClose + "</span>".length;
-      }
-    }
-  }
-  result += html.slice(cursor);
-  return result;
-}
-
-// ─── main ───────────────────────────────────────────────────────────────
-const source = fs.readFileSync(SOURCE, "utf-8");
-
-const enHtml = buildVariant(source, "en");
-const esHtml = buildVariant(source, "es");
-
-fs.mkdirSync(path.dirname(OUT_ES), { recursive: true });
-fs.writeFileSync(OUT_EN, enHtml);
-fs.writeFileSync(OUT_ES, esHtml);
-
-// Sanity-check: each variant should have NO ml-* spans left
-function countMlSpans(html, lang) {
-  return (html.match(new RegExp(`<span\\s+class="ml-${lang}"`, "g")) || []).length;
-}
-const enLeftover = countMlSpans(enHtml, "en") + countMlSpans(enHtml, "es");
-const esLeftover = countMlSpans(esHtml, "en") + countMlSpans(esHtml, "es");
-
-console.log(`[build-bilingual] EN: ${(enHtml.length / 1024).toFixed(1)} KB → ${OUT_EN.replace(ROOT + "/", "")}`);
-console.log(`[build-bilingual] ES: ${(esHtml.length / 1024).toFixed(1)} KB → ${OUT_ES.replace(ROOT + "/", "")}`);
-console.log(`[build-bilingual] Residual ml-* spans: EN=${enLeftover}, ES=${esLeftover} (should be 0).`);
-
-if (enLeftover > 0 || esLeftover > 0) {
-  console.error("[build-bilingual] FAIL: span unwrapping incomplete.");
+if (enResult.emDashes > 0 || esResult.emDashes > 0) {
+  console.error("[build-bilingual] FAIL: em dashes detected. Replace with periods, commas, colons, or '·'.");
   process.exit(1);
 }
+
 console.log("[build-bilingual] OK");
