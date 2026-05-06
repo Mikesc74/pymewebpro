@@ -669,7 +669,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 year of hosting and support</span></li>
         </ul>
         <div class="actions">
-          <button type="button" class="btn btn-orange" data-plan="esencial" data-tier-label="Essential">Choose Essential →</button>
+          <a class="btn btn-orange" href="/start/?plan=esencial">Choose Essential →</a>
           <a class="btn btn-ghost-light" href="#ask">Or, get more info first</a>
         </div>
       </div>
@@ -687,7 +687,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 year of hosting and support</span></li>
         </ul>
         <div class="actions">
-          <button type="button" class="btn btn-orange" data-plan="pro" data-tier-label="Pro">Choose Pro →</button>
+          <a class="btn btn-orange" href="/start/?plan=pro">Choose Pro →</a>
           <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">Or, get more info first</a>
         </div>
       </div>
@@ -722,7 +722,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <label for="lf-about">Tell us about your business</label>
           <textarea id="lf-about" name="about" required placeholder="What you do, who buys, what isn't working, current website if you have one"></textarea>
         </div>
-        <input type="hidden" name="plan" id="lf-plan" value="">
         <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Send to Mike and Santiago →</button>
@@ -915,19 +914,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       else { document.documentElement.classList.add('geo-na'); }
     }).catch(function(){ document.documentElement.classList.add('geo-na'); });
   }
-  // "Choose <plan>" buttons in pricing: tag the form with the plan, scroll to form.
-  var planField = document.getElementById('lf-plan');
-  document.querySelectorAll('button[data-plan]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var plan = btn.getAttribute('data-plan');
-      if(planField) planField.value = plan;
-      var ask = document.getElementById('ask');
-      if(ask) ask.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      var nameInput = document.getElementById('lf-name');
-      if(nameInput) setTimeout(function(){ nameInput.focus(); }, 600);
-    });
-  });
-
   var form = document.getElementById('lead-form');
   if(!form) return;
   var status = document.getElementById('lf-status');
@@ -948,8 +934,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       language: 'en',
       source: 'pymewebpro_v4',
       page: window.location.pathname,
-      website: fd.get('company_website') || '',
-      extra: { plan: fd.get('plan') || '' }
+      website: fd.get('company_website') || ''
     };
     fetch(PORTAL_URL + '/api/leads', {
       method: 'POST',

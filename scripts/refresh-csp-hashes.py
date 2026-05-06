@@ -18,6 +18,8 @@ os.chdir(ROOT)
 FILES = [
     "index.html",
     "es/index.html",
+    "start/index.html",
+    "es/start/index.html",
     "terminos.html",
     "politica-de-datos.html",
     "hosting.html",

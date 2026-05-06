@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" class="lang-en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FBF7F0">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex,nofollow">
+<title>Start your build · PymeWebPro</title>
+<meta name="description" content="Starting your PymeWebPro build. Three quick fields, then payment.">
+<link rel="canonical" href="https://pymewebpro.com/start/">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23FBF7F0%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2241%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-sans-serif%2Csystem-ui%22%20font-size%3D%2228%22%20font-weight%3D%22800%22%20fill%3D%22%231A1612%22%3Ep%3Ctspan%20fill%3D%22%23FF5C2E%22%3Ew%3C/tspan%3Ep%3C/text%3E%3C/svg%3E'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,500&family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;overflow-x:clip;min-height:100%}
+html{font-family:'Inter Tight','Inter',system-ui,-apple-system,sans-serif;color:#1B1410;background:#FBF7F0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{line-height:1.55;font-size:16.5px;font-weight:500;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+.fr{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500}
+
+.topnav{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(27,20,16,.06)}
+.brand{display:inline-flex;align-items:baseline;gap:0;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:19px;color:#1B1410;letter-spacing:-.026em;line-height:1;transition:opacity .15s}
+.brand:hover{opacity:.75}
+.brand .br{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:500;color:#A89788;letter-spacing:0;font-size:.92em}
+.brand .word{font-family:'Inter Tight',sans-serif;font-weight:700;color:inherit;margin:0 1.5px}
+.brand .web{color:#FF5C2E}
+.back{font-size:13.5px;color:#7A4828;font-weight:600}
+.back:hover{color:#1B1410}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+.shell{width:100%;max-width:560px}
+
+.kicker{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7A4828;margin-bottom:.85rem}
+h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.025em;line-height:1.05;font-size:clamp(30px,4vw,42px);margin:0 0 .55rem;color:#1B1410}
+h1 .accent{color:#FF5C2E}
+.sub{font-size:17px;color:#3a2a1f;margin:0 0 28px;line-height:1.5}
+
+.plan-card{background:#1B1410;color:#F4ECDF;border-radius:18px;padding:24px 26px;margin-bottom:24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 24px 48px -28px rgba(27,20,16,.45)}
+.plan-card .row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.plan-card .name{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.015em;color:#FBF7F0}
+.plan-card .tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFB28A;display:block;margin-bottom:.3rem}
+.plan-card .price{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;line-height:1;color:#FBF7F0;text-align:right;white-space:nowrap}
+.plan-card .price small{font-size:13px;font-weight:600;opacity:.65;margin-left:.3rem}
+.plan-card .deposit{font-size:13.5px;color:rgba(244,236,223,.72);line-height:1.45;border-top:1px solid rgba(244,236,223,.12);padding-top:14px}
+.plan-card .deposit strong{color:#FF5C2E;font-weight:700}
+
+form{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:.4rem}
+label{font-size:12.5px;font-weight:700;color:#3a2a1f;letter-spacing:.02em}
+label .opt{color:#7A4828;font-weight:500;margin-left:.4rem}
+input[type=text],input[type=email]{font:inherit;font-size:16px;padding:.85rem 1rem;border-radius:11px;border:1.5px solid rgba(27,20,16,.14);background:#fff;color:#1B1410;width:100%;transition:border-color .15s,box-shadow .15s}
+input::placeholder{color:rgba(27,20,16,.4)}
+input:focus{outline:0;border-color:#FF5C2E;box-shadow:0 0 0 4px rgba(255,92,46,.12)}
+
+.submit{margin-top:8px;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 1.4rem;border:0;border-radius:999px;background:#FF5C2E;color:#fff;font-family:'Inter Tight',sans-serif;font-weight:800;font-size:16.5px;letter-spacing:-.005em;cursor:pointer;box-shadow:0 8px 24px -8px rgba(255,92,46,.55);transition:transform .15s,box-shadow .15s,opacity .15s}
+.submit:hover{transform:translateY(-1px);box-shadow:0 12px 32px -10px rgba(255,92,46,.65)}
+.submit:disabled{opacity:.65;cursor:wait;transform:none}
+
+.note{font-size:12.5px;color:#7A4828;margin-top:6px;text-align:center;line-height:1.5}
+.alt-paths{margin-top:28px;padding-top:24px;border-top:1px solid rgba(27,20,16,.08);font-size:13.5px;color:#5a4538;text-align:center}
+.alt-paths a{color:#FF5C2E;font-weight:700;margin:0 6px}
+.alt-paths a:hover{text-decoration:underline}
+
+.status{margin-top:14px;font-size:14px;text-align:center;display:none;padding:10px 14px;border-radius:10px}
+.status.ok{display:block;background:rgba(123,203,148,.15);color:#1F6B3A;border:1px solid rgba(123,203,148,.4)}
+.status.err{display:block;background:rgba(255,138,107,.15);color:#9A3517;border:1px solid rgba(255,138,107,.4)}
+
+footer{padding:18px 24px;border-top:1px solid rgba(27,20,16,.06);font-size:12.5px;color:#7A6957;text-align:center;line-height:1.55}
+footer a{color:#7A4828;font-weight:600}
+footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
+</style>
+</head>
+
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="https://pymewebpro.com/" aria-label="PymeWebPro home">
+    <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
+  </a>
+  <a class="back" href="https://pymewebpro.com/">← Back</a>
+</nav>
+
+<main>
+  <div class="shell">
+    <span class="kicker" id="kicker">Starting your build</span>
+    <h1>Three quick fields, then <span class="accent fr">payment</span>.</h1>
+    <p class="sub">We'll create your build slot, send you straight to checkout, and start writing your page within 24 hours of payment.</p>
+
+    <div class="plan-card" id="plan-card" hidden>
+      <div class="row">
+        <div>
+          <span class="tag" id="plan-tag">Essential</span>
+          <div class="name" id="plan-name">The page</div>
+        </div>
+        <div class="price" id="plan-price"></div>
+      </div>
+      <div class="deposit" id="plan-deposit"></div>
+    </div>
+
+    <form id="start-form" novalidate>
+      <div class="field">
+        <label for="sf-name">Your name</label>
+        <input id="sf-name" name="name" type="text" required autocomplete="name" placeholder="Full name">
+      </div>
+      <div class="field">
+        <label for="sf-email">Email</label>
+        <input id="sf-email" name="email" type="email" required autocomplete="email" placeholder="you@yourbusiness.com">
+      </div>
+      <div class="field">
+        <label for="sf-business">Business name</label>
+        <input id="sf-business" name="business_name" type="text" required placeholder="What's your business called?">
+      </div>
+      <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <button type="submit" class="submit" id="sf-submit">Continue to payment →</button>
+      <div class="note">By continuing, you'll be sent to a secure checkout page. No charge yet.</div>
+      <div class="status" id="sf-status" role="status" aria-live="polite"></div>
+    </form>
+
+    <div class="alt-paths">
+      Prefer to talk first?
+      <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener">Book 15 min with Mike</a>
+      <span style="opacity:.4">·</span>
+      <a href="https://wa.me/573014047722" target="_blank" rel="noopener">WhatsApp Santiago</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div>Norte Sur Consulting S.A.S. · NIT 901.956.771-1 · Cámara de Comercio matrícula 21-817900-12</div>
+  <div class="legal">© 2026 Norte Sur Consulting S.A.S. · <a href="https://pymewebpro.com">pymewebpro.com</a></div>
+</footer>
+
+<script>
+(function(){
+  var PORTAL_URL = 'https://portal.pymewebpro.com';
+  var PLANS = {
+    esencial: { tag: 'Essential', name: 'The page', cad: '$500 CAD', cop: '$390.000 COP', dep_cad: '$150 CAD', dep_cop: '$117.000 COP' },
+    pro: { tag: 'Pro · Best value', name: 'The connected page', cad: '$800 CAD', cop: '$690.000 COP', dep_cad: '$240 CAD', dep_cop: '$207.000 COP' }
+  };
+
+  var params = new URLSearchParams(window.location.search);
+  var planKey = (params.get('plan') || 'esencial').toLowerCase();
+  if (!PLANS[planKey]) planKey = 'esencial';
+  var plan = PLANS[planKey];
+
+  var card = document.getElementById('plan-card');
+  document.getElementById('plan-tag').textContent = plan.tag;
+  document.getElementById('plan-name').textContent = plan.name;
+  document.getElementById('kicker').textContent = 'Starting your ' + plan.tag.split(' ')[0] + ' plan';
+
+  function renderPrice(isCO){
+    var price = isCO ? plan.cop : plan.cad;
+    var dep = isCO ? plan.dep_cop : plan.dep_cad;
+    document.getElementById('plan-price').innerHTML = price;
+    document.getElementById('plan-deposit').innerHTML = '<strong>30% deposit</strong> (' + dep + ') today, 70% on launch. <strong>30-day money-back guarantee.</strong>';
+    card.removeAttribute('hidden');
+  }
+
+  fetch('/cdn-cgi/trace').then(function(r){ return r.text(); }).then(function(t){
+    var m = t.match(/loc=([A-Z]{2})/);
+    renderPrice(m && m[1] === 'CO');
+  }).catch(function(){ renderPrice(false); });
+
+  var form = document.getElementById('start-form');
+  var submit = document.getElementById('sf-submit');
+  var status = document.getElementById('sf-status');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (form.company_website && form.company_website.value) return;
+    status.className = 'status';
+    status.textContent = '';
+    submit.disabled = true;
+    submit.textContent = 'Creating your build slot...';
+    var fd = new FormData(form);
+    var payload = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      business_name: fd.get('business_name'),
+      message: 'Wants the ' + plan.tag.split(' ')[0] + ' plan. Came from /start.',
+      language: 'en',
+      source: 'pymewebpro_start',
+      page: '/start/',
+      website: fd.get('company_website') || '',
+      extra: { plan: planKey, hosting: 'annual' }
+    };
+    fetch(PORTAL_URL + '/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, body: j }; }); })
+      .then(function(res){
+        if (res.ok && res.body && res.body.lead_id){
+          status.className = 'status ok';
+          status.textContent = 'Sending you to checkout...';
+          window.location = PORTAL_URL + '/c/' + res.body.lead_id;
+        } else {
+          status.className = 'status err';
+          status.textContent = (res.body && res.body.error) || 'Something went wrong. Try again, or WhatsApp Santiago.';
+          submit.disabled = false;
+          submit.textContent = 'Continue to payment →';
+        }
+      })
+      .catch(function(){
+        status.className = 'status err';
+        status.textContent = 'Network error. Try again, or WhatsApp Santiago.';
+        submit.disabled = false;
+        submit.textContent = 'Continue to payment →';
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
