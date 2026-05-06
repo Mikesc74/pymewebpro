@@ -76,7 +76,7 @@ const CSP = [
   // refactored to utility classes.
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data:",
+  "img-src 'self' data: https://images.pexels.com",
   "connect-src 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
