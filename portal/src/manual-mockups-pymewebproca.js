@@ -847,7 +847,7 @@ footer{background:var(--paper);padding:64px var(--gutter) 24px;border-top:1px so
 <section class="studio" id="studio">
   <div class="studio-grid">
     <div class="studio-text">
-      <span class="eyebrow"><span class="dot"></span><span class="ml-en">Two people, no agency</span><span class="ml-es">Dos personas, sin agencia</span></span>
+      <span class="eyebrow"><span class="dot"></span><span class="ml-en">No Agency Overhead</span><span class="ml-es">Sin sobrecosto de agencia</span></span>
       <h2 style="margin-top:20px"><span class="ml-en">Meet the people who'll <span class="accent">actually build it.</span></span><span class="ml-es">Conozca a las personas que <span class="accent">van a construirlo.</span></span></h2>
       <p class="lede">
         <span class="ml-en">PymeWebPro is <strong>just the two of us</strong>, both based in Medellín. Mike takes the English calls, Santiago takes the Spanish ones. The person who picks up your first call is the same person handing you the keys at launch. No account manager passing you down a chain, no junior learning on your project.</span>
