@@ -1437,31 +1437,34 @@ footer{background:var(--paper);padding:64px var(--gutter) 24px;border-top:1px so
   else { window.addEventListener('load', startGallery); }
 })();
 (function(){
-  // Header hide-on-scroll-down, show-on-scroll-up
+  // Header hide-on-scroll-down, show-on-scroll-up.
+  // lastY only updates when we cross a direction-change threshold so small
+  // jitters don't leave the state machine pointing at a stale baseline.
   var header = document.querySelector('.header');
   if(!header) return;
-  var lastY = window.pageYOffset || 0;
+  var lastY = window.pageYOffset || document.documentElement.scrollTop || 0;
   var ticking = false;
   var THRESHOLD = 80;
-  var DELTA = 6;
-  function onScroll(){
-    var y = window.pageYOffset || 0;
-    if (Math.abs(y - lastY) < DELTA) { ticking = false; return; }
+  var DELTA = 5;
+  function update(){
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
     if (y < THRESHOLD) {
       header.classList.remove('header--hidden');
       header.classList.remove('header--scrolled');
-    } else if (y > lastY) {
+      lastY = y;
+    } else if (y > lastY + DELTA) {
       header.classList.add('header--hidden');
       header.classList.add('header--scrolled');
-    } else {
+      lastY = y;
+    } else if (y < lastY - DELTA) {
       header.classList.remove('header--hidden');
       header.classList.add('header--scrolled');
+      lastY = y;
     }
-    lastY = y;
     ticking = false;
   }
   window.addEventListener('scroll', function(){
-    if (!ticking) { window.requestAnimationFrame(onScroll); ticking = true; }
+    if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
 })();
 </script>

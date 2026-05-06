@@ -25,6 +25,7 @@
 //   print(json.dumps(sorted(hashes), indent=2))"
 
 const SCRIPT_HASHES = [
+  "sha256-02queKA3G2JAM2xM0Ibk8bxUr/8OAMi9g/bik2vhTyQ=",
   "sha256-6gt3qBAc1TjJNlWg3bip8EBQD5AdnLnjWSHY/2uaX24=",
   "sha256-6o4RcIgyfc5UPTW6IkpOXoxUOCQ6pnCwwzHiShQn4PE=",
   "sha256-9GIHlcCxqhxCsTQ9GzaxQhDa6AAm5+gaYgcFwZ5X7tY=",
@@ -35,7 +36,6 @@ const SCRIPT_HASHES = [
   "sha256-IoVbTk5ntEIfUH5VZZvTsE/S+QSJ5WCQqrOhXdCnZds=",
   "sha256-Lwledmw/HilVT+zr3NN4vTeaIYtIsewLyyHbFMHF3cg=",
   "sha256-O7yTh7jvxYkTMyxoFvPbm3tGxDKQtZmGHJxCzjF2t2M=",
-  "sha256-QaOqQAfmxfpxHRtvX9IRq9/yyPyDC2ZwyyXPteunX2w=",
   "sha256-RC9oTX6XdtLsxQg7VV1XK2bkiN2/+7DglkP6sb+nGVw=",
   "sha256-RHdSg17RQrYS3zk8gb3aP97P5MNDX5J2W11vKAXBZns=",
   "sha256-TZZsp2Il/xsbOfsEXmqX5Pq6HNkx+6Rln8ciaXhGrb0=",
