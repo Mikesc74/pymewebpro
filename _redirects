@@ -9,3 +9,9 @@
 # in that case configure a Cloudflare zone-level Redirect Rule instead.
 https://www.pymewebpro.com/*  https://pymewebpro.com/:splat  301!
 http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
+
+# Legacy /en/ paths -> apex (English is now the default at /). 301 permanent.
+# /en/index.html still ships as a backup meta-refresh, but Cloudflare Pages
+# matches _redirects rules before serving the file, so the 301 wins.
+/en/*   /:splat   301
+/en     /         301

@@ -7,7 +7,8 @@
     "check:worker": "node --check src/index.js && node --check src/mockups.js && node --check src/manual-mockups.js && node --check src/manual-mockups-schedulator.js && node --check src/manual-mockups-blueskitchen.js && node --check src/manual-mockups-dagaparfum.js && node --check src/manual-mockups-bluewhale.js && node --check src/manual-mockups-espaciodental.js && node --check src/manual-mockups-pymewebproca.js && node --check src/manual-mockups-marena.js && node --check src/manual-mockups-start.js && node --check src/legal.js && node --check src/payments.js && node --check src/_archived/admin-chat.js && node --check src/_archived/auto-gen.js && node --check src/_archived/blueprint.js && node --check src/_archived/blueprint-saas.js && node --check src/_archived/blueprint-professional.js && echo '[check-worker] OK \u2014 worker source files parse cleanly'",
     "check:spa": "node scripts/check-spa.mjs",
     "check:standards": "node scripts/check-standards.mjs",
-    "check": "npm run check:worker && npm run check:spa && npm run check:standards",
+    "build:bilingual": "node ../scripts/build-bilingual.mjs",
+    "check": "npm run check:worker && npm run check:spa && npm run check:standards && npm run build:bilingual",
     "predeploy": "npm run check",
     "deploy": "wrangler deploy"
   },
