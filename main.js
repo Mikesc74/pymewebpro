@@ -217,8 +217,8 @@ function showFormError(f, data) {
     '<a href="https://wa.me/573014047722?text=' + msg + '" ' +
       'style="color:inherit;text-decoration:underline;font-weight:600" ' +
       'rel="noopener">WhatsApp +57 301 404 7722</a> · ' +
-    '<a href="mailto:ventas@pymewebpro.com" ' +
-      'style="color:inherit;text-decoration:underline;font-weight:600">ventas@pymewebpro.com</a>';
+    '<a href="mailto:hello@pymewebpro.com" ' +
+      'style="color:inherit;text-decoration:underline;font-weight:600">hello@pymewebpro.com</a>';
   banner.scrollIntoView({behavior: 'smooth', block: 'center'});
 }
 

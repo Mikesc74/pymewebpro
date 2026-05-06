@@ -9,11 +9,28 @@ export const pymewebproCaHtml = `
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PymeWebPro · Custom websites for SMBs · From $500 CAD or $390.000 COP · Built on Cloudflare</title>
-<meta name="description" content="Canadian-owned web studio building enterprise-grade custom sites for SMBs across North America and Latin America. Hand-built on Cloudflare, deployed in 48 hours, sub-1-second load times. Starting at $500 CAD or $390.000 COP. Based in Medellín, powered by Anthropic AI to deliver agency-quality work without the agency markup.">
+<title data-lang="en">PymeWebPro · Custom websites for SMBs · From $500 CAD · Built on Cloudflare</title>
+<title data-lang="es">PymeWebPro · Sitios web a la medida para pymes · Desde $390.000 COP · Construido en Cloudflare</title>
+<meta name="description" data-lang="en" content="Canadian-owned web studio building enterprise-grade custom sites for SMBs across North America. Hand-built on Cloudflare, deployed in 48 hours, sub-1-second load times. Starting at $500 CAD. Based in Medellín, powered by Anthropic AI to deliver agency-quality work without the agency markup.">
+<meta name="description" data-lang="es" content="Estudio web liderado por canadiense que construye sitios nivel enterprise para pymes en Latinoamérica. Hecho a mano en Cloudflare, desplegado en 48 horas, carga sub-segundo. Desde $390.000 COP. Basado en Medellín, impulsado por la IA de Anthropic para entregar trabajo nivel agencia sin el sobrecosto de agencia.">
 <meta name="theme-color" content="#0A0A0B">
-<meta property="og:title" content="PymeWebPro · Enterprise web studio at SMB pricing">
-<meta property="og:description" content="Custom sites for SMBs, from $500 CAD or $390.000 COP. Cloudflare hosted, sub-1s load, Lighthouse 100. Canadian-owned, Medellín-based, powered by Anthropic AI.">
+<meta property="og:title" data-lang="en" content="PymeWebPro · Enterprise web studio at SMB pricing">
+<meta property="og:title" data-lang="es" content="PymeWebPro · Estudio web nivel enterprise a precio de pyme">
+<meta property="og:description" data-lang="en" content="Custom sites for SMBs, from $500 CAD. Cloudflare hosted, sub-1s load, Lighthouse 100. Canadian-owned, Medellín-based, powered by Anthropic AI.">
+<meta property="og:description" data-lang="es" content="Sitios a la medida para pymes, desde $390.000 COP. Hosting en Cloudflare, carga sub-1s, Lighthouse 100. Liderazgo canadiense, base en Medellín, impulsado por la IA de Anthropic.">
+<meta property="og:locale" data-lang="en" content="en_CA">
+<meta property="og:locale" data-lang="es" content="es_CO">
+<meta property="og:image" content="https://pymewebpro.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" data-lang="en" content="PymeWebPro · Custom websites for SMBs · From $500 CAD">
+<meta property="og:image:alt" data-lang="es" content="PymeWebPro · Sitios web a la medida para pymes · Desde $390.000 COP">
+<meta property="og:url" data-lang="en" content="https://pymewebpro.com/">
+<meta property="og:url" data-lang="es" content="https://pymewebpro.com/es/">
+<meta name="twitter:image" content="https://pymewebpro.com/og-image.png">
+<link rel="alternate" hreflang="en" href="https://pymewebpro.com/">
+<link rel="alternate" hreflang="es" href="https://pymewebpro.com/es/">
+<link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"PymeWebPro","alternateName":"Norte Sur Consulting S.A.S.","url":"https://pymewebpro.com","email":"hello@pymewebpro.com","founder":{"@type":"Person","name":"Michael Chartrand"},"taxID":"901.956.771-1","address":[{"@type":"PostalAddress","addressLocality":"London","addressRegion":"Ontario","addressCountry":"CA"},{"@type":"PostalAddress","addressLocality":"Medellín","addressRegion":"Antioquia","addressCountry":"CO"}],"sameAs":["https://mockups.pymewebpro.com"]}</script>
@@ -684,8 +701,8 @@ body.nav-open{overflow:hidden}
         <a href="#faq"><span class="ml-en">FAQ</span><span class="ml-es">Preguntas</span></a>
       </div>
       <div class="lang-toggle" role="group" aria-label="Language">
-        <button data-l="en" type="button" aria-label="English">EN</button>
-        <button data-l="es" type="button" aria-label="Español">ES</button>
+        <a href="/" data-l="en" hreflang="en" aria-label="English">EN</a>
+        <a href="/es/" data-l="es" hreflang="es" aria-label="Español">ES</a>
       </div>
       <a href="#pricing" class="cta"><span class="ml-en">Buy now</span><span class="ml-es">Comprar</span> <span class="arrow">→</span></a>
     </nav>
@@ -709,8 +726,8 @@ body.nav-open{overflow:hidden}
   </div>
   <div class="nd-foot">
     <div class="lang-toggle" role="group" aria-label="Language">
-      <button data-l="en" type="button" aria-label="English">EN</button>
-      <button data-l="es" type="button" aria-label="Español">ES</button>
+      <a href="/" data-l="en" hreflang="en" aria-label="English">EN</a>
+      <a href="/es/" data-l="es" hreflang="es" aria-label="Español">ES</a>
     </div>
     <a href="#pricing" class="cta" data-nav-close><span class="ml-en">Buy now</span><span class="ml-es">Comprar</span> <span class="arrow">→</span></a>
   </div>
@@ -1072,7 +1089,7 @@ body.nav-open{overflow:hidden}
   <div class="container">
     <div class="section-head center">
       <span class="eyebrow"><span class="dot"></span><span class="ml-en">Recent Work</span><span class="ml-es">Trabajo reciente</span></span>
-      <h2><span class="ml-en">Five sites built in the last <span class="accent">30 days.</span></span><span class="ml-es">Cinco sitios construidos en los últimos <span class="accent">30 días.</span></span></h2>
+      <h2><span class="ml-en">Recent <span class="accent">work.</span></span><span class="ml-es">Trabajo <span class="accent">reciente.</span></span></h2>
       <p><span class="ml-en">A range of categories, all built on the same stack and process.</span><span class="ml-es">Variedad de sectores, todos construidos con la misma tecnología y proceso.</span></p>
     </div>
 
@@ -1303,7 +1320,7 @@ body.nav-open{overflow:hidden}
       <p><span class="ml-en">Canadian-led web studio building enterprise-grade sites for SMBs across North America and Latin America. Hand-crafted in Medellín, deployed on Cloudflare's global edge.</span><span class="ml-es">Estudio web liderado por canadiense que construye sitios nivel enterprise para pymes en Norteamérica y Latinoamérica. Hecho a mano en Medellín, desplegado en la red edge global de Cloudflare.</span></p>
       <div class="addr">
         <span class="ml-en">Norte Sur Consulting S.A.S.<br>NIT 901.956.771-1<br>hello@pymewebpro.com</span>
-        <span class="ml-es">Norte Sur Consulting S.A.S.<br>NIT 901.956.771-1<br>hola@pymewebpro.com</span>
+        <span class="ml-es">Norte Sur Consulting S.A.S.<br>NIT 901.956.771-1<br>hello@pymewebpro.com</span>
       </div>
     </div>
     <div class="foot-col">
@@ -1319,9 +1336,8 @@ body.nav-open{overflow:hidden}
     <div class="foot-col">
       <h5><span class="ml-en">Studio</span><span class="ml-es">Estudio</span></h5>
       <ul>
-        <li><a href="#honest"><span class="ml-en">About PymeWebPro</span><span class="ml-es">Acerca de PymeWebPro</span></a></li>
+        <li><a href="#pricing"><span class="ml-en">About PymeWebPro</span><span class="ml-es">Acerca de PymeWebPro</span></a></li>
         <li><a href="https://mockups.pymewebpro.com" target="_blank" rel="noopener"><span class="ml-en">Mockups gallery</span><span class="ml-es">Galería de mockups</span></a></li>
-        <li><a href="/recursos/"><span class="ml-en">Resources</span><span class="ml-es">Recursos</span></a></li>
         <li><a href="#cta-final"><span class="ml-en">Contact</span><span class="ml-es">Contacto</span></a></li>
       </ul>
     </div>
@@ -1386,30 +1402,9 @@ body.nav-open{overflow:hidden}
     applyGeo(m ? m[1] : 'XX');
   }).catch(function(){ applyGeo('XX'); });
 })();
-(function(){
-  var saved = localStorage.getItem('pwp-lang');
-  var browser = (navigator.language || 'en').slice(0,2).toLowerCase();
-  var lang = saved || (browser === 'es' ? 'es' : 'en');
-  document.documentElement.classList.remove('lang-en','lang-es');
-  document.documentElement.classList.add('lang-' + lang);
-  document.documentElement.lang = lang;
-  function syncLangButtons(l){
-    document.querySelectorAll('.lang-toggle button').forEach(function(x){
-      x.classList.toggle('on', x.getAttribute('data-l') === l);
-    });
-  }
-  syncLangButtons(lang);
-  document.querySelectorAll('.lang-toggle button').forEach(function(b){
-    b.addEventListener('click', function(){
-      var l = b.getAttribute('data-l');
-      document.documentElement.classList.remove('lang-en','lang-es');
-      document.documentElement.classList.add('lang-' + l);
-      document.documentElement.lang = l;
-      localStorage.setItem('pwp-lang', l);
-      syncLangButtons(l);
-    });
-  });
-})();
+/* lang toggle is now anchor-link based - see <a href="/" data-l="en"> in nav.
+   The build-bilingual.mjs script generates separate /index.html (EN) and /es/index.html (ES)
+   files at deploy time, so each URL has the correct <html lang>, <title>, meta, and DOM. */
 (function(){
   var body = document.body;
   var toggle = document.getElementById('navToggle');

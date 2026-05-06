@@ -6,7 +6,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /functions/
-Disallow: /hosting.html
 
 # Common AI crawlers — allow factual indexing, no special handling
 # (add Disallow rules per crawler here if policy changes)

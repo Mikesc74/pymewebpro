@@ -1,0 +1,5 @@
+Contact: mailto:hello@pymewebpro.com
+Expires: 2027-05-05T00:00:00.000Z
+Preferred-Languages: en, es
+Canonical: https://pymewebpro.com/.well-known/security.txt
+Policy: https://pymewebpro.com/politica-de-datos.html

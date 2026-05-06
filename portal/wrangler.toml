@@ -33,7 +33,7 @@ bucket_name = "pymewebpro-client-assets"
 [vars]
 APP_URL = "https://portal.pymewebpro.com"
 FROM_EMAIL = "PymeWebPro <noreply@pymewebpro.com>"
-ADMIN_EMAIL = "ventas@pymewebpro.com"
+ADMIN_EMAIL = "hello@pymewebpro.com"
 WHATSAPP_NUMBER = "+573014047722"
 
 # --- Secrets (NOT stored here — set via wrangler) -------------------------
