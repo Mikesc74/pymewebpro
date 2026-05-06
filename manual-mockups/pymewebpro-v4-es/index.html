@@ -142,6 +142,7 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .problem .card .tag{display:inline-flex;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .7rem;border-radius:999px;background:rgba(244,236,223,.1);color:#F4ECDF}
 .problem .card.good .tag{background:rgba(255,255,255,.18);color:#fff}
 .problem .card h3{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.02em;font-size:28px;margin:1rem 0 .5rem;line-height:1.1}
+.problem .card.good h3{text-decoration:underline;text-decoration-thickness:3px;text-decoration-color:rgba(255,255,255,.6);text-underline-offset:5px;text-decoration-skip-ink:auto}
 .problem .card p{font-size:16px;line-height:1.55;opacity:.92;margin:0 0 1.25rem}
 .problem .card ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem}
 .problem .card li{display:flex;gap:.7rem;font-size:15px;line-height:1.4;align-items:flex-start}
@@ -240,8 +241,6 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .offer .tier .actions{margin-top:auto;display:flex;flex-direction:column;gap:.5rem}
 html.geo-co .price-na{display:none}
 html:not(.geo-co) .price-co{display:none}
-html.geo-co .pay-na{display:none}
-html:not(.geo-co) .pay-co{display:none}
 
 .ask .panel{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
 @media (max-width:920px){.ask .panel{grid-template-columns:1fr}}
@@ -413,7 +412,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </div>
     </div>
     <blockquote>
-      "Un folleto se construyó para informar. Una página de ventas se construye para convertir. La mayoría de sitios web de pymes son folletos disfrazados de páginas de ventas, y la tasa de rebote lo demuestra en silencio."
+      "Un sitio web se construye para informar. Una página de ventas se construye para convertir. La mayoría de sitios web de pymes son folletos disfrazados de páginas de ventas, y la tasa de rebote lo demuestra en silencio."
       <cite>La tesis</cite>
     </blockquote>
   </div>
@@ -648,8 +647,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 año de hosting y soporte</span></li>
         </ul>
         <div class="actions">
-          <a class="btn btn-orange pay-na" href="https://wise.com/pay/r/rhZaZERQUcEuitY" target="_blank" rel="noopener">Pagar $150 de depósito →</a>
-          <a class="btn btn-orange pay-co" href="https://checkout.wompi.co/l/IjE5K4" target="_blank" rel="noopener">Pagar $117.000 de depósito →</a>
+          <button type="button" class="btn btn-orange" data-plan="esencial" data-tier-label="Essential">Elegir Essential →</button>
           <a class="btn btn-ghost-light" href="#ask">O, infórmese primero</a>
         </div>
       </div>
@@ -667,8 +665,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 año de hosting y soporte</span></li>
         </ul>
         <div class="actions">
-          <a class="btn btn-orange pay-na" href="https://wise.com/pay/r/rhZaZERQUcEuitY" target="_blank" rel="noopener">Pagar $240 de depósito →</a>
-          <a class="btn btn-orange pay-co" href="https://checkout.wompi.co/l/xzGeMX" target="_blank" rel="noopener">Pagar $207.000 de depósito →</a>
+          <button type="button" class="btn btn-orange" data-plan="pro" data-tier-label="Pro">Elegir Pro →</button>
           <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">O, infórmese primero</a>
         </div>
       </div>
@@ -701,6 +698,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <label for="lf-about">Cuéntenos sobre su negocio</label>
           <textarea id="lf-about" name="about" required placeholder="Qué hace, quién compra, qué no funciona, sitio web actual si tiene"></textarea>
         </div>
+        <input type="hidden" name="plan" id="lf-plan" value="">
         <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Enviar a Mike y Santiago →</button>
@@ -892,10 +890,24 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       else { document.documentElement.classList.add('geo-na'); }
     }).catch(function(){ document.documentElement.classList.add('geo-co'); });
   }
+  // Botones "Elegir <plan>": etiquetan el formulario con el plan y bajan al formulario.
+  var planField = document.getElementById('lf-plan');
+  document.querySelectorAll('button[data-plan]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var plan = btn.getAttribute('data-plan');
+      if(planField) planField.value = plan;
+      var ask = document.getElementById('ask');
+      if(ask) ask.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var nameInput = document.getElementById('lf-name');
+      if(nameInput) setTimeout(function(){ nameInput.focus(); }, 600);
+    });
+  });
+
   var form = document.getElementById('lead-form');
   if(!form) return;
   var status = document.getElementById('lf-status');
   var submit = document.getElementById('lf-submit');
+  var PORTAL_URL = 'https://portal.pymewebpro.com';
   form.addEventListener('submit', function(e){
     e.preventDefault();
     if(form.company_website && form.company_website.value){ return; }
@@ -903,17 +915,32 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
     status.textContent = '';
     submit.disabled = true;
     submit.textContent = 'Enviando...';
-    var data = new FormData(form);
-    fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
-      .then(function(r){
-        if(r.ok){
-          form.reset();
+    var fd = new FormData(form);
+    var payload = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      message: fd.get('about'),
+      language: 'es',
+      source: 'pymewebpro_v4',
+      page: window.location.pathname,
+      website: fd.get('company_website') || '',
+      extra: { plan: fd.get('plan') || '' }
+    };
+    fetch(PORTAL_URL + '/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, body: j }; }); })
+      .then(function(res){
+        if(res.ok && res.body && res.body.lead_id){
           status.className = 'form-status ok';
-          status.textContent = 'Recibido. Mike o Santiago responderán en un día hábil.';
+          status.textContent = 'Recibido. Lo enviamos al siguiente paso...';
           submit.textContent = 'Enviado ✓';
+          setTimeout(function(){ window.location = PORTAL_URL + '/c/' + res.body.lead_id; }, 600);
         } else {
           status.className = 'form-status err';
-          status.textContent = 'Algo salió mal. Intente de nuevo, o escriba a Santiago por WhatsApp.';
+          status.textContent = (res.body && res.body.error) || 'Algo salió mal. Intente de nuevo, o escriba a Santiago por WhatsApp.';
           submit.disabled = false;
           submit.textContent = 'Enviar a Mike y Santiago →';
         }

@@ -25,13 +25,14 @@
 //   print(json.dumps(sorted(hashes), indent=2))"
 
 const SCRIPT_HASHES = [
-  "sha256-/95LIAfFmdCzp1l/YmAN4XjSE9WYw68BnhiXSSck2Qo=",
   "sha256-6gt3qBAc1TjJNlWg3bip8EBQD5AdnLnjWSHY/2uaX24=",
   "sha256-6o4RcIgyfc5UPTW6IkpOXoxUOCQ6pnCwwzHiShQn4PE=",
+  "sha256-8kaNj7w6WG9Lfg2Ifn9TyvzCl4SkU8AL07kM+hWBGvA=",
   "sha256-8nP8stg0/PnKrHXiuHJtI92CNeUBM/vG28NlI03jKJc=",
   "sha256-9GIHlcCxqhxCsTQ9GzaxQhDa6AAm5+gaYgcFwZ5X7tY=",
   "sha256-DTY8VSHnG/qMD7S4tIseAdV0uAks0yoNDf6elKFtFcA=",
   "sha256-DYDqBiY2eQmiAdcVr/lhPyPlfdxjcR5kotO/GOGpwd0=",
+  "sha256-DguERnf4DiEmVra5Q6v4hTlROhQYe6e+V335jqSfmzc=",
   "sha256-EHFj0jeeky9W2Ei6oF3Fg7F3imE7aI+9vxXhuK8EGOo=",
   "sha256-I4ODCvCv2kH4C8QMonIRib3emcwyO69XGYW2HMXAJko=",
   "sha256-IoVbTk5ntEIfUH5VZZvTsE/S+QSJ5WCQqrOhXdCnZds=",
@@ -43,7 +44,6 @@ const SCRIPT_HASHES = [
   "sha256-TfY2ErKfpmqjgjSfu2REipjwge7kCqO/ufFpisrPah4=",
   "sha256-VaWy8PtS6N9pwz8EXxXLzNe4nslRvZ733mSrtMxHpkI=",
   "sha256-Y4PVBUaXvX8m58rzZS3JCff033KFVV7zy1ZAjl1jiLs=",
-  "sha256-YpmdW1Z5bRGWnwA6lWVeZ9wyB2/946gO/4H4FDws1dg=",
   "sha256-YxZU7wsEBfSpa5yK72Z5vHv4nqsp1row70HzkPdrmrc=",
   "sha256-altb7fLp1/RpkV4r8roH4lTA8ORqjHv5NheEktPcFPU=",
   "sha256-bB3ycjISsXJKFpaVaGQuniFPsjitCvia9HK5+R3hjO0=",
@@ -78,7 +78,7 @@ const CSP = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https://images.pexels.com",
-  "connect-src 'self'",
+  "connect-src 'self' https://portal.pymewebpro.com",
   "form-action 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",

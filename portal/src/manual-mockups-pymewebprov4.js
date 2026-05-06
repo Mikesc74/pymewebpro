@@ -154,6 +154,7 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .problem .card .tag{display:inline-flex;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .7rem;border-radius:999px;background:rgba(244,236,223,.1);color:#F4ECDF}
 .problem .card.good .tag{background:rgba(255,255,255,.18);color:#fff}
 .problem .card h3{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.02em;font-size:28px;margin:1rem 0 .5rem;line-height:1.1}
+.problem .card.good h3{text-decoration:underline;text-decoration-thickness:3px;text-decoration-color:rgba(255,255,255,.6);text-underline-offset:5px;text-decoration-skip-ink:auto}
 .problem .card p{font-size:16px;line-height:1.55;opacity:.92;margin:0 0 1.25rem}
 .problem .card ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem}
 .problem .card li{display:flex;gap:.7rem;font-size:15px;line-height:1.4;align-items:flex-start}
@@ -214,6 +215,18 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .proof .quote .who{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(27,20,16,.08);padding-top:1rem;font-size:13.5px}
 .proof .quote .who .name{font-weight:700;color:#1B1410}
 .proof .quote .who .role-line{color:#7A4828}
+.proof .builds{margin-bottom:36px}
+.proof .builds-label{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7A4828;margin:0 0 18px}
+.proof .builds-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+@media (max-width:980px){.proof .builds-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.proof .builds-grid{grid-template-columns:repeat(2,1fr)}}
+.proof .build{display:block;text-decoration:none;color:inherit;transition:transform .15s}
+.proof .build:hover{transform:translateY(-2px)}
+.proof .build-shot{aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#fff;border:1px solid rgba(27,20,16,.08);margin-bottom:8px;box-shadow:0 4px 12px -6px rgba(27,20,16,.12);transition:box-shadow .15s}
+.proof .build-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.proof .build:hover .build-shot{box-shadow:0 14px 28px -10px rgba(27,20,16,.22)}
+.proof .build-name{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:13.5px;color:#1B1410;line-height:1.2;margin-bottom:2px}
+.proof .build-tag{font-size:11.5px;color:#7A4828;font-weight:600;line-height:1.3}
 .proof .receipts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:#1B1410;border-radius:18px;padding:30px;color:#F4ECDF}
 @media (max-width:820px){.proof .receipts{grid-template-columns:repeat(2,1fr);gap:24px}}
 .proof .receipt .num{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:36px;color:#FF5C2E;line-height:1;margin-bottom:.3rem}
@@ -243,8 +256,6 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .offer .tier .actions{margin-top:auto;display:flex;flex-direction:column;gap:.5rem}
 html.geo-co .price-na{display:none}
 html:not(.geo-co) .price-co{display:none}
-html.geo-co .pay-na{display:none}
-html:not(.geo-co) .pay-co{display:none}
 
 /* CHAPTER 06 / Ask */
 .ask .panel{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
@@ -423,7 +434,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </div>
     </div>
     <blockquote>
-      "A brochure was built to inform. A marketing page is built to convert. Most small business websites are brochures pretending to be marketing pages, and the bounce rate quietly proves it."
+      "A website is built to inform. A marketing page is built to convert. Most small business websites are brochures pretending to be marketing pages, and the bounce rate quietly proves it."
       <cite>The thesis</cite>
     </blockquote>
   </div>
@@ -555,6 +566,41 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         </div>
       </div>
     </div>
+    <div class="builds">
+      <h4 class="builds-label">Live builds you can click through</h4>
+      <div class="builds-grid">
+        <a class="build" href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">
+          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/schedulator.jpg" alt="The Schedulator marketing page" loading="lazy"></div>
+          <div class="build-name">The Schedulator</div>
+          <div class="build-tag">Client · B2B SaaS</div>
+        </a>
+        <a class="build" href="https://mockups.pymewebpro.com/blue-whale-international/" target="_blank" rel="noopener">
+          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/blue-whale-international.jpg" alt="Blue Whale International marketing page" loading="lazy"></div>
+          <div class="build-name">Blue Whale</div>
+          <div class="build-tag">Client · Recruiting</div>
+        </a>
+        <a class="build" href="https://mockups.pymewebpro.com/marena/" target="_blank" rel="noopener">
+          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/marena.jpg" alt="Marena marketing page" loading="lazy"></div>
+          <div class="build-name">Marena</div>
+          <div class="build-tag">Concept · Fashion retail</div>
+        </a>
+        <a class="build" href="https://mockups.pymewebpro.com/espacio-dental/" target="_blank" rel="noopener">
+          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/espacio-dental.jpg" alt="Espacio Dental marketing page" loading="lazy"></div>
+          <div class="build-name">Espacio Dental</div>
+          <div class="build-tag">Concept · Dental clinic</div>
+        </a>
+        <a class="build" href="https://mockups.pymewebpro.com/daga-parfum/" target="_blank" rel="noopener">
+          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/daga-parfum.jpg" alt="Daga Parfum marketing page" loading="lazy"></div>
+          <div class="build-name">Daga Parfum</div>
+          <div class="build-tag">Concept · Perfume</div>
+        </a>
+        <a class="build" href="https://mockups.pymewebpro.com/blues-kitchen/" target="_blank" rel="noopener">
+          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/blues-kitchen.jpg" alt="Blues Kitchen marketing page" loading="lazy"></div>
+          <div class="build-name">Blues Kitchen</div>
+          <div class="build-tag">Concept · Wedding venue</div>
+        </a>
+      </div>
+    </div>
     <div class="receipts">
       <div class="receipt"><div class="num">100</div><div class="label">Perfect Google Lighthouse score · top marks for speed, accessibility, SEO and best practices.</div></div>
       <div class="receipt"><div class="num">&lt;0.9s</div><div class="label">Page becomes useful in under one second. Industry average is around four.</div></div>
@@ -629,8 +675,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 year of hosting and support</span></li>
         </ul>
         <div class="actions">
-          <a class="btn btn-orange pay-na" href="https://wise.com/pay/r/rhZaZERQUcEuitY" target="_blank" rel="noopener">Pay $150 deposit and start →</a>
-          <a class="btn btn-orange pay-co" href="https://checkout.wompi.co/l/IjE5K4" target="_blank" rel="noopener">Pay $117.000 deposit and start →</a>
+          <button type="button" class="btn btn-orange" data-plan="esencial" data-tier-label="Essential">Choose Essential →</button>
           <a class="btn btn-ghost-light" href="#ask">Or, get more info first</a>
         </div>
       </div>
@@ -648,8 +693,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 year of hosting and support</span></li>
         </ul>
         <div class="actions">
-          <a class="btn btn-orange pay-na" href="https://wise.com/pay/r/rhZaZERQUcEuitY" target="_blank" rel="noopener">Pay $240 deposit and start →</a>
-          <a class="btn btn-orange pay-co" href="https://checkout.wompi.co/l/xzGeMX" target="_blank" rel="noopener">Pay $207.000 deposit and start →</a>
+          <button type="button" class="btn btn-orange" data-plan="pro" data-tier-label="Pro">Choose Pro →</button>
           <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">Or, get more info first</a>
         </div>
       </div>
@@ -684,6 +728,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <label for="lf-about">Tell us about your business</label>
           <textarea id="lf-about" name="about" required placeholder="What you do, who buys, what isn't working, current website if you have one"></textarea>
         </div>
+        <input type="hidden" name="plan" id="lf-plan" value="">
         <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Send to Mike and Santiago →</button>
@@ -876,10 +921,24 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       else { document.documentElement.classList.add('geo-na'); }
     }).catch(function(){ document.documentElement.classList.add('geo-na'); });
   }
+  // "Choose <plan>" buttons in pricing: tag the form with the plan, scroll to form.
+  var planField = document.getElementById('lf-plan');
+  document.querySelectorAll('button[data-plan]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var plan = btn.getAttribute('data-plan');
+      if(planField) planField.value = plan;
+      var ask = document.getElementById('ask');
+      if(ask) ask.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var nameInput = document.getElementById('lf-name');
+      if(nameInput) setTimeout(function(){ nameInput.focus(); }, 600);
+    });
+  });
+
   var form = document.getElementById('lead-form');
   if(!form) return;
   var status = document.getElementById('lf-status');
   var submit = document.getElementById('lf-submit');
+  var PORTAL_URL = 'https://portal.pymewebpro.com';
   form.addEventListener('submit', function(e){
     e.preventDefault();
     if(form.company_website && form.company_website.value){ return; }
@@ -887,17 +946,32 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
     status.textContent = '';
     submit.disabled = true;
     submit.textContent = 'Sending...';
-    var data = new FormData(form);
-    fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
-      .then(function(r){
-        if(r.ok){
-          form.reset();
+    var fd = new FormData(form);
+    var payload = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      message: fd.get('about'),
+      language: 'en',
+      source: 'pymewebpro_v4',
+      page: window.location.pathname,
+      website: fd.get('company_website') || '',
+      extra: { plan: fd.get('plan') || '' }
+    };
+    fetch(PORTAL_URL + '/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, body: j }; }); })
+      .then(function(res){
+        if(res.ok && res.body && res.body.lead_id){
           status.className = 'form-status ok';
-          status.textContent = 'Got it. Mike or Santiago will reply within one business day.';
+          status.textContent = 'Got it. Sending you to the next step...';
           submit.textContent = 'Sent ✓';
+          setTimeout(function(){ window.location = PORTAL_URL + '/c/' + res.body.lead_id; }, 600);
         } else {
           status.className = 'form-status err';
-          status.textContent = 'Something went wrong. Try again, or WhatsApp Santiago.';
+          status.textContent = (res.body && res.body.error) || 'Something went wrong. Try again, or WhatsApp Santiago.';
           submit.disabled = false;
           submit.textContent = 'Send to Mike and Santiago →';
         }
