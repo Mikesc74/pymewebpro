@@ -38,16 +38,30 @@ function cors(response) {
   return withSecurityHeaders(new Response(response.body, { status: response.status, headers }));
 }
 // Apply baseline security headers to every Worker response.
-// HSTS preload directives match the apex (_headers on Cloudflare Pages) so that
-// mockups.pymewebpro.com, portal.pymewebpro.com, and *.sites.pymewebpro.com
-// emit the same protection regardless of which subdomain a fresh visitor lands on first.
-function withSecurityHeaders(response) {
+// Mirrors the apex Cloudflare Pages config (_headers) so mockups.pymewebpro.com,
+// portal.pymewebpro.com, and *.sites.pymewebpro.com emit the same protection
+// regardless of which subdomain a fresh visitor lands on first.
+function withSecurityHeaders(response, opts = {}) {
   const headers = new Headers(response.headers);
+  const isHtml = (headers.get("Content-Type") || "").toLowerCase().startsWith("text/html");
+
   if (!headers.has("Strict-Transport-Security")) {
     headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
   }
   if (!headers.has("X-Content-Type-Options")) headers.set("X-Content-Type-Options", "nosniff");
   if (!headers.has("Referrer-Policy")) headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  if (!headers.has("Permissions-Policy")) {
+    headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=(), browsing-topics=()");
+  }
+  if (!headers.has("Cross-Origin-Opener-Policy")) headers.set("Cross-Origin-Opener-Policy", "same-origin");
+  if (!headers.has("Cross-Origin-Resource-Policy")) headers.set("Cross-Origin-Resource-Policy", "same-origin");
+
+  // Strip ACAO from HTML responses — CORS is for API calls, not pages.
+  if (isHtml && headers.get("Access-Control-Allow-Origin") === "*") {
+    headers.delete("Access-Control-Allow-Origin");
+    headers.delete("Access-Control-Allow-Methods");
+    headers.delete("Access-Control-Allow-Headers");
+  }
   // X-Frame-Options is path-specific (admin SPA may iframe project portals); leave unset by default.
   return new Response(response.body, { status: response.status, headers });
 }

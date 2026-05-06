@@ -15,3 +15,6 @@ http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
 # matches _redirects rules before serving the file, so the 301 wins.
 /en/*   /:splat   301
 /en     /         301
+
+# /hosting (no .html) -> /hosting.html canonical. 301 permanent.
+/hosting   /hosting.html   301
