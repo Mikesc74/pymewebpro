@@ -50,7 +50,8 @@
 {"@type":"Question","name":"¿En qué se diferencia de Wix o Squarespace?","acceptedAnswer":{"@type":"Answer","text":"Wix le vende un constructor de folletos. Nosotros le construimos un vendedor. Hecho a la medida sin plantilla, carga sub-1-segundo, escrita para convertir, completamente suya."}},
 {"@type":"Question","name":"¿Garantizan leads?","acceptedAnswer":{"@type":"Answer","text":"No. No podemos prometer tráfico (eso es su publicidad, su SEO, sus canales) ni podemos prometer conversiones (eso depende de la calidad del tráfico y el ajuste de la oferta, cosas que no controlamos). Lo que prometemos es la página en sí: estructura clara, carga rápida, formulario que funciona, escrita para convertir. La garantía de devolución a 30 días cubre su satisfacción con el trabajo."}},
 {"@type":"Question","name":"¿Quién la construye realmente?","acceptedAnswer":{"@type":"Answer","text":"Mike y Santiago manejan el trabajo. Claude de Anthropic hace el diseño y el código bajo nuestra supervisión. Por eso $500 compra lo que antes costaba $5.000."}},
-{"@type":"Question","name":"¿Y si no me gusta?","acceptedAnswer":{"@type":"Answer","text":"Garantía de devolución a 30 días. Si la página no le funciona, le devolvemos cada peso."}}
+{"@type":"Question","name":"¿Y si no me gusta?","acceptedAnswer":{"@type":"Answer","text":"Garantía de devolución a 30 días. Si la página no le funciona, le devolvemos cada peso."}},
+{"@type":"Question","name":"¿Necesito comprar un dominio?","acceptedAnswer":{"@type":"Answer","text":"Sí. Después de pagar, lo acompañamos dentro del portal. Si ya tiene un dominio, lo conectamos. Si no, le indicamos Cloudflare Registrar o Namecheap (alrededor de $50.000 COP al año, a veces menos con nuestro link de referido), lo ayudamos a comprarlo en 5 minutos y manejamos toda la configuración técnica (zona en Cloudflare, registros DNS, certificado SSL) por nuestra cuenta. El dominio siempre se registra a su nombre, nunca al nuestro."}}
 ]}
 </script>
 
@@ -182,6 +183,11 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .solution .founder .avatar{width:96px;height:96px;border-radius:50%;background:#FF5C2E;display:grid;place-items:center;color:#FBF7F0;font-weight:800;font-size:32px;flex-shrink:0;overflow:hidden;font-family:'Inter Tight',sans-serif;box-shadow:0 8px 22px -10px rgba(27,20,16,.25);border:3px solid #fff}
 .solution .founder .avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .solution .founder h4{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:18px;margin:0 0 .15rem;color:#1B1410}
+.solution .founder .name-row{display:flex;align-items:center;gap:8px;margin:0 0 .15rem}
+.solution .founder .name-row h4{margin:0}
+.solution .founder .li-link{color:#0A66C2;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:3px;transition:opacity .15s,transform .15s;flex-shrink:0;opacity:.7}
+.solution .founder .li-link:hover{opacity:1;transform:translateY(-1px)}
+.solution .founder .li-link svg{width:18px;height:18px;display:block}
 .solution .founder .role{font-size:13.5px;color:#7A4828;font-weight:600;margin-bottom:.55rem}
 .solution .founder .pill{display:inline-flex;align-items:center;gap:.4rem;font-size:13px;font-weight:700;background:#1B1410;color:#FBF7F0;padding:.4rem .75rem;border-radius:999px}
 .solution .founder.right .pill{background:#FF5C2E}
@@ -195,8 +201,20 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 
 .proof .quotes{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:36px}
 @media (max-width:820px){.proof .quotes{grid-template-columns:1fr}}
-.proof .quote{background:#fff;border-radius:18px;padding:30px;border:1px solid rgba(27,20,16,.07)}
+.proof .quote{background:#fff;border-radius:18px;padding:30px;border:1px solid rgba(27,20,16,.07);position:relative}
 .proof .quote .mark{font-family:'Fraunces',serif;font-style:italic;font-size:60px;color:#FF5C2E;line-height:.5;margin-bottom:.8rem}
+.proof .quote.has-video .mark{display:none}
+.proof .quote .vid-avatar{display:inline-flex;padding:0;border:0;background:transparent;cursor:pointer;position:relative;width:68px;height:68px;border-radius:50%;overflow:hidden;margin-bottom:16px;box-shadow:0 6px 18px -6px rgba(27,20,16,.28),0 0 0 3px #fff,0 0 0 4px rgba(255,92,46,.45);transition:transform .15s,box-shadow .15s}
+.proof .quote .vid-avatar:hover{transform:scale(1.05)}
+.proof .quote .vid-avatar:hover .play-icon{opacity:1}
+.proof .quote .vid-avatar video{width:100%;height:100%;object-fit:cover;display:block;background:#fff}
+.proof .quote .vid-avatar .play-icon{position:absolute;inset:0;display:grid;place-items:center;background:rgba(27,20,16,.45);color:#fff;font-size:20px;opacity:0;transition:opacity .15s;border-radius:50%}
+.proof .quote .vid-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FF5C2E;margin-left:10px;vertical-align:8px}
+.vid-modal{border:0;background:transparent;padding:0;max-width:min(720px,92vw);width:100%;max-height:92vh;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.65)}
+.vid-modal::backdrop{background:rgba(20,15,12,.78);backdrop-filter:blur(4px)}
+.vid-modal video{width:100%;height:auto;display:block;background:#000}
+.vid-modal .close{position:absolute;top:12px;right:12px;z-index:2;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:0;font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .15s}
+.vid-modal .close:hover{background:rgba(0,0,0,.8)}
 .proof .quote p{font-size:17px;line-height:1.55;color:#1B1410;margin:0 0 1.25rem}
 .proof .quote .who{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:1px solid rgba(27,20,16,.08);padding-top:1rem;font-size:13.5px}
 .proof .quote .who .name{font-weight:700;color:#1B1410}
@@ -288,6 +306,10 @@ footer.site h5{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:13
 footer.site ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem}
 footer.site a:hover{color:#FBF7F0}
 footer.site .legal-block{font-size:13px;color:#7A6957;line-height:1.55}
+footer.site .socials{display:inline-flex;gap:8px;margin-top:14px}
+footer.site .socials a{color:#A89788;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:rgba(244,236,223,.06);transition:color .15s,background .15s,transform .15s}
+footer.site .socials a:hover{color:#FBF7F0;background:rgba(244,236,223,.12);transform:translateY(-1px)}
+footer.site .socials svg{width:16px;height:16px}
 footer.site .locations{display:flex;justify-content:center;gap:80px;margin:32px 0 28px;flex-wrap:wrap;text-align:center}
 @media (max-width:560px){footer.site .locations{gap:24px}}
 footer.site .loc h6{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#FBF7F0;margin:0 0 .3rem}
@@ -469,7 +491,12 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       <div class="founder">
         <div class="avatar"><img src="./mike.jpg" alt="Mike Chartrand" loading="lazy" onerror="this.parentNode.textContent='MC'"></div>
         <div>
-          <h4>Mike Chartrand</h4>
+          <div class="name-row">
+            <h4>Mike Chartrand</h4>
+            <a class="li-link" href="https://www.linkedin.com/in/mikechartrand/" target="_blank" rel="noopener" aria-label="Mike Chartrand en LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+            </a>
+          </div>
           <div class="role">Cofundador canadiense · gestiona las construcciones</div>
           <a class="pill" href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener">Agendar llamada de 15 min →</a>
         </div>
@@ -477,7 +504,12 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       <div class="founder right">
         <div class="avatar"><img src="./santiago.jpg" alt="Santiago Santos" loading="lazy" onerror="this.parentNode.textContent='SS'"></div>
         <div>
-          <h4>Santiago Santos</h4>
+          <div class="name-row">
+            <h4>Santiago Santos</h4>
+            <a class="li-link" href="https://linkedin.com/in/REPLACE_WITH_SANTIAGO_HANDLE" target="_blank" rel="noopener" aria-label="Santiago Santos en LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+            </a>
+          </div>
           <div class="role">Cofundador colombiano · gestiona las cuentas</div>
           <a class="pill" href="https://wa.me/573014047722" target="_blank" rel="noopener">WhatsApp Santiago →</a>
         </div>
@@ -516,9 +548,17 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </div>
     </div>
     <div class="quotes">
-      <div class="quote">
+      <div class="quote has-video">
         <div class="mark">"</div>
-        <p>Soy profesor de educación física de primaria y construí un SaaS para administradores escolares. Necesitaba un sitio que no se viera como otra plantilla de Stripe. <strong>Mike entendió el brief en la primera llamada y lanzó un v1 pulido en 48 horas.</strong> La mitad del precio de una agencia, entrega más rápida, y código fuente que me podía llevar.</p>
+        <button class="vid-avatar" type="button" data-vid="patrick-vid-modal" aria-label="Ver el testimonio en video de Patrick">
+          <video autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+            <source src="/screenshots/patrick-circle.webm" type="video/webm">
+            <source src="/screenshots/patrick-circle.mp4" type="video/mp4">
+          </video>
+          <span class="play-icon" aria-hidden="true">▶</span>
+        </button>
+        <span class="vid-badge">Testimonio en video</span>
+        <p>I'm former elementary PE teacher who made an SaaS web app to help my school with yearly scheduling. My school has used the app for years but I never had proper landing page to turn it into a small business. <strong>Mike was able to take extensive information about the product and turn it into a clean, modern, and detailed landing page in less than 48 hours.</strong> And I got the source code so I can incorporate it into my existing web presence and maintain it moving forward. I highly recommend his services!</p>
         <div class="who">
           <div>
             <div class="name">Patrick Detzner</div>
@@ -772,6 +812,10 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <div class="answer">Manténgalo. Una página de ventas es la página a la que apunta sus anuncios. Cuando corre una campaña en Google Ads, Meta Ads o LinkedIn, está pagando entre $2 y $10 por clic. Mandar esos clics a una página de inicio con cinco pestañas y sin siguiente paso claro desperdicia el gasto. Mandarlos a una página de ventas construida para convertir es lo que hace que la matemática del anuncio funcione. La misma lógica aplica para posts en redes, campañas de correo, códigos QR en un flyer y boca a boca: es la página a la que apunta el tráfico cuando quiere que convierta. Su sitio existente sigue haciendo su trabajo (informar). La página de ventas hace el nuevo (vender).</div>
       </details>
       <details>
+        <summary>¿Necesito comprar un dominio?</summary>
+        <div class="answer">Sí. Después de pagar, lo acompañamos dentro del portal. Si ya tiene un dominio, lo conectamos. Si no, le indicamos Cloudflare Registrar o <a href="REPLACE_WITH_NAMECHEAP_REFERRAL_URL" target="_blank" rel="noopener">Namecheap (link de referido)</a> (alrededor de $50.000 COP al año, a veces menos con nuestro referido), lo ayudamos a comprarlo en 5 minutos y manejamos toda la configuración técnica (zona en Cloudflare, registros DNS, certificado SSL) por nuestra cuenta. El dominio siempre se registra a su nombre, nunca al nuestro, así puede llevárselo a donde quiera si alguna vez se va.</div>
+      </details>
+      <details>
         <summary>¿Quién la construye realmente?</summary>
         <div class="answer">Mike y Santiago manejan el trabajo. Claude de Anthropic hace el diseño y el código bajo nuestra supervisión. No lo escondemos, estamos orgullosos. Por eso <span class="price-na">$500 compra lo que antes costaba $5.000</span><span class="price-co">$390.000 compra lo que antes costaba $3.900.000</span>.</div>
       </details>
@@ -793,6 +837,14 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
 
 </main>
 
+<dialog class="vid-modal" id="patrick-vid-modal" aria-label="Testimonio en video de Patrick Detzner">
+  <button type="button" class="close" data-close-vid aria-label="Cerrar video">×</button>
+  <video controls preload="metadata" playsinline>
+    <source src="/screenshots/patrick-full.mp4" type="video/mp4">
+    Su navegador no soporta reproducción de video.
+  </video>
+</dialog>
+
 <footer class="site">
   <div class="wrap">
     <div class="top">
@@ -801,6 +853,14 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <span class="br" style="color:#7A6957">&lt;</span><span class="word" style="color:#FBF7F0">pyme<span class="web">web</span>pro</span><span class="br" style="color:#7A6957">/&gt;</span>
         </a>
         <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los reyes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>. Liderazgo canadiense, hecho en Medellín.</p>
+        <div class="socials">
+          <a href="https://www.facebook.com/pymewebpro" target="_blank" rel="noopener" aria-label="PymeWebPro en Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/pymewebpro/" target="_blank" rel="noopener" aria-label="PymeWebPro en Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07c-1.28.06-2.15.26-2.91.55-.79.31-1.46.72-2.13 1.39C1.34 2.68.93 3.35.62 4.14c-.29.76-.49 1.63-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.28.26 2.15.55 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.29 1.63.49 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.28-.06 2.15-.26 2.91-.55.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.29-.76.49-1.63.55-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.28-.26-2.15-.55-2.91-.31-.79-.72-1.46-1.39-2.13C21.32 1.34 20.65.93 19.86.62c-.76-.29-1.63-.49-2.91-.55C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 005.84 12 6.16 6.16 0 0012 18.16 6.16 6.16 0 0018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+          </a>
+        </div>
       </div>
       <div>
         <h5>Capítulos</h5>
@@ -885,6 +945,37 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
   }
   if (document.readyState === 'complete') { startCarousel(); }
   else { window.addEventListener('load', startCarousel); }
+})();
+(function(){
+  // Testimonio en video: clic en el avatar circular -> abre modal con audio.
+  document.querySelectorAll('button[data-vid]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = btn.getAttribute('data-vid');
+      var dlg = document.getElementById(id);
+      if(!dlg) return;
+      var v = dlg.querySelector('video');
+      if(typeof dlg.showModal === 'function'){ dlg.showModal(); } else { dlg.setAttribute('open',''); }
+      if(v){ try { v.currentTime = 0; v.play(); } catch(e){} }
+    });
+  });
+  document.querySelectorAll('[data-close-vid]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var dlg = btn.closest('dialog');
+      if(!dlg) return;
+      var v = dlg.querySelector('video');
+      if(v){ v.pause(); }
+      if(typeof dlg.close === 'function'){ dlg.close(); } else { dlg.removeAttribute('open'); }
+    });
+  });
+  document.querySelectorAll('dialog.vid-modal').forEach(function(dlg){
+    dlg.addEventListener('click', function(e){
+      if(e.target === dlg){
+        var v = dlg.querySelector('video');
+        if(v){ v.pause(); }
+        if(typeof dlg.close === 'function'){ dlg.close(); } else { dlg.removeAttribute('open'); }
+      }
+    });
+  });
 })();
 (function(){
   if(!document.documentElement.classList.contains('geo-co') && !document.documentElement.classList.contains('geo-na')){

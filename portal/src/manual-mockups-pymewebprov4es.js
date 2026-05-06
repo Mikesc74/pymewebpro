@@ -204,9 +204,13 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .proof .quote{background:#fff;border-radius:18px;padding:30px;border:1px solid rgba(27,20,16,.07)}
 .proof .quote .mark{font-family:'Fraunces',serif;font-style:italic;font-size:60px;color:#FF5C2E;line-height:.5;margin-bottom:.8rem}
 .proof .quote p{font-size:17px;line-height:1.55;color:#1B1410;margin:0 0 1.25rem}
-.proof .quote .who{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(27,20,16,.08);padding-top:1rem;font-size:13.5px}
+.proof .quote .who{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:1px solid rgba(27,20,16,.08);padding-top:1rem;font-size:13.5px}
 .proof .quote .who .name{font-weight:700;color:#1B1410}
 .proof .quote .who .role-line{color:#7A4828}
+.proof .quote .gstars{display:inline-flex;flex-direction:column;align-items:flex-end;gap:2px;text-decoration:none;color:inherit;transition:opacity .15s;flex-shrink:0}
+.proof .quote .gstars:hover{opacity:.78}
+.proof .quote .gstars .row{color:#FF5C2E;font-size:15px;letter-spacing:1px;line-height:1}
+.proof .quote .gstars .src{font-size:11px;color:#7A4828;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .proof .builds{margin-bottom:36px}
 .proof .builds-label{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7A4828;margin:0 0 18px}
 .proof .builds-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
@@ -354,13 +358,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <div class="cta-row">
           <a class="btn btn-orange" href="#ask">Cuéntenos sobre su negocio</a>
           <a class="btn btn-ghost" href="#offer">Ver precios</a>
-        </div>
-        <div class="micro">
-          <span><span class="ok">✓</span> En línea en 48 horas</span>
-          <span class="dot">·</span>
-          <span><span class="ok">✓</span> Garantía de 30 días</span>
-          <span class="dot">·</span>
-          <span><span class="ok">✓</span> Usted es dueño del código</span>
         </div>
       </div>
       <div class="anatomy-card" aria-label="Anatomía de esta página">
@@ -533,16 +530,24 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
             <div class="name">Patrick Detzner</div>
             <div class="role-line">Fundador · The Schedulator</div>
           </div>
+          <a class="gstars" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="5 estrellas en Google, ver reseña">
+            <span class="row" aria-hidden="true">★★★★★</span>
+            <span class="src">Ver en Google →</span>
+          </a>
         </div>
       </div>
       <div class="quote">
         <div class="mark">"</div>
-        <p><strong>Súper contento con el producto final</strong> de Mike y el equipo de PymeWebPro. El proceso fue directo y rápido. Entendieron exactamente lo que necesitaba y entregaron un sitio limpio y profesional en un par de días. Muy recomendados.</p>
+        <p>Amazing, la página está una chimba!!! <strong>Super Happy with the final producto of Mike</strong>, we did this really fast, it's amazing how Mike do it! Very useful, and now i Will be able to Sell More AND register all the candidatos AND interviews.</p>
         <div class="who">
           <div>
             <div class="name">Orlando de La Flor Ferrari</div>
             <div class="role-line">Blue Whale International</div>
           </div>
+          <a class="gstars" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="5 estrellas en Google, ver reseña">
+            <span class="row" aria-hidden="true">★★★★★</span>
+            <span class="src">Ver en Google →</span>
+          </a>
         </div>
       </div>
     </div>
@@ -653,7 +658,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 año de hosting y soporte</span></li>
         </ul>
         <div class="actions">
-          <button type="button" class="btn btn-orange" data-plan="esencial" data-tier-label="Essential">Elegir Essential →</button>
+          <a class="btn btn-orange" href="/es/start/?plan=esencial">Elegir Essential →</a>
           <a class="btn btn-ghost-light" href="#ask">O, infórmese primero</a>
         </div>
       </div>
@@ -671,7 +676,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 año de hosting y soporte</span></li>
         </ul>
         <div class="actions">
-          <button type="button" class="btn btn-orange" data-plan="pro" data-tier-label="Pro">Elegir Pro →</button>
+          <a class="btn btn-orange" href="/es/start/?plan=pro">Elegir Pro →</a>
           <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">O, infórmese primero</a>
         </div>
       </div>
@@ -704,7 +709,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <label for="lf-about">Cuéntenos sobre su negocio</label>
           <textarea id="lf-about" name="about" required placeholder="Qué hace, quién compra, qué no funciona, sitio web actual si tiene"></textarea>
         </div>
-        <input type="hidden" name="plan" id="lf-plan" value="">
         <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Enviar a Mike y Santiago →</button>
@@ -896,19 +900,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       else { document.documentElement.classList.add('geo-na'); }
     }).catch(function(){ document.documentElement.classList.add('geo-co'); });
   }
-  // Botones "Elegir <plan>": etiquetan el formulario con el plan y bajan al formulario.
-  var planField = document.getElementById('lf-plan');
-  document.querySelectorAll('button[data-plan]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var plan = btn.getAttribute('data-plan');
-      if(planField) planField.value = plan;
-      var ask = document.getElementById('ask');
-      if(ask) ask.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      var nameInput = document.getElementById('lf-name');
-      if(nameInput) setTimeout(function(){ nameInput.focus(); }, 600);
-    });
-  });
-
   var form = document.getElementById('lead-form');
   if(!form) return;
   var status = document.getElementById('lf-status');
@@ -929,8 +920,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       language: 'es',
       source: 'pymewebpro_v4',
       page: window.location.pathname,
-      website: fd.get('company_website') || '',
-      extra: { plan: fd.get('plan') || '' }
+      website: fd.get('company_website') || ''
     };
     fetch(PORTAL_URL + '/api/leads', {
       method: 'POST',

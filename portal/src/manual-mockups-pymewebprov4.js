@@ -212,9 +212,13 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .proof .quote{background:#fff;border-radius:18px;padding:30px;border:1px solid rgba(27,20,16,.07)}
 .proof .quote .mark{font-family:'Fraunces',serif;font-style:italic;font-size:60px;color:#FF5C2E;line-height:.5;margin-bottom:.8rem}
 .proof .quote p{font-size:17px;line-height:1.55;color:#1B1410;margin:0 0 1.25rem}
-.proof .quote .who{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(27,20,16,.08);padding-top:1rem;font-size:13.5px}
+.proof .quote .who{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:1px solid rgba(27,20,16,.08);padding-top:1rem;font-size:13.5px}
 .proof .quote .who .name{font-weight:700;color:#1B1410}
 .proof .quote .who .role-line{color:#7A4828}
+.proof .quote .gstars{display:inline-flex;flex-direction:column;align-items:flex-end;gap:2px;text-decoration:none;color:inherit;transition:opacity .15s;flex-shrink:0}
+.proof .quote .gstars:hover{opacity:.78}
+.proof .quote .gstars .row{color:#FF5C2E;font-size:15px;letter-spacing:1px;line-height:1}
+.proof .quote .gstars .src{font-size:11px;color:#7A4828;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .proof .builds{margin-bottom:36px}
 .proof .builds-label{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7A4828;margin:0 0 18px}
 .proof .builds-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
@@ -368,13 +372,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <div class="cta-row">
           <a class="btn btn-orange" href="#ask">Tell us about your business</a>
           <a class="btn btn-ghost" href="#offer">See pricing</a>
-        </div>
-        <div class="micro">
-          <span><span class="ok">✓</span> Live in 48 hours</span>
-          <span class="dot">·</span>
-          <span><span class="ok">✓</span> 30-day money-back</span>
-          <span class="dot">·</span>
-          <span><span class="ok">✓</span> You own the code</span>
         </div>
       </div>
       <div class="anatomy-card" aria-label="Anatomy of this page">
@@ -553,16 +550,24 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
             <div class="name">Patrick Detzner</div>
             <div class="role-line">Founder · The Schedulator</div>
           </div>
+          <a class="gstars" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="5 stars on Google, view review">
+            <span class="row" aria-hidden="true">★★★★★</span>
+            <span class="src">View on Google →</span>
+          </a>
         </div>
       </div>
       <div class="quote">
         <div class="mark">"</div>
-        <p><strong>Super happy with the final product</strong> from Mike and the PymeWebPro team. The whole process was straightforward and fast. They understood exactly what I needed and delivered a clean, professional site in just a couple of days. Highly recommended.</p>
+        <p>Amazing, la página está una chimba!!! <strong>Super Happy with the final producto of Mike</strong>, we did this really fast, it's amazing how Mike do it! Very useful, and now i Will be able to Sell More AND register all the candidatos AND interviews.</p>
         <div class="who">
           <div>
             <div class="name">Orlando de La Flor Ferrari</div>
             <div class="role-line">Blue Whale International</div>
           </div>
+          <a class="gstars" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="5 stars on Google, view review">
+            <span class="row" aria-hidden="true">★★★★★</span>
+            <span class="src">View on Google →</span>
+          </a>
         </div>
       </div>
     </div>
@@ -675,7 +680,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 year of hosting and support</span></li>
         </ul>
         <div class="actions">
-          <button type="button" class="btn btn-orange" data-plan="esencial" data-tier-label="Essential">Choose Essential →</button>
+          <a class="btn btn-orange" href="/start/?plan=esencial">Choose Essential →</a>
           <a class="btn btn-ghost-light" href="#ask">Or, get more info first</a>
         </div>
       </div>
@@ -693,7 +698,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>1 year of hosting and support</span></li>
         </ul>
         <div class="actions">
-          <button type="button" class="btn btn-orange" data-plan="pro" data-tier-label="Pro">Choose Pro →</button>
+          <a class="btn btn-orange" href="/start/?plan=pro">Choose Pro →</a>
           <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">Or, get more info first</a>
         </div>
       </div>
@@ -728,7 +733,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <label for="lf-about">Tell us about your business</label>
           <textarea id="lf-about" name="about" required placeholder="What you do, who buys, what isn't working, current website if you have one"></textarea>
         </div>
-        <input type="hidden" name="plan" id="lf-plan" value="">
         <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Send to Mike and Santiago →</button>
@@ -921,19 +925,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       else { document.documentElement.classList.add('geo-na'); }
     }).catch(function(){ document.documentElement.classList.add('geo-na'); });
   }
-  // "Choose <plan>" buttons in pricing: tag the form with the plan, scroll to form.
-  var planField = document.getElementById('lf-plan');
-  document.querySelectorAll('button[data-plan]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var plan = btn.getAttribute('data-plan');
-      if(planField) planField.value = plan;
-      var ask = document.getElementById('ask');
-      if(ask) ask.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      var nameInput = document.getElementById('lf-name');
-      if(nameInput) setTimeout(function(){ nameInput.focus(); }, 600);
-    });
-  });
-
   var form = document.getElementById('lead-form');
   if(!form) return;
   var status = document.getElementById('lf-status');
@@ -954,8 +945,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       language: 'en',
       source: 'pymewebpro_v4',
       page: window.location.pathname,
-      website: fd.get('company_website') || '',
-      extra: { plan: fd.get('plan') || '' }
+      website: fd.get('company_website') || ''
     };
     fetch(PORTAL_URL + '/api/leads', {
       method: 'POST',
