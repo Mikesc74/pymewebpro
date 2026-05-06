@@ -35,7 +35,11 @@ export function computeQuote(lead) {
   const hosting = lead.hosting || "none";
   const planPrice = PLAN_PRICES_COP[plan] || 0;
   let hostingPrice = HOSTING_PRICES_COP[hosting] || 0;
-  const hostingBundled = plan === "pro" && hosting === "annual";
+  // Both tiers bundle 1 year of hosting per v4 marketing ("1 year of hosting
+  // and support" listed under Essential AND Pro). Previously only Pro bundled
+  // it, which double-billed Essential buyers who selected hosting=annual at
+  // checkout (390k plan + 270k hosting = 660k instead of 390k).
+  const hostingBundled = (plan === "esencial" || plan === "pro") && hosting === "annual";
   if (hostingBundled) hostingPrice = 0;
 
   const now = Date.now();
