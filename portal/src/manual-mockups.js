@@ -16,6 +16,7 @@ import { dagaParfumHtml } from "./manual-mockups-dagaparfum.js";
 import { blueWhaleHtml } from "./manual-mockups-bluewhale.js";
 import { espacioDentalHtml } from "./manual-mockups-espaciodental.js";
 import { pymewebproCaHtml } from "./manual-mockups-pymewebproca.js";
+import { pymewebproV1Html } from "./manual-mockups-pymewebprov1.js";
 import { schedulatorHtml } from "./manual-mockups-schedulator.js";
 import { marenaHtml } from "./manual-mockups-marena.js";
 import { startHtml } from "./manual-mockups-start.js";
@@ -31,6 +32,7 @@ export const MANUAL_MOCKUPS = {
   "blue-whale-international": blueWhaleHtml,
   "espacio-dental": espacioDentalHtml,
   "pymewebpro-ca": pymewebproCaHtml,
+  "pymewebpro-v1": pymewebproV1Html,
   marena: marenaHtml,
   start: startHtml,
 };

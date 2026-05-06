@@ -41,15 +41,20 @@ for (const entry of mapEntries) {
 
   let html = fs.readFileSync(srcHtml, "utf-8");
 
-  // Embed any local ./*.jpg references as base64
+  // Embed any local ./*.{jpg,jpeg,png,webp} references as base64.
+  // Backwards compatible: previously only .jpg was matched; expanded to png/webp
+  // so v2-style mockups can drop screenshots in PNG without manual conversion.
   const photosDir = path.dirname(srcHtml);
-  const photoRefs = [...new Set(html.match(/\.\/([\w-]+\.jpg)/g) || [])];
+  const photoRefs = [...new Set(html.match(/\.\/([\w-]+\.(?:jpg|jpeg|png|webp))/g) || [])];
+  const mimeFor = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
   for (const ref of photoRefs) {
     const fn = ref.slice(2);
     const photoPath = path.join(photosDir, fn);
     if (fs.existsSync(photoPath)) {
+      const ext = fn.split(".").pop().toLowerCase();
+      const mime = mimeFor[ext] || "image/jpeg";
       const b64 = fs.readFileSync(photoPath).toString("base64");
-      html = html.split(ref).join(`data:image/jpeg;base64,${b64}`);
+      html = html.split(ref).join(`data:${mime};base64,${b64}`);
     }
   }
 
