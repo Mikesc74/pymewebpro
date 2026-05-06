@@ -6,21 +6,12 @@
 # Pattern /* matches every path. To override per-path, add another block
 # with a more specific pattern below (Pages picks the most specific match).
 #
-# CSP NOTE: script-src has SHA-256 hashes for each inline <script> block in
-# every HTML file. If you edit ANY inline-script content (including whitespace),
-# the hash changes and the browser will refuse to execute the block. Recompute
-# all inline-script hashes with:
-#
-# style-src kept at 'unsafe-inline' deliberately. Each page has its own inline
-# <style> block (24+ unique style hashes across the site), and every CSS edit
-# would require recomputing all of them. The XSS exfil vector for inline styles
-# is `background: url(attacker)` — already closed by `img-src 'self' data:`.
-# All inline style= attributes have been refactored to utility classes.
-#
-#   python3 -c "import re,hashlib,base64; html=open('index.html').read();
-#   [print(\"'sha256-\"+base64.b64encode(hashlib.sha256(m.group(2).encode()).digest()).decode()+\"'\")
-#    for m in re.finditer(r'<script(\s[^>]*)?>(.*?)</script>', html, re.DOTALL)
-#    if 'src=' not in (m.group(1) or '') and m.group(2).strip()]"
+# CSP NOTE: Content-Security-Policy is NOT set here. It is set by the Pages
+# Function at functions/_middleware.js because the hash-locked CSP value
+# exceeds Cloudflare Pages' ~2000-char per-header-value limit on _headers
+# entries. Oversized values are silently stripped, so a CSP defined here
+# never reaches the wire. See functions/_middleware.js for the full CSP
+# definition and hash-recompute instructions.
 
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
@@ -28,7 +19,6 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=(), browsing-topics=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-+u/6uQuNWmfH5bFaP1H4vMSHj1BY/JVd6+3VP2dwyKU=' 'sha256-00PtBehKDEe70byfu3gZc+pRvMxy9sXF9QjtAQLfUzg=' 'sha256-1MHWVAWqRtJFXMtg/lMNvbuygX+uubkL+yMfHGh6Bz4=' 'sha256-5DJZoASK/LxSgtR4p9obPoWO5U+cnjxTNHiZKorum7c=' 'sha256-6gt3qBAc1TjJNlWg3bip8EBQD5AdnLnjWSHY/2uaX24=' 'sha256-6o4RcIgyfc5UPTW6IkpOXoxUOCQ6pnCwwzHiShQn4PE=' 'sha256-6pvnh+ggR3rx0+ejxtKOU65Sxdh/sJH/E83Fe2SGYSk=' 'sha256-9GIHlcCxqhxCsTQ9GzaxQhDa6AAm5+gaYgcFwZ5X7tY=' 'sha256-DYDqBiY2eQmiAdcVr/lhPyPlfdxjcR5kotO/GOGpwd0=' 'sha256-EHFj0jeeky9W2Ei6oF3Fg7F3imE7aI+9vxXhuK8EGOo=' 'sha256-FnEOZuxp4d3FgOkM8VrhCJcRSuuRpSY09GJCoeyH1zE=' 'sha256-G1fQscijotj/WOav7dPpGbDgxCVEMgSsbCOmFcMdfUc=' 'sha256-G2GVzbRCSRyeIyCddy4HieWuaQhyrUWOmmrZ2hL9FaY=' 'sha256-I4ODCvCv2kH4C8QMonIRib3emcwyO69XGYW2HMXAJko=' 'sha256-IoVbTk5ntEIfUH5VZZvTsE/S+QSJ5WCQqrOhXdCnZds=' 'sha256-Lwledmw/HilVT+zr3NN4vTeaIYtIsewLyyHbFMHF3cg=' 'sha256-P+OvErb1BBDyaaezPzpXwOkwzFoeNMvEFmuBCchZMBs=' 'sha256-PnBPewdaylJvq6Kh8oPKaV2O/dD7PDyvCieCNNDNJio=' 'sha256-RHdSg17RQrYS3zk8gb3aP97P5MNDX5J2W11vKAXBZns=' 'sha256-TJ0RWNb7cO67tslkbPl+k+rVoDwXss6E+gcEiNlOzxo=' 'sha256-Y4PVBUaXvX8m58rzZS3JCff033KFVV7zy1ZAjl1jiLs=' 'sha256-YFdQSLPZ8VN8Ysflt1sxfAGoFlkBruHfueA43jctF7A=' 'sha256-YUvzmIAHZDwoA7xLNpBJlOWZ3z1uPCKvSGb6xY/HpuM=' 'sha256-YxZU7wsEBfSpa5yK72Z5vHv4nqsp1row70HzkPdrmrc=' 'sha256-altb7fLp1/RpkV4r8roH4lTA8ORqjHv5NheEktPcFPU=' 'sha256-bIhQW4enP9e7kiwG1k4tNyRfDdqq5z4tXq5oesg2pUo=' 'sha256-csi/5pQ/XKA3Us4LC2FlE1c4S7lrRWs3bX8aPH5dNds=' 'sha256-fl6+vGA2KV1gtvbSw2x6/LjIHf5uB7kecW6sEBI9G3Y=' 'sha256-iLxhcygx6d0yAEPxIDRZ3eY35idrUK0n2DpYEd4Juyo=' 'sha256-lEG6LhcsPECK7uDWdBWtjndcg9BXZ54HMF8INACSKDI=' 'sha256-md6GiOK9/4dujSiYpnsQkwfUj285qoL+kzLrOdsyuBE=' 'sha256-n8QNKzmgolnNVayDI+BBSIPtKi/SyinNTg1RCAJSpaQ=' 'sha256-pEhVG24++1MMM1pp/67N8pCFmbl4FRCpr7ftVXr4M3Y=' 'sha256-rWFB3t/iDfofT3ogSqeEebp3+8u6zPJt+3DtDnSgZb4=' 'sha256-rk1861BuiQl9jNIPJfFX8YnAlg3Ybm+849U59BwiP2k=' 'sha256-sDkatlSWIVvSKEULQ5hvh4b3cbMh4AqbznBu9yx+UuI=' 'sha256-vDDi3ZJn8gcNAY6CfcfYdL654PhkerHHjGuKUN5IKBQ=' 'sha256-vZnDzfWFe/3EonS42AgTWkj3/YDvij3ttuzF5E5wTaI=' 'sha256-w6D8KavAo8iFp77Dg1oxo72/6NoYuhYIF45MNv15Fc4=' 'sha256-wnIgqXukMptaE1t+eH3tWU0KCaqKGHbavIe04U71lAs=' 'sha256-x6Q/pBtWHKjI2Dp3gpHbudwnDwfROt6VStAfB0GlHXE=' 'sha256-xAbORcxQXe9UbVWDpbpsY/przpkWb2K5ETIugpa56t0=' 'sha256-xIPiZc9NYVb8zVoj8xiw9kh+MWSz1+MNyPze8L4MuJM=' 'sha256-ynRNbHwHTfiwBGWnXuWodj7kRSMnY+4WH4bw6nt+/HM=' 'sha256-zwQpTDRzvF5wRcBZDV/xxySTiTBv1FRen5TJt2S4VB4='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
 
@@ -45,15 +35,22 @@
   Cache-Control: public, max-age=600, must-revalidate
   CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
-/terminos.html
+# Pretty-URL paths. Cloudflare Pages serves /name.html at /name and 308-redirects
+# /name.html → /name, so the canonical URL is the extension-less form.
+
+/terminos
   Cache-Control: public, max-age=600, must-revalidate
   CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
-/politica-de-datos.html
+/politica-de-datos
   Cache-Control: public, max-age=600, must-revalidate
   CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
-/hosting.html
+/privacy
+  Cache-Control: public, max-age=600, must-revalidate
+  CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
+/hosting
   Cache-Control: public, max-age=600, must-revalidate
   CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 

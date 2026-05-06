@@ -20,16 +20,28 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/"/>
   </url>
   <url>
-    <loc>https://pymewebpro.com/terminos.html</loc>
+    <loc>https://pymewebpro.com/terminos</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://pymewebpro.com/politica-de-datos.html</loc>
+    <loc>https://pymewebpro.com/privacy</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pymewebpro.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pymewebpro.com/politica-de-datos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/privacy"/>
+  </url>
+  <url>
+    <loc>https://pymewebpro.com/politica-de-datos</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pymewebpro.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pymewebpro.com/politica-de-datos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/privacy"/>
   </url>
 
   <!-- Recursos (added 2026-05-01) -->
@@ -66,77 +78,15 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Vertical + City Landing Pages (added 2026-05-01) -->
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-abogados-medellin/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-abogados-bogota/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-abogados-barranquilla/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-clinicas-dentales-medellin/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-clinicas-dentales-bogota/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-clinicas-dentales-barranquilla/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-empresas-turismo-medellin/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-empresas-turismo-bogota/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-empresas-turismo-barranquilla/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-hoteles-boutique-medellin/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-hoteles-boutique-bogota/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pymewebpro.com/sitio-web-hoteles-boutique-barranquilla/</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+  <!--
+    Vertical × city landing pages (sitio-web-{abogados,clinicas-dentales,
+    empresas-turismo,hoteles-boutique}-{medellin,bogota,barranquilla}/) were
+    flagged in the 2026-05-05 audit as a "doorway page" pattern under
+    Google's spam guidelines. Each page is now <meta name="robots"
+    content="noindex,follow"> and intentionally NOT included in this
+    sitemap. They remain reachable via direct link or campaign URL but
+    will not be indexed. Re-introduce here if and when each page gets
+    genuinely unique content (city case studies, local imagery, sector
+    pricing, regulatory specifics).
+  -->
 </urlset>

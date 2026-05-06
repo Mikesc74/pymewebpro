@@ -16,5 +16,7 @@ http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
 /en/*   /:splat   301
 /en     /         301
 
-# /hosting (no .html) -> /hosting.html canonical. 301 permanent.
-/hosting   /hosting.html   301
+# Note: Cloudflare Pages automatically serves *.html files at the extension-less
+# URL and 308-redirects /name.html → /name. So /hosting.html, /terminos.html,
+# /politica-de-datos.html, /privacy.html all resolve at the extension-less path.
+# All canonical URLs and sitemap entries use the extension-less form.

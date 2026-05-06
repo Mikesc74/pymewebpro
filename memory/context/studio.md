@@ -70,18 +70,17 @@ Display NIT on:
 ### Colombian market
 | Plan | Pricing | Includes |
 |------|---------|----------|
-| Esencial (one-time) | $690.000 COP | 1 year hosting |
-| Esencial (split) | $390.000 COP + $30.000 COP/mo | Hosting billed monthly |
-| Crecimiento | (Growth tier — multi-section + integrations) | More sections, blog, FAQ, GA4/Meta pixel |
+| Essential | $390.000 COP one-time | Multi-page custom site, WhatsApp + lead form, 1 yr hosting+support, 1 wk revisions |
+| Pro | $690.000 COP one-time | Everything in Essential + blog, PDF download section, GA4 + Meta Pixel, bilingual EN/ES, 2 yr hosting+support, 2 wk revisions |
 
 ### NA / Canadian market
 
-**Both tiers are single-page multi-section custom sites.** Same structural format. The differentiator is integrations + bilingual + extended hosting + more revisions. NOT page count or section count.
+**Both tiers are multi-page custom sites.** Essential ships with WhatsApp + a lead form that emails the client. Pro adds a blog, a PDF download section (ebooks, guides, menus), GA4 + Meta Pixel, bilingual EN/FR or EN/ES, an extra year of hosting+support (2 yr total), and a longer revision window (2 weeks vs 1).
 
 | Tier | Price | Includes |
 |------|-------|----------|
-| Essential | $500 CAD one-time | Single-page multi-section custom site, Cloudflare hosting (1 yr · $180 value), SSL, custom domain, Lighthouse 100, contact form, 2 revisions, 48-hr delivery |
-| Pro | $800 CAD one-time | Everything in Essential + bilingual EN/FR or EN/ES, booking/payment/newsletter integrations, 2 yr hosting ($360 value), 4 revisions, Schema.org Service entries |
+| Essential | $500 CAD one-time | Multi-page custom site, WhatsApp button, lead form to email, custom domain + SSL, mobile responsive, Lighthouse 100, privacy-first analytics, 1 yr hosting+support ($180 value), 1 wk revisions, 48-hr delivery |
+| Pro | $800 CAD one-time | Everything in Essential + blog section, PDF download section (ebooks, guides, menus), GA4 + Meta Pixel, bilingual EN/FR or EN/ES, 2 yr hosting+support ($360 value), 2 wk revisions |
 | Hosting renewal | $15 CAD/mo or $180 CAD/yr | After included period expires |
 | Maintenance add-on | $35 CAD/mo (optional, on top of hosting) | Monthly content updates, security patches, minor design adjustments |
 | Ad-hoc edits | $75 CAD/hr (30-min minimum) | One-off changes, no commitment |
@@ -95,7 +94,7 @@ Display NIT on:
 
 Switched from 50/50 to 30/70 on 2026-05-05. A productized $500-800 / $690.000-1.080.000 build doesn't need an agency-style 50% deposit; the lower barrier to start makes the buy decision easier while DNS gating on the 70% balance still protects against non-payment.
 
-Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $117.000 COP · Crecimiento $207.000 COP.
+Deposit numbers by tier: Essential $150 CAD / $117.000 COP · Pro $240 CAD / $207.000 COP.
 
 ### Pricing structure (set 2026-05-05, restructured to lower COP tiers)
 
@@ -103,8 +102,8 @@ Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $117.000
 |---|---|---|---|---|---|
 | Canada / NA | Essential | $500 CAD | $150 CAD | $350 CAD | 1 year |
 | Canada / NA | Pro | $800 CAD | $240 CAD | $560 CAD | 2 years |
-| Colombia | Esencial | $390.000 COP | $117.000 COP | $273.000 COP | 1 year |
-| Colombia | Crecimiento | $690.000 COP | $207.000 COP | $483.000 COP | 2 years |
+| Colombia | Essential | $390.000 COP | $117.000 COP | $273.000 COP | 1 year |
+| Colombia | Pro | $690.000 COP | $207.000 COP | $483.000 COP | 2 years |
 
 ### Live pay-links (set 2026-05-05)
 
@@ -115,13 +114,13 @@ Deposit numbers by tier: Essential $150 CAD · Pro $240 CAD · Esencial $117.000
 - Pro balance ($560): `https://wise.com/pay/r/I-G0t2wOE1CRJYI` ← send at launch
 
 **Wompi (LATAM — COP):**
-- Esencial deposit ($117.000): `https://checkout.wompi.co/l/IjE5K4` ← on public site (Esencial card)
-- Crecimiento deposit ($207.000): `https://checkout.wompi.co/l/xzGeMX` ← on public site (Crecimiento card)
-- Esencial balance ($273.000): `https://checkout.wompi.co/l/HdCwpF` ← email at launch
-- Crecimiento balance ($483.000): `https://checkout.wompi.co/l/VdGy5L` ← email at launch
+- Essential deposit ($117.000): `https://checkout.wompi.co/l/IjE5K4` ← on public site (Essential card)
+- Pro deposit ($207.000): `https://checkout.wompi.co/l/xzGeMX` ← on public site (Pro card)
+- Essential balance ($273.000): `https://checkout.wompi.co/l/HdCwpF` ← email at launch
+- Pro balance ($483.000): `https://checkout.wompi.co/l/VdGy5L` ← email at launch
 - Obsolete after restructure (can be archived/disabled in Wompi):
-  - `kNsvyu` was the old Esencial $207.000 link
-  - `3tNB1l` was the old Crecimiento $324.000 link
+  - `kNsvyu` was the old Essential $207.000 link
+  - `3tNB1l` was the old Pro $324.000 link
 
 ### 30-day satisfaction guarantee
 

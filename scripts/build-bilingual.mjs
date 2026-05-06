@@ -26,8 +26,11 @@ function buildVariant(html, keepLang) {
     `<html lang="${keepLang}" class="lang-${keepLang}">`
   );
 
-  // 2. Drop any <title>/<meta>/<link> tag tagged with the OTHER language
-  // Pattern matches self-closing or paired tags with data-lang="<dropLang>"
+  // 2. Drop any <title>/<meta>/<link>/<script> tag tagged with the OTHER language.
+  // <script type="application/ld+json" data-lang="es">…</script> in the EN
+  // build is dropped wholesale (and vice-versa) so each locale ships only
+  // the schema block in its own language — fixes audit §4.1 (Spanish FAQ
+  // schema was rendering in English).
   out = out.replace(
     new RegExp(`<title\\s+data-lang="${dropLang}"[^>]*>[\\s\\S]*?<\\/title>`, "g"),
     ""
@@ -36,10 +39,14 @@ function buildVariant(html, keepLang) {
     new RegExp(`<meta\\s+[^>]*data-lang="${dropLang}"[^>]*>`, "g"),
     ""
   );
+  out = out.replace(
+    new RegExp(`<script[^>]*\\sdata-lang="${dropLang}"[^>]*>[\\s\\S]*?<\\/script>`, "g"),
+    ""
+  );
 
   // 3. Strip data-lang attribute from kept tags (clean output)
   out = out.replace(
-    new RegExp(`(<title|<meta)([^>]*)\\sdata-lang="${keepLang}"`, "g"),
+    new RegExp(`(<title|<meta|<script)([^>]*)\\sdata-lang="${keepLang}"`, "g"),
     "$1$2"
   );
 

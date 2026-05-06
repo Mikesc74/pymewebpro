@@ -24,10 +24,10 @@ Workplace shorthand, internal terms, and project codenames.
 
 | Term | Meaning |
 |------|---------|
-| **Esencial** | Colombian Plan 1: $690.000 COP or $390.000 + $30K/mo hosting. Single-page marketing site. |
-| **Crecimeinto** | Colombian Plan 2 (Growth): more sections + integrations. |
-| **Essential** | NA tier: $500 CAD, single-page, 1 yr hosting. |
-| **Pro** | NA tier: $800 CAD, multi-section + bilingual + integrations + 2 yr hosting. |
+| **Essential** (Colombia) | $390.000 COP one-time. Multi-page custom site, WhatsApp + lead form, 1 yr hosting+support. |
+| **Pro** (Colombia) | $690.000 COP one-time. Essential + blog, PDF downloads, GA4 + Meta Pixel, bilingual EN/ES, 2 yr hosting+support. |
+| **Essential** (NA) | $500 CAD one-time. Multi-page custom site, WhatsApp + lead form, 1 yr hosting+support, 1 wk revisions. |
+| **Pro** (NA) | $800 CAD one-time. Essential + blog, PDF downloads, GA4 + Meta Pixel, bilingual EN/FR or EN/ES, 2 yr hosting+support, 2 wk revisions. |
 
 ## Tech stack acronyms
 

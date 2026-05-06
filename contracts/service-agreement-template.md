@@ -18,8 +18,8 @@ The Studio will design, develop, and deploy a custom marketing website (the "**W
 
 **Selected Tier:**
 
-- [ ] **Essential** (CAD $500), single-page multi-section custom-designed website
-- [ ] **Pro** (CAD $800), single-page multi-section site with bilingual support and integrations
+- [ ] **Essential** (CAD $500), multi-page custom-designed website with WhatsApp + lead form
+- [ ] **Pro** (CAD $800), multi-page site adding blog, PDF downloads, GA4 + Meta tracking, bilingual support
 
 **Schedule A** captures any additional scope beyond the standard tier deliverables, if needed for this engagement. If the project is a standard build, Schedule A may be left blank or omitted.
 
@@ -39,11 +39,13 @@ Both tiers include:
 
 Pro tier additionally includes:
 
+- Blog section
+- PDF download section (ebooks, guides, menus, lead magnets)
+- GA4 + Meta Pixel tracking integration (Client provides their own GA4 and Meta property IDs)
 - Bilingual support (EN / FR or EN / ES) with hreflang and language toggle
-- Booking, payment, or newsletter integration with the Client's chosen processor
 - Schema.org Service entries for each service offered
-- Extended hosting (2 years included, valued at CAD $360, vs. 1 year in Essential, valued at CAD $180)
-- Additional revision rounds (4 included vs. 2 in Essential)
+- Extended hosting and support (2 years included, valued at CAD $360, vs. 1 year in Essential, valued at CAD $180)
+- Extended post-launch revision window (2 weeks vs. 1 week in Essential)
 
 ## 3. Timeline
 
@@ -83,14 +85,14 @@ This guarantee is the Client's exclusive refund remedy. After thirty (30) days p
 
 ## 5. Revisions
 
-The Studio includes:
+The Studio includes a free post-launch revision window during which the Client may request changes at no additional cost:
 
-- Two (2) rounds of revisions in the Essential tier
-- Four (4) rounds of revisions in the Pro tier
+- **Essential tier:** one (1) week of free revisions starting on the launch date
+- **Pro tier:** two (2) weeks of free revisions starting on the launch date
 
-A "round of revisions" means a single consolidated set of feedback from the Client that the Studio addresses in one pass. Trivial typo corrections do not count as a round.
+During the revision window, the Client can submit consolidated feedback and the Studio will address it in good-faith iteration cycles. Out-of-scope work (new sections, new integrations, content the Client did not provide at kickoff) is quoted separately even within the revision window.
 
-Additional revisions beyond the included rounds are billed at **CAD $75 per hour** (or USD equivalent) with a 30-minute minimum. The Studio will provide a written estimate before beginning any out-of-scope work.
+After the revision window expires, additional revisions are billed at **CAD $75 per hour** (or USD equivalent) with a 30-minute minimum. The Studio will provide a written estimate before beginning any out-of-scope or post-window work.
 
 ## 6. Hosting, Domain, and Maintenance
 

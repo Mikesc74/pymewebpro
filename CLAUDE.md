@@ -15,7 +15,14 @@ Full glossary and rich context live in `./memory/`.
 
 PymeWebPro is the public-facing brand and trade name. Norte Sur Consulting S.A.S. is the contracting legal entity on all invoices, contracts, banking, and tax filings.
 
-Solo operator. Web design studio targeting SMBs in Colombia, the US, and Canada.
+**Two-person partnership.** Mike (Canadian founder, legal-entity owner) and **Santiago Santos** (Medellín-based partner, profit share) run the studio together. Both are based in Medellín and have access to client records. Default routing:
+- **English-language buyers** → Mike (Cal.com 15-min call, WhatsApp, contract review).
+- **Spanish-language buyers** → Santiago (WhatsApp +57 301 404 7722, Colombian-market end-to-end).
+- Either can hand off to the other if the situation calls for it.
+
+Web design studio targeting SMBs in Colombia, the US, and Canada.
+
+Do NOT describe the studio as "solo operator" or imply Mike works alone — that was an outdated framing. Santiago is a real, named partner who shares profit and is publicly named in the FAQ + privacy policy as a person with access to client records.
 
 ## Studio · One-line
 
@@ -32,12 +39,12 @@ Both addresses appear in the public footer. Mike personally works from Medellín
 
 | Market | Tier | Price |
 |--------|------|-------|
-| Colombia | Esencial | $390.000 COP one-time (incl. 1 yr hosting) |
-| Colombia | Crecimiento | $690.000 COP one-time (incl. 2 yr hosting) |
-| Canada / NA | Essential | $500 CAD one-time (incl. 1 yr hosting) |
-| Canada / NA | Pro | $800 CAD one-time (incl. 2 yr hosting) |
+| Colombia | Essential | $390.000 COP one-time (incl. 1 yr hosting+support) |
+| Colombia | Pro | $690.000 COP one-time (incl. 2 yr hosting+support) |
+| Canada / NA | Essential | $500 CAD one-time (incl. 1 yr hosting+support) |
+| Canada / NA | Pro | $800 CAD one-time (incl. 2 yr hosting+support) |
 
-**Both Essential and Pro are single-page, multi-section custom sites.** They have the same structural format. Pro adds: bilingual support (EN/FR or EN/ES), payment/booking/newsletter integrations, 2 years hosting (vs. 1), and 4 revisions (vs. 2). NOT a section-count difference.
+**Both Essential and Pro are multi-page custom sites.** Essential includes a WhatsApp button, lead form to email, custom domain + SSL, 1 year hosting + support, 1 week of free post-launch revisions. Pro adds a blog, PDF download section, GA4 + Meta Pixel tracking, bilingual support (EN/FR or EN/ES), 2 years hosting + support, 2 weeks of free post-launch revisions.
 
 ## Hosting
 
@@ -48,7 +55,7 @@ Both addresses appear in the public footer. Mike personally works from Medellín
 
 ## Payment terms (both markets)
 
-- **30% deposit to start** — no design or development begins until deposit clears (NA: $150 Essential / $240 Pro · LATAM: $117.000 Esencial / $207.000 Crecimiento)
+- **30% deposit to start** — no design or development begins until deposit clears (NA: $150 Essential / $240 Pro · LATAM: $117.000 Essential / $207.000 Pro)
 - **70% on launch** — site sits on staging URL; DNS to client domain not connected until balance clears
 - NA: Wise Business invoicing (cards, Apple/Google Pay, wires) in CAD or USD
 - LATAM: Wompi (cards, PSE, bank transfer) in COP
@@ -206,8 +213,8 @@ When in doubt, look at how Daga, BWI, or Espacio Dental handle the equivalent mo
 | **manual mockup** | Self-contained HTML site served from `mockups.pymewebpro.com/<slug>/` |
 | **the worker** | Cloudflare Workers code at `~/code/pymewebpro/portal/` |
 | **the SPA** | React admin in `src/index.js` (Babel standalone) |
-| **Lanzar final** | Deploy customer site to production (Esencial/Crecimiento clients) |
+| **Lanzar final** | Deploy customer site to production (Essential/Pro clients) |
 | **wizard intake** | The step-by-step client onboarding flow |
-| **Esencial / Crecimiento** | Two COP pricing tiers (Colombian market) |
+| **Essential / Pro** | The two pricing tiers, identical names in both COP (Colombia) and CAD (NA) markets |
 | **mockups subdomain** | mockups.pymewebpro.com |
 → Full glossary: `memory/glossary.md`

@@ -6,15 +6,15 @@
 <title>Términos y Condiciones · PymeWebPro</title>
 <meta name="description" content="Términos y condiciones de los servicios de NORTE SUR CONSULTING S.A.S. (PymeWebPro)." />
 <meta name="robots" content="index,follow" />
-<link rel="canonical" href="https://pymewebpro.com/terminos.html">
-<link rel="alternate" hreflang="es" href="https://pymewebpro.com/terminos.html">
-<link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/terminos.html">
+<link rel="canonical" href="https://pymewebpro.com/terminos">
+<link rel="alternate" hreflang="es" href="https://pymewebpro.com/terminos">
+<link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/terminos">
 <meta property="og:title" content="Términos y Condiciones · PymeWebPro">
 <meta property="og:description" content="Términos y condiciones de los servicios de Norte Sur Consulting S.A.S. (PymeWebPro).">
 <meta property="og:image" content="https://pymewebpro.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://pymewebpro.com/terminos.html">
+<meta property="og:url" content="https://pymewebpro.com/terminos">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="es_CO">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -23,30 +23,56 @@
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box}
-  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:#fbf8f3;color:#0a1f1a;line-height:1.65}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#FFFFFF;
+    --paper:#FAF9F6;
+    --soft:#F4F2ED;
+    --ink:#0A0A0B;
+    --slate:#52525B;
+    --gray:#6B6B72;
+    --line:#E8E6E0;
+    --accent:#FF5C2E;
+    --accent-deep:#E0481D;
+    --display:'Inter Tight',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
   .wrap{max-width:780px;margin:0 auto;padding:60px 24px 80px}
-  a.brand{font-family:'Fraunces',serif;font-weight:800;font-size:1.4rem;text-decoration:none;color:#0a1f1a;display:inline-block;margin-bottom:32px;letter-spacing:-.02em}
-  a.brand .yel{color:#d4a017}
-  h1{font-family:'Fraunces',serif;font-weight:700;font-size:2.2rem;letter-spacing:-.01em;margin:0 0 8px}
-  .meta{color:#5e6883;font-size:.88rem;margin:0 0 36px;padding-bottom:18px;border-bottom:1px solid #e5e0c9}
-  h2{font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem;margin:36px 0 12px;letter-spacing:-.005em}
-  p{margin:0 0 14px}
-  ul,ol{margin:0 0 14px;padding-left:22px}
+  a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--accent)}
+  a:hover{color:var(--accent-deep)}
+  a.brand{font-family:var(--mono);font-weight:600;font-size:1.05rem;color:var(--ink);display:inline-block;margin-bottom:36px;text-decoration:none;letter-spacing:-0.01em}
+  a.brand .br{color:var(--accent)}
+  a.brand .word{color:var(--ink)}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-0.02em;line-height:1.1;margin:0 0 10px}
+  .meta{color:var(--gray);font-family:var(--mono);font-size:12px;margin:0 0 36px;padding-bottom:18px;border-bottom:1px solid var(--line);letter-spacing:0.02em}
+  h2{font-family:var(--display);font-weight:700;font-size:1.35rem;margin:36px 0 12px;letter-spacing:-0.01em;line-height:1.25}
+  h3{font-family:var(--display);font-weight:600;font-size:1.05rem;margin:24px 0 8px;letter-spacing:-0.005em;line-height:1.3}
+  p{margin:0 0 14px;color:var(--ink)}
+  ul,ol{margin:0 0 14px;padding-left:22px;color:var(--ink)}
   li{margin-bottom:6px}
-  .info{background:#fff;border:1px solid #e5e0c9;border-radius:10px;padding:18px 22px;margin:24px 0}
-  .info b{display:inline-block;min-width:170px;color:#5e6883;font-weight:600}
-  a{color:#003893}
-  .back{display:inline-block;margin-top:48px;padding:10px 20px;background:#0a1f1a;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem}
+  code{font-family:var(--mono);font-size:0.88em;background:var(--soft);padding:1px 6px;border-radius:4px;color:var(--ink)}
+  .info{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin:24px 0}
+  .info p{margin:0 0 8px}
+  .info p:last-child{margin-bottom:0}
+  .info b{display:inline-block;min-width:170px;color:var(--gray);font-weight:500;font-family:var(--mono);font-size:11.5px;letter-spacing:0.02em;text-transform:uppercase}
+  .back{display:inline-flex;align-items:center;gap:8px;margin-top:48px;padding:12px 22px;background:var(--ink);color:#fff;text-decoration:none;border-radius:10px;font-family:var(--display);font-weight:600;font-size:0.95rem;letter-spacing:-0.005em;transition:background 0.18s}
+  .back:hover{background:var(--accent-deep);color:#fff}
+  .langswitch{font-size:12px;color:var(--gray);font-family:var(--mono);margin-bottom:24px;letter-spacing:0.02em}
+  .langswitch a{margin-left:8px;color:var(--gray)}
+  .langswitch a:hover{color:var(--accent-deep)}
+  .langswitch b{color:var(--ink);font-weight:600}
 </style>
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Términos y Condiciones","url":"https://pymewebpro.com/terminos.html","publisher":{"@type":"Organization","name":"PymeWebPro","url":"https://pymewebpro.com","alternateName":"Norte Sur Consulting S.A.S.","taxID":"901.956.771-1"},"inLanguage":"es","lastReviewed":"2026-05-05"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Términos y Condiciones","url":"https://pymewebpro.com/terminos","publisher":{"@type":"Organization","name":"PymeWebPro","url":"https://pymewebpro.com","alternateName":"Norte Sur Consulting S.A.S.","taxID":"901.956.771-1"},"inLanguage":"es","lastReviewed":"2026-05-05"}</script>
 </head>
 <body>
 <div class="wrap">
-<a class="brand" href="/">pyme<span class="yel">webpro</span></a>
+<a class="brand" href="/"><span class="br">&lt;</span><span class="word">pymewebpro</span><span class="br">/&gt;</span></a>
 
 <h1>Términos y Condiciones</h1>
 <p class="meta">NORTE SUR CONSULTING S.A.S. · Última actualización: 29 de abril de 2026</p>
@@ -64,37 +90,35 @@
 <p>El presente documento regula la relación comercial entre NORTE SUR CONSULTING S.A.S. (en adelante "PymeWebPro" o "nosotros") y el cliente (en adelante "el Cliente" o "usted") respecto a los servicios de diseño, construcción, hospedaje y soporte de sitios web. Al contratar nuestros servicios o utilizar nuestro sitio web, el Cliente acepta estos términos en su totalidad.</p>
 
 <h2>2. Servicios ofrecidos</h2>
-<p>PymeWebPro ofrece los siguientes planes:</p>
+<p>PymeWebPro ofrece dos planes. Ambos entregan un sitio web multi-página hecho a la medida, alojado en la red edge de Cloudflare, con botón de WhatsApp, formulario de leads que llega a su correo, dominio propio, SSL, analítica con privacidad, Lighthouse 100, encabezados de seguridad A+ y entrega en 48 horas.</p>
 <ul>
-  <li><b>Plan Esencial:</b> sitio web profesional de hasta cinco páginas (Inicio, Servicios, Sobre nosotros, Contacto, Ubicación), con SEO técnico, mapa de Google, correo profesional reenviado, galería, testimonios y soporte. Pago único.</li>
-  <li><b>Plan Crecimiento:</b> incluye todo lo del plan Esencial más blog/noticias, galería ampliada, reservas, reseñas, equipo, FAQ, versión bilingüe, Google Business Profile, logo asistido por IA, PDF descargable, captura de correos, catálogo de WhatsApp Business, conversion tracking (Meta Pixel + GA4) y un (1) año de hosting incluido.</li>
-  <li><b>Plan Hosting (opcional):</b> hospedaje, monitoreo y pequeños cambios mensuales.</li>
+  <li><b>Plan Essential — $390.000 COP (pago único):</b> sitio multi-página a la medida, botón de WhatsApp, formulario de leads que llega a su correo, configuración de dominio y SSL, hosting Cloudflare con soporte incluido por 1 año, Lighthouse 100, sub-1s LCP, 1 semana de revisiones gratis post-lanzamiento.</li>
+  <li><b>Plan Pro — $690.000 COP (pago único):</b> todo lo del plan Essential más sección de blog, sección de descargas en PDF (ebooks, guías, menús), tracking GA4 + Meta Pixel, soporte bilingüe (ES / EN) con switch de idioma y hreflang, hosting Cloudflare con soporte incluido por 2 años, 2 semanas de revisiones gratis post-lanzamiento.</li>
 </ul>
-<p>Los precios y características vigentes están publicados en <a href="/#pricing">pymewebpro.com/#pricing</a>.</p>
+<p>Los precios y características vigentes están publicados en <a href="/#pricing">pymewebpro.com/#pricing</a>. Cualquier alcance adicional (catálogos e-comm de más de 50 SKUs, apps tipo SaaS, sitios de membresía) se cotiza por separado y queda fuera de los planes Essential y Pro.</p>
 
 <h2>3. Pago</h2>
 <ul>
-  <li>Los pagos se realizan a través de Wompi (Bancolombia) en pesos colombianos (COP).</li>
-  <li>El precio del plan se cobra como pago único al momento de la contratación.</li>
-  <li>Los descuentos por contratación dentro de las primeras 24 horas se aplican automáticamente en la pantalla de pago.</li>
+  <li>Los pagos se realizan a través de Wompi (Bancolombia) en pesos colombianos (COP), con tarjeta, PSE o transferencia bancaria.</li>
+  <li>El precio del plan se cobra en dos partes: <b>30% de depósito</b> al iniciar (no se comienza diseño ni desarrollo hasta confirmar el depósito) y <b>70% al lanzar</b> (el sitio terminado permanece en una URL de staging hasta que se confirme el saldo; el dominio del Cliente no se conecta al sitio en producción hasta que el saldo sea pagado).</li>
   <li>El Cliente puede diferir el pago en cuotas a través de su banco; PymeWebPro recibe el monto completo y la entidad bancaria gestiona el cobro mensual.</li>
   <li>El registro del dominio (~$50.000 a $150.000 COP/año, según extensión) lo paga el Cliente directamente al registrador y no forma parte del precio del plan.</li>
 </ul>
 
 <h2>4. Tiempos de entrega</h2>
-<p>El plazo de entrega comienza a correr desde el momento en que el Cliente envía su pack de materiales (logo, fotos, colores, contenido, etc.) a través del portal de cliente:</p>
+<p>El plazo de entrega comienza a correr desde el momento en que el Cliente envía su brief y pack de materiales (logo, fotos, colores, contenido, etc.) a través del portal de cliente y se confirma el depósito del 30%:</p>
 <ul>
-  <li><b>Plan Esencial:</b> 48 horas.</li>
-  <li><b>Plan Crecimiento:</b> 48 horas.</li>
+  <li><b>Plan Essential:</b> 48 horas.</li>
+  <li><b>Plan Pro:</b> 48 horas.</li>
 </ul>
 <p>Si PymeWebPro no entrega dentro del plazo por causas atribuibles a nosotros, el Cliente tiene derecho a un reembolso completo (ver sección 6).</p>
 
-<h2>5. Rondas de cambios</h2>
+<h2>5. Revisiones incluidas</h2>
 <ul>
-  <li><b>Plan Esencial:</b> 2 rondas de cambios incluidas.</li>
-  <li><b>Plan Crecimiento:</b> hasta 5 rondas de cambios.</li>
+  <li><b>Plan Essential:</b> 1 semana de revisiones gratis a partir del lanzamiento.</li>
+  <li><b>Plan Pro:</b> 2 semanas de revisiones gratis a partir del lanzamiento.</li>
 </ul>
-<p>Cambios adicionales más allá del límite incluido se cotizarán como un trabajo adicional.</p>
+<p>Durante el período de revisiones incluidas no se contabilizan rondas: enviamos los cambios solicitados (texto, voz, pantallazos, lo que prefiera) y los aplicamos, normalmente el mismo día. Pasado el período incluido, las ediciones puntuales se cobran a $75/hr CAD (o equivalente en COP) con un mínimo de 30 minutos. Cualquier cambio que requiera alcance fuera del brief original se cotiza por separado antes de ejecutarlo.</p>
 
 <h2>6. Garantía de devolución de 30 días</h2>
 <p>Si dentro de los treinta (30) días siguientes a la entrega del sitio el Cliente no está satisfecho, PymeWebPro reembolsará el 100% del valor pagado, siempre que:</p>
@@ -130,8 +154,26 @@
 </ul>
 <p>La responsabilidad máxima de PymeWebPro estará limitada al monto efectivamente pagado por el Cliente por el servicio en cuestión.</p>
 
-<h2>10. Cancelación</h2>
-<p>El Plan Hosting puede cancelarse en cualquier momento sin penalidad. Una vez cancelado, PymeWebPro entregará al Cliente las credenciales necesarias para que él mismo aloje su sitio en otro proveedor; los archivos del sitio se conservarán durante 30 días después de la cancelación.</p>
+<h2 id="10-cancelacion">10. Cancelación</h2>
+<p>Este contrato puede cancelarse en cualquier momento. Las consecuencias económicas dependen de la fase del proyecto al momento de la cancelación.</p>
+
+<h3>10.1. Antes de la entrega del primer preview</h3>
+<p>Si el Cliente cancela después de pagar el depósito del 30% pero antes de que PymeWebPro entregue el primer preview en URL de staging, PymeWebPro reembolsa el 100% del depósito al medio de pago original, dentro de catorce (14) días hábiles. No se cobra el saldo del 70%. No quedan obligaciones pendientes para ninguna de las partes.</p>
+
+<h3>10.2. Entre el primer preview y el lanzamiento</h3>
+<p>Una vez entregado el primer preview, el depósito del 30% no es reembolsable: representa el diseño y desarrollo ya ejecutados. Si el Cliente decide no continuar al lanzamiento, el saldo del 70% no se factura. PymeWebPro no transfiere DNS al dominio del Cliente, y el sitio no se publica en producción. A solicitud del Cliente, PymeWebPro entrega un archivo con el código fuente del trabajo completado para que el Cliente pueda usarlo en otro proveedor de hosting si así lo desea.</p>
+
+<h3>10.3. Después del lanzamiento</h3>
+<p>La cancelación post-lanzamiento se rige por la Garantía de devolución de 30 días (sección 6): dentro de los primeros 30 días desde el lanzamiento el Cliente puede solicitar reembolso del 100% pagado. Pasados los 30 días el valor pagado no es reembolsable, pero el Cliente conserva la titularidad del sitio y puede solicitar la migración a otro proveedor en cualquier momento; PymeWebPro entrega el código fuente sin costo.</p>
+
+<h3>10.4. Cancelación del Plan Hosting</h3>
+<p>El Plan Hosting opcional puede cancelarse en cualquier momento sin penalidad. PymeWebPro entregará al Cliente las credenciales necesarias para alojar el sitio en otro proveedor; los archivos del sitio se conservan durante 30 días después de la cancelación.</p>
+
+<h3>10.5. Cancelación por incumplimiento</h3>
+<p>PymeWebPro puede dar por terminado el contrato si el Cliente: (a) no paga el saldo del 70% dentro de los 30 días siguientes a la fecha de vencimiento de la factura; (b) sube al portal contenido ilegal o que infrinja derechos de terceros; o (c) incurre en uso abusivo del servicio o del personal. En estos casos los pagos por trabajo ya completado no son reembolsables, pero PymeWebPro entrega los archivos correspondientes al estado del proyecto.</p>
+
+<h3>10.6. Cómo solicitar la cancelación</h3>
+<p>Para solicitar cualquier cancelación, escriba a <!--email_off--><a href="mailto:hello@pymewebpro.com">hello@pymewebpro.com</a><!--/email_off--> indicando nombre, referencia del proyecto y motivo. PymeWebPro responde dentro de dos (2) días hábiles confirmando la fase aplicable, el monto reembolsable (si aplica) y el cronograma de cierre del proyecto.</p>
 
 <h2>11. Confidencialidad</h2>
 <p>PymeWebPro mantendrá confidencial la información comercial del Cliente y solo la utilizará para los fines de la prestación del servicio.</p>

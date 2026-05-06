@@ -1,0 +1,31 @@
+Audit-driven cleanup pass: CSP, English privacy policy, terms §10, contact form, brand consolidation, doorway pages
+
+Critical
+- Ship real CSP via functions/_middleware.js (was silently stripped from _headers because the hash-locked value exceeded CF Pages' ~2KB limit).
+- Add English privacy policy at /privacy aligned with PIPEDA + Quebec Law 25; route EN footer there. Spanish stays at /politica-de-datos.
+- Resolve no-cookies contradiction: rewrite politica-de-datos §5 + §9 to drop the GA + Meta Pixel claims; note GA4/Pixel are a Pro-tier client-site feature, not used on pymewebpro.com itself.
+- Rewrite terminos §10 (Cancelacion) into 6 subsections covering pre-preview, post-preview, post-launch, hosting, for-cause, and procedure. Closes the deposit-cancellation gap.
+- Align contract + ToS with current Essential/Pro multi-page product (drop stale 5-page CMS framing; unify tier names across languages).
+
+High
+- Add inline contact form to homepage CTA wired to /api/contact.
+- Doorway-page risk: noindex,follow on all 12 sitio-web-* pages, remove from sitemap.xml, drop duplicate <link rel=canonical>.
+- Spanish FAQ JSON-LD now per-locale; build-bilingual.mjs extended to strip <script data-lang>.
+- Trust strip eyebrow softened (Tools we build with); drop Cloudflare 100% SLA claim; relabel hero perf panel as illustrative.
+- Toronto-agency comparison column relabeled Typical agency (illustrative) with sr-only comparison-example text; price-foot calls out composite-from-rate-cards framing.
+- Remove unverifiable testimonials section (both linked to mockup URLs and neither subject was findable).
+- Portfolio relabeled Concept builds, live and clickable; BWI + Schedulator marked Concept; 1B AUM claim removed.
+
+Medium
+- Two-person partnership disclosure: name Santiago Santos in FAQ + privacy + memory; ES CTA routes to Santiago, EN to Mike.
+- Brand consolidation: terminos / politica-de-datos / privacy / hosting ported from gold/red/Fraunces to main orange/Inter-Tight system with bracket logo.
+- Canonical URLs aligned to extension-less form across legal pages, sitemap, _headers cache rules; drop /hosting -> /hosting.html redirect that collided with CF Pages auto-strip.
+- robots.txt: drop /api/ + /functions/ Disallow leakage.
+- Service JSON-LD areaServed: [CA,US,MX] -> [CA,US,CO].
+- Title tag tightened to 60 chars to fit SERP.
+- WordPress CVE every Tuesday and studio in Toronto replaced with generic phrasing.
+
+Verified
+- npm run check passes (0 fails).
+- All 36 inline-script hashes recomputed in functions/_middleware.js.
+- build-bilingual.mjs: 0 residual ml-* spans in EN/ES outputs.

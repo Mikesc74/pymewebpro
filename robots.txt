@@ -1,13 +1,9 @@
 # PymeWebPro — robots.txt
-# Marketing site is fully indexable. The portal lives on a different host
-# (portal.pymewebpro.com) so we don't gate it from here.
+# Marketing site is fully indexable. Crawlers will see the canonical
+# URLs in the sitemap; landing pages flagged for noindex (vertical ×
+# city pattern) declare that via meta robots in their <head>.
 
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /functions/
-
-# Common AI crawlers — allow factual indexing, no special handling
-# (add Disallow rules per crawler here if policy changes)
 
 Sitemap: https://pymewebpro.com/sitemap.xml
