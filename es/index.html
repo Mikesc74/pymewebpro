@@ -667,6 +667,8 @@ section{padding:clamp(80px,9vw,130px) 0}
 
 /* Comparison-card "illustrative" badge */
 .badge-illustrative{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray);background:transparent;border:1px solid var(--line);border-radius:4px;padding:2px 6px;margin-left:8px;vertical-align:middle}
+/* Staging-URL badge for client testimonials whose customer-owned domain isn't live yet */
+.badge-staging{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:middle}
 
 /* ─── Footer ─────────────────────────────────── */
 footer{background:var(--bg);color:var(--slate);padding:70px 0 28px;border-top:1px solid var(--line)}
@@ -1138,8 +1140,8 @@ body.nav-open{overflow:hidden}
   <div class="container">
     <div class="section-head center">
       <span class="eyebrow"><span class="dot"></span>Portafolio</span>
-      <h2>Builds conceptuales, <span class="accent">en vivo y navegables.</span></h2>
-      <p>Seis sitios conceptuales completos en distintos sectores, alojados en mockups.pymewebpro.com para que pueda recorrerlos. Cada uno cumple con el mismo estándar de Lighthouse, seguridad y rendimiento que entregamos a clientes pagos. El trabajo de clientes reales se agregará aquí a medida que obtengamos permiso para publicarlo.</p>
+      <h2>Trabajo de clientes y builds conceptuales, <span class="accent">en vivo y navegables.</span></h2>
+      <p>Una mezcla de builds para clientes pagos y showcases conceptuales en distintos sectores, alojados en mockups.pymewebpro.com para que pueda recorrerlos. Las tarjetas de clientes apuntan a URLs de staging mientras se finaliza el dominio propio del cliente; las tarjetas conceptuales están claramente etiquetadas. Cada una cumple con el mismo estándar de Lighthouse, seguridad y rendimiento.</p>
     </div>
 
     <div class="port-grid">
@@ -1155,8 +1157,8 @@ body.nav-open{overflow:hidden}
       <a class="port-card bwi" href="https://mockups.pymewebpro.com/blue-whale-international/" target="_blank" rel="noopener">
         <div class="preview"><img src="/screenshots/blue-whale-international.jpg" alt="Blue Whale International site preview" width="1200" height="930" loading="lazy" decoding="async"></div>
         <div class="info">
-          <div class="head"><h3>Blue Whale International</h3><span class="sector">Concepto · Recruiting financiero</span></div>
-          <p>Sitio conceptual para una firma de recruiting financiero y tech en LATAM. Diseño corporativo con subida de hoja de vida, formulario de carreras y listado de roles.</p>
+          <div class="head"><h3>Blue Whale International</h3><span class="sector">Cliente · Recruiting financiero</span></div>
+          <p>Firma de recruiting financiero y tech en LATAM. Diseño corporativo con subida de hoja de vida, formulario de carreras y listado de roles. Actualmente en staging mientras se finaliza el dominio propio.</p>
           <div class="meta"><span>Inter Tight</span><span>Subida de archivos</span><span>5 secciones</span></div>
         </div>
       </a>
@@ -1182,8 +1184,8 @@ body.nav-open{overflow:hidden}
       <a class="port-card sched" href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">
         <div class="preview"><img src="/screenshots/schedulator.jpg" alt="The Schedulator site preview" width="1200" height="932" loading="lazy" decoding="async"></div>
         <div class="info">
-          <div class="head"><h3>The Schedulator</h3><span class="sector">Concepto · SaaS B2B</span></div>
-          <p>Sitio conceptual de marketing SaaS para administradores de escuelas primarias. Página de producto con scheduling drag-and-drop, tema oscuro y CTA de demo.</p>
+          <div class="head"><h3>The Schedulator</h3><span class="sector">Cliente · SaaS B2B</span></div>
+          <p>Sitio de marketing SaaS para administradores de escuelas primarias. Página de producto con scheduling drag-and-drop, tema oscuro y CTA de demo. Actualmente en staging mientras se finaliza el dominio propio.</p>
           <div class="meta"><span>Tema oscuro</span><span>Long-form</span><span>Demo CTA</span></div>
         </div>
       </a>
@@ -1201,20 +1203,40 @@ body.nav-open{overflow:hidden}
   </div>
 </section>
 
-<!--
-  Testimonials section intentionally removed 2026-05-06. Previous block
-  presented two concept-feedback quotes ("Patrick Detzner / The Schedulator",
-  "Orlando de La Flor Ferrari / Blue Whale International") under a "What
-  clients say" heading. Both linked to mockups.pymewebpro.com pages, neither
-  named subject was findable in any third-party directory, and the BWI quote
-  carried an unverifiable "$1B AUM" framing in the portfolio card. Audit
-  flagged as fabrication risk under FTC endorsement / Canadian Competition
-  Bureau guidance.
-
-  This section will return when we have shipped paying-client work with
-  permission to publish (a) a real testimonial quote, (b) the client's name
-  and verifiable role, and (c) a link to the live customer-owned domain.
--->
+<!-- ─── Testimonial ─── -->
+<section class="testimonial">
+  <div class="testimonial-inner">
+    <div class="testimonial-head">
+      <span class="eyebrow"><span class="dot"></span>Lo que dicen los clientes</span>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <blockquote>
+          Soy profesor de educación física de primaria y construí un SaaS para administradores escolares. Necesitaba un sitio de marketing que no se viera como otra plantilla de Stripe. <span class="accent">Mike entendió el brief en la primera llamada y lanzó un v1 pulido en 48 horas.</span> La mitad del precio que pedía una agencia, entrega más rápida, y código fuente que me podía llevar conmigo, difícil de discutir con eso.
+        </blockquote>
+        <cite>
+          <span class="name">Patrick Detzner</span>
+          <span class="role">Fundador · The Schedulator</span>
+        </cite>
+        <div class="link">
+          Ver el sitio → <a href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">schedulator</a> <span class="badge-staging" aria-label="Currently on staging URL while customer-owned domain is finalized">on staging</span>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <blockquote>
+          <span class="accent">Súper contento con el producto final</span> de Mike y el equipo de PymeWebPro. Todo el proceso fue directo y rápido. Entendieron exactamente lo que necesitaba y entregaron un sitio limpio y profesional en solo un par de días. Muy recomendados.
+        </blockquote>
+        <cite>
+          <span class="name">Orlando de La Flor Ferrari</span>
+          <span class="role">Blue Whale International</span>
+        </cite>
+        <div class="link">
+          Ver el sitio → <a href="https://mockups.pymewebpro.com/blue-whale-international/" target="_blank" rel="noopener">blue-whale-international</a> <span class="badge-staging" aria-label="Currently on staging URL while customer-owned domain is finalized">on staging</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ─── Comparison ─── -->
 <section class="compare">

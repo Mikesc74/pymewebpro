@@ -1,0 +1,17 @@
+Restore Patrick + Orlando testimonials (real paying clients)
+
+Reverts the prior over-correction. Both Schedulator (Patrick Detzner)
+and Blue Whale International (Orlando de La Flor Ferrari) are real
+paying clients; their customer-owned domains aren't live yet, so
+showcase URLs stay on mockups.pymewebpro.com staging for now.
+
+- Restore testimonials section verbatim with both quotes.
+- Relabel portfolio cards: Client·Finance recruiting (BWI),
+  Client·B2B SaaS (Schedulator). Drop unverifiable "$1B AUM"
+  framing from BWI card desc.
+- Add "on staging" badge next to testimonial-card links so the
+  mockups.pymewebpro.com URL doesn't read as fake.
+- Portfolio header: "Client work and concept builds, live and
+  clickable" (acknowledges the mix instead of calling everything
+  concept).
+- Soften Patrick quote: "Toronto agency" → "an agency".
