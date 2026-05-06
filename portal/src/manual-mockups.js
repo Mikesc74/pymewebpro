@@ -17,6 +17,11 @@ import { blueWhaleHtml } from "./manual-mockups-bluewhale.js";
 import { espacioDentalHtml } from "./manual-mockups-espaciodental.js";
 import { pymewebproCaHtml } from "./manual-mockups-pymewebproca.js";
 import { pymewebproV1Html } from "./manual-mockups-pymewebprov1.js";
+import { pymewebproV3Html } from "./manual-mockups-pymewebprov3.js";
+import { pymewebproV3EsHtml } from "./manual-mockups-pymewebprov3es.js";
+import { pymewebproV3FrHtml } from "./manual-mockups-pymewebprov3fr.js";
+import { pymewebproV4Html } from "./manual-mockups-pymewebprov4.js";
+import { pymewebproV4EsHtml } from "./manual-mockups-pymewebprov4es.js";
 import { schedulatorHtml } from "./manual-mockups-schedulator.js";
 import { marenaHtml } from "./manual-mockups-marena.js";
 import { startHtml } from "./manual-mockups-start.js";
@@ -33,6 +38,11 @@ export const MANUAL_MOCKUPS = {
   "espacio-dental": espacioDentalHtml,
   "pymewebpro-ca": pymewebproCaHtml,
   "pymewebpro-v1": pymewebproV1Html,
+  "pymewebpro-v3": pymewebproV3Html,
+  "pymewebpro-v3-es": pymewebproV3EsHtml,
+  "pymewebpro-v3-fr": pymewebproV3FrHtml,
+  "pymewebpro-v4": pymewebproV4Html,
+  "pymewebpro-v4-es": pymewebproV4EsHtml,
   marena: marenaHtml,
   start: startHtml,
 };
