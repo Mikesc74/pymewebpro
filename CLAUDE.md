@@ -122,11 +122,13 @@ All 7 sites with a navbar (i.e. all except `start`) ship a **working hamburger d
 
 ## Positioning · key phrases
 
-- "Canadian founder. Medellín-built. AI-leveraged."
+- "Canadian-owned studio. Built in Medellín. Powered by Anthropic AI."
 - "Enterprise tech at SMB pricing."
 - "Custom-coded · Cloudflare-hosted · sub-1s LCP · 48-hour delivery."
-- "We use Anthropic AI as a force multiplier — same craft, fraction of the time."
-- Drop in Toronto Agency comparison: $8,500 vs $800.
+- "Claude does the build. We set the brief, review the output, and ship."
+- Drop in Toronto Agency comparison: $5K-$12K vs $500-$800.
+
+**What we don't claim:** we don't position ourselves as senior engineers, a development team, or programmers. The pitch is honest: a small studio that uses Anthropic AI to do the technical work, with humans setting briefs and reviewing output before shipping. Customers get the same output as an agency at a fraction of the cost because there are no engineering salaries to pay.
 
 ## Mike's preferences
 
@@ -148,7 +150,7 @@ All 7 sites with a navbar (i.e. all except `start`) ship a **working hamburger d
 
 These are non-negotiable. If a brief asks for something that violates these, push back.
 
-1. **No runtime CSS frameworks via CDN.** Never use `<script src="https://cdn.tailwindcss.com">` or any equivalent. That CDN is for prototyping only and adds a 3MB+ JS payload that destroys LCP. We ship hand-tuned inline `<style>` blocks. Tailwind, Bootstrap, Bulma, Pico — none belong in production output.
+1. **No runtime CSS frameworks via CDN.** Never use `<script src="https://cdn.tailwindcss.com">` or any equivalent. That CDN is for prototyping only and adds a 3MB+ JS payload that destroys LCP. We ship custom inline `<style>` blocks (AI-built, human-reviewed; no framework runtime). Tailwind, Bootstrap, Bulma, Pico — none belong in production output.
 2. **No CDN scripts at all** except: Google Fonts (preconnect + stylesheet), Pexels images (CDN URLs OK), and explicitly-allowed libraries we choose case-by-case (e.g., a small Chart.js or three.js when the build genuinely needs it).
 3. **Real product photos required.** A fashion site without product photos is wireframe-tier. A real-estate site without property shots is wireframe-tier. Use Pexels CDN URLs at minimum, base64-embed when local files are provided. CSS gradients are NEVER an acceptable substitute for images on product, portfolio, or gallery cards.
 4. **No marquee scrolling text bars.** Dated 2018 e-comm trope. If you need to convey shipping/return/promo info, use a static notice bar.

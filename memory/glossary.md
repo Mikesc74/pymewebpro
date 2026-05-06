@@ -6,7 +6,7 @@ Workplace shorthand, internal terms, and project codenames.
 
 | Term | Meaning |
 |------|---------|
-| **manual mockup** | A hand-built static HTML site served as a single string from `mockups.pymewebpro.com/<slug>/`. Bypasses the auto-generator. Each registered in `MANUAL_MOCKUPS` map. |
+| **manual mockup** | A custom static HTML site (AI-built, human-reviewed) served as a single string from `mockups.pymewebpro.com/<slug>/`. Bypasses the auto-generator. Each registered in `MANUAL_MOCKUPS` map. |
 | **the worker** | The single Cloudflare Worker `pymewebpro-portal`. Handles everything: portal SPA, admin, intake, manual mockups, customer sites under `*.sites.pymewebpro.com`. |
 | **the SPA** | The React admin/portal interface, embedded as `FRONTEND_HTML` template literal inside `portal/src/index.js`. Uses React 18 + Babel standalone. |
 | **the engine** | The original (now archived) auto-generator that built sites from intake forms. Folded into the portal. |

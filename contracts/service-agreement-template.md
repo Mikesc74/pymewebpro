@@ -27,7 +27,7 @@ The Studio will design, develop, and deploy a custom marketing website (the "**W
 
 Both tiers include:
 
-- Custom-designed, hand-coded HTML and CSS website. No WordPress, no themes.
+- Custom-designed, custom-coded HTML and CSS website. No WordPress, no themes. Built with Anthropic's Claude as the primary coding partner; every output is reviewed and refined by the Studio before shipping.
 - Cloudflare Workers hosting. 1 year included for Essential, 2 years for Pro.
 - Custom domain configuration with SSL
 - Mobile-responsive design across all devices
