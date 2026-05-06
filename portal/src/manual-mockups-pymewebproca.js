@@ -511,36 +511,37 @@ section{position:relative}
 
 /* ─── Portfolio ──────────────────────────────── */
 .portfolio{padding:96px var(--gutter);background:var(--bg)}
-.port-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.port-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .port-card{
-  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
   overflow:hidden;display:flex;flex-direction:column;
   transition:all .3s;color:inherit;
 }
-.port-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--accent-soft)}
+.port-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--accent-soft)}
 .port-card .preview{
   aspect-ratio:16/10;background:var(--cream);overflow:hidden;
   display:flex;align-items:center;justify-content:center;
 }
 .port-card .preview img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .port-card:hover .preview img{transform:scale(1.04)}
-.port-card .info{padding:26px 28px}
-.port-card .info .head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px;flex-wrap:wrap}
-.port-card .info h3{font-size:20px;letter-spacing:-0.02em}
-.port-card .info .sector{font-size:12px;color:var(--accent-deep);font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
-.port-card .info p{font-size:14.5px;color:var(--slate);line-height:1.55;margin-bottom:16px}
-.port-card .info .meta{display:flex;gap:8px;flex-wrap:wrap}
-.port-card .info .meta span{font-size:11.5px;color:var(--slate);background:var(--bg);padding:4px 10px;border-radius:999px;border:1px solid var(--line);font-weight:500}
+.port-card .info{padding:18px 20px 20px}
+.port-card .info .head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.port-card .info h3{font-size:16px;letter-spacing:-0.02em}
+.port-card .info .sector{font-size:10.5px;color:var(--accent-deep);font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+.port-card .info p{font-size:13px;color:var(--slate);line-height:1.5;margin-bottom:11px}
+.port-card .info .meta{display:flex;gap:6px;flex-wrap:wrap}
+.port-card .info .meta span{font-size:10.5px;color:var(--slate);background:var(--bg);padding:3px 8px;border-radius:999px;border:1px solid var(--line);font-weight:500}
 .port-card.cta-card{
   background:linear-gradient(135deg,var(--accent-soft) 0%,var(--paper) 100%);
   border:1px dashed var(--accent);
   align-items:center;justify-content:center;text-align:center;
 }
-.port-card.cta-card .preview{background:transparent;color:var(--ink);font-family:var(--display);font-size:22px;font-weight:600;flex-direction:column}
-.port-card.cta-card .preview .small{font-family:var(--sans);font-size:13px;color:var(--slate);margin-top:8px;font-weight:400}
-.port-card.cta-card .info{text-align:center;width:100%;padding:24px 28px 30px}
+.port-card.cta-card .preview{background:transparent;color:var(--ink);font-family:var(--display);font-size:18px;font-weight:600;flex-direction:column}
+.port-card.cta-card .preview .small{font-family:var(--sans);font-size:12px;color:var(--slate);margin-top:6px;font-weight:400}
+.port-card.cta-card .info{text-align:center;width:100%;padding:16px 20px 20px}
 
-@media (max-width:780px){.port-grid{grid-template-columns:1fr}}
+@media (max-width:980px){.port-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.port-grid{grid-template-columns:1fr}}
 
 /* ─── Honest pitch ───────────────────────────── */
 .honest{padding:96px var(--gutter);background:var(--paper)}
@@ -919,6 +920,15 @@ footer{background:var(--paper);padding:64px var(--gutter) 24px;border-top:1px so
         <div class="head"><h3>The Schedulator</h3><span class="sector"><span class="ml-en">Client · B2B SaaS</span><span class="ml-es">Cliente · SaaS B2B</span></span></div>
         <p><span class="ml-en">SaaS marketing site for elementary-school admins. Drag-and-drop product page, dark theme, demo CTA. On staging while the customer-owned domain is finalized.</span><span class="ml-es">Sitio de marketing SaaS para administradores escolares. Página de producto con drag-and-drop, tema oscuro, CTA de demo. En staging mientras se finaliza el dominio propio.</span></p>
         <div class="meta"><span><span class="ml-en">Dark theme</span><span class="ml-es">Tema oscuro</span></span><span><span class="ml-en">Long-form</span><span class="ml-es">Long-form</span></span><span>Demo CTA</span></div>
+      </div>
+    </a>
+
+    <a class="port-card" href="https://mockups.pymewebpro.com/marena/" target="_blank" rel="noopener">
+      <div class="preview"><img src="https://pymewebpro.com/screenshots/marena.jpg" alt="Marena site preview" width="1200" height="750" loading="lazy" decoding="async"></div>
+      <div class="info">
+        <div class="head"><h3>Marena</h3><span class="sector"><span class="ml-en">Concept · Fashion retail</span><span class="ml-es">Concepto · Moda</span></span></div>
+        <p><span class="ml-en">Fashion retail concept from Medellín. Editorial product cards, lookbook gallery, cart drawer, full Spanish.</span><span class="ml-es">Concepto de retail de moda de Medellín. Tarjetas de producto editoriales, galería de lookbook, carrito lateral, totalmente en español.</span></p>
+        <div class="meta"><span>Editorial</span><span>Lookbook</span><span><span class="ml-en">Cart drawer</span><span class="ml-es">Carrito lateral</span></span></div>
       </div>
     </a>
 
