@@ -20,6 +20,8 @@ FILES = [
     "es/index.html",
     "start/index.html",
     "es/start/index.html",
+    "es/sitios-web/index.html",
+    "es/tienda/index.html",
     "terminos.html",
     "politica-de-datos.html",
     "hosting.html",
