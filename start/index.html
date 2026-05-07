@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en" class="lang-en">
+<html lang="es" class="lang-es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#FBF7F0">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex,nofollow">
-<title>Start your build · PymeWebPro</title>
-<meta name="description" content="Starting your PymeWebPro build. Three quick fields, then payment.">
+<title>Empezar su construcción · PymeWebPro</title>
+<meta name="description" content="Empezando su página de PymeWebPro. Tres campos rápidos, luego pago.">
 <link rel="canonical" href="https://pymewebpro.com/start/">
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23FBF7F0%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2241%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-sans-serif%2Csystem-ui%22%20font-size%3D%2228%22%20font-weight%3D%22800%22%20fill%3D%22%231A1612%22%3Ep%3Ctspan%20fill%3D%22%23FF5C2E%22%3Ew%3C/tspan%3Ep%3C/text%3E%3C/svg%3E'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,7 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 
 .shell{width:100%;max-width:560px}
 
 .kicker{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7A4828;margin-bottom:.85rem}
-h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.025em;line-height:1.05;font-size:clamp(30px,4vw,42px);margin:0 0 .55rem;color:#1B1410}
+h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.025em;line-height:1.05;font-size:clamp(28px,3.6vw,38px);margin:0 0 .55rem;color:#1B1410}
 h1 .accent{color:#FF5C2E}
 .sub{font-size:17px;color:#3a2a1f;margin:0 0 28px;line-height:1.5}
 
@@ -77,23 +77,23 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
 <body>
 
 <nav class="topnav">
-  <a class="brand" href="https://pymewebpro.com/" aria-label="PymeWebPro home">
+  <a class="brand" href="https://pymewebpro.com/" aria-label="PymeWebPro inicio">
     <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
   </a>
-  <a class="back" href="https://pymewebpro.com/">← Back</a>
+  <a class="back" href="https://pymewebpro.com/">← Volver</a>
 </nav>
 
 <main>
   <div class="shell">
-    <span class="kicker" id="kicker">Starting your build</span>
-    <h1>Three quick fields, then <span class="accent fr">payment</span>.</h1>
-    <p class="sub">We'll create your build slot, send you straight to checkout, and start writing your page within 24 hours of payment.</p>
+    <span class="kicker" id="kicker">Empezando su plan</span>
+    <h1>Tres campos rápidos, luego <span class="accent fr">el pago</span>.</h1>
+    <p class="sub">Creamos su slot de construcción, lo enviamos directo al checkout, y empezamos a escribir su página dentro de las 24 horas siguientes al pago.</p>
 
     <div class="plan-card" id="plan-card" hidden>
       <div class="row">
         <div>
           <span class="tag" id="plan-tag">Essential</span>
-          <div class="name" id="plan-name">The page</div>
+          <div class="name" id="plan-name">La página</div>
         </div>
         <div class="price" id="plan-price"></div>
       </div>
@@ -102,26 +102,26 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
 
     <form id="start-form" novalidate>
       <div class="field">
-        <label for="sf-name">Your name</label>
-        <input id="sf-name" name="name" type="text" required autocomplete="name" placeholder="Full name">
+        <label for="sf-name">Su nombre</label>
+        <input id="sf-name" name="name" type="text" required autocomplete="name" placeholder="Nombre completo">
       </div>
       <div class="field">
-        <label for="sf-email">Email</label>
-        <input id="sf-email" name="email" type="email" required autocomplete="email" placeholder="you@yourbusiness.com">
+        <label for="sf-email">Correo</label>
+        <input id="sf-email" name="email" type="email" required autocomplete="email" placeholder="usted@sunegocio.com">
       </div>
       <div class="field">
-        <label for="sf-business">Business name</label>
-        <input id="sf-business" name="business_name" type="text" required placeholder="What's your business called?">
+        <label for="sf-business">Nombre del negocio</label>
+        <input id="sf-business" name="business_name" type="text" required placeholder="¿Cómo se llama su negocio?">
       </div>
       <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-      <button type="submit" class="submit" id="sf-submit">Continue to payment →</button>
-      <div class="note">By continuing, you'll be sent to a secure checkout page. No charge yet.</div>
+      <button type="submit" class="submit" id="sf-submit">Continuar al pago →</button>
+      <div class="note">Al continuar, lo enviaremos a una página de pago segura. Aún no le cobramos.</div>
       <div class="status" id="sf-status" role="status" aria-live="polite"></div>
     </form>
 
     <div class="alt-paths">
-      Prefer to talk first?
-      <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener">Book 15 min with Mike</a>
+      ¿Prefiere hablar primero?
+      <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener">Agendar 15 min con Mike</a>
       <span style="opacity:.4">·</span>
       <a href="https://wa.me/573014047722" target="_blank" rel="noopener">WhatsApp Santiago</a>
     </div>
@@ -137,8 +137,8 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
 (function(){
   var PORTAL_URL = 'https://portal.pymewebpro.com';
   var PLANS = {
-    esencial: { tag: 'Essential', name: 'The page', cad: '$500 CAD', cop: '$390.000 COP', dep_cad: '$150 CAD', dep_cop: '$117.000 COP' },
-    pro: { tag: 'Pro · Best value', name: 'The connected page', cad: '$800 CAD', cop: '$690.000 COP', dep_cad: '$240 CAD', dep_cop: '$207.000 COP' }
+    esencial: { tag: 'Essential', name: 'La página', cad: '$500 CAD', cop: '$390.000 COP', dep_cad: '$150 CAD', dep_cop: '$117.000 COP' },
+    pro: { tag: 'Pro · Mejor valor', name: 'La página conectada', cad: '$800 CAD', cop: '$690.000 COP', dep_cad: '$240 CAD', dep_cop: '$207.000 COP' }
   };
 
   var params = new URLSearchParams(window.location.search);
@@ -149,20 +149,20 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
   var card = document.getElementById('plan-card');
   document.getElementById('plan-tag').textContent = plan.tag;
   document.getElementById('plan-name').textContent = plan.name;
-  document.getElementById('kicker').textContent = 'Starting your ' + plan.tag.split(' ')[0] + ' plan';
+  document.getElementById('kicker').textContent = 'Empezando su plan ' + plan.tag.split(' ')[0];
 
   function renderPrice(isCO){
     var price = isCO ? plan.cop : plan.cad;
     var dep = isCO ? plan.dep_cop : plan.dep_cad;
     document.getElementById('plan-price').innerHTML = price;
-    document.getElementById('plan-deposit').innerHTML = '<strong>30% deposit</strong> (' + dep + ') today, 70% on launch. <strong>30-day money-back guarantee.</strong>';
+    document.getElementById('plan-deposit').innerHTML = '<strong>30% de depósito</strong> (' + dep + ') hoy, 70% al lanzar. <strong>Garantía de devolución a 30 días.</strong>';
     card.removeAttribute('hidden');
   }
 
   fetch('/cdn-cgi/trace').then(function(r){ return r.text(); }).then(function(t){
     var m = t.match(/loc=([A-Z]{2})/);
     renderPrice(m && m[1] === 'CO');
-  }).catch(function(){ renderPrice(false); });
+  }).catch(function(){ renderPrice(true); });
 
   var form = document.getElementById('start-form');
   var submit = document.getElementById('sf-submit');
@@ -173,14 +173,14 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
     status.className = 'status';
     status.textContent = '';
     submit.disabled = true;
-    submit.textContent = 'Creating your build slot...';
+    submit.textContent = 'Creando su slot de construcción...';
     var fd = new FormData(form);
     var payload = {
       name: fd.get('name'),
       email: fd.get('email'),
       business_name: fd.get('business_name'),
-      message: 'Wants the ' + plan.tag.split(' ')[0] + ' plan. Came from /start.',
-      language: 'en',
+      message: 'Quiere el plan ' + plan.tag.split(' ')[0] + '. Vino de /es/start.',
+      language: 'es',
       source: 'pymewebpro_start',
       page: '/start/',
       website: fd.get('company_website') || '',
@@ -195,20 +195,20 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
       .then(function(res){
         if (res.ok && res.body && res.body.lead_id){
           status.className = 'status ok';
-          status.textContent = 'Sending you to checkout...';
+          status.textContent = 'Enviándolo al checkout...';
           window.location = PORTAL_URL + '/c/' + res.body.lead_id;
         } else {
           status.className = 'status err';
-          status.textContent = (res.body && res.body.error) || 'Something went wrong. Try again, or WhatsApp Santiago.';
+          status.textContent = (res.body && res.body.error) || 'Algo salió mal. Intente de nuevo, o escriba a Santiago por WhatsApp.';
           submit.disabled = false;
-          submit.textContent = 'Continue to payment →';
+          submit.textContent = 'Continuar al pago →';
         }
       })
       .catch(function(){
         status.className = 'status err';
-        status.textContent = 'Network error. Try again, or WhatsApp Santiago.';
+        status.textContent = 'Error de red. Intente de nuevo, o escriba a Santiago por WhatsApp.';
         submit.disabled = false;
-        submit.textContent = 'Continue to payment →';
+        submit.textContent = 'Continuar al pago →';
       });
   });
 })();

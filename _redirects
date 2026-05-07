@@ -16,6 +16,12 @@ http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
 /en/*   /:splat   301
 /en     /         301
 
+# Legacy /es/ paths -> apex (Spanish is now the default at / since LATAM-only
+# pivot). The whole site is Spanish, so /es/ prefix is no longer meaningful.
+# Old inbound links from social, GBP, search results all 301 to the new path.
+/es/*   /:splat   301
+/es     /         301
+
 # Note: Cloudflare Pages automatically serves *.html files at the extension-less
 # URL and 308-redirects /name.html → /name. So /hosting.html, /terminos.html,
 # /politica-de-datos.html, /privacy.html all resolve at the extension-less path.
