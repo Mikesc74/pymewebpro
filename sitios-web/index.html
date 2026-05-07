@@ -349,10 +349,10 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
       .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, body: j }; }); })
       .then(function(res){
         if(res.ok && res.body && res.body.lead_id){
+          form.reset();
           status.className = 'form-status ok';
-          status.textContent = 'Recibido. Lo enviamos al siguiente paso...';
+          status.textContent = '✓ Recibido. Mike o Santiago le responderán por correo en un día hábil. Si quiere acelerar, escríbale a Santiago por WhatsApp.';
           submit.textContent = 'Enviado ✓';
-          setTimeout(function(){ window.location = PORTAL + '/c/' + res.body.lead_id; }, 600);
         } else {
           status.className = 'form-status err';
           status.textContent = (res.body && res.body.error) || 'Algo salió mal. Intente de nuevo, o escriba a Santiago por WhatsApp.';

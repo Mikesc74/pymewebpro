@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Brand palette -->
+  <!-- cream #FBF7F0 · ink #1B1410 · orange #FF5C2E · muted #6B5F50 -->
+
+  <defs>
+    <style type="text/css"><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&amp;family=Inter+Tight:wght@500;600;700&amp;display=swap');
+      .ink { fill: #1B1410; }
+      .orange { fill: #FF5C2E; }
+      .muted { fill: #6B5F50; }
+      .display { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-style: normal; }
+      .sans { font-family: 'Inter Tight', system-ui, sans-serif; }
+      .sans-bold { font-family: 'Inter Tight', system-ui, sans-serif; font-weight: 700; }
+    ]]></style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#FBF7F0"/>
+
+  <!-- Top accent stripe (orange, thin) -->
+  <rect x="0" y="0" width="1200" height="6" fill="#FF5C2E"/>
+
+  <!-- Wordmark · top-left -->
+  <g transform="translate(72, 88)">
+    <text class="sans-bold ink" font-size="26" letter-spacing="-0.5">pymewebpro</text>
+    <text class="sans ink" font-size="26" x="170" opacity="0.35">.com</text>
+  </g>
+
+  <!-- Eyebrow tag · top-right -->
+  <g transform="translate(1128, 88)" text-anchor="end">
+    <text class="sans muted" font-size="20" letter-spacing="2">PÁGINAS QUE VENDEN</text>
+  </g>
+
+  <!-- Headline (Fraunces, oversized, two lines) -->
+  <g transform="translate(72, 248)">
+    <text class="display ink" font-size="92" letter-spacing="-3">Convierte visitantes</text>
+    <text class="display ink" font-size="92" letter-spacing="-3" y="98">
+      en <tspan class="orange">clientes</tspan>.
+    </text>
+  </g>
+
+  <!-- Subhead -->
+  <g transform="translate(72, 470)">
+    <text class="sans muted" font-size="26" letter-spacing="-0.2">
+      Páginas de venta hechas a mano · Medellín → Latinoamérica
+    </text>
+  </g>
+
+  <!-- Bottom row: price chip + delivery chip + domain -->
+  <g transform="translate(72, 540)">
+    <!-- Price chip -->
+    <rect x="0" y="0" width="222" height="46" rx="23" fill="#1B1410"/>
+    <text class="sans-bold" fill="#FBF7F0" font-size="18" x="111" y="29" text-anchor="middle" letter-spacing="0.3">
+      Desde $390.000 COP
+    </text>
+
+    <!-- Delivery chip -->
+    <rect x="238" y="0" width="172" height="46" rx="23" fill="none" stroke="#1B1410" stroke-width="1.5"/>
+    <text class="sans-bold ink" font-size="18" x="324" y="29" text-anchor="middle" letter-spacing="0.3">
+      48 horas online
+    </text>
+  </g>
+
+  <!-- Domain · bottom-right -->
+  <g transform="translate(1128, 569)" text-anchor="end">
+    <text class="sans-bold orange" font-size="22" letter-spacing="-0.2">pymewebpro.com</text>
+  </g>
+
+</svg>
