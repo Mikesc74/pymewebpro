@@ -97,27 +97,23 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 header.site .right{display:flex;align-items:center;gap:.5rem}
 @media (max-width:560px){.lang-switch{font-size:11.5px}.lang-switch a{padding:4px 8px}}
 
-/* INTRO HERO — absorbs Chapter 01 marker + v3-style positioning + full anatomy preview.
-   Source order is H1-first (so mobile reads pitch before chapter marker). Desktop uses
-   grid-template-areas to lift the marker to the top row spanning both columns. */
-.intro{padding:48px 0 88px;position:relative}
-.intro .wrap{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"marker marker" "text anatomy";gap:36px 64px;align-items:center}
-.intro .text{grid-area:text}
-.intro .anatomy-card{grid-area:anatomy}
-.intro .chapter-marker{grid-area:marker;margin-bottom:0}
+/* HERO (intro section) — v3-style positioning + full anatomy preview.
+   Renamed from .intro to .hero to avoid clashing with .solution .intro
+   used inside Capítulo 03. */
+.hero{padding:48px 0 88px;position:relative}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
 @media (max-width:980px){
-  .intro{padding:32px 0 56px}
-  .intro .wrap{grid-template-columns:1fr;grid-template-areas:"text" "anatomy" "marker";gap:36px}
-  .intro .chapter-marker{margin:8px 0 0;padding-top:28px;padding-bottom:0;border-top:1.5px solid rgba(27,20,16,.1);border-bottom:0}
+  .hero{padding:32px 0 56px}
+  .hero .wrap{grid-template-columns:1fr;gap:36px}
 }
-.intro h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:.98;font-size:clamp(40px,5.8vw,72px);margin:.85rem 0 1.1rem;color:#1B1410}
-.intro h1 .strike{color:rgba(27,20,16,.32);text-decoration:line-through;text-decoration-thickness:4px;text-decoration-color:rgba(255,92,46,.85)}
-.intro h1 .accent{color:#FF5C2E}
-.intro .lede{font-size:19.5px;line-height:1.5;color:#3a2a1f;max-width:560px;margin:0 0 1.75rem}
-.intro .cta-row{display:flex;gap:.65rem;flex-wrap:wrap}
-.intro .micro{margin-top:1.25rem;font-size:13.5px;color:#7A4828;display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
-.intro .micro .ok{color:#206B3A;font-weight:700}
-.intro .dot{opacity:.4}
+.hero h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:.98;font-size:clamp(40px,5.8vw,72px);margin:.85rem 0 1.1rem;color:#1B1410}
+.hero h1 .strike{color:rgba(27,20,16,.32);text-decoration:line-through;text-decoration-thickness:4px;text-decoration-color:rgba(255,92,46,.85)}
+.hero h1 .accent{color:#FF5C2E}
+.hero .lede{font-size:19.5px;line-height:1.5;color:#3a2a1f;max-width:560px;margin:0 0 1.75rem}
+.hero .cta-row{display:flex;gap:.65rem;flex-wrap:wrap}
+.hero .micro{margin-top:1.25rem;font-size:13.5px;color:#7A4828;display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
+.hero .micro .ok{color:#206B3A;font-weight:700}
+.hero .dot{opacity:.4}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#7A4828;background:rgba(255,92,46,.08);padding:.5rem .85rem;border-radius:999px}
 
 .chapter{padding:96px 0 104px;position:relative}
@@ -380,9 +376,9 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
 <main id="main">
 
 <!-- CAPÍTULO 01 / EL GANCHO (intro hero) -->
-<section class="intro" id="top">
+<section class="hero" id="top">
   <div class="wrap">
-    <div class="text">
+    <div>
       <span class="eyebrow">Los líderes de la página de ventas</span>
       <h1>No necesita <span class="strike">un sitio web</span>. Necesita una <span class="accent fr">página de ventas</span>.</h1>
       <p class="lede">Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>.</p>
