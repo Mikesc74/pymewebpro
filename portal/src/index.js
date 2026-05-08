@@ -62,6 +62,24 @@ function withSecurityHeaders(response, opts = {}) {
     headers.delete("Access-Control-Allow-Methods");
     headers.delete("Access-Control-Allow-Headers");
   }
+  // CSP for HTML responses. Inline script allowed because FRONTEND_HTML ships
+  // a Babel-standalone React app inline; hashing it is impractical (every edit
+  // changes the hash). frame-ancestors 'none' matches X-Frame-Options: DENY
+  // set elsewhere; loosen to 'self' if admin SPA needs to iframe project portals.
+  if (isHtml && !headers.has("Content-Security-Policy")) {
+    headers.set("Content-Security-Policy", [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' https://unpkg.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: blob:",
+      "connect-src 'self'",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "form-action 'self'"
+    ].join("; "));
+  }
   // X-Frame-Options is path-specific (admin SPA may iframe project portals); leave unset by default.
   return new Response(response.body, { status: response.status, headers });
 }

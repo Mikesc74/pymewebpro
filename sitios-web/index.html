@@ -138,6 +138,27 @@ footer.site .copy{padding-top:18px;border-top:1px solid rgba(244,236,223,.08);te
 footer.site .copy a{color:#A89788}
 footer.site .copy a:hover{color:#FBF7F0}
 footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',serif;font-style:italic}
+
+/* Utility classes (CSP hash-lock support) */
+.u-ink{color:var(--ink)}
+.u-orange{color:#FF5C2E}
+.u-cream{color:#FBF7F0}
+.u-tan{color:#7A6957}
+.u-blue-co{color:#003893}
+.u-onbg-color{color:var(--bg)}
+.u-op-7{opacity:.7}
+.u-op-4{opacity:.4}
+.u-tc{text-align:center}
+.u-mt-14{margin-top:14px}
+.u-mt-24{margin-top:24px}
+.u-mx-auto{margin-left:auto;margin-right:auto}
+.u-offscreen{position:absolute;left:-9999px}
+.u-onbg{border-color:var(--bg);color:var(--bg)}
+.u-darkborder{border-color:rgba(27,20,16,.2);color:#1B1410}
+.u-onwhite{border-color:#fff;color:#fff}
+.u-bullet-sub{margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px}
+.u-bullet-sub-rem{margin:1rem 0 0;font-size:0.875rem;line-height:1.55;color:#A89788;max-width:340px}
+.u-fineprint{font-size:.85rem;color:#5e6883;margin-bottom:24px}
 </style>
 </head>
 
@@ -189,9 +210,9 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 </section>
 
 <section class="section dark" id="offer">
-  <div class="wrap" style="text-align:center">
+  <div class="wrap u-tc">
     <h2>Un precio. Todo incluido.</h2>
-    <p class="lede" style="margin-left:auto;margin-right:auto">Una semana del brief al lanzamiento. Mismo equipo que las páginas de ventas, mismo proceso, misma garantía de devolución a 30 días.</p>
+    <p class="lede u-mx-auto">Una semana del brief al lanzamiento. Mismo equipo que las páginas de ventas, mismo proceso, misma garantía de devolución a 30 días.</p>
     <div class="offer-card">
       <div class="tag">Sitio web completo</div>
       <h3>Su negocio, en línea</h3>
@@ -223,7 +244,7 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
     <div class="list">
       <details>
         <summary>¿Cuándo necesito un sitio web completo en lugar de una página de ventas?</summary>
-        <div class="answer">Cuando vende varios servicios distintos, cuando publica contenido o portafolio, cuando los clientes le encuentran por SEO en consultas largas, o cuando su negocio tiene historia y secciones que necesitan su propia página. Si su único objetivo es convertir clics de anuncios, una <a href="/" style="color:#FF5C2E">página de ventas</a> es mejor.</div>
+        <div class="answer">Cuando vende varios servicios distintos, cuando publica contenido o portafolio, cuando los clientes le encuentran por SEO en consultas largas, o cuando su negocio tiene historia y secciones que necesitan su propia página. Si su único objetivo es convertir clics de anuncios, una <a href="/" class="u-orange">página de ventas</a> es mejor.</div>
       </details>
       <details>
         <summary>¿Cuántas páginas puedo tener?</summary>
@@ -242,8 +263,8 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
         <div class="answer">Lo conectamos. Si ya tiene un dominio, lo apuntamos al sitio. Si no, le indicamos un registrador (Cloudflare Registrar o Namecheap, alrededor de $50.000 COP al año) y lo acompañamos en la compra. El dominio siempre se registra a su nombre.</div>
       </details>
       <details>
-        <summary>¿También venden productos? ¿O eso es la <a href="/tienda/" style="color:#FF5C2E">tienda</a>?</summary>
-        <div class="answer">Si necesita carrito de compras, inventario, pasarelas de pago, eso es nuestro plan de <a href="/tienda/" style="color:#FF5C2E">tienda en línea</a> (Shopify o construido a la medida). Si solo quiere mostrar productos sin venderlos en línea, el sitio web completo lo cubre.</div>
+        <summary>¿También venden productos? ¿O eso es la <a href="/tienda/" class="u-orange">tienda</a>?</summary>
+        <div class="answer">Si necesita carrito de compras, inventario, pasarelas de pago, eso es nuestro plan de <a href="/tienda/" class="u-orange">tienda en línea</a> (Shopify o construido a la medida). Si solo quiere mostrar productos sin venderlos en línea, el sitio web completo lo cubre.</div>
       </details>
     </div>
   </div>
@@ -266,7 +287,7 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
         <label for="lf-about">Cuéntenos sobre su negocio</label>
         <textarea id="lf-about" name="about" required placeholder="Qué hace, cuántas páginas necesita, sitio actual si tiene"></textarea>
       </div>
-      <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="u-offscreen" aria-hidden="true">
       <div class="submit-row">
         <button type="submit" class="btn btn-orange" id="lf-submit">Enviar a Mike y Santiago →</button>
         <span class="reply">Respondemos en un día hábil.</span>
@@ -282,10 +303,10 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
   <div class="wrap">
     <div class="top">
       <div>
-        <a class="brand" href="/" style="color:#FBF7F0">
-          <span class="br" style="color:#7A6957">&lt;</span><span class="word" style="color:#FBF7F0">pyme<span class="web">web</span>pro</span><span class="br" style="color:#7A6957">/&gt;</span>
+        <a class="brand" href="/" class="u-cream">
+          <span class="br u-tan">&lt;</span><span class="word u-cream">pyme<span class="web">web</span>pro</span><span class="br u-tan">/&gt;</span>
         </a>
-        <p style="margin:1rem 0 0;font-size:0.875rem;line-height:1.55;color:#A89788;max-width:340px">Sitios web, páginas de ventas y tiendas en línea para pymes colombianas. Hechos en Medellín.</p>
+        <p class="u-bullet-sub-rem">Sitios web, páginas de ventas y tiendas en línea para pymes colombianas. Hechos en Medellín.</p>
       </div>
       <div>
         <h5>Productos</h5>

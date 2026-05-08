@@ -65,6 +65,27 @@
   .legal a{color:var(--ink)}
   .back{display:inline-flex;align-items:center;gap:8px;margin-top:36px;padding:12px 22px;background:var(--ink);color:#fff;text-decoration:none;border-radius:10px;font-family:var(--display);font-weight:600;font-size:0.95rem;letter-spacing:-0.005em;transition:background 0.18s}
   .back:hover{background:var(--accent-deep);color:#fff}
+
+/* Utility classes (CSP hash-lock support) */
+.u-ink{color:var(--ink)}
+.u-orange{color:#FF5C2E}
+.u-cream{color:#FBF7F0}
+.u-tan{color:#7A6957}
+.u-blue-co{color:#003893}
+.u-onbg-color{color:var(--bg)}
+.u-op-7{opacity:.7}
+.u-op-4{opacity:.4}
+.u-tc{text-align:center}
+.u-mt-14{margin-top:14px}
+.u-mt-24{margin-top:24px}
+.u-mx-auto{margin-left:auto;margin-right:auto}
+.u-offscreen{position:absolute;left:-9999px}
+.u-onbg{border-color:var(--bg);color:var(--bg)}
+.u-darkborder{border-color:rgba(27,20,16,.2);color:#1B1410}
+.u-onwhite{border-color:#fff;color:#fff}
+.u-bullet-sub{margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px}
+.u-bullet-sub-rem{margin:1rem 0 0;font-size:0.875rem;line-height:1.55;color:#A89788;max-width:340px}
+.u-fineprint{font-size:.85rem;color:#5e6883;margin-bottom:24px}
 </style>
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Renovar mi hosting","url":"https://pymewebpro.com/hosting","publisher":{"@type":"Organization","name":"PymeWebPro","url":"https://pymewebpro.com","alternateName":"Norte Sur Consulting S.A.S.","taxID":"901.956.771-1"},"inLanguage":"es","lastReviewed":"2026-05-05"}</script>
@@ -82,7 +103,7 @@
     <span class="plan-tag">Pago mensual</span>
     <h2 class="plan-name">Hosting mensual</h2>
     <div class="plan-price">$30.000</div>
-    <div class="plan-period">COP / mes <span style="opacity:.7">· IVA incluido</span></div>
+    <div class="plan-period">COP / mes <span class="u-op-7">· IVA incluido</span></div>
     <p class="plan-feat">Hospedaje + monitoreo + pequeños cambios mensuales. Cancele cuando quiera.</p>
     <span class="plan-cta">Pagar ahora →</span>
   </a>
@@ -91,7 +112,7 @@
     <span class="plan-tag">Pago anual <span class="plan-save">Ahorra 25%</span></span>
     <h2 class="plan-name">Hosting anual prepagado</h2>
     <div class="plan-price">$270.000</div>
-    <div class="plan-period">COP / año (equivale a $22.500/mes) <span style="opacity:.7">· IVA incluido</span></div>
+    <div class="plan-period">COP / año (equivale a $22.500/mes) <span class="u-op-7">· IVA incluido</span></div>
     <p class="plan-feat">Mismo plan, prepagado por 12 meses. Ahorra $90.000 frente al mensual.</p>
     <span class="plan-cta">Pagar ahora →</span>
   </a>
@@ -108,12 +129,12 @@
   </ul>
 </div>
 
-<p class="legal" style="margin-top:24px">
+<p class="legal u-mt-24">
   <strong>Sin contrato.</strong> Puede cancelar cuando quiera. Si cancela, le entregamos los archivos del sitio y le ayudamos con la transición a otro proveedor durante 30 días.
   <br><br>
   <strong>¿Es cliente del plan Pro?</strong> Sus dos primeros años de hosting están incluidos. Esta página es para renovar a partir del tercer año.
   <br><br>
-  ¿Dudas? Escríbanos a <!--email_off--><a href="mailto:hello@pymewebpro.com" style="color:#003893">hello@pymewebpro.com</a><!--/email_off--> o por WhatsApp al <a href="https://portal.pymewebpro.com/go/whatsapp?campaign=hosting_page&text=Hola%2C%20tengo%20una%20pregunta%20sobre%20mi%20hosting." style="color:#003893">+57 301 404 7722</a>.
+  ¿Dudas? Escríbanos a <!--email_off--><a href="mailto:hello@pymewebpro.com" class="u-blue-co">hello@pymewebpro.com</a><!--/email_off--> o por WhatsApp al <a href="https://portal.pymewebpro.com/go/whatsapp?campaign=hosting_page&text=Hola%2C%20tengo%20una%20pregunta%20sobre%20mi%20hosting." class="u-blue-co">+57 301 404 7722</a>.
 </p>
 
 <a class="back" href="/">← Volver al inicio</a>

@@ -1622,6 +1622,26 @@ async function handleInviersolContact(req, env, helpers) {
   if (body.website) return json({ ok: true });
 
   const ip = req.headers.get("CF-Connecting-IP") || req.headers.get("X-Forwarded-For") || "unknown";
+
+  // Cloudflare Turnstile verification
+  if (env.TURNSTILE_SECRET) {
+    const turnstileToken = body.turnstile_token || body["cf-turnstile-response"] || "";
+    if (!turnstileToken) return json({ error: "Falta verificacion CAPTCHA." }, 400);
+    const verifyForm = new FormData();
+    verifyForm.append("secret", env.TURNSTILE_SECRET);
+    verifyForm.append("response", turnstileToken);
+    if (ip && ip !== "unknown") verifyForm.append("remoteip", ip);
+    const verifyResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: verifyForm,
+    });
+    const verifyData = await verifyResp.json().catch(() => ({}));
+    if (!verifyData.success) {
+      console.warn("Turnstile failed:", verifyData["error-codes"]);
+      return json({ error: "Verificacion CAPTCHA fallida. Recarga la pagina e intenta de nuevo." }, 403);
+    }
+  }
+
   if (env.TOKENS) {
     const rlKey = `inviersol-contact:${ip}`;
     const existing = await env.TOKENS.get(rlKey);

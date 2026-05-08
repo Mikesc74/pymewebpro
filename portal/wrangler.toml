@@ -11,11 +11,9 @@ routes = [
   { pattern = "portal.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   { pattern = "*.sites.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   { pattern = "mockups.pymewebpro.com/*", zone_name = "pymewebpro.com" },
-  # inviersol.com - production custom domain. Requires the inviersol.com zone
-  # to exist in this Cloudflare account (Add Site -> switch nameservers at
-  # Namecheap to Cloudflare's). Uncomment once the zone is active in CF.
-  # { pattern = "inviersol.com/*", zone_name = "inviersol.com" },
-  # { pattern = "www.inviersol.com/*", zone_name = "inviersol.com" },
+  # inviersol.com - production custom domain. Zone is already active in CF.
+  { pattern = "inviersol.com/*", zone_name = "inviersol.com" },
+  { pattern = "www.inviersol.com/*", zone_name = "inviersol.com" },
 ]
 
 # --- Bindings (discovered from the live deployment 2026-04-30) ------------
