@@ -101,10 +101,16 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
    Renamed from .intro to .hero to avoid clashing with .solution .intro
    used inside Capítulo 03. */
 .hero{padding:48px 0 88px;position:relative}
-.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+/* Desktop: chapter-marker spans the top row, then text + anatomy below.
+   Mobile: text → anatomy → chapter-marker (so H1 is the first thing seen). */
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"marker marker" "text anatomy";gap:36px 64px;align-items:center}
+.hero .text{grid-area:text;min-width:0}
+.hero .anatomy-card{grid-area:anatomy}
+.hero .chapter-marker{grid-area:marker;margin-bottom:0}
 @media (max-width:980px){
   .hero{padding:32px 0 56px}
-  .hero .wrap{grid-template-columns:1fr;gap:36px}
+  .hero .wrap{grid-template-columns:1fr;grid-template-areas:"text" "anatomy" "marker";gap:36px}
+  .hero .chapter-marker{margin:8px 0 0;padding-top:28px;padding-bottom:0;border-top:1.5px solid rgba(27,20,16,.1);border-bottom:0}
 }
 .hero h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:.98;font-size:clamp(40px,5.8vw,72px);margin:.85rem 0 1.1rem;color:#1B1410}
 .hero h1 .strike{color:rgba(27,20,16,.32);text-decoration:line-through;text-decoration-thickness:4px;text-decoration-color:rgba(255,92,46,.85)}
@@ -378,7 +384,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
 <!-- CAPÍTULO 01 / EL GANCHO (intro hero) -->
 <section class="hero" id="top">
   <div class="wrap">
-    <div>
+    <div class="text">
       <span class="eyebrow">Los líderes de la página de ventas</span>
       <h1>No necesita <span class="strike">un sitio web</span>. Necesita una <span class="accent fr">página de ventas</span>.</h1>
       <p class="lede">Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>.</p>
@@ -426,6 +432,14 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         </div>
       </div>
       <div class="footnote">Esta página es una página de ventas. Mire cómo está construida.</div>
+    </div>
+    <div class="chapter-marker">
+      <span class="num">01</span>
+      <div class="meta">
+        <span class="lbl">Capítulo 01</span>
+        <span class="name">El Gancho</span>
+        <span class="role">Donde aterriza el visitante. El titular o se gana los próximos diez segundos o los pierde.</span>
+      </div>
     </div>
   </div>
 </section>
