@@ -97,6 +97,20 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 header.site .right{display:flex;align-items:center;gap:.5rem}
 @media (max-width:560px){.lang-switch{font-size:11.5px}.lang-switch a{padding:4px 8px}}
 
+/* INTRO HERO (sits above Chapter 01 — marketing-style positioning + full anatomy preview) */
+.intro{padding:64px 0 88px;position:relative}
+.intro .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+@media (max-width:980px){.intro .wrap{grid-template-columns:1fr;gap:40px}.intro{padding:40px 0 56px}}
+.intro h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:.98;font-size:clamp(40px,5.8vw,72px);margin:.85rem 0 1.1rem;color:#1B1410}
+.intro h1 .strike{color:rgba(27,20,16,.32);text-decoration:line-through;text-decoration-thickness:4px;text-decoration-color:rgba(255,92,46,.85)}
+.intro h1 .accent{color:#FF5C2E}
+.intro .lede{font-size:19.5px;line-height:1.5;color:#3a2a1f;max-width:560px;margin:0 0 1.75rem}
+.intro .cta-row{display:flex;gap:.65rem;flex-wrap:wrap}
+.intro .micro{margin-top:1.25rem;font-size:13.5px;color:#7A4828;display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
+.intro .micro .ok{color:#206B3A;font-weight:700}
+.intro .dot{opacity:.4}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#7A4828;background:rgba(255,92,46,.08);padding:.5rem .85rem;border-radius:999px}
+
 .chapter{padding:96px 0 104px;position:relative}
 .chapter.dark{background:#1B1410;color:#F4ECDF}
 .chapter.cream{background:#F4ECDF}
@@ -355,6 +369,61 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
 </header>
 
 <main id="main">
+
+<!-- INTRO HERO (v3-style) -->
+<section class="intro" id="top">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Los líderes de la página de ventas · Liderazgo canadiense, hecho en Medellín</span>
+      <h1>No necesita <span class="strike">un sitio web</span>. Necesita una <span class="accent fr">página de ventas</span>.</h1>
+      <p class="lede">Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>.</p>
+      <div class="cta-row">
+        <a class="btn btn-orange" href="#ask">Cuéntenos sobre su negocio</a>
+        <a class="btn btn-ghost" href="#hook">Vea cómo funciona</a>
+      </div>
+      <div class="micro">
+        <span><span class="ok">✓</span> En línea en 48 horas</span>
+        <span class="dot">·</span>
+        <span><span class="ok">✓</span> Garantía de 30 días</span>
+        <span class="dot">·</span>
+        <span><span class="ok">✓</span> Usted es dueño del código</span>
+      </div>
+    </div>
+    <div class="anatomy-card" aria-label="Anatomía de una página de ventas">
+      <div class="browser">
+        <i></i><i></i><i></i>
+        <span class="url">su-negocio.com</span>
+      </div>
+      <div class="stack">
+        <div class="anatomy-row">
+          <div class="block"><div class="lbl">Sección 1</div><div class="ttl">El gancho que detiene el scroll</div></div>
+          <div class="tag">Gancho</div>
+        </div>
+        <div class="anatomy-row">
+          <div class="block"><div class="lbl">Sección 2</div><div class="ttl">El problema con el que llegaron</div></div>
+          <div class="tag">Problema</div>
+        </div>
+        <div class="anatomy-row">
+          <div class="block"><div class="lbl">Sección 3</div><div class="ttl">Lo que usted hace, en simple</div></div>
+          <div class="tag">Solución</div>
+        </div>
+        <div class="anatomy-row">
+          <div class="block"><div class="lbl">Sección 4</div><div class="ttl">Clientes reales diciendo cosas reales</div></div>
+          <div class="tag">Prueba</div>
+        </div>
+        <div class="anatomy-row">
+          <div class="block"><div class="lbl">Sección 5</div><div class="ttl">Qué cuesta, qué reciben</div></div>
+          <div class="tag">Oferta</div>
+        </div>
+        <div class="anatomy-row">
+          <div class="block"><div class="lbl">Sección 6</div><div class="ttl">Un siguiente paso claro</div></div>
+          <div class="tag">Pedido</div>
+        </div>
+      </div>
+      <div class="footnote">Esta página es una página de ventas. Mire cómo está construida.</div>
+    </div>
+  </div>
+</section>
 
 <!-- CAPÍTULO 01 / EL GANCHO -->
 <section class="chapter hook" id="hook">
