@@ -11,7 +11,7 @@ export const pymewebproV4EsHtml = `
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#FBF7F0">
 <meta name="color-scheme" content="light">
-<title>Los reyes de la página de ventas · Seis capítulos, un trabajo, en 48 horas · PymeWebPro</title>
+<title>Los líderes de la página de ventas · Seis capítulos, un trabajo, en 48 horas · PymeWebPro</title>
 <meta name="description" content="Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde $390.000 COP. Esta página es el demo: seis capítulos, un trabajo.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://mockups.pymewebpro.com/pymewebpro-v4-es/">
@@ -20,13 +20,13 @@ export const pymewebproV4EsHtml = `
 <link rel="alternate" hreflang="x-default" href="https://mockups.pymewebpro.com/pymewebpro-v4/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Los reyes de la página de ventas · PymeWebPro">
+<meta property="og:title" content="Los líderes de la página de ventas · PymeWebPro">
 <meta property="og:description" content="Seis capítulos. Un trabajo. En línea en 48 horas. Desde $390.000 COP. Liderazgo canadiense, hecho en Medellín.">
 <meta property="og:url" content="https://mockups.pymewebpro.com/pymewebpro-v4-es/">
 <meta property="og:locale" content="es_CO">
 <meta property="og:image" content="https://pymewebpro.com/screenshots/schedulator.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Los reyes de la página de ventas · PymeWebPro">
+<meta name="twitter:title" content="Los líderes de la página de ventas · PymeWebPro">
 <meta name="twitter:description" content="Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes.">
 <meta name="twitter:image" content="https://pymewebpro.com/screenshots/schedulator.png">
 
@@ -313,7 +313,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
 
 <div class="topbar">
   <div class="wrap">
-    <span><strong>Los reyes de la página de ventas.</strong></span>
+    <span><strong>Los líderes de la página de ventas.</strong></span>
     <span class="dot">·</span>
     <span>Seis capítulos, un trabajo.</span>
     <span class="dot">·</span>
@@ -806,7 +806,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <a class="brand" href="#hook" style="color:#FBF7F0">
           <span class="br" style="color:#7A6957">&lt;</span><span class="word" style="color:#FBF7F0">pyme<span class="web">web</span>pro</span><span class="br" style="color:#7A6957">/&gt;</span>
         </a>
-        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los reyes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>. Liderazgo canadiense, hecho en Medellín.</p>
+        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>. Liderazgo canadiense, hecho en Medellín.</p>
       </div>
       <div>
         <h5>Capítulos</h5>
