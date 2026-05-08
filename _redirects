@@ -10,15 +10,12 @@
 https://www.pymewebpro.com/*  https://pymewebpro.com/:splat  301!
 http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
 
-# Legacy /en/ paths -> apex (English is now the default at /). 301 permanent.
-# /en/index.html still ships as a backup meta-refresh, but Cloudflare Pages
-# matches _redirects rules before serving the file, so the 301 wins.
-/en/*   /:splat   301
-/en     /         301
+# /en/ is a real path again — English translation lives there.
+# (Earlier we 301'd /en/* → / during the LATAM-only commit; reversed
+# now that we're shipping a real English version.)
 
-# Legacy /es/ paths -> apex (Spanish is now the default at / since LATAM-only
-# pivot). The whole site is Spanish, so /es/ prefix is no longer meaningful.
-# Old inbound links from social, GBP, search results all 301 to the new path.
+# Legacy /es/ paths -> apex (Spanish is the default at / since LATAM-only
+# pivot). The whole site is Spanish at apex, so /es/ prefix is meaningless.
 /es/*   /:splat   301
 /es     /         301
 

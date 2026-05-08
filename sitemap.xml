@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  LATAM-only commit: site is Spanish at the apex. No /es/ subdirectory, no
-  English alternate. Removed hreflang declarations because they were telling
-  Google "the page at / is the English version" — which contradicted the
-  actual <html lang="es"> on the page and is the most likely cause of Google
-  rendering the search snippet from a stale English description.
-  Re-add hreflang only if and when a real English version returns at /en/.
+  Bilingual: Spanish at apex (/), English at /en/. hreflang declared on each
+  URL pair so Google serves the right language to the right audience.
 -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://pymewebpro.com/</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pymewebpro.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pymewebpro.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/"/>
+  </url>
+  <url>
+    <loc>https://pymewebpro.com/en/</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pymewebpro.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pymewebpro.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/"/>
   </url>
   <url>
     <loc>https://pymewebpro.com/sitios-web/</loc>
@@ -84,9 +93,7 @@
   <!--
     Vertical × city landing pages (sitio-web-{abogados,clinicas-dentales,
     empresas-turismo,hoteles-boutique}-{medellin,bogota,barranquilla}/) are
-    intentionally NOT included. They were flagged in the 2026-05-05 audit as
-    a "doorway page" pattern under Google's spam guidelines and are now
-    <meta name="robots" content="noindex,follow">. Re-introduce here if and
-    when each gets genuinely unique content.
+    intentionally NOT included. They were flagged as a "doorway page" pattern
+    and are now <meta name="robots" content="noindex,follow">.
   -->
 </urlset>

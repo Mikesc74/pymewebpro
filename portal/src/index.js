@@ -1127,7 +1127,11 @@ function computeQuote(lead) {
   const hosting = lead.hosting || "none";
   const planPrice = PLAN_PRICES_COP[plan] || 0;
   let hostingPrice = HOSTING_PRICES_COP[hosting] || 0;
-  const hostingBundled = plan === "pro" && hosting === "annual";
+  // Esencial = $390k flat (includes 1 month free, monthly billing starts later).
+  // Pro + annual = bundled (1 year hosting included).
+  // Hosting is never charged at /start/ checkout for Esencial — buyer can
+  // upgrade to annual via /hosting after the first month.
+  const hostingBundled = (plan === "esencial") || (plan === "pro" && hosting === "annual");
   if (hostingBundled) hostingPrice = 0;
   const now = Date.now();
   const deadline = (lead.created_at || 0) + DISCOUNT_WINDOW_MS;

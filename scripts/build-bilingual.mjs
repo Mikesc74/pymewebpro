@@ -1,23 +1,19 @@
-// build-bilingual.mjs — promote the v4 ES mockup to the production root.
+// build-bilingual.mjs — bilingual build. Writes Spanish to / and English to /en/.
 //
-// As of the LATAM-only commit, the entire site is Spanish. There is no /es/
-// subdirectory anymore. The Spanish v4 page IS the root index.html.
+// Spanish source (canonical): manual-mockups/pymewebpro-v4-es/index.html  -> /index.html
+// English source:             manual-mockups/pymewebpro-v4/index.html     -> /en/index.html
 //
-// Reads:
-//   manual-mockups/pymewebpro-v4-es/index.html
+// English version is bilingual-aware (data-tag images already in English, prices
+// shown via .price-na/.price-co toggles, .lang-en class on <html>). The Spanish
+// version remains the apex (https://pymewebpro.com/) per the LATAM-first audience.
 //
-// Writes:
-//   index.html                 (root, served at https://pymewebpro.com/)
-//
-// Transforms applied:
+// Transforms applied to BOTH outputs (each scoped to its source slug):
 //   mockups.pymewebpro.com/pymewebpro-v4-es/  -> pymewebpro.com/
+//   mockups.pymewebpro.com/pymewebpro-v4/     -> pymewebpro.com/en/   (EN only)
 //   "./mike.jpg"     -> "/screenshots/mike.jpg"
 //   "./santiago.jpg" -> "/screenshots/santiago.jpg"
-//   /pymewebpro-v4-es/   -> /             (any remaining mockup-subdomain refs)
-//   /pymewebpro-v4/      -> /             (legacy EN refs that may still exist)
-//
-// Script name kept as build-bilingual for backwards compat with portal/package.json
-// predeploy chain. Despite the name, it now produces a single Spanish output.
+//   /pymewebpro-v4-es/   -> /
+//   /pymewebpro-v4/      -> /en/   (EN only) or /  (ES — legacy refs)
 //
 // Usage:  node scripts/build-bilingual.mjs
 
@@ -28,34 +24,52 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-const SRC = path.join(ROOT, "manual-mockups/pymewebpro-v4-es/index.html");
-const OUT = path.join(ROOT, "index.html");
+const ES_SRC = path.join(ROOT, "manual-mockups/pymewebpro-v4-es/index.html");
+const ES_OUT = path.join(ROOT, "index.html");
+const EN_SRC = path.join(ROOT, "manual-mockups/pymewebpro-v4/index.html");
+const EN_OUT = path.join(ROOT, "en/index.html");
 
-function transform(html) {
+function transformEs(html) {
   return html
     .replace(/https:\/\/mockups\.pymewebpro\.com\/pymewebpro-v4-es\//g, "https://pymewebpro.com/")
-    .replace(/https:\/\/mockups\.pymewebpro\.com\/pymewebpro-v4\//g, "https://pymewebpro.com/")
+    .replace(/https:\/\/mockups\.pymewebpro\.com\/pymewebpro-v4\//g, "https://pymewebpro.com/en/")
     .replace(/"\.\/mike\.jpg"/g, '"/screenshots/mike.jpg"')
     .replace(/"\.\/santiago\.jpg"/g, '"/screenshots/santiago.jpg"')
     .replace(/\/pymewebpro-v4-es\//g, "/")
-    .replace(/\/pymewebpro-v4\//g, "/");
+    .replace(/\/pymewebpro-v4\//g, "/en/");
 }
 
-if (!fs.existsSync(SRC)) {
-  console.error(`[build-bilingual] FAIL: source missing — ${path.relative(ROOT, SRC)}`);
-  process.exit(1);
+function transformEn(html) {
+  return html
+    .replace(/https:\/\/mockups\.pymewebpro\.com\/pymewebpro-v4\//g, "https://pymewebpro.com/en/")
+    .replace(/https:\/\/mockups\.pymewebpro\.com\/pymewebpro-v4-es\//g, "https://pymewebpro.com/")
+    .replace(/"\.\/mike\.jpg"/g, '"/screenshots/mike.jpg"')
+    .replace(/"\.\/santiago\.jpg"/g, '"/screenshots/santiago.jpg"')
+    .replace(/\/pymewebpro-v4\//g, "/en/")
+    .replace(/\/pymewebpro-v4-es\//g, "/");
 }
 
-let html = fs.readFileSync(SRC, "utf-8");
-html = transform(html);
-fs.writeFileSync(OUT, html);
+function build(srcPath, outPath, transform, label) {
+  if (!fs.existsSync(srcPath)) {
+    console.error(`[build-bilingual] FAIL: ${label} source missing — ${path.relative(ROOT, srcPath)}`);
+    process.exit(1);
+  }
+  let html = fs.readFileSync(srcPath, "utf-8");
+  html = transform(html);
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  fs.writeFileSync(outPath, html);
 
-const sizeKB = (fs.statSync(OUT).size / 1024).toFixed(1);
-const emDashes = (html.match(/—|&mdash;|&#8212;/g) || []).length;
+  const sizeKB = (fs.statSync(outPath).size / 1024).toFixed(1);
+  const emDashes = (html.match(/—|&mdash;|&#8212;/g) || []).length;
 
-console.log(`[build-bilingual] ✓  ${path.relative(ROOT, SRC)}  ->  ${path.relative(ROOT, OUT)}  (${sizeKB} KB)`);
-if (emDashes > 0) {
-  console.error(`[build-bilingual] FAIL: ${emDashes} em dashes detected. Replace with periods, commas, colons, or '·'.`);
-  process.exit(1);
+  console.log(`[build-bilingual] ✓  ${label}  ${path.relative(ROOT, srcPath)}  ->  ${path.relative(ROOT, outPath)}  (${sizeKB} KB)`);
+  if (emDashes > 0) {
+    console.error(`[build-bilingual] FAIL: ${emDashes} em dashes detected in ${label}. Replace with periods, commas, colons, or '·'.`);
+    process.exit(1);
+  }
 }
-console.log("[build-bilingual] OK — single-language Spanish build.");
+
+build(ES_SRC, ES_OUT, transformEs, "ES");
+build(EN_SRC, EN_OUT, transformEn, "EN");
+
+console.log("[build-bilingual] OK — Spanish at /, English at /en/.");

@@ -25,6 +25,7 @@ import { pymewebproV4EsHtml } from "./manual-mockups-pymewebprov4es.js";
 import { schedulatorHtml } from "./manual-mockups-schedulator.js";
 import { marenaHtml } from "./manual-mockups-marena.js";
 import { startHtml } from "./manual-mockups-start.js";
+import { inviersolHtml } from "./manual-mockups-inviersol.js";
 
 // ─── Registry ───────────────────────────────────────────────────────────────
 // Keys must be lowercase, URL-safe slugs (a-z, 0-9, hyphen). Each value is a
@@ -45,4 +46,5 @@ export const MANUAL_MOCKUPS = {
   "pymewebpro-v4-es": pymewebproV4EsHtml,
   marena: marenaHtml,
   start: startHtml,
+  inviersol: inviersolHtml,
 };

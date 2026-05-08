@@ -9,6 +9,9 @@
 <meta name="description" content="Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde $390.000 COP. Esta página es el demo: seis capítulos, un trabajo.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://pymewebpro.com/">
+<link rel="alternate" hreflang="es" href="https://pymewebpro.com/">
+<link rel="alternate" hreflang="en" href="https://pymewebpro.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Los líderes de la página de ventas · PymeWebPro">
@@ -54,7 +57,7 @@
 {"@type":"Question","name":"¿Quién la construye realmente?","acceptedAnswer":{"@type":"Answer","text":"Mike y Santiago manejan el trabajo. Claude de Anthropic hace el diseño y el código bajo nuestra supervisión. Por eso $500 compra lo que antes costaba $5.000."}},
 {"@type":"Question","name":"¿Y si no me gusta?","acceptedAnswer":{"@type":"Answer","text":"Garantía de devolución a 30 días. Si la página no le funciona, le devolvemos cada peso."}},
 {"@type":"Question","name":"¿Necesito comprar un dominio?","acceptedAnswer":{"@type":"Answer","text":"Sí. Después de pagar, lo acompañamos dentro del portal. Si ya tiene un dominio, lo conectamos. Si no, le indicamos Cloudflare Registrar o Namecheap (alrededor de $50.000 COP al año, a veces menos con nuestro link de referido), lo ayudamos a comprarlo en 5 minutos y manejamos toda la configuración técnica (zona en Cloudflare, registros DNS, certificado SSL) por nuestra cuenta. El dominio siempre se registra a su nombre, nunca al nuestro."}},
-{"@type":"Question","name":"¿Cuánto cuesta el hosting después del primer año?","acceptedAnswer":{"@type":"Answer","text":"$30.000 COP al mes, o $270.000 COP al año si paga por adelantado (ahorra 25%). Incluye hospedaje en Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos."}}
+{"@type":"Question","name":"¿Cuánto cuesta el hosting después del período incluido?","acceptedAnswer":{"@type":"Answer","text":"Esencial incluye 1 mes; Pro incluye 1 año. Después: $30.000 COP al mes, o $270.000 COP al año si paga por adelantado (ahorra 25%) · IVA incluido. Incluye hospedaje en Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes. Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos."}}
 ]}
 </script>
 
@@ -97,7 +100,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 header.site .right{display:flex;align-items:center;gap:.5rem}
 @media (max-width:560px){.lang-switch{font-size:11.5px}.lang-switch a{padding:4px 8px}}
 
-/* HERO (intro section) — v3-style positioning + full anatomy preview.
+/* HERO (intro section) - v3-style positioning + full anatomy preview.
    Renamed from .intro to .hero to avoid clashing with .solution .intro
    used inside Capítulo 03. */
 .hero{padding:48px 0 88px;position:relative}
@@ -379,6 +382,10 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
     </a>
     <div class="right">
+      <div class="lang-switch" role="navigation" aria-label="Idioma">
+        <a href="/" class="active" aria-current="page">ES</a>
+        <a href="/en/" hreflang="en">EN</a>
+      </div>
       <a class="btn btn-orange" href="#ask">Cuéntenos sobre su negocio</a>
     </div>
   </div>
@@ -699,7 +706,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <h3>La página</h3>
         <p class="sub">Para dueños que quieren una buena página de ventas, rápido.</p>
         <div class="price"><span class="price-na">$500<small>CAD</small></span><span class="price-co">$390.000<small>COP</small></span></div>
-        <div class="deposit"><span class="price-na">30% de depósito ($150 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($117.000 COP), 70% al lanzar.</span></div>
+        <div class="deposit"><span class="price-na">30% de depósito ($150 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($117.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></span></div>
         <ul>
           <li><span class="check">✓</span><span>1 página de ventas de alta conversión</span></li>
           <li><span class="check">✓</span><span>Optimizada para móvil</span></li>
@@ -711,7 +718,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <li><span class="check">✓</span><span>Embed de Google Maps</span></li>
           <li><span class="check">✓</span><span>Configuración de Perfil de Empresa de Google</span></li>
           <li><span class="check">✓</span><span>Analíticas privacy-first instaladas</span></li>
-          <li><span class="check">✓</span><span>1 año de hosting y soporte</span></li>
+          <li><span class="check">✓</span><span>1 mes de hosting y soporte incluido</span></li>
         </ul>
         <div class="actions">
           <a class="btn btn-orange" href="/start/?plan=esencial">Elegir Essential →</a>
@@ -723,7 +730,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <h3>La página conectada</h3>
         <p class="sub">Para dueños que ya usan analíticas, anuncios, un CRM o reservas en línea, y quieren la página conectada a todo eso.</p>
         <div class="price"><span class="price-na">$800<small>CAD</small></span><span class="price-co">$690.000<small>COP</small></span></div>
-        <div class="deposit"><span class="price-na">30% de depósito ($240 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($207.000 COP), 70% al lanzar.</span></div>
+        <div class="deposit"><span class="price-na">30% de depósito ($240 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($207.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></span></div>
         <ul>
           <li><span class="check">✓</span><span>Todo lo de Essential</span></li>
           <li><span class="check">✓</span><span>Embed de Google Analytics 4 + Meta Pixel</span></li>
@@ -851,11 +858,11 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </details>
       <details>
         <summary>¿Qué pasa después del lanzamiento?</summary>
-        <div class="answer">Ambos planes: una página en vivo en su dominio más 1 año de hosting y soporte. Todo lo que entregamos es suyo: el código, el copy, la configuración de analíticas, el dominio. Pro agrega el cableado a sus otras herramientas (GA4, Meta Pixel, CRM, calendario de reservas) para que la página funcione bien con lo que ya use. Después del año incluido, el hosting se renueva en un plan plano simple.</div>
+        <div class="answer">Una página en vivo en su dominio. Todo lo que entregamos es suyo: el código, el copy, la configuración de analíticas, el dominio. Hosting incluido: <strong>1 mes</strong> con Esencial, <strong>1 año</strong> con Pro. Pro agrega el cableado a sus otras herramientas (GA4, Meta Pixel, CRM, calendario de reservas) para que la página funcione bien con lo que ya use. Después del hosting incluido, se renueva en un plan plano simple ($30.000 COP/mes o $270.000 COP/año, IVA incluido).</div>
       </details>
       <details>
-        <summary>¿Cuánto cuesta el hosting después del primer año?</summary>
-        <div class="answer">$30.000 COP al mes, o $270.000 COP al año si paga por adelantado (ahorra 25%). Incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" style="color:#FF5C2E">Ver el plan o renovar</a>.</div>
+        <summary>¿Cuánto cuesta el hosting después del período incluido?</summary>
+        <div class="answer">Esencial incluye <strong>1 mes</strong>; Pro incluye <strong>1 año</strong>. Después: $30.000 COP al mes, o $270.000 COP al año si paga por adelantado (ahorra 25%) · IVA incluido. El plan incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" style="color:#FF5C2E">Ver el plan o renovar</a>.</div>
       </details>
       <details>
         <summary>¿Y si no me gusta?</summary>

@@ -25,10 +25,10 @@
 //   print(json.dumps(sorted(hashes), indent=2))"
 
 const SCRIPT_HASHES = [
+  "sha256-1MHWVAWqRtJFXMtg/lMNvbuygX+uubkL+yMfHGh6Bz4=",
   "sha256-6gt3qBAc1TjJNlWg3bip8EBQD5AdnLnjWSHY/2uaX24=",
   "sha256-6o4RcIgyfc5UPTW6IkpOXoxUOCQ6pnCwwzHiShQn4PE=",
   "sha256-9GIHlcCxqhxCsTQ9GzaxQhDa6AAm5+gaYgcFwZ5X7tY=",
-  "sha256-CLGUxhTwMTyvocjczR4xaSw06vnbdoIUEy27ZXhKW8U=",
   "sha256-DYDqBiY2eQmiAdcVr/lhPyPlfdxjcR5kotO/GOGpwd0=",
   "sha256-EHFj0jeeky9W2Ei6oF3Fg7F3imE7aI+9vxXhuK8EGOo=",
   "sha256-I4ODCvCv2kH4C8QMonIRib3emcwyO69XGYW2HMXAJko=",
@@ -54,8 +54,9 @@ const SCRIPT_HASHES = [
   "sha256-lEG6LhcsPECK7uDWdBWtjndcg9BXZ54HMF8INACSKDI=",
   "sha256-md6GiOK9/4dujSiYpnsQkwfUj285qoL+kzLrOdsyuBE=",
   "sha256-n8QNKzmgolnNVayDI+BBSIPtKi/SyinNTg1RCAJSpaQ=",
-  "sha256-pO006gJWX7GSHRhNl1gjtQHmwFUCuC3ICbF9H93p0uA=",
+  "sha256-qePrVM6EfJsP8v9OY+6lsPFFtbBGGf93QrqU792konw=",
   "sha256-rk1861BuiQl9jNIPJfFX8YnAlg3Ybm+849U59BwiP2k=",
+  "sha256-s9upK0xmw4RxOgdAZdi9WUl52pTA2yiwIIJzmIm+Ndc=",
   "sha256-vDDi3ZJn8gcNAY6CfcfYdL654PhkerHHjGuKUN5IKBQ=",
   "sha256-vOhM5Sr087MCqZBcYtJz61I+X0RZlmZA2ysJk7xJb2Y=",
   "sha256-w6D8KavAo8iFp77Dg1oxo72/6NoYuhYIF45MNv15Fc4=",

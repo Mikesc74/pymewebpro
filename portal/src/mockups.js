@@ -35,6 +35,29 @@ export async function handleMockups(req, env, ctx, helpers) {
   const reqHost = (req.headers.get("host") || "").toLowerCase().replace(/^www\./, "");
   const knownHosts = ["portal.pymewebpro.com", "pymewebpro.com"];
 
+  // ── inviersol.com — production custom domain for the inviersol mockup ────
+  // Serves MANUAL_MOCKUPS.inviersol at the root. Form posts to
+  // /api/inviersol/contact which forwards to inviersol@hotmail.com via Resend.
+  if (reqHost === "inviersol.com") {
+    if (m === "POST" && p === "/api/inviersol/contact") {
+      return await handleInviersolContact(req, env, helpers);
+    }
+    if (m === "GET" && (p === "/" || p === "")) {
+      return new Response(MANUAL_MOCKUPS.inviersol, {
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "public, max-age=300",
+        },
+      });
+    }
+    return new Response("Not found", { status: 404 });
+  }
+
+  // Same contact endpoint also works under mockups.pymewebpro.com
+  if (m === "POST" && p === "/api/inviersol/contact" && reqHost === "mockups.pymewebpro.com") {
+    return await handleInviersolContact(req, env, helpers);
+  }
+
   // ── Manual mockups host (mockups.pymewebpro.com) ─────────────────────────
   // Custom-built one-off marketing sites (e.g. Schedulator) that bypass the
   // PYME auto-generator. Keyed by URL slug; HTML is fully self-contained and
@@ -1579,4 +1602,82 @@ async function leadFormSubmit(env, helpers, clientId, req) {
   }
 
   return new Response(JSON.stringify({ ok: true }), { headers: { "content-type": "application/json", ...cors } });
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// inviersol.com - contact form handler
+// POST /api/inviersol/contact  ->  Resend email to inviersol@hotmail.com
+// ────────────────────────────────────────────────────────────────────────────
+async function handleInviersolContact(req, env, helpers) {
+  const json = (helpers && helpers.json) || ((d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { "content-type": "application/json" } }));
+  const escape = (helpers && helpers.escapeHtml) || ((s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"));
+
+  if (req.headers.get("content-type")?.includes("application/json") !== true) {
+    return json({ error: "Content-Type must be application/json" }, 400);
+  }
+
+  let body;
+  try { body = await req.json(); } catch { return json({ error: "JSON invalido" }, 400); }
+
+  if (body.website) return json({ ok: true });
+
+  const ip = req.headers.get("CF-Connecting-IP") || req.headers.get("X-Forwarded-For") || "unknown";
+  if (env.TOKENS) {
+    const rlKey = `inviersol-contact:${ip}`;
+    const existing = await env.TOKENS.get(rlKey);
+    const count = existing ? parseInt(existing, 10) : 0;
+    if (count >= 5) return json({ error: "Demasiados envios. Intenta de nuevo en unos minutos." }, 429);
+    await env.TOKENS.put(rlKey, String(count + 1), { expirationTtl: 600 });
+  }
+
+  const firstName = String(body.first_name || "").trim().slice(0, 80);
+  const lastName  = String(body.last_name  || "").trim().slice(0, 80);
+  const email     = String(body.email      || "").trim().slice(0, 120);
+  const subject   = String(body.subject    || "").trim().slice(0, 160) || "Cotizacion desde inviersol.com";
+  const message   = String(body.message    || "").trim().slice(0, 4000);
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: "Correo invalido" }, 400);
+  if (!message) return json({ error: "Mensaje requerido" }, 400);
+
+  const fullName = [firstName, lastName].filter(Boolean).join(" ") || "(sin nombre)";
+
+  const html = `
+    <h2 style="font-family:system-ui,sans-serif;color:#0d2536">Nueva solicitud desde inviersol.com</h2>
+    <table style="font-family:system-ui,sans-serif;font-size:14px;border-collapse:collapse">
+      <tr><td style="padding:6px 12px 6px 0;color:#5b6270">Nombre</td><td style="padding:6px 0">${escape(fullName)}</td></tr>
+      <tr><td style="padding:6px 12px 6px 0;color:#5b6270">Correo</td><td style="padding:6px 0"><a href="mailto:${escape(email)}">${escape(email)}</a></td></tr>
+      <tr><td style="padding:6px 12px 6px 0;color:#5b6270">Asunto</td><td style="padding:6px 0">${escape(subject)}</td></tr>
+    </table>
+    <h3 style="font-family:system-ui,sans-serif;color:#0d2536;margin-top:18px">Mensaje</h3>
+    <p style="font-family:system-ui,sans-serif;font-size:14px;line-height:1.5;white-space:pre-wrap">${escape(message)}</p>
+    <hr style="border:0;border-top:1px solid #e5e7eb;margin:24px 0">
+    <p style="font-family:system-ui,sans-serif;font-size:12px;color:#5b6270">
+      Enviado desde el formulario de inviersol.com - IP: ${escape(ip)}
+    </p>
+  `;
+
+  if (!env.RESEND_API_KEY) return json({ error: "Servidor mal configurado." }, 500);
+
+  const resp = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: env.FROM_EMAIL || "PymeWebPro <noreply@pymewebpro.com>",
+      to: ["inviersol@hotmail.com"],
+      reply_to: email,
+      subject: `[INVIERSOL] ${subject} - ${fullName}`,
+      html,
+    }),
+  });
+
+  if (!resp.ok) {
+    const errText = await resp.text().catch(() => "");
+    console.error("Inviersol contact send failed:", errText);
+    return json({ error: "No pudimos enviar el correo. Intenta WhatsApp." }, 502);
+  }
+
+  return json({ ok: true });
 }

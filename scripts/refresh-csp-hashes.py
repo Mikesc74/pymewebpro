@@ -17,6 +17,7 @@ os.chdir(ROOT)
 # Every HTML file that goes through Pages middleware and gets a CSP header.
 FILES = [
     "index.html",
+    "en/index.html",
     "start/index.html",
     "sitios-web/index.html",
     "tienda/index.html",
