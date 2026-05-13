@@ -361,6 +361,27 @@ footer.site .copy{padding-top:24px;border-top:1px solid rgba(244,236,223,.08);di
 footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',serif;font-style:italic}
 
 noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center;font-size:13px;font-weight:600}
+
+/* Utility classes (CSP hash-lock support) */
+.u-ink{color:var(--ink)}
+.u-orange{color:#FF5C2E}
+.u-cream{color:#FBF7F0}
+.u-tan{color:#7A6957}
+.u-blue-co{color:#003893}
+.u-onbg-color{color:var(--bg)}
+.u-op-7{opacity:.7}
+.u-op-4{opacity:.4}
+.u-tc{text-align:center}
+.u-mt-14{margin-top:14px}
+.u-mt-24{margin-top:24px}
+.u-mx-auto{margin-left:auto;margin-right:auto}
+.u-offscreen{position:absolute;left:-9999px}
+.u-onbg{border-color:var(--bg);color:var(--bg)}
+.u-darkborder{border-color:rgba(27,20,16,.2);color:#1B1410}
+.u-onwhite{border-color:#fff;color:#fff}
+.u-bullet-sub{margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px}
+.u-bullet-sub-rem{margin:1rem 0 0;font-size:0.875rem;line-height:1.55;color:#A89788;max-width:340px}
+.u-fineprint{font-size:.85rem;color:#5e6883;margin-bottom:24px}
 </style>
 </head>
 
@@ -706,7 +727,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <h3>La página</h3>
         <p class="sub">Para dueños que quieren una buena página de ventas, rápido.</p>
         <div class="price"><span class="price-na">$500<small>CAD</small></span><span class="price-co">$390.000<small>COP</small></span></div>
-        <div class="deposit"><span class="price-na">30% de depósito ($150 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($117.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></span></div>
+        <div class="deposit"><span class="price-na">30% de depósito ($150 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($117.000 COP), 70% al lanzar. <span class="u-op-7">· IVA incluido</span></span></div>
         <ul>
           <li><span class="check">✓</span><span>1 página de ventas de alta conversión</span></li>
           <li><span class="check">✓</span><span>Optimizada para móvil</span></li>
@@ -730,7 +751,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <h3>La página conectada</h3>
         <p class="sub">Para dueños que ya usan analíticas, anuncios, un CRM o reservas en línea, y quieren la página conectada a todo eso.</p>
         <div class="price"><span class="price-na">$800<small>CAD</small></span><span class="price-co">$690.000<small>COP</small></span></div>
-        <div class="deposit"><span class="price-na">30% de depósito ($240 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($207.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></span></div>
+        <div class="deposit"><span class="price-na">30% de depósito ($240 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($207.000 COP), 70% al lanzar. <span class="u-op-7">· IVA incluido</span></span></div>
         <ul>
           <li><span class="check">✓</span><span>Todo lo de Essential</span></li>
           <li><span class="check">✓</span><span>Embed de Google Analytics 4 + Meta Pixel</span></li>
@@ -740,7 +761,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         </ul>
         <div class="actions">
           <a class="btn btn-orange" href="/start/?plan=pro">Elegir Pro →</a>
-          <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">O, infórmese primero</a>
+          <a class="btn btn-ghost" href="#ask" class="u-darkborder">O, infórmese primero</a>
         </div>
       </div>
     </div>
@@ -772,7 +793,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
           <label for="lf-about">Cuéntenos sobre su negocio</label>
           <textarea id="lf-about" name="about" required placeholder="Qué hace, quién compra, qué no funciona, sitio web actual si tiene"></textarea>
         </div>
-        <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="u-offscreen" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Enviar a Mike y Santiago →</button>
           <span class="reply">Respondemos en un día hábil.</span>
@@ -838,7 +859,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </details>
       <details>
         <summary>¿Y si necesito un sitio web completo o una tienda en línea?</summary>
-        <div class="answer">Una página de ventas es una página, hecha para convertir. Si su negocio necesita varias páginas (servicios separados, blog, portafolio, equipo) eso es nuestro <a href="/sitios-web/" style="color:#FF5C2E">sitio web completo</a>. Si necesita carrito, catálogo y procesar pagos, eso es nuestra <a href="/tienda/" style="color:#FF5C2E">tienda en línea</a>. Mismo equipo, misma garantía, mismo proceso, distintos productos.</div>
+        <div class="answer">Una página de ventas es una página, hecha para convertir. Si su negocio necesita varias páginas (servicios separados, blog, portafolio, equipo) eso es nuestro <a href="/sitios-web/" class="u-orange">sitio web completo</a>. Si necesita carrito, catálogo y procesar pagos, eso es nuestra <a href="/tienda/" class="u-orange">tienda en línea</a>. Mismo equipo, misma garantía, mismo proceso, distintos productos.</div>
       </details>
       <details>
         <summary>¿Y si ya tengo un sitio web?</summary>
@@ -862,7 +883,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </details>
       <details>
         <summary>¿Cuánto cuesta el hosting después del período incluido?</summary>
-        <div class="answer">Esencial incluye <strong>1 mes</strong>; Pro incluye <strong>1 año</strong>. Después: $30.000 COP al mes, o $270.000 COP al año si paga por adelantado (ahorra 25%) · IVA incluido. El plan incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" style="color:#FF5C2E">Ver el plan o renovar</a>.</div>
+        <div class="answer">Esencial incluye <strong>1 mes</strong>; Pro incluye <strong>1 año</strong>. Después: $30.000 COP al mes, o $270.000 COP al año si paga por adelantado (ahorra 25%) · IVA incluido. El plan incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" class="u-orange">Ver el plan o renovar</a>.</div>
       </details>
       <details>
         <summary>¿Y si no me gusta?</summary>
@@ -886,10 +907,10 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
   <div class="wrap">
     <div class="top">
       <div>
-        <a class="brand" href="#top" style="color:#FBF7F0">
-          <span class="br" style="color:#7A6957">&lt;</span><span class="word" style="color:#FBF7F0">pyme<span class="web">web</span>pro</span><span class="br" style="color:#7A6957">/&gt;</span>
+        <a class="brand" href="#top" class="u-cream">
+          <span class="br u-tan">&lt;</span><span class="word u-cream">pyme<span class="web">web</span>pro</span><span class="br u-tan">/&gt;</span>
         </a>
-        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>. Liderazgo canadiense, hecho en Medellín.</p>
+        <p class="u-bullet-sub">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>. Liderazgo canadiense, hecho en Medellín.</p>
         <div class="socials">
           <a href="https://www.facebook.com/pymewebpro" target="_blank" rel="noopener" aria-label="PymeWebPro en Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
@@ -935,7 +956,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <p>Medellín, Antioquia, Colombia</p>
       </div>
     </div>
-    <div class="legal-block" style="text-align:center">
+    <div class="legal-block u-tc">
       Norte Sur Consulting S.A.S. · NIT 901.956.771-1 · Cámara de Comercio matrícula 21-817900-12
     </div>
     <div class="copy">
