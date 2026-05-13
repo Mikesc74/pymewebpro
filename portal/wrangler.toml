@@ -11,6 +11,9 @@ routes = [
   { pattern = "portal.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   { pattern = "*.sites.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   { pattern = "mockups.pymewebpro.com/*", zone_name = "pymewebpro.com" },
+  # santi.pymewebpro.com - Santi's bilingual sales site. See src/santi.js.
+  # custom_domain = true → wrangler auto-creates the DNS record on first deploy.
+  { pattern = "santi.pymewebpro.com", zone_name = "pymewebpro.com", custom_domain = true },
   # inviersol.com - production custom domain. Zone is already active in CF.
   { pattern = "inviersol.com/*", zone_name = "inviersol.com" },
   { pattern = "www.inviersol.com/*", zone_name = "inviersol.com" },

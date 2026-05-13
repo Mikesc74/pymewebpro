@@ -3,62 +3,75 @@
 This file is the hot cache. Claude reads this first on every session in `~/code/pymewebpro/`.
 Full glossary and rich context live in `./memory/`.
 
+## HARD RULE: Colombia-only market
+
+**PymeWebPro serves Colombian SMBs only.** This is a Colombian company, billed in COP, marketed to Colombian customers, operating from Medellín.
+
+Do NOT:
+- Quote prices in CAD or USD on any pymewebpro asset
+- Position the studio as serving NA / Canada / US / LATAM clients
+- Mention London, Ontario as a business location
+- Frame pymewebpro as bilingual for "two markets"
+- Reference Wise, Stripe, or NA payment rails as our payment methods
+
+DO:
+- Quote prices in COP
+- Treat Mike's Canadian nationality as a personal fact about the founder, not a market positioning
+- Treat any English copy on pymewebpro as a courtesy for English-speaking Colombian residents / expats, not as an NA-market funnel
+- Reference Wompi (cards, PSE, bank transfer) as the payment method
+- Frame the studio as "Colombian web design studio" or "diseño web en Colombia"
+
 ## Me
 
-**Michael Chartrand** ("Mike") — Canadian citizen, Founder & Legal Representative of **Norte Sur Consulting S.A.S.**, doing business as **PymeWebPro**.
+**Michael Chartrand** ("Mike") — Canadian citizen by nationality, full-time resident of Medellín, Founder & Legal Representative of **Norte Sur Consulting S.A.S.**, doing business as **PymeWebPro**.
 - **Legal entity:** Norte Sur Consulting S.A.S. (Colombian Sociedad por Acciones Simplificada)
 - **NIT:** 901.956.771-1
 - **DBA / brand:** PymeWebPro
-- **Based in:** Medellín, Antioquia, Colombia (build studio)
-- **Family home:** London, Ontario, Canada (NA operations contact point — parents still live there)
+- **Based in:** Medellín, Antioquia, Colombia
 - **Email:** mike@mikec.pro
 
 PymeWebPro is the public-facing brand and trade name. Norte Sur Consulting S.A.S. is the contracting legal entity on all invoices, contracts, banking, and tax filings.
 
-**Two-person partnership.** Mike (Canadian founder, legal-entity owner) and **Santiago Santos** (Medellín-based partner, profit share) run the studio together. Both are based in Medellín and have access to client records. Default routing:
-- **English-language buyers** → Mike (Cal.com 15-min call, WhatsApp, contract review).
-- **Spanish-language buyers** → Santiago (WhatsApp +57 301 404 7722, Colombian-market end-to-end).
+**Two-person partnership.** Mike (Canadian founder by nationality, legal-entity owner, Medellín resident) and **Santiago Santos** (paisa, born and based in Medellín, profit-share partner) run the studio together. Both are in Medellín and have access to client records. Default routing:
+- **Spanish-first / Colombian buyers** → Santiago (WhatsApp +57 301 404 7722, primary).
+- **English-language Colombian / expat buyers in Colombia** → Mike (Cal.com 15-min call, WhatsApp).
 - Either can hand off to the other if the situation calls for it.
 
-Web design studio targeting SMBs in Colombia, the US, and Canada.
+Colombian web design studio targeting Colombian SMBs.
 
-Do NOT describe the studio as "solo operator" or imply Mike works alone — that was an outdated framing. Santiago is a real, named partner who shares profit and is publicly named in the FAQ + privacy policy as a person with access to client records.
+Do NOT describe the studio as "solo operator" or imply Mike works alone — Santiago is a real, named partner who shares profit and is publicly named in the FAQ + privacy policy as a person with access to client records.
 
 ## Studio · One-line
 
-PymeWebPro = a Canadian-led, Medellín-built, AI-leveraged web design studio that ships custom-coded marketing sites on Cloudflare for a fraction of agency pricing.
+PymeWebPro = a Medellín-based, AI-leveraged web design studio that ships custom-coded sales pages on Cloudflare for Colombian SMBs at a fraction of agency pricing.
 
-## Two locations (public framing)
+## Location
 
-- **London, Ontario, Canada** — North American operations · client communications · contracts & billing in CAD/USD via Wise.
-- **Medellín, Antioquia, Colombia** — build studio · design, code & deploy · LATAM clients billed in COP via Wompi.
+- **Medellín, Antioquia, Colombia** — studio · design, code & deploy · Colombian clients billed in COP via Wompi.
 
-Both addresses appear in the public footer. Mike personally works from Medellín; London is the family home and the NA-facing mailing address.
+Single location. No London office. Mike's family home is in London, Ontario but that is a personal fact, not a business location and must not appear on pymewebpro public surfaces.
 
 ## Pricing (current)
 
-| Market | Tier | Price |
-|--------|------|-------|
-| Colombia | Essential | $390.000 COP one-time (incl. 1 yr hosting+support) |
-| Colombia | Pro | $690.000 COP one-time (incl. 2 yr hosting+support) |
-| Canada / NA | Essential | $500 CAD one-time (incl. 1 yr hosting+support) |
-| Canada / NA | Pro | $800 CAD one-time (incl. 2 yr hosting+support) |
+| Tier | Price | Includes |
+|------|-------|----------|
+| Essential | $390.000 COP one-time | 1 yr hosting+support |
+| Pro | $690.000 COP one-time | 2 yr hosting+support |
 
-**Both Essential and Pro are multi-page custom sites.** Essential includes a WhatsApp button, lead form to email, custom domain + SSL, 1 year hosting + support, 1 week of free post-launch revisions. Pro adds a blog, PDF download section, GA4 + Meta Pixel tracking, bilingual support (EN/FR or EN/ES), 2 years hosting + support, 2 weeks of free post-launch revisions.
+**Both Essential and Pro are multi-page custom sites.** Essential includes a WhatsApp button, lead form to email, custom domain + SSL, 1 year hosting + support, 1 week of free post-launch revisions. Pro adds a blog, PDF download section, GA4 + Meta Pixel tracking, bilingual support (EN/ES) if the client needs it, 2 years hosting + support, 2 weeks of free post-launch revisions.
 
 ## Hosting
 
-- **CAD $15/mo or $180/yr** for ongoing hosting after the included period
-- Essential includes 1 yr ($180 value) · Pro includes 2 yr ($360 value)
-- Optional maintenance add-on: **$35/mo on top of hosting** (monthly content updates, security patches, minor design)
-- Ad-hoc edits: **$75/hr CAD** (30-min minimum)
+- **$30.000 COP/mes** or **$270.000 COP/año** (25% prepay discount) for ongoing hosting after the included period
+- Essential includes 1 yr · Pro includes 2 yr
+- Optional maintenance add-on: extra cost on top of hosting (monthly content updates, security patches, minor design)
+- Ad-hoc edits: hourly, COP-denominated, 30-min minimum
 
-## Payment terms (both markets)
+## Payment terms
 
-- **30% deposit to start** — no design or development begins until deposit clears (NA: $150 Essential / $240 Pro · LATAM: $117.000 Essential / $207.000 Pro)
+- **30% deposit to start** — no design or development begins until deposit clears ($117.000 COP Essential / $207.000 COP Pro)
 - **70% on launch** — site sits on staging URL; DNS to client domain not connected until balance clears
-- NA: Wise Business invoicing (cards, Apple/Google Pay, wires) in CAD or USD
-- LATAM: Wompi (cards, PSE, bank transfer) in COP
+- Payments via **Wompi** (cards, PSE, bank transfer) in COP only
 - **30-day money-back guarantee post-launch:** site goes offline + full refund within 14 days if client unhappy. After 30 days, fee is non-refundable.
 
 Switched from 50/50 to 30/70 on 2026-05-05. Lower psychological barrier to start (productized service, not custom agency build), DNS gating on the 70% balance still protects against non-payment.
@@ -87,11 +100,14 @@ Build process for every client site:
 
 ## Production marketing site
 
-The studio's primary site at **pymewebpro.com** is now the **bilingual EN/ES** version of the PymeWebPro CA mockup. It is served by Cloudflare Pages from the repo root `index.html` (sibling Pages project, not the Worker). The `/en/` legacy path redirects to `/?lang=en`. Source-of-truth HTML lives at `manual-mockups/pymewebpro-ca/index.html` — copy to repo root after edits and `git push` to deploy via Pages.
+The studio's primary site at **pymewebpro.com** is Spanish-primary, Colombian-market only. It is served by Cloudflare Pages from the repo root `index.html` (sibling Pages project, not the Worker). Source-of-truth HTML lives at `manual-mockups/pymewebpro-ca/index.html` (legacy folder name — kept for git history, contents are now Colombia-only) — copy to repo root after edits and `git push` to deploy via Pages.
 
-EN side: $500/$800 CAD, Wise Business, NA-market copy.
-ES side: $690.000 COP, Wompi, LATAM-market copy.
-Both share one footer with two locations (London + Medellín) and the Norte Sur NIT block.
+ES (primary): $390.000 / $690.000 COP, Wompi payments, Colombian-market copy.
+EN (secondary courtesy): optional English version for English-speaking Colombian residents and expats. Same COP pricing. Same Colombian-market positioning. NOT an NA-market funnel.
+
+Single footer with Medellín location and the Norte Sur NIT block. The site previously had London/Ontario + NA-market framing — that is stale and should be removed wherever it still appears.
+
+**Outstanding cleanup as of 2026-05-13:** Homepage `index.html`, `en/index.html`, and various other pages still contain `.price-na` / `.price-co` swap classes, "$500 CAD" references, London/Ontario footer entries, and "Canadian-led, built in Medellín" framing. These need a sweep to remove. The new traffic guide pages at `/guides/traffic/` and `/en/guides/traffic/` were corrected on 2026-05-13.
 
 ## Active client mockups (8 wired)
 
@@ -121,21 +137,24 @@ All 7 sites with a navbar (i.e. all except `start`) ship a **working hamburger d
 
 | Method | Currency | Use |
 |--------|----------|-----|
-| Wise Business | CAD + USD | NA clients · cards (1% domestic / 2.9% intl), Apple/Google Pay, wires |
-| Wompi | COP | Colombian clients · bank transfers + cards |
+| Wompi | COP | All clients · bank transfers (PSE) + cards |
 
 **No Stripe account.** We do NOT use Stripe for our own payments. We CAN integrate Stripe into client sites (they provide their own merchant account). Don't list Stripe as a PymeWebPro payment method on any site.
+
+**No Wise / CAD / USD.** Even though Mike has a Wise Business account personally, PymeWebPro the studio does NOT bill in CAD or USD and does NOT use Wise as a payment method. Colombian customers pay in COP via Wompi. Period.
 → Setup details: `memory/context/studio.md`
 
 ## Positioning · key phrases
 
-- "Canadian-owned studio. Built in Medellín. Powered by Anthropic AI."
-- "Enterprise tech at SMB pricing."
-- "Custom-coded · Cloudflare-hosted · sub-1s LCP · 48-hour delivery."
-- "Claude does the build. We set the brief, review the output, and ship."
-- Drop in Toronto Agency comparison: $5K-$12K vs $500-$800.
+- "Estudio de diseño web en Medellín. Construido con Claude de Anthropic."
+- "Páginas de ventas custom. Sub-1s LCP. Entrega en 48 horas."
+- "Claude construye. Mike y Santiago supervisan, revisan, lanzan."
+- "Lo que las agencias cobran $5M COP, nosotros lo cobramos $390k COP."
 
-**What we don't claim:** we don't position ourselves as senior engineers, a development team, or programmers. The pitch is honest: a small studio that uses Anthropic AI to do the technical work, with humans setting briefs and reviewing output before shipping. Customers get the same output as an agency at a fraction of the cost because there are no engineering salaries to pay.
+**What we don't claim:**
+- We don't claim "Canadian-led" or "Canadian-owned" as a market position. Mike's nationality is a personal fact, not a sales angle for Colombian SMBs.
+- We don't position ourselves as senior engineers, a development team, or programmers. The pitch is honest: a small studio that uses Anthropic AI to do the technical work, with humans setting briefs and reviewing output before shipping.
+- We don't serve NA / US / Canada / international clients. Customers are Colombian SMBs only.
 
 ## Mike's preferences
 
@@ -215,6 +234,6 @@ When in doubt, look at how Daga, BWI, or Espacio Dental handle the equivalent mo
 | **the SPA** | React admin in `src/index.js` (Babel standalone) |
 | **Lanzar final** | Deploy customer site to production (Essential/Pro clients) |
 | **wizard intake** | The step-by-step client onboarding flow |
-| **Essential / Pro** | The two pricing tiers, identical names in both COP (Colombia) and CAD (NA) markets |
+| **Essential / Pro** | The two pricing tiers · $390.000 COP / $690.000 COP one-time, Colombia-only |
 | **mockups subdomain** | mockups.pymewebpro.com |
 → Full glossary: `memory/glossary.md`

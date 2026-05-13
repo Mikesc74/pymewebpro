@@ -12,6 +12,26 @@
 //
 // Mockup engine module imported from a sibling file (added by graft):
 import { handleMockups } from "./mockups.js";
+// CRM module · spreadsheet-style admin grid for leads, clients, deals, activities.
+// API:  /api/admin/crm/grid + /api/admin/crm/<table>[/<id>]
+// Page: /admin/crm  (standalone HTML, not part of the React SPA)
+import { handleAdminCRM, crmPageHTML } from "./crm.js";
+import { handleSiteAuditAPI, siteAuditReportHTML } from "./site-audit.js";
+// santi.pymewebpro.com · bilingual sales site for Santi to use with prospects.
+import { santiPageHTML } from "./santi.js";
+// Lead enrichment · Claude Haiku + web search to fill missing phone/email/socials.
+import { handleEnrich } from "./enrich.js";
+// Chief of Staff · agente en español, widget flotante en cada página admin.
+//   /api/admin/chief-of-staff/chat  -> backend Anthropic loop con tools CRM
+//   CHIEF_OF_STAFF_WIDGET_HTML       -> snippet HTML inyectado antes de </body>
+import { handleChiefOfStaff } from "./chief-of-staff.js";
+import { CHIEF_OF_STAFF_WIDGET_HTML } from "./chief-of-staff-widget.js";
+// Proposal generator: builds a mockup HTML + printable proposal page when a
+// deal moves to the "proposal" stage and the user confirms in the CRM modal.
+//   POST /api/admin/proposals/:dealId/generate
+//   GET  /proposal-mockup/:dealId
+//   GET  /admin/proposal/:dealId
+import { handleProposalRoutes } from "./proposal-generator.js";
 //
 // Modules in order:  utils.js, auth.js, client.js, deliverables.js, admin.js,
 //                    files.js, leads.js, payments.js, frontend.js, index.js
@@ -952,6 +972,35 @@ async function handleWhatsAppRedirect(request, env) {
   if (text) target += `?text=${encodeURIComponent(text)}`;
   return Response.redirect(target, 302);
 }
+// Spam heuristic for the public lead form. Returns a short reason string if
+// the submission looks like a bot / scam · null if it looks legit.
+function looksLikeSpam(fields) {
+  const haystack = [fields.name, fields.email, fields.businessName, fields.message, fields.phone]
+    .filter(Boolean).join(" ").toLowerCase();
+  if (!haystack) return null;
+  // Suspicious domains seen in real spam (graph.org, telegra.ph, t.me etc).
+  const badDomains = ["graph.org", "telegra.ph", "t.me/", "tinyurl", "bit.ly", "is.gd", "rebrand.ly", ".ru/", ".xyz/"];
+  for (const d of badDomains) if (haystack.includes(d)) return "bad_domain:" + d;
+  // Crypto / scam keywords.
+  const badWords = [
+    "withdrawal process", "withdrawal-process", "withdraw your", "btc reward",
+    "usdt", "metamask", "seed phrase", "private key", "airdrop",
+    "earn $", "claim your", "you have received", "wire transfer",
+    "investment opportunity", "guaranteed return",
+  ];
+  for (const w of badWords) if (haystack.includes(w)) return "bad_word:" + w;
+  // Emoji-heavy submissions (real users rarely lead with rocket+chart emojis).
+  const emojiCount = (haystack.match(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu) || []).length;
+  if (emojiCount >= 3) return "emoji_spam";
+  // URLs in name / business name are always spam.
+  if (/^https?:\/\//.test(fields.name || "")) return "url_in_name";
+  if (/^https?:\/\//.test(fields.businessName || "")) return "url_in_business";
+  // Disposable / obviously fake email domains.
+  const email = (fields.email || "").toLowerCase();
+  if (/@(ship79|mail-tester|guerrillamail|sharklasers|throwaway|temp-mail|10minute)/.test(email)) return "disposable_email";
+  return null;
+}
+
 async function captureLead(request, env) {
   const ip = getClientIP(request);
   const ipOk = await rateLimit(env, `lead:ip:${ip}`, 5, 600);
@@ -965,6 +1014,14 @@ async function captureLead(request, env) {
   const phone = (body.phone || "").toString().trim().slice(0, 64) || null;
   const businessName = (body.business_name || body.businessName || "").toString().trim().slice(0, 200) || null;
   const message = (body.message || "").toString().trim().slice(0, 5000) || null;
+  // Spam filter. Rejects crypto-scam / withdrawal / phishing bot submissions
+  // that hit the public contact form. Logged in metadata so we know it tripped.
+  const spamCheck = looksLikeSpam({ name, email, businessName, message, phone });
+  if (spamCheck) {
+    console.log("Lead spam blocked:", spamCheck, { email });
+    // Return 200 so spam bots can't probe which filters tripped them.
+    return json({ ok: true });
+  }
   const language = body.language === "es" ? "es" : "en";
   const source = VALID_SOURCES.includes(body.source) ? body.source : "contact_form";
   if (!email || !email.includes("@") || email.length > 254) return json({ error: "Valid email required" }, 400);
@@ -1862,9 +1919,16 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const [leadDetail, setLeadDetail] = useState(null);
       const [showInvite, setShowInvite] = useState(false);
       const [statusFilter, setStatusFilter] = useState('');
+      const auditUrlRef = useRef(null);
 
-      const tab = route.startsWith('/admin/leads') ? 'leads'
-                : route.startsWith('/admin/clicks') ? 'clicks'
+      function runSiteAudit() {
+        const u = (auditUrlRef.current?.value || '').trim();
+        if (!u) return;
+        window.open('/admin/site-audit?url=' + encodeURIComponent(u), '_blank', 'noopener');
+      }
+
+      const tab = route.startsWith('/admin/crm') ? 'crm'
+                : route.startsWith('/admin/leads') ? 'crm'
                 : 'clients';
 
       async function tryLogin() {
@@ -1904,8 +1968,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       useEffect(() => {
         if (!authed) return;
         if (tab === 'clients') loadClients();
-        else if (tab === 'leads') loadLeads(statusFilter);
-        else if (tab === 'clicks') loadClicks();
+        // 'crm' loads its own data inside the iframe; nothing to fetch here.
       }, [authed, tab, statusFilter]);
 
       const clientDetailMatch = route.match(/^\\/admin\\/clients\\/([a-f0-9-]+)$/);
@@ -1948,8 +2011,8 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const tabBtn = (id, label, Icon, count) => (
         <button onClick={() => setRoute('/admin' + (id==='clients'?'':'/'+id))} style={{
           background: tab===id ? 'rgba(255,92,46,0.12)' : 'transparent',
-          color: tab===id ? '#FF5C2E' : 'rgba(26,32,50,0.55)',
-          border: '1px solid ' + (tab===id ? 'rgba(255,92,46,0.3)' : 'rgba(26,32,50,0.08)'),
+          color: tab===id ? '#FF5C2E' : 'rgba(255,255,255,0.75)',
+          border: '1px solid ' + (tab===id ? 'rgba(255,92,46,0.3)' : 'rgba(255,255,255,0.15)'),
           padding: '0.4rem 0.85rem', borderRadius: '4px', cursor: 'pointer',
           fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase',
           display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
@@ -1966,22 +2029,60 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             <div style={{display:'flex',alignItems:'center',gap:'1.25rem',flex:1,minWidth:0}}>
               <button onClick={()=>setRoute('/admin')} title="Home" style={{display:'flex',alignItems:'center',gap:'0.6rem',background:'transparent',border:'none',cursor:'pointer',padding:0,fontFamily:'inherit'}}>
                 <Shield size={18} color="#FF5C2E" />
-                <span className="serif" style={{fontSize:'1.15rem',color:'#1A2032',whiteSpace:'nowrap'}}>Pyme<span style={{color:'#FF5C2E'}}>WebPro</span> · Admin</span>
+                <span className="serif" style={{fontSize:'1.15rem',color:'#FFFFFF',whiteSpace:'nowrap'}}>Pyme<span style={{color:'#FF5C2E'}}>WebPro</span> · Admin</span>
               </button>
               <div style={{display:'flex',gap:'.4rem',flexWrap:'wrap'}}>
+                {tabBtn('crm', 'CRM', Tag)}
                 {tabBtn('clients', 'Clients', Users, clients.length || undefined)}
-                {tabBtn('leads', 'Leads', Tag, (leadCounts.new || 0) + (leadCounts.contacted || 0) || undefined)}
-                {tabBtn('clicks', 'WhatsApp', MsgIcon)}
+              </div>
+              <div style={{display:'flex',alignItems:'center',gap:'0.4rem',flex:1,maxWidth:'520px',minWidth:0}}>
+                <input
+                  type="text"
+                  ref={auditUrlRef}
+                  defaultValue=""
+                  onKeyDown={e => e.key === 'Enter' && runSiteAudit()}
+                  placeholder="Paste a website URL…"
+                  style={{
+                    flex:1, minWidth:0,
+                    background:'rgba(255,255,255,0.08)',
+                    border:'1px solid rgba(255,255,255,0.18)',
+                    color:'#fff',
+                    padding:'0.4rem 0.7rem',
+                    borderRadius:'4px',
+                    fontFamily:'inherit',
+                    fontSize:'0.82rem',
+                    outline:'none',
+                  }}
+                />
+                <button
+                  onClick={runSiteAudit}
+                  title="Run an audit on this URL and open a PDF-ready report"
+                  style={{
+                    background:'rgba(255,92,46,0.18)',
+                    color:'#FF5C2E',
+                    border:'1px solid rgba(255,92,46,0.35)',
+                    padding:'0.4rem 0.85rem',
+                    borderRadius:'4px',
+                    cursor:'pointer',
+                    fontSize:'0.78rem',
+                    letterSpacing:'0.08em',
+                    textTransform:'uppercase',
+                    fontFamily:'inherit',
+                    whiteSpace:'nowrap',
+                  }}
+                >
+                  Test a site
+                </button>
               </div>
             </div>
             <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
               {tab === 'clients' && !detail && !leadDetail && (
                 <>
-                  <button onClick={async()=>{await adminApi('/api/admin/check-all-sites',{method:'POST'});loadClients();}} style={{...ghostBtn,padding:'0.4rem 0.75rem',fontSize:'0.78rem'}} title="Check the health of all sites"><Sparkle size={13} /> Check sites</button>
+                  <button onClick={async()=>{await adminApi('/api/admin/check-all-sites',{method:'POST'});loadClients();}} style={{...ghostBtn,padding:'0.4rem 0.75rem',fontSize:'0.78rem',color:'rgba(255,255,255,0.85)',borderColor:'rgba(255,255,255,0.18)'}} title="Check the health of all sites"><Sparkle size={13} /> Check sites</button>
                   <button onClick={() => setShowInvite(true)} style={{...primaryBtn,padding:'0.4rem 0.85rem',fontSize:'0.78rem'}}><Plus size={13} /> Invite Client</button>
                 </>
               )}
-              <button onClick={() => { localStorage.removeItem(ADMIN_KEY); setAuthed(false); }} style={{...ghostBtn,padding:'0.4rem 0.75rem',fontSize:'0.78rem'}}>Sign Out</button>
+              <button onClick={() => { localStorage.removeItem(ADMIN_KEY); setAuthed(false); }} style={{...ghostBtn,padding:'0.4rem 0.75rem',fontSize:'0.78rem',color:'rgba(255,255,255,0.85)',borderColor:'rgba(255,255,255,0.18)'}}>Sign Out</button>
             </div>
           </header>
           {children}
@@ -1993,7 +2094,9 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
       return (
         <Shell>
-          <main style={{padding:'2.5rem 2rem',maxWidth:'1200px',margin:'0 auto'}}>
+          <main style={tab === 'crm'
+            ? {padding:0, maxWidth:'none', margin:0, width:'100%'}
+            : {padding:'2.5rem 2rem', maxWidth:'1200px', margin:'0 auto'}}>
 
             {tab === 'clients' && (
               <>
@@ -2012,53 +2115,18 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               </>
             )}
 
-            {tab === 'leads' && (
-              <>
-                <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',margin:'0 0 1.5rem'}}>
-                  <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:0}}>Leads</h1>
-                  <div style={{display:'flex',gap:'0.4rem'}}>
-                    {['', 'new', 'contacted', 'converted', 'dismissed'].map(s => (
-                      <button key={s||'all'} onClick={() => setStatusFilter(s)} style={{
-                        background: statusFilter===s ? 'rgba(255,92,46,0.12)' : 'transparent',
-                        color: statusFilter===s ? '#FF5C2E' : 'rgba(26,32,50,0.5)',
-                        border: '1px solid ' + (statusFilter===s ? 'rgba(255,92,46,0.3)' : 'rgba(26,32,50,0.08)'),
-                        padding: '0.35rem 0.75rem', borderRadius: '3px', cursor:'pointer', fontSize:'0.75rem', textTransform:'capitalize'
-                      }}>{s || 'all'}{leadCounts[s] ? ' (' + leadCounts[s] + ')' : ''}</button>
-                    ))}
-                  </div>
-                </div>
-                {loading ? <Loader size={24} className="spin" color="#FF5C2E" /> : (
-                  leads.length === 0 ? (
-                    <div style={{textAlign:'center',padding:'4rem',color:'rgba(26,32,50,0.4)'}}>
-                      No leads yet. They'll appear here as the contact form fires.'
-                    </div>
-                  ) : (
-                    <div style={{display:'flex',flexDirection:'column',gap:'0.75rem'}}>
-                      {leads.map(l => <LeadRow key={l.id} l={l} onClick={() => setRoute('/admin/leads/' + l.id)} />)}
-                    </div>
-                  )
-                )}
-              </>
-            )}
-
-            {tab === 'clicks' && (
-              <>
-                <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:'0 0 0.5rem'}}>WhatsApp Clicks</h1>
-                <p style={{color:'rgba(26,32,50,0.5)',marginBottom:'2rem',fontSize:'0.9rem'}}>Anonymous click attribution — your <code style={{color:'#FF5C2E'}}>/go/whatsapp?campaign=…</code> redirect.</p>
-                {loading ? <Loader size={24} className="spin" color="#FF5C2E" /> : clicks.length === 0 ? (
-                  <div style={{textAlign:'center',padding:'4rem',color:'rgba(26,32,50,0.4)'}}>No clicks logged yet.</div>
-                ) : (
-                  <div style={{display:'flex',flexDirection:'column',gap:'0.4rem'}}>
-                    {clicks.map(c => (
-                      <div key={c.id} style={{display:'grid',gridTemplateColumns:'160px 140px 1fr',gap:'1rem',padding:'0.85rem 1rem',background:'rgba(26,32,50,0.03)',border:'1px solid rgba(26,32,50,0.08)',borderRadius:'2px',fontSize:'0.85rem'}}>
-                        <span style={{color:'rgba(26,32,50,0.5)'}}>{new Date(c.created_at).toLocaleString('en-US')}</span>
-                        <span style={{color:'#FF5C2E'}}>{c.campaign || '(none)'}</span>
-                        <span style={{color:'rgba(26,32,50,0.4)',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{c.referrer || '—'}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
+            {tab === 'crm' && (
+              <iframe
+                src="/admin/crm?embed=1"
+                title="CRM"
+                style={{
+                  width:'100%',
+                  height:'calc(100vh - 110px)',
+                  border:'none',
+                  display:'block',
+                  background:'#FAFAF7'
+                }}
+              />
             )}
           </main>
           {showInvite && <InviteModal onClose={() => setShowInvite(false)} onCreated={() => { setShowInvite(false); loadClients(); }} />}
@@ -2092,15 +2160,37 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     }
 
     function LeadDetail({ lead, onBack, onRefresh, setRoute }) {
-      const [notes, setNotes] = useState(lead.notes || '');
+      // Notes are now an append-only journal. The notes column on the lead
+      // is treated as the accumulated history; noteDraft is the next entry
+      // the user is composing. On save we prepend "[timestamp] draft" so the
+      // newest note is at the top of the history.
+      const [notesHistory, setNotesHistory] = useState(lead.notes || '');
+      const [noteDraft, setNoteDraft] = useState('');
       const [status, setStatus] = useState(lead.status);
+      const [instagram, setInstagram] = useState(lead.instagram || '');
+      const [facebookUrl, setFacebookUrl] = useState(lead.facebook_url || '');
+      const [xUrl, setXUrl] = useState(lead.x_url || '');
+      const [tiktokUrl, setTiktokUrl] = useState(lead.tiktok_url || '');
       const [saving, setSaving] = useState(false);
       const [converting, setConverting] = useState(false);
 
       async function save() {
         setSaving(true);
         try {
-          await adminApi('/api/admin/leads/' + lead.id, { method: 'PATCH', body: JSON.stringify({ status, notes }) });
+          // If the user typed a new note, stamp it and prepend to the history.
+          let newHistory = notesHistory;
+          const draft = (noteDraft || '').trim();
+          if (draft) {
+            const stamp = formatNoteStamp(new Date());
+            const entry = '[' + stamp + ']\\n' + draft;
+            newHistory = newHistory ? (entry + '\\n\\n---\\n\\n' + newHistory) : entry;
+          }
+          await adminApi('/api/admin/leads/' + lead.id, { method: 'PATCH', body: JSON.stringify({
+            status, notes: newHistory,
+            instagram, facebook_url: facebookUrl, x_url: xUrl, tiktok_url: tiktokUrl,
+          }) });
+          setNotesHistory(newHistory);
+          setNoteDraft('');
           await onRefresh();
         } catch (e) { alert('Save failed: ' + e.message); }
         finally { setSaving(false); }
@@ -2149,6 +2239,14 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               {lead.metadata && lead.metadata.extra && Object.entries(lead.metadata.extra).filter(([_,v])=>v).map(([k,v]) => <LeadField key={k} k={k} v={v} />)}
             </div>
 
+            <h2 className="serif" style={{fontSize:'1.5rem',marginBottom:'1rem'}}>Socials</h2>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.75rem',marginBottom:'1.5rem'}}>
+              <SocialField label="Instagram"   value={instagram}   onChange={setInstagram}   placeholder="@handle or https://instagram.com/..." />
+              <SocialField label="Facebook"    value={facebookUrl} onChange={setFacebookUrl} placeholder="Page URL or username" />
+              <SocialField label="X (Twitter)" value={xUrl}        onChange={setXUrl}        placeholder="@handle or https://x.com/..." />
+              <SocialField label="TikTok"      value={tiktokUrl}   onChange={setTiktokUrl}   placeholder="@handle or https://tiktok.com/@..." />
+            </div>
+
             <h2 className="serif" style={{fontSize:'1.5rem',marginBottom:'1rem'}}>Status</h2>
             <div style={{display:'flex',gap:'0.5rem',marginBottom:'1.5rem',flexWrap:'wrap'}}>
               {['new','contacted','converted','dismissed'].map(s => (
@@ -2162,7 +2260,31 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             </div>
 
             <h2 className="serif" style={{fontSize:'1.5rem',marginBottom:'1rem'}}>Notes</h2>
-            <textarea value={notes} onChange={e=>setNotes(e.target.value)} rows={5} placeholder="Internal notes — only visible to admins" style={{...inputStyle, fontFamily:'inherit', resize:'vertical'}} />
+            <div style={{
+              background:'#FFFFFF',
+              border:'1px solid rgba(26,32,50,0.08)',
+              borderRadius:'4px',
+              padding: notesHistory ? '0.85rem 1rem' : '0.6rem 1rem',
+              maxHeight:'260px',
+              overflowY:'auto',
+              marginBottom:'0.75rem',
+              fontSize:'13.5px',
+              lineHeight:1.55,
+              color:'rgba(26,32,50,0.92)',
+              whiteSpace:'pre-wrap',
+              fontFamily:'inherit',
+            }}>
+              {notesHistory
+                ? notesHistory
+                : <span style={{color:'rgba(26,32,50,0.4)',fontStyle:'italic'}}>No notes yet. Add the first one below.</span>}
+            </div>
+            <textarea
+              value={noteDraft}
+              onChange={e => setNoteDraft(e.target.value)}
+              rows={4}
+              placeholder="Add a new note. On save it gets timestamped and pinned to the top of the history above."
+              style={{...inputStyle, fontFamily:'inherit', resize:'vertical'}}
+            />
 
             <div style={{display:'flex',gap:'0.75rem',marginTop:'2rem',flexWrap:'wrap'}}>
               <button onClick={save} disabled={saving} style={primaryBtn}>{saving ? 'Saving…' : 'Save'}</button>
@@ -2188,6 +2310,33 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         <div style={{marginBottom:'0.75rem'}}>
           <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.4)',marginBottom:'0.25rem',textTransform:'uppercase',letterSpacing:'0.1em'}}>{k}</div>
           <div style={{color:'rgba(26,32,50,0.9)',whiteSpace:'pre-wrap'}}>{v}</div>
+        </div>
+      );
+    }
+
+    // Stamps a note entry in a stable, human-readable format. We avoid the
+    // Date toISOString to keep timestamps local; admins read these in the
+    // same browser they typed them in.
+    function formatNoteStamp(d) {
+      const p = (n) => String(n).padStart(2, '0');
+      return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) +
+        ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+    }
+
+    // Editable single-line input used for the four social URL fields on the
+    // lead detail page. Same look as inputStyle so it matches the existing
+    // form controls.
+    function SocialField({ label, value, onChange, placeholder }) {
+      return (
+        <div>
+          <div style={{fontSize:'0.7rem',color:'rgba(26,32,50,0.5)',marginBottom:'0.35rem',textTransform:'uppercase',letterSpacing:'0.08em'}}>{label}</div>
+          <input
+            type="text"
+            value={value || ''}
+            onChange={e => onChange(e.target.value)}
+            placeholder={placeholder || ''}
+            style={inputStyle}
+          />
         </div>
       );
     }
@@ -4223,6 +4372,21 @@ const src_default = {
     const url = new URL(request.url);
     const path = url.pathname;
     if (request.method === "OPTIONS") return cors(new Response(null, { status: 204 }));
+    // santi.pymewebpro.com: bilingual sales site for Santi. Single self-contained
+    // HTML page. Anything other than GET on this host returns 405. Robots/health
+    // requests get a tiny txt response.
+    if (url.hostname === "santi.pymewebpro.com") {
+      if (request.method !== "GET") return new Response("Method not allowed", { status: 405 });
+      if (path === "/robots.txt") return new Response("User-agent: *\nAllow: /\n", { headers: { "Content-Type": "text/plain" } });
+      return withSecurityHeaders(new Response(santiPageHTML(), {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "public, max-age=300",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "strict-origin-when-cross-origin",
+        },
+      }));
+    }
     try {
       if (path === "/api/health") return cors(json({ ok: true, timestamp: Date.now() }));
       if (path === "/go/whatsapp") return await handleWhatsAppRedirect(request, env);
@@ -4235,14 +4399,84 @@ const src_default = {
       if (path.startsWith("/api/client/")) return cors(await handleClient(request, env, ctx));
       if (path === "/api/leads") return cors(await handlePublicLeads(request, env, ctx));
       if (path.startsWith("/api/admin/leads") || path === "/api/admin/clicks") return cors(await handleAdminLeads(request, env, ctx));
+      // CRM API. Must run BEFORE the /api/admin/* catch-all because it has its own table-aware routing.
+      if (path.startsWith("/api/admin/crm")) return cors(await handleAdminCRM(request, env, { json, isAdmin, uuid }));
+      // Site audit API · used by the header "Test a site" button to produce a PDF-ready report.
+      if (path === "/api/admin/site-audit") return cors(await handleSiteAuditAPI(request, env, { json, isAdmin }));
+      // Lead enrichment endpoints · same auth pattern, runs before the catch-all.
+      if (path.startsWith("/api/admin/enrich")) return cors(await handleEnrich(request, env, ctx, { json, isAdmin }));
+      // Chief of Staff agent. Must run BEFORE the /api/admin/* catch-all.
+      if (path.startsWith("/api/admin/chief-of-staff")) return cors(await handleChiefOfStaff(request, env, { json, isAdmin, uuid }));
+      // Proposal generator routes (POST generate + GET mockup/proposal pages).
+      // The handler returns null if the path doesn't belong to it.
+      {
+        const __propResp = await handleProposalRoutes(request, env, { json, isAdmin, escapeHtml });
+        if (__propResp) return cors(__propResp);
+      }
       // ─── mockup engine routes (must run BEFORE the /api/admin/* and /api/* catch-alls) ───
       const __mockupResp = await handleMockups(request, env, ctx, { json, isAdmin, randomToken, uuid, sha256, escapeHtml });
       if (__mockupResp) return cors(__mockupResp);
       if (path.startsWith("/api/admin/")) return cors(await handleAdmin(request, env, ctx));
       if (path.startsWith("/api/files/")) return cors(await handleFiles(request, env, ctx));
       if (path.startsWith("/api/")) return cors(json({ error: "Not found" }, 404));
-      // SPA fallthrough
-      return withSecurityHeaders(new Response(FRONTEND_HTML, {
+      // CRM is a tab inside the admin SPA. The SPA loads the CRM via an iframe
+      // pointing to /admin/crm?embed=1, which serves the standalone CRM HTML.
+      // Direct visits to /admin/crm (no query) fall through to the SPA, which
+      // then opens the CRM tab automatically.
+      if ((path === "/admin/crm" || path === "/admin/crm/") && url.searchParams.get("embed") === "1") {
+        // Custom CSP so the SPA can iframe this page. withSecurityHeaders would
+        // otherwise default to frame-ancestors 'none', which blocks the embed.
+        const embedCSP = [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-inline' https://unpkg.com",
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+          "font-src 'self' https://fonts.gstatic.com data:",
+          "img-src 'self' data: blob:",
+          "connect-src 'self'",
+          "frame-ancestors 'self'",
+          "base-uri 'self'",
+          "object-src 'none'",
+          "form-action 'self'",
+        ].join("; ");
+        // NO Chief of Staff widget here. The CRM page is iframe-embedded
+        // inside the SPA, and the SPA injects the widget on its own document.
+        // Injecting again here would render a second floating bubble inside
+        // the iframe, doubling the chief of staff on the CRM tab.
+        return withSecurityHeaders(new Response(crmPageHTML(env), {
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "X-Frame-Options": "SAMEORIGIN",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Security-Policy": embedCSP,
+          },
+        }));
+      }
+      // Site audit report page · standalone HTML that fetches the JSON API on the
+      // client (using the admin token in localStorage) and auto-opens the print
+      // dialog for "Save as PDF". Opened in a new tab by the header button.
+      if (path === "/admin/site-audit" || path === "/admin/site-audit/") {
+        const target = url.searchParams.get("url");
+        if (!target) {
+          return new Response("Missing ?url= parameter", { status: 400, headers: { "Content-Type": "text/plain" } });
+        }
+        return new Response(siteAuditReportHTML(target), {
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+          },
+        });
+      }
+      // SPA fallthrough. Inject the Chief of Staff widget at serve time so
+      // FRONTEND_HTML stays free of `${...}` interpolations (check-spa would reject those).
+      const spaHtml = FRONTEND_HTML.replace(
+        "</body>",
+        CHIEF_OF_STAFF_WIDGET_HTML + "\n</body>"
+      );
+      return withSecurityHeaders(new Response(spaHtml, {
         headers: {
           "Content-Type": "text/html; charset=utf-8",
           "Cache-Control": "public, max-age=300",

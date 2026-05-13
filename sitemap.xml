@@ -48,6 +48,26 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Guides (bilingual series) -->
+  <url>
+    <loc>https://pymewebpro.com/guides/traffic/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pymewebpro.com/guides/traffic/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pymewebpro.com/en/guides/traffic/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/guides/traffic/"/>
+  </url>
+  <url>
+    <loc>https://pymewebpro.com/en/guides/traffic/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pymewebpro.com/guides/traffic/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pymewebpro.com/en/guides/traffic/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pymewebpro.com/guides/traffic/"/>
+  </url>
+
   <!-- City hubs -->
   <url>
     <loc>https://pymewebpro.com/medellin/</loc>
