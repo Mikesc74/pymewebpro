@@ -143,6 +143,19 @@ All 7 sites with a navbar (i.e. all except `start`) ship a **working hamburger d
 - Worker source: `~/code/pymewebpro/portal/src/`
 - Manual mockup HTML sources: `~/code/pymewebpro/manual-mockups/`
 
+### Master portal subpath mount (2026-05-13)
+
+The same `pymewebpro-portal` worker also serves the studio admin under the master portal at **colguides.com/portal/pymewebpro/*** (Mike + Santi only, Cloudflare Access-gated). Mechanism:
+
+- Wrangler route `colguides.com/portal/pymewebpro/*` directs traffic to this worker.
+- The fetch handler detects `colguides.com` host + the `/portal/pymewebpro` prefix, strips it from `url.pathname`, reconstructs the Request, and lets the existing router see root-relative paths unchanged.
+- After the response is built, `rewriteForPwpSubpath()` rewrites Location redirects and HTML `href`/`action`/`src` attributes to prepend the prefix, and injects `<script>window.PWP_BASE="/portal/pymewebpro";</script>` into HTML responses.
+- The SPA reads `window.PWP_BASE` via the `pwpBase()` / `pwpStripBase()` / `pwpPush()` / `pwpReplace()` helpers at the top of the inlined React app. All fetch helpers (`api`, `adminApi`), direct `fetch('/api/...')` calls, and the client-side router prepend the base on writes and strip it on reads.
+
+Adding a new direct `fetch('/api/...')` or `window.location.href = '/...'` anywhere in the SPA? Always wrap the path: `pwpBase() + '/api/...'`. Otherwise it'll 404 under the master portal mount while still working on `portal.pymewebpro.com`.
+
+`portal.pymewebpro.com` is retained as the legacy URL during the cutover and will be removed from `wrangler.toml` routes once the master portal is verified.
+
 ## Payments — what we accept
 
 | Method | Currency | Use |

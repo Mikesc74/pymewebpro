@@ -129,7 +129,7 @@ const STYLE_HASH_LIST = STYLE_HASHES.map((h) => `'${h}'`).join(" ");
 
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' ${SCRIPT_HASH_LIST}`,
+  `script-src 'self' ${SCRIPT_HASH_LIST} https://www.googletagmanager.com`,
   // style-src is now hash-locked. All inline style="..." attributes have been
   // refactored to .u-* utility classes (see end of each page's <style> block).
   // Adding a new inline <style> block or editing an existing one means the
@@ -139,8 +139,8 @@ const CSP = [
   // here plus a per-attribute hash (the latter is brittle, prefer option a).
   `style-src 'self' ${STYLE_HASH_LIST} https://fonts.googleapis.com`,
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data: https://images.pexels.com",
-  "connect-src 'self' https://portal.pymewebpro.com",
+  "img-src 'self' data: https://images.pexels.com https://www.google-analytics.com",
+  "connect-src 'self' https://portal.pymewebpro.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com",
   "form-action 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",

@@ -8,7 +8,8 @@ account_id = "c98561adefb602704d4e7a6a1b7e7597"
 # to <slug>.sites.pymewebpro.com with no per-client DNS work. Requires a wildcard
 # DNS record (CNAME *.sites pymewebpro-portal.workers.dev) configured one-time on the zone.
 routes = [
-  { pattern = "portal.pymewebpro.com/*", zone_name = "pymewebpro.com" },
+  # portal.pymewebpro.com retired 2026-05-13. Studio admin lives under the
+  # master portal at colguides.com/portal/pymewebpro/* (Access-gated).
   { pattern = "*.sites.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   { pattern = "mockups.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   # santi.pymewebpro.com - Santi's bilingual sales site. See src/santi.js.
@@ -17,6 +18,12 @@ routes = [
   # inviersol.com - production custom domain. Zone is already active in CF.
   { pattern = "inviersol.com/*", zone_name = "inviersol.com" },
   { pattern = "www.inviersol.com/*", zone_name = "inviersol.com" },
+  # Master portal mount under colguides.com (Mike + Santi only, Access-gated).
+  # The fetch handler detects this host+prefix, strips /portal/pymewebpro from
+  # the path before routing, and rewrites outbound HTML/redirects to keep the
+  # prefix in the URL bar. See src/index.js fetch() and rewriteForPwpSubpath().
+  { pattern = "colguides.com/portal/pymewebpro/*", zone_name = "colguides.com" },
+  { pattern = "www.colguides.com/portal/pymewebpro/*", zone_name = "colguides.com" },
 ]
 
 # --- Bindings (discovered from the live deployment 2026-04-30) ------------
@@ -37,10 +44,27 @@ bucket_name = "pymewebpro-client-assets"
 # --- Plain-text vars ------------------------------------------------------
 # These are visible in the Worker; don't put secrets here.
 [vars]
-APP_URL = "https://portal.pymewebpro.com"
+APP_URL = "https://colguides.com/portal/pymewebpro"
 FROM_EMAIL = "PymeWebPro <noreply@pymewebpro.com>"
 ADMIN_EMAIL = "hello@pymewebpro.com"
 WHATSAPP_NUMBER = "+573014047722"
+
+# Chief of Staff agent · cross-worker dispatch
+# Catalina exposes /api/agent on catalina.medellin.guide. The CoS posts to this
+# URL with a shared-secret header (COS_SHARED_SECRET) to call WhatsApp send,
+# Google Calendar booking, web search, fetch_url, weather, place lookup, live
+# Catalina DB reads, and Cloudflare traffic analytics actions.
+CATALINA_AGENT_URL = "https://catalina.medellin.guide/api/agent"
+COS_EMAIL_FROM     = "Chief of Staff <chief@medellin.guide>"
+COS_EMAIL_REPLY_TO = "mike@mikec.pro"
+
+# Shared Tasks portal at tasks.colguides.com (the kanban for Mike + Santi).
+# The CoS uses Cloudflare Access service token credentials (same one that
+# powers `node scripts/add-task.mjs` in ~/code/tasks-portal/) to programmatically
+# add/list/update/delete tasks. The Client ID is visible; the Client Secret is
+# stored as a worker secret (TASKS_ACCESS_CLIENT_SECRET).
+TASKS_PORTAL_URL       = "https://tasks.colguides.com"
+TASKS_ACCESS_CLIENT_ID = "ebf6ce7ef81ee9f7cb28774011630ce4.access"
 
 # --- Secrets (NOT stored here — set via wrangler) -------------------------
 # Run these once after `wrangler login`:

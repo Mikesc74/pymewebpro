@@ -266,7 +266,11 @@ export const CHIEF_OF_STAFF_WIDGET_HTML = `
   var ADMIN_KEY = "pwp_admin";
   var HISTORY_KEY = "pwp_cos_history_v1";
   var SHOW_TRACE_KEY = "pwp_cos_show_trace";
+  // Master-portal base prepended at call time so the widget works both on the
+  // legacy portal.pymewebpro.com URL (where window.PWP_BASE is undefined) and
+  // on colguides.com/portal/pymewebpro/* (where the worker injects it).
   var ENDPOINT = "/api/admin/chief-of-staff/chat";
+  function cosEndpoint() { return (window.PWP_BASE || "") + ENDPOINT; }
 
   var launcher = document.getElementById("cos-launcher");
   var panel    = document.getElementById("cos-panel");
@@ -433,7 +437,7 @@ export const CHIEF_OF_STAFF_WIDGET_HTML = `
     var typing = addTyping();
 
     try {
-      var res = await fetch(ENDPOINT, {
+      var res = await fetch(cosEndpoint(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

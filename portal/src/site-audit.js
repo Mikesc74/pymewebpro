@@ -489,7 +489,7 @@ export function siteAuditReportHTML(targetUrl) {
     return;
   }
   try {
-    const r = await fetch('/api/admin/site-audit?url=' + encodeURIComponent(url), {
+    const r = await fetch((window.PWP_BASE || '') + '/api/admin/site-audit?url=' + encodeURIComponent(url), {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);

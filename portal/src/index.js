@@ -26,6 +26,7 @@ import { handleEnrich } from "./enrich.js";
 //   CHIEF_OF_STAFF_WIDGET_HTML       -> snippet HTML inyectado antes de </body>
 import { handleChiefOfStaff } from "./chief-of-staff.js";
 import { CHIEF_OF_STAFF_WIDGET_HTML } from "./chief-of-staff-widget.js";
+import { COS_LOADER_JS } from "./cos-loader.js";
 // Proposal generator: builds a mockup HTML + printable proposal page when a
 // deal moves to the "proposal" stage and the user confirms in the CRM modal.
 //   POST /api/admin/proposals/:dealId/generate
@@ -1622,7 +1623,7 @@ function confirmationHtml({ lead, quote, lang, lastPayment, justReturned }) {
     if (!box.checked) return;
     btn.disabled = true; btn.textContent = tPaying; err.style.display = 'none';
     try {
-      const r = await fetch('/api/leads/${esc(lead.id)}/checkout', {
+      const r = await fetch((window.PWP_BASE || '') + '/api/leads/${esc(lead.id)}/checkout', {
         method: 'POST',
         headers: {'content-type':'application/json'},
         body: JSON.stringify({ authorization_accepted: true, clause_version: ${JSON.stringify(ENCARGADO_CLAUSE_VERSION)} })
@@ -1794,13 +1795,29 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     // ─── i18n ──────────────────────────────────────────────────────────
     const T = {"en":{"brand":"PymeWebPro","tagline":"Client Onboarding Portal","loginTitle":"Welcome","loginSub":"Enter your email to receive a secure login link","emailPh":"you@yourbusiness.com","sendLink":"Send Magic Link","sending":"Sending…","linkSent":"Check your inbox","linkSentSub":"We sent a login link to","backToLogin":"← Use a different email","progress":"Project Progress","complete":"complete","saving":"Saving…","saved":"Saved","saveError":"Couldn't save — check your connection","welcomeTitle":"Welcome — let's build your site","welcomeBody":"This takes about 5–10 minutes. Your answers save as you type, so feel free to leave and come back. Don't worry about getting every field perfect — we'll polish your copy ourselves before showing you the mockup.","welcomeCta":"Let's start","optional":"optional","sectionDone":"done","skipForNow":"Skip for now","intros":{"business":"The basics — these appear on your site and are the foundation for everything else. About 2 minutes.","contact":"How should visitors reach you? What you put here goes on the WhatsApp button, the footer, and the map.","brand":"Your logo and the colors that identify you. No logo yet? Upload any placeholder — we'll handle the rest.","visual":"Authentic photos of your business sell far better than stock images. 3 to 8 good photos is plenty.","content":"The tone and topics you want to convey. You don't need to write the final copy — that's our job. Just describe the feeling.","tech":"If you already own a domain or have hosting, tell us. If not, we set everything up for you.","growth":"Extra features included in your Growth plan. Fill in only what applies — leave the rest blank."},"verifying":"Verifying your link…","verifyFailed":"Link expired or invalid","sections":{"business":"Business Basics","contact":"Contact & Social","brand":"Brand Assets","visual":"Visual Direction","content":"Content & Themes","tech":"Technical Setup","growth":"Growth Add-Ons"},"fields":{"bizName":"Business Name","tagline":"Tagline / Slogan","whatYouDo":"What does your business do?","audience":"Who is your target audience?","nit":"Tax ID (NIT or cédula)","nitHelp":"Required for the privacy policy and terms pages","legalRepresentative":"Legal representative full name (optional)","phone":"Phone Number","email":"Public Email","address":"Business Address","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Upload Logo (PNG, SVG, AI)","colors":"Brand Colors","colorsHelp":"Add hex codes or describe your palette","fonts":"Font Preferences","photos":"Upload Photography & Imagery","refSites":"Reference websites you like","photoAlts":"Describe each photo (one per line, in upload order)","photoAltsHelp":"Used for accessibility (screen readers) and SEO. Example line: 'Front of our bakery on Calle 50 with the team smiling'","tone":"Brand Tone","topics":"Key topics to cover","pages":"Sections needed","domain":"Existing Domain","hosting":"Current Hosting","bizEmail":"Business Email Setup","bookingsUrl":"Booking link (Calendly, Cal.com, etc.)","pdfUp":"Upload Catalog / Menu PDF","pdfLabel":"PDF button label","pdfLabelPh":"e.g. Menu, Catalog, Spec Sheet","waCatalogUrl":"WhatsApp Business catalog link","newsletterEnableLabel":"Enable newsletter signup form on the site","newsletterHelp":"Subscribers get stored and you'll be emailed each new sign-up","ga4Id":"Google Analytics 4 ID","ga4Help":"Looks like G-XXXXXXXXXX","metaPixelId":"Meta (Facebook) Pixel ID","metaPixelHelp":"15-16 digit number from Meta Events Manager","testimonials":"Testimonials","testimonialsHelp":"One per line: Name | Quote | Role (e.g.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"FAQs","faqsHelp":"One per line: Question? | Answer","growthIntro":"These features are part of your Growth plan. Fill in only what applies — leave the rest blank.","bilingualLabel":"Generate an English version of my site too (en/)"},"ph":{"bizName":"Bakery La Esquina · Aurora Yoga Studio · Taller El Diamante","tagline":"e.g. Fresh bread since 1995 · Your day starts calm · Quick repairs, with warranty","whatYouDo":"In your own words: what do you sell or offer, what makes you different, who already trusts you…","audience":"Local families, professionals 30-50, small businesses needing X…","colors":"#0F172A and a warm gold · or just describe: 'navy blue + Colombian yellow', 'earthy & warm', etc.","tone":"Professional · friendly · bold · warm · direct · sober — pick a few","topics":"Sustainability, family heritage, fast turnaround, B2B specialists…","pages":"Home, About, Services, Portfolio, Contact (one per line)…"},"next":"Next","back":"Back","submit":"Submit & Notify Us","submitting":"Submitting…","submitted":"Submitted","submittedSub":"We’ve been notified. We’ll reach out shortly.","dragDrop":"Drop files here or click to upload"},"es":{"brand":"PymeWebPro","tagline":"Portal de Incorporación","loginTitle":"Bienvenido","loginSub":"Ingrese su correo para recibir un enlace de acceso","emailPh":"tu@tunegocio.com","sendLink":"Enviar Enlace","sending":"Enviando…","linkSent":"Revise su bandeja","linkSentSub":"Enviamos un enlace a","backToLogin":"← Usar otro correo","progress":"Progreso","complete":"completo","saving":"Guardando…","saved":"Guardado","saveError":"No se pudo guardar — verifique su conexión","welcomeTitle":"¡Bienvenido! Vamos a poner su sitio en línea","welcomeBody":"Esto le toma entre 5 y 10 minutos. Sus respuestas se guardan a medida que escribe, así que puede salir y volver cuando quiera. No se preocupe si algo no queda perfecto — pulimos el texto por usted antes de mostrarle el mockup.","welcomeCta":"Empecemos","optional":"opcional","sectionDone":"listo","skipForNow":"Saltar por ahora","intros":{"business":"Lo básico — estos datos aparecen en su sitio y son la base de todo lo demás. Unos 2 minutos.","contact":"¿Cómo prefiere que sus clientes lo contacten? Lo que ponga aquí va al botón de WhatsApp, al pie de página y al mapa.","brand":"Su logo y los colores que lo identifican. ¿No tiene logo todavía? Suba cualquier imagen — nosotros nos encargamos.","visual":"Fotos auténticas de su negocio venden mucho mejor que fotos de stock. 3 a 8 fotos buenas son suficientes.","content":"El tono y los temas que quiere transmitir. No tiene que escribir el texto final — eso lo hacemos nosotros. Solo descríbanos la sensación.","tech":"Si ya tiene un dominio o un hosting actual, díganoslo. Si no, todo lo configuramos por usted.","growth":"Funciones extra incluidas en su plan Crecimiento. Complete solo lo que aplique — deje el resto en blanco si no lo necesita."},"verifying":"Verificando…","verifyFailed":"Enlace caducado o inválido","sections":{"business":"Datos del Negocio","contact":"Contacto y Redes","brand":"Activos de Marca","visual":"Dirección Visual","content":"Contenido y Temas","tech":"Configuración Técnica","growth":"Funciones Crecimiento"},"fields":{"bizName":"Nombre del Negocio","tagline":"Eslogan","whatYouDo":"¿Qué hace su empresa?","audience":"¿Quién es su público objetivo?","nit":"NIT o cédula","nitHelp":"Requerido para la política de privacidad y los términos","legalRepresentative":"Representante legal (nombre completo, opcional)","phone":"Teléfono","email":"Correo Público","address":"Dirección","whatsapp":"WhatsApp","ig":"Instagram","fb":"Facebook","li":"LinkedIn","logoUp":"Subir Logo (PNG, SVG, AI)","colors":"Colores de Marca","colorsHelp":"Agregue códigos hex o describa su paleta","fonts":"Tipografía","photos":"Subir Fotografías","refSites":"Sitios de referencia","photoAlts":"Describa cada foto (una por línea, en orden de subida)","photoAltsHelp":"Se usa para accesibilidad (lectores de pantalla) y SEO. Ejemplo: 'Fachada de nuestra panadería en la Calle 50 con el equipo sonriendo'","tone":"Tono de Marca","topics":"Temas clave","pages":"Secciones necesarias","domain":"Dominio Existente","hosting":"Hosting Actual","bizEmail":"Correo Empresarial","bookingsUrl":"Enlace de reservas (Calendly, Cal.com, etc.)","pdfUp":"Subir catálogo / menú en PDF","pdfLabel":"Texto del botón PDF","pdfLabelPh":"ej. Menú, Catálogo, Ficha Técnica","waCatalogUrl":"Catálogo de WhatsApp Business","newsletterEnableLabel":"Activar formulario de suscripción en el sitio","newsletterHelp":"Los suscriptores se guardan y le enviamos un correo en cada nuevo registro","ga4Id":"ID de Google Analytics 4","ga4Help":"Formato G-XXXXXXXXXX","metaPixelId":"ID del Pixel de Meta (Facebook)","metaPixelHelp":"Número de 15-16 dígitos del Events Manager de Meta","testimonials":"Testimonios","testimonialsHelp":"Uno por línea: Nombre | Cita | Rol (ej.: María Pérez | Excelente servicio | Cliente desde 2022)","faqs":"Preguntas frecuentes","faqsHelp":"Uno por línea: ¿Pregunta? | Respuesta","growthIntro":"Estas funciones son parte de su plan Crecimiento. Complete solo lo que aplique — deje el resto en blanco.","bilingualLabel":"Generar también una versión en inglés (en/)"},"ph":{"bizName":"Panadería La Esquina · Estudio Yoga Aurora · Taller El Diamante","tagline":"ej. Pan caliente desde 1995 · Su día empieza con calma · Reparaciones rápidas con garantía","whatYouDo":"En sus propias palabras: qué vende u ofrece, qué lo hace diferente, quién ya le compra…","audience":"Familias del barrio, profesionales 30-50, pymes que necesitan X…","colors":"#0F172A y un dorado cálido · o simplemente describa: 'azul marino + amarillo Colombia', 'tierras cálidas', etc.","tone":"Profesional · cercano · juvenil · sobrio · directo · cálido — elija algunos","topics":"Sostenibilidad, tradición familiar, entrega rápida, especialistas en B2B…","pages":"Inicio, Nosotros, Servicios, Contacto (uno por línea)…"},"next":"Siguiente","back":"Atrás","submit":"Enviar y Notificarnos","submitting":"Enviando…","submitted":"Enviado","submittedSub":"Hemos sido notificados. Le contactaremos pronto.","dragDrop":"Suelte archivos aquí o haga clic"}};
 
+    // ─── Master-portal base path ──────────────────────────────────────
+    // When this SPA is served under colguides.com/portal/pymewebpro/*, the
+    // worker injects window.PWP_BASE = "/portal/pymewebpro". On the canonical
+    // portal.pymewebpro.com host it stays undefined and pwpBase() returns "".
+    function pwpBase() { return window.PWP_BASE || ""; }
+    function pwpStripBase(p) {
+      const b = pwpBase();
+      return (b && p.startsWith(b)) ? (p.slice(b.length) || "/") : p;
+    }
+    function pwpPush(r) {
+      window.history.pushState({}, "", pwpBase() + r);
+    }
+    function pwpReplace(r) {
+      window.history.replaceState({}, "", pwpBase() + r);
+    }
+
     // ─── API CLIENT ───────────────────────────────────────────────────
     async function api(path, opts = {}) {
       const session = localStorage.getItem(SESSION_KEY);
       const headers = { ...(opts.headers || {}) };
       if (opts.body && typeof opts.body === 'string') headers['Content-Type'] = 'application/json';
       if (session) headers['Authorization'] = 'Bearer ' + session;
-      const res = await fetch(path, { ...opts, headers });
+      const res = await fetch(pwpBase() + path, { ...opts, headers });
       if (res.status === 401) { localStorage.removeItem(SESSION_KEY); throw new Error('UNAUTHORIZED'); }
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
@@ -1811,7 +1828,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const headers = { ...(opts.headers || {}) };
       if (opts.body && typeof opts.body === 'string') headers['Content-Type'] = 'application/json';
       if (token) headers['Authorization'] = 'Bearer ' + token;
-      const res = await fetch(path, { ...opts, headers });
+      const res = await fetch(pwpBase() + path, { ...opts, headers });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
       return data;
@@ -1819,13 +1836,13 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
     // ─── ROUTER ───────────────────────────────────────────────────────
     function App() {
-      const [route, setRoute] = useState(window.location.pathname);
+      const [route, setRoute] = useState(pwpStripBase(window.location.pathname));
       useEffect(() => {
-        const handler = () => setRoute(window.location.pathname);
+        const handler = () => setRoute(pwpStripBase(window.location.pathname));
         window.addEventListener('popstate', handler);
         return () => window.removeEventListener('popstate', handler);
       }, []);
-      if (route.startsWith('/admin')) return <AdminApp route={route} setRoute={(r) => { window.history.pushState({}, '', r); setRoute(r); }} />;
+      if (route.startsWith('/admin')) return <AdminApp route={route} setRoute={(r) => { pwpPush(r); setRoute(r); }} />;
       return <ClientApp />;
     }
 
@@ -1851,7 +1868,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           api('/api/auth/verify?token=' + token)
             .then(res => {
               localStorage.setItem(SESSION_KEY, res.session);
-              window.history.replaceState({}, '', '/');
+              pwpReplace('/');
               return loadIntake();
             })
             .catch(() => { setError(t.verifyFailed); setStage('login'); });
@@ -1924,7 +1941,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       function runSiteAudit() {
         const u = (auditUrlRef.current?.value || '').trim();
         if (!u) return;
-        window.open('/admin/site-audit?url=' + encodeURIComponent(u), '_blank', 'noopener');
+        window.open(pwpBase() + '/admin/site-audit?url=' + encodeURIComponent(u), '_blank', 'noopener');
       }
 
       const tab = route.startsWith('/admin/crm') ? 'crm'
@@ -2472,7 +2489,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                       <span style={{color:'rgba(26,32,50,0.85)'}}>{f.filename}</span>
                       <span style={{fontSize:'0.75rem',color:'rgba(26,32,50,0.4)'}}>{formatSize(f.size_bytes)}</span>
                     </div>
-                    <a href={'/api/files/' + f.id + '?admin_token=' + encodeURIComponent(localStorage.getItem(ADMIN_KEY) || '')} target="_blank" rel="noopener" style={{...iconBtn,textDecoration:'none',display:'inline-flex',alignItems:'center'}}><Download size={14} /></a>
+                    <a href={pwpBase() + '/api/files/' + f.id + '?admin_token=' + encodeURIComponent(localStorage.getItem(ADMIN_KEY) || '')} target="_blank" rel="noopener" style={{...iconBtn,textDecoration:'none',display:'inline-flex',alignItems:'center'}}><Download size={14} /></a>
                   </div>
                 ))}
               </div>
@@ -3028,7 +3045,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             try {
               const buf = await entry.file.arrayBuffer();
               const tokenForUpload = localStorage.getItem(ADMIN_KEY) || '';
-              const r = await fetch('/api/admin/clients/' + client.id + '/manual-mockup/upload', {
+              const r = await fetch(pwpBase() + '/api/admin/clients/' + client.id + '/manual-mockup/upload', {
                 method: 'POST',
                 headers: {
                   'Authorization': 'Bearer ' + tokenForUpload,
@@ -3837,7 +3854,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         setFiles(p => [{ id: tempId, filename: file.name, category, uploading: true, size_bytes: file.size }, ...p]);
         try {
           const toSend = await maybeResizeImage(file, category);
-          const res = await fetch("/api/files/upload?category=" + category + "&filename=" + encodeURIComponent(toSend.name), {
+          const res = await fetch(pwpBase() + "/api/files/upload?category=" + category + "&filename=" + encodeURIComponent(toSend.name), {
             method: "POST",
             headers: { "Authorization": "Bearer " + localStorage.getItem(SESSION_KEY), "Content-Type": toSend.type || "application/octet-stream" },
             body: toSend
@@ -4367,8 +4384,31 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 </html>`;
 
 // src/index.js  (the Worker entry)
+//
+// Master portal subpath note (2026-05-13):
+// This worker also serves colguides.com/portal/pymewebpro/* as one tile of
+// the master portal at colguides.com/portal. When a request arrives on that
+// host+prefix, we strip "/portal/pymewebpro" from url.pathname before the
+// router sees it, then rewrite outbound HTML/redirects via
+// rewriteForPwpSubpath() so the prefix stays in the user's URL bar. The
+// SPA reads window.PWP_BASE (injected into the HTML shell) to know its
+// mount path for fetch() calls and history.pushState. See README +
+// CLAUDE.md.
 const src_default = {
-  async fetch(request, env, ctx) {
+  async fetch(originalRequest, env, ctx) {
+    const PWP_BASE = "/portal/pymewebpro";
+    const origUrl = new URL(originalRequest.url);
+    const isColguidesPwp = (origUrl.hostname === "colguides.com" || origUrl.hostname === "www.colguides.com")
+      && (origUrl.pathname === PWP_BASE || origUrl.pathname.startsWith(PWP_BASE + "/"));
+
+    let request = originalRequest;
+    if (isColguidesPwp) {
+      const newUrl = new URL(origUrl);
+      newUrl.pathname = origUrl.pathname.slice(PWP_BASE.length) || "/";
+      request = new Request(newUrl.toString(), originalRequest);
+    }
+
+    let __pwpResponse = await (async () => {
     const url = new URL(request.url);
     const path = url.pathname;
     if (request.method === "OPTIONS") return cors(new Response(null, { status: 204 }));
@@ -4389,6 +4429,20 @@ const src_default = {
     }
     try {
       if (path === "/api/health") return cors(json({ ok: true, timestamp: Date.now() }));
+      // ─── Public Chief of Staff loader script ─────────────────────────
+      // Served at /cos-widget.js (and the master-portal-prefixed equivalent).
+      // No auth needed for the script itself; the chat endpoint it calls
+      // requires Bearer ADMIN_TOKEN. Every portal page includes this with
+      // <script src="https://colguides.com/portal/pymewebpro/cos-widget.js" defer></script>
+      if (path === "/cos-widget.js" && request.method === "GET") {
+        return new Response(COS_LOADER_JS, {
+          headers: {
+            "Content-Type": "application/javascript; charset=utf-8",
+            "Cache-Control": "public, max-age=300",
+            "Access-Control-Allow-Origin": "*"
+          }
+        });
+      }
       if (path === "/go/whatsapp") return await handleWhatsAppRedirect(request, env);
       const cMatch = path.match(/^\/c\/([a-f0-9-]{36})$/);
       if (cMatch && request.method === "GET") return await handleConfirmPage(request, env, cMatch[1]);
@@ -4399,6 +4453,15 @@ const src_default = {
       if (path.startsWith("/api/client/")) return cors(await handleClient(request, env, ctx));
       if (path === "/api/leads") return cors(await handlePublicLeads(request, env, ctx));
       if (path.startsWith("/api/admin/leads") || path === "/api/admin/clicks") return cors(await handleAdminLeads(request, env, ctx));
+      // ─── Traffic analytics proxy (admin-only) ─────────────────────────
+      // Lets the master-portal launcher fetch live Cloudflare analytics for
+      // the public sites without ever exposing the COS_SHARED_SECRET to the
+      // browser. Auth: same Bearer ADMIN_TOKEN as the rest of /api/admin/*.
+      // Backend: calls Catalina's /api/agent dispatch on behalf of the user.
+      if (path.startsWith("/api/admin/traffic/") && request.method === "GET") {
+        if (!isAdmin(request, env)) return cors(json({ error: "Unauthorized" }, 401));
+        return cors(await handleTrafficProxy(request, env, path, url));
+      }
       // CRM API. Must run BEFORE the /api/admin/* catch-all because it has its own table-aware routing.
       if (path.startsWith("/api/admin/crm")) return cors(await handleAdminCRM(request, env, { json, isAdmin, uuid }));
       // Site audit API · used by the header "Test a site" button to produce a PDF-ready report.
@@ -4470,11 +4533,12 @@ const src_default = {
           },
         });
       }
-      // SPA fallthrough. Inject the Chief of Staff widget at serve time so
-      // FRONTEND_HTML stays free of `${...}` interpolations (check-spa would reject those).
+      // SPA fallthrough. Load the Chief of Staff widget via the shared loader
+      // script so every portal page (launcher, Catalina, PWP, Tasks) uses one
+      // source of truth. The loader self-injects launcher + panel on DOM ready.
       const spaHtml = FRONTEND_HTML.replace(
         "</body>",
-        CHIEF_OF_STAFF_WIDGET_HTML + "\n</body>"
+        '<script src="https://colguides.com/portal/pymewebpro/cos-widget.js" defer></script>\n</body>'
       );
       return withSecurityHeaders(new Response(spaHtml, {
         headers: {
@@ -4489,8 +4553,167 @@ const src_default = {
       console.error("Worker error:", err, err.stack);
       return cors(json({ error: "Internal server error", detail: err.message }, 500));
     }
+    })();
+
+    if (isColguidesPwp) {
+      __pwpResponse = await rewriteForPwpSubpath(__pwpResponse, PWP_BASE);
+    }
+    return __pwpResponse;
   }
 };
+
+/**
+ * Traffic analytics proxy. Forwards GET /api/admin/traffic/<sub> to the
+ * Catalina dispatch endpoint with the shared secret attached on the server.
+ * The browser side never sees COS_SHARED_SECRET.
+ *
+ *   /api/admin/traffic/summary   → cg_traffic_summary
+ *   /api/admin/traffic/pages     → cg_top_pages
+ *   /api/admin/traffic/countries → cg_top_countries
+ *
+ * All query params are forwarded as the agent action params (site, period,
+ * start_date, end_date, limit, etc.).
+ */
+async function handleTrafficProxy(request, env, path, url) {
+  const sub = path.replace(/^\/api\/admin\/traffic\//, "").replace(/\/$/, "");
+  const actionMap = {
+    "summary":   "cg_traffic_summary",
+    "pages":     "cg_top_pages",
+    "countries": "cg_top_countries",
+  };
+  const action = actionMap[sub];
+  if (!action) {
+    return new Response(JSON.stringify({ ok: false, error: "Unknown traffic subpath: " + sub }), {
+      status: 404, headers: { "content-type": "application/json" }
+    });
+  }
+  const params = {};
+  for (const [k, v] of url.searchParams) {
+    // Coerce limit to integer if present.
+    if (k === "limit") params[k] = parseInt(v, 10) || undefined;
+    else params[k] = v;
+  }
+  if (!env.COS_SHARED_SECRET) {
+    return new Response(JSON.stringify({ ok: false, error: "COS_SHARED_SECRET not set on this worker" }), {
+      status: 500, headers: { "content-type": "application/json" }
+    });
+  }
+  const dispatchUrl = env.CATALINA_AGENT_URL || "https://catalina.medellin.guide/api/agent";
+  const r = await fetch(dispatchUrl, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-cos-secret": env.COS_SHARED_SECRET
+    },
+    body: JSON.stringify({ action, params })
+  });
+  const data = await r.json().catch(() => ({ ok: false, error: "Bad response" }));
+  return new Response(JSON.stringify(data), {
+    status: r.ok ? 200 : (r.status || 500),
+    headers: { "content-type": "application/json", "cache-control": "no-store" }
+  });
+}
+
+/**
+ * Outbound rewrite when this worker is mounted under colguides.com/portal/pymewebpro/*.
+ * Four jobs:
+ *   1. Redirect Location headers: prepend PWP_BASE to root-relative redirects.
+ *   2. HTML body: prepend PWP_BASE to href/action/src attributes that point
+ *      at root-relative paths (skips protocol-relative `//host` URLs).
+ *   3. Inject a tiny script that exposes `window.PWP_BASE` so the SPA's
+ *      fetch helpers and client-side router can prepend it for in-app
+ *      navigation and API calls.
+ *   4. Inject the shared master-portal header strip at the top of every HTML
+ *      response so the nav back to /portal/ and to sister portals (Catalina,
+ *      Tasks) is always one click away.
+ */
+async function rewriteForPwpSubpath(response, base) {
+  // Redirect Location header
+  if (response.status >= 300 && response.status < 400) {
+    const loc = response.headers.get("Location");
+    if (loc && loc.startsWith("/") && !loc.startsWith("//")) {
+      const h = new Headers(response.headers);
+      h.set("Location", base + loc);
+      return new Response(response.body, { status: response.status, headers: h });
+    }
+    return response;
+  }
+  const ct = response.headers.get("content-type") || "";
+  if (!ct.toLowerCase().includes("text/html")) return response;
+  let text = await response.text();
+  // Inject window.PWP_BASE before any other script runs. Try after <head>,
+  // fall back to before </head>, fall back to prepending the body.
+  const baseScript = '<script>window.PWP_BASE=' + JSON.stringify(base) + ';</script>';
+  if (text.includes("<head>")) {
+    text = text.replace("<head>", "<head>\n" + baseScript);
+  } else if (text.includes("</head>")) {
+    text = text.replace("</head>", baseScript + "\n</head>");
+  } else {
+    text = baseScript + text;
+  }
+  // Rewrite root-relative href/action/src attributes. The negative lookahead
+  // (?!/) skips protocol-relative `//cdn.example.com` URLs. The character
+  // class lookahead ensures we only touch attributes whose value starts with
+  // `/` followed by a path-like char (handles `/`, `?`, `#`, end-of-attr).
+  text = text
+    .replace(/(href|action|src)="\/(?!\/)/g, '$1="' + base + '/')
+    .replace(/(href|action|src)='\/(?!\/)/g, "$1='" + base + "/");
+  // Master-portal header strip. Same look as the launcher.
+  text = injectMasterPortalHeader(text, "pymewebpro");
+  const h = new Headers(response.headers);
+  return new Response(text, { status: response.status, headers: h });
+}
+
+/**
+ * Shared master-portal header strip. Same Fraunces + JetBrains Mono palette
+ * as the launcher at colguides.com/portal/. Active-tile highlighted via the
+ * `active` arg ("catalina" | "pymewebpro" | "tasks"). Self-contained with
+ * scoped class prefix `cg-mph` to avoid colliding with the sub-portal's own
+ * styles. The same snippet lives in each portal worker (catalina, pymewebpro,
+ * tasks) so they can each inject it without an HTTP fetch.
+ */
+function masterPortalHeader(active) {
+  const link = (slug, label, href) => {
+    const cls = "cg-mph__link" + (active === slug ? " is-active" : "");
+    return '<a href="' + href + '" class="' + cls + '">' + label + '</a>';
+  };
+  return [
+    '<link rel="preconnect" href="https://fonts.googleapis.com">',
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media=\'all\'">',
+    '<style>',
+    '.cg-mph{position:sticky;top:0;z-index:99999;background:#1A1612;color:#F2E9D5;border-bottom:1px solid #7A6A53;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;font-family:"Inter Tight",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:12px;letter-spacing:.04em;box-shadow:0 1px 0 rgba(255,255,255,.04)}',
+    '.cg-mph *{box-sizing:border-box}',
+    '.cg-mph__brand{font-family:"Fraunces",Georgia,serif;font-weight:700;font-size:18px;color:#F2E9D5;text-decoration:none;letter-spacing:-.01em;display:inline-flex;align-items:baseline;gap:8px;line-height:1}',
+    '.cg-mph__brand em{font-style:italic;font-weight:500;color:#D24A1D}',
+    '.cg-mph__brand span{color:#7A6A53;font-style:normal;font-weight:400;font-size:14px}',
+    '.cg-mph__nav{display:flex;gap:14px;flex-wrap:wrap;font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}',
+    '.cg-mph__link{color:#DCD0B3;text-decoration:none;padding:4px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}',
+    '.cg-mph__link:hover{color:#F2E9D5;border-bottom-color:#D24A1D}',
+    '.cg-mph__link.is-active{color:#F2E9D5;border-bottom-color:#F2E9D5}',
+    '.cg-mph__sep{color:#7A6A53;user-select:none}',
+    '@media (max-width:560px){.cg-mph{padding:8px 14px;font-size:11px}.cg-mph__brand{font-size:16px}.cg-mph__brand span{display:none}}',
+    '</style>',
+    '<header class="cg-mph" role="navigation" aria-label="Master portal">',
+    '  <a class="cg-mph__brand" href="/portal/"><span>←</span>ColGuides <em>Master Portal</em></a>',
+    '  <nav class="cg-mph__nav">',
+    '    ' + link("catalina", "Catalina", "/portal/catalina/"),
+    '    <span class="cg-mph__sep">·</span>',
+    '    ' + link("pymewebpro", "PymeWebPro", "/portal/pymewebpro/admin"),
+    '    <span class="cg-mph__sep">·</span>',
+    '    ' + link("tasks", "Tasks", "/portal/tasks/"),
+    '  </nav>',
+    '</header>'
+  ].join("\n");
+}
+
+function injectMasterPortalHeader(html, active) {
+  const header = masterPortalHeader(active);
+  if (html.includes("<body>")) return html.replace("<body>", "<body>\n" + header);
+  const bodyOpen = html.match(/<body[^>]*>/);
+  if (bodyOpen) return html.replace(bodyOpen[0], bodyOpen[0] + "\n" + header);
+  return header + html;
+}
 
 export { src_default as default };
 

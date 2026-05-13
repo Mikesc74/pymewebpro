@@ -1344,9 +1344,9 @@ function siteHeaders() {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: https://www.facebook.com https://www.google-analytics.com",
-    "connect-src 'self' https://portal.pymewebpro.com https://www.google-analytics.com https://*.facebook.com",
+    "connect-src 'self' https://colguides.com https://www.google-analytics.com https://*.facebook.com",
     "frame-src https://calendly.com https://*.calendly.com https://cal.com https://*.cal.com",
-    "form-action 'self' https://portal.pymewebpro.com",
+    "form-action 'self' https://colguides.com",
     "base-uri 'self'",
     "object-src 'none'",
     "frame-ancestors 'self'",
@@ -1422,7 +1422,7 @@ async function __cwSend(){
   const section=document.getElementById('__cw_section').value;
   const comment=document.getElementById('__cw_text').value.trim();
   if(!comment)return;
-  const r=await fetch('/api/m/'+__cwToken+'/comment',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({section,comment})});
+  const r=await fetch((window.PWP_BASE||'')+'/api/m/'+__cwToken+'/comment',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({section,comment})});
   const j=await r.json();
   document.getElementById('__cw_msg').textContent = j.ok?'¡Gracias! Recibido.':'Error al enviar';
   if(j.ok){document.getElementById('__cw_text').value='';}

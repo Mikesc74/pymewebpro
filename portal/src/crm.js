@@ -1351,8 +1351,13 @@ const COLS = {
 // ----------- helpers -----------
 function getToken() { return localStorage.getItem(ADMIN_KEY) || ""; }
 
+// Master-portal base path. The worker injects window.PWP_BASE when serving
+// under colguides.com/portal/pymewebpro/*; on portal.pymewebpro.com (legacy)
+// it stays undefined and pwpBase() returns "".
+function pwpBase() { return window.PWP_BASE || ""; }
+
 async function api(path, opts) {
-  const res = await fetch(path, {
+  const res = await fetch(pwpBase() + path, {
     ...opts,
     headers: {
       "Content-Type": "application/json",
@@ -3888,7 +3893,7 @@ async function generateProposalFor(dealId, opts) {
     if (state.active === "funnel") renderFunnel(); else renderGrid();
     // Quick confirmation with a link the user can copy.
     toast("Proposal ready · /admin/proposal/" + dealId);
-    try { window.open("/admin/proposal/" + dealId, "_blank", "noopener"); } catch (e) {}
+    try { window.open(pwpBase() + "/admin/proposal/" + dealId, "_blank", "noopener"); } catch (e) {}
   } catch (e) {
     if (deal) deal.proposal_status = "error";
     if (state.active === "funnel") renderFunnel(); else renderGrid();
