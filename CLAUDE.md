@@ -3,19 +3,29 @@
 This file is the hot cache. Claude reads this first on every session in `~/code/pymewebpro/`.
 Full glossary and rich context live in `./memory/`.
 
-## HARD RULE: Colombia-only market
+## HARD RULE: Colombia-only market, COP-only pricing
 
 **PymeWebPro serves Colombian SMBs only.** This is a Colombian company, billed in COP, marketed to Colombian customers, operating from Medellín.
 
+**The demographic is Colombian. ALWAYS quote money in Colombian pesos (COP), and ONLY in COP.** This rule applies to:
+- Every page on pymewebpro.com (Spanish and English versions)
+- Every blog post, guide, or article we publish
+- Every chat response when discussing pricing, costs, budgets, examples, or competitor benchmarks
+- Every client proposal, invoice, email, social post
+
+A Colombian reader does NOT need a USD conversion. Don't include one. When citing international tool costs (Ahrefs, SEMrush, Meta Ads, Beehiiv, etc.), do the conversion to COP at the prevailing TRM (roughly $4.000 COP/USD as of mid-2026) and quote ONLY the COP figure. No "(~$129 USD)" parenthetical, no "USD" label, no mixed-currency tables. Pure COP, period.
+
+The only exception: industry-standard ratio statistics where the unit cancels out (e.g. "email ROI is roughly $36 to $42 per $1 spent") can remain as a ratio without forcing a COP conversion, because the figure is a ratio not a price the reader pays.
+
 Do NOT:
-- Quote prices in CAD or USD on any pymewebpro asset
+- Quote prices in CAD or USD as the primary unit on any pymewebpro asset
 - Position the studio as serving NA / Canada / US / LATAM clients
 - Mention London, Ontario as a business location
 - Frame pymewebpro as bilingual for "two markets"
 - Reference Wise, Stripe, or NA payment rails as our payment methods
 
 DO:
-- Quote prices in COP
+- Quote prices in COP, with full thousand-separator formatting (`$390.000 COP`, `$20 million COP`)
 - Treat Mike's Canadian nationality as a personal fact about the founder, not a market positioning
 - Treat any English copy on pymewebpro as a courtesy for English-speaking Colombian residents / expats, not as an NA-market funnel
 - Reference Wompi (cards, PSE, bank transfer) as the payment method
