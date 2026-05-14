@@ -1,4 +1,4 @@
-// Pages middleware — sets Content-Security-Policy on every HTML response.
+// Pages middleware , sets Content-Security-Policy on every HTML response.
 //
 // Why this lives here, not in _headers:
 //
@@ -38,6 +38,7 @@
 //   "
 
 const SCRIPT_HASHES = [
+  "sha256-+Km2JgOlLQLRi6/81ubHwKC15gRsPeDZA5RisvAUx84=",
   "sha256-6gt3qBAc1TjJNlWg3bip8EBQD5AdnLnjWSHY/2uaX24=",
   "sha256-6o4RcIgyfc5UPTW6IkpOXoxUOCQ6pnCwwzHiShQn4PE=",
   "sha256-6pvnh+ggR3rx0+ejxtKOU65Sxdh/sJH/E83Fe2SGYSk=",
@@ -70,10 +71,12 @@ const SCRIPT_HASHES = [
   "sha256-altb7fLp1/RpkV4r8roH4lTA8ORqjHv5NheEktPcFPU=",
   "sha256-bB3ycjISsXJKFpaVaGQuniFPsjitCvia9HK5+R3hjO0=",
   "sha256-bIhQW4enP9e7kiwG1k4tNyRfDdqq5z4tXq5oesg2pUo=",
+  "sha256-bcxg30y/qI7+do/tSlFu9Qi8bzvv0es9JEAHXzf4j8I=",
   "sha256-csi/5pQ/XKA3Us4LC2FlE1c4S7lrRWs3bX8aPH5dNds=",
   "sha256-d/yirliPDVbbNbEYPusiW0rxpbH+eYNCSAtTKLJwTUA=",
   "sha256-dss+CoNYf9ls00JNLDe1wZ2lXcFYw/DVc5SKXb1vAls=",
   "sha256-fl6+vGA2KV1gtvbSw2x6/LjIHf5uB7kecW6sEBI9G3Y=",
+  "sha256-g7NaPHSwiYAqqmC67jZOlK1LuYOJgTt6uoBsC70D/Kw=",
   "sha256-iLxhcygx6d0yAEPxIDRZ3eY35idrUK0n2DpYEd4Juyo=",
   "sha256-kOUodk+OasLL+5p9LFkJ+hyGL35e9EL+9GVhrE1sw9c=",
   "sha256-lEG6LhcsPECK7uDWdBWtjndcg9BXZ54HMF8INACSKDI=",
@@ -89,10 +92,11 @@ const SCRIPT_HASHES = [
   "sha256-wnIgqXukMptaE1t+eH3tWU0KCaqKGHbavIe04U71lAs=",
   "sha256-x6Q/pBtWHKjI2Dp3gpHbudwnDwfROt6VStAfB0GlHXE=",
   "sha256-xAbORcxQXe9UbVWDpbpsY/przpkWb2K5ETIugpa56t0=",
+  "sha256-xHCrWYQwAgPuc5F8qcQ9E70ZbDl57mS1ghQrEbsoehY=",
   "sha256-xIPiZc9NYVb8zVoj8xiw9kh+MWSz1+MNyPze8L4MuJM=",
   "sha256-xbVfoqFy0rH1/aBlOjvChz/b6nh7mVIndGIKhb4MJR8=",
   "sha256-yZ6BTF+LcAzKu1ePYWyLnst6kPoIoQ08GM79IDElqV0=",
-  "sha256-ynRNbHwHTfiwBGWnXuWodj7kRSMnY+4WH4bw6nt+/HM=",
+  "sha256-ynRNbHwHTfiwBGWnXuWodj7kRSMnY+4WH4bw6nt+/HM="
 ];
 
 const STYLE_HASHES = [
@@ -100,12 +104,14 @@ const STYLE_HASHES = [
   "sha256-13ibskFxM+oBG1GOKCF2RlES6jq9ZsjpijA1hToibN8=",
   "sha256-1TTnTUCjeZWiPDfrIjDULGo9WtgYLhpdm4OO+728ihk=",
   "sha256-1nPELemA6W56auTRzuELYIQ0Y00KXwgS7Pvn+J0V+a8=",
+  "sha256-2HqC71FssKaGjis9lPFPRlq1Yb99UiJaoD1kWvGhTA0=",
   "sha256-2JkVYTMbWJoiLbMcWr3NLu6kmOb6pDbJkcVGvAA+/a0=",
   "sha256-2k5lFDSA1d3pNH0uN1sn3FJ7AdATplEyhDPdwvq/GrU=",
   "sha256-3DcMn2WmeWPgq2jmGnlrYpR6Rts7gPFf+tKxJ7uMuUQ=",
   "sha256-3kjAJe+gQsyD6UXLWQVgZaszD7z2GXblbFCktZwvBoc=",
   "sha256-5qVs8rN9R+cJmCDt6bmWYUZr7rHy1WHnnGyJkZ6O5rQ=",
   "sha256-7nRJxaCwAoBm8Q2TIPJM3lvz0i93AW46r4kGfzixCRs=",
+  "sha256-BieLMX0wc5nlJlx75bF5yd6Wt518yLVd6jwvYKYjGmI=",
   "sha256-DRPx7MgVdZEcvzrXVL5kc4AzhqrKxQf+pqjbN215TUE=",
   "sha256-IUnkZKM7Le39aCghCslwtvOJUJthKDQxiQrhj9LH2lk=",
   "sha256-KNZQJoVLSiFjV9VT7nzhG+ER4g0oTxH1hZE/cta1clw=",
@@ -115,13 +121,12 @@ const STYLE_HASHES = [
   "sha256-TLrw00ljrj/n2ir7nhs9LDue+0qPE7dew3qvvNYPG5c=",
   "sha256-YEph6qo0neaQwZAiVE/stU9OWGO5DyeYPRP/tdmCFuI=",
   "sha256-YsvcdoHqT1NFJQnCwWJcCKk20nUsFCnOZF825Aj+yPE=",
-  "sha256-b6yRxb1pa08OajFfO9oNL8CEixCaGOrZootQeHDxe1I=",
   "sha256-cFAML3pIvp0/lVw+jCpSp30fxEHkPvwYlCgvusSe3r0=",
-  "sha256-eCD5YYQB8S/ZHG6YRVR7JMojz32F/dT1oDf9Cy2zys8=",
   "sha256-kWSWu6DAfe3R9lbzNDix1dG4V3zrwShZMGBIeMyHPoA=",
   "sha256-mmhqnLP17QjDwYhGyIbRoeNK8MGINCq3zEwSPw67vJ4=",
   "sha256-n/V9ozr2Ffdr1konOiT+8GodcH4FJHdQRYfEkP049CE=",
   "sha256-tkldcovVxCmq7Hv0c/JoqM+RBZHndsHIZ3gvmp2X4mY=",
+  "sha256-v6XeoMK6fY1n+abRDvtp28lqzX7ii2v1wWXSchncGVQ="
 ];
 
 const SCRIPT_HASH_LIST = SCRIPT_HASHES.map((h) => `'${h}'`).join(" ");
@@ -133,7 +138,7 @@ const CSP = [
   // style-src is now hash-locked. All inline style="..." attributes have been
   // refactored to .u-* utility classes (see end of each page's <style> block).
   // Adding a new inline <style> block or editing an existing one means the
-  // SHA-256 changes — recompute STYLE_HASHES per the maintenance script above.
+  // SHA-256 changes , recompute STYLE_HASHES per the maintenance script above.
   // If you absolutely must add a one-off inline style="" attribute, you can
   // either (a) refactor it to a utility class, or (b) add 'unsafe-hashes'
   // here plus a per-attribute hash (the latter is brittle, prefer option a).
@@ -161,7 +166,7 @@ export const onRequest = async (context) => {
   headers.set("Content-Security-Policy", CSP);
 
   // Cloudflare Pages adds Access-Control-Allow-Origin: * to every static
-  // asset by default. Strip it from HTML — these pages never need to be
+  // asset by default. Strip it from HTML , these pages never need to be
   // read cross-origin, and a wide-open ACAO is a recurring SSL-Labs ding.
   headers.delete("Access-Control-Allow-Origin");
 
