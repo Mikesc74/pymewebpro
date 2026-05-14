@@ -1,0 +1,17 @@
+#!/bin/bash
+# pymewebpro pre-push hook, refuse to push if CSP hashes in
+# functions/_middleware.js are out of sync with inline <script>/<style>
+# bodies in the deployed HTML.
+#
+# History: the 2026-05-13 GA4 commit modified inline scripts/styles but
+# didn't regenerate STYLE_HASHES, which the prior version of refresh-csp-
+# hashes.py didn't even produce. Result: the live site lost all utility-
+# class styling. This hook catches that class of regression locally.
+#
+# To bypass (emergency only): git push --no-verify
+#
+# Install: ln -sf ../../scripts/git-hooks/pre-push .git/hooks/pre-push
+#          chmod +x scripts/git-hooks/pre-push
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+exec python3 scripts/refresh-csp-hashes.py --check
