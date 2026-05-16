@@ -453,6 +453,11 @@ export const CHIEF_OF_STAFF_WIDGET_HTML = `
         return;
       }
 
+      if (res.status === 429) {
+        addMsg("error", "Limite de velocidad de la API alcanzado. Espera un minuto y vuelve a intentar.");
+        return;
+      }
+
       var data;
       try { data = await res.json(); }
       catch (e) {

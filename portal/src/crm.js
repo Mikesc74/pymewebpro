@@ -286,96 +286,115 @@ export function crmPageHTML(env) {
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CRM · PymeWebPro Admin</title>
+<title>CRM · PymeWebPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;0,900;1,500&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;0,900;1,500&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
 <style>
 :root {
-  --bg: #FAFAF7;
-  --ink: #1A2032;
-  --ink-soft: rgba(26,32,50,0.55);
-  --ink-faint: rgba(26,32,50,0.08);
-  --ink-line: rgba(26,32,50,0.12);
-  --accent: #FF5C2E;
-  --accent-bg: rgba(255,92,46,0.10);
-  --row-hover: #F4F2EC;
-  --header-bg: #0A0E27;
-  --header-ink: #FAFAF7;
-  --pill-bg: rgba(26,32,50,0.06);
-  --green: #16a34a;
-  --amber: #d97706;
-  --red: #dc2626;
-  --blue: #2563eb;
+  --paper:    #F2E9D5;
+  --paper-2:  #E8DFC8;
+  --paper-3:  #DDD4B8;
+  --ink:      #1A1612;
+  --ink-soft: #3A2F26;
+  --ink-mute: rgba(26,22,18,.50);
+  --ink-faint: rgba(26,22,18,.09);
+  --ink-line:  rgba(26,22,18,.16);
+  --p:      #D24A1D;
+  --p-deep: #A8381A;
+  --p-bg:   rgba(210,74,29,.09);
+  --green: #166534; --green-bg: rgba(22,101,52,.10);
+  --amber: #92400E; --amber-bg: rgba(146,64,14,.12);
+  --red:   #991B1B; --red-bg:   rgba(153,27,27,.10);
+  --blue:  #1D4ED8; --blue-bg:  rgba(29,78,216,.10);
+  --row-hover: #EBE1CC;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans:  'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Legacy aliases keep all var(--accent), var(--bg) etc. working unchanged */
+  --bg:         var(--paper);
+  --accent:     var(--p);
+  --accent-bg:  var(--p-bg);
+  --header-bg:  var(--ink);
+  --header-ink: var(--paper);
+  --pill-bg:    rgba(26,22,18,.07);
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
   background: var(--bg); color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 14px;
   min-height: 100vh;
   display: flex; flex-direction: column;
+  background-image: radial-gradient(rgba(26,22,18,.05) 1px, transparent 1px);
+  background-size: 3px 3px;
+  -webkit-font-smoothing: antialiased;
 }
 header {
-  background: rgba(10,14,39,0.94);
-  color: var(--header-ink);
-  padding: 0.75rem 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.7rem 1.5rem;
   display: flex; align-items: center; gap: 1rem;
   position: sticky; top: 0; z-index: 50;
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 3px double rgba(242,233,213,.2);
 }
 /* When embedded as an iframe in the admin SPA the parent already shows a
    header, so we suppress ours. The body class is set by inline script below. */
 body.embed > header { display: none; }
 body.embed nav.tabs { top: 0; }
-header .brand { display: flex; align-items: baseline; gap: 0.5rem; font-family: Georgia, serif; font-size: 1.05rem; }
-header .brand b { color: var(--accent); }
-header .brand span { color: rgba(255,255,255,0.6); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; }
+header .brand { display: flex; align-items: baseline; gap: 0.35rem; font-family: var(--serif); font-weight: 900; font-size: 1.1rem; letter-spacing: -0.01em; }
+header .brand em { font-style: italic; font-weight: 500; color: var(--p); }
+header .brand span { font-family: var(--mono); font-size: 0.62rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(242,233,213,.45); margin-left: 0.35rem; vertical-align: middle; }
 header .spacer { flex: 1; }
-header a.back { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; }
-header a.back:hover { color: var(--accent); }
+header a.back { color: rgba(242,233,213,.6); text-decoration: none; font-family: var(--mono); font-size: 0.62rem; letter-spacing: .1em; text-transform: uppercase; }
+header a.back:hover { color: var(--p); }
 
 nav.tabs {
-  background: #fff; border-bottom: 1px solid var(--ink-line);
-  padding: 0.5rem 1.5rem; display: flex; gap: 0.4rem; align-items: center;
-  position: sticky; top: 49px; z-index: 49;
+  background: var(--paper-2); border-bottom: 2px solid var(--ink-line);
+  padding: 0.45rem 1.5rem; display: flex; gap: 0.3rem; align-items: center;
+  position: sticky; top: 48px; z-index: 49; flex-wrap: wrap;
 }
 nav.tabs button {
   background: transparent; border: 1px solid var(--ink-faint);
-  padding: 0.4rem 0.85rem; border-radius: 4px; cursor: pointer;
-  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
-  font-family: inherit; color: var(--ink-soft);
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  transition: all 0.15s;
+  padding: 0.35rem 0.75rem; border-radius: 3px; cursor: pointer;
+  font-size: 0.69rem; letter-spacing: 0.09em; text-transform: uppercase;
+  font-family: var(--mono); color: var(--ink-soft);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  transition: all 0.1s;
 }
-nav.tabs button:hover { background: var(--row-hover); color: var(--ink); }
+nav.tabs button:hover { background: var(--paper-3); color: var(--ink); }
 nav.tabs button.active {
   background: var(--accent-bg); color: var(--accent);
-  border-color: rgba(255,92,46,0.3);
+  border-color: rgba(210,74,29,.3);
 }
 nav.tabs .count {
-  font-size: 0.7rem; padding: 1px 6px; border-radius: 10px;
-  background: var(--pill-bg); color: var(--ink-soft);
+  font-size: 0.65rem; padding: 1px 6px; border-radius: 8px;
+  background: rgba(26,22,18,.07); color: var(--ink-mute);
 }
-nav.tabs button.active .count { background: rgba(255,92,46,0.18); color: var(--accent); }
+nav.tabs button.active .count { background: rgba(210,74,29,.18); color: var(--accent); }
 nav.tabs .grow { flex: 1; }
 nav.tabs input.search {
-  border: 1px solid var(--ink-faint); padding: 0.4rem 0.6rem;
-  border-radius: 4px; font-family: inherit; font-size: 0.85rem;
-  background: var(--bg); min-width: 220px;
+  border: 1px solid var(--ink-line); padding: 0.35rem 0.55rem;
+  border-radius: 3px; font-family: var(--mono); font-size: 0.72rem;
+  background: var(--paper); color: var(--ink); min-width: 200px;
 }
+nav.tabs input.search:focus { outline: none; border-color: var(--p); }
 nav.tabs button.primary {
-  background: var(--accent); color: white; border-color: var(--accent);
+  background: var(--p); color: var(--paper); border-color: var(--p); font-weight: 700;
 }
-nav.tabs button.primary:hover { background: #e84a1a; }
+nav.tabs button.primary:hover { background: var(--p-deep); }
 nav.tabs button.ghost { color: var(--ink-soft); }
 
 main { flex: 1; padding: 0; overflow: auto; }
 
 .login {
   max-width: 420px; margin: 4rem auto; padding: 2rem;
-  background: white; border: 1px solid var(--ink-line); border-radius: 6px;
+  background: var(--paper-2); border: 1.5px solid var(--ink); border-radius: 4px;
+  box-shadow: 4px 4px 0 var(--ink);
 }
-.login h2 { font-family: Georgia, serif; font-weight: normal; margin: 0 0 1.5rem; font-size: 1.5rem; }
+.login h2 { font-family: var(--serif); font-weight: 700; margin: 0 0 1.5rem; font-size: 1.5rem; letter-spacing: -0.01em; }
 .login input { width: 100%; padding: 0.75rem; border: 1px solid var(--ink-line); border-radius: 4px; font-size: 0.95rem; font-family: inherit; }
 .login button { width: 100%; padding: 0.75rem; background: var(--accent); color: white; border: none; border-radius: 4px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; margin-top: 1rem; font-family: inherit; font-size: 0.85rem; }
 .login .err { color: var(--red); font-size: 0.85rem; margin-top: 0.75rem; }
@@ -384,11 +403,11 @@ main { flex: 1; padding: 0; overflow: auto; }
 table.sheet {
   width: 100%;
   border-collapse: separate; border-spacing: 0;
-  background: white;
+  background: var(--paper);
   font-size: 13px;
 }
 table.sheet thead th {
-  background: #F4F2EC;
+  background: var(--paper-2);
   color: var(--ink); font-weight: 600; text-align: left;
   padding: 0.45rem 0.6rem;
   border-bottom: 1px solid var(--ink-line);
@@ -417,8 +436,8 @@ table.sheet tbody td .cell {
 table.sheet tbody td:first-child .cell { padding-left: 1.2rem; }
 table.sheet tbody td input.edit, table.sheet tbody td select.edit, table.sheet tbody td textarea.edit {
   width: 100%; padding: 0.4rem 0.55rem;
-  border: 2px solid var(--accent); background: white;
-  font-family: inherit; font-size: 13px; font-weight: 600;
+  border: 2px solid var(--accent); background: var(--paper);
+  font-family: var(--mono); font-size: 13px; font-weight: 600;
   outline: none;
 }
 table.sheet tbody td textarea.edit { min-height: 60px; resize: vertical; font-weight: 400; }
@@ -435,7 +454,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 }
 .empty {
   padding: 3rem; text-align: center; color: var(--ink-soft);
-  font-family: Georgia, serif; font-style: italic;
+  font-family: var(--serif); font-style: italic;
 }
 
 /* Stage / status pills */
@@ -448,6 +467,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .pill.amber { background: rgba(217,119,6,0.14); color: var(--amber); }
 .pill.red { background: rgba(220,38,38,0.12); color: var(--red); }
 .pill.blue { background: rgba(37,99,235,0.12); color: var(--blue); }
+.pill.purp { background: rgba(109,40,217,0.10); color: #6D28D9; }
 .pill.gray { background: var(--pill-bg); color: var(--ink-soft); }
 
 .toast {
@@ -467,32 +487,45 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .statusbar .ok { color: #4ade80; }
 
 /* ---- Kanban funnel ---- */
+.kanban-toolbar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1rem 0;
+  font-size: 0.78rem; color: var(--ink-soft);
+}
+.kanban-toolbar select {
+  font-size: 0.78rem; padding: 3px 8px; border-radius: 4px;
+  border: 1px solid var(--ink-line); background: var(--paper); color: var(--ink);
+  cursor: pointer;
+}
+.kanban-toolbar select:focus { outline: none; border-color: var(--accent); }
 .kanban {
   display: flex; gap: 0.75rem;
   padding: 1rem 1rem 2rem; overflow-x: auto;
   align-items: flex-start;
   min-height: calc(100vh - 200px);
+  min-width: max-content;
 }
+#kanban-wrap { overflow-x: auto; }
 .kanban .col {
-  flex: 0 0 280px;
-  width: 280px;
-  min-width: 0;
-  max-width: 280px;
-  background: #F4F2EC;
+  flex: 0 0 260px;
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
+  background: var(--paper-2);
   border: 1px solid var(--ink-line);
-  border-radius: 6px;
+  border-radius: 4px;
   display: flex; flex-direction: column;
   max-height: calc(100vh - 200px);
   overflow: hidden;
 }
 .kanban .col-head {
-  padding: 0.7rem 0.9rem;
+  padding: 0.6rem 0.85rem;
   border-bottom: 1px solid var(--ink-line);
   display: flex; align-items: center; justify-content: space-between;
-  font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
   font-weight: 700;
-  position: sticky; top: 0; background: #F4F2EC; z-index: 2;
-  border-radius: 6px 6px 0 0;
+  position: sticky; top: 0; background: var(--paper-2); z-index: 2;
+  border-radius: 4px 4px 0 0;
 }
 .kanban .col-head .dot {
   width: 8px; height: 8px; border-radius: 50%;
@@ -500,7 +533,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 }
 .kanban .col-head .num {
   font-size: 0.7rem; padding: 1px 7px; border-radius: 10px;
-  background: white; color: var(--ink-soft); font-weight: 600;
+  background: var(--paper); color: var(--ink-soft); font-weight: 600;
   letter-spacing: 0;
 }
 .kanban .col-body {
@@ -515,20 +548,21 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   border-radius: 4px;
 }
 .kanban .card {
-  background: white;
+  background: var(--paper);
   border: 1px solid var(--ink-line);
-  border-left: 3px solid var(--ink-soft);
-  border-radius: 4px;
-  padding: 0.55rem 0.7rem;
-  font-size: 0.82rem;
+  border-left: 3px solid var(--ink-mute);
+  border-radius: 3px;
+  padding: 0.48rem 0.6rem;
+  font-size: 0.8rem;
   cursor: grab;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 2px rgba(26,22,18,.03);
   transition: transform 0.1s, box-shadow 0.1s;
   min-width: 0;
+  flex-shrink: 0;
   overflow: hidden;
   word-break: break-word;
 }
-.kanban .card:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.kanban .card:hover { box-shadow: 2px 2px 0 var(--ink-line); }
 .kanban .card.dragging { opacity: 0.4; cursor: grabbing; }
 .kanban .card.selected {
   outline: 2px solid var(--accent);
@@ -541,12 +575,12 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .kanban .card.t-deal   { border-left-color: var(--accent); }
 .kanban .card.t-client { border-left-color: #16a34a; }
 .kanban .card .title {
-  font-weight: 600; color: var(--ink); margin-bottom: 0.2rem;
+  font-weight: 600; color: var(--ink); margin-bottom: 0.18rem;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .kanban .card .meta {
-  font-size: 0.7rem; color: var(--ink-soft);
-  display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 0.63rem; color: var(--ink-mute);
+  display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap;
   min-width: 0; overflow: hidden;
 }
 .kanban .card .meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -581,6 +615,18 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .kanban .card .soc-x_url        { background: #000000; color: #fff; }
 .kanban .card .soc-tiktok_url   { background: #111111; color: #25F4EE; border: 1px solid #FE2C55; }
 .kanban .card .soc:hover { opacity: 0.85; transform: translateY(-1px); }
+/* Contact status strip on deal Kanban cards. */
+.kanban .card .contact-status {
+  font-size: 0.68rem; margin-top: 0.35rem;
+  padding: 2px 6px; border-radius: 3px; display: inline-block;
+}
+.kanban .card .contact-status.cs-new {
+  background: rgba(249,115,22,0.12); color: #c2410c;
+  font-weight: 600;
+}
+.kanban .card .contact-status.cs-touched {
+  background: rgba(37,99,235,0.1); color: #1d4ed8;
+}
 /* Proposal status badge inline in the deal meta row. */
 .kanban .card .proposal-badge {
   display: inline-block; padding: 1px 6px; border-radius: 3px;
@@ -644,25 +690,37 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 /* ---- Contact card modal ---- */
 .modal-bg {
   position: fixed; inset: 0;
-  background: rgba(10,14,39,0.55);
+  background: rgba(26,22,18,0.6);
   z-index: 200;
-  display: flex; align-items: flex-start; justify-content: center;
-  padding: 3vh 1rem;
-  overflow-y: auto;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
   backdrop-filter: blur(2px);
 }
 .modal {
-  background: white; border-radius: 10px;
+  background: var(--paper); border-radius: 6px;
+  border: 1.5px solid var(--ink);
   width: 760px; max-width: 100%;
-  box-shadow: 0 24px 60px rgba(10,14,39,0.35);
+  height: 90vh;
+  box-shadow: 6px 6px 0 var(--ink);
   display: flex; flex-direction: column;
   overflow: hidden;
+}
+.modal-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+.modal-activities {
+  flex: 0 0 auto;
+  max-height: 220px;
+  min-height: 0;
+  overflow-y: auto;
 }
 .modal-head {
   padding: 1.1rem 1.5rem 0.85rem;
   border-bottom: 1px solid var(--ink-line);
   display: flex; align-items: flex-start; gap: 0.85rem;
-  background: linear-gradient(180deg, #FAFAF7 0%, white 100%);
+  background: linear-gradient(180deg, var(--paper-2) 0%, var(--paper) 100%);
 }
 .modal-head .title-wrap {
   flex: 1; min-width: 0;
@@ -678,8 +736,8 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .modal-head.t-deal   .type-pill { background: rgba(255,92,46,0.15); color: var(--accent); }
 .modal-head.t-client .type-pill { background: rgba(22,163,74,0.15); color: #16a34a; }
 .modal-head h2 {
-  margin: 0; font-family: Georgia, serif; font-weight: normal;
-  font-size: 1.4rem; line-height: 1.2;
+  margin: 0; font-family: var(--serif); font-weight: 700;
+  font-size: 1.4rem; line-height: 1.2; letter-spacing: -0.01em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .modal-head .summary {
@@ -696,12 +754,12 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .modal-head .close:hover { color: var(--ink); }
 .modal-actions {
   display: flex; gap: 0.4rem; padding: 0.6rem 1.5rem;
-  background: var(--bg); border-bottom: 1px solid var(--ink-line);
+  background: var(--paper-2); border-bottom: 1px solid var(--ink-line);
   flex-wrap: wrap;
 }
 .modal-actions a, .modal-actions button {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  background: white; color: var(--ink);
+  background: var(--paper); color: var(--ink);
   border: 1px solid var(--ink-line);
   padding: 0.4rem 0.75rem; border-radius: 4px;
   font-size: 0.78rem; font-weight: 600;
@@ -732,7 +790,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .modal-actions .wa-split button.wa-templates:hover { background: #1FA851; }
 #wa-tpl-popover {
   z-index: 300; width: 360px;
-  background: white; border: 1px solid var(--ink-line);
+  background: var(--paper); border: 1px solid var(--ink-line);
   border-radius: 6px; box-shadow: 0 12px 32px rgba(0,0,0,0.2);
   padding: 0.4rem; display: flex; flex-direction: column; gap: 2px;
   max-height: 460px; overflow-y: auto;
@@ -744,7 +802,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 }
 #wa-tpl-popover .wa-tpl-item {
   display: flex; flex-direction: column; gap: 0.2rem; align-items: flex-start;
-  text-align: left; background: white; border: 1px solid transparent;
+  text-align: left; background: var(--paper); border: 1px solid transparent;
   border-radius: 4px; padding: 0.5rem 0.7rem; cursor: pointer;
   font-family: inherit; font-size: 0.78rem; color: var(--ink);
 }
@@ -790,9 +848,9 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 /* Notes journal: history block above the draft input. White scrolling
    panel; preserves the timestamp lines that get prepended on save. */
 .modal-body .notes-history {
-  background: #FFFFFF;
+  background: var(--paper-2);
   border: 1px solid var(--ink-line);
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 0.75rem 0.9rem;
   max-height: 240px; overflow-y: auto;
   white-space: pre-wrap;
@@ -809,12 +867,12 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 }
 .modal-body input, .modal-body select, .modal-body textarea {
   width: 100%; padding: 0.5rem 0.6rem;
-  border: 1px solid var(--ink-line); border-radius: 4px;
+  border: 1px solid var(--ink-line); border-radius: 3px;
   font-family: inherit; font-size: 0.88rem;
-  background: var(--bg); color: var(--ink);
+  background: var(--paper); color: var(--ink);
 }
 .modal-body input:focus, .modal-body select:focus, .modal-body textarea:focus {
-  outline: 2px solid rgba(255,92,46,0.4); border-color: var(--accent);
+  outline: 2px solid rgba(210,74,29,.3); border-color: var(--p);
 }
 .modal-body textarea { min-height: 70px; resize: vertical; font-family: inherit; }
 .modal-body textarea.ta.big {
@@ -822,13 +880,13 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   line-height: 1.45;
   font-size: 0.92rem;
   padding: 0.7rem 0.8rem;
-  background: white;
+  background: var(--paper);
   border: 1px solid var(--ink-line);
 }
 .modal-body textarea.ta.big:focus {
-  background: white;
-  border-color: var(--accent);
-  outline: 2px solid rgba(255,92,46,0.15);
+  background: var(--paper);
+  border-color: var(--p);
+  outline: 2px solid rgba(210,74,29,.15);
 }
 .modal-body .field-big {
   margin-top: 1rem;
@@ -846,6 +904,11 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   font-size: 0.7rem; color: var(--ink-soft);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   margin-bottom: 0.6rem;
+}
+.modal-body .read-only-val {
+  font-size: 0.9rem; color: var(--ink);
+  padding: 0.35rem 0.5rem;
+  background: var(--pill-bg); border-radius: 4px;
 }
 .modal-foot {
   padding: 0.85rem 1.25rem;
@@ -867,8 +930,8 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .modal-activities {
   padding: 0.85rem 1.25rem 1rem;
   border-top: 1px dashed var(--ink-faint);
-  background: #FAFAF7;
-  border-radius: 0 0 8px 8px;
+  background: var(--paper-2);
+  border-radius: 0 0 5px 5px;
 }
 .modal-activities h3 {
   font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
@@ -900,8 +963,8 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .lf-pills {
   display: flex; gap: 0.4rem; flex-wrap: wrap;
   padding: 0.75rem 1rem 0.5rem;
-  background: #fff;
-  border-bottom: 1px solid var(--ink-faint);
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--ink-line);
 }
 .lf-pill {
   background: transparent;
@@ -930,7 +993,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   align-items: center;
 }
 .lf-pills-secondary select.lf-category {
-  background: white;
+  background: var(--paper);
   border: 1px solid var(--ink-line);
   padding: 0.35rem 0.55rem;
   border-radius: 14px;
@@ -963,12 +1026,24 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   margin-left: 0.1rem;
 }
 .lf-sheet tbody td.actions button:hover {
-  background: white;
+  background: var(--paper);
   border-color: var(--ink-line);
   color: var(--ink);
 }
 .lf-sheet tbody td.actions button[data-act="promote"]:hover {
   background: var(--accent-bg); border-color: rgba(255,92,46,0.35); color: var(--accent);
+}
+/* Uncontacted (new stage) lead rows get an orange left-border so Santi can
+   spot them instantly. The "Mark contacted" button only shows on these rows. */
+.lf-sheet tbody tr.lf-uncontacted { border-left: 3px solid #f97316; }
+.lf-sheet tbody tr.lf-uncontacted > td:first-child { background: rgba(249,115,22,0.04); }
+.lf-sheet tbody td.actions button[data-act="contact"] {
+  background: #22c55e; color: #fff; border: 1px solid #16a34a;
+  border-radius: 3px; font-size: 0.7rem; padding: 2px 7px;
+  cursor: pointer; white-space: nowrap; margin-right: 0.25rem;
+}
+.lf-sheet tbody td.actions button[data-act="contact"]:hover {
+  background: #16a34a; border-color: #15803d;
 }
 .lf-sheet td .cell {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -994,22 +1069,22 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 
 .lf-foot {
   padding: 0.6rem 1rem;
-  background: #fff;
-  border-top: 1px solid var(--ink-faint);
+  background: var(--paper-2);
+  border-top: 1px solid var(--ink-line);
   font-size: 0.8rem; color: var(--ink-soft);
   display: flex; align-items: center; gap: 0.75rem;
   flex-wrap: wrap;
 }
 .lf-foot button {
-  background: white; border: 1px solid var(--ink-line);
+  background: var(--paper); border: 1px solid var(--ink-line);
   padding: 0.3rem 0.7rem; border-radius: 3px;
-  font-family: inherit; font-size: 0.75rem; color: var(--ink);
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink);
   cursor: pointer;
 }
 .lf-foot button:disabled { opacity: 0.4; cursor: not-allowed; }
 .lf-foot button:hover:not(:disabled) { background: var(--row-hover); }
 .lf-foot .ps {
-  background: white; border: 1px solid var(--ink-line);
+  background: var(--paper); border: 1px solid var(--ink-line);
   padding: 0.25rem 0.45rem; border-radius: 3px;
   font-family: inherit; font-size: 0.75rem;
 }
@@ -1035,8 +1110,8 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   border-bottom: 1px solid var(--ink-line);
 }
 .today-greet h2 {
-  font-family: Georgia, serif; font-weight: normal;
-  font-size: 2rem; margin: 0; color: var(--ink);
+  font-family: var(--serif); font-weight: 700;
+  font-size: 2rem; margin: 0; color: var(--ink); letter-spacing: -0.02em;
 }
 .today-date {
   font-size: 0.85rem; color: var(--ink-soft);
@@ -1044,21 +1119,21 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 }
 .today-summary { display: flex; gap: 1rem; flex-wrap: wrap; }
 .today-kpi {
-  background: white; border: 1px solid var(--ink-line);
-  border-radius: 6px; padding: 0.65rem 1rem;
+  background: var(--paper-2); border: 1px solid var(--ink-line);
+  border-radius: 4px; padding: 0.65rem 1rem;
   min-width: 130px;
 }
 .today-kpi .kpi-num {
-  font-family: Georgia, serif; font-size: 1.5rem; line-height: 1;
-  color: var(--accent); font-weight: 400;
+  font-family: var(--serif); font-size: 1.5rem; line-height: 1;
+  color: var(--p); font-weight: 700; letter-spacing: -0.02em;
 }
 .today-kpi .kpi-label {
-  font-size: 0.7rem; color: var(--ink-soft); margin-top: 0.25rem;
-  letter-spacing: 0.04em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 0.65rem; color: var(--ink-soft); margin-top: 0.25rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
 }
 .today-group {
-  background: white; border: 1px solid var(--ink-line);
-  border-radius: 8px; padding: 1.1rem 1.25rem 1.25rem;
+  background: var(--paper-2); border: 1px solid var(--ink-line);
+  border-radius: 4px; padding: 1.1rem 1.25rem 1.25rem;
   margin-bottom: 1.1rem;
 }
 .today-group-head {
@@ -1066,8 +1141,8 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   margin-bottom: 0.25rem;
 }
 .today-group-head h3 {
-  margin: 0; font-family: Georgia, serif; font-weight: normal;
-  font-size: 1.2rem; color: var(--ink);
+  margin: 0; font-family: var(--serif); font-weight: 700;
+  font-size: 1.2rem; color: var(--ink); letter-spacing: -0.01em;
 }
 .today-group-head span {
   background: var(--accent-bg); color: var(--accent);
@@ -1082,7 +1157,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   display: flex; align-items: center; gap: 0.85rem;
   padding: 0.6rem 0.75rem;
   border: 1px solid var(--ink-line); border-radius: 6px;
-  background: white;
+  background: var(--paper);
   cursor: pointer;
   transition: border-color 0.1s, box-shadow 0.1s;
 }
@@ -1177,11 +1252,11 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   color: var(--ink-soft); line-height: 1;
 }
 .today-item .t-actions button:hover {
-  background: white; border-color: var(--ink-line); color: var(--ink);
+  background: var(--paper); border-color: var(--ink-line); color: var(--ink);
 }
 .today-empty {
   text-align: center; padding: 3rem 1rem;
-  background: white; border: 1px dashed var(--ink-line); border-radius: 8px;
+  background: var(--paper); border: 1px dashed var(--ink-line); border-radius: 8px;
   color: var(--ink-soft);
 }
 .today-empty .empty-icon {
@@ -1191,7 +1266,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem;
 }
 .today-empty h3 {
-  font-family: Georgia, serif; font-weight: normal;
+  font-family: var(--serif); font-weight: 700;
   font-size: 1.3rem; margin: 0 0 0.4rem; color: var(--ink);
 }
 @media (max-width: 640px) {
@@ -1208,9 +1283,9 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 </script>
 
 <header>
-  <div class="brand">Pyme<b>WebPro</b> <span>CRM</span></div>
+  <div class="brand">Pyme<em>WebPro</em><span>CRM</span></div>
   <div class="spacer"></div>
-  <a href="/admin" class="back">← Back to admin</a>
+  <a href="/admin" class="back">← admin</a>
 </header>
 
 <div id="root"></div>
@@ -1224,23 +1299,25 @@ const ADMIN_KEY = "pwp_admin";
 // Lead funnel replaces the old Leads tab. Deals are shown in the Prospect
 // funnel kanban, so no separate Deals tab either. The underlying DATA tables
 // (leads + deals) still exist and are used by the funnel + modal.
-const TABLES = ["today", "leadfunnel", "funnel", "activities"];
+const TABLES = ["today", "funnel", "activities"];
 const DATA_TABLES = ["leads", "clients", "deals", "activities"];
 const TABLE_LABELS = {
-  today: "Today", leadfunnel: "Leads", funnel: "Prospect funnel", activities: "Activities",
+  today: "Today", funnel: "Pipeline", activities: "Activities",
 };
 const TABLE_ICONS  = {
-  today: "☀", leadfunnel: "📥", funnel: "🔀", activities: "📋",
+  today: "☀", funnel: "🔀", activities: "📋",
 };
 
-// Prospect (kanban) funnel: deals + won-state clients. Lead-side stages
-// (raw/contacted/MQL) are NOT here · they live in the Lead funnel spreadsheet.
+// Prospect (kanban) funnel: raw leads + deals + won-state clients.
+// "Leads" column shows raw incoming leads (lead_stage: new). From there
+// they move to Qualifying once they become a deal.
 const FUNNEL_COLUMNS = [
-  { id: "qualifying",  label: "Qualifying",  dot: "#2563eb" },
-  { id: "proposal",    label: "Proposal",    dot: "#d97706" },
-  { id: "negotiation", label: "Negotiation", dot: "#d97706" },
-  { id: "won",         label: "Won",         dot: "#16a34a" },
-  { id: "lost",        label: "Lost",        dot: "#dc2626" },
+  { id: "lead",        label: "Leads",                dot: "#9CA3AF" },
+  { id: "qualifying",  label: "Marketing Qualified",  dot: "#2563eb" },
+  { id: "proposal",    label: "Sales Qualified",      dot: "#d97706" },
+  { id: "negotiation", label: "Proposal / Mockup",    dot: "#8B5CF6" },
+  { id: "won",         label: "Won",                  dot: "#16a34a" },
+  { id: "lost",        label: "Lost",                 dot: "#dc2626" },
 ];
 
 // Lead funnel stages: where high-volume outreach (cold calls, WhatsApp, email)
@@ -1277,7 +1354,7 @@ const LEAD_FUNNEL_COLS = [
 
 const state = {
   authed: !!localStorage.getItem(ADMIN_KEY),
-  active: location.hash.replace("#", "") || "today",
+  active: (location.hash.replace("#", "") || "today").replace("leadfunnel", "funnel"),
   data: { leads: [], clients: [], deals: [], activities: [] },
   counts: {},
   // No default sort. Rows render in the order returned by the server (updated_at
@@ -1286,7 +1363,8 @@ const state = {
   sort: { col: null, dir: "desc" },
   search: "",
   editing: null, // { table, id, col }
-  lookups: { leadById: new Map(), clientById: new Map(), dealById: new Map() },
+  lookups: { leadById: new Map(), clientById: new Map(), dealById: new Map(), dealsByLead: new Map() },
+  funnelSort: "",  // "" | "contacted_desc" | "contacted_asc"
   selected: new Set(), // keys: "type:id"
 };
 if (!TABLES.includes(state.active)) state.active = "today";
@@ -1328,7 +1406,7 @@ const COLS = {
     { key: "title",           label: "Deal",          type: "text", width: "25%" },
     { key: "lead_id",         label: "Lead",          type: "fk", fk: "leads", width: "16%" },
     { key: "client_id",       label: "Client",        type: "fk", fk: "clients", width: "16%" },
-    { key: "stage",           label: "Stage",         type: "select", options: ["qualifying","proposal","negotiation","won","lost"], pill: stagePill, width: "11%" },
+    { key: "stage",           label: "Stage",         type: "select", options: ["qualifying","proposal","negotiation","won","lost"], optionLabels: { qualifying:"Mktg Qualified", proposal:"Sales Qualified", negotiation:"Proposal / Mockup", won:"Won", lost:"Lost" }, pill: stagePill, width: "11%" },
     { key: "value_cop_cents", label: "Value (COP)",   type: "money", width: "12%" },
     { key: "owner",           label: "Owner",         type: "select", options: ["santi","mike"], width: "9%" },
     { key: "next_action",     label: "Next action",   type: "text", width: "auto" },
@@ -1437,7 +1515,12 @@ function motionPill(v) {
 }
 function clientStatusPill(v) { return pillFor(v, { invited:"gray", in_progress:"amber", submitted:"blue", active:"green" }); }
 function planPill(v)         { return pillFor(v, { esencial:"blue", pro:"green" }); }
-function stagePill(v)        { return pillFor(v, { qualifying:"gray", proposal:"blue", negotiation:"amber", won:"green", lost:"red" }); }
+function stagePill(v) {
+  const labels = { qualifying:"Mktg Qual", proposal:"Sales Qual", negotiation:"Proposal", won:"Won", lost:"Lost" };
+  const colors = { qualifying:"blue", proposal:"amber", negotiation:"purp", won:"green", lost:"red" };
+  if (!v) return "";
+  return '<span class="pill ' + (colors[v] || "gray") + '">' + escHtml(labels[v] || v) + '</span>';
+}
 function kindPill(v)         { return pillFor(v, { call:"blue", whatsapp:"green", email:"amber", meeting:"blue", note:"gray", task:"amber" }); }
 function pillFor(v, map) {
   if (v === null || v === undefined || v === "") return "";
@@ -1463,6 +1546,11 @@ function rebuildLookups() {
   state.lookups.leadById = new Map(state.data.leads.map((r) => [r.id, r]));
   state.lookups.clientById = new Map(state.data.clients.map((r) => [r.id, r]));
   state.lookups.dealById = new Map(state.data.deals.map((r) => [r.id, r]));
+  // lead_id -> deal (first match). Used to hide promoted leads from the active
+  // lead funnel once they have a deal card in the Kanban.
+  state.lookups.dealsByLead = new Map(
+    state.data.deals.filter((d) => d.lead_id).map((d) => [d.lead_id, d])
+  );
 }
 
 // ----------- rendering -----------
@@ -1476,21 +1564,18 @@ function render() {
     return;
   }
   let body;
-  if (state.active === "today")           body = '<main><div id="today-wrap"></div></main>';
-  else if (state.active === "funnel")     body = '<main><div id="kanban-wrap"></div></main>';
-  else if (state.active === "leadfunnel") body = '<main><div id="leadfunnel-wrap"></div></main>';
-  else                                    body = '<main><div class="grid-wrap" id="grid"></div></main>';
+  if (state.active === "today")       body = '<main><div id="today-wrap"></div></main>';
+  else if (state.active === "funnel") body = '<main><div id="kanban-wrap"></div></main>';
+  else                                body = '<main><div class="grid-wrap" id="grid"></div></main>';
   root.innerHTML = renderTabs() + body + renderStatusbar();
   bindTabHandlers();
-  if (state.active === "today")           renderToday();
-  else if (state.active === "funnel")     renderFunnel();
-  else if (state.active === "leadfunnel") renderLeadFunnel();
-  else                                    renderGrid();
+  if (state.active === "today")       renderToday();
+  else if (state.active === "funnel") renderFunnel();
+  else                                renderGrid();
 }
 
 function renderTabs() {
   const isFunnel = state.active === "funnel";
-  const isLeadFunnel = state.active === "leadfunnel";
   const isToday = state.active === "today";
   return '<nav class="tabs">' +
     TABLES.map((t) => {
@@ -1499,9 +1584,8 @@ function renderTabs() {
       if (t === "today") {
         n = computeTodayItems().length;
       } else if (t === "funnel") {
-        n = state.data.deals.length + state.data.clients.length;
-      } else if (t === "leadfunnel") {
-        n = state.data.leads.filter((l) => !["sales_qualified","disqualified"].includes(l.lead_stage)).length;
+        n = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length
+          + state.data.deals.length + state.data.clients.length;
       } else {
         n = state.counts[t] || (state.data[t] && state.data[t].length) || 0;
       }
@@ -1509,10 +1593,8 @@ function renderTabs() {
     }).join("") +
     '<div class="grow"></div>' +
     '<input class="search" id="search" placeholder="Filter…" value="' + escHtml(state.search) + '" />' +
-    (isFunnel || isLeadFunnel || isToday ? "" : '<button class="primary" id="add">+ New row</button>') +
-    (isFunnel || isLeadFunnel || isToday ? "" : '<button class="ghost" id="export">Export .csv</button>') +
-    (isLeadFunnel ? '<button class="primary" id="add">+ New lead</button>' : "") +
-    (isLeadFunnel ? '<button class="ghost" id="export">Export .csv</button>' : "") +
+    (isFunnel || isToday ? "" : '<button class="primary" id="add">+ New row</button>') +
+    (isFunnel || isToday ? "" : '<button class="ghost" id="export">Export .csv</button>') +
     '<button class="ghost" id="refresh">↻</button>' +
     '<button class="ghost" id="logout">Sign out</button>' +
     "</nav>";
@@ -1526,14 +1608,6 @@ function renderStatusbar() {
       "<span>" + n + " action items on your plate</span>" +
       '<span class="ok">● connected</span>' +
       "<span>Click any row to open the contact card. Inline buttons log touches without leaving this page.</span>" +
-      "</div>";
-  }
-  if (t === "leadfunnel") {
-    const active = state.data.leads.filter((l) => !["sales_qualified","disqualified"].includes(l.lead_stage || "new")).length;
-    return '<div class="statusbar">' +
-      "<span>" + state.data.leads.length + " total leads, " + active + " active</span>" +
-      '<span class="ok">● connected</span>' +
-      "<span>Click ☎ 📱 ✉ to log a touch. ⇪ promotes to the prospect funnel.</span>" +
       "</div>";
   }
   if (t === "funnel") {
@@ -1654,11 +1728,29 @@ function renderGrid() {
 // ===========================================================================
 
 // Determine which column a row belongs in. Returns null if the row should be
-// hidden. Leads NEVER appear on the prospect kanban now · they live in the
-// Lead funnel spreadsheet until they hit Sales Qualified, at which point a
-// deal is created and they're represented by that deal here.
+// hidden. Leads are shown in the Kanban according to their lead_stage:
+//   new / contacted          -> "lead" column
+//   marketing_qualified      -> "qualifying" column
+//   sales_qualified          -> "proposal" column
+//   disqualified             -> hidden
 function cardColumn(type, row, ctx) {
-  if (type === "lead") return null;
+  if (type === "lead") {
+    // Skip converted/dismissed leads.
+    const skipStatus = ["converted", "dismissed"];
+    if (skipStatus.includes(row.status)) return null;
+    // Map lead_stage to the matching Kanban column.
+    const stageToCol = {
+      new:                 "lead",
+      contacted:           "lead",
+      marketing_qualified: "qualifying",
+      sales_qualified:     "proposal",
+      disqualified:        null,
+    };
+    if (row.lead_stage && stageToCol.hasOwnProperty(row.lead_stage)) {
+      return stageToCol[row.lead_stage];
+    }
+    return "lead"; // fallback for leads with no stage set yet
+  }
   if (type === "deal") {
     return row.stage || "qualifying";
   }
@@ -1708,14 +1800,41 @@ function renderFunnel() {
     cardsByCol[col].push({ type: "client", row: c });
   });
 
-  // Intentionally no per-column sort here. Cards stay in their current order
-  // so editing a card (which bumps updated_at) doesn't make it jump to the top.
-  // Initial order comes from the /grid fetch (updated_at DESC at load time).
+  // Optional sort within each column by last-contacted date.
+  if (state.funnelSort) {
+    const dir = state.funnelSort === "contacted_asc" ? 1 : -1;
+    FUNNEL_COLUMNS.forEach((col) => {
+      cardsByCol[col.id].sort((a, b) => {
+        const ta = getLastContactedAt(a);
+        const tb = getLastContactedAt(b);
+        // Uncontacted cards (ts=0): oldest-first puts them at top, newest-first at bottom.
+        if (!ta && !tb) return 0;
+        if (!ta) return dir === 1 ? -1 : 1;
+        if (!tb) return dir === 1 ? 1 : -1;
+        return (ta - tb) * dir;
+      });
+    });
+  }
+
+  const sortSelect =
+    '<div class="kanban-toolbar">' +
+    '<label>Sort by:</label>' +
+    '<select id="funnel-sort">' +
+      '<option value="">Default order</option>' +
+      '<option value="contacted_desc"' + (state.funnelSort === "contacted_desc" ? " selected" : "") + '>Last contacted: newest first</option>' +
+      '<option value="contacted_asc"'  + (state.funnelSort === "contacted_asc"  ? " selected" : "") + '>Last contacted: oldest first (uncontacted at top)</option>' +
+    '</select>' +
+    '</div>';
 
   const wrap = document.getElementById("kanban-wrap");
-  wrap.innerHTML = '<div class="kanban">' +
+  wrap.innerHTML = sortSelect + '<div class="kanban">' +
     FUNNEL_COLUMNS.map((c) => renderColumn(c, cardsByCol[c.id])).join("") +
     "</div>";
+
+  document.getElementById("funnel-sort").onchange = (e) => {
+    state.funnelSort = e.target.value;
+    renderFunnel();
+  };
 
   // Bind drag-and-drop AND click-to-open on every card.
   wrap.querySelectorAll(".card").forEach((el) => {
@@ -1957,6 +2076,27 @@ function onCardClick(e) {
   openCard(type, id);
 }
 
+// Returns the last-contacted timestamp for a card (deal, lead, or client).
+// Checks last_touched_at on the linked lead first, then falls back to the
+// most recent activity in state. Returns 0 if never contacted.
+function getLastContactedAt(c) {
+  const r = c.row;
+  const linked = c.type === "deal" && r.lead_id ? state.lookups.leadById.get(r.lead_id) : null;
+  const leadRow = c.type === "lead" ? r : linked;
+  let ts = leadRow && leadRow.last_touched_at ? Number(leadRow.last_touched_at) : 0;
+  if (!ts) {
+    const leadId = leadRow && leadRow.id;
+    const dealId = c.type === "deal" ? r.id : null;
+    state.data.activities.forEach((a) => {
+      if ((dealId && a.deal_id === dealId) || (leadId && a.lead_id === leadId)) {
+        const t = Number(a.occurred_at);
+        if (t > ts) ts = t;
+      }
+    });
+  }
+  return ts;
+}
+
 function buildFunnelContext() {
   const dealsByLead = new Map();
   const wonDealsByClient = new Map();
@@ -1989,6 +2129,7 @@ function renderCard(c) {
   let title = "";
   let meta = "";
   let socials = "";
+  let contactStatus = "";
   if (t === "lead") {
     title = r.business_name || r.name || r.email || "(unnamed lead)";
     const bits = [];
@@ -2008,9 +2149,25 @@ function renderCard(c) {
     else if (r.proposal_status === "generating") bits.push('<span class="proposal-badge gen">Generating...</span>');
     else if (r.proposal_status === "error") bits.push('<span class="proposal-badge err">Proposal error</span>');
     meta = '<span class="type-pill">Deal</span>' + bits.map((b) => '<span>' + b + '</span>').join("");
-    // Mirror lead socials onto the deal card if we can find the linked lead.
+    // Contact status strip. Use last_touched_at from the lead if set; otherwise
+    // fall back to the most recent activity linked to this deal or its lead.
+    // This handles leads that had activities logged before last_touched_at existed.
     const linked = r.lead_id ? state.lookups.leadById.get(r.lead_id) : null;
-    if (linked) socials = renderSocialIcons(linked);
+    let lastTouch = linked && linked.last_touched_at ? Number(linked.last_touched_at) : 0;
+    if (!lastTouch) {
+      const linkedLeadId = linked && linked.id;
+      const dealId = r.id;
+      state.data.activities.forEach((a) => {
+        if ((a.deal_id === dealId || (linkedLeadId && a.lead_id === linkedLeadId)) && Number(a.occurred_at) > lastTouch) {
+          lastTouch = Number(a.occurred_at);
+        }
+      });
+    }
+    if (!lastTouch) {
+      contactStatus = '<div class="contact-status cs-new">Not contacted</div>';
+    } else {
+      contactStatus = '<div class="contact-status cs-touched">Last contacted: ' + escHtml(fmtDate(lastTouch)) + "</div>";
+    }
   } else if (t === "client") {
     title = r.business_name || r.email;
     const bits = [];
@@ -2022,6 +2179,7 @@ function renderCard(c) {
   return '<div class="card t-' + t + sel + '" draggable="true" data-type="' + t + '" data-id="' + escHtml(r.id) + '">' +
     '<div class="title">' + escHtml(title) + "</div>" +
     '<div class="meta">' + meta + "</div>" +
+    contactStatus +
     socials +
     "</div>";
 }
@@ -2147,16 +2305,44 @@ function currentColumnFor(type, id) {
 }
 
 // Map a drop onto the right DB update. Returns silently after toasting.
-// Leads are no longer shown on the prospect kanban, so only deal + client.
 async function applyFunnelMove(type, id, fromCol, toCol) {
   try {
+    if (type === "lead") {
+      // Dragging a raw lead out of the Leads column promotes it to "contacted"
+      // so it appears in the Lead Funnel spreadsheet for follow-up.
+      if (toCol === "lead") return; // no-op
+      if (toCol === "won" || toCol === "lost") { toast("Promote a lead to a deal first", true); return; }
+      const res = await api("/api/admin/crm/leads/" + id, {
+        method: "PATCH",
+        body: JSON.stringify({ lead_stage: "contacted", status: "contacted" }),
+      });
+      replaceRow("leads", id, res.row);
+      rebuildLookups();
+      renderFunnel();
+      toast("Lead moved to Contacted in Lead Funnel");
+      return;
+    }
     if (type === "deal") {
       const VALID = ["qualifying","proposal","negotiation","won","lost"];
       if (!VALID.includes(toCol)) { toast("Deals can't move to " + toCol, true); return; }
-      const body = { stage: toCol };
+const body = { stage: toCol };
       if (toCol === "won" || toCol === "lost") body.closed_at = Date.now();
       const res = await api("/api/admin/crm/deals/" + id, { method: "PATCH", body: JSON.stringify(body) });
       replaceRow("deals", id, res.row);
+      // Auto-advance linked lead to SQL when deal reaches proposal.
+      if (toCol === "proposal") {
+        const deal = res.row;
+        const linkedLead = deal.lead_id ? state.lookups.leadById.get(deal.lead_id) : null;
+        if (linkedLead && linkedLead.lead_stage !== "sales_qualified") {
+          try {
+            const lr = await api("/api/admin/crm/leads/" + deal.lead_id, {
+              method: "PATCH", body: JSON.stringify({ lead_stage: "sales_qualified", status: "converted" }),
+            });
+            replaceRow("leads", deal.lead_id, lr.row);
+            rebuildLookups();
+          } catch (_) {}
+        }
+      }
       toast("Deal moved to " + toCol);
     }
     else if (type === "client") {
@@ -2857,7 +3043,10 @@ function renderLeadFunnel() {
   // Filter rows.
   const f = state.leadStageFilter;
   let rows = state.data.leads;
-  if (f === "active") rows = rows.filter((l) => !["sales_qualified","disqualified"].includes(l.lead_stage || "new"));
+  if (f === "active") rows = rows.filter((l) =>
+    !["sales_qualified","disqualified"].includes(l.lead_stage || "new") &&
+    !state.lookups.dealsByLead.has(l.id)
+  );
   else if (f !== "all") rows = rows.filter((l) => (l.lead_stage || "new") === f);
   if (state.heatFilter) {
     const hf = state.heatFilter;
@@ -2999,8 +3188,9 @@ function renderLeadFunnel() {
       e.stopPropagation();
       const act = b.dataset.act;
       const id = b.dataset.id;
-      if (act === "call")      quickLogTouch(id, "call");
-      else if (act === "wa")   quickLogTouch(id, "whatsapp");
+      if (act === "contact")    markContactedOnly(id);
+      else if (act === "call")  quickLogTouch(id, "call");
+      else if (act === "wa")    quickLogTouch(id, "whatsapp");
       else if (act === "email") quickLogTouch(id, "email");
       else if (act === "open")  openCard("lead", id);
       else if (act === "promote") promoteToSQL(id);
@@ -3016,6 +3206,7 @@ function renderLeadFunnel() {
 function renderLeadFunnelRow(r, cols) {
   cols = cols || getOrderedLeadCols();
   const isSel = state.selected.has(selKey("lead", r.id));
+  const isNew = !r.lead_stage || r.lead_stage === "new";
   const cells = cols.map((c) => {
     const v = r[c.key];
     const display = formatLeadFunnelCell(c, v);
@@ -3023,15 +3214,16 @@ function renderLeadFunnelRow(r, cols) {
     return '<td data-id="' + r.id + '" data-col="' + c.key + '"' + editable + '><div class="cell">' + display + "</div></td>";
   }).join("");
   const actions = '<td class="actions">' +
+    (isNew ? '<button data-act="contact" data-id="' + r.id + '" title="Mark as contacted">Contacted</button>' : "") +
     '<button data-act="call" data-id="' + r.id + '" title="Log a call">☎</button>' +
     '<button data-act="wa" data-id="' + r.id + '" title="Log WhatsApp touch">📱</button>' +
     '<button data-act="email" data-id="' + r.id + '" title="Log an email">✉</button>' +
     '<button data-act="open" data-id="' + r.id + '" title="Open full record">↗</button>' +
-    '<button data-act="promote" data-id="' + r.id + '" title="Mark Sales Qualified (creates deal)">⇪</button>' +
+    '<button data-act="promote" data-id="' + r.id + '" title="Add to prospect funnel (creates deal at Qualifying)">⇪</button>' +
     '<button data-act="delete" data-id="' + r.id + '" title="Delete this lead">🗑</button>' +
     "</td>";
-  const trCls = isSel ? ' class="lf-selected"' : "";
-  return "<tr" + trCls + " data-row-id='" + escHtml(r.id) + "'>" + cells + actions + "</tr>";
+  const trCls = [isSel ? "lf-selected" : "", isNew ? "lf-uncontacted" : ""].filter(Boolean).join(" ");
+  return "<tr" + (trCls ? ' class="' + trCls + '"' : "") + " data-row-id='" + escHtml(r.id) + "'>" + cells + actions + "</tr>";
 }
 
 function formatLeadFunnelCell(c, v) {
@@ -3083,7 +3275,7 @@ function onLeadFunnelCellClick(e) {
     input.className = "edit";
     colDef.options.forEach((opt) => {
       const o = document.createElement("option");
-      o.value = opt; o.textContent = opt === "" ? "·" : opt;
+      o.value = opt; o.textContent = opt === "" ? "·" : ((colDef.optionLabels && colDef.optionLabels[opt]) || opt);
       if (String(cur || "") === opt) o.selected = true;
       input.appendChild(o);
     });
@@ -3180,6 +3372,26 @@ async function quickLogTouch(leadId, kind) {
   } catch (e) { toast(e.message, true); }
 }
 
+// One-click "Mark contacted": flips lead_stage from new -> contacted without
+// requiring a subject prompt. No activity is logged; use ☎/📱/✉ to log a touch
+// with notes. The green "Contacted" button disappears from the row after save.
+async function markContactedOnly(leadId) {
+  const lead = state.data.leads.find((r) => r.id === leadId);
+  if (!lead) { toast("Lead not found", true); return; }
+  if ((lead.lead_stage || "new") !== "new") return; // already past new, no-op
+  try {
+    const res = await api("/api/admin/crm/leads/" + leadId, {
+      method: "PATCH",
+      body: JSON.stringify({ lead_stage: "contacted", status: "contacted", last_touched_at: Date.now(), last_touched_kind: "note" }),
+    });
+    replaceRow("leads", leadId, res.row);
+    renderLeadFunnel();
+    document.querySelector("nav.tabs").outerHTML = renderTabs();
+    bindTabHandlers();
+    toast("Marked as contacted");
+  } catch (e) { toast(e.message, true); }
+}
+
 // Mark a lead Sales Qualified · creates a matching deal at qualifying and
 // flips legacy status='converted'. Lead disappears from the active lead-funnel
 // view and shows up as a deal card in the prospect kanban.
@@ -3205,12 +3417,15 @@ async function deleteLead(leadId) {
 async function promoteToSQL(leadId) {
   const lead = state.data.leads.find((r) => r.id === leadId);
   if (!lead) { toast("Lead not found", true); return; }
-  if (lead.lead_stage === "sales_qualified") { toast("Already Sales Qualified", true); return; }
-  if (!confirm("Promote '" + (lead.business_name || lead.name || lead.email) + "' to the prospect funnel? A deal will be created at Qualifying.")) return;
+  if (state.lookups.dealsByLead.has(leadId)) { toast("Already in the prospect funnel", true); return; }
+  if (!confirm("Add '" + (lead.business_name || lead.name || lead.email) + "' to the prospect funnel? A deal will be created at Qualifying.")) return;
   try {
+    // Mark status=converted so the lead exits the active funnel view, but keep
+    // lead_stage at its current value (MQL). The lead auto-advances to SQL when
+    // the deal is dragged to Proposal.
     const leadRes = await api("/api/admin/crm/leads/" + leadId, {
       method: "PATCH",
-      body: JSON.stringify({ lead_stage: "sales_qualified", status: "converted" }),
+      body: JSON.stringify({ status: "converted" }),
     });
     replaceRow("leads", leadId, leadRes.row);
 
@@ -3362,7 +3577,7 @@ function renderQuickActionsBar(type, row) {
   const mail  = email    ? "mailto:" + encodeURIComponent(email) : null;
   let url     = null;
   if (site) {
-    url = /^https?:\/\//i.test(site) ? site : "https://" + site;
+    url = /^https?:\\/\\//i.test(site) ? site : "https://" + site;
   }
 
   const buttons = [];
@@ -3379,7 +3594,7 @@ function renderQuickActionsBar(type, row) {
     buttons.push('<a class="wa disabled" title="No phone on record">📱 WhatsApp</a>');
   }
   buttons.push(tel
-    ? '<a class="tel" href="' + escHtml(tel) + '">☎ Call</a>'
+    ? '<a class="tel" href="' + escHtml(tel) + '" target="_blank" rel="noopener">☎ Call</a>'
     : '<a class="tel disabled" title="No phone on record">☎ Call</a>');
   buttons.push(mail
     ? '<a href="' + escHtml(mail) + '">✉ Email</a>'
@@ -3610,6 +3825,9 @@ async function logWaTemplateTouch(leadId, tpl, fullMessage) {
 // Renders the editable fields for an entity. Uses the same COLS definitions
 // the spreadsheet view uses, so changes there propagate automatically.
 function renderCardFields(type, row) {
+  // Deal cards get a focused layout: only the fields needed at a glance.
+  if (type === "deal") return renderDealCardFields(row);
+
   const table = PLURAL[type];
   const cols = COLS[table].filter((c) => !c.readonly);
 
@@ -3649,12 +3867,73 @@ function renderCardFields(type, row) {
     html.push(renderNotesJournal(row));
   }
 
-  // Deal-only Proposal block. Shows the current proposal status and (when
-  // ready) a link to the printable proposal page. The button regenerates
-  // the package using the linked lead's social URLs.
-  if (type === "deal") {
-    html.push(renderProposalBlock(row));
+  return html.join("");
+}
+
+// Renders a single text input that belongs to the linked LEAD, not the deal.
+// The data-lead-field attribute tells saveCard to route this field to a
+// separate PATCH on the lead record.
+function renderLeadContactField(key, label, value) {
+  const id = "fld-lead-" + key;
+  return '<div class="field"><label for="' + id + '">' + escHtml(label) + "</label>" +
+    '<input type="text" id="' + id + '" data-key="' + key + '" data-type="text" data-lead-field="1" value="' + escHtml(value || "") + '" /></div>';
+}
+
+// Focused deal card layout: only what Santi needs during a sales call.
+// Order: Deal Name, Prospect Name (read-only), Stage, Owner, Notes,
+// Contact info (phone/WA/web/social from linked lead), Proposal block.
+function renderDealCardFields(deal) {
+  const html = [];
+
+  html.push('<div class="meta-line">id: ' + escHtml(deal.id) +
+    (deal.created_at ? '  ·  created ' + escHtml(fmtDate(deal.created_at)) : "") +
+    (deal.updated_at ? '  ·  updated ' + escHtml(fmtDate(deal.updated_at)) : "") +
+    '</div>');
+
+  // Deal Name
+  const titleCol = COLS.deals.find((c) => c.key === "title") || { key: "title", label: "Deal Name", type: "text" };
+  html.push(renderFieldInput({ ...titleCol, label: "Deal Name" }, deal.title || ""));
+
+  // Prospect Name (read-only display from linked lead)
+  const lead = deal.lead_id ? state.lookups.leadById.get(deal.lead_id) : null;
+  const prospectName = lead
+    ? (lead.business_name || lead.name || lead.email || "(unnamed)")
+    : "(no linked lead)";
+  html.push('<div class="field"><label>Prospect</label>' +
+    '<div class="read-only-val">' + escHtml(prospectName) + '</div></div>');
+
+  // Stage
+  const stageCol = COLS.deals.find((c) => c.key === "stage");
+  if (stageCol) html.push(renderFieldInput(stageCol, deal.stage || "qualifying"));
+
+  // Owner
+  const ownerCol = COLS.deals.find((c) => c.key === "owner");
+  if (ownerCol) html.push(renderFieldInput(ownerCol, deal.owner || ""));
+
+  // Plan (chosen during negotiation)
+  html.push(renderFieldInput(
+    { key: "plan", label: "Plan", type: "select", options: ["", "esencial", "pro", "custom"] },
+    deal.plan || ""
+  ));
+
+  // Notes (in EDITABLE_COLUMNS for deals but not in the spreadsheet COLS)
+  html.push(renderFieldInput({ key: "notes", label: "Notes", type: "textarea" }, deal.notes || ""));
+
+  // Contact info from the linked lead. These fields patch the lead record on
+  // save (not the deal), identified by data-lead-field="1".
+  if (lead) {
+    html.push('<div class="field-group"><h3 class="field-group-title">Contact info</h3>');
+    html.push(renderLeadContactField("phone",        "Phone",     lead.phone));
+    html.push(renderLeadContactField("whatsapp",     "WhatsApp",  lead.whatsapp));
+    html.push(renderLeadContactField("current_site", "Website",   lead.current_site));
+    html.push(renderLeadContactField("facebook_url", "Facebook",  lead.facebook_url));
+    html.push(renderLeadContactField("instagram",    "Instagram", lead.instagram));
+    html.push(renderLeadContactField("tiktok_url",   "TikTok",    lead.tiktok_url));
+    html.push('</div>');
   }
+
+  // Proposal block
+  html.push(renderProposalBlock(deal));
 
   return html.join("");
 }
@@ -3685,6 +3964,7 @@ function renderNotesJournal(lead) {
 
 function renderSocialsBlock(lead) {
   const fields = [
+    { key: "current_site", label: "Website",     placeholder: "minegocio.com or https://minegocio.com" },
     { key: "instagram",    label: "Instagram",   placeholder: "@handle or https://instagram.com/..." },
     { key: "facebook_url", label: "Facebook",    placeholder: "Page URL or username" },
     { key: "x_url",        label: "X (Twitter)", placeholder: "@handle or https://x.com/..." },
@@ -3697,7 +3977,7 @@ function renderSocialsBlock(lead) {
       '<input type="text" id="' + id + '" data-key="' + f.key + '" data-type="text" value="' + escHtml(v) + '" placeholder="' + escHtml(f.placeholder) + '" />' +
       "</div>";
   }).join("");
-  return '<div class="field-group"><h3 class="field-group-title">Socials</h3>' + items + "</div>";
+  return '<div class="field-group"><h3 class="field-group-title">Web &amp; Socials</h3>' + items + "</div>";
 }
 
 function renderProposalBlock(deal) {
@@ -3747,7 +4027,8 @@ function renderFieldInput(c, v) {
     inner = '<select id="' + id + '" data-key="' + c.key + '" data-type="' + c.type + '">' +
       c.options.map((opt) => {
         const sel = String(v || "") === opt ? " selected" : "";
-        return '<option value="' + escHtml(opt) + '"' + sel + '>' + (opt === "" ? "·" : escHtml(opt)) + '</option>';
+        const lbl = opt === "" ? "·" : ((c.optionLabels && c.optionLabels[opt]) || opt);
+        return '<option value="' + escHtml(opt) + '"' + sel + '>' + escHtml(lbl) + '</option>';
       }).join("") + "</select>";
   } else if (c.type === "fk") {
     const rows = state.data[c.fk] || [];
@@ -3850,17 +4131,49 @@ async function saveCard(type, id, modalEl) {
     return;
   }
 
-  // Deal stage moved to "proposal": ask whether to generate the proposal
-  // package (mockup + printable PDF page). Manual confirm prevents surprise
-  // Anthropic spend.
+  // Deal stage moved to "proposal": auto-advance linked lead to SQL, and ask
+  // whether to generate the proposal package.
   let shouldGenerateProposal = false;
   if (type === "deal" && "stage" in body && body.stage === "proposal") {
     const deal = state.data.deals.find((d) => d.id === id);
     const wasStage = deal && deal.stage;
+    if (wasStage !== "proposal" && deal && deal.lead_id) {
+      const linkedLead = state.lookups.leadById.get(deal.lead_id);
+      if (linkedLead && linkedLead.lead_stage !== "sales_qualified") {
+        try {
+          const lr = await api("/api/admin/crm/leads/" + deal.lead_id, {
+            method: "PATCH", body: JSON.stringify({ lead_stage: "sales_qualified", status: "converted" }),
+          });
+          replaceRow("leads", deal.lead_id, lr.row);
+          rebuildLookups();
+        } catch (_) {}
+      }
+    }
     if (wasStage !== "proposal") {
       shouldGenerateProposal = confirm(
         "This deal moved to Proposal stage.\\n\\nGenerate a custom mockup + proposal package now?\\n\\n(Uses the linked lead's social URLs and notes. Takes ~30 to 60 seconds. Click OK to generate, Cancel to skip.)"
       );
+    }
+  }
+
+  // For deal cards: route any lead-tagged contact-info fields to the linked
+  // lead record, and strip them from the deal body so the deal endpoint
+  // doesn't receive columns it doesn't own.
+  if (type === "deal") {
+    const leadFieldEls = Array.from(modalEl.querySelectorAll("[data-key][data-lead-field]"));
+    if (leadFieldEls.length > 0) {
+      const deal = state.data.deals.find((d) => d.id === id);
+      const leadId = deal && deal.lead_id;
+      if (leadId) {
+        const leadBody = {};
+        leadFieldEls.forEach((el) => { leadBody[el.dataset.key] = el.value; });
+        Object.keys(leadBody).forEach((k) => delete body[k]);
+        try {
+          const lr = await api("/api/admin/crm/leads/" + leadId, { method: "PATCH", body: JSON.stringify(leadBody) });
+          replaceRow("leads", leadId, lr.row);
+          rebuildLookups();
+        } catch (_) { /* non-fatal: deal save still proceeds */ }
+      }
     }
   }
 
@@ -3951,6 +4264,27 @@ async function addActivityFor(type, entityId) {
     const res = await api("/api/admin/crm/activities", { method: "POST", body: JSON.stringify(body) });
     state.data.activities.unshift(res.row);
     state.counts.activities = (state.counts.activities || 0) + 1;
+
+    // Update last_touched_at on the linked lead so the Kanban contact status
+    // reflects the activity. For deal-type activities, resolve the linked lead.
+    const leadId = type === "lead" ? entityId
+      : type === "deal" ? (state.data.deals.find((d) => d.id === entityId) || {}).lead_id
+      : null;
+    if (leadId) {
+      const lead = state.lookups.leadById.get(leadId);
+      const leadPatch = { last_touched_at: Date.now(), last_touched_kind: kind,
+        touches_count: (Number(lead && lead.touches_count) || 0) + 1 };
+      if (lead && (lead.lead_stage || "new") === "new") {
+        leadPatch.lead_stage = "contacted";
+        leadPatch.status = "contacted";
+      }
+      try {
+        const lr = await api("/api/admin/crm/leads/" + leadId, { method: "PATCH", body: JSON.stringify(leadPatch) });
+        replaceRow("leads", leadId, lr.row);
+        rebuildLookups();
+      } catch (_) {}
+    }
+
     // Re-render the modal in place so the new activity appears.
     const modal = document.getElementById("card-modal");
     if (modal) {
@@ -3959,6 +4293,8 @@ async function addActivityFor(type, entityId) {
       const addBtn = modal.querySelector('button[data-act="add-activity"]');
       if (addBtn) addBtn.onclick = () => addActivityFor(type, entityId);
     }
+    if (state.active === "funnel") renderFunnel();
+    else if (state.active === "leadfunnel") renderLeadFunnel();
     toast("Activity added");
   } catch (e) { toast(e.message, true); }
 }
@@ -4016,7 +4352,7 @@ function onCellClick(e) {
     input.className = "edit";
     colDef.options.forEach((opt) => {
       const o = document.createElement("option");
-      o.value = opt; o.textContent = opt === "" ? "·" : opt;
+      o.value = opt; o.textContent = opt === "" ? "·" : ((colDef.optionLabels && colDef.optionLabels[opt]) || opt);
       if (String(cur || "") === opt) o.selected = true;
       input.appendChild(o);
     });

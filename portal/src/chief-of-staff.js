@@ -942,7 +942,10 @@ export async function handleChiefOfStaff(request, env, helpers) {
 
   for (let i = 0; i < MAX_TOOL_ITERATIONS; i++) {
     const res = await callAnthropic(env, systemPrompt, messages, TOOLS);
-    if (!res.ok) return json({ error: "Anthropic call failed", detail: res.error }, 502);
+    if (!res.ok) {
+      if (res.error === "rate_limit") return json({ error: "rate_limit", detail: "Rate limit de Anthropic alcanzado. Espera un minuto y vuelve a intentarlo." }, 429);
+      return json({ error: "Anthropic call failed", detail: res.error }, 502);
+    }
 
     const { content, stop_reason } = res.data;
     messages.push({ role: "assistant", content });
@@ -973,7 +976,10 @@ export async function handleChiefOfStaff(request, env, helpers) {
     if (i === MAX_TOOL_ITERATIONS - 1) {
       // Force a final answer turn without tools.
       const final = await callAnthropic(env, systemPrompt, messages, []);
-      if (!final.ok) return json({ error: "Anthropic call failed", detail: final.error }, 502);
+      if (!final.ok) {
+        if (final.error === "rate_limit") return json({ error: "rate_limit", detail: "Rate limit de Anthropic alcanzado. Espera un minuto y vuelve a intentarlo." }, 429);
+        return json({ error: "Anthropic call failed", detail: final.error }, 502);
+      }
       for (const block of final.data.content) {
         if (block.type === "text") finalText += block.text;
       }
@@ -1088,6 +1094,7 @@ async function callAnthropic(env, system, messages, tools) {
     });
     if (!r.ok) {
       const text = await r.text();
+      if (r.status === 429) return { ok: false, error: "rate_limit", status: 429 };
       return { ok: false, error: `${r.status} ${text}` };
     }
     const data = await r.json();
