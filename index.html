@@ -848,7 +848,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </details>
       <details>
         <summary>¿Quién la construye realmente?</summary>
-        <div class="answer">Mike y Santiago manejan el trabajo. Claude de Anthropic hace el diseño y el código bajo nuestra supervisión. No lo escondemos, estamos orgullosos. Por eso <span class="price-na">$500 compra lo que antes costaba $5.000</span><span class="price-co">$390.000 compra lo que antes costaba $3.900.000</span>.</div>
+        <div class="answer">Mike y Santiago manejan el trabajo. Claude de Anthropic hace el diseño y el código bajo nuestra supervisión. No lo escondemos, estamos orgullosos. Por eso $390.000 compra lo que antes costaba $3.900.000.</div>
       </details>
       <details>
         <summary>¿Ustedes escriben el copy o tengo que hacerlo yo?</summary>
@@ -887,7 +887,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <a class="brand" href="#top" style="color:#FBF7F0">
           <span class="br" style="color:#FBF7F0">&lt;</span><span class="word" style="color:#FBF7F0">pyme<span class="web">web</span>pro</span><span class="br" style="color:#FBF7F0">/&gt;</span>
         </a>
-        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>. Liderazgo canadiense, hecho en Medellín.</p>
+        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde $390.000 COP. Hecho en Medellín.</p>
         <div class="socials">
           <a href="https://www.facebook.com/pymewebpro" target="_blank" rel="noopener" aria-label="PymeWebPro en Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
@@ -1013,13 +1013,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
   });
 })();
 (function(){
-  if(!document.documentElement.classList.contains('geo-co') && !document.documentElement.classList.contains('geo-na')){
-    fetch('/cdn-cgi/trace').then(function(r){return r.text()}).then(function(t){
-      var m = t.match(/loc=([A-Z]{2})/);
-      if(m && m[1] === 'CO'){ document.documentElement.classList.add('geo-co'); }
-      else { document.documentElement.classList.add('geo-na'); }
-    }).catch(function(){ document.documentElement.classList.add('geo-co'); });
-  }
   var form = document.getElementById('lead-form');
   if(!form) return;
   var status = document.getElementById('lf-status');
