@@ -2764,7 +2764,6 @@ function renderToday() {
         '<th class="td-cb"><input type="checkbox" class="t-all-cb" title="Select all"' + (allSel ? " checked" : "") + '></th>' +
         renderTodaySortTh("Business", "business_name") +
         renderTodaySortTh("Heat", "heat") +
-        renderTodaySortTh("City", "city") +
         renderTodaySortTh("Category", "category") +
         '<th>Phone</th>' +
         '<th>WhatsApp</th>' +
@@ -3082,7 +3081,6 @@ function renderTodayItem(it) {
     '<td class="td-cb"><input type="checkbox" class="t-cb"' + (sel ? " checked" : "") + ' data-id="' + escHtml(r.id) + '" data-type="' + type + '" /></td>' +
     '<td class="td-biz" data-type="' + type + '" data-id="' + escHtml(r.id) + '" title="' + escHtml(title) + '">' + escHtml(title) + '</td>' +
     '<td>' + heatHtml + '</td>' +
-    '<td class="td-city">' + escHtml(cityTxt) + '</td>' +
     '<td class="td-cat">' + escHtml(catTxt) + '</td>' +
     phoneHtml + waHtml + emailHtml + siteHtml + igHtml + fbHtml +
     '<td class="td-actions">' + actions + '</td>' +
