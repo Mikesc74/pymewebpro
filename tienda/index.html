@@ -174,6 +174,7 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 .u-fineprint{font-size:.85rem;color:#5e6883;margin-bottom:24px}
 </style>
 <script src="/analytics.js" defer></script>
+<script src="/assets/lead-attribution.js" defer></script>
 </head>
 
 <body>
@@ -319,7 +320,7 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
   <div class="wrap">
     <h2>Cuéntenos qué vende.</h2>
     <p class="lede">Tres campos. Una respuesta en un día hábil. Lo enviamos al portal para los detalles y el pago.</p>
-    <form id="lead-form" novalidate>
+    <form id="lead-form" data-pwp-form="true" novalidate>
       <div class="field">
         <label for="lf-name">Su nombre</label>
         <input id="lf-name" name="name" type="text" required autocomplete="name" placeholder="Nombre completo">
@@ -407,6 +408,10 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
       website: fd.get('company_website') || '',
       extra: { plan: 'ecommerce', hosting: 'annual' }
     };
+    if (window.PwpAttribution) {
+      var attr = window.PwpAttribution.get();
+      for (var k in attr) { if (Object.prototype.hasOwnProperty.call(attr, k)) payload[k] = attr[k]; }
+    }
     fetch(PORTAL + '/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },

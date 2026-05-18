@@ -361,6 +361,7 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center;font-size:13px;font-weight:600}
 </style>
+<script src="/assets/lead-attribution.js" defer></script>
 </head>
 
 <body>
@@ -758,7 +759,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </div>
     </div>
     <div class="panel">
-      <form id="lead-form" method="post" action="/api/lead" novalidate>
+      <form id="lead-form" method="post" action="/api/lead" data-pwp-form="true" novalidate>
         <div class="field">
           <label for="lf-name">Su nombre</label>
           <input id="lf-name" name="name" type="text" required autocomplete="name" placeholder="Nombre completo">
@@ -1036,6 +1037,10 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       page: window.location.pathname,
       website: fd.get('company_website') || ''
     };
+    if (window.PwpAttribution) {
+      var attr = window.PwpAttribution.get();
+      for (var k in attr) { if (Object.prototype.hasOwnProperty.call(attr, k)) payload[k] = attr[k]; }
+    }
     fetch(PORTAL_URL + '/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
