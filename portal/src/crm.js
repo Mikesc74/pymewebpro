@@ -1100,14 +1100,25 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 
 /* ---- Today spreadsheet ---- */
 .today-sheet-wrap { overflow-x: auto; margin-top: 1rem; }
-.today-sheet { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.today-sheet { width: 100%; border-collapse: collapse; font-size: 0.82rem; table-layout: fixed; }
 .today-sheet thead th {
   padding: 6px 9px; text-align: left; background: var(--paper-2);
-  border-bottom: 2px solid var(--ink-line); white-space: nowrap;
+  border-bottom: 2px solid var(--ink-line); border-right: 1px solid var(--ink-faint);
+  white-space: nowrap; position: relative;
   font-family: var(--mono); font-size: 0.68rem; font-weight: 700;
   letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-soft);
-  user-select: none;
+  user-select: none; overflow: hidden; text-overflow: ellipsis;
 }
+.today-sheet thead th:last-child { border-right: 0; }
+/* Per-column resize handle. 6px hit-target on the right edge of each th. */
+.today-sheet thead th .col-resizer {
+  position: absolute; top: 0; right: -3px; width: 6px; height: 100%;
+  cursor: col-resize; user-select: none; z-index: 2;
+}
+.today-sheet thead th .col-resizer:hover,
+.today-sheet thead th .col-resizer.dragging { background: var(--accent); opacity: 0.5; }
+.today-sheet td { border-right: 1px solid var(--ink-faint); overflow: hidden; text-overflow: ellipsis; }
+.today-sheet td:last-child { border-right: 0; }
 .today-sheet thead th.sortable { cursor: pointer; }
 .today-sheet thead th.sortable:hover { color: var(--ink); }
 .today-sheet thead th.sort-active { color: var(--accent); }
@@ -1410,7 +1421,7 @@ const state = {
   editing: null, // { table, id, col }
   lookups: { leadById: new Map(), clientById: new Map(), dealById: new Map(), dealsByLead: new Map() },
   funnelSort: "",  // "" | "contacted_desc" | "contacted_asc"
-  todaySort: { col: "heat", dir: 1 },  // col: field key, dir: 1=asc 0=desc
+  todaySort: { col: "heat", dir: -1 }, // col: field key, dir: 1=asc, -1=desc (heat defaults desc so HOT bubbles to top)
   selected: new Set(), // keys: "type:id"
 };
 if (!TABLES.includes(state.active)) state.active = "today";
@@ -2601,7 +2612,10 @@ function computeTodayItems() {
   return Array.from(seen.values()).sort((a, b) => a.weight - b.weight);
 }
 
-const TODAY_HEAT_RANK = { HOT: 0, WARM: 1, COOL: 2, COLD: 3, DEAD: 4 };
+// Heat ranks ordered by SEMANTIC importance (HOT highest). The Leads tab
+// defaults to descending sort on this column, so a "↓" arrow puts HOT on
+// top, which matches user intuition. Unknown heat goes to the bottom.
+const TODAY_HEAT_RANK = { HOT: 4, WARM: 3, COOL: 2, COLD: 1, DEAD: 0 };
 const TODAY_WEIGHT_LABEL = {
   "overdue": "Overdue", "due-today": "Due today", "hot-untouched": "Hot",
   "stuck-deal": "Stuck deal", "fresh-activity": "Recent", "needs-enrichment": "Needs enrichment",
@@ -2629,7 +2643,11 @@ function todaySortItems(items) {
     }
     if (va < vb) return dir === 1 ? -1 : 1;
     if (va > vb) return dir === 1 ? 1 : -1;
-    return 0;
+    // Tiebreaker: highest score first (within heat tier, surface the
+    // most-qualified records). Falls back to most-recent created_at.
+    const sa = Number(ra.score) || 0, sb = Number(rb.score) || 0;
+    if (sa !== sb) return sb - sa;
+    return (Number(rb.created_at) || 0) - (Number(ra.created_at) || 0);
   });
 }
 
@@ -2638,7 +2656,65 @@ function renderTodaySortTh(label, col, extraClass) {
   const active = sc === col;
   const arrow = active ? (dir === 1 ? " ↑" : " ↓") : "";
   return '<th class="sortable' + (active ? " sort-active" : "") + (extraClass ? " " + extraClass : "") +
-    '" data-sort="' + col + '">' + label + (arrow ? '<span class="sort-arrow">' + arrow + '</span>' : '') + '</th>';
+    '" data-sort="' + col + '">' + label + (arrow ? '<span class="sort-arrow">' + arrow + '</span>' : '') +
+    '<span class="col-resizer" title="Drag to resize column"></span></th>';
+}
+
+// Per-column drag resize for the Leads table. Widths persist in
+// localStorage under LEADS_COLS_KEY so the user's layout sticks. Hooks
+// up after every renderToday() call.
+const LEADS_COLS_KEY = "pwp_leads_col_widths_v1";
+
+function installLeadsColumnResize(wrap) {
+  const table = wrap.querySelector("table.today-sheet");
+  if (!table) return;
+  const headRow = table.querySelector("thead tr");
+  if (!headRow) return;
+  const ths = Array.from(headRow.children);
+
+  // Restore saved widths (px) by index.
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(LEADS_COLS_KEY) || "{}") || {}; } catch (e) { saved = {}; }
+  ths.forEach((th, i) => {
+    // Non-sortable plain ths get a resizer too. Inject one if missing.
+    if (!th.querySelector(".col-resizer")) {
+      const span = document.createElement("span");
+      span.className = "col-resizer";
+      span.title = "Drag to resize column";
+      th.appendChild(span);
+    }
+    if (saved[i]) th.style.width = saved[i] + "px";
+  });
+
+  // Drag wiring.
+  ths.forEach((th, i) => {
+    const handle = th.querySelector(".col-resizer");
+    if (!handle) return;
+    handle.onmousedown = (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      handle.classList.add("dragging");
+      const startX = ev.clientX;
+      const startW = th.getBoundingClientRect().width;
+      const onMove = (e) => {
+        const w = Math.max(40, Math.round(startW + (e.clientX - startX)));
+        th.style.width = w + "px";
+      };
+      const onUp = () => {
+        document.removeEventListener("mousemove", onMove);
+        document.removeEventListener("mouseup", onUp);
+        handle.classList.remove("dragging");
+        const w = Math.round(th.getBoundingClientRect().width);
+        try {
+          const cur = JSON.parse(localStorage.getItem(LEADS_COLS_KEY) || "{}") || {};
+          cur[i] = w;
+          localStorage.setItem(LEADS_COLS_KEY, JSON.stringify(cur));
+        } catch (e) { /* localStorage unavailable, drop silently */ }
+      };
+      document.addEventListener("mousemove", onMove);
+      document.addEventListener("mouseup", onUp);
+    };
+  });
 }
 
 function renderToday() {
@@ -2687,7 +2763,6 @@ function renderToday() {
         '<th class="td-cb"><input type="checkbox" class="t-all-cb" title="Select all"' + (allSel ? " checked" : "") + '></th>' +
         renderTodaySortTh("Business", "business_name") +
         renderTodaySortTh("Heat", "heat") +
-        renderTodaySortTh("Stage", "stage") +
         '<th>City / Cat.</th>' +
         '<th>Phone</th>' +
         '<th>WhatsApp</th>' +
@@ -2695,6 +2770,7 @@ function renderToday() {
         '<th>Website</th>' +
         '<th>Instagram</th>' +
         '<th>Facebook</th>' +
+        '<th>TikTok</th>' +
         renderTodaySortTh("Due", "due") +
         renderTodaySortTh("Reason", "reason") +
         '<th>Actions</th>' +
@@ -2711,16 +2787,20 @@ function renderToday() {
 
   // Sort column headers.
   wrap.querySelectorAll("th.sortable[data-sort]").forEach((th) => {
-    th.onclick = () => {
+    th.onclick = (e) => {
+      if (e.target && e.target.classList && e.target.classList.contains("col-resizer")) return;
       const col = th.dataset.sort;
       if (state.todaySort.col === col) {
         state.todaySort.dir = state.todaySort.dir === 1 ? -1 : 1;
       } else {
-        state.todaySort = { col, dir: 1 };
+        // Heat defaults to descending so HOT-on-top reads as "↓"
+        const initDir = col === "heat" ? -1 : 1;
+        state.todaySort = { col, dir: initDir };
       }
       renderToday();
     };
   });
+  installLeadsColumnResize(wrap);
   // Select-all checkbox.
   const allCb = wrap.querySelector("input.t-all-cb");
   if (allCb) {
@@ -2961,15 +3041,21 @@ function renderTodayItem(it) {
     : '<td class="td-contact"></td>';
   const ig  = (cr.instagram    || "").toString().trim();
   const fb  = (cr.facebook_url || "").toString().trim();
+  const tt  = (cr.tiktok_url   || "").toString().trim();
   const igHandle = ig.replace(/^https?:[/][/](www[.])?instagram[.]com[/]?/, "").replace(/[/]$/, "") || ig;
   const fbHandle = fb.replace(/^https?:[/][/](www[.])?facebook[.]com[/]?/, "").replace(/[/]$/, "") || fb;
+  const ttHandle = tt.replace(/^https?:[/][/](www[.])?tiktok[.]com[/]@?/, "").replace(/[/]$/, "") || tt;
   const igUrl = ig ? (ig.startsWith("http") ? ig : "https://instagram.com/" + ig.replace(/^@/, "")) : "";
   const fbUrl = fb ? (fb.startsWith("http") ? fb : "https://facebook.com/" + fb.replace(/^@/, "")) : "";
+  const ttUrl = tt ? (tt.startsWith("http") ? tt : "https://tiktok.com/@" + tt.replace(/^@/, "")) : "";
   const igHtml = igHandle
     ? '<td class="td-contact"><a class="lnk-ig" href="' + escHtml(igUrl) + '" target="_blank" rel="noopener">📸 ' + escHtml(igHandle.slice(0, 18)) + '</a></td>'
     : '<td class="td-contact"></td>';
   const fbHtml = fbHandle
     ? '<td class="td-contact"><a class="lnk-fb" href="' + escHtml(fbUrl) + '" target="_blank" rel="noopener">🔵 ' + escHtml(fbHandle.slice(0, 18)) + '</a></td>'
+    : '<td class="td-contact"></td>';
+  const ttHtml = ttHandle
+    ? '<td class="td-contact"><a class="lnk-tt" href="' + escHtml(ttUrl) + '" target="_blank" rel="noopener">♪ ' + escHtml(ttHandle.slice(0, 18)) + '</a></td>'
     : '<td class="td-contact"></td>';
 
   const due = r.next_action_due || (lr && lr.next_action_due);
@@ -2996,9 +3082,8 @@ function renderTodayItem(it) {
     '<td class="td-cb"><input type="checkbox" class="t-cb"' + (sel ? " checked" : "") + ' data-id="' + escHtml(r.id) + '" data-type="' + type + '" /></td>' +
     '<td class="td-biz" data-type="' + type + '" data-id="' + escHtml(r.id) + '" title="' + escHtml(title) + '">' + escHtml(title) + '</td>' +
     '<td>' + heatHtml + '</td>' +
-    '<td>' + stageHtml + '</td>' +
     '<td class="td-city">' + escHtml(citycat) + '</td>' +
-    phoneHtml + waHtml + emailHtml + siteHtml + igHtml + fbHtml +
+    phoneHtml + waHtml + emailHtml + siteHtml + igHtml + fbHtml + ttHtml +
     '<td class="td-due' + dueCls + '">' + dueHtml + '</td>' +
     '<td class="' + reasonCls + '">' + escHtml(reasonLabel) + '</td>' +
     '<td class="td-actions">' + actions + '</td>' +
