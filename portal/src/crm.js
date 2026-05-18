@@ -2502,9 +2502,9 @@ function computeAllLeadsItems() {
         kind = overdue ? "overdue" : "due-today";
         reason = (overdue ? "Overdue: " : "Due today: ") + (l.next_action || "follow up");
         weight = overdue ? 1 : 2;
-      } else if ((heat === "HOT" || heat === "DEAD") && (l.touches_count || 0) === 0 && stage === "new") {
-        if (hasReachableChannel(l)) { kind = "hot-untouched"; reason = heat + " lead with no contact yet"; weight = 3; }
-        else { kind = "needs-enrichment"; reason = heat + " lead, no contact channel on file"; weight = 6; }
+      } else if (heat === "HOT" && (l.touches_count || 0) === 0 && stage === "new") {
+        if (hasReachableChannel(l)) { kind = "hot-untouched"; reason = "HOT lead with no contact yet"; weight = 3; }
+        else { kind = "needs-enrichment"; reason = "HOT lead, no contact channel on file"; weight = 6; }
       } else {
         kind = "lead";
         reason = (l.heat || "") + (l.category ? " · " + l.category : "");
@@ -2539,7 +2539,7 @@ function computeTodayItems() {
   // separate "Needs enrichment" bucket below.
   state.data.leads.forEach((l) => {
     const heat = (l.heat || "").toUpperCase();
-    if ((heat === "HOT" || heat === "DEAD") && (l.touches_count || 0) === 0 &&
+    if (heat === "HOT" && (l.touches_count || 0) === 0 &&
         (l.lead_stage || "new") === "new") {
       if (hasReachableChannel(l)) {
         items.push({
@@ -2667,7 +2667,7 @@ function renderToday() {
       '<div class="today-summary">',
         renderTodayKpi("Total leads", totalLeads, ""),
         renderTodayKpi("Need attention today", triageCount, "overdue or hot untouched"),
-        renderTodayKpi("Hot untouched", state.data.leads.filter((l) => ["HOT","DEAD"].includes((l.heat||"").toUpperCase()) && (l.touches_count || 0) === 0).length, "leads"),
+        renderTodayKpi("Hot untouched", state.data.leads.filter((l) => (l.heat||"").toUpperCase() === "HOT" && (l.touches_count || 0) === 0).length, "leads"),
       '</div>',
     '</div>'
   ];
