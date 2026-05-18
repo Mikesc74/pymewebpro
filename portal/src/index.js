@@ -23,6 +23,15 @@ import { santiPageHTML } from "./santi.js";
 import { handleEnrich } from "./enrich.js";
 // Outbound prospecting loader · Google Places search -> dedupe -> bulk insert.
 import { handleProspecting } from "./prospecting.js";
+// Outreach drafter (Claude Haiku) + log-send + cadence queue.
+//   POST /api/admin/outreach/draft     · Claude-generated WA or email draft
+//   POST /api/admin/outreach/log-send  · records an outbound touch
+//   GET  /api/admin/outreach/cadence   · D+1 / D+3 / D+7 / D+14_stale buckets
+import { handleOutreach } from "./outreach.js";
+// Wompi 30/70 deposit + balance link generator, plus webhook processors.
+//   POST /api/admin/deals/:dealId/deposit-link   · 30% deposit Wompi URL
+//   POST /api/admin/deals/:dealId/balance-link   · 70% balance Wompi URL
+import { handleDepositLinks, processDepositPayment, processBalancePayment } from "./deposit-links.js";
 // Chief of Staff · agente en español, widget flotante en cada página admin.
 //   /api/admin/chief-of-staff/chat  -> backend Anthropic loop con tools CRM
 //   CHIEF_OF_STAFF_WIDGET_HTML       -> snippet HTML inyectado antes de </body>
@@ -1339,10 +1348,20 @@ async function handleWompiWebhook(request, env) {
     `UPDATE payments SET wompi_transaction_id = ?, status = ?, paid_at = COALESCE(paid_at, ?), raw_event = ?, updated_at = ? WHERE id = ?`
   ).bind(wompiId || null, newStatus, paidAt, JSON.stringify(body), now, payment.id).run();
   if (newStatus === "approved") {
-    // Branch on payment kind so the right fulfillment runs.
-    if (payment.plan === "upgrade") await processUpgradePayment(env, payment);
-    else if (payment.plan === "hosting") await processHostingPayment(env, payment);
-    else await convertLeadOnApproval(env, payment);
+    // Branch on reference prefix first (deposit / balance), then fall back to
+    // the legacy plan-based routing for upgrades, hosting, and full-price.
+    const ref = String(payment.reference || "");
+    if (ref.startsWith("pwp-dep-")) {
+      await processDepositPayment(env, payment);
+    } else if (ref.startsWith("pwp-bal-")) {
+      await processBalancePayment(env, payment);
+    } else if (payment.plan === "upgrade") {
+      await processUpgradePayment(env, payment);
+    } else if (payment.plan === "hosting") {
+      await processHostingPayment(env, payment);
+    } else {
+      await convertLeadOnApproval(env, payment);
+    }
   }
   return json({ ok: true, status: newStatus });
 }
@@ -4474,6 +4493,14 @@ const src_default = {
       if (path.startsWith("/api/admin/enrich")) return cors(await handleEnrich(request, env, ctx, { json, isAdmin }));
       // Outbound prospecting · Google Places search + dedupe + bulk insert. Admin-only.
       if (path.startsWith("/api/admin/prospecting")) return cors(await handleProspecting(request, env, ctx, { json, isAdmin, uuid }));
+      // Outreach drafter + cadence queue (Claude-generated WA/email + follow-up buckets). Admin-only.
+      if (path.startsWith("/api/admin/outreach")) {
+        return cors(await handleOutreach(request, env, ctx, { json, isAdmin, uuid }));
+      }
+      // Wompi deposit + balance link generator for the 30/70 split. Admin-only.
+      if (path.match(/^\/api\/admin\/deals\/[^/]+\/(deposit|balance)-link$/)) {
+        return cors(await handleDepositLinks(request, env, ctx, { json, isAdmin, uuid }));
+      }
       // Chief of Staff agent. Must run BEFORE the /api/admin/* catch-all.
       if (path.startsWith("/api/admin/chief-of-staff")) return cors(await handleChiefOfStaff(request, env, { json, isAdmin, uuid }));
       // Proposal generator routes (POST generate + GET mockup/proposal pages).
@@ -4566,8 +4593,105 @@ const src_default = {
       __pwpResponse = await rewriteForPwpSubpath(__pwpResponse, PWP_BASE);
     }
     return __pwpResponse;
+  },
+
+  // Nightly cron · runs at 09:00 America/Bogota (14:00 UTC, see wrangler.toml).
+  // Creates D+1 / D+3 / D+7 / D+14 follow-up tasks in `activities` for any
+  // lead in the open funnel whose last touch landed exactly N days ago.
+  // Capped at 50 task inserts per run; wraps in try/catch.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(runNightlyCadenceSweep(env, event).catch((e) => {
+      console.error("scheduled: cadence sweep crashed: " + (e && e.stack || e));
+    }));
   }
 };
+
+// Bogotá local-midnight day index. America/Bogota is UTC-5 year-round (no DST).
+function bogotaDayIndex(ms) {
+  const BOGOTA_OFFSET_MS = 5 * 60 * 60 * 1000;
+  return Math.floor((ms - BOGOTA_OFFSET_MS) / (24 * 60 * 60 * 1000));
+}
+
+async function runNightlyCadenceSweep(env, event) {
+  const startedAt = Date.now();
+  const counts = { scanned: 0, scheduled: 0, skipped_capped: 0, by_bucket: { 1: 0, 3: 0, 7: 0, 14: 0 } };
+  const HARD_CAP = 50;
+  const todayIdx = bogotaDayIndex(startedAt);
+  const TARGET_DAYS = [1, 3, 7, 14];
+
+  try {
+    // Pull every open-funnel lead that has at least one previous touch.
+    // Cap the candidate pool generously so we don't load the whole table; 2000
+    // is plenty given the funnel is in the low hundreds today.
+    const rows = await env.DB.prepare(
+      "SELECT id, business_name, score, last_touched_at " +
+      "  FROM leads " +
+      " WHERE lead_stage IN ('new','contacted','marketing_qualified') " +
+      "   AND last_touched_at IS NOT NULL " +
+      " ORDER BY COALESCE(score, 0) DESC " +
+      " LIMIT 2000"
+    ).all();
+
+    const candidates = rows.results || [];
+    counts.scanned = candidates.length;
+
+    for (const lead of candidates) {
+      if (counts.scheduled >= HARD_CAP) { counts.skipped_capped += 1; continue; }
+      const touchIdx = bogotaDayIndex(lead.last_touched_at);
+      const ageDays = todayIdx - touchIdx;
+      if (!TARGET_DAYS.includes(ageDays)) continue;
+
+      // De-dupe: skip if a follow-up task for this bucket already exists.
+      const dupSubject = "Follow-up D+" + ageDays + ": " + (lead.business_name || "(no name)");
+      const existing = await env.DB.prepare(
+        "SELECT id FROM activities WHERE lead_id = ? AND kind = 'task' AND subject = ? LIMIT 1"
+      ).bind(lead.id, dupSubject).first();
+      if (existing) continue;
+
+      const now = Date.now();
+      const dueAt = now + 2 * 60 * 60 * 1000; // due in 2 hours
+      try {
+        await env.DB.prepare(
+          "INSERT INTO activities (id, kind, subject, body, lead_id, owner, occurred_at, due_at, created_at, updated_at, done) " +
+          "VALUES (?, 'task', ?, ?, ?, 'santi', ?, ?, ?, ?, 0)"
+        ).bind(
+          crypto.randomUUID(),
+          dupSubject,
+          "Bucket: D+" + ageDays + ". Score=" + (lead.score == null ? "?" : lead.score) + ". Suggest WA/email follow-up.",
+          lead.id,
+          now, dueAt, now, now,
+        ).run();
+        counts.scheduled += 1;
+        counts.by_bucket[ageDays] = (counts.by_bucket[ageDays] || 0) + 1;
+      } catch (e) {
+        console.warn("scheduled: insert failed for lead " + lead.id + ": " + (e && e.message || e));
+      }
+    }
+
+    // Final summary row so we can verify the cron actually ran.
+    try {
+      const now = Date.now();
+      await env.DB.prepare(
+        "INSERT INTO activities (id, kind, subject, body, owner, occurred_at, created_at, updated_at, done) " +
+        "VALUES (?, 'note', ?, ?, 'system', ?, ?, ?, 1)"
+      ).bind(
+        crypto.randomUUID(),
+        "Nightly cadence sweep",
+        JSON.stringify({
+          ran_at: now,
+          cron: (event && event.cron) || null,
+          duration_ms: now - startedAt,
+          ...counts,
+        }),
+        now, now, now,
+      ).run();
+    } catch (e) {
+      console.warn("scheduled: summary insert failed: " + (e && e.message || e));
+    }
+  } catch (e) {
+    console.error("scheduled: cadence sweep failed: " + (e && e.stack || e));
+  }
+}
 
 /**
  * Traffic analytics proxy. Forwards GET /api/admin/traffic/<sub> to the

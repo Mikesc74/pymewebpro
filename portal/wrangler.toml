@@ -41,6 +41,14 @@ id = "47573834bfad418aa10b8f851a250a03"
 binding = "ASSETS"
 bucket_name = "pymewebpro-client-assets"
 
+# --- Cron triggers --------------------------------------------------------
+# 14:00 UTC == 09:00 America/Bogota (UTC-5, no DST). Drives the nightly
+# cadence sweep in src/index.js scheduled() · creates D+1/D+3/D+7/D+14
+# follow-up tasks in `activities` for any open-funnel lead whose last touch
+# landed on one of those bucket boundaries.
+[triggers]
+crons = ["0 14 * * *"]
+
 # --- Plain-text vars ------------------------------------------------------
 # These are visible in the Worker; don't put secrets here.
 [vars]
