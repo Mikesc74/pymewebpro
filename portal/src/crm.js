@@ -2772,7 +2772,6 @@ function renderToday() {
         '<th>Website</th>' +
         '<th>Instagram</th>' +
         '<th>Facebook</th>' +
-        renderTodaySortTh("Reason", "reason") +
         '<th class="th-actions">Actions</th>' +
       '</tr></thead>' +
       '<tbody>' +
@@ -3086,7 +3085,6 @@ function renderTodayItem(it) {
     '<td class="td-city">' + escHtml(cityTxt) + '</td>' +
     '<td class="td-cat">' + escHtml(catTxt) + '</td>' +
     phoneHtml + waHtml + emailHtml + siteHtml + igHtml + fbHtml +
-    '<td class="' + reasonCls + '">' + escHtml(reasonLabel) + '</td>' +
     '<td class="td-actions">' + actions + '</td>' +
   '</tr>';
 }
