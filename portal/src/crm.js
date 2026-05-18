@@ -1628,7 +1628,7 @@ function renderTabs() {
       const active = t === state.active ? "active" : "";
       let n;
       if (t === "today") {
-        n = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length;
+        n = state.data.leads.filter(isInLeadsView).length;
       } else if (t === "funnel") {
         n = countVisibleFunnelCards();
       } else {
@@ -1648,7 +1648,7 @@ function renderTabs() {
 function renderStatusbar() {
   const t = state.active;
   if (t === "today") {
-    const total = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length;
+    const total = state.data.leads.filter(isInLeadsView).length;
     const triage = computeTodayItems().length;
     return '<div class="statusbar">' +
       "<span>" + total + " total leads" + (triage ? " · " + triage + " need attention today" : "") + "</span>" +
@@ -2471,16 +2471,28 @@ function todayEndMs() {
   const d = new Date(); d.setHours(23, 59, 59, 999); return d.getTime();
 }
 
-// Returns ALL non-converted, non-dismissed leads wrapped in the same item
-// shape Today/Leads consumes. Each lead gets a kind + reason that reflects
-// its triage status (overdue, hot-untouched, needs-enrichment) if it has
-// one, otherwise kind='lead' and reason=heat-or-stage. This powers the
-// "Leads" tab as a full inventory view, not just a triage list.
+// A lead belongs in the "Leads" inventory tab only while it's still
+// above the funnel: new or contacted. Once it becomes marketing_qualified
+// or beyond, it lives on the Kanban/Pipeline. Disqualified leads are
+// hidden everywhere by default. converted/dismissed (legacy status) are
+// also excluded as a belt-and-suspenders against orphan rows.
+function isInLeadsView(l) {
+  const stage = l.lead_stage || "new";
+  if (["marketing_qualified","sales_qualified","disqualified"].includes(stage)) return false;
+  if (["converted","dismissed"].includes(l.status)) return false;
+  return true;
+}
+
+// Returns every lead that belongs in the "Leads" inventory tab, wrapped
+// in the same item shape Today/Leads consumes. Each lead gets a kind +
+// reason that reflects its triage status (overdue, hot-untouched,
+// needs-enrichment) if it has one, otherwise kind='lead' and
+// reason=heat-or-category.
 function computeAllLeadsItems() {
   const todayEnd = todayEndMs();
   const now = Date.now();
   return state.data.leads
-    .filter((l) => !["converted","dismissed"].includes(l.status))
+    .filter(isInLeadsView)
     .map((l) => {
       const heat = (l.heat || "").toUpperCase();
       const stage = l.lead_stage || "new";
@@ -2643,7 +2655,7 @@ function renderToday() {
     : items;
   filtered = todaySortItems(filtered);
 
-  const totalLeads = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length;
+  const totalLeads = state.data.leads.filter(isInLeadsView).length;
   const triageCount = computeTodayItems().length;
 
   const html = ['<div class="today-page">',
