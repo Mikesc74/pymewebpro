@@ -1130,6 +1130,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .today-sheet td.td-biz { font-weight: 600; color: var(--ink); white-space: nowrap; max-width: 180px; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
 .today-sheet td.td-biz:hover { color: var(--accent); text-decoration: underline; }
 .today-sheet td.td-city { color: var(--ink-soft); white-space: nowrap; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+.today-sheet td.td-cat  { color: var(--ink-soft); white-space: nowrap; max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
 .today-sheet td.td-contact a { display: inline-block; padding: 2px 5px; border-radius: 3px; font-size: 0.75rem; text-decoration: none; color: inherit; border: 1px solid transparent; white-space: nowrap; }
 .today-sheet td.td-contact a:hover { background: var(--paper); border-color: var(--ink-line); }
 .today-sheet td.td-contact .lnk-phone { color: var(--accent); }
@@ -1147,7 +1148,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 .today-sheet td.td-reason.r-due-today { color: #B45309; }
 .today-sheet td.td-reason.r-hot-untouched { color: var(--accent); }
 .today-sheet td.td-reason.r-needs-enrichment { color: var(--ink-mute); }
-.today-sheet td.td-actions { white-space: nowrap; }
+.today-sheet th.th-actions, .today-sheet td.td-actions { white-space: nowrap; min-width: 220px; }
 .today-sheet td.td-actions button {
   background: transparent; border: 1px solid transparent; cursor: pointer;
   color: var(--ink-soft); font-size: 0.78rem; padding: 2px 5px; border-radius: 3px; line-height: 1;
@@ -2763,17 +2764,16 @@ function renderToday() {
         '<th class="td-cb"><input type="checkbox" class="t-all-cb" title="Select all"' + (allSel ? " checked" : "") + '></th>' +
         renderTodaySortTh("Business", "business_name") +
         renderTodaySortTh("Heat", "heat") +
-        '<th>City / Cat.</th>' +
+        renderTodaySortTh("City", "city") +
+        renderTodaySortTh("Category", "category") +
         '<th>Phone</th>' +
         '<th>WhatsApp</th>' +
         '<th>Email</th>' +
         '<th>Website</th>' +
         '<th>Instagram</th>' +
         '<th>Facebook</th>' +
-        '<th>TikTok</th>' +
-        renderTodaySortTh("Due", "due") +
         renderTodaySortTh("Reason", "reason") +
-        '<th>Actions</th>' +
+        '<th class="th-actions">Actions</th>' +
       '</tr></thead>' +
       '<tbody>' +
         filtered.map(renderTodayItem).join("") +
@@ -3015,7 +3015,8 @@ function renderTodayItem(it) {
   const sel = state.selected.has(selKey(type, r.id));
 
   const title = r.business_name || r.title || r.name || r.email || "(unnamed)";
-  const citycat = isLead ? [r.city, r.category].filter(Boolean).join(" / ") : (r.stage || "");
+  const cityTxt = isLead ? (r.city || "") : "";
+  const catTxt  = isLead ? (r.category || "") : (r.stage || "");
   const heatHtml = isLead && r.heat ? heatPill(r.heat) : "";
   const stageHtml = isLead && r.lead_stage ? leadStagePill(r.lead_stage) : (r.stage ? stagePill(r.stage) : "");
 
@@ -3082,9 +3083,9 @@ function renderTodayItem(it) {
     '<td class="td-cb"><input type="checkbox" class="t-cb"' + (sel ? " checked" : "") + ' data-id="' + escHtml(r.id) + '" data-type="' + type + '" /></td>' +
     '<td class="td-biz" data-type="' + type + '" data-id="' + escHtml(r.id) + '" title="' + escHtml(title) + '">' + escHtml(title) + '</td>' +
     '<td>' + heatHtml + '</td>' +
-    '<td class="td-city">' + escHtml(citycat) + '</td>' +
-    phoneHtml + waHtml + emailHtml + siteHtml + igHtml + fbHtml + ttHtml +
-    '<td class="td-due' + dueCls + '">' + dueHtml + '</td>' +
+    '<td class="td-city">' + escHtml(cityTxt) + '</td>' +
+    '<td class="td-cat">' + escHtml(catTxt) + '</td>' +
+    phoneHtml + waHtml + emailHtml + siteHtml + igHtml + fbHtml +
     '<td class="' + reasonCls + '">' + escHtml(reasonLabel) + '</td>' +
     '<td class="td-actions">' + actions + '</td>' +
   '</tr>';
