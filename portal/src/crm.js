@@ -1349,10 +1349,10 @@ const ADMIN_KEY = "pwp_admin";
 const TABLES = ["today", "funnel", "activities"];
 const DATA_TABLES = ["leads", "clients", "deals", "activities"];
 const TABLE_LABELS = {
-  today: "Today", funnel: "Pipeline", activities: "Activities",
+  today: "Leads", funnel: "Pipeline", activities: "Activities",
 };
 const TABLE_ICONS  = {
-  today: "☀", funnel: "🔀", activities: "📋",
+  today: "📇", funnel: "🔀", activities: "📋",
 };
 
 // Prospect (kanban) funnel: raw leads + deals + won-state clients.
@@ -1628,10 +1628,9 @@ function renderTabs() {
       const active = t === state.active ? "active" : "";
       let n;
       if (t === "today") {
-        n = computeTodayItems().length;
+        n = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length;
       } else if (t === "funnel") {
-        n = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length
-          + state.data.deals.length + state.data.clients.length;
+        n = countVisibleFunnelCards();
       } else {
         n = state.counts[t] || (state.data[t] && state.data[t].length) || 0;
       }
@@ -1649,20 +1648,21 @@ function renderTabs() {
 function renderStatusbar() {
   const t = state.active;
   if (t === "today") {
-    const n = computeTodayItems().length;
+    const total = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length;
+    const triage = computeTodayItems().length;
     return '<div class="statusbar">' +
-      "<span>" + n + " action items on your plate</span>" +
+      "<span>" + total + " total leads" + (triage ? " · " + triage + " need attention today" : "") + "</span>" +
       '<span class="ok">● connected</span>' +
       "<span>Click any row to open the contact card. Inline buttons log touches without leaving this page.</span>" +
       "</div>";
   }
   if (t === "funnel") {
-    const total = state.data.leads.length + state.data.deals.length + state.data.clients.length;
+    const total = countVisibleFunnelCards();
     const pipelineCents = state.data.deals
       .filter((d) => ["qualifying","proposal","negotiation"].includes(d.stage))
       .reduce((s, d) => s + (Number(d.value_cop_cents) || 0), 0);
     return '<div class="statusbar">' +
-      "<span>" + total + " items in the funnel</span>" +
+      "<span>" + total + " items in the funnel (marketing-qualified onwards)</span>" +
       "<span>Open pipeline: " + fmtMoney(Math.round(pipelineCents), "COP") + "</span>" +
       '<span class="ok">● connected</span>' +
       "<span>Drag a card between columns to update its stage.</span>" +
@@ -1806,6 +1806,22 @@ function cardColumn(type, row, ctx) {
     return "won";
   }
   return null;
+}
+
+// Count the cards that will actually render in the Kanban (= what
+// cardColumn() returns non-null for). Used by the tab counter and
+// statusbar so the displayed number matches what the user sees.
+function countVisibleFunnelCards() {
+  const wonDealsByClient = new Map();
+  state.data.deals.forEach((d) => {
+    if (d.stage === "won" && d.client_id) wonDealsByClient.set(d.client_id, d);
+  });
+  const ctx = { wonDealsByClient: wonDealsByClient };
+  let n = 0;
+  state.data.leads.forEach((l) => { if (cardColumn("lead", l, ctx)) n++; });
+  state.data.deals.forEach((d) => { if (cardColumn("deal", d, ctx)) n++; });
+  state.data.clients.forEach((c) => { if (cardColumn("client", c, ctx)) n++; });
+  return n;
 }
 
 // Search filter for funnel cards. Cheap textual scan.
@@ -2455,8 +2471,39 @@ function todayEndMs() {
   const d = new Date(); d.setHours(23, 59, 59, 999); return d.getTime();
 }
 
+// Returns ALL non-converted, non-dismissed leads wrapped in the same item
+// shape Today/Leads consumes. Each lead gets a kind + reason that reflects
+// its triage status (overdue, hot-untouched, needs-enrichment) if it has
+// one, otherwise kind='lead' and reason=heat-or-stage. This powers the
+// "Leads" tab as a full inventory view, not just a triage list.
+function computeAllLeadsItems() {
+  const todayEnd = todayEndMs();
+  const now = Date.now();
+  return state.data.leads
+    .filter((l) => !["converted","dismissed"].includes(l.status))
+    .map((l) => {
+      const heat = (l.heat || "").toUpperCase();
+      const stage = l.lead_stage || "new";
+      let kind, reason, weight;
+      if (l.next_action_due && l.next_action_due <= todayEnd && stage !== "disqualified") {
+        const overdue = l.next_action_due < now - DAY_MS;
+        kind = overdue ? "overdue" : "due-today";
+        reason = (overdue ? "Overdue: " : "Due today: ") + (l.next_action || "follow up");
+        weight = overdue ? 1 : 2;
+      } else if ((heat === "HOT" || heat === "DEAD") && (l.touches_count || 0) === 0 && stage === "new") {
+        if (hasReachableChannel(l)) { kind = "hot-untouched"; reason = heat + " lead with no contact yet"; weight = 3; }
+        else { kind = "needs-enrichment"; reason = heat + " lead, no contact channel on file"; weight = 6; }
+      } else {
+        kind = "lead";
+        reason = (l.heat || "") + (l.category ? " · " + l.category : "");
+        weight = 9;
+      }
+      return { kind: kind, lead: l, reason: reason, weight: weight };
+    });
+}
+
 // Returns a flat array of { kind, lead?, deal?, reason, weight } for the
-// current state. Used by the Today tab and the nav counter.
+// current state. Used by the triage KPIs (formerly the Today tab).
 function computeTodayItems() {
   const todayEnd = todayEndMs();
   const now = Date.now();
@@ -2585,7 +2632,7 @@ function renderTodaySortTh(label, col, extraClass) {
 function renderToday() {
   const wrap = document.getElementById("today-wrap");
   if (!wrap) return;
-  const items = computeTodayItems();
+  const items = computeAllLeadsItems();
   const q = (state.search || "").toLowerCase();
   let filtered = q
     ? items.filter((it) => {
@@ -2596,27 +2643,27 @@ function renderToday() {
     : items;
   filtered = todaySortItems(filtered);
 
-  const date = new Date();
-  const dateStr = date.toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+  const totalLeads = state.data.leads.filter((l) => !["converted","dismissed"].includes(l.status)).length;
+  const triageCount = computeTodayItems().length;
 
   const html = ['<div class="today-page">',
     '<div class="today-hero">',
       '<div class="today-greet">',
-        '<h2>Buenos dias, Santi</h2>',
-        '<div class="today-date">' + escHtml(dateStr) + '</div>',
+        '<h2>Leads</h2>',
+        '<div class="today-date">Full inventory · click a row to open the contact card.</div>',
       '</div>',
       '<div class="today-summary">',
-        renderTodayKpi("Action items", filtered.length, ""),
-        renderTodayKpi("Open pipeline", fmtMoney(state.data.deals.filter((d) => !["won","lost"].includes(d.stage)).reduce((s, d) => s + (Number(d.value_cop_cents) || 0), 0), "COP"), "in active deals"),
+        renderTodayKpi("Total leads", totalLeads, ""),
+        renderTodayKpi("Need attention today", triageCount, "overdue or hot untouched"),
         renderTodayKpi("Hot untouched", state.data.leads.filter((l) => ["HOT","DEAD"].includes((l.heat||"").toUpperCase()) && (l.touches_count || 0) === 0).length, "leads"),
       '</div>',
     '</div>'
   ];
 
   if (filtered.length === 0) {
-    html.push('<div class="today-empty"><div class="empty-icon">✓</div>' +
-      '<h3>Inbox zero.</h3>' +
-      '<p>Nothing urgent right now. Open the Pipeline to keep working through prospects.</p>' +
+    html.push('<div class="today-empty"><div class="empty-icon">·</div>' +
+      '<h3>No leads match this filter.</h3>' +
+      '<p>Clear the search box or refresh.</p>' +
     '</div>');
   } else {
     const allKeys = filtered.map((it) => selKey(it.lead ? "lead" : "deal", (it.lead || it.deal).id));

@@ -80,20 +80,20 @@ const SCRIPT_HASHES = [
 ];
 
 const STYLE_HASHES = [
-  "sha256-0n2/niPzozYA3dLth7Y3dAL1KZ2NYFYtdjgC7vCcSqM=",
   "sha256-13ibskFxM+oBG1GOKCF2RlES6jq9ZsjpijA1hToibN8=",
   "sha256-1nPELemA6W56auTRzuELYIQ0Y00KXwgS7Pvn+J0V+a8=",
   "sha256-7nRJxaCwAoBm8Q2TIPJM3lvz0i93AW46r4kGfzixCRs=",
-  "sha256-7xUygpMqx+fg4zbubjEnkSEYmICmWYXEOPiQUDzWsZ4=",
-  "sha256-BbHqoGyBZk2cou5ufZ794dlPV7LbpaZ4mPIS+N4JGwM=",
-  "sha256-FFevN2kpiRodwEEtfjlfDfShsZwuSehE8TNy0uqTeVw=",
   "sha256-KNZQJoVLSiFjV9VT7nzhG+ER4g0oTxH1hZE/cta1clw=",
+  "sha256-LFmGeFVusYQPLmvA2CSIZLalqovfUCd8Xkzg1W+XZ5Y=",
   "sha256-S26/GwbJjQlPbph9YoO29JMyt+6+c+m8lETNQT2O1nc=",
   "sha256-Sqr3A3nF2rYpiE1yGXW9/oX69QxkIJNIt+ZCF4BCa4Y=",
   "sha256-YEph6qo0neaQwZAiVE/stU9OWGO5DyeYPRP/tdmCFuI=",
-  "sha256-k81zN8JfWjw0bvmd86UvjtC9JXXEecQQO3+xiz39sL8=",
+  "sha256-he/U2UugO0I/zdHSoWJVnm8TCLC73TbZGeE6QSho6HE=",
+  "sha256-htiNmIWK5S3SNoQbtC+k0ZpXAVSmYElvOwiti3ajUnw=",
+  "sha256-lQmJkGn3a3qpgpXIzokJvMuw0FtWD+Sb7ZdaEXT+faY=",
+  "sha256-lWVMuCo0MpbjLXrbx+ZgF9cPY+Svag7Szm0eitGBmk4=",
   "sha256-tkldcovVxCmq7Hv0c/JoqM+RBZHndsHIZ3gvmp2X4mY=",
-  "sha256-tl1ZGkOKpJ2IbCN9kP/nYDBpFcEluXEKZm1l1cV8MKY=",
+  "sha256-z78aRRwtiALpgnA2EoaF9e3HCbQY2wxXnsM3vLqf0ww=",
 ];
 
 const SCRIPT_HASH_LIST = SCRIPT_HASHES.map((h) => `'${h}'`).join(" ");
