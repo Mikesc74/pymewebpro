@@ -21,6 +21,8 @@ import { handleSiteAuditAPI, siteAuditReportHTML } from "./site-audit.js";
 import { santiPageHTML } from "./santi.js";
 // Lead enrichment · Claude Haiku + web search to fill missing phone/email/socials.
 import { handleEnrich } from "./enrich.js";
+// Outbound prospecting loader · Google Places search -> dedupe -> bulk insert.
+import { handleProspecting } from "./prospecting.js";
 // Chief of Staff · agente en español, widget flotante en cada página admin.
 //   /api/admin/chief-of-staff/chat  -> backend Anthropic loop con tools CRM
 //   CHIEF_OF_STAFF_WIDGET_HTML       -> snippet HTML inyectado antes de </body>
@@ -928,7 +930,7 @@ async function deleteFile(request, env, fileId) {
 
 // src/leads.js
 const VALID_STATUSES = ["new", "contacted", "converted", "dismissed"];
-const VALID_SOURCES = ["contact_form", "whatsapp_click", "manual", "whatsapp_message"];
+const VALID_SOURCES = ["contact_form", "whatsapp_click", "manual", "whatsapp_message", "outbound"];
 async function handlePublicLeads(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
@@ -4470,6 +4472,8 @@ const src_default = {
       if (path === "/api/admin/site-audit") return cors(await handleSiteAuditAPI(request, env, { json, isAdmin }));
       // Lead enrichment endpoints · same auth pattern, runs before the catch-all.
       if (path.startsWith("/api/admin/enrich")) return cors(await handleEnrich(request, env, ctx, { json, isAdmin }));
+      // Outbound prospecting · Google Places search + dedupe + bulk insert. Admin-only.
+      if (path.startsWith("/api/admin/prospecting")) return cors(await handleProspecting(request, env, ctx, { json, isAdmin, uuid }));
       // Chief of Staff agent. Must run BEFORE the /api/admin/* catch-all.
       if (path.startsWith("/api/admin/chief-of-staff")) return cors(await handleChiefOfStaff(request, env, { json, isAdmin, uuid }));
       // Proposal generator routes (POST generate + GET mockup/proposal pages).
