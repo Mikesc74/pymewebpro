@@ -1098,9 +1098,56 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 }
 .lf-sheet tr.lf-selected:hover td { background: rgba(255,92,46,0.13) !important; }
 
+/* ---- Today spreadsheet ---- */
+.today-sheet-wrap { overflow-x: auto; margin-top: 1rem; }
+.today-sheet { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.today-sheet thead th {
+  padding: 6px 9px; text-align: left; background: var(--paper-2);
+  border-bottom: 2px solid var(--ink-line); white-space: nowrap;
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-soft);
+  user-select: none;
+}
+.today-sheet thead th.sortable { cursor: pointer; }
+.today-sheet thead th.sortable:hover { color: var(--ink); }
+.today-sheet thead th.sort-active { color: var(--accent); }
+.today-sheet thead th .sort-arrow { margin-left: 3px; opacity: 0.6; }
+.today-sheet tbody tr { border-bottom: 1px solid var(--ink-faint); transition: background .1s; }
+.today-sheet tbody tr:hover { background: var(--paper-2); }
+.today-sheet tbody tr.ts-selected { background: rgba(210,74,29,.06); }
+.today-sheet td { padding: 6px 9px; vertical-align: middle; }
+.today-sheet td.td-biz { font-weight: 600; color: var(--ink); white-space: nowrap; max-width: 180px; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+.today-sheet td.td-biz:hover { color: var(--accent); text-decoration: underline; }
+.today-sheet td.td-city { color: var(--ink-soft); white-space: nowrap; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+.today-sheet td.td-contact a { display: inline-block; padding: 2px 5px; border-radius: 3px; font-size: 0.75rem; text-decoration: none; color: inherit; border: 1px solid transparent; white-space: nowrap; }
+.today-sheet td.td-contact a:hover { background: var(--paper); border-color: var(--ink-line); }
+.today-sheet td.td-contact .lnk-phone { color: var(--accent); }
+.today-sheet td.td-contact .lnk-wa    { color: #1FA851; }
+.today-sheet td.td-contact .lnk-mail  { color: #B45309; }
+.today-sheet td.td-contact .lnk-site  { color: #2563EB; font-family: var(--mono); font-size: 0.7rem; }
+.today-sheet td.td-contact .lnk-ig   { color: #C13584; }
+.today-sheet td.td-contact .lnk-fb   { color: #1877F2; }
+.today-sheet td.td-nxt { color: var(--ink-soft); font-size: 0.78rem; max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.today-sheet td.td-due { white-space: nowrap; font-family: var(--mono); font-size: 0.75rem; }
+.today-sheet td.td-due.overdue { color: var(--red); font-weight: 600; }
+.today-sheet td.td-due.due-today { color: #B45309; font-weight: 600; }
+.today-sheet td.td-reason { font-size: 0.75rem; color: var(--ink-soft); white-space: nowrap; }
+.today-sheet td.td-reason.r-overdue { color: var(--red); }
+.today-sheet td.td-reason.r-due-today { color: #B45309; }
+.today-sheet td.td-reason.r-hot-untouched { color: var(--accent); }
+.today-sheet td.td-reason.r-needs-enrichment { color: var(--ink-mute); }
+.today-sheet td.td-actions { white-space: nowrap; }
+.today-sheet td.td-actions button {
+  background: transparent; border: 1px solid transparent; cursor: pointer;
+  color: var(--ink-soft); font-size: 0.78rem; padding: 2px 5px; border-radius: 3px; line-height: 1;
+}
+.today-sheet td.td-actions button:hover { background: var(--paper); border-color: var(--ink-line); color: var(--ink); }
+.today-sheet td.td-cb { width: 28px; padding: 6px 4px 6px 10px; }
+.today-sheet td.td-cb input { width: 14px; height: 14px; cursor: pointer; accent-color: var(--accent); }
+
 /* ---- Today dashboard ---- */
 .today-page {
-  max-width: 980px; margin: 0 auto;
+  max-width: 1280px; margin: 0 auto;
   padding: 1.5rem 1.25rem 3rem;
 }
 .today-hero {
@@ -1312,9 +1359,7 @@ const TABLE_ICONS  = {
 // "Leads" column shows raw incoming leads (lead_stage: new). From there
 // they move to Qualifying once they become a deal.
 const FUNNEL_COLUMNS = [
-  { id: "lead",        label: "Leads",                dot: "#9CA3AF" },
   { id: "qualifying",  label: "Marketing Qualified",  dot: "#2563eb" },
-  { id: "proposal",    label: "Sales Qualified",      dot: "#d97706" },
   { id: "negotiation", label: "Proposal / Mockup",    dot: "#8B5CF6" },
   { id: "won",         label: "Won",                  dot: "#16a34a" },
   { id: "lost",        label: "Lost",                 dot: "#dc2626" },
@@ -1365,6 +1410,7 @@ const state = {
   editing: null, // { table, id, col }
   lookups: { leadById: new Map(), clientById: new Map(), dealById: new Map(), dealsByLead: new Map() },
   funnelSort: "",  // "" | "contacted_desc" | "contacted_asc"
+  todaySort: { col: "heat", dir: 1 },  // col: field key, dir: 1=asc 0=desc
   selected: new Set(), // keys: "type:id"
 };
 if (!TABLES.includes(state.active)) state.active = "today";
@@ -1731,7 +1777,7 @@ function renderGrid() {
 // hidden. Leads are shown in the Kanban according to their lead_stage:
 //   new / contacted          -> "lead" column
 //   marketing_qualified      -> "qualifying" column
-//   sales_qualified          -> "proposal" column
+//   sales_qualified          -> "negotiation" column (Proposal / Mockup)
 //   disqualified             -> hidden
 function cardColumn(type, row, ctx) {
   if (type === "lead") {
@@ -1740,16 +1786,16 @@ function cardColumn(type, row, ctx) {
     if (skipStatus.includes(row.status)) return null;
     // Map lead_stage to the matching Kanban column.
     const stageToCol = {
-      new:                 "lead",
-      contacted:           "lead",
+      new:                 null,
+      contacted:           null,
       marketing_qualified: "qualifying",
-      sales_qualified:     "proposal",
+      sales_qualified:     "negotiation",
       disqualified:        null,
     };
     if (row.lead_stage && stageToCol.hasOwnProperty(row.lead_stage)) {
       return stageToCol[row.lead_stage];
     }
-    return "lead"; // fallback for leads with no stage set yet
+    return null; // leads with no stage set are handled by Today / lead funnel, not the Kanban
   }
   if (type === "deal") {
     return row.stage || "qualifying";
@@ -2138,6 +2184,12 @@ function renderCard(c) {
     if (r.source) bits.push(escHtml(r.source));
     meta = '<span class="type-pill">Lead</span>' + (bits.length ? '<span>' + bits.join(" · ") + '</span>' : "");
     socials = renderSocialIcons(r);
+    // Contact status strip for lead cards.
+    if (r.last_touched_at) {
+      contactStatus = '<div class="contact-status cs-touched">Last contacted: ' + escHtml(fmtDate(Number(r.last_touched_at))) + "</div>";
+    } else {
+      contactStatus = '<div class="contact-status cs-new">Not contacted</div>';
+    }
   } else if (t === "deal") {
     title = r.title || "(untitled deal)";
     const bits = [];
@@ -2490,30 +2542,60 @@ function computeTodayItems() {
   return Array.from(seen.values()).sort((a, b) => a.weight - b.weight);
 }
 
+const TODAY_HEAT_RANK = { HOT: 0, WARM: 1, COOL: 2, COLD: 3, DEAD: 4 };
+const TODAY_WEIGHT_LABEL = {
+  "overdue": "Overdue", "due-today": "Due today", "hot-untouched": "Hot",
+  "stuck-deal": "Stuck deal", "fresh-activity": "Recent", "needs-enrichment": "Needs enrichment",
+};
+
+function todaySortItems(items) {
+  const { col, dir } = state.todaySort;
+  return [...items].sort((a, b) => {
+    const ra = a.lead || a.deal || {}, rb = b.lead || b.deal || {};
+    let va, vb;
+    if (col === "heat") {
+      va = TODAY_HEAT_RANK[(ra.heat || "").toUpperCase()] ?? 9;
+      vb = TODAY_HEAT_RANK[(rb.heat || "").toUpperCase()] ?? 9;
+    } else if (col === "due") {
+      va = ra.next_action_due || 999999999999;
+      vb = rb.next_action_due || 999999999999;
+    } else if (col === "stage") {
+      va = ra.lead_stage || ra.stage || "";
+      vb = rb.lead_stage || rb.stage || "";
+    } else if (col === "reason") {
+      va = a.weight || 9; vb = b.weight || 9;
+    } else {
+      va = (ra[col] || "").toString().toLowerCase();
+      vb = (rb[col] || "").toString().toLowerCase();
+    }
+    if (va < vb) return dir === 1 ? -1 : 1;
+    if (va > vb) return dir === 1 ? 1 : -1;
+    return 0;
+  });
+}
+
+function renderTodaySortTh(label, col, extraClass) {
+  const { col: sc, dir } = state.todaySort;
+  const active = sc === col;
+  const arrow = active ? (dir === 1 ? " ↑" : " ↓") : "";
+  return '<th class="sortable' + (active ? " sort-active" : "") + (extraClass ? " " + extraClass : "") +
+    '" data-sort="' + col + '">' + label + (arrow ? '<span class="sort-arrow">' + arrow + '</span>' : '') + '</th>';
+}
+
 function renderToday() {
   const wrap = document.getElementById("today-wrap");
   if (!wrap) return;
   const items = computeTodayItems();
   const q = (state.search || "").toLowerCase();
-  const filtered = q
+  let filtered = q
     ? items.filter((it) => {
         const r = it.lead || it.deal || {};
-        const blob = [r.business_name, r.name, r.title, r.email, r.city, r.category].filter(Boolean).join(" ").toLowerCase();
+        const blob = [r.business_name, r.name, r.title, r.email, r.city, r.category, r.whatsapp, r.phone].filter(Boolean).join(" ").toLowerCase();
         return blob.includes(q) || (it.reason || "").toLowerCase().includes(q);
       })
     : items;
+  filtered = todaySortItems(filtered);
 
-  const groups = {
-    "overdue":         { title: "Overdue", subtitle: "Action was due before today", items: [] },
-    "due-today":       { title: "Due today", subtitle: "Action due today · contact now", items: [] },
-    "hot-untouched":   { title: "Hot leads · ready to contact", subtitle: "HOT or DEAD prospects with phone, email or social on file", items: [] },
-    "stuck-deal":      { title: "Stuck deals", subtitle: "Same stage for over 7 days · time to nudge", items: [] },
-    "fresh-activity":  { title: "Fresh activity (last 24h)", subtitle: "Conversations in progress", items: [] },
-    "needs-enrichment":{ title: "Needs enrichment", subtitle: "Hot prospects with no contact channel · either research them or bulk-disqualify", items: [] },
-  };
-  filtered.forEach((it) => { if (groups[it.kind]) groups[it.kind].items.push(it); });
-
-  // Date header.
   const date = new Date();
   const dateStr = date.toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" });
 
@@ -2531,76 +2613,88 @@ function renderToday() {
     '</div>'
   ];
 
-  Object.keys(groups).forEach((gk) => {
-    const g = groups[gk];
-    if (!g.items.length) return;
-    const allKeys = g.items.map((it) => selKey((it.lead ? "lead" : "deal"), (it.lead || it.deal).id));
-    const allSel = allKeys.length > 0 && allKeys.every((k) => state.selected.has(k));
-    html.push('<section class="today-group">' +
-      '<div class="today-group-head">' +
-        '<label class="group-check" title="Select all in this section"><input type="checkbox" class="t-group-cb"' + (allSel ? " checked" : "") + ' data-group="' + gk + '" /></label>' +
-        '<h3>' + escHtml(g.title) + '</h3>' +
-        '<span>' + g.items.length + '</span>' +
-      '</div>' +
-      '<p class="today-group-sub">' + escHtml(g.subtitle) + '</p>' +
-      '<div class="today-list">' +
-        g.items.map(renderTodayItem).join("") +
-      '</div>' +
-    '</section>');
-  });
-
   if (filtered.length === 0) {
-    html.push('<div class="today-empty">' +
-      '<div class="empty-icon">✓</div>' +
+    html.push('<div class="today-empty"><div class="empty-icon">✓</div>' +
       '<h3>Inbox zero.</h3>' +
-      '<p>Nothing urgent right now. Open the Lead funnel to keep working through cold prospects, or take a coffee.</p>' +
+      '<p>Nothing urgent right now. Open the Pipeline to keep working through prospects.</p>' +
     '</div>');
+  } else {
+    const allKeys = filtered.map((it) => selKey(it.lead ? "lead" : "deal", (it.lead || it.deal).id));
+    const allSel = allKeys.length > 0 && allKeys.every((k) => state.selected.has(k));
+    html.push(
+      '<div class="today-sheet-wrap">' +
+      '<table class="today-sheet">' +
+      '<thead><tr>' +
+        '<th class="td-cb"><input type="checkbox" class="t-all-cb" title="Select all"' + (allSel ? " checked" : "") + '></th>' +
+        renderTodaySortTh("Business", "business_name") +
+        renderTodaySortTh("Heat", "heat") +
+        renderTodaySortTh("Stage", "stage") +
+        '<th>City / Cat.</th>' +
+        '<th>Phone</th>' +
+        '<th>WhatsApp</th>' +
+        '<th>Email</th>' +
+        '<th>Website</th>' +
+        '<th>Instagram</th>' +
+        '<th>Facebook</th>' +
+        renderTodaySortTh("Due", "due") +
+        renderTodaySortTh("Reason", "reason") +
+        '<th>Actions</th>' +
+      '</tr></thead>' +
+      '<tbody>' +
+        filtered.map(renderTodayItem).join("") +
+      '</tbody>' +
+      '</table></div>'
+    );
   }
 
   html.push('</div>');
   wrap.innerHTML = html.join("");
 
-  // Bind row clicks · open the modal for the lead or deal.
-  wrap.querySelectorAll(".today-item").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      if (e.target.closest("button[data-act]") || e.target.closest("a") || e.target.closest(".t-check") || e.target.closest("input.t-cb")) return;
-      openCard(el.dataset.type, el.dataset.id);
-    });
-  });
-  // Per-row checkbox.
-  wrap.querySelectorAll("input.t-cb").forEach((cb) => {
-    cb.addEventListener("click", (e) => e.stopPropagation());
-    cb.addEventListener("change", (e) => {
-      const k = selKey(cb.dataset.type, cb.dataset.id);
-      if (cb.checked) state.selected.add(k); else state.selected.delete(k);
+  // Sort column headers.
+  wrap.querySelectorAll("th.sortable[data-sort]").forEach((th) => {
+    th.onclick = () => {
+      const col = th.dataset.sort;
+      if (state.todaySort.col === col) {
+        state.todaySort.dir = state.todaySort.dir === 1 ? -1 : 1;
+      } else {
+        state.todaySort = { col, dir: 1 };
+      }
       renderToday();
-    });
+    };
   });
-  // Per-section "select all" checkbox.
-  wrap.querySelectorAll("input.t-group-cb").forEach((cb) => {
-    cb.addEventListener("click", (e) => e.stopPropagation());
-    cb.addEventListener("change", () => {
-      const gk = cb.dataset.group;
-      const itemsInGroup = computeTodayItems().filter((it) => it.kind === gk);
-      itemsInGroup.forEach((it) => {
-        const r = it.lead || it.deal;
-        const type = it.lead ? "lead" : "deal";
-        const k = selKey(type, r.id);
-        if (cb.checked) state.selected.add(k); else state.selected.delete(k);
+  // Select-all checkbox.
+  const allCb = wrap.querySelector("input.t-all-cb");
+  if (allCb) {
+    allCb.onchange = () => {
+      const rows = wrap.querySelectorAll("tr[data-type]");
+      rows.forEach((tr) => {
+        const k = selKey(tr.dataset.type, tr.dataset.id);
+        if (allCb.checked) state.selected.add(k); else state.selected.delete(k);
       });
       renderToday();
-    });
+    };
+  }
+  // Per-row checkbox.
+  wrap.querySelectorAll("input.t-cb").forEach((cb) => {
+    cb.onchange = () => {
+      const k = selKey(cb.dataset.type, cb.dataset.id);
+      if (cb.checked) state.selected.add(k); else state.selected.delete(k);
+      renderTodayBulkBar();
+    };
   });
-  wrap.querySelectorAll(".today-item button[data-act]").forEach((b) => {
+  // Business name cell click — open card.
+  wrap.querySelectorAll("td.td-biz[data-type]").forEach((td) => {
+    td.onclick = () => openCard(td.dataset.type, td.dataset.id);
+  });
+  // Action buttons.
+  wrap.querySelectorAll("button[data-act]").forEach((b) => {
     b.onclick = (e) => {
       e.stopPropagation();
-      const act = b.dataset.act;
-      const id = b.dataset.id;
-      const type = b.dataset.type;
+      const act = b.dataset.act, id = b.dataset.id, type = b.dataset.type;
       if (act === "open") openCard(type, id);
-      else if (act === "call" && type === "lead")  quickLogTouch(id, "call");
-      else if (act === "wa"   && type === "lead")  quickLogTouch(id, "whatsapp");
-      else if (act === "email"&& type === "lead")  quickLogTouch(id, "email");
+      else if (act === "call"    && type === "lead") quickLogTouch(id, "call");
+      else if (act === "wa"      && type === "lead") quickLogTouch(id, "whatsapp");
+      else if (act === "email"   && type === "lead") quickLogTouch(id, "email");
       else if (act === "promote" && type === "lead") promoteToSQL(id);
       else if (act === "delete") {
         if (type === "lead") deleteLead(id);
@@ -2776,52 +2870,80 @@ function renderTodayKpi(label, value, suffix) {
 function renderTodayItem(it) {
   const r = it.lead || it.deal || {};
   const isLead = !!it.lead;
-  // For deal cards, pull the domain from the linked lead (deals don't have a
-  // current_site / email of their own).
-  const contactForDomain = isLead ? r : (r.lead_id ? state.lookups.leadById.get(r.lead_id) : null);
-  const domain = extractContactDomain(contactForDomain || {});
-  const title = r.business_name || r.title || r.name || r.email || "(unnamed)";
-  const subtitle = isLead
-    ? [r.name && r.name !== r.business_name ? r.name : "", r.city, r.category].filter(Boolean).join(" · ")
-    : ["Deal", r.stage, r.value_cop_cents ? fmtMoney(r.value_cop_cents, "COP") : ""].filter(Boolean).join(" · ");
-  const heat = isLead && r.heat ? heatPill(r.heat) : "";
-  const stage = isLead && r.lead_stage ? leadStagePill(r.lead_stage) : (r.stage ? stagePill(r.stage) : "");
-  const reasonClass = "reason r-" + it.kind;
-  const domainHtml = domain
-    ? '<a class="t-domain" href="' + escHtml(domain.url) + '" target="_blank" rel="noopener" title="' + escHtml(domain.source === "site" ? "From current_site" : "From email domain") + '" onclick="event.stopPropagation()">' +
-        '<span class="t-domain-icon">' + (domain.source === "site" ? "🌐" : "✉") + '</span>' +
-        escHtml(domain.host) +
-      '</a>'
-    : '';
-
+  const lr = isLead ? r : (r.lead_id ? state.lookups.leadById.get(r.lead_id) : null); // linked lead for deal rows
+  const cr = lr || r; // contact row (where phone/wa/email live)
   const type = isLead ? "lead" : "deal";
   const sel = state.selected.has(selKey(type, r.id));
+
+  const title = r.business_name || r.title || r.name || r.email || "(unnamed)";
+  const citycat = isLead ? [r.city, r.category].filter(Boolean).join(" / ") : (r.stage || "");
+  const heatHtml = isLead && r.heat ? heatPill(r.heat) : "";
+  const stageHtml = isLead && r.lead_stage ? leadStagePill(r.lead_stage) : (r.stage ? stagePill(r.stage) : "");
+
+  const cleanNum = (s) => String(s || "").replace(/\D/g, "");
+  const phone = (cr.phone || "").toString().trim();
+  const wa    = (cr.whatsapp || "").toString().trim();
+  const email = (cr.email || "").toString().trim();
+  const site  = (cr.current_site || "").toString().trim();
+  let siteHost = "";
+  try { siteHost = new URL(site.startsWith("http") ? site : "https://" + site).hostname.replace("www.", ""); } catch {}
+
+  const phoneHtml = phone
+    ? '<td class="td-contact"><a class="lnk-phone" href="tel:' + escHtml(cleanNum(phone)) + '" title="Call">☎ ' + escHtml(phone) + '</a></td>'
+    : '<td class="td-contact"></td>';
+  const waHtml = wa
+    ? '<td class="td-contact"><a class="lnk-wa" href="https://wa.me/' + escHtml(cleanNum(wa)) + '" target="_blank" rel="noopener" title="WhatsApp">📱 ' + escHtml(wa) + '</a></td>'
+    : '<td class="td-contact"></td>';
+  const emailHtml = email
+    ? '<td class="td-contact"><a class="lnk-mail" href="mailto:' + escHtml(email) + '" title="Email">✉ ' + escHtml(email) + '</a></td>'
+    : '<td class="td-contact"></td>';
+  const siteHtml = siteHost
+    ? '<td class="td-contact"><a class="lnk-site" href="' + escHtml(site.startsWith("http") ? site : "https://" + site) + '" target="_blank" rel="noopener">🌐 ' + escHtml(siteHost) + '</a></td>'
+    : '<td class="td-contact"></td>';
+  const ig  = (cr.instagram    || "").toString().trim();
+  const fb  = (cr.facebook_url || "").toString().trim();
+  const igHandle = ig.replace(/^https?:[/][/](www[.])?instagram[.]com[/]?/, "").replace(/[/]$/, "") || ig;
+  const fbHandle = fb.replace(/^https?:[/][/](www[.])?facebook[.]com[/]?/, "").replace(/[/]$/, "") || fb;
+  const igUrl = ig ? (ig.startsWith("http") ? ig : "https://instagram.com/" + ig.replace(/^@/, "")) : "";
+  const fbUrl = fb ? (fb.startsWith("http") ? fb : "https://facebook.com/" + fb.replace(/^@/, "")) : "";
+  const igHtml = igHandle
+    ? '<td class="td-contact"><a class="lnk-ig" href="' + escHtml(igUrl) + '" target="_blank" rel="noopener">📸 ' + escHtml(igHandle.slice(0, 18)) + '</a></td>'
+    : '<td class="td-contact"></td>';
+  const fbHtml = fbHandle
+    ? '<td class="td-contact"><a class="lnk-fb" href="' + escHtml(fbUrl) + '" target="_blank" rel="noopener">🔵 ' + escHtml(fbHandle.slice(0, 18)) + '</a></td>'
+    : '<td class="td-contact"></td>';
+
+  const due = r.next_action_due || (lr && lr.next_action_due);
+  const now = Date.now();
+  const dueCls = due ? (due < now - 86400000 ? " overdue" : (due < now + 86400000 ? " due-today" : "")) : "";
+  const dueHtml = due ? escHtml(fmtDate(due)) : "";
+
+  const reasonLabel = TODAY_WEIGHT_LABEL[it.kind] || it.kind;
+  const reasonCls = "td-reason r-" + it.kind;
+
   let actions = '<button data-act="open" data-id="' + escHtml(r.id) + '" data-type="' + type + '" title="Open">↗</button>' +
                 '<button data-act="delete" data-id="' + escHtml(r.id) + '" data-type="' + type + '" title="Delete">🗑</button>';
   if (isLead) {
     actions =
-      '<button data-act="call"  data-id="' + escHtml(r.id) + '" data-type="lead" title="Log a call">☎</button>' +
-      '<button data-act="wa"    data-id="' + escHtml(r.id) + '" data-type="lead" title="Log WhatsApp">📱</button>' +
-      '<button data-act="email" data-id="' + escHtml(r.id) + '" data-type="lead" title="Log email">✉</button>' +
-      '<button data-act="open"  data-id="' + escHtml(r.id) + '" data-type="lead" title="Open">↗</button>' +
+      '<button data-act="call"    data-id="' + escHtml(r.id) + '" data-type="lead" title="Log call">☎</button>' +
+      '<button data-act="wa"      data-id="' + escHtml(r.id) + '" data-type="lead" title="Log WA">📱</button>' +
+      '<button data-act="email"   data-id="' + escHtml(r.id) + '" data-type="lead" title="Log email">✉</button>' +
+      '<button data-act="open"    data-id="' + escHtml(r.id) + '" data-type="lead" title="Open">↗</button>' +
       '<button data-act="promote" data-id="' + escHtml(r.id) + '" data-type="lead" title="Mark Sales Qualified">⇪</button>' +
-      '<button data-act="delete"  data-id="' + escHtml(r.id) + '" data-type="lead" title="Delete this lead">🗑</button>';
+      '<button data-act="delete"  data-id="' + escHtml(r.id) + '" data-type="lead" title="Delete">🗑</button>';
   }
 
-  const contactStrip = renderContactStrip(contactForDomain || (isLead ? r : null));
-
-  return '<div class="today-item' + (sel ? " today-selected" : "") + '" data-type="' + type + '" data-id="' + escHtml(r.id) + '">' +
-    '<label class="t-check" title="Select"><input type="checkbox" class="t-cb"' + (sel ? " checked" : "") + ' data-id="' + escHtml(r.id) + '" data-type="' + type + '" /></label>' +
-    '<div class="t-info">' +
-      '<div class="t-title">' +
-        escHtml(title) +
-      '</div>' +
-      (contactStrip ? '<div class="t-contact">' + contactStrip + '</div>' : '') +
-      '<div class="t-meta">' + heat + stage + '<span>' + escHtml(subtitle) + '</span></div>' +
-      '<div class="' + reasonClass + '">' + escHtml(it.reason) + '</div>' +
-    '</div>' +
-    '<div class="t-actions">' + actions + '</div>' +
-  '</div>';
+  return '<tr class="' + (sel ? "ts-selected" : "") + '" data-type="' + type + '" data-id="' + escHtml(r.id) + '">' +
+    '<td class="td-cb"><input type="checkbox" class="t-cb"' + (sel ? " checked" : "") + ' data-id="' + escHtml(r.id) + '" data-type="' + type + '" /></td>' +
+    '<td class="td-biz" data-type="' + type + '" data-id="' + escHtml(r.id) + '" title="' + escHtml(title) + '">' + escHtml(title) + '</td>' +
+    '<td>' + heatHtml + '</td>' +
+    '<td>' + stageHtml + '</td>' +
+    '<td class="td-city">' + escHtml(citycat) + '</td>' +
+    phoneHtml + waHtml + emailHtml + siteHtml + igHtml + fbHtml +
+    '<td class="td-due' + dueCls + '">' + dueHtml + '</td>' +
+    '<td class="' + reasonCls + '">' + escHtml(reasonLabel) + '</td>' +
+    '<td class="td-actions">' + actions + '</td>' +
+  '</tr>';
 }
 
 // Renders the inline contact strip shown on every Today row. Each chip is
@@ -3964,6 +4086,7 @@ function renderNotesJournal(lead) {
 
 function renderSocialsBlock(lead) {
   const fields = [
+    { key: "whatsapp",     label: "WhatsApp",    placeholder: "+57 300 000 0000" },
     { key: "current_site", label: "Website",     placeholder: "minegocio.com or https://minegocio.com" },
     { key: "instagram",    label: "Instagram",   placeholder: "@handle or https://instagram.com/..." },
     { key: "facebook_url", label: "Facebook",    placeholder: "Page URL or username" },
@@ -3977,7 +4100,7 @@ function renderSocialsBlock(lead) {
       '<input type="text" id="' + id + '" data-key="' + f.key + '" data-type="text" value="' + escHtml(v) + '" placeholder="' + escHtml(f.placeholder) + '" />' +
       "</div>";
   }).join("");
-  return '<div class="field-group"><h3 class="field-group-title">Web &amp; Socials</h3>' + items + "</div>";
+  return '<div class="field-group"><h3 class="field-group-title">Contact &amp; Socials</h3>' + items + "</div>";
 }
 
 function renderProposalBlock(deal) {
