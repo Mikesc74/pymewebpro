@@ -159,8 +159,8 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
 (function(){
   var PORTAL_URL = 'https://portal.pymewebpro.com';
   var PLANS = {
-    esencial: { tag: 'Essential', name: 'La página', cad: '$500 CAD', cop: '$390.000 COP', dep_cad: '$150 CAD', dep_cop: '$117.000 COP' },
-    pro: { tag: 'Pro · Mejor valor', name: 'La página conectada', cad: '$800 CAD', cop: '$690.000 COP', dep_cad: '$240 CAD', dep_cop: '$207.000 COP' }
+    esencial: { tag: 'Essential', name: 'La página', cop: '$390.000 COP', dep_cop: '$117.000 COP' },
+    pro: { tag: 'Pro · Mejor valor', name: 'La página conectada', cop: '$690.000 COP', dep_cop: '$207.000 COP' }
   };
 
   var params = new URLSearchParams(window.location.search);
@@ -173,18 +173,13 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
   document.getElementById('plan-name').textContent = plan.name;
   document.getElementById('kicker').textContent = 'Empezando su plan ' + plan.tag.split(' ')[0];
 
-  function renderPrice(isCO){
-    var price = isCO ? plan.cop : plan.cad;
-    var dep = isCO ? plan.dep_cop : plan.dep_cad;
-    document.getElementById('plan-price').innerHTML = price;
-    document.getElementById('plan-deposit').innerHTML = '<strong>30% de depósito</strong> (' + dep + ') hoy, 70% al lanzar. <strong>Garantía de devolución a 30 días.</strong>';
+  function renderPrice(){
+    document.getElementById('plan-price').innerHTML = plan.cop;
+    document.getElementById('plan-deposit').innerHTML = '<strong>30% de depósito</strong> (' + plan.dep_cop + ') hoy, 70% al lanzar. <strong>Garantía de devolución a 30 días.</strong>';
     card.removeAttribute('hidden');
   }
 
-  fetch('/cdn-cgi/trace').then(function(r){ return r.text(); }).then(function(t){
-    var m = t.match(/loc=([A-Z]{2})/);
-    renderPrice(m && m[1] === 'CO');
-  }).catch(function(){ renderPrice(true); });
+  renderPrice();
 
   var form = document.getElementById('start-form');
   var submit = document.getElementById('sf-submit');
