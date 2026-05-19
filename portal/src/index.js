@@ -101,11 +101,14 @@ function withSecurityHeaders(response, opts = {}) {
   if (isHtml && !headers.has("Content-Security-Policy")) {
     headers.set("Content-Security-Policy", [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://unpkg.com",
+      // Cloudflare Web Analytics auto-injects a beacon from static.cloudflareinsights.com;
+      // allow it explicitly so the CSP doesn't flag it on every page load.
+      "script-src 'self' 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob:",
-      "connect-src 'self'",
+      // The beacon POSTs back to cloudflareinsights.com; let it through connect-src too.
+      "connect-src 'self' https://cloudflareinsights.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "object-src 'none'",

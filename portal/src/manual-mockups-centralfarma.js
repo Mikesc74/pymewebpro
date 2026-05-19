@@ -151,7 +151,13 @@ section{padding:5rem 0}
 
 /* Brand graphic · crossfade gallery (pharmacist / delivery / injection) */
 .hero-graphic{
-  position:relative;aspect-ratio:4/5;max-width:440px;margin-left:auto;
+  position:relative;
+  width:100%;max-width:440px;
+  /* aspect-ratio alone breaks when all children are position:absolute (figure
+     content-height collapses to 0 and the ratio can't compute). Use a padding-top
+     trick that works even with zero in-flow content. 5/4 = 125% (height/width). */
+  padding-top:125%;
+  margin-left:auto;margin-right:0;
   border-radius:20px;overflow:hidden;
   box-shadow:0 30px 60px -20px rgba(14,42,77,.30), 0 6px 18px rgba(14,42,77,.12);
   background:var(--brand-50);
