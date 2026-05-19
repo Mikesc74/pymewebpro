@@ -24,6 +24,7 @@ import { renderRobots, renderSitemap } from "./legal.js";
 import { MANUAL_MOCKUPS } from "./manual-mockups.js";
 import { handleEspacioDentalChat } from "./espacio-dental-chat.js";
 import { handleMockupProspects } from "./mockup-prospects.js";
+import { handleProspectChat } from "./prospect-chat.js";
 
 // ─── Public dispatch (called from index.js) ─────────────────────────────────
 
@@ -66,6 +67,17 @@ export async function handleMockups(req, env, ctx, helpers) {
   // booking. See espacio-dental-chat.js for the system prompt + booking flow.
   if (reqHost === "mockups.pymewebpro.com" && p === "/api/espacio-dental/chat") {
     return handleEspacioDentalChat(req, env);
+  }
+
+  // ── Generic prospect chat agent ──────────────────────────────────────────
+  // POST  mockups.pymewebpro.com/api/chat/<slug> → Claude-powered Q&A for any
+  // mockup in the mockup_prospects table. Auto-synthesizes a system prompt
+  // from the brief unless chatbot_system_prompt column is set. Returns
+  // { reply, wa_link?, mode } with wa_link populated on ORDER or HANDOFF
+  // markers. See prospect-chat.js.
+  if (reqHost === "mockups.pymewebpro.com" && p.startsWith("/api/chat/")) {
+    const r = await handleProspectChat(req, env);
+    if (r) return r;
   }
 
   // ── Manual mockups host (mockups.pymewebpro.com) ─────────────────────────
