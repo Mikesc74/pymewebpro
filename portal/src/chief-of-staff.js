@@ -1577,6 +1577,7 @@ async function toolListMockups() {
       "start",
       "medellin-guide",
       "medellin-guide-boutique",
+      "central-farma-drogueria",
     ],
   };
 }
