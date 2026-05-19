@@ -109,7 +109,7 @@ section{padding:5rem 0}
   gap:1rem;padding:.85rem 1.5rem;max-width:1140px;margin:0 auto;
 }
 .brand{display:inline-flex;align-items:center;gap:.65rem;color:var(--navy);font-weight:700}
-.brand-mark{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--sans);font-weight:900;font-size:.92rem;letter-spacing:-.04em;box-shadow:var(--shadow-sm);text-transform:uppercase}
+.brand-mark{width:42px;height:42px;flex:0 0 42px;background-image:url('./logo-mark.png');background-size:contain;background-position:center;background-repeat:no-repeat;filter:drop-shadow(0 1px 2px rgba(14,42,77,.18))}
 .brand-name{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--navy);font-variation-settings:'opsz' 36}
 .brand-sub{font-size:.7rem;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:1px}
 .brand-text{display:flex;flex-direction:column;line-height:1.15}
@@ -172,9 +172,9 @@ section{padding:5rem 0}
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
 .hero-graphic .badge-mark{
-  width:30px;height:30px;border-radius:50%;background:var(--brand);
-  color:#fff;display:flex;align-items:center;justify-content:center;
-  font-family:var(--sans);font-weight:900;font-size:.72rem;letter-spacing:-.04em;
+  width:34px;height:34px;
+  background-image:url('./logo-mark.png');
+  background-size:contain;background-position:center;background-repeat:no-repeat;
 }
 .hero-graphic .badge-text{font-size:.72rem;font-weight:600;color:var(--navy);letter-spacing:.01em;padding-right:.25rem}
 /* Slide caption pill · changes with active slide, gives visual rhythm */
@@ -196,13 +196,12 @@ section{padding:5rem 0}
 
 .hero-graphic .crate-badge{
   left:30%;top:62%;
-  width:14%;aspect-ratio:1/1;
-  background:var(--brand);color:#fff;
-  border-radius:50%;border:3px solid #fff;
-  box-shadow:0 6px 16px rgba(0,0,0,.32), inset 0 -3px 8px rgba(0,0,0,.12);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--sans);font-weight:900;font-size:clamp(.7rem, 2.1vw, 1.4rem);
-  letter-spacing:-.04em;
+  width:16%;aspect-ratio:1/1;
+  background:#fff;
+  background-image:url('./logo-mark.png');
+  background-size:78% 78%;background-position:center;background-repeat:no-repeat;
+  border-radius:50%;
+  box-shadow:0 6px 16px rgba(0,0,0,.32), inset 0 -3px 8px rgba(0,0,0,.06);
   transform:translate(-50%,-50%) rotate(-6deg);
   transform-origin:center;
 }
@@ -397,7 +396,7 @@ footer a:hover{color:var(--cream)}
   padding:.95rem 1.1rem;background:var(--brand);color:#fff;
 }
 .chat-header .who{display:flex;align-items:center;gap:.65rem}
-.chat-header .avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:900;font-size:.78rem;letter-spacing:-.04em}
+.chat-header .avatar{width:38px;height:38px;border-radius:50%;background:#fff;background-image:url('./logo-mark.png');background-size:78% 78%;background-position:center;background-repeat:no-repeat;box-shadow:0 1px 4px rgba(0,0,0,.18)}
 .chat-header .title{font-weight:600;font-size:.95rem;line-height:1.15}
 .chat-header .subtitle{font-size:.72rem;opacity:.85;display:flex;align-items:center;gap:.35rem}
 .chat-header .subtitle::before{content:'';width:7px;height:7px;border-radius:50%;background:#7CF7C5;box-shadow:0 0 0 2px rgba(124,247,197,.25)}
@@ -539,7 +538,7 @@ footer a:hover{color:var(--cream)}
 <header class="nav" aria-label="Navegación principal">
   <div class="nav-inner">
     <a href="#top" class="brand" aria-label="Central Farma Droguería · inicio">
-      <span class="brand-mark" aria-hidden="true">CF</span>
+      <span class="brand-mark" role="img" aria-label="Logo Central Farma"></span>
       <span class="brand-text">
         <span class="brand-name">Central Farma</span>
         <span class="brand-sub">Droguería · Medellín</span>
@@ -593,14 +592,14 @@ footer a:hover{color:var(--cream)}
       <img class="slide" src="./hero-delivery.jpg" alt="Domiciliario de Central Farma en moto con caja entregando un pedido" width="800" height="1000" decoding="async" loading="lazy">
       <img class="slide" src="./hero-injection.jpg" alt="Aplicación profesional de una inyección en Central Farma" width="800" height="1000" decoding="async" loading="lazy">
       <div class="badge" aria-hidden="true">
-        <span class="badge-mark">CF</span>
+        <span class="badge-mark" role="img" aria-label="Central Farma"></span>
         <span class="badge-text">Central Farma</span>
       </div>
       <span class="caption is-active" data-i="0">Atención que se siente cercana</span>
       <span class="caption" data-i="1">Domicilios gratis en tu barrio</span>
       <span class="caption" data-i="2">Inyectología profesional</span>
       <!-- Per-slide overlays · positioned over the delivery photo to brand the crate and clean up the AI-garbled license plate. -->
-      <span class="slide-overlay crate-badge" data-slide="1" aria-hidden="true">CF</span>
+      <span class="slide-overlay crate-badge" data-slide="1" aria-hidden="true"></span>
       <span class="slide-overlay plate-cover" data-slide="1" aria-hidden="true">FAR42M</span>
     </figure>
   </div>
@@ -770,7 +769,7 @@ footer a:hover{color:var(--cream)}
     <div class="foot-grid">
       <div>
         <a href="#top" class="brand" aria-label="Central Farma · inicio">
-          <span class="brand-mark" aria-hidden="true">CF</span>
+          <span class="brand-mark" role="img" aria-label="Logo Central Farma"></span>
           <span class="brand-text">
             <span class="brand-name">Central Farma</span>
             <span class="brand-sub">Droguería · Medellín</span>
@@ -813,7 +812,7 @@ footer a:hover{color:var(--cream)}
 <aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
   <header class="chat-header">
     <div class="who">
-      <div class="avatar" aria-hidden="true">CF</div>
+      <div class="avatar" role="img" aria-label="Central Farma"></div>
       <div>
         <div class="title" id="chatTitle">Asistente Central Farma</div>
         <div class="subtitle">en línea</div>
