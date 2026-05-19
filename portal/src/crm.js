@@ -3778,28 +3778,35 @@ function closeCard() {
 function onCardEsc(e) { if (e.key === "Escape") closeCard(); }
 
 // Pre-built WhatsApp opener / follow-up messages. Variables in {braces} are
-// substituted from the lead row at click time. The first three target specific
-// scenarios from the cold-research import (HOT, DEAD site, hospitality).
+// substituted from the lead row at click time. Cold-outreach openers each lead
+// with a specific observable problem on the prospect's site (slow/mobile, no
+// CTA, bad SEO, no site, broken site) so the message lands as a concrete
+// observation Santi made when reviewing them, not a generic pitch.
 const WA_TEMPLATES = [
   {
-    id: "cold-hot",
-    label: "Cold outreach (HOT lead)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Vimos {business} en {city} y creemos que tiene mucho potencial para crecer con un sitio web propio. Tenemos planes desde $390.000 COP con entrega en 48 horas. ¿Te interesa que hablemos 5 minutos?",
+    id: "cold-slow",
+    label: "Cold outreach (Slow/mobile)",
+    template: "Hola {name}, soy Santi de PymeWebPro. Vi el sitio de {business} y carga lento en celular, donde estan la mayoria de tus clientes. Mi socio canadiense y yo armamos sitios rapidos y optimizados para Colombia. Te hago un mockup gratis mostrandote como se veria el tuyo mejorado. Planes desde $390.000 COP, entrega en 48 horas. ¿Tienes 5 minutos? https://pymewebpro.com/",
   },
   {
-    id: "cold-dead",
-    label: "Cold outreach (DEAD site)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Vimos que {business} tenia un sitio web ({site}) que ya no esta disponible. Tus clientes lo encuentran y piensan que cerraste. Podemos armarte uno nuevo profesional en 48 horas desde $390.000 COP. ¿Hablamos?",
+    id: "cold-no-cta",
+    label: "Cold outreach (No WhatsApp/CTA)",
+    template: "Hola {name}, soy Santi de PymeWebPro. Revise el sitio de {business} y note que no tiene boton de WhatsApp ni una llamada a la accion clara, eso te hace perder clientes que entran pero no saben que hacer. Mi socio canadiense y yo construimos sitios pensados como canal de ventas, no solo vitrina. Te armo un mockup gratis para que veas la diferencia. Desde $390.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
   },
   {
-    id: "cold-hotel",
-    label: "Cold outreach (Hotel)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Sin sitio web propio, {business} esta dejando reservas directas y pagando comisiones a Booking. Armamos sitios de hotel desde $690.000 COP con galeria, reservas y pasarela de pago. Entrega en 48 horas. ¿Te interesa?",
+    id: "cold-seo",
+    label: "Cold outreach (Bad SEO)",
+    template: "Hola {name}, soy Santi de PymeWebPro. Busque {business} en Google y tu sitio no aparece bien posicionado, eso significa clientes yendose a la competencia que si aparece. Mi socio canadiense y yo construimos sitios con SEO local desde el primer dia. Te hago un mockup gratis para que veas el cambio. Desde $390.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
   },
   {
-    id: "cold-restaurant",
-    label: "Cold outreach (Restaurante)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Si dependes solo de Rappi e Instagram para tus pedidos, estas pagando hasta 35% en comisiones. Te armamos un sitio propio con menu, fotos y pedidos directos por WhatsApp en 48 horas, desde $390.000 COP. ¿Te llamo?",
+    id: "cold-no-site",
+    label: "Cold outreach (No site)",
+    template: "Hola {name}, soy Santi de PymeWebPro. Busque {business} en Google y no encontre un sitio web propio, solo aparecen en redes sociales o directorios. Eso significa que clientes que los buscan terminan en la competencia que si tiene sitio. Mi socio canadiense y yo armamos sitios profesionales para PYMES colombianas, pensados como canal de ventas. Te hago un mockup gratis para que veas como se veria el tuyo. Desde $390.000 COP, entrega en 48 horas. ¿Tienes 5 minutos? https://pymewebpro.com/",
+  },
+  {
+    id: "cold-broken",
+    label: "Cold outreach (Broken site)",
+    template: "Hola {name}, soy Santi de PymeWebPro. Entre al sitio de {business} y note que no carga bien o se ve desactualizado, eso te resta credibilidad frente a clientes que te estan comparando con la competencia. Mi socio canadiense y yo armamos sitios profesionales para PYMES colombianas, pensados como canal de ventas. Te hago un mockup gratis mostrandote como se veria renovado. Desde $390.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
   },
   {
     id: "after-quote",

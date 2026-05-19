@@ -108,6 +108,116 @@ Build process for every client site:
 5. `npm run deploy` → goes live at `mockups.pymewebpro.com/<slug>/`
 → Full pipeline: `memory/context/pipeline.md`
 
+## Prospect mockups · build playbook for Claude in Cowork
+
+When Mike says `build mockup for <slug>`, this is the procedure. The studio admin captures the brief in D1; Cowork (you, Claude) does the actual design + build work. Each mockup is bespoke, never template-driven · Mike will reject anything that looks recycled from another build.
+
+### Step 1 · Get the brief
+
+The brief lives in D1 table `mockup_prospects` (uuid 93fc7e21-713c-4479-bb55-69ae05c275dc on the `pymewebpro-portal` db) and includes: business_name, instagram_url, facebook_url, tiktok_url, website_url, style_brief, owner_name, owner_whatsapp, cal_link, notes, chatbot_system_prompt, status. Claude in the Cowork sandbox CANNOT query D1 directly (no Cloudflare creds, admin API is Access-gated). Two paths to obtain the brief:
+- Ask Mike to copy-paste it. Fastest.
+- Have him export from the studio admin at `colguides.com/portal/pymewebpro/admin/mockups/<slug>`.
+
+If `notes` has content, READ IT FIRST. That's Mike's running feedback log from prior iterations.
+
+### Step 2 · Study the brand
+
+Always do this before designing. Skipping it is what produces template-y output.
+- WebFetch usually fails on Instagram/Facebook/TikTok (JS-rendered shells). Either ask Mike for screenshots of the IG profile + 3-4 grid posts + a story, or use the Claude-in-Chrome MCP if the extension is installed.
+- Their existing website (if any) WebFetches fine and tells you their actual copy voice, layout instincts, what they highlight.
+- Extract from sources: logo + palette (use the actual hex of the dominant color, not "green"), typography vibe in their graphics, photography style (photo-driven vs type-and-icon driven), voice (formal vs warm, paisa-friendly vs neutral), what services they emphasize, brand archetype (caregiver, expert, friend, etc).
+- Confirm with Mike before designing: address, hours, services, anything the owner specifically wants featured. Don't fabricate operational details · clearly placeholder anything you don't know.
+
+### Step 3 · Pick the design direction
+
+- Spanish primary. Only add English secondary if the brief explicitly says so (expat-facing).
+- Pick a type pairing distinct from existing mockups so the studio's work doesn't look interchangeable. Current pairings in use: see `manual-mockups/*/index.html`. Avoid copying.
+- Pick 4-6 brand colors with explicit hex values. Don't reach for the generic teal/coral palette by default.
+- Decide photo vs type-and-icon driven. If the brand's IG is graphic-heavy (badges, callouts, illustration), type-and-icon often beats photo. If they shoot a lot of product/people, photo-driven works.
+- The "voice" of CTAs and copy must match the brand archetype. A caregiver pharmacy ("Tu droguería de confianza") doesn't speak the same way as a parfumerie ("Vestida para arruinarles la noche").
+
+### Step 4 · Build the bespoke HTML
+
+Write `manual-mockups/<slug>/index.html`. Hard constraints:
+- Fully self-contained: inline CSS, optional inline JS, no external CSS framework.
+- Allowed externals: Google Fonts preconnect + stylesheet, the brand's logo file embedded via `rebuild-mockups.mjs` base64 pipeline.
+- No em dashes anywhere in user-visible text.
+- Mobile-first, breakpoint at ~780-880px depending on layout.
+- Honor `prefers-reduced-motion`, include `@media print` cleanup, semantic HTML.
+- JSON-LD: at minimum LocalBusiness + relevant Service.
+- Chat widget mandatory: floating fab + slide-up panel + JS that POSTs to `/api/chat/<slug>` and handles `[ORDER]` / `[HANDOFF]` markers → wa.me link. Reuse the structure from `manual-mockups/central-farma-drogueria/index.html`.
+- All visible CTAs route to the chat agent (`data-action="open-chat"`), NOT directly to WhatsApp. Contact info cards and footer can show WhatsApp as data.
+
+### Step 5 · Image handling
+
+Gemini Imagen generates good photos but mangles embedded text (logos on signage, license plates, etc). When Mike provides images:
+- They land as PNGs from Imagen. Compress to JPG in the sandbox:
+  ```bash
+  cd /sessions/bold-keen-davinci/mnt/code/pymewebpro/manual-mockups/<slug>
+  for f in hero-*.png; do
+    convert "$f" -resize "1000x>" -strip -quality 82 -interlace JPEG "${f%.png}.jpg"
+  done
+  ```
+  Targets: ~100-200KB per JPG, max width 1000px, quality 82.
+- Logo files: keep as PNG (transparency matters), ~100KB or smaller. Use it via `background-image:url('./logo-mark.png')` in CSS so the rebuild script base64-embeds it ONCE and every touchpoint reuses it via the class.
+- For per-photo brand overlays (CF badge on a delivery crate, fake clean license plate), use absolutely-positioned overlay elements scoped to a specific slide via `[data-slide="N"]` attribute selectors. Be ready to iterate on percentage positioning from screenshots Mike sends. Don't guess pixel-precise on the first try.
+
+### Step 6 · Lessons learned (gotchas to avoid)
+
+- **`aspect-ratio` collapses to zero when all children are `position:absolute`.** Use the `padding-top:<ratio>%` trick instead (e.g. `padding-top:125%` for 4:5). The CF gallery silently rendered at zero height for half a day because of this.
+- **Imagen embeds garbled text in plates/signs.** Don't ask Imagen to render specific brand text (it auto-completes to plausible existing brands · "CF" became "COLOMBIA FAST CF"). Generate clean blank surfaces and overlay branding via CSS.
+- **CSP set by `withSecurityHeaders` in `portal/src/index.js`** restricts what scripts can load. Cloudflare's Web Analytics beacon is allowed via the explicit `static.cloudflareinsights.com` addition. If you load any new third-party (analytics, fonts beyond Google, etc), update the CSP allowlist there.
+- **Heavy base64 bundles are fine.** Existing mockups range from 28KB to 1.7MB. Lighthouse doesn't penalize inline images the way it penalizes blocking HTTP waterfalls.
+- **Stale "por WhatsApp" copy.** When the agent is the front door, every "escríbenos por WhatsApp" and "pídenos por WhatsApp" in user-visible copy must be swapped. Keep WhatsApp framing only in (a) the chat widget's error fallback and footer disclaimer, (b) contact-info cards as data.
+- **The studio admin's auto-synthesized chatbot prompt is too thin.** Once a mockup is past the first draft, populate `chatbot_system_prompt` with real (or plausibly-made-up-for-mockup) FAQ data: products carried, prices, coverage zones, services. Otherwise the agent escalates every specific question to WhatsApp, defeating its own purpose.
+
+### Step 7 · Quality gate (blocks deploy)
+
+```bash
+cd ~/code/pymewebpro/portal
+node scripts/check-standards.mjs
+```
+
+Must return 0 FAILs. WARN-level issues (Organization JSON-LD regex, og:title, NIT block for Colombian sites) are acceptable as long as they're considered. Production mockups generally have 2-3 standing WARNs.
+
+### Step 8 · Wire into the registry
+
+For a NEW slug:
+1. Append `import { <camelCase>Html } from "./manual-mockups-<flatslug>.js";` to `portal/src/manual-mockups.js`.
+2. Add the entry to the `MANUAL_MOCKUPS` map in the same file.
+3. Create an empty placeholder file at `portal/src/manual-mockups-<flatslug>.js` so the rebuild script has somewhere to write.
+4. Add the slug to `toolListMockups()` in `portal/src/chief-of-staff.js` so the studio's chief-of-staff agent knows about it.
+
+For an EXISTING slug being re-built (iteration): no registry changes needed.
+
+### Step 9 · Rebuild + deploy
+
+```bash
+cd ~/code/pymewebpro/portal
+node scripts/rebuild-mockups.mjs          # base64-embed images, regenerate bundle
+node scripts/check-standards.mjs           # block on FAILs
+wrangler deploy                            # ~5s to ship
+cd .. && git add -A && \
+  git commit -m "<slug>: <short summary of what changed>" && \
+  git push                                 # for posterity
+```
+
+Live URL: `https://mockups.pymewebpro.com/<slug>/`.
+
+### Step 10 · Confirm with Mike + log
+
+- Paste the live URL + a 3-line summary of what shipped (sections, visual direction, anything to verify on his end).
+- Tell Mike to flip the prospect's `status` from `brief` to `live` in the studio admin once the URL renders correctly. This keeps the listing honest AND lets the "Copy build prompt" button auto-detect `revise` vs `build` on next iteration.
+- Add a Recent changes entry at the top of `~/code/pymewebpro/CLAUDE.md`. Date, slug, files touched, deploy command, any follow-ups.
+- The first build is rarely the last. Mike iterates via the `notes` textarea on the prospect's admin row. Next session reads those notes first.
+
+### Step 11 · Generic chatbot
+
+The chat widget on every prospect mockup talks to `mockups.pymewebpro.com/api/chat/<slug>` (handler at `portal/src/prospect-chat.js`). It auto-synthesizes a Spanish system prompt from the brief unless `chatbot_system_prompt` is set on the D1 row. After the first build:
+- Draft a real FAQ-style system prompt as a `chatbot-prompt.md` file alongside the index.html (so it's checked into git).
+- Tell Mike: `cat manual-mockups/<slug>/chatbot-prompt.md | pbcopy`, then paste into the System prompt textarea in studio admin, save.
+- The agent picks it up on next request (no deploy needed; D1 reads are live).
+
 ## Production marketing site
 
 The studio's primary site at **pymewebpro.com** is Spanish-primary, Colombian-market only. Served by Cloudflare Pages directly from the repo root: **`index.html`** (Spanish, primary) and **`en/index.html`** (English secondary). Edit those files directly. There is no longer a `manual-mockups/pymewebpro-v4/` build-source folder, no `scripts/build-bilingual.mjs`, no `npm run build:bilingual` step. `check:standards` (run by `npm run check`) validates both root files in-place.
@@ -267,6 +377,10 @@ When in doubt, look at how Daga, BWI, or Espacio Dental handle the equivalent mo
 
 ## Recent changes
 
+- **2026-05-19 (later x8)** · **Removed inviersol.com routes from pymewebpro-portal `wrangler.toml`.** Edited `portal/wrangler.toml` to drop `{ pattern = "inviersol.com/*", zone_name = "inviersol.com" }` and `{ pattern = "www.inviersol.com/*", zone_name = "inviersol.com" }`. Replaced with a comment block explaining the trap: inviersol.com now lives on its own dedicated Cloudflare Pages project (`inviersol`, repo `~/code/Inviersol/`), and pymewebpro-portal has zero per-host logic for inviersol, so any deploy with those routes declared causes pymewebpro-portal to hijack inviersol.com and serve empty 200s for every request. Symptom is the entire site going dark while `inviersol.pages.dev` still serves fine. Today's pymewebpro-portal deploy at 19:33 UTC re-attached the routes (wrangler syncs routes from wrangler.toml on every deploy) and took inviersol offline ~10 minutes after we'd brought it back. **Deploy:** no immediate redeploy needed · the manual route deletion in the inviersol.com zone stays in effect as long as no one redeploys pymewebpro-portal from an older checkout of this repo. Next time pymewebpro-portal IS deployed, wrangler will reconcile and the routes will stay gone. See `~/code/Inviersol/CLAUDE.md` Recent changes 2026-05-19 (later) for full incident write-up.
+- **2026-05-19 (later x7)** · **Studio admin: "Copy build prompt" button on mockup detail page.** Click → assembles a Cowork-ready prompt from form state (slug, brief, social URLs, owner contact, style brief, iteration notes, chatbot-prompt presence) and writes it to clipboard. Mike clicks → switches to Cowork → pastes → Claude has the full brief inline and follows the playbook without a separate "paste the brief" step. Prompt auto-uses `build` for first-time prospects (no chatbot_system_prompt + status != live) and `revise` for follow-ups, so existing live mockups don't get rebuilt from scratch. New state: `copiedAt` toast for "✓ Build prompt copied to clipboard". File: `portal/src/index.js` MockupProspectDetail · adds `buildPrompt()` + `copyBuildPrompt()` + the button with `<Copy>` icon between Save and Archive, plus an updated hint string. Also patched the build playbook (Step 10) to remind future builds to flip prospect status from `brief` to `live` after first deploy so the listing stays honest. Deploy: `cd portal && wrangler deploy`.
+- **2026-05-19 (later x6)** · **CRM WhatsApp templates · replaced 4 generic cold-outreach openers with 5 problem-led versions.** Edited `WA_TEMPLATES` in `portal/src/crm.js` (lines ~3783). Removed: `cold-hot`, `cold-dead`, `cold-hotel`, `cold-restaurant` (all generic "tiene mucho potencial" type pitches). Added: `cold-slow` (sitio carga lento en celular), `cold-no-cta` (no boton de WhatsApp ni CTA clara), `cold-seo` (no aparece bien en Google), `cold-no-site` (no encontre sitio propio), `cold-broken` (sitio no carga bien o desactualizado). Each opens with a specific observable problem on the prospect's site instead of a vague pitch · the hook is "I looked at your site and noticed X" rather than "we can help you." Kept the 4 follow-up templates (after-quote, followup-3day, followup-week, final-touch) untouched. Style matches existing templates: informal "tu", ASCII Spanish (no accents to avoid WA URL-encoding issues), `{business}` substitution, single-line. All include the pymewebpro.com URL at the end. **Deploy:** `cd portal && wrangler deploy`. **Verify:** open colguides.com/portal/pymewebpro/admin/crm, click ▾ next to any contact's WhatsApp button, confirm the picker now shows the 5 new openers + 4 follow-ups.
+- **2026-05-19 (later x5)** · **Commit 2 of 3 of the mockup-prospects pipeline · build playbook landed in CLAUDE.md.** Added a "Prospect mockups · build playbook for Claude in Cowork" section (after "Pipeline · manual mockup"). Documents the 11-step procedure a future Claude session follows when it hears `build mockup for <slug>`: get brief from D1 via Mike, study sources, pick bespoke design direction, build HTML, handle images (compress PNGs to JPGs, Imagen text gotchas, CSS overlays), avoid the documented gotchas (aspect-ratio + absolute children collapses, CSP allowlist, stale WA copy), run check-standards, wire into registry, deploy, log to changelog, populate `chatbot_system_prompt` with real FAQ. Captures lessons from the CF build so the next prospect doesn't re-derive them.
 - **2026-05-19 (later x4)** · **CF mockup · chat agent is the front door, WhatsApp CTAs replaced.** Nav, hero, and visit-panel buttons no longer dump to wa.me. They open the chat panel via `data-action="open-chat"` (JS extracted `openPanel` to a shared dispatcher). Customer talks to the agent first; the agent decides if/when to escalate to Carlos via the existing `[ORDER]` / `[HANDOFF]` markers → wa.me link. WhatsApp links in the contact info cards + footer stay (those are contact data, not action CTAs). **Substantive system prompt drafted** at `manual-mockups/central-farma-drogueria/chatbot-prompt.md` (~1900 tokens of Spanish brand-aware FAQ: products carried, prices, delivery zones, payment methods, inyectología services + costs, escalation rules). Mock data, plausibly Colombian, marked clearly as approximate so Carlos can replace with real figures. **Studio admin SPA gains a `chatbot_system_prompt` textarea** in the chatbot section of MockupProspectDetail · 14 rows, monospace, with a live char/token counter, so Mike can paste/iterate the prompt from the UI without SQL. Save payload + API already accept the field. **Deploy:** `cd portal && wrangler deploy`. **Next:** Mike pastes the chatbot-prompt.md contents into the new admin textarea on the CF row, saves, tests chat. If the agent still escalates too eagerly, tighten the HANDOFF criteria section of the prompt.
 - **2026-05-19 (later x3)** · **CF mockup hero gallery + real logo.** Replaced the SVG monogram-on-green-ring hero graphic with a 4:5 rotating photo carousel (2s crossfade, hover-pause, pauses when tab is hidden, respects `prefers-reduced-motion`). Three Gemini-generated photos: `hero-pharmacist.jpg` (Diana P., handing a box to a customer), `hero-delivery.jpg` (delivery driver lifting helmet next to scooter), `hero-injection.jpg` (Paula R. administering a vaccine). All shot to read as the same studio session. Compressed from ~6MB raw PNG to ~424KB total JPG (q=82, 1000px max) via `convert` in sandbox. **Per-slide overlays** composited only when the delivery slide is active: a white circular CF logo badge (`.crate-badge` at `left:30%, top:62%, width:16%`) sits on the green delivery crate, and a synthetic Colombian motorcycle plate (`.plate-cover` showing "FAR42M", positioned over the AI-garbled original) covers up Imagen's mangled plate text. **Real CF logo wired everywhere.** Logo image `logo-mark.png` (97KB) base64-embedded ONCE via CSS `background-image` on `.brand-mark`, then reused across nav, footer, hero badge, chat avatar, crate overlay. Spans/divs are now empty with `role="img"` + Spanish `aria-label`. **Final bundle: 1125KB** (vs. espacio-dental at 1725KB). Position tuning for crate badge + plate cover is eyeballed — needs visual fine-tune after deploy. **Deploy:** `cd portal && wrangler deploy`. **Note:** original .png hero files are still on disk in `manual-mockups/central-farma-drogueria/` (sandbox can't delete). Mike to `rm hero-*.png` manually.
 - **2026-05-19 (later x2)** · **Generic prospect chat agent · Commit 3 of the mockup-prospects pipeline.** Every prospect mockup now gets a real chat agent that answers questions, takes orders, and hands off to the owner by WhatsApp · without per-brand code. Endpoint: `POST mockups.pymewebpro.com/api/chat/<slug>`. **Files added:** `portal/src/prospect-chat.js` (loads `mockup_prospects` row by slug, auto-synthesizes a Spanish system prompt from `business_name` + `style_brief` + `owner_name` + `owner_whatsapp` + `cal_link` unless `chatbot_system_prompt` column is set as a manual override; runs Claude Haiku 4.5; detects `[ORDER: items=...; address=...; phone=...]` and `[HANDOFF: reason=...]` markers in the reply and converts them to a `wa.me` link with a pre-filled message to the owner; returns `{reply, wa_link?, mode}`). **Files changed:** `portal/src/mockups.js` imports + dispatches `handleProspectChat` for any path matching `/api/chat/<slug>` on `mockups.pymewebpro.com`, ordered after the hardcoded espacio-dental matcher so legacy traffic keeps working. **CF mockup wired to the new agent:** replaced the placeholder WhatsApp fab in `manual-mockups/central-farma-drogueria/index.html` with a full chat panel · slide-up modal, brand-green header with "CF" avatar + live indicator, message bubbles, typing dots, error states, WhatsApp CTA when the agent emits an ORDER/HANDOFF marker. Mobile: full-screen modal. Bundle: 32KB → 41KB raw. **Espacio Dental NOT cut over** in this commit · keeps its hardcoded `espacio-dental-chat.js` (different language flow, different booking marker) until a separate migration commit. **Secret:** uses existing `env.ANTHROPIC_API_KEY` already set on the worker. **Deploy:** `cd portal && wrangler deploy`. **Follow-ups:** "Generate system prompt" button in the studio admin SPA (let Mike review/edit the auto-synthesized prompt before going live); cut espacio-dental over to the generic handler once we've verified the Spanish flow on CF; rate limiting per IP; "Open in WhatsApp now" passthrough button at top of chat for users who just want to skip the bot.

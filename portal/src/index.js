@@ -3472,8 +3472,64 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const [saving, setSaving] = useState(false);
       const [error, setError] = useState(null);
       const [savedAt, setSavedAt] = useState(null);
+      const [copiedAt, setCopiedAt] = useState(null);
 
       function set(k, v) { setForm(prev => ({ ...prev, [k]: v })); }
+
+      // Build a Cowork-ready prompt that travels with the full brief. Mike clicks
+      // "Copy build prompt", switches to Cowork, pastes. Claude reads the brief
+      // inline and follows the playbook in CLAUDE.md without a separate paste step.
+      function buildPrompt() {
+        // NOTE: the whole AdminApp lives inside a top-level template literal
+        // (FRONTEND_HTML), so backtick template strings and dollar-brace
+        // interpolation are not safe here without escaping. This function uses
+        // plain string concatenation throughout.
+        var f = form;
+        var isFirstBuild = !f.chatbot_system_prompt && f.status !== 'live';
+        var action = isFirstBuild ? 'build' : 'revise';
+        function dash(v) { return (v && String(v).trim()) ? v : '—'; }
+        var lines = [
+          action + ' mockup for ' + f.slug,
+          '',
+          '## Brief',
+          '',
+          '- Business: ' + dash(f.business_name),
+          '- Slug: ' + f.slug,
+          '- Status: ' + dash(f.status),
+          '- Instagram: ' + dash(f.instagram_url),
+          '- Facebook: ' + dash(f.facebook_url),
+          '- TikTok: ' + dash(f.tiktok_url),
+          '- Existing website: ' + dash(f.website_url),
+          '- Owner: ' + dash(f.owner_name) + ' · WhatsApp ' + dash(f.owner_whatsapp),
+          '- Cal.com: ' + dash(f.cal_link),
+          '- Live mockup URL: https://mockups.pymewebpro.com/' + f.slug + '/',
+          '',
+          '## Style brief',
+          '',
+          (f.style_brief && f.style_brief.trim()) ? f.style_brief.trim() : '_(empty)_',
+          '',
+          '## Iteration notes (READ FIRST if not empty)',
+          '',
+          (f.notes && f.notes.trim()) ? f.notes.trim() : '_(none yet · first build)_',
+          '',
+          '## Chatbot system prompt (D1)',
+          '',
+          (f.chatbot_system_prompt && f.chatbot_system_prompt.trim())
+            ? '_(populated · ' + f.chatbot_system_prompt.length.toLocaleString() + ' chars · the live chat agent uses this)_'
+            : '_(empty · agent auto-synthesizes from style brief)_',
+        ];
+        return lines.join('\n');
+      }
+
+      async function copyBuildPrompt() {
+        try {
+          await navigator.clipboard.writeText(buildPrompt());
+          setCopiedAt(Date.now());
+          setTimeout(() => setCopiedAt(null), 2200);
+        } catch (e) {
+          setError('Clipboard write failed: ' + (e.message || e));
+        }
+      }
 
       async function save() {
         setSaving(true); setError(null);
@@ -3573,11 +3629,15 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
           {error && <div style={{color:'#FCA5A5',fontSize:'0.85rem',marginBottom:'1rem'}}>{error}</div>}
           {savedAt && !error && <div style={{color:'#86efac',fontSize:'0.8rem',marginBottom:'1rem'}}>✓ Saved {new Date(savedAt).toLocaleTimeString()}</div>}
+          {copiedAt && <div style={{color:'#86efac',fontSize:'0.8rem',marginBottom:'1rem'}}>✓ Build prompt copied to clipboard · paste into Cowork to start</div>}
 
-          <div style={{display:'flex',gap:'0.75rem',alignItems:'center'}}>
+          <div style={{display:'flex',gap:'0.75rem',alignItems:'center',flexWrap:'wrap'}}>
             <button onClick={save} disabled={saving} style={{...primaryBtn,padding:'0.55rem 1.5rem'}}>{saving?'Saving…':'Save brief'}</button>
+            <button onClick={copyBuildPrompt} style={{...ghostBtn,padding:'0.55rem 1rem',fontSize:'0.82rem',display:'inline-flex',alignItems:'center',gap:'0.4rem',color:'#F2896A',borderColor:'rgba(210,74,29,0.45)'}} title="Copy a Cowork-ready prompt with the full brief, then paste into Claude in Cowork">
+              <Copy size={13} /> Copy build prompt
+            </button>
             <button onClick={archive} style={{...ghostBtn,padding:'0.55rem 1rem',fontSize:'0.78rem',color:'#FCA5A5',borderColor:'rgba(252,165,165,0.3)'}}>Archive</button>
-            <div style={{marginLeft:'auto',fontSize:'0.75rem',color:'var(--pwp-mute)'}}>Then ping Claude in Cowork: <code>build mockup for {prospect.slug}</code></div>
+            <div style={{marginLeft:'auto',fontSize:'0.75rem',color:'var(--pwp-mute)',maxWidth:'320px',textAlign:'right'}}>Save first, then <b>Copy build prompt</b> · paste into Claude in Cowork and the build starts with the full brief inline.</div>
           </div>
         </main>
       );
