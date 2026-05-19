@@ -19,7 +19,6 @@ import { marenaHtml } from "./manual-mockups-marena.js";
 import { startHtml } from "./manual-mockups-start.js";
 import { medellinGuideHtml } from "./manual-mockups-medellinguide.js";
 import { medellinGuideBoutiqueHtml } from "./manual-mockups-medellinguideboutique.js";
-import { medellinGuideCatHtml } from "./manual-mockups-medellinguidecat.js";
 
 // ─── Registry ───────────────────────────────────────────────────────────────
 // Keys must be lowercase, URL-safe slugs (a-z, 0-9, hyphen). Each value is a
@@ -34,5 +33,4 @@ export const MANUAL_MOCKUPS = {
   start: startHtml,
   "medellin-guide": medellinGuideHtml,
   "medellin-guide-boutique": medellinGuideBoutiqueHtml,
-  "medellin-guide-cat": medellinGuideCatHtml,
 };

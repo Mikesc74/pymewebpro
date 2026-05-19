@@ -1577,7 +1577,6 @@ async function toolListMockups() {
       "start",
       "medellin-guide",
       "medellin-guide-boutique",
-      "medellin-guide-cat",
     ],
   };
 }
