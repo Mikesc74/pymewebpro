@@ -110,30 +110,34 @@ Build process for every client site:
 
 ## Production marketing site
 
-The studio's primary site at **pymewebpro.com** is Spanish-primary, Colombian-market only. It is served by Cloudflare Pages from the repo root `index.html` (sibling Pages project, not the Worker). Source-of-truth HTML lives at `manual-mockups/pymewebpro-ca/index.html` (legacy folder name — kept for git history, contents are now Colombia-only) — copy to repo root after edits and `git push` to deploy via Pages.
+The studio's primary site at **pymewebpro.com** is Spanish-primary, Colombian-market only. Served by Cloudflare Pages directly from the repo root: **`index.html`** (Spanish, primary) and **`en/index.html`** (English secondary). Edit those files directly. There is no longer a `manual-mockups/pymewebpro-v4/` build-source folder, no `scripts/build-bilingual.mjs`, no `npm run build:bilingual` step. `check:standards` (run by `npm run check`) validates both root files in-place.
 
 ES (primary): $390.000 / $690.000 COP, Wompi payments, Colombian-market copy.
 EN (secondary courtesy): optional English version for English-speaking Colombian residents and expats. Same COP pricing. Same Colombian-market positioning. NOT an NA-market funnel.
 
-Single footer with Medellín location and the Norte Sur NIT block. The site previously had London/Ontario + NA-market framing — that is stale and should be removed wherever it still appears.
+Single footer with Medellín location and the Norte Sur NIT block.
 
-**Outstanding cleanup as of 2026-05-13:** Homepage `index.html`, `en/index.html`, and various other pages still contain `.price-na` / `.price-co` swap classes, "$500 CAD" references, London/Ontario footer entries, and "Canadian-led, built in Medellín" framing. These need a sweep to remove. The new traffic guide pages at `/guides/traffic/` and `/en/guides/traffic/` were corrected on 2026-05-13.
+**Section 4 "La Prueba" testimonials** ship three Google reviews in a 3-column grid at desktop/tablet (single column on mobile): Patrick Detzner (Schedulator), Orlando de La Flor Ferrari (Blue Whale International), Santiago Florez (Inviersol).
 
-## Active client mockups (8 wired)
+**`builds-grid` below the reviews** points at the public-facing URL for each build. Live customer sites use their real domain (Schedulator → schedulator2.vercel.app, Inviersol → inviersol.com), concept mockups use `mockups.pymewebpro.com/<slug>/`.
+
+## Active client mockups (6 wired)
+
+Three former entries (`schedulator`, `inviersol`, all `pymewebpro-*` variants) were removed from the mockups registry on 2026-05-18 because they're either now live on their own domains or no longer needed.
 
 | Slug | Brand | Sector | Status |
 |------|-------|--------|--------|
-| `schedulator` | The Schedulator | B2B SaaS | Live, v21 shipped |
 | `blues-kitchen` | The Blues Kitchen | Events venue | Live, photos embedded |
 | `daga-parfum` | Daga Parfum | Luxury fragrance e-comm | Live |
 | `blue-whale-international` | BWI Talent | Finance + tech recruiting | Live, refocused 2026-05 |
 | `espacio-dental` | Espacio Dental | Dental clinic (expat-targeted) | Live |
-| `pymewebpro-ca` | PymeWebPro (now bilingual EN/ES, primary site) | Studio's own | Live · also = root pymewebpro.com |
 | `marena` | Marena | Fashion retail (cold outreach) | Live |
 | `start` | PymeWebPro /start | Tutorial walkthrough page | Live |
 → Per-client briefs: `memory/projects/`
 
-All 7 sites with a navbar (i.e. all except `start`) ship a **working hamburger drawer**: 3-bar toggle → animated X, slide-in `.nav-drawer` from right with brand-tinted scrim, body scroll lock, close on link/scrim/Escape. Brand colors per site via `--accent`, `--ink`, `--line` vars.
+Plus three `medellin-guide*` variants for the sibling guide network.
+
+All sites with a navbar (i.e. all except `start`) ship a **working hamburger drawer**: 3-bar toggle → animated X, slide-in `.nav-drawer` from right with brand-tinted scrim, body scroll lock, close on link/scrim/Escape. Brand colors per site via `--accent`, `--ink`, `--line` vars.
 
 ## Tech stack
 
@@ -260,3 +264,7 @@ When in doubt, look at how Daga, BWI, or Espacio Dental handle the equivalent mo
 | **Essential / Pro** | The two pricing tiers · $390.000 COP / $690.000 COP one-time, Colombia-only |
 | **mockups subdomain** | mockups.pymewebpro.com |
 → Full glossary: `memory/glossary.md`
+
+## Recent changes
+
+- **2026-05-18** · Section 4 testimonials + builds-grid + flattened build:bilingual indirection. Added Santiago Florez (Inviersol) as third Google review on pymewebpro.com (ES + EN), switched section 4 grid to 3 columns desktop/tablet, smaller card padding/font, single column on mobile. Pointed Schedulator build tile at `schedulator2.vercel.app` and added Inviersol tile pointing at `inviersol.com` (both live clients, not mockups). **Removed slugs from `MANUAL_MOCKUPS`:** `schedulator`, `inviersol`, `pymewebpro-ca`, `pymewebpro-v1`, `pymewebpro-v3`, `pymewebpro-v3-es`, `pymewebpro-v3-fr`, `pymewebpro-v4`, `pymewebpro-v4-es`. Registry now 9 slugs (6 client/concept mockups + 3 medellin-guide variants + start). **Flattened production build:** root `index.html` + `en/index.html` are now the actual source of truth. Deleted the indirection: removed `npm run build:bilingual` from the `check` chain. `check:standards` now validates the root files in-place as "pymewebpro.com (ES)" and "(EN)" entries. CLAUDE.md was previously stale: it claimed `manual-mockups/pymewebpro-ca/index.html` was source-of-truth when build:bilingual actually sourced from `pymewebpro-v4`/`-es`. Cost a wasted hour. **DNS:** Mike re-added a proxied A record for `mockups.pymewebpro.com` (was missing entirely, which had killed every "See the build" tile on the homepage). **Files Mike still needs to `rm` manually** (cowork sandbox can't delete): `manual-mockups/{inviersol,schedulator,pymewebpro-ca,pymewebpro-v1,pymewebpro-v3,pymewebpro-v3-es,pymewebpro-v3-fr,pymewebpro-v4,pymewebpro-v4-es}/`, `scripts/{build-bilingual,promote-v4}.mjs`, `portal/src/manual-mockups-{inviersol,schedulator,pymewebproca,pymewebprov1,pymewebprov3,pymewebprov3es,pymewebprov3fr,pymewebprov4,pymewebprov4es}.js`. Also synced the static slug list in `portal/src/chief-of-staff.js` `toolListMockups()` with the new registry. Deploy: `cd portal && wrangler deploy` (worker), `git push` (Pages).

@@ -1567,26 +1567,17 @@ async function toolReadDoc({ name }) {
 async function toolListMockups() {
   // Lista estática, sincronizada manualmente con MANUAL_MOCKUPS en manual-mockups.js.
   return {
-    note: "Slugs activos en mockups.pymewebpro.com/<slug>/. Para detalle por cliente revisa memory/projects/<slug>.md.",
+    note: "Slugs activos en mockups.pymewebpro.com/<slug>/. Para detalle por cliente revisa memory/projects/<slug>.md. Schedulator e Inviersol ya están en vivo en sus dominios (schedulator2.vercel.app, inviersol.com) y no están en mockups.",
     slugs: [
-      "schedulator",
       "blues-kitchen",
       "daga-parfum",
       "blue-whale-international",
       "espacio-dental",
-      "pymewebpro-ca",
-      "pymewebpro-v1",
-      "pymewebpro-v3",
-      "pymewebpro-v3-es",
-      "pymewebpro-v3-fr",
-      "pymewebpro-v4",
-      "pymewebpro-v4-es",
       "marena",
       "start",
-      "inviersol",
-      "medellinguide",
-      "medellinguideboutique",
-      "medellinguidecat",
+      "medellin-guide",
+      "medellin-guide-boutique",
+      "medellin-guide-cat",
     ],
   };
 }

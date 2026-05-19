@@ -21,9 +21,18 @@ const FULL_SITE_EXEMPT = new Set(["start", "_template"]);
 // Sites that target Colombia and therefore need NIT + Cámara compliance.
 // Default to assuming a site doesn't unless flagged.
 const COLOMBIAN_SITES = new Set([
-  "blues-kitchen", "daga-parfum", "espacio-dental", "marena", "pymewebpro-ca",
-  "pymewebpro-v4", "pymewebpro-v4-es",
+  "blues-kitchen", "daga-parfum", "espacio-dental", "marena",
+  "pymewebpro.com (ES)", "pymewebpro.com (EN)",
 ]);
+
+// Extra production HTML files (outside manual-mockups/) we still want to
+// validate. After the build-bilingual flatten on 2026-05-18, the live
+// pymewebpro.com pages ARE the source of truth, served directly by
+// Cloudflare Pages — no intermediate mockup folder.
+const PRODUCTION_SITES = [
+  { label: "pymewebpro.com (ES)", file: path.resolve(STUDIO, "index.html") },
+  { label: "pymewebpro.com (EN)", file: path.resolve(STUDIO, "en/index.html") },
+];
 
 const checks = [
   {
@@ -123,32 +132,34 @@ const checks = [
   },
 ];
 
-function validateSite(slug) {
-  const file = path.join(MOCKUPS_DIR, slug, "index.html");
-  if (!fs.existsSync(file)) return { slug, missing: true, results: [] };
+function validateSite(label, file) {
+  if (!fs.existsSync(file)) return { slug: label, missing: true, results: [] };
   const html = fs.readFileSync(file, "utf-8");
   const results = checks.map((check) => ({
     name: check.name,
     severity: check.severity,
-    pass: check.test(html, slug),
+    pass: check.test(html, label),
   }));
-  return { slug, results, bytes: html.length };
+  return { slug: label, results, bytes: html.length };
 }
 
-const slugs = fs.readdirSync(MOCKUPS_DIR, { withFileTypes: true })
+const mockupSites = fs.readdirSync(MOCKUPS_DIR, { withFileTypes: true })
   .filter((d) => d.isDirectory() && !d.name.startsWith("_"))
   .map((d) => d.name)
-  .filter((s) => !FULL_SITE_EXEMPT.has(s));
+  .filter((s) => !FULL_SITE_EXEMPT.has(s))
+  .map((slug) => ({ label: slug, file: path.join(MOCKUPS_DIR, slug, "index.html") }));
+
+const sites = [...PRODUCTION_SITES, ...mockupSites];
 
 let totalFails = 0;
 let totalWarns = 0;
 
-console.log(`[check-standards] Validating ${slugs.length} mockup site(s)...\n`);
+console.log(`[check-standards] Validating ${sites.length} site(s)...\n`);
 
-for (const slug of slugs) {
-  const { results, missing, bytes } = validateSite(slug);
+for (const { label, file } of sites) {
+  const { results, missing, bytes } = validateSite(label, file);
   if (missing) {
-    console.log(`  ✗ ${slug} — index.html missing`);
+    console.log(`  ✗ ${label} — index.html missing`);
     totalFails++;
     continue;
   }
@@ -164,13 +175,13 @@ for (const slug of slugs) {
       ? "⚠"
       : "✗";
   const sizeKb = Math.round(bytes / 1024);
-  console.log(`  ${status} ${slug} (${sizeKb}KB)`);
+  console.log(`  ${status} ${label} (${sizeKb}KB)`);
 
   for (const r of fails) console.log(`      ✗ FAIL: ${r.name}`);
   for (const r of warns) console.log(`      ⚠ WARN: ${r.name}`);
 }
 
-console.log(`\n[check-standards] ${slugs.length} site(s) checked · ${totalFails} fail(s) · ${totalWarns} warn(s)`);
+console.log(`\n[check-standards] ${sites.length} site(s) checked · ${totalFails} fail(s) · ${totalWarns} warn(s)`);
 
 if (totalFails > 0) {
   console.error("[check-standards] BLOCKING: at least one FAIL — fix before deploy.");

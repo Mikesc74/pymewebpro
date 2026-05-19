@@ -44,10 +44,10 @@
 {"@context":"https://schema.org","@type":"WebSite","name":"PymeWebPro","url":"https://pymewebpro.com/","inLanguage":["en","es"]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Service","serviceType":"Diseño y construcción de página de ventas","provider":{"@type":"Organization","name":"PymeWebPro"},"name":"Página de ventas Essential","areaServed":["CO"],"offers":{"@type":"Offer","price":"390000","priceCurrency":"COP","availability":"https://schema.org/InStock"}}
+{"@context":"https://schema.org","@type":"Service","serviceType":"Diseño y construcción de página de ventas","provider":{"@type":"Organization","name":"PymeWebPro"},"name":"Página de ventas Essential","areaServed":["CA","US","CO"],"offers":{"@type":"Offer","price":"500","priceCurrency":"CAD","availability":"https://schema.org/InStock"}}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Service","serviceType":"Diseño y construcción de página de ventas","provider":{"@type":"Organization","name":"PymeWebPro"},"name":"Página de ventas Pro","areaServed":["CO"],"offers":{"@type":"Offer","price":"690000","priceCurrency":"COP","availability":"https://schema.org/InStock"}}
+{"@context":"https://schema.org","@type":"Service","serviceType":"Diseño y construcción de página de ventas","provider":{"@type":"Organization","name":"PymeWebPro"},"name":"Página de ventas Pro","areaServed":["CA","US","CO"],"offers":{"@type":"Offer","price":"800","priceCurrency":"CAD","availability":"https://schema.org/InStock"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
@@ -93,10 +93,6 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .brand:hover .br{color:#FF5C2E}
 .brand .word{font-family:'Inter Tight',sans-serif;font-weight:700;color:inherit;margin:0 1.5px}
 .brand .web{color:#FF5C2E}
-.nav-pill{display:inline-flex;align-items:center;gap:.4rem;font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.04em;color:#1B1410;padding:8px 14px;border-radius:999px;border:1.5px solid rgba(27,20,16,.12);margin-right:.5rem;transition:background .15s,border-color .15s,color .15s}
-.nav-pill:hover{background:rgba(255,92,46,.06);border-color:rgba(255,92,46,.4);color:#FF5C2E}
-.nav-pill .arrow{color:#FF5C2E;font-family:'Fraunces',serif;font-style:italic;font-weight:500}
-@media (max-width:680px){.nav-pill{display:none}}
 .lang-switch{display:inline-flex;gap:2px;font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.04em;background:rgba(27,20,16,.05);border-radius:999px;padding:3px;margin-right:.5rem}
 .lang-switch a{padding:5px 11px;border-radius:999px;color:#7A4828;opacity:.7;transition:opacity .15s,background .15s,color .15s}
 .lang-switch a:hover{opacity:1;color:#1B1410}
@@ -306,6 +302,8 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .offer .tier li{display:flex;gap:.65rem;align-items:flex-start;font-size:15px;line-height:1.45}
 .offer .tier li .check{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(255,92,46,.18);color:#FF5C2E;display:grid;place-items:center;font-size:11px;font-weight:800;margin-top:2px}
 .offer .tier .actions{margin-top:auto;display:flex;flex-direction:column;gap:.5rem}
+html.geo-co .price-na{display:none}
+html:not(.geo-co) .price-co{display:none}
 
 .ask .panel{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
 @media (max-width:920px){.ask .panel{grid-template-columns:1fr}}
@@ -343,7 +341,6 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .faq .answer{padding:0 22px 20px;font-size:15.5px;line-height:1.6;color:#5a4538}
 
 footer.site{background:#1B1410;color:#A89788;padding:56px 0 32px;font-size:14.5px}
-footer.site .brand,footer.site .brand .br,footer.site .brand .word{color:#FBF7F0}
 footer.site .top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:42px;padding-bottom:36px;border-bottom:1px solid rgba(244,236,223,.08)}
 @media (max-width:820px){footer.site .top{grid-template-columns:1fr 1fr;gap:32px}}
 footer.site h5{font-family:'Inter Tight',sans-serif;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#FBF7F0;margin:0 0 .85rem}
@@ -365,7 +362,6 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center;font-size:13px;font-weight:600}
 </style>
-<script src="/assets/lead-attribution.js" defer></script>
 </head>
 
 <body>
@@ -374,7 +370,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
 
 <div class="topbar">
   <div class="wrap">
-    Desde $390.000 COP
+    <span class="price-na">Desde $500 CAD</span><span class="price-co">Desde $390.000 COP</span>
     <span class="dot">·</span>
     <span>En línea en 48 horas</span>
   </div>
@@ -386,7 +382,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
     </a>
     <div class="right">
-      <a class="nav-pill" href="/guides/traffic/">Cómo conseguir visitantes <span class="arrow">→</span></a>
       <div class="lang-switch" role="navigation" aria-label="Idioma">
         <a href="/" class="active" aria-current="page">ES</a>
         <a href="/en/" hreflang="en">EN</a>
@@ -412,9 +407,9 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
     <div class="text">
       <span class="eyebrow">Los líderes de la página de ventas</span>
       <h1>No necesita <span class="strike">un sitio web</span>. Necesita una <span class="accent fr">página de ventas</span>.</h1>
-      <p class="lede">Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde $390.000 COP.</p>
+      <p class="lede">Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>.</p>
       <div class="cta-row">
-        <a class="btn btn-orange" href="#" data-valentina-open>Hablemos con Valentina</a>
+        <a class="btn btn-orange" href="#ask">Cuéntenos sobre su negocio</a>
         <a class="btn btn-ghost" href="#problem">Vea cómo funciona</a>
       </div>
       <div class="micro">
@@ -636,8 +631,8 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
     <div class="builds">
       <h4 class="builds-label">Trabajos en vivo que puede explorar</h4>
       <div class="builds-grid">
-        <a class="build" href="https://mockups.pymewebpro.com/schedulator/" target="_blank" rel="noopener">
-          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/schedulator.jpg" alt="Página de ventas de The Schedulator" loading="lazy"></div>
+        <a class="build" href="https://schedulator2.vercel.app/" target="_blank" rel="noopener">
+          <div class="build-shot"><img src="https://pymewebpro.com/screenshots/schedulator.jpg" alt="Sitio en vivo de The Schedulator" loading="lazy"></div>
           <div class="build-name">The Schedulator</div>
           <div class="build-tag">Cliente · SaaS B2B</div>
         </a>
@@ -729,8 +724,8 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <div class="tag">Essential</div>
         <h3>La página</h3>
         <p class="sub">Para dueños que quieren una buena página de ventas, rápido.</p>
-        <div class="price">$390.000<small>COP</small></div>
-        <div class="deposit">30% de depósito ($117.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></div>
+        <div class="price"><span class="price-na">$500<small>CAD</small></span><span class="price-co">$390.000<small>COP</small></span></div>
+        <div class="deposit"><span class="price-na">30% de depósito ($150 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($117.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></span></div>
         <ul>
           <li><span class="check">✓</span><span>1 página de ventas de alta conversión</span></li>
           <li><span class="check">✓</span><span>Optimizada para móvil</span></li>
@@ -753,8 +748,8 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
         <div class="tag">Pro · Mejor valor</div>
         <h3>La página conectada</h3>
         <p class="sub">Para dueños que ya usan analíticas, anuncios, un CRM o reservas en línea, y quieren la página conectada a todo eso.</p>
-        <div class="price">$690.000<small>COP</small></div>
-        <div class="deposit">30% de depósito ($207.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></div>
+        <div class="price"><span class="price-na">$800<small>CAD</small></span><span class="price-co">$690.000<small>COP</small></span></div>
+        <div class="deposit"><span class="price-na">30% de depósito ($240 CAD), 70% al lanzar.</span><span class="price-co">30% de depósito ($207.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></span></div>
         <ul>
           <li><span class="check">✓</span><span>Todo lo de Essential</span></li>
           <li><span class="check">✓</span><span>Embed de Google Analytics 4 + Meta Pixel</span></li>
@@ -779,30 +774,43 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       <div class="meta">
         <span class="lbl">Capítulo 06</span>
         <span class="name">El Pedido</span>
-        <span class="role">Un siguiente paso. Sin formularios. Hablamos cuando le quede bien.</span>
+        <span class="role">Un siguiente paso. Tres campos. Una respuesta en un día hábil.</span>
       </div>
     </div>
     <div class="panel">
-      <div class="talk">
-        <h2 class="fr">Hablemos de su página.</h2>
-        <p>Valentina, nuestra asistente, responde al instante en este mismo chat. Le explica los planes, anota lo que necesita, y le genera el link de pago del depósito si decide arrancar. Sin formularios.</p>
-        <div class="submit-row">
-          <button type="button" class="btn btn-orange" data-valentina-open>Hablar con Valentina ahora</button>
-          <span class="reply">Responde en segundos · español o inglés.</span>
+      <form id="lead-form" method="post" action="/api/lead" novalidate>
+        <div class="field">
+          <label for="lf-name">Su nombre</label>
+          <input id="lf-name" name="name" type="text" required autocomplete="name" placeholder="Nombre completo">
         </div>
+        <div class="field">
+          <label for="lf-email">Correo</label>
+          <input id="lf-email" name="email" type="email" required autocomplete="email" placeholder="usted@sunegocio.com">
+        </div>
+        <div class="field">
+          <label for="lf-about">Cuéntenos sobre su negocio</label>
+          <textarea id="lf-about" name="about" required placeholder="Qué hace, quién compra, qué no funciona, sitio web actual si tiene"></textarea>
+        </div>
+        <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div class="submit-row">
+          <button type="submit" class="btn btn-orange" id="lf-submit">Enviar a Mike y Santiago →</button>
+          <span class="reply">Respondemos en un día hábil.</span>
+        </div>
+        <div class="form-status" id="lf-status" role="status" aria-live="polite"></div>
         <div class="alt">
-          ¿Prefiere hablar primero con un humano?
+          ¿Prefiere hablar primero?
           <div class="ways">
+            <a href="https://cal.com/mike-chartrand/15min" target="_blank" rel="noopener">Agendar 15 min con Mike</a>
             <a href="https://wa.me/573014047722" target="_blank" rel="noopener">WhatsApp Santiago</a>
           </div>
         </div>
-      </div>
+      </form>
       <div class="promise">
         <div class="item">
           <div class="ic">1</div>
           <div>
-            <h4>Respuesta al instante.</h4>
-            <p>Valentina responde en segundos. Y si necesita un humano, Mike o Santiago le contactan en un día hábil.</p>
+            <h4>Una respuesta en un día hábil, siempre.</h4>
+            <p>Le contesta un humano en 24 horas hábiles. No un autoresponder, no un chatbot.</p>
           </div>
         </div>
         <div class="item">
@@ -861,7 +869,7 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       </details>
       <details>
         <summary>¿Quién la construye realmente?</summary>
-        <div class="answer">Mike y Santiago manejan el trabajo. Claude de Anthropic hace el diseño y el código bajo nuestra supervisión. No lo escondemos, estamos orgullosos. Por eso $390.000 compra lo que antes costaba $3.900.000.</div>
+        <div class="answer">Mike y Santiago manejan el trabajo. Claude de Anthropic hace el diseño y el código bajo nuestra supervisión. No lo escondemos, estamos orgullosos. Por eso <span class="price-na">$500 compra lo que antes costaba $5.000</span><span class="price-co">$390.000 compra lo que antes costaba $3.900.000</span>.</div>
       </details>
       <details>
         <summary>¿Ustedes escriben el copy o tengo que hacerlo yo?</summary>
@@ -897,10 +905,10 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
   <div class="wrap">
     <div class="top">
       <div>
-        <a class="brand" href="#top">
-          <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
+        <a class="brand" href="#top" style="color:#FBF7F0">
+          <span class="br" style="color:#7A6957">&lt;</span><span class="word" style="color:#FBF7F0">pyme<span class="web">web</span>pro</span><span class="br" style="color:#7A6957">/&gt;</span>
         </a>
-        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde $390.000 COP. Hecho en Medellín.</p>
+        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde <span class="price-na">$500 CAD</span><span class="price-co">$390.000 COP</span>. Liderazgo canadiense, hecho en Medellín.</p>
         <div class="socials">
           <a href="https://www.facebook.com/pymewebpro" target="_blank" rel="noopener" aria-label="PymeWebPro en Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
@@ -1026,6 +1034,13 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
   });
 })();
 (function(){
+  if(!document.documentElement.classList.contains('geo-co') && !document.documentElement.classList.contains('geo-na')){
+    fetch('/cdn-cgi/trace').then(function(r){return r.text()}).then(function(t){
+      var m = t.match(/loc=([A-Z]{2})/);
+      if(m && m[1] === 'CO'){ document.documentElement.classList.add('geo-co'); }
+      else { document.documentElement.classList.add('geo-na'); }
+    }).catch(function(){ document.documentElement.classList.add('geo-co'); });
+  }
   var form = document.getElementById('lead-form');
   if(!form) return;
   var status = document.getElementById('lf-status');
@@ -1048,10 +1063,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
       page: window.location.pathname,
       website: fd.get('company_website') || ''
     };
-    if (window.PwpAttribution) {
-      var attr = window.PwpAttribution.get();
-      for (var k in attr) { if (Object.prototype.hasOwnProperty.call(attr, k)) payload[k] = attr[k]; }
-    }
     fetch(PORTAL_URL + '/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -1080,11 +1091,6 @@ noscript .nojs{background:#FFE9D9;color:#7A4828;padding:.85rem;text-align:center
   });
 })();
 </script>
-
-<!-- Valentina · PymeWebPro sales agent. Loads asynchronously after the page.
-     Worker source: ~/code/pymewebpro-agent. CSP allow list updated in
-     functions/_middleware.js (script-src, style-src, connect-src). -->
-<script src="https://valentina.pymewebpro.com/widget.js" defer></script>
 
 </body>
 </html>
