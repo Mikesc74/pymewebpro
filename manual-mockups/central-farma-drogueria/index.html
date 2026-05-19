@@ -169,20 +169,6 @@ section{padding:5rem 0}
   background:linear-gradient(165deg, rgba(46,139,106,.10) 0%, rgba(14,42,77,.00) 35%, rgba(14,42,77,.18) 100%);
   z-index:2;
 }
-/* CF logo badge anchored bottom-left so brand presence stays through all three slides */
-.hero-graphic .badge{
-  position:absolute;left:1rem;bottom:1rem;z-index:3;
-  display:inline-flex;align-items:center;gap:.55rem;
-  padding:.4rem .75rem .4rem .4rem;background:rgba(255,255,255,.95);
-  border-radius:99px;box-shadow:0 6px 14px rgba(14,42,77,.18);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-}
-.hero-graphic .badge-mark{
-  width:34px;height:34px;
-  background-image:url('./logo-mark.png');
-  background-size:contain;background-position:center;background-repeat:no-repeat;
-}
-.hero-graphic .badge-text{font-size:.72rem;font-weight:600;color:var(--navy);letter-spacing:.01em;padding-right:.25rem}
 /* Slide caption pill · changes with active slide, gives visual rhythm */
 .hero-graphic .caption{
   position:absolute;right:1rem;bottom:1rem;z-index:3;
@@ -201,7 +187,7 @@ section{padding:5rem 0}
 .hero-graphic .slide-overlay.is-active{opacity:1}
 
 .hero-graphic .crate-badge{
-  left:33%;top:50%;
+  left:27%;top:58%;
   width:19%;aspect-ratio:1/1;
   background:#fff;
   background-image:url('./logo-mark.png');
@@ -212,18 +198,6 @@ section{padding:5rem 0}
   transform-origin:center;
 }
 
-.hero-graphic .plate-cover{
-  left:27%;top:87%;
-  width:22%;height:4.2%;
-  background:linear-gradient(180deg,#F5D013 0%,#E8C108 100%);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Inter',sans-serif;font-weight:800;
-  font-size:clamp(.42rem,1.25vw,.82rem);
-  color:#1a1a1a;letter-spacing:.04em;
-  transform:translate(-50%,-50%) skewY(-1.5deg);
-  border-radius:2px;
-  box-shadow:0 1px 2px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.35);
-}
 /* Honor reduced-motion · disable crossfade, just show first image */
 @media (prefers-reduced-motion: reduce){
   .hero-graphic .slide{transition:none}
@@ -597,16 +571,11 @@ footer a:hover{color:var(--cream)}
       <img class="slide is-active" src="./hero-pharmacist.jpg" alt="Farmaceuta de Central Farma atendiendo a un cliente con una sonrisa" width="800" height="1000" decoding="async" fetchpriority="high">
       <img class="slide" src="./hero-delivery.jpg" alt="Domiciliario de Central Farma en moto con caja entregando un pedido" width="800" height="1000" decoding="async" loading="lazy">
       <img class="slide" src="./hero-injection.jpg" alt="Aplicación profesional de una inyección en Central Farma" width="800" height="1000" decoding="async" loading="lazy">
-      <div class="badge" aria-hidden="true">
-        <span class="badge-mark" role="img" aria-label="Central Farma"></span>
-        <span class="badge-text">Central Farma</span>
-      </div>
       <span class="caption is-active" data-i="0">Atención que se siente cercana</span>
       <span class="caption" data-i="1">Domicilios gratis en tu barrio</span>
       <span class="caption" data-i="2">Inyectología profesional</span>
-      <!-- Per-slide overlays · positioned over the delivery photo to brand the crate and clean up the AI-garbled license plate. -->
+      <!-- CF badge composited onto the delivery scooter's crate face. -->
       <span class="slide-overlay crate-badge" data-slide="1" aria-hidden="true"></span>
-      <span class="slide-overlay plate-cover" data-slide="1" aria-hidden="true">FAR42M</span>
     </figure>
   </div>
 </section>
