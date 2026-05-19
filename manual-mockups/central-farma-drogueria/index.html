@@ -16,7 +16,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800;900&display=swap">
 
 <style>
 /* ─── Tokens · Central Farma palette pulled from their CF wordmark + IG graphics ─── */
@@ -109,7 +109,7 @@ section{padding:5rem 0}
   gap:1rem;padding:.85rem 1.5rem;max-width:1140px;margin:0 auto;
 }
 .brand{display:inline-flex;align-items:center;gap:.65rem;color:var(--navy);font-weight:700}
-.brand-mark{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--serif);font-weight:700;font-size:1.05rem;letter-spacing:-.02em;box-shadow:var(--shadow-sm)}
+.brand-mark{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--sans);font-weight:900;font-size:.92rem;letter-spacing:-.04em;box-shadow:var(--shadow-sm);text-transform:uppercase}
 .brand-name{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--navy);font-variation-settings:'opsz' 36}
 .brand-sub{font-size:.7rem;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:1px}
 .brand-text{display:flex;flex-direction:column;line-height:1.15}
@@ -143,32 +143,89 @@ section{padding:5rem 0}
 .trust-strip span{display:inline-flex;align-items:center;gap:.4rem}
 .trust-strip .dot{width:4px;height:4px;border-radius:50%;background:var(--brand);display:inline-block}
 
-/* Brand graphic (right side of hero) */
+/* Brand graphic · crossfade gallery (pharmacist / delivery / injection) */
 .hero-graphic{
-  position:relative;aspect-ratio:1/1;max-width:380px;margin-left:auto;
+  position:relative;aspect-ratio:4/5;max-width:440px;margin-left:auto;
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(14,42,77,.30), 0 6px 18px rgba(14,42,77,.12);
+  background:var(--brand-50);
+}
+.hero-graphic .slide{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;
+  opacity:0;transition:opacity .8s ease-in-out;
+  will-change:opacity;
+}
+.hero-graphic .slide.is-active{opacity:1}
+/* Subtle brand-green wash that ties stock photos back to the palette */
+.hero-graphic::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(165deg, rgba(46,139,106,.10) 0%, rgba(14,42,77,.00) 35%, rgba(14,42,77,.18) 100%);
+  z-index:2;
+}
+/* CF logo badge anchored bottom-left so brand presence stays through all three slides */
+.hero-graphic .badge{
+  position:absolute;left:1rem;bottom:1rem;z-index:3;
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.4rem .75rem .4rem .4rem;background:rgba(255,255,255,.95);
+  border-radius:99px;box-shadow:0 6px 14px rgba(14,42,77,.18);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.hero-graphic .badge-mark{
+  width:30px;height:30px;border-radius:50%;background:var(--brand);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-weight:900;font-size:.72rem;letter-spacing:-.04em;
+}
+.hero-graphic .badge-text{font-size:.72rem;font-weight:600;color:var(--navy);letter-spacing:.01em;padding-right:.25rem}
+/* Slide caption pill · changes with active slide, gives visual rhythm */
+.hero-graphic .caption{
+  position:absolute;right:1rem;bottom:1rem;z-index:3;
+  padding:.35rem .75rem;background:rgba(14,42,77,.78);color:#fff;
+  font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  border-radius:99px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;transform:translateY(4px);transition:opacity .4s ease, transform .4s ease;
+}
+.hero-graphic .caption.is-active{opacity:1;transform:translateY(0)}
+
+/* Slide overlays · per-slide composited elements (CF badge on delivery crate, fake clean license plate). Shown only when their target slide is active. */
+.hero-graphic .slide-overlay{
+  position:absolute;z-index:3;pointer-events:none;
+  opacity:0;transition:opacity .35s ease;
+}
+.hero-graphic .slide-overlay.is-active{opacity:1}
+
+.hero-graphic .crate-badge{
+  left:30%;top:62%;
+  width:14%;aspect-ratio:1/1;
+  background:var(--brand);color:#fff;
+  border-radius:50%;border:3px solid #fff;
+  box-shadow:0 6px 16px rgba(0,0,0,.32), inset 0 -3px 8px rgba(0,0,0,.12);
   display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-weight:900;font-size:clamp(.7rem, 2.1vw, 1.4rem);
+  letter-spacing:-.04em;
+  transform:translate(-50%,-50%) rotate(-6deg);
+  transform-origin:center;
 }
-.hero-graphic .ring{
-  position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 30% 25%, var(--brand) 0%, var(--brand-dark) 75%);
-  box-shadow:0 30px 60px -20px rgba(46,139,106,.45), inset 0 -4px 12px rgba(0,0,0,.12);
+
+.hero-graphic .plate-cover{
+  left:27%;top:87%;
+  width:22%;height:4.2%;
+  background:linear-gradient(180deg,#F5D013 0%,#E8C108 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Inter',sans-serif;font-weight:800;
+  font-size:clamp(.42rem,1.25vw,.82rem);
+  color:#1a1a1a;letter-spacing:.04em;
+  transform:translate(-50%,-50%) skewY(-1.5deg);
+  border-radius:2px;
+  box-shadow:0 1px 2px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.35);
 }
-.hero-graphic .ring::after{
-  content:'';position:absolute;inset:8px;border-radius:50%;
-  border:2px solid rgba(255,255,255,.18);
+/* Honor reduced-motion · disable crossfade, just show first image */
+@media (prefers-reduced-motion: reduce){
+  .hero-graphic .slide{transition:none}
+  .hero-graphic .slide:not(:first-child){display:none}
+  .hero-graphic .slide:first-child{opacity:1}
+  .hero-graphic .caption{opacity:1;transform:none}
 }
-.hero-graphic .monogram{
-  position:relative;z-index:2;
-  font-family:var(--serif);font-weight:700;font-size:clamp(7rem, 18vw, 11rem);
-  color:#fff;letter-spacing:-.06em;line-height:.85;
-  text-shadow:0 4px 14px rgba(0,0,0,.18);
-  font-variation-settings:'opsz' 144;
-}
-.hero-graphic .icon-dot{position:absolute;color:rgba(255,255,255,.32)}
-.hero-graphic .icon-dot.a{top:14%;right:8%;width:28px;height:28px}
-.hero-graphic .icon-dot.b{bottom:18%;left:6%;width:36px;height:36px}
-.hero-graphic .icon-dot.c{top:55%;right:-2%;width:22px;height:22px}
-.hero-graphic .icon-dot.d{top:8%;left:18%;width:18px;height:18px;color:rgba(248,239,212,.55)}
 
 @media (max-width: 880px){
   .hero{padding:2.5rem 0 2rem}
@@ -340,7 +397,7 @@ footer a:hover{color:var(--cream)}
   padding:.95rem 1.1rem;background:var(--brand);color:#fff;
 }
 .chat-header .who{display:flex;align-items:center;gap:.65rem}
-.chat-header .avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:.85rem;letter-spacing:-.02em;font-variation-settings:'opsz' 36}
+.chat-header .avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:900;font-size:.78rem;letter-spacing:-.04em}
 .chat-header .title{font-weight:600;font-size:.95rem;line-height:1.15}
 .chat-header .subtitle{font-size:.72rem;opacity:.85;display:flex;align-items:center;gap:.35rem}
 .chat-header .subtitle::before{content:'';width:7px;height:7px;border-radius:50%;background:#7CF7C5;box-shadow:0 0 0 2px rgba(124,247,197,.25)}
@@ -531,14 +588,21 @@ footer a:hover{color:var(--cream)}
       </div>
     </div>
 
-    <div class="hero-graphic" aria-hidden="true">
-      <div class="ring"></div>
-      <div class="monogram">CF</div>
-      <svg class="icon-dot a" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9 2 7 4 7 7v3H6a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3h-1V7c0-3-2-5-5-5zm0 2c2 0 3 1.3 3 3v3H9V7c0-1.7 1-3 3-3z"/></svg>
-      <svg class="icon-dot b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-5-7-11a7 7 0 0 1 14 0c0 6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-      <svg class="icon-dot c" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="9" width="18" height="6" rx="3"/><line x1="12" y1="9" x2="12" y2="15" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/></svg>
-      <svg class="icon-dot d" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-    </div>
+    <figure class="hero-graphic" id="heroGallery" aria-label="Central Farma · escenas del día a día">
+      <img class="slide is-active" src="./hero-pharmacist.jpg" alt="Farmaceuta de Central Farma atendiendo a un cliente con una sonrisa" width="800" height="1000" decoding="async" fetchpriority="high">
+      <img class="slide" src="./hero-delivery.jpg" alt="Domiciliario de Central Farma en moto con caja entregando un pedido" width="800" height="1000" decoding="async" loading="lazy">
+      <img class="slide" src="./hero-injection.jpg" alt="Aplicación profesional de una inyección en Central Farma" width="800" height="1000" decoding="async" loading="lazy">
+      <div class="badge" aria-hidden="true">
+        <span class="badge-mark">CF</span>
+        <span class="badge-text">Central Farma</span>
+      </div>
+      <span class="caption is-active" data-i="0">Atención que se siente cercana</span>
+      <span class="caption" data-i="1">Domicilios gratis en tu barrio</span>
+      <span class="caption" data-i="2">Inyectología profesional</span>
+      <!-- Per-slide overlays · positioned over the delivery photo to brand the crate and clean up the AI-garbled license plate. -->
+      <span class="slide-overlay crate-badge" data-slide="1" aria-hidden="true">CF</span>
+      <span class="slide-overlay plate-cover" data-slide="1" aria-hidden="true">FAR42M</span>
+    </figure>
   </div>
 </section>
 
@@ -772,6 +836,49 @@ footer a:hover{color:var(--cream)}
 <script>
 // Year stamp.
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// ─── Hero gallery · 2s crossfade rotation, hover-pause, reduced-motion aware ───
+(function(){
+  var gallery = document.getElementById('heroGallery');
+  if (!gallery) return;
+  var slides = Array.prototype.slice.call(gallery.querySelectorAll('.slide'));
+  var captions = Array.prototype.slice.call(gallery.querySelectorAll('.caption'));
+  var overlays = Array.prototype.slice.call(gallery.querySelectorAll('.slide-overlay'));
+  if (slides.length < 2) return;
+  // Show slide-2 overlays on initial render (delivery crate badge + clean plate)
+  // even before the first tick, so first impression of the delivery slide is correct.
+  function syncOverlays(n){
+    overlays.forEach(function(o){
+      o.classList.toggle('is-active', parseInt(o.dataset.slide, 10) === n);
+    });
+  }
+  // Respect user pref
+  var motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!motionOK){ syncOverlays(0); return; }
+
+  var i = 0;
+  var timer = null;
+  function show(n){
+    slides.forEach(function(s, idx){ s.classList.toggle('is-active', idx === n); });
+    captions.forEach(function(c, idx){ c.classList.toggle('is-active', idx === n); });
+    syncOverlays(n);
+  }
+  function tick(){
+    i = (i + 1) % slides.length;
+    show(i);
+  }
+  function start(){ if (!timer) timer = setInterval(tick, 2000); }
+  function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+  gallery.addEventListener('mouseenter', stop);
+  gallery.addEventListener('mouseleave', start);
+  gallery.addEventListener('focusin',    stop);
+  gallery.addEventListener('focusout',   start);
+  // Pause when tab hidden so we don't burn cycles
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) stop(); else start();
+  });
+  start();
+})();
 
 // ─── Chat widget ───
 (function(){
