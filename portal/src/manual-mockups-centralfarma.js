@@ -559,10 +559,10 @@ footer a:hover{color:var(--cream)}
       </ul>
     </nav>
     <div class="nav-cta">
-      <a class="btn btn-primary" href="https://wa.me/573023877739?text=Hola%20Central%20Farma%2C%20quiero%20hacer%20un%20pedido" rel="noopener" aria-label="Pedir por WhatsApp">
-        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        Pedir por WhatsApp
-      </a>
+      <button type="button" class="btn btn-primary" data-action="open-chat" aria-label="Hablar con el asistente de Central Farma">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Pide o consulta
+      </button>
     </div>
   </div>
 </header>
@@ -577,10 +577,10 @@ footer a:hover{color:var(--cream)}
       <h1>Tu droguería de confianza en el barrio.</h1>
       <p class="lead">Domicilios gratuitos, servicio de inyectología profesional y todo lo que necesitas para el cuidado de tu familia. Pídenos por WhatsApp y nosotros llegamos hasta tu puerta.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary btn-lg" href="https://wa.me/573023877739?text=Hola%20Central%20Farma%2C%20quiero%20hacer%20un%20pedido" rel="noopener">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          Pide o cotiza por WhatsApp
-        </a>
+        <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Pide o consulta con nuestro asistente
+        </button>
         <a class="btn btn-ghost btn-lg" href="#servicios">
           Ver servicios
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -757,11 +757,11 @@ footer a:hover{color:var(--cream)}
 
       <div class="visit-cta">
         <h3>¿Lista la lista?</h3>
-        <p>Escríbenos por WhatsApp y te confirmamos disponibilidad, total y tiempo de entrega. Sin compromiso.</p>
-        <a class="btn btn-lg" href="https://wa.me/573023877739?text=Hola%20Central%20Farma%2C%20quiero%20cotizar" rel="noopener">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          Pide o cotiza
-        </a>
+        <p>Cuéntale a nuestro asistente qué necesitas. Te confirma disponibilidad y total al instante; si necesita confirmar algo con Carlos, lo coordina por ti.</p>
+        <button type="button" class="btn btn-lg" data-action="open-chat">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Hablar con el asistente
+        </button>
       </div>
     </div>
   </div>
@@ -919,6 +919,15 @@ document.getElementById('year').textContent = new Date().getFullYear();
   fab.addEventListener('click', openPanel);
   closeBtn.addEventListener('click', closePanel);
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.getAttribute('data-open') === 'true') closePanel(); });
+  // Any element with data-action="open-chat" anywhere on the page triggers the chat
+  // panel · this lets us route nav CTA, hero CTAs, and the visit panel button
+  // through the assistant instead of dumping users straight to WhatsApp.
+  document.querySelectorAll('[data-action="open-chat"]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      openPanel();
+    });
+  });
 
   function addBubble(role, text, opts){
     opts = opts || {};

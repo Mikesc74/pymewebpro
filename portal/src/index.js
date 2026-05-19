@@ -3486,6 +3486,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             owner_whatsapp: form.owner_whatsapp,
             cal_link: form.cal_link,
             notes: form.notes,
+            chatbot_system_prompt: form.chatbot_system_prompt,
             status: form.status,
           };
           await adminApi('/api/admin/mockup-prospects/' + prospect.id, { method: 'PUT', body: JSON.stringify(payload) });
@@ -3552,6 +3553,12 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               <div><label style={fieldLabel}>Owner first name</label><input value={form.owner_name||''} onChange={e=>set('owner_name', e.target.value)} placeholder="Carlos" style={inputStyle} /></div>
               <div><label style={fieldLabel}>Owner WhatsApp (digits only)</label><input value={form.owner_whatsapp||''} onChange={e=>set('owner_whatsapp', e.target.value)} placeholder="573001234567" style={{...inputStyle,fontFamily:'ui-monospace,Menlo,monospace'}} /></div>
               <div style={{gridColumn:'span 2'}}><label style={fieldLabel}>Cal.com booking link (optional)</label><input value={form.cal_link||''} onChange={e=>set('cal_link', e.target.value)} placeholder="https://cal.com/..." style={inputStyle} /></div>
+            </div>
+            <div style={{marginTop:'1.25rem'}}>
+              <label style={fieldLabel}>System prompt (overrides auto-synthesis)</label>
+              <p style={{color:'var(--pwp-mute)',fontSize:'0.78rem',margin:'0 0 0.5rem'}}>The full brand-aware instructions the chat agent runs with. Leave empty to use auto-synthesis from the brief above. Put real product knowledge, prices, coverage zones here so the agent stops dumping every question to WhatsApp.</p>
+              <textarea value={form.chatbot_system_prompt||''} onChange={e=>set('chatbot_system_prompt', e.target.value)} rows={14} placeholder="Eres el asistente de [Negocio]..." style={{...inputStyle,fontFamily:'ui-monospace,Menlo,monospace',fontSize:'0.82rem',lineHeight:1.55}} />
+              <div style={{fontSize:'0.7rem',color:'var(--pwp-mute)',marginTop:'0.4rem'}}>{(form.chatbot_system_prompt||'').length.toLocaleString()} chars · ~{Math.round((form.chatbot_system_prompt||'').length/4).toLocaleString()} tokens</div>
             </div>
           </section>
 
