@@ -15,9 +15,11 @@ routes = [
   # santi.pymewebpro.com - Santi's bilingual sales site. See src/santi.js.
   # custom_domain = true → wrangler auto-creates the DNS record on first deploy.
   { pattern = "santi.pymewebpro.com", zone_name = "pymewebpro.com", custom_domain = true },
-  # inviersol.com - production custom domain. Zone is already active in CF.
-  { pattern = "inviersol.com/*", zone_name = "inviersol.com" },
-  { pattern = "www.inviersol.com/*", zone_name = "inviersol.com" },
+  # inviersol.com routes REMOVED 2026-05-19 · this site now lives on its own
+  # Cloudflare Pages project (`inviersol`, repo ~/code/Inviersol/). If these
+  # routes are restored, pymewebpro-portal will hijack inviersol.com again and
+  # serve empty 200s because there is no per-host logic for it here. See
+  # ~/code/Inviersol/CLAUDE.md Recent changes 2026-05-19.
   # Master portal mount under colguides.com (Mike + Santi only, Access-gated).
   # The fetch handler detects this host+prefix, strips /portal/pymewebpro from
   # the path before routing, and rewrites outbound HTML/redirects to keep the
