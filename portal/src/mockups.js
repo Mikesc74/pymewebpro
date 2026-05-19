@@ -22,6 +22,8 @@ import { renderRobots, renderSitemap } from "./legal.js";
 // Admin AI chat removed — no Anthropic-in-the-portal. All build work happens in Cowork now.
 // import { handleAdminChat } from "./admin-chat.js";  // archived → src/_archived/admin-chat.js
 import { MANUAL_MOCKUPS } from "./manual-mockups.js";
+import { handleEspacioDentalChat } from "./espacio-dental-chat.js";
+import { handleMockupProspects } from "./mockup-prospects.js";
 
 // ─── Public dispatch (called from index.js) ─────────────────────────────────
 
@@ -56,6 +58,14 @@ export async function handleMockups(req, env, ctx, helpers) {
   // Same contact endpoint also works under mockups.pymewebpro.com
   if (m === "POST" && p === "/api/inviersol/contact" && reqHost === "mockups.pymewebpro.com") {
     return await handleInviersolContact(req, env, helpers);
+  }
+
+  // ── Espacio Dental chat agent ─────────────────────────────────────────────
+  // POST  mockups.pymewebpro.com/api/espacio-dental/chat → Claude-powered Q&A
+  // for the espacio-dental mockup. Bilingual EN/ES, emits WhatsApp links for
+  // booking. See espacio-dental-chat.js for the system prompt + booking flow.
+  if (reqHost === "mockups.pymewebpro.com" && p === "/api/espacio-dental/chat") {
+    return handleEspacioDentalChat(req, env);
   }
 
   // ── Manual mockups host (mockups.pymewebpro.com) ─────────────────────────
@@ -150,6 +160,14 @@ export async function handleMockups(req, env, ctx, helpers) {
   // routes registered below (mockups, site/disable, site/enable, domain,
   // email-forwarding, blueprint). Routes that don't match here fall through
   // to handleAdmin in index.js via the `return null` at the end of the function.
+  // Sales-prospect mockups (separate from post-sale client mockups).
+  // handleMockupProspects returns null when the path doesn't match; otherwise
+  // it returns a Response and we short-circuit here.
+  if (p.startsWith("/api/admin/mockup-prospects")) {
+    const r = await handleMockupProspects(req, env, helpers);
+    if (r) return r;
+  }
+
   if (p.startsWith("/api/admin/mockups") || p.startsWith("/api/admin/clients/")) {
     if (!helpers.isAdmin(req, env)) return helpers.json({ error: "unauthorized" }, 401);
 

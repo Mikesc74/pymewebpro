@@ -1959,6 +1959,9 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const [leadDetail, setLeadDetail] = useState(null);
       const [showInvite, setShowInvite] = useState(false);
       const [statusFilter, setStatusFilter] = useState('');
+      const [mockups, setMockups] = useState([]);
+      const [mockupDetail, setMockupDetail] = useState(null);
+      const [showNewMockup, setShowNewMockup] = useState(false);
       const auditUrlRef = useRef(null);
 
       function runSiteAudit() {
@@ -1969,6 +1972,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
       const tab = route.startsWith('/admin/crm') ? 'crm'
                 : route.startsWith('/admin/leads') ? 'crm'
+                : route.startsWith('/admin/mockups') ? 'mockups'
                 : 'clients';
 
       async function tryLogin() {
@@ -2004,15 +2008,24 @@ const FRONTEND_HTML = `<!DOCTYPE html>
           setClicks(res.clicks || []);
         } finally { setLoading(false); }
       }
+      async function loadMockups() {
+        setLoading(true);
+        try {
+          const res = await adminApi('/api/admin/mockup-prospects');
+          setMockups(res.prospects || []);
+        } finally { setLoading(false); }
+      }
 
       useEffect(() => {
         if (!authed) return;
         if (tab === 'clients') loadClients();
+        if (tab === 'mockups') loadMockups();
         // 'crm' loads its own data inside the iframe; nothing to fetch here.
       }, [authed, tab, statusFilter]);
 
       const clientDetailMatch = route.match(/^\\/admin\\/clients\\/([a-f0-9-]+)$/);
       const leadDetailMatch = route.match(/^\\/admin\\/leads\\/([a-f0-9-]+)$/);
+      const mockupDetailMatch = route.match(/^\\/admin\\/mockups\\/([a-z0-9-]+)$/);
 
       useEffect(() => {
         if (clientDetailMatch && authed) {
@@ -2024,6 +2037,12 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         if (leadDetailMatch && authed) {
           adminApi('/api/admin/leads/' + leadDetailMatch[1]).then(r => setLeadDetail(r.lead)).catch(() => {});
         } else { setLeadDetail(null); }
+      }, [route, authed]);
+
+      useEffect(() => {
+        if (mockupDetailMatch && authed) {
+          adminApi('/api/admin/mockup-prospects/' + mockupDetailMatch[1]).then(r => setMockupDetail(r.prospect)).catch(() => {});
+        } else { setMockupDetail(null); }
       }, [route, authed]);
 
       if (!authed) {
@@ -2074,6 +2093,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               <div style={{display:'flex',gap:'.4rem',flexWrap:'wrap'}}>
                 {tabBtn('crm', 'CRM', Tag)}
                 {tabBtn('clients', 'Clients', Users, clients.length || undefined)}
+                {tabBtn('mockups', 'Mockups', Palette, mockups.length || undefined)}
               </div>
               <div style={{display:'flex',alignItems:'center',gap:'0.4rem',flex:1,maxWidth:'520px',minWidth:0}}>
                 <input
@@ -2122,6 +2142,9 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                   <button onClick={() => setShowInvite(true)} style={{...primaryBtn,padding:'0.4rem 0.85rem',fontSize:'0.78rem'}}><Plus size={13} /> Invite Client</button>
                 </>
               )}
+              {tab === 'mockups' && !mockupDetail && (
+                <button onClick={() => setShowNewMockup(true)} style={{...primaryBtn,padding:'0.4rem 0.85rem',fontSize:'0.78rem'}}><Plus size={13} /> New mockup</button>
+              )}
               <button onClick={() => { localStorage.removeItem(ADMIN_KEY); setAuthed(false); }} style={{...ghostBtn,padding:'0.4rem 0.75rem',fontSize:'0.78rem',color:'rgba(255,255,255,0.85)',borderColor:'rgba(255,255,255,0.18)'}}>Sign Out</button>
             </div>
           </header>
@@ -2131,6 +2154,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
       if (detail) return <Shell><ClientDetail detail={detail} onBack={() => setRoute('/admin')} onRefresh={() => adminApi('/api/admin/clients/' + clientDetailMatch[1]).then(setDetail)} /></Shell>;
       if (leadDetail) return <Shell><LeadDetail lead={leadDetail} onBack={() => setRoute('/admin/leads')} onRefresh={() => adminApi('/api/admin/leads/' + leadDetailMatch[1]).then(r => setLeadDetail(r.lead))} setRoute={setRoute} /></Shell>;
+      if (mockupDetail) return <Shell><MockupProspectDetail prospect={mockupDetail} onBack={() => setRoute('/admin/mockups')} onRefresh={() => adminApi('/api/admin/mockup-prospects/' + mockupDetailMatch[1]).then(r => setMockupDetail(r.prospect))} /></Shell>;
 
       return (
         <Shell>
@@ -2168,8 +2192,29 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 }}
               />
             )}
+
+            {tab === 'mockups' && (
+              <>
+                <h1 className="serif" style={{fontSize:'2.5rem',fontWeight:400,margin:'0 0 0.5rem'}}>Mockups</h1>
+                <p style={{color:'var(--pwp-mute)',fontSize:'0.9rem',margin:'0 0 2rem',maxWidth:'640px'}}>
+                  Briefs for sales-prospect mockups. Add one here, then ask Claude in Cowork to build it. Each site is bespoke, hits the studio quality bar, and gets its own chatbot at <code>mockups.pymewebpro.com/&lt;slug&gt;/</code>.
+                </p>
+                {loading ? <Loader size={24} className="spin" color="#D24A1D" /> : (
+                  mockups.length === 0 ? (
+                    <div style={{textAlign:'center',padding:'4rem',color:'var(--pwp-mute)'}}>
+                      No mockup briefs yet. Click <b>New mockup</b> to add one.
+                    </div>
+                  ) : (
+                    <div style={{display:'flex',flexDirection:'column',gap:'0.75rem'}}>
+                      {mockups.map(p => <MockupRow key={p.id} p={p} onClick={() => setRoute('/admin/mockups/' + p.slug)} />)}
+                    </div>
+                  )
+                )}
+              </>
+            )}
           </main>
           {showInvite && <InviteModal onClose={() => setShowInvite(false)} onCreated={() => { setShowInvite(false); loadClients(); }} />}
+          {showNewMockup && <NewMockupModal onClose={() => setShowNewMockup(false)} onCreated={(slug) => { setShowNewMockup(false); loadMockups(); setRoute('/admin/mockups/' + slug); }} />}
         </Shell>
       );
     }
@@ -3336,6 +3381,195 @@ const FRONTEND_HTML = `<!DOCTYPE html>
             )}
           </div>
         </div>
+      );
+    }
+
+    // ─── MOCKUPS (sales-prospect briefs · built by Claude in Cowork) ──
+    function MockupRow({ p, onClick }) {
+      const statusColor = { brief: '#9CA3AF', building: '#D24A1D', live: '#16a34a', archived: '#6B7280' }[p.status] || '#9CA3AF';
+      const updated = p.updated_at ? new Date(p.updated_at).toLocaleDateString('en-US', { month:'short', day:'numeric' }) : '';
+      const socialDots = [
+        p.instagram_url && 'IG',
+        p.facebook_url && 'FB',
+        p.tiktok_url && 'TT',
+        p.website_url && 'WEB',
+      ].filter(Boolean);
+      return (
+        <div onClick={onClick} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto',gap:'1.25rem',alignItems:'center',padding:'1.25rem 1.5rem',background:'var(--pwp-surface)',border:'1px solid var(--pwp-line)',borderRadius:'4px',cursor:'pointer'}}>
+          <div style={{minWidth:0}}>
+            <div className="serif" style={{fontSize:'1.1rem',marginBottom:'0.2rem'}}>{p.business_name || p.slug}</div>
+            <div style={{color:'var(--pwp-mute)',fontSize:'0.8rem',fontFamily:'var(--pwp-mono,ui-monospace,Menlo)'}}>{p.slug}</div>
+          </div>
+          <div style={{display:'flex',gap:'0.35rem'}}>
+            {socialDots.map(d => <span key={d} style={{fontSize:'0.65rem',letterSpacing:'0.08em',padding:'2px 6px',background:'rgba(255,255,255,0.05)',color:'var(--pwp-slate)',borderRadius:'2px'}}>{d}</span>)}
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:'0.5rem'}}>
+            <div style={{width:'8px',height:'8px',borderRadius:'50%',background:statusColor}} />
+            <span style={{fontSize:'0.8rem',color:'var(--pwp-slate)',textTransform:'capitalize'}}>{p.status}</span>
+          </div>
+          <span style={{fontSize:'0.75rem',color:'var(--pwp-mute)'}}>{updated}</span>
+        </div>
+      );
+    }
+
+    function NewMockupModal({ onClose, onCreated }) {
+      const [bizName, setBizName] = useState('');
+      const [slug, setSlug] = useState('');
+      const [loading, setLoading] = useState(false);
+      const [error, setError] = useState(null);
+
+      function suggestSlug(name) {
+        return name.toLowerCase().replace(/[\\s_]+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+      }
+
+      async function submit() {
+        const finalSlug = suggestSlug(slug || bizName);
+        if (!bizName.trim()) { setError('Business name required'); return; }
+        if (!finalSlug) { setError('Slug must contain a-z, 0-9, -'); return; }
+        setLoading(true); setError(null);
+        try {
+          const res = await adminApi('/api/admin/mockup-prospects', {
+            method: 'POST',
+            body: JSON.stringify({ business_name: bizName.trim(), slug: finalSlug }),
+          });
+          onCreated(res.prospect.slug);
+        } catch (e) {
+          setError(e.message || 'Could not create');
+        } finally { setLoading(false); }
+      }
+
+      return (
+        <div onClick={onClose} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(8px)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:100,padding:'2rem'}}>
+          <div onClick={e=>e.stopPropagation()} style={{maxWidth:'480px',width:'100%',background:'var(--pwp-bg)',border:'1px solid var(--pwp-line)',borderRadius:'4px',padding:'2.5rem'}}>
+            <h2 className="serif" style={{fontSize:'1.75rem',margin:'0 0 0.5rem'}}>New mockup brief</h2>
+            <p style={{color:'var(--pwp-mute)',fontSize:'0.85rem',margin:'0 0 1.5rem'}}>Just the basics. Add socials, style notes, and owner WhatsApp on the next screen.</p>
+            <div style={{display:'flex',flexDirection:'column',gap:'1rem',marginBottom:'1.5rem'}}>
+              <div>
+                <label style={fieldLabel}>Business name *</label>
+                <input value={bizName} onChange={e=>{ setBizName(e.target.value); if (!slug) setSlug(suggestSlug(e.target.value)); }} placeholder="Daga Parfum" style={inputStyle} autoFocus />
+              </div>
+              <div>
+                <label style={fieldLabel}>URL slug *</label>
+                <input value={slug} onChange={e=>setSlug(suggestSlug(e.target.value))} placeholder="daga-parfum" style={{...inputStyle,fontFamily:'ui-monospace,Menlo,monospace'}} />
+                <div style={{fontSize:'0.7rem',color:'var(--pwp-mute)',marginTop:'0.4rem'}}>mockups.pymewebpro.com/<b>{suggestSlug(slug || bizName) || 'slug'}</b>/</div>
+              </div>
+            </div>
+            {error && <div style={{color:'#FCA5A5',fontSize:'0.85rem',marginBottom:'1rem'}}>{error}</div>}
+            <div style={{display:'flex',gap:'0.75rem'}}>
+              <button onClick={onClose} style={{...ghostBtn,flex:1}}>Cancel</button>
+              <button onClick={submit} disabled={loading} style={{...primaryBtn,flex:1}}>{loading?'Creating…':'Create brief'}</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function MockupProspectDetail({ prospect, onBack, onRefresh }) {
+      const [form, setForm] = useState(prospect);
+      const [saving, setSaving] = useState(false);
+      const [error, setError] = useState(null);
+      const [savedAt, setSavedAt] = useState(null);
+
+      function set(k, v) { setForm(prev => ({ ...prev, [k]: v })); }
+
+      async function save() {
+        setSaving(true); setError(null);
+        try {
+          const payload = {
+            business_name: form.business_name,
+            instagram_url: form.instagram_url,
+            facebook_url: form.facebook_url,
+            tiktok_url: form.tiktok_url,
+            website_url: form.website_url,
+            style_brief: form.style_brief,
+            owner_name: form.owner_name,
+            owner_whatsapp: form.owner_whatsapp,
+            cal_link: form.cal_link,
+            notes: form.notes,
+            status: form.status,
+          };
+          await adminApi('/api/admin/mockup-prospects/' + prospect.id, { method: 'PUT', body: JSON.stringify(payload) });
+          setSavedAt(Date.now());
+          if (onRefresh) onRefresh();
+        } catch (e) {
+          setError(e.message || 'Save failed');
+        } finally { setSaving(false); }
+      }
+
+      async function archive() {
+        if (!confirm('Archive this mockup brief? The mockup URL keeps working but it gets hidden from the list.')) return;
+        try {
+          await adminApi('/api/admin/mockup-prospects/' + prospect.id, { method: 'DELETE' });
+          onBack();
+        } catch (e) { setError(e.message); }
+      }
+
+      const mockupUrl = 'https://mockups.pymewebpro.com/' + prospect.slug + '/';
+      const statusColor = { brief: '#9CA3AF', building: '#D24A1D', live: '#16a34a', archived: '#6B7280' }[form.status] || '#9CA3AF';
+
+      return (
+        <main style={{padding:'2rem',maxWidth:'900px',margin:'0 auto'}}>
+          <button onClick={onBack} style={{...ghostBtn,marginBottom:'1.5rem',padding:'0.35rem 0.75rem',fontSize:'0.75rem'}}>← Back</button>
+
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',gap:'1rem',marginBottom:'0.5rem',flexWrap:'wrap'}}>
+            <h1 className="serif" style={{fontSize:'2.25rem',fontWeight:400,margin:0}}>{form.business_name || prospect.slug}</h1>
+            <div style={{display:'flex',alignItems:'center',gap:'0.5rem'}}>
+              <div style={{width:'8px',height:'8px',borderRadius:'50%',background:statusColor}} />
+              <span style={{fontSize:'0.8rem',color:'var(--pwp-slate)',textTransform:'capitalize'}}>{form.status}</span>
+            </div>
+          </div>
+          <div style={{color:'var(--pwp-mute)',fontSize:'0.85rem',marginBottom:'2rem',display:'flex',alignItems:'center',gap:'0.75rem',flexWrap:'wrap'}}>
+            <code style={{fontFamily:'ui-monospace,Menlo,monospace'}}>{prospect.slug}</code>
+            <span>·</span>
+            <a href={mockupUrl} target="_blank" rel="noopener" style={{color:'var(--pwp-accent)'}}>Open mockup ↗</a>
+          </div>
+
+          <section style={{background:'var(--pwp-surface)',border:'1px solid var(--pwp-line)',borderRadius:'4px',padding:'1.75rem',marginBottom:'1.5rem'}}>
+            <h2 className="serif" style={{fontSize:'1.15rem',fontWeight:500,margin:'0 0 1.25rem'}}>The brief</h2>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',marginBottom:'1rem'}}>
+              <div><label style={fieldLabel}>Business name</label><input value={form.business_name||''} onChange={e=>set('business_name', e.target.value)} style={inputStyle} /></div>
+              <div>
+                <label style={fieldLabel}>Status</label>
+                <select value={form.status} onChange={e=>set('status', e.target.value)} style={inputStyle}>
+                  <option value="brief">brief</option>
+                  <option value="building">building</option>
+                  <option value="live">live</option>
+                  <option value="archived">archived</option>
+                </select>
+              </div>
+              <div><label style={fieldLabel}>Instagram URL</label><input value={form.instagram_url||''} onChange={e=>set('instagram_url', e.target.value)} placeholder="https://instagram.com/..." style={inputStyle} /></div>
+              <div><label style={fieldLabel}>Facebook URL</label><input value={form.facebook_url||''} onChange={e=>set('facebook_url', e.target.value)} placeholder="https://facebook.com/..." style={inputStyle} /></div>
+              <div><label style={fieldLabel}>TikTok URL</label><input value={form.tiktok_url||''} onChange={e=>set('tiktok_url', e.target.value)} placeholder="https://tiktok.com/@..." style={inputStyle} /></div>
+              <div><label style={fieldLabel}>Existing website</label><input value={form.website_url||''} onChange={e=>set('website_url', e.target.value)} placeholder="https://..." style={inputStyle} /></div>
+            </div>
+            <label style={fieldLabel}>Style brief · what should this site feel like?</label>
+            <textarea value={form.style_brief||''} onChange={e=>set('style_brief', e.target.value)} rows={5} placeholder="Audience, mood, brand archetype, services to lead with, what to avoid, any direction from the owner." style={{...inputStyle,fontFamily:'inherit',lineHeight:1.5}} />
+          </section>
+
+          <section style={{background:'var(--pwp-surface)',border:'1px solid var(--pwp-line)',borderRadius:'4px',padding:'1.75rem',marginBottom:'1.5rem'}}>
+            <h2 className="serif" style={{fontSize:'1.15rem',fontWeight:500,margin:'0 0 1.25rem'}}>Chatbot · routes leads to the owner</h2>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
+              <div><label style={fieldLabel}>Owner first name</label><input value={form.owner_name||''} onChange={e=>set('owner_name', e.target.value)} placeholder="Carlos" style={inputStyle} /></div>
+              <div><label style={fieldLabel}>Owner WhatsApp (digits only)</label><input value={form.owner_whatsapp||''} onChange={e=>set('owner_whatsapp', e.target.value)} placeholder="573001234567" style={{...inputStyle,fontFamily:'ui-monospace,Menlo,monospace'}} /></div>
+              <div style={{gridColumn:'span 2'}}><label style={fieldLabel}>Cal.com booking link (optional)</label><input value={form.cal_link||''} onChange={e=>set('cal_link', e.target.value)} placeholder="https://cal.com/..." style={inputStyle} /></div>
+            </div>
+          </section>
+
+          <section style={{background:'var(--pwp-surface)',border:'1px solid var(--pwp-line)',borderRadius:'4px',padding:'1.75rem',marginBottom:'1.5rem'}}>
+            <h2 className="serif" style={{fontSize:'1.15rem',fontWeight:500,margin:'0 0 0.5rem'}}>Iteration notes</h2>
+            <p style={{color:'var(--pwp-mute)',fontSize:'0.8rem',margin:'0 0 1rem'}}>Running log of feedback. Claude reads this at the start of every revision · paste comments, hex codes, photo URLs, copy changes, whatever.</p>
+            <textarea value={form.notes||''} onChange={e=>set('notes', e.target.value)} rows={10} placeholder="2026-05-19 · First pass. Liked the typography, the hero photo is too dark. Wants a teal accent (#0E5C5E) not orange. Add the WhatsApp button above the fold." style={{...inputStyle,fontFamily:'ui-monospace,Menlo,monospace',fontSize:'0.85rem',lineHeight:1.6}} />
+          </section>
+
+          {error && <div style={{color:'#FCA5A5',fontSize:'0.85rem',marginBottom:'1rem'}}>{error}</div>}
+          {savedAt && !error && <div style={{color:'#86efac',fontSize:'0.8rem',marginBottom:'1rem'}}>✓ Saved {new Date(savedAt).toLocaleTimeString()}</div>}
+
+          <div style={{display:'flex',gap:'0.75rem',alignItems:'center'}}>
+            <button onClick={save} disabled={saving} style={{...primaryBtn,padding:'0.55rem 1.5rem'}}>{saving?'Saving…':'Save brief'}</button>
+            <button onClick={archive} style={{...ghostBtn,padding:'0.55rem 1rem',fontSize:'0.78rem',color:'#FCA5A5',borderColor:'rgba(252,165,165,0.3)'}}>Archive</button>
+            <div style={{marginLeft:'auto',fontSize:'0.75rem',color:'var(--pwp-mute)'}}>Then ping Claude in Cowork: <code>build mockup for {prospect.slug}</code></div>
+          </div>
+        </main>
       );
     }
 

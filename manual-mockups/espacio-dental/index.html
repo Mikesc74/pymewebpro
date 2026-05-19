@@ -1,15 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="lang-en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Espacio Dental, English-Speaking Dentists in Itagüí, Medellín · CES Graduates</title>
-<meta name="description" content="Modern dental clinic in Itagüí, Medellín. CES-graduated dentists, English-speaking team, international standards. Cosmetic dentistry, smile design, whitening, orthodontics. Free first consultation. Book on WhatsApp.">
+<title data-lang="en">Espacio Dental, English-Speaking Dentists in Itagüí, Medellín · CES Graduates</title>
+<title data-lang="es">Espacio Dental, Odontología moderna en Itagüí, Medellín · Egresados CES</title>
+<meta name="description" content="Modern dental clinic in Itagüí, Medellín. CES-graduated dentists, English-speaking team, international standards. Cosmetic dentistry, smile design, whitening, orthodontics. Free first consultation. Talk with us." data-lang="en">
+<meta name="description" content="Clínica dental moderna en Itagüí, Medellín. Odontólogos egresados de CES, equipo bilingüe, estándares internacionales. Odontología estética, diseño de sonrisa, blanqueamiento, ortodoncia. Primera consulta gratis. Reserva por WhatsApp." data-lang="es">
 <meta name="theme-color" content="#2DB5A8">
 <meta property="og:title" content="Espacio Dental, Modern Dentistry for Expats in Medellín">
 <meta property="og:description" content="CES-graduated, English-speaking dentists in Itagüí. Smile design, whitening, ceramic veneers. Free consultation.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://images.pexels.com/photos/6809642/pexels-photo-6809642.jpeg?auto=compress&cs=tinysrgb&h=650&w=940">
+<meta property="og:image" content="https://pymewebpro.com/screenshots/espacio-dental.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -440,10 +442,11 @@ section{padding:clamp(70px,9vw,120px) 0}
 .rev-card .author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
 .rev-card .author .av{
   width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
   font-family:var(--display);font-weight:700;font-size:15px;flex-shrink:0;
 }
 .rev-card .author .av.navy{background:var(--navy)}
+.rev-card .author .av img{width:100%;height:100%;object-fit:cover;display:block}
 .rev-card .author .name{font-family:var(--display);font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:-0.012em}
 .rev-card .author .meta{font-size:12px;color:var(--gray);margin-top:1px}
 .rev-card .src{
@@ -558,22 +561,89 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:70px 0 24px}
 @media (max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;gap:36px 28px}}
 @media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
 
-/* ─── Float WhatsApp ─────────────────────────────── */
-.fab{
+/* ─── Chat agent (Valentina) ─────────────────────── */
+.chat-fab{
   position:fixed;right:22px;bottom:22px;z-index:60;
-  width:60px;height:60px;border-radius:50%;
-  background:#25D366;color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 8px 24px rgba(37,211,102,0.5);
-  transition:all .25s;
+  height:60px;padding:0 22px 0 18px;border-radius:999px;
+  background:var(--teal);color:#fff;border:0;cursor:pointer;
+  display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 10px 28px rgba(45,181,168,0.45),0 2px 6px rgba(11,27,44,0.08);
+  font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:-0.005em;
+  transition:transform .18s,box-shadow .18s,background .18s;
 }
-.fab:hover{transform:scale(1.08);background:#1FB155}
-.fab::before{
-  content:"";position:absolute;inset:-4px;border-radius:50%;
-  background:#25D366;opacity:0.4;z-index:-1;
-  animation:ripple 2s ease-out infinite;
+.chat-fab:hover{transform:translateY(-1px);background:#249b90;box-shadow:0 14px 32px rgba(45,181,168,0.55)}
+.chat-fab svg{flex-shrink:0}
+.chat-fab .chat-fab-label{white-space:nowrap}
+.chat-fab .dot{position:absolute;top:7px;left:7px;width:11px;height:11px;border-radius:50%;background:#F5A623;border:2px solid #fff}
+.chat-fab::before{
+  content:"";position:absolute;inset:-3px;border-radius:inherit;
+  background:var(--teal);opacity:0.3;z-index:-1;
+  animation:chat-ripple 2.2s ease-out infinite;
 }
-@keyframes ripple{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.5);opacity:0}}
+@keyframes chat-ripple{0%{transform:scale(1);opacity:0.5}100%{transform:scale(1.08);opacity:0}}
+.chat-panel{
+  position:fixed;right:22px;bottom:22px;z-index:61;
+  width:min(380px,calc(100vw - 44px));height:min(560px,calc(100vh - 44px));
+  background:#fff;border-radius:18px;display:none;flex-direction:column;
+  box-shadow:0 20px 60px rgba(11,27,44,0.22),0 0 0 1px rgba(11,27,44,0.06);
+  overflow:hidden;font-family:var(--sans);
+}
+.chat-panel.open{display:flex}
+.chat-head{padding:16px 18px;background:linear-gradient(135deg,var(--teal),#1A8A80);color:#fff;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.chat-head .av{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:18px;flex-shrink:0}
+.chat-head .who{flex:1;min-width:0}
+.chat-head .name{font-family:var(--display);font-weight:700;font-size:15px;line-height:1.2}
+.chat-head .status{font-size:11.5px;opacity:.85;display:flex;align-items:center;gap:5px}
+.chat-head .status::before{content:"";width:6px;height:6px;border-radius:50%;background:#5FE38A;display:inline-block}
+.chat-head .close{background:transparent;border:0;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:6px;border-radius:8px;transition:background .15s}
+.chat-head .close:hover{background:rgba(255,255,255,.18)}
+.chat-body{flex:1;overflow-y:auto;padding:16px;background:#F7F9FB;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:84%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.45;word-wrap:break-word;white-space:pre-wrap}
+.chat-msg.bot{background:#fff;color:var(--ink);border:1px solid #E5E9EE;border-bottom-left-radius:4px;align-self:flex-start}
+.chat-msg.user{background:var(--teal);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.chat-msg.system{background:transparent;color:var(--gray);font-size:12px;text-align:center;align-self:center;padding:6px 10px;font-style:italic}
+.chat-msg .wa-btn{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:9px 14px;background:#25D366;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:13.5px;transition:background .15s}
+.chat-msg .wa-btn:hover{background:#1FB155}
+.chat-typing{display:inline-flex;gap:4px;padding:10px 14px;background:#fff;border:1px solid #E5E9EE;border-radius:14px;border-bottom-left-radius:4px;align-self:flex-start;width:fit-content}
+.chat-typing span{width:7px;height:7px;border-radius:50%;background:var(--gray);opacity:.5;animation:chat-blink 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:.2s}
+.chat-typing span:nth-child(3){animation-delay:.4s}
+@keyframes chat-blink{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.chat-input{display:flex;gap:8px;padding:12px;background:#fff;border-top:1px solid #E5E9EE;flex-shrink:0}
+.chat-input input{flex:1;padding:10px 14px;border:1px solid #E5E9EE;border-radius:999px;font-family:inherit;font-size:14px;outline:none;transition:border-color .15s}
+.chat-input input:focus{border-color:var(--teal)}
+.chat-input button{padding:0 16px;background:var(--teal);color:#fff;border:0;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px;transition:background .15s}
+.chat-input button:hover:not(:disabled){background:#249b90}
+.chat-input button:disabled{opacity:.5;cursor:not-allowed}
+@media (max-width:520px){
+  .chat-panel{right:10px;bottom:10px;width:calc(100vw - 20px);height:calc(100vh - 20px);border-radius:14px}
+  .chat-fab{right:14px;bottom:14px;width:58px;height:58px}
+}
+
+/* ─── Chat CTA (replaces booking form) ───────────── */
+.chat-cta{
+  background:linear-gradient(160deg,#fff 0%,#EAF7F5 100%);
+  border-radius:22px;padding:34px 32px;border:1px solid rgba(45,181,168,0.18);
+  box-shadow:0 10px 30px -8px rgba(45,181,168,0.25);
+  display:flex;flex-direction:column;align-items:flex-start;gap:18px;height:100%;
+}
+.chat-cta .badge-pill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#fff;border:1px solid rgba(45,181,168,0.3);border-radius:999px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--teal-deep)}
+.chat-cta .badge-pill .dot{width:7px;height:7px;border-radius:50%;background:#5FE38A;display:inline-block}
+.chat-cta h3{font-family:var(--display);font-size:clamp(24px,3vw,32px);line-height:1.15;color:var(--ink);letter-spacing:-0.015em;margin:0}
+.chat-cta h3 .accent{color:var(--teal)}
+.chat-cta p{font-size:15px;line-height:1.55;color:var(--gray);margin:0}
+.chat-cta .v-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:#fff;border-radius:14px;border:1px solid rgba(11,27,44,0.07);width:100%}
+.chat-cta .v-row .av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#1A8A80);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;flex-shrink:0}
+.chat-cta .v-row .v-meta{flex:1;min-width:0}
+.chat-cta .v-row .v-name{font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink);line-height:1.2}
+.chat-cta .v-row .v-status{font-size:12.5px;color:var(--teal-deep);display:flex;align-items:center;gap:5px;margin-top:2px}
+.chat-cta .v-row .v-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#5FE38A}
+.chat-cta .v-bullets{list-style:none;padding:0;margin:4px 0 0;display:flex;flex-direction:column;gap:10px;width:100%}
+.chat-cta .v-bullets li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink);line-height:1.5}
+.chat-cta .v-bullets li::before{content:"✓";color:var(--teal);font-weight:700;flex-shrink:0;margin-top:1px}
+.chat-cta .v-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;background:var(--teal);color:#fff;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;border:0;cursor:pointer;transition:background .15s,transform .15s;width:100%;justify-content:center}
+.chat-cta .v-cta:hover{background:#249b90;transform:translateY(-1px)}
+.chat-cta .v-fineprint{font-size:12px;color:var(--gray);text-align:center;width:100%;margin:0}
 
 /* ─── Mobile nav drawer ─── */
 .menu-toggle{display:none;align-items:center;justify-content:center;width:42px;height:42px;border-radius:8px;background:transparent;border:1px solid #E5E9EE;color:#0B1B2C;cursor:pointer;transition:background .15s,border-color .15s;padding:0;margin-left:auto}
@@ -598,14 +668,22 @@ body.nav-open .nav-drawer{transform:translateX(0)}
 .nav-drawer .nd-foot .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;background:#1E7A8C;color:#fff;border-radius:10px;font-size:14.5px;font-weight:600;width:100%;text-decoration:none;text-align:center}
 @media (max-width:920px){.menu-toggle{display:inline-flex}}
 body.nav-open{overflow:hidden}
+
+/* ─── Bilingual toggle (EN/ES) ─── */
+html.lang-en .ml-es,html.lang-es .ml-en{display:none!important}
+html.lang-en [data-lang="es"],html.lang-es [data-lang="en"]{display:none}
+.lang-toggle{display:inline-flex;align-items:center;border:1.5px solid currentColor;border-radius:999px;padding:2px;font-size:11px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;opacity:.92}
+.lang-toggle a{padding:4px 10px;border-radius:999px;color:inherit;text-decoration:none;transition:all .18s ease}
+html.lang-en .lang-toggle a[data-l="en"],html.lang-es .lang-toggle a[data-l="es"]{background:var(--teal);color:#fff}
+.nav-drawer .lang-toggle{color:var(--ink);align-self:flex-start;margin:14px 22px 0}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <span class="pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg> <strong>English-speaking</strong> dentists</span>
+  <span class="pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg> <span class="ml-en"><strong>English-speaking</strong> dentists</span><span class="ml-es">Odontólogos <strong>bilingües</strong></span></span>
   <span class="sep">·</span>
-  <span class="pill">Free first consultation</span>
+  <span class="pill"><span class="ml-en">Free first consultation</span><span class="ml-es">Primera consulta gratis</span></span>
   <span class="sep">·</span>
   <span class="pill">WhatsApp <strong>3052278822</strong></span>
 </div>
@@ -627,16 +705,19 @@ body.nav-open{overflow:hidden}
     <button class="menu-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navDrawer"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
     <nav class="nav">
       <div class="navlinks">
-        <a href="#services">Services</a>
-        <a href="#why">For Expats</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#gallery">Smile Gallery</a>
-        <a href="#book">Contact</a>
+        <a href="#services"><span class="ml-en">Services</span><span class="ml-es">Servicios</span></a>
+        <a href="#why"><span class="ml-en">For Expats</span><span class="ml-es">Para extranjeros</span></a>
+        <a href="#pricing"><span class="ml-en">Pricing</span><span class="ml-es">Precios</span></a>
+        <a href="#gallery"><span class="ml-en">Smile Gallery</span><span class="ml-es">Galería de sonrisas</span></a>
+        <a href="#book"><span class="ml-en">Contact</span><span class="ml-es">Contacto</span></a>
       </div>
-      <div class="lang"><span class="flag">EN</span><span style="opacity:0.4">/ES</span></div>
-      <a href="#book" class="cta-pill">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 15.46l-2.93-.34c-.61-.07-1.21.14-1.64.57l-2.13 2.13c-3.27-1.66-5.95-4.34-7.61-7.61l2.13-2.13c.43-.43.64-1.03.57-1.64L7.04 5c-.12-.99-.97-1.74-1.97-1.74H3.04c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-2.03c0-1-.74-1.85-1.74-1.97z"/></svg>
-        Book on WhatsApp
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <a href="?lang=en" data-l="en" hreflang="en" aria-label="English">EN</a>
+        <a href="?lang=es" data-l="es" hreflang="es" aria-label="Español">ES</a>
+      </div>
+      <a href="#book" class="cta-pill" onclick="event.preventDefault();var f=document.getElementById('chatFab');if(f)f.click();">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        <span class="ml-en">Talk with Us</span><span class="ml-es">Hablar con nosotros</span>
       </a>
     </nav>
   </div>
@@ -649,13 +730,17 @@ body.nav-open{overflow:hidden}
     <button class="nd-close" id="navClose" aria-label="Close menu">&times;</button>
   </div>
   <div class="nd-links">
-    <a href="#services" data-nav-close>Services</a>
-    <a href="#team" data-nav-close>Team</a>
-    <a href="#why" data-nav-close>Why us</a>
-    <a href="#contact" data-nav-close>Contact</a>
+    <a href="#services" data-nav-close><span class="ml-en">Services</span><span class="ml-es">Servicios</span></a>
+    <a href="#team" data-nav-close><span class="ml-en">Team</span><span class="ml-es">Equipo</span></a>
+    <a href="#why" data-nav-close><span class="ml-en">Why us</span><span class="ml-es">Por qué nosotros</span></a>
+    <a href="#contact" data-nav-close><span class="ml-en">Contact</span><span class="ml-es">Contacto</span></a>
+  </div>
+  <div class="lang-toggle" role="group" aria-label="Language">
+    <a href="?lang=en" data-l="en" hreflang="en">EN</a>
+    <a href="?lang=es" data-l="es" hreflang="es">ES</a>
   </div>
   <div class="nd-foot">
-    <a href="#book" class="cta" data-nav-close>Book a visit</a>
+    <a href="#book" class="cta" data-nav-close><span class="ml-en">Book a visit</span><span class="ml-es">Reservar visita</span></a>
   </div>
 </aside>
 
@@ -665,34 +750,86 @@ body.nav-open{overflow:hidden}
   <div class="hero-grid">
     <div class="hero-copy">
       <div class="badges">
-        <span class="badge"><span class="dot"></span>English-speaking dentists</span>
-        <span class="badge"><span class="dot navy"></span>CES University graduates</span>
-        <span class="badge"><span class="dot"></span>Hablamos español</span>
+        <span class="badge"><span class="dot"></span><span class="ml-en">English-speaking dentists</span><span class="ml-es">Odontólogos bilingües</span></span>
+        <span class="badge"><span class="dot navy"></span><span class="ml-en">CES University graduates</span><span class="ml-es">Egresados Universidad CES</span></span>
+        <span class="badge"><span class="dot"></span><span class="ml-en">Hablamos español</span><span class="ml-es">We speak English</span></span>
       </div>
-      <h1>Modern dentistry in Medellín, designed for <span class="accent">people who travel.</span></h1>
-      <p class="lede">A boutique dental clinic in Itagüí offering smile design, whitening, ceramic veneers, and orthodontics, at a fraction of US prices and with a team that speaks your language.</p>
+      <h1><span class="ml-en">Modern dentistry in Medellín, designed for <span class="accent">people who travel.</span></span><span class="ml-es">Odontología moderna en Medellín, pensada para <span class="accent">quienes viajan.</span></span></h1>
+      <p class="lede"><span class="ml-en">A boutique dental clinic in Itagüí offering smile design, whitening, ceramic veneers, and orthodontics, at a fraction of US prices and with a team that speaks your language.</span><span class="ml-es">Clínica dental boutique en Itagüí. Diseño de sonrisa, blanqueamiento, carillas en cerámica y ortodoncia, a una fracción del precio de Estados Unidos y con un equipo que habla su idioma.</span></p>
       <div class="hero-cta">
         <a href="https://wa.me/573052278822" class="btn btn-wa" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.967-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.057 22h-.005a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64.001 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>
-          Book Free Consultation
+          <span class="ml-en">Book Free Consultation</span><span class="ml-es">Reservar consulta gratis</span>
         </a>
-        <a href="#services" class="btn btn-outline">See Services →</a>
+        <a href="#services" class="btn btn-outline"><span class="ml-en">See Services →</span><span class="ml-es">Ver servicios →</span></a>
       </div>
       <div class="hero-trust">
         <div class="stars">★★★★★</div>
-        <div class="meta"><strong>4.9 / 5</strong> · 180+ reviews from local & international patients</div>
+        <div class="meta"><strong>4.9 / 5</strong> · <span class="ml-en">180+ reviews from local &amp; international patients</span><span class="ml-es">180+ reseñas de pacientes locales e internacionales</span></div>
       </div>
     </div>
 
     <div class="hero-photo">
-      <img src="https://images.pexels.com/photos/3762408/pexels-photo-3762408.jpeg?auto=compress&cs=tinysrgb&h=1100&w=900" alt="Patient with confident smile">
+      <img src="./hero.jpg" alt="Patient with confident smile">
       <div class="float-card">
         <div class="ico">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
         </div>
         <div class="txt">
-          <h5>Free first consultation</h5>
-          <p>30-minute valuation, no commitment.</p>
+          <h5><span class="ml-en">Free first consultation</span><span class="ml-es">Primera consulta gratis</span></h5>
+          <p><span class="ml-en">30-minute valuation, no commitment.</span><span class="ml-es">Valoración de 30 minutos, sin compromiso.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Why ─── -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow white"><span class="ml-en">For International Patients</span><span class="ml-es">Para pacientes internacionales</span></span>
+      <h2><span class="ml-en">Why expats choose </span><span class="ml-es">Por qué los extranjeros eligen </span><span class="accent">Espacio Dental.</span></h2>
+      <p><span class="ml-en">We've built our practice around the kind of care international patients actually want, clear pricing in USD, English-speaking staff, and no high-pressure upselling.</span><span class="ml-es">Hemos construido nuestra práctica alrededor del tipo de atención que los pacientes internacionales realmente quieren: precios claros en USD, equipo bilingüe y nada de ventas a presión.</span></p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-list">
+        <div class="why-item">
+          <div class="num">1</div>
+          <div class="body">
+            <h4><span class="ml-en">You won't pay US prices.</span><span class="ml-es">No pagará precios de Estados Unidos.</span></h4>
+            <p><span class="ml-en">Same procedures, same materials, 60–80% less. A full smile design that runs $8,000 in the US is around $2,200 here, without compromising on quality.</span><span class="ml-es">Mismos procedimientos, mismos materiales, 60 a 80% menos. Un diseño de sonrisa completo que cuesta $8.000 USD allá, aquí está cerca de $2.200 USD, sin comprometer la calidad.</span></p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="num">2</div>
+          <div class="body">
+            <h4><span class="ml-en">You won't need a translator.</span><span class="ml-es">No necesitará traductor.</span></h4>
+            <p><span class="ml-en">Every dentist on our team speaks fluent English. <span class="ml-en">Treatment</span><span class="ml-es">Tratamiento</span> plans, consent forms, and post-op care instructions all in writing, in your language.</span><span class="ml-es">Cada odontólogo del equipo habla inglés con fluidez. Planes de tratamiento, consentimientos y cuidados postoperatorios por escrito, en su idioma.</span></p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="num">3</div>
+          <div class="body">
+            <h4><span class="ml-en">You're treated by CES graduates.</span><span class="ml-es">Lo atienden egresados de CES.</span></h4>
+            <p><span class="ml-en">CES University is Colombia's most respected dental school. Our entire team graduated from it, with additional specializations in cosmetic and digital dentistry.</span><span class="ml-es">La Universidad CES es la facultad de odontología más respetada de Colombia. Todo nuestro equipo es egresado, con especializaciones adicionales en odontología estética y digital.</span></p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="num">4</div>
+          <div class="body">
+            <h4><span class="ml-en">You can fit it into a short visit.</span><span class="ml-es">Cabe en una visita corta.</span></h4>
+            <p><span class="ml-en">Most cosmetic work, whitening, resin design, even ceramic veneers, fits comfortably into a 5-to-10-day stay in Medellín. We schedule around your travel.</span><span class="ml-es">La mayoría del trabajo estético, blanqueamiento, diseño en resina, incluso carillas en cerámica, cabe cómodamente en una estadía de 5 a 10 días en Medellín. Coordinamos según su viaje.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-photo">
+        <img src="./clinic.jpg" alt="Modern dental clinic in Itagüí">
+        <div class="stat-card">
+          <div class="v">$2,200</div>
+          <div class="l"><span class="ml-en">Avg. full smile design, vs. $8,000+ in the US</span><span class="ml-es">Diseño de sonrisa completo en promedio, vs. $8.000+ USD en Estados Unidos</span></div>
         </div>
       </div>
     </div>
@@ -704,23 +841,23 @@ body.nav-open{overflow:hidden}
   <div class="trust-grid">
     <div class="trust-item">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-      <div>CES Graduates<small>Top dental school in CO</small></div>
+      <div><span class="ml-en">CES Graduates<small>Top dental school in CO</small></span><span class="ml-es">Egresados CES<small>La mejor facultad de odontología de Colombia</small></span></div>
     </div>
     <div class="trust-item">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-      <div>English-speaking<small>Native-fluency team</small></div>
+      <div><span class="ml-en">English-speaking<small>Native-fluency team</small></span><span class="ml-es">Bilingüe<small>Equipo con fluidez nativa en inglés</small></span></div>
     </div>
     <div class="trust-item">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
-      <div>Free consultation<small>30-min valuation</small></div>
+      <div><span class="ml-en">Free consultation<small>30-min valuation</small></span><span class="ml-es">Consulta gratis<small>Valoración de 30 min</small></span></div>
     </div>
     <div class="trust-item">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-      <div>Same-day booking<small>via WhatsApp</small></div>
+      <div><span class="ml-en">Same-day booking<small>via WhatsApp</small></span><span class="ml-es">Cita el mismo día<small>por WhatsApp</small></span></div>
     </div>
     <div class="trust-item">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-      <div>USD pricing<small>Transparent, no surprises</small></div>
+      <div><span class="ml-en">USD pricing<small>Transparent, no surprises</small></span><span class="ml-es">Precios en USD<small>Transparentes, sin sorpresas</small></span></div>
     </div>
   </div>
 </div>
@@ -729,106 +866,54 @@ body.nav-open{overflow:hidden}
 <section class="services" id="services">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Our Services</span>
-      <h2>Aesthetic & general dentistry, <span class="accent">done right.</span></h2>
-      <p>From a routine cleaning to a full ceramic smile design, every treatment is performed in-house by CES-certified dentists using international-grade materials.</p>
+      <span class="eyebrow"><span class="ml-en">Our Services</span><span class="ml-es">Nuestros servicios</span></span>
+      <h2><span class="ml-en">Aesthetic & general dentistry, </span><span class="ml-es">Odontología estética y general, </span><span class="accent"><span class="ml-en">done right.</span></h2></span><span class="ml-es">bien hecha.</span></h2></span>
+      <p><span class="ml-en"><span class="ml-en">From</span><span class="ml-es">Desde</span> a routine cleaning to a full ceramic smile design, every treatment is performed in-house by CES-certified dentists using international-grade materials.</span><span class="ml-es">Desde una limpieza de rutina hasta un diseño de sonrisa completo en cerámica, cada tratamiento se realiza in-house con odontólogos certificados por CES y materiales de grado internacional.</span></p>
     </div>
 
     <div class="svc-grid">
       <article class="svc-card">
         <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
-        <h3>Deep Cleaning</h3>
+        <h3><span class="ml-en">Deep Cleaning</span><span class="ml-es">Limpieza profunda</span></h3>
         <span class="es">Limpieza profunda</span>
-        <p>Ultrasonic scaling, polish, and prophylaxis. Removes tartar, plaque, and surface stains in a single 45-minute appointment.</p>
+        <p><span class="ml-en">Ultrasonic scaling, polish, and prophylaxis. Removes tartar, plaque, and surface stains in a single 45-minute appointment.</span><span class="ml-es">Detartraje ultrasónico, profilaxis y pulido. Elimina sarro, placa y manchas superficiales en una sola cita de 45 minutos.</span></p>
         <div class="price"><span class="from">From</span><span class="amt">$45 <small>USD</small></span></div>
       </article>
       <article class="svc-card">
         <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
-        <h3>Professional Whitening</h3>
+        <h3><span class="ml-en">Professional <span class="ml-en">Whitening</span><span class="ml-es">Blanqueamiento</span></span><span class="ml-es">Blanqueamiento profesional</span></h3>
         <span class="es">Blanqueamiento</span>
-        <p>In-office LED whitening with Opalescence Boost. 6–8 shades brighter in a single 60-minute session, with no sensitivity.</p>
+        <p><span class="ml-en">In-office LED whitening with Opalescence Boost. 6–8 shades brighter in a single 60-minute session, with no sensitivity.</span><span class="ml-es">Blanqueamiento LED en consultorio con Opalescence Boost. De 6 a 8 tonos más blanco en una sesión de 60 minutos, sin sensibilidad.</span></p>
         <div class="price"><span class="from">From</span><span class="amt">$180 <small>USD</small></span></div>
       </article>
       <article class="svc-card navy">
         <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg></div>
-        <h3>Resin Smile Design</h3>
+        <h3><span class="ml-en">Resin <span class="ml-en">Smile Design</span><span class="ml-es">Diseño de sonrisa</span></span><span class="ml-es">Diseño de sonrisa en resina</span></h3>
         <span class="es">Diseño en resina</span>
-        <p>Composite resin reshaping for chipped, gapped, or uneven teeth. Same-day results, 100% reversible, no enamel removed.</p>
+        <p><span class="ml-en">Composite resin reshaping for chipped, gapped, or uneven teeth. Same-day results, 100% reversible, no enamel removed.</span><span class="ml-es">Modelado en resina compuesta para dientes astillados, separados o desalineados. Resultados el mismo día, 100% reversible, sin retirar esmalte.</span></p>
         <div class="price"><span class="from">From</span><span class="amt">$95 <small>USD / tooth</small></span></div>
       </article>
       <article class="svc-card">
         <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
-        <h3>Micro Smile Design</h3>
+        <h3><span class="ml-en">Micro Smile Design</span><span class="ml-es">Microdiseño en resina</span></h3>
         <span class="es">Microdiseño en resina</span>
-        <p>Subtle, precise touch-ups for those who want refinement without an obvious change. Perfect for chipped edges or minor asymmetries.</p>
+        <p><span class="ml-en">Subtle, precise touch-ups for those who want refinement without an obvious change. Perfect for chipped edges or minor asymmetries.</span><span class="ml-es">Retoques sutiles y precisos para quienes buscan refinamiento sin un cambio evidente. Perfecto para bordes astillados o asimetrías leves.</span></p>
         <div class="price"><span class="from">From</span><span class="amt">$60 <small>USD / tooth</small></span></div>
       </article>
       <article class="svc-card navy">
         <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg></div>
-        <h3>Ceramic Veneers</h3>
+        <h3><span class="ml-en">Ceramic <span class="ml-en">Veneers</span><span class="ml-es">Carillas</span></span><span class="ml-es">Carillas en cerámica</span></h3>
         <span class="es">Diseño en cerámica</span>
-        <p>Premium e.max porcelain veneers, 0.3mm thick, color-matched, designed digitally and bonded in 2–3 visits over a single week.</p>
+        <p><span class="ml-en">Premium e.max porcelain veneers, 0.3mm thick, color-matched, designed digitally and bonded in 2–3 visits over a single week.</span><span class="ml-es">Carillas premium e.max en porcelana, 0,3 mm, igualadas en color, diseñadas digitalmente y cementadas en 2 o 3 visitas durante una semana.</span></p>
         <div class="price"><span class="from">From</span><span class="amt">$320 <small>USD / veneer</small></span></div>
       </article>
       <article class="svc-card">
         <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div>
-        <h3>Orthodontics</h3>
+        <h3><span class="ml-en">Orthodontics</span><span class="ml-es">Ortodoncia</span></h3>
         <span class="es">Ortodoncia · brackets & aligners</span>
-        <p>Conventional brackets or clear aligners. Initial scan and treatment plan included. Monthly check-ins, total transparency on timeline.</p>
+        <p><span class="ml-en">Conventional brackets or clear aligners. Initial scan and treatment plan included. Monthly check-ins, total transparency on timeline.</span><span class="ml-es">Brackets convencionales o alineadores transparentes. Escaneo inicial y plan de tratamiento incluidos. Citas mensuales, total transparencia en los tiempos.</span></p>
         <div class="price"><span class="from">From</span><span class="amt">$1.200 <small>USD / full</small></span></div>
       </article>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Why ─── -->
-<section class="why" id="why">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow white">For International Patients</span>
-      <h2>Why expats choose <span class="accent">Espacio Dental.</span></h2>
-      <p>We've built our practice around the kind of care international patients actually want, clear pricing in USD, English-speaking staff, and no high-pressure upselling.</p>
-    </div>
-
-    <div class="why-grid">
-      <div class="why-list">
-        <div class="why-item">
-          <div class="num">1</div>
-          <div class="body">
-            <h4>You won't pay US prices.</h4>
-            <p>Same procedures, same materials, 60–80% less. A full smile design that runs $8,000 in the US is around $2,200 here, without compromising on quality.</p>
-          </div>
-        </div>
-        <div class="why-item">
-          <div class="num">2</div>
-          <div class="body">
-            <h4>You won't need a translator.</h4>
-            <p>Every dentist on our team speaks fluent English. Treatment plans, consent forms, and post-op care instructions all in writing, in your language.</p>
-          </div>
-        </div>
-        <div class="why-item">
-          <div class="num">3</div>
-          <div class="body">
-            <h4>You're treated by CES graduates.</h4>
-            <p>CES University is Colombia's most respected dental school. Our entire team graduated from it, with additional specializations in cosmetic and digital dentistry.</p>
-          </div>
-        </div>
-        <div class="why-item">
-          <div class="num">4</div>
-          <div class="body">
-            <h4>You can fit it into a short visit.</h4>
-            <p>Most cosmetic work, whitening, resin design, even ceramic veneers, fits comfortably into a 5-to-10-day stay in Medellín. We schedule around your travel.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="why-photo">
-        <img src="https://images.pexels.com/photos/6809642/pexels-photo-6809642.jpeg?auto=compress&cs=tinysrgb&h=1200&w=900" alt="Modern dental clinic in Itagüí">
-        <div class="stat-card">
-          <div class="v">$2,200</div>
-          <div class="l">Avg. full smile design, vs. $8,000+ in the US</div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -837,20 +922,20 @@ body.nav-open{overflow:hidden}
 <section class="pricing" id="pricing">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow navy">Transparent Pricing · USD</span>
-      <h2>What you'd pay back home, <span class="navy">vs. with us.</span></h2>
-      <p>Our base prices, side-by-side with average US clinic rates. No hidden fees, no surprise add-ons. We'll quote you in writing before any treatment begins.</p>
+      <span class="eyebrow navy"><span class="ml-en">Transparent Pricing · USD</span><span class="ml-es">Precios transparentes · USD</span></span>
+      <h2><span class="ml-en">What you'd pay back home,</span><span class="ml-es">Lo que pagaría en su país,</span> <span class="navy"><span class="ml-en">vs. with us.</span></h2></span><span class="ml-es">vs. con nosotros.</span></h2></span>
+      <p><span class="ml-en">Our base prices, side-by-side with average US clinic rates. No hidden fees, no surprise add-ons. We'll quote you in writing before any treatment begins.</span><span class="ml-es">Nuestros precios base, comparados con tarifas promedio de clínicas en Estados Unidos. Sin costos ocultos ni cargos sorpresa. Le entregamos cotización escrita antes de iniciar cualquier tratamiento.</span></p>
     </div>
 
     <div class="price-card">
       <div class="price-head">
         <div>Treatment</div>
-        <div>US Average</div>
+        <div><span class="ml-en">US Average</span><span class="ml-es">Promedio EE.UU.</span></div>
         <div>Espacio Dental</div>
-        <div class="savings">You Save</div>
+        <div class="savings"><span class="ml-en">You Save</span><span class="ml-es">Ahorra</span></div>
       </div>
       <div class="price-row">
-        <div class="name">Deep Cleaning + Polish<small>Limpieza profunda</small></div>
+        <div class="name"><span class="ml-en">Deep Cleaning + Polish</span><span class="ml-es">Limpieza profunda + pulido</span><small>Limpieza profunda</small></div>
         <div class="us">$250</div>
         <div class="ours">$45</div>
         <div class="save"><span>~82%</span></div>
@@ -862,31 +947,31 @@ body.nav-open{overflow:hidden}
         <div class="save"><span>~72%</span></div>
       </div>
       <div class="price-row">
-        <div class="name">Resin Smile Design<small>Per tooth · Diseño en resina</small></div>
+        <div class="name">Resin Smile Design<small><span class="ml-en">Per tooth · Diseño en resina</span><span class="ml-es">Por diente · Diseño en resina</span></small></div>
         <div class="us">$400</div>
         <div class="ours">$95</div>
         <div class="save"><span>~76%</span></div>
       </div>
       <div class="price-row">
-        <div class="name">Ceramic Veneer (e.max)<small>Per tooth · Carilla en cerámica</small></div>
+        <div class="name"><span class="ml-en">Ceramic Veneer (e.max)</span><span class="ml-es">Carilla en cerámica (e.max)</span><small><span class="ml-en">Per tooth · Carilla en cerámica</span><span class="ml-es">Por diente · Carilla en cerámica</span></small></div>
         <div class="us">$1.500</div>
         <div class="ours">$320</div>
         <div class="save"><span>~79%</span></div>
       </div>
       <div class="price-row">
-        <div class="name">Full Orthodontic Treatment<small>Brackets convencionales</small></div>
+        <div class="name"><span class="ml-en">Full Orthodontic Treatment</span><span class="ml-es">Tratamiento ortodóntico completo</span><small>Brackets convencionales</small></div>
         <div class="us">$5.500</div>
         <div class="ours">$1.200</div>
         <div class="save"><span>~78%</span></div>
       </div>
       <div class="price-row">
-        <div class="name">Clear Aligners (Full Treatment)<small>Alineadores transparentes</small></div>
+        <div class="name"><span class="ml-en">Clear Aligners (Full Treatment)</span><span class="ml-es">Alineadores transparentes (tratamiento completo)</span><small>Alineadores transparentes</small></div>
         <div class="us">$5.000</div>
         <div class="ours">$1.800</div>
         <div class="save"><span>~64%</span></div>
       </div>
       <div class="price-foot">
-        Prices are referential and may vary based on case complexity. <strong>Final quote in writing</strong> after free consultation. We accept USD cash, all major cards, and bank transfer.
+        <span class="ml-en">Prices are referential and may vary based on case complexity. </span><span class="ml-es">Los precios son referenciales y pueden variar según la complejidad del caso. </span><strong><span class="ml-en">Final quote in writing</span><span class="ml-es">Cotización final por escrito</span></strong><span class="ml-en"> after free consultation. We accept USD cash, all major cards, and bank transfer.</span><span class="ml-es"> después de la consulta gratis. Aceptamos efectivo en USD, las principales tarjetas y transferencia bancaria.</span>
       </div>
     </div>
   </div>
@@ -897,8 +982,8 @@ body.nav-open{overflow:hidden}
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Smile Gallery</span>
-      <h2>Real patients, <span class="accent">real results.</span></h2>
-      <p>A small selection of recent work. All photos shared with patient permission.</p>
+      <h2><span class="ml-en">Real patients, </span><span class="ml-es">Pacientes reales, </span><span class="accent"><span class="ml-en">real results.</span></h2></span><span class="ml-es">resultados reales.</span></h2></span>
+      <p><span class="ml-en">A small selection of recent work. All photos shared with patient permission.</span><span class="ml-es">Una pequeña selección de trabajos recientes. Todas las fotos compartidas con autorización de los pacientes.</span></p>
     </div>
 
     <div class="gal-grid">
@@ -908,12 +993,12 @@ body.nav-open{overflow:hidden}
         <span class="lbl"><span class="dot"></span>Catalina · Bogotá</span>
       </div>
       <div class="gal-item">
-        <img src="https://images.pexels.com/photos/17299920/pexels-photo-17299920.jpeg?auto=compress&cs=tinysrgb&h=700&w=700" alt="Whitening result">
+        <img src="./whitening.jpg" alt="Whitening result">
         <span class="tag navy">Whitening</span>
         <span class="lbl"><span class="dot"></span>Mark · USA</span>
       </div>
       <div class="gal-item">
-        <img src="https://images.pexels.com/photos/3762441/pexels-photo-3762441.jpeg?auto=compress&cs=tinysrgb&h=700&w=700" alt="Ceramic veneers">
+        <img src="./veneers.jpg" alt="Ceramic veneers">
         <span class="tag">Veneers</span>
         <span class="lbl"><span class="dot"></span>Sofía · Medellín</span>
       </div>
@@ -924,12 +1009,12 @@ body.nav-open{overflow:hidden}
       </div>
       <div class="gal-item">
         <img src="./resin-design.jpg" alt="Resin design">
-        <span class="tag">Resin Design</span>
+        <span class="tag"><span class="ml-en">Resin Design</span><span class="ml-es">Diseño en resina</span></span>
         <span class="lbl"><span class="dot"></span>Laura · Itagüí</span>
       </div>
       <div class="gal-item">
         <img src="./micro-design.jpg" alt="Micro design">
-        <span class="tag navy">Micro Design</span>
+        <span class="tag navy"><span class="ml-en">Micro Design</span><span class="ml-es">Microdiseño</span></span>
         <span class="lbl"><span class="dot"></span>Emma · Canada</span>
       </div>
     </div>
@@ -940,32 +1025,32 @@ body.nav-open{overflow:hidden}
 <section class="team">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow navy">The Team</span>
-      <h2>Three CES graduates, <span class="navy">one shared standard.</span></h2>
-      <p>Small team by design. You'll see the same dentist from consultation through follow-up, no rotating chairs, no handoffs.</p>
+      <span class="eyebrow navy"><span class="ml-en">The Team</span><span class="ml-es">El equipo</span></span>
+      <h2><span class="ml-en">Three CES graduates,</span><span class="ml-es">Tres egresadas de CES,</span> <span class="navy"><span class="ml-en">one shared standard.</span><span class="ml-es">un mismo estándar.</span></span></h2>
+      <p><span class="ml-en">Small team by design. You'll see the same dentist from consultation through follow-up, no rotating chairs, no handoffs.</span><span class="ml-es">Equipo pequeño por diseño. Usted ve al mismo odontólogo desde la consulta hasta el seguimiento, sin rotaciones ni traspasos.</span></p>
     </div>
 
     <div class="team-grid">
       <div class="team-card">
         <div class="ph">VS</div>
         <h4>Dra. Valentina Sánchez</h4>
-        <div class="role">Founder · Cosmetic Dentistry</div>
+        <div class="role"><span class="ml-en">Founder · Cosmetic Dentistry</span><span class="ml-es">Fundadora · Odontología estética</span></div>
         <div class="creds"><span>CES 2014</span><span>Veneers</span><span>Smile Design</span></div>
-        <p class="bio">Trained at CES University and Universidad de Antioquia. Specializes in digital smile design and ceramic veneers. Speaks English and Spanish.</p>
+        <p class="bio"><span class="ml-en">Trained at CES University and Universidad de Antioquia. Specializes in digital smile design and ceramic veneers. Speaks English and Spanish.</span><span class="ml-es">Formada en la Universidad CES y la Universidad de Antioquia. Especialista en diseño digital de sonrisa y carillas en cerámica. Habla inglés y español.</span></p>
       </div>
       <div class="team-card">
         <div class="ph">CR</div>
         <h4>Dr. Carlos Restrepo</h4>
         <div class="role">Orthodontics</div>
         <div class="creds"><span>CES 2012</span><span>Brackets</span><span>Aligners</span></div>
-        <p class="bio">Orthodontic specialist with eight years of clinical practice. Certified Invisalign provider. Speaks fluent English, learned in Toronto.</p>
+        <p class="bio"><span class="ml-en">Orthodontic specialist with eight years of clinical practice. Certified Invisalign provider. Speaks fluent English, learned in Toronto.</span><span class="ml-es">Especialista en ortodoncia con ocho años de práctica clínica. Proveedor certificado de Invisalign. Habla inglés con fluidez, aprendido en Toronto.</span></p>
       </div>
       <div class="team-card">
         <div class="ph">MJ</div>
         <h4>Dra. Mariana Jaramillo</h4>
-        <div class="role">General · Aesthetic</div>
+        <div class="role"><span class="ml-en">General · Aesthetic</span><span class="ml-es">General · Estética</span></div>
         <div class="creds"><span>CES 2017</span><span>Resin</span><span>Whitening</span></div>
-        <p class="bio">General and aesthetic dentistry. Lead on whitening protocols and resin design. Bilingual, with patients from across North America and Europe.</p>
+        <p class="bio"><span class="ml-en">General and aesthetic dentistry. Lead on whitening protocols and resin design. Bilingual, with patients from across North America and Europe.</span><span class="ml-es">Odontología general y estética. Líder de protocolos de blanqueamiento y diseño en resina. Bilingüe, con pacientes de toda Norteamérica y Europa.</span></p>
       </div>
     </div>
   </div>
@@ -975,46 +1060,46 @@ body.nav-open{overflow:hidden}
 <section class="reviews">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">What patients say</span>
-      <h2>180+ five-star reviews. <span class="accent">Here are a few.</span></h2>
+      <span class="eyebrow"><span class="ml-en">What patients say</span><span class="ml-es">Lo que dicen los pacientes</span></span>
+      <h2><span class="ml-en">180+ five-star reviews.</span><span class="ml-es">180+ reseñas de cinco estrellas.</span> <span class="accent"><span class="ml-en">Here are a few.</span><span class="ml-es">Aquí algunas.</span></span></h2>
     </div>
 
     <div class="rev-grid">
       <div class="rev-card">
         <div class="stars">★★★★★</div>
-        <blockquote>"I was nervous about getting veneers abroad. Valentina walked me through every step in perfect English, sent me digital previews before we started, and the result is honestly better than what my dentist in Austin quoted me $14,000 for. Worth the trip."</blockquote>
+        <blockquote><span class="ml-en">"I was nervous about getting veneers abroad. Valentina walked me through every step in perfect English, sent me digital previews before we started, and the result is honestly better than what my dentist in Austin quoted me $14,000 for. Worth the trip."</span><span class="ml-es">"Estaba nervioso de hacerme carillas en el extranjero. Valentina me explicó cada paso en perfecto inglés, me envió vistas previas digitales antes de empezar, y el resultado es mejor que lo que mi dentista en Austin me cotizó por $14.000. Valió el viaje."</span></blockquote>
         <div class="author">
-          <div class="av">M</div>
+          <div class="av"><img src="./mark.jpg" alt="Mark T."></div>
           <div>
             <div class="name">Mark T.</div>
-            <div class="meta">Austin, TX · 8 ceramic veneers</div>
+            <div class="meta"><span class="ml-en">Austin, TX · 8 ceramic veneers</span><span class="ml-es">Austin, TX · 8 carillas en cerámica</span></div>
           </div>
         </div>
-        <div class="src">★ Google Review · Mar 2026</div>
+        <div class="src">★ <span class="ml-en">Google Review · Mar 2026</span><span class="ml-es">Reseña de Google · mar 2026</span></div>
       </div>
       <div class="rev-card">
         <div class="stars">★★★★★</div>
-        <blockquote>"Espacio dental me hizo el diseño de sonrisa en una sola semana, antes de mi boda. Valentina y su equipo son cuidadosos, profesionales, y el resultado es exactamente lo que pedí. Mil gracias."</blockquote>
+        <blockquote><span class="ml-en">"Espacio dental me hizo el diseño de sonrisa en una sola semana, antes de mi boda. Valentina y su equipo son cuidadosos, profesionales, y el resultado es exactamente lo que pedí. Mil gracias."</span><span class="ml-es">"Espacio Dental did my smile design in just one week, right before my wedding. Valentina and her team are careful, professional, and the result is exactly what I asked for. Thank you so much."</span></blockquote>
         <div class="author">
-          <div class="av navy">S</div>
+          <div class="av navy"><img src="./sofia.jpg" alt="Sofía R."></div>
           <div>
             <div class="name">Sofía R.</div>
-            <div class="meta">El Poblado · Diseño de sonrisa</div>
+            <div class="meta"><span class="ml-en">El Poblado · Diseño de sonrisa</span><span class="ml-es">El Poblado · Diseño de sonrisa</span></div>
           </div>
         </div>
-        <div class="src">★ Google Review · Feb 2026</div>
+        <div class="src">★ <span class="ml-en">Google Review · Feb 2026</span><span class="ml-es">Reseña de Google · feb 2026</span></div>
       </div>
       <div class="rev-card">
         <div class="stars">★★★★★</div>
-        <blockquote>"I came down to Medellín for two weeks, planning to just do whitening. Mariana suggested a couple of micro resin touch-ups for $180 total, I said yes, and the difference is incredible. They never pushed me toward anything bigger."</blockquote>
+        <blockquote><span class="ml-en">"I came down to Medellín for two weeks, planning to just do whitening. Mariana suggested a couple of micro resin touch-ups for $180 total, I said yes, and the difference is incredible. They never pushed me toward anything bigger."</span><span class="ml-es">"Vine a Medellín por dos semanas planeando solo hacerme blanqueamiento. Mariana sugirió un par de retoques en resina por $180 USD en total, acepté, y la diferencia es increíble. Nunca me presionaron para algo más grande."</span></blockquote>
         <div class="author">
           <div class="av">E</div>
           <div>
             <div class="name">Emma K.</div>
-            <div class="meta">Toronto, CA · Whitening + resin</div>
+            <div class="meta"><span class="ml-en">Toronto, CA · Whitening + resin</span><span class="ml-es">Toronto, Canadá · Blanqueamiento + resina</span></div>
           </div>
         </div>
-        <div class="src">★ Google Review · Jan 2026</div>
+        <div class="src">★ <span class="ml-en">Google Review · Jan 2026</span><span class="ml-es">Reseña de Google · ene 2026</span></div>
       </div>
     </div>
   </div>
@@ -1025,30 +1110,30 @@ body.nav-open{overflow:hidden}
   <div class="container">
     <div class="book-grid">
       <div class="book-info">
-        <span class="eyebrow">Book your visit</span>
-        <h2>Free first consultation. <span class="accent">No commitment.</span></h2>
-        <p class="lede">Send us a quick message, we'll reply on WhatsApp within a few hours, ask a couple of questions, and book a 30-minute valuation at no cost.</p>
+        <span class="eyebrow"><span class="ml-en">Book your visit</span><span class="ml-es">Reserve su visita</span></span>
+        <h2><span class="ml-en">Free first consultation. </span><span class="ml-es">Primera consulta gratis. </span><span class="accent"><span class="ml-en">No commitment.</span></h2></span><span class="ml-es">Sin compromiso.</span></h2></span>
+        <p class="lede"><span class="ml-en">Send us a quick message, we'll reply on WhatsApp within a few hours, ask a couple of questions, and book a 30-minute valuation at no cost.</span><span class="ml-es">Envíenos un mensaje corto, respondemos por WhatsApp en pocas horas, hacemos un par de preguntas y agendamos una valoración de 30 minutos sin costo.</span></p>
 
         <div class="info-block">
           <div class="info-row">
             <div class="ico wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.967-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.057 22h-.005a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884z"/></svg></div>
             <div>
               <h5>WhatsApp</h5>
-              <p><a href="https://wa.me/573052278822" target="_blank" rel="noopener">+57 305 227 8822</a> · Reply within 4 hours, 7 days a week</p>
+              <p><a href="https://wa.me/573052278822" target="_blank" rel="noopener">+57 305 227 8822</a> · <span class="ml-en">Reply within 4 hours, 7 days a week</span><span class="ml-es">Respondemos en 4 horas, 7 días a la semana</span></p>
             </div>
           </div>
           <div class="info-row">
             <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
             <div>
-              <h5>Visit us</h5>
+              <h5><span class="ml-en">Visit us</span><span class="ml-es">Visítenos</span></h5>
               <p>Itagüí · Parque Principal · Cra 50 #51-23, Local 102, Medellín</p>
             </div>
           </div>
           <div class="info-row">
             <div class="ico navy"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
             <div>
-              <h5>Hours</h5>
-              <p>Mon–Fri 8:00am – 7:00pm · Sat 9:00am – 2:00pm · Closed Sunday</p>
+              <h5><span class="ml-en">Hours</span><span class="ml-es">Horario</span></h5>
+              <p><span class="ml-en">Mon–Fri 8:00am – 7:00pm · Sat 9:00am – 2:00pm · Closed Sunday</span><span class="ml-es">Lun a Vie 8:00am a 7:00pm · Sáb 9:00am a 2:00pm · Domingo cerrado</span></p>
             </div>
           </div>
         </div>
@@ -1065,69 +1150,33 @@ body.nav-open{overflow:hidden}
         </div>
       </div>
 
-      <form class="book-form" onsubmit="event.preventDefault();this.querySelector('.success').classList.add('show');this.querySelector('button[type=submit]').textContent='Sent ✓';this.querySelector('button[type=submit]').disabled=true;">
-        <h3>Request a free consultation</h3>
-        <span class="free">100% free · No commitment</span>
+      <div class="chat-cta">
+        <span class="badge-pill"><span class="dot"></span><span class="ml-en">Live · Free · No commitment</span><span class="ml-es">En vivo · Gratis · Sin compromiso</span></span>
+        <h3><span class="ml-en">Chat with <span class="accent">Valentina</span> now.</span><span class="ml-es">Habla con <span class="accent">Valentina</span> ahora.</span></h3>
+        <p><span class="ml-en">She can answer your questions, give you a written price estimate, and book your free 30-minute consultation. No forms, no waiting.</span><span class="ml-es">Te responde preguntas, te da un presupuesto por escrito y agenda tu consulta gratis de 30 minutos. Sin formularios, sin esperar.</span></p>
 
-        <div class="row">
-          <div class="field">
-            <label>Full name *</label>
-            <input type="text" required placeholder="Sarah Wilson">
-          </div>
-          <div class="field">
-            <label>Email *</label>
-            <input type="email" required placeholder="sarah@email.com">
+        <div class="v-row">
+          <div class="av">V</div>
+          <div class="v-meta">
+            <div class="v-name">Valentina</div>
+            <div class="v-status"><span class="ml-en">Online · replies in seconds</span><span class="ml-es">En línea · responde en segundos</span></div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="field">
-            <label>WhatsApp *</label>
-            <input type="tel" required placeholder="+1 305 555 0101">
-          </div>
-          <div class="field">
-            <label>Service of interest *</label>
-            <select required>
-              <option value="">Select a service</option>
-              <option>Deep cleaning · Limpieza</option>
-              <option>Professional whitening · Blanqueamiento</option>
-              <option>Resin smile design · Diseño en resina</option>
-              <option>Micro smile design · Microdiseño</option>
-              <option>Ceramic veneers · Diseño en cerámica</option>
-              <option>Orthodontics · Ortodoncia</option>
-              <option>I'm not sure, I'd like advice</option>
-            </select>
-          </div>
-        </div>
+        <ul class="v-bullets">
+          <li><span class="ml-en">Get exact USD prices for any treatment.</span><span class="ml-es">Precios exactos en USD para cualquier tratamiento.</span></li>
+          <li><span class="ml-en">Ask about timelines, materials, recovery.</span><span class="ml-es">Pregunta por tiempos, materiales, recuperación.</span></li>
+          <li><span class="ml-en">Book a free consultation in under a minute.</span><span class="ml-es">Agenda una consulta gratis en menos de un minuto.</span></li>
+          <li><span class="ml-en">Bilingual · ask in English or Spanish.</span><span class="ml-es">Bilingüe · pregunta en español o inglés.</span></li>
+        </ul>
 
-        <div class="row">
-          <div class="field">
-            <label>Where are you visiting from?</label>
-            <input type="text" placeholder="USA, Canada, EU, Medellín...">
-          </div>
-          <div class="field">
-            <label>Preferred dates</label>
-            <input type="text" placeholder="e.g., May 15–25">
-          </div>
-        </div>
+        <button type="button" class="v-cta" onclick="document.getElementById('chatFab').click()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          <span class="ml-en">Start chatting with Valentina</span><span class="ml-es">Empezar a chatear con Valentina</span>
+        </button>
 
-        <div class="field full">
-          <label>Anything we should know?</label>
-          <textarea placeholder="Past dental work, sensitivities, specific goals, etc."></textarea>
-        </div>
-
-        <div class="submit-row">
-          <button type="submit" class="btn btn-primary" style="width:100%">Send Request →</button>
-          <div class="or">or</div>
-          <a href="https://wa.me/573052278822?text=Hola!%20Me%20gustaria%20agendar%20una%20cita%20de%20valoracion." target="_blank" rel="noopener" class="btn btn-wa" style="width:100%">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.967-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.057 22h-.005a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884z"/></svg>
-            Chat on WhatsApp
-          </a>
-        </div>
-        <p class="meta">By contacting us you accept our privacy policy. We never share your information.</p>
-
-        <div class="success">Got it, your request was received. We'll reply on WhatsApp within a few hours to confirm your free consultation.</div>
-      </form>
+        <p class="v-fineprint"><span class="ml-en">Powered by Claude AI · supervised by our team · responses reviewed daily.</span><span class="ml-es">Powered by Claude AI · supervisado por nuestro equipo · respuestas revisadas a diario.</span></p>
+      </div>
     </div>
   </div>
 </section>
@@ -1148,7 +1197,7 @@ body.nav-open{overflow:hidden}
           <span class="l2">Itagüí · Medellín</span>
         </div>
       </a>
-      <p>A boutique dental clinic in Itagüí offering modern, English-friendly cosmetic and general dentistry to local and international patients.</p>
+      <p><span class="ml-en">A boutique dental clinic in Itagüí offering modern, English-friendly cosmetic and general dentistry to local and international patients.</span><span class="ml-es">Clínica dental boutique en Itagüí. Odontología estética y general moderna, bilingüe, para pacientes locales e internacionales.</span></p>
       <div class="addr">
         Cra 50 #51-23, Local 102 · Itagüí Parque Principal<br>
         Medellín, Antioquia · Colombia<br>
@@ -1156,32 +1205,32 @@ body.nav-open{overflow:hidden}
       </div>
     </div>
     <div class="foot-col">
-      <h5>Services</h5>
+      <h5><span class="ml-en">Services</h5></span><span class="ml-es">Servicios</h5></span>
       <ul>
         <li><a href="#services">Deep Cleaning</a></li>
         <li><a href="#services">Whitening</a></li>
         <li><a href="#services">Resin Design</a></li>
-        <li><a href="#services">Ceramic Veneers</a></li>
+        <li><a href="#services"><span class="ml-en">Ceramic Veneers</span><span class="ml-es">Carillas en cerámica</span></a></li>
         <li><a href="#services">Orthodontics</a></li>
       </ul>
     </div>
     <div class="foot-col">
-      <h5>Clinic</h5>
+      <h5><span class="ml-en">Clinic</h5></span><span class="ml-es">Clínica</h5></span>
       <ul>
         <li><a href="#why">For Expats</a></li>
-        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#pricing"><span class="ml-en">Pricing</a></span><span class="ml-es">Precios</a></span></li>
         <li><a href="#gallery">Smile Gallery</a></li>
-        <li><a href="#book">Book Visit</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="#book"><span class="ml-en">Book Visit</span><span class="ml-es">Reservar visita</span></a></li>
+        <li><a href="#"><span class="ml-en">Contact</a></span><span class="ml-es">Contacto</a></span></li>
       </ul>
     </div>
     <div class="foot-col">
-      <h5>Connect</h5>
+      <h5><span class="ml-en">Connect</h5></span><span class="ml-es">Síganos</h5></span>
       <ul>
         <li><a href="https://wa.me/573052278822" target="_blank" rel="noopener">WhatsApp</a></li>
         <li><a href="https://www.instagram.com/espaciodental_/" target="_blank" rel="noopener">Instagram</a></li>
         <li><a href="https://www.facebook.com/espaciodentalmed" target="_blank" rel="noopener">Facebook</a></li>
-        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#"><span class="ml-en">Privacy</span><span class="ml-es">Privacidad</span><span class="ml-en"> Policy</a></span><span class="ml-es"> </a></span></li>
         <li><a href="#">Habeas Data</a></li>
       </ul>
     </div>
@@ -1197,10 +1246,27 @@ body.nav-open{overflow:hidden}
   </div>
 </footer>
 
-<a href="https://wa.me/573052278822?text=Hola!%20Me%20gustaria%20agendar%20una%20cita%20de%20valoracion." class="fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.967-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.057 22h-.005a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64.001 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zM20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.549 4.142 1.595 5.945L0 24l6.335-1.652a11.92 11.92 0 005.71 1.447h.005c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.405z"/></svg>
-</a>
-
+<!-- Chat agent (Claude-powered) -->
+<button class="chat-fab" id="chatFab" aria-label="Chat with Valentina">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+  <span class="chat-fab-label"><span class="ml-en">Chat with Valentina</span><span class="ml-es">Habla con Valentina</span></span>
+  <span class="dot" aria-hidden="true"></span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat with Espacio Dental">
+  <div class="chat-head">
+    <div class="av">V</div>
+    <div class="who">
+      <div class="name"><span class="ml-en">Valentina · Espacio Dental</span><span class="ml-es">Valentina · Espacio Dental</span></div>
+      <div class="status"><span class="ml-en">Online · replies in seconds</span><span class="ml-es">En línea · responde en segundos</span></div>
+    </div>
+    <button class="close" id="chatClose" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="chat-body" id="chatBody" aria-live="polite"></div>
+  <form class="chat-input" id="chatForm" autocomplete="off">
+    <input type="text" id="chatInput" required maxlength="500" aria-label="Your message">
+    <button type="submit" id="chatSend"><span class="ml-en">Send</span><span class="ml-es">Enviar</span></button>
+  </form>
+</div>
 
 <script>
 (function(){
@@ -1213,6 +1279,149 @@ body.nav-open{overflow:hidden}
   if(scrim)scrim.addEventListener('click',close);
   document.querySelectorAll('[data-nav-close]').forEach(function(a){a.addEventListener('click',close)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&body.classList.contains('nav-open'))close()});
+})();
+
+// ─── Bilingual EN/ES toggle ───
+window.__edSetLang=(function(){
+  var html=document.documentElement;
+  function setLang(l){
+    if(l!=='en'&&l!=='es')l='en';
+    html.classList.remove('lang-en','lang-es');
+    html.classList.add('lang-'+l);
+    html.setAttribute('lang',l);
+    try{localStorage.setItem('ed_lang',l)}catch(e){}
+    document.querySelectorAll('title[data-lang]').forEach(function(t){if(t.getAttribute('data-lang')===l)document.title=t.textContent});
+  }
+  var qs;try{qs=new URLSearchParams(location.search)}catch(e){qs=null}
+  var picked=qs&&qs.get('lang');
+  if(!picked){try{picked=localStorage.getItem('ed_lang')}catch(e){}}
+  if(!picked){var n=(navigator.language||'en').toLowerCase();picked=n.indexOf('es')===0?'es':'en'}
+  setLang(picked);
+  // Delegated click on document (capture phase) so the toggle works no matter
+  // when/how the user clicks, even if the anchor handlers race with other
+  // listeners or get unbound.
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.lang-toggle a[data-l]');
+    if(!a)return;
+    e.preventDefault();
+    e.stopPropagation();
+    var l=a.getAttribute('data-l');
+    setLang(l);
+    try{var u=new URL(location.href);u.searchParams.set('lang',l);history.replaceState(null,'',u.toString())}catch(err){}
+  },true);
+  return setLang;
+})();
+
+// ─── Chat agent (Claude-powered) ───
+(function(){
+  var fab=document.getElementById('chatFab');
+  var panel=document.getElementById('chatPanel');
+  var closeBtn=document.getElementById('chatClose');
+  var body=document.getElementById('chatBody');
+  var form=document.getElementById('chatForm');
+  var input=document.getElementById('chatInput');
+  var sendBtn=document.getElementById('chatSend');
+  if(!fab||!panel)return;
+
+  var history=[];
+  var opened=false;
+  var sending=false;
+  var ENDPOINT='/api/espacio-dental/chat';
+
+  function currentLang(){return document.documentElement.classList.contains('lang-es')?'es':'en'}
+  function placeholder(){return currentLang()==='es'?'Pregunte lo que quiera…':'Ask anything…'}
+
+  function escapeHTML(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+
+  function addBot(text, wa){
+    var d=document.createElement('div');
+    d.className='chat-msg bot';
+    d.innerHTML=escapeHTML(text);
+    if(wa){
+      var a=document.createElement('a');
+      a.href=wa;a.target='_blank';a.rel='noopener';a.className='wa-btn';
+      a.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>'+(currentLang()==='es'?'Continuar por WhatsApp':'Continue on WhatsApp');
+      d.appendChild(a);
+    }
+    body.appendChild(d);
+    body.scrollTop=body.scrollHeight;
+  }
+  function addUser(text){
+    var d=document.createElement('div');
+    d.className='chat-msg user';
+    d.textContent=text;
+    body.appendChild(d);
+    body.scrollTop=body.scrollHeight;
+  }
+  function showTyping(){
+    var t=document.createElement('div');
+    t.className='chat-typing';t.id='chatTyping';
+    t.innerHTML='<span></span><span></span><span></span>';
+    body.appendChild(t);
+    body.scrollTop=body.scrollHeight;
+  }
+  function hideTyping(){var t=document.getElementById('chatTyping');if(t)t.remove()}
+
+  function welcome(){
+    if(body.children.length>0)return;
+    var msg=currentLang()==='es'
+      ? '¡Hola! Soy Valentina, la asistente de Espacio Dental. Puedo contarte sobre los servicios, los precios o ayudarte a reservar una consulta gratis de 30 minutos. ¿En qué te puedo ayudar?'
+      : "Hi! I'm Valentina, the Espacio Dental assistant. I can tell you about our services, pricing, or help you book a free 30-minute consultation. What can I help with?";
+    addBot(msg);
+  }
+
+  function open(){
+    panel.classList.add('open');
+    opened=true;
+    input.placeholder=placeholder();
+    welcome();
+    setTimeout(function(){input.focus()},150);
+  }
+  function close(){panel.classList.remove('open')}
+
+  fab.addEventListener('click',function(){panel.classList.contains('open')?close():open()});
+  closeBtn.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.classList.contains('open'))close()});
+
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    if(sending)return;
+    var text=(input.value||'').trim();
+    if(!text)return;
+    sending=true;sendBtn.disabled=true;
+    addUser(text);
+    history.push({role:'user',content:text});
+    input.value='';
+    showTyping();
+    try{
+      var r=await fetch(ENDPOINT,{
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({messages:history,lang:currentLang()})
+      });
+      hideTyping();
+      if(!r.ok){
+        addBot(currentLang()==='es'?'Disculpa, algo falló. Intenta de nuevo en un momento o escríbenos directamente al WhatsApp +57 305 227 8822.':'Sorry, something went wrong. Try again in a moment, or reach us on WhatsApp at +57 305 227 8822.');
+      }else{
+        var data=await r.json();
+        var reply=data.reply||'';
+        var wa=data.wa_link||null;
+        if(reply)addBot(reply, wa);
+        if(reply)history.push({role:'assistant',content:reply});
+      }
+    }catch(err){
+      hideTyping();
+      addBot(currentLang()==='es'?'Sin conexión. Verifica tu internet y reintenta.':'Connection error. Check your network and try again.');
+    }finally{
+      sending=false;sendBtn.disabled=false;
+      setTimeout(function(){input.focus()},50);
+    }
+  });
+
+  // Update placeholder on language switch
+  document.querySelectorAll('.lang-toggle a').forEach(function(a){
+    a.addEventListener('click',function(){setTimeout(function(){input.placeholder=placeholder()},10)});
+  });
 })();
 </script>
 </body>
