@@ -1159,13 +1159,12 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 
 /* ---- Today dashboard ---- */
 .today-page {
-  max-width: 1280px; margin: 0 auto;
-  padding: 1.5rem 1.25rem 3rem;
+  width: 100%; padding: 1.5rem 0 3rem;
 }
 .today-hero {
   display: flex; justify-content: space-between; align-items: flex-end;
   gap: 1.5rem;
-  margin-bottom: 1.75rem; padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem; padding: 0 1.25rem 1.25rem;
   border-bottom: 1px solid var(--ink-line);
 }
 .today-greet h2 {
@@ -1190,6 +1189,30 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   font-family: var(--mono); font-size: 0.65rem; color: var(--ink-soft); margin-top: 0.25rem;
   letter-spacing: 0.06em; text-transform: uppercase;
 }
+.today-kpi-add {
+  cursor: pointer; border-style: dashed; text-align: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+.today-kpi-add:hover { background: var(--paper-3); border-color: var(--p); }
+.today-kpi-add .kpi-num { color: var(--p); }
+.leads-search-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--ink-line);
+  background: var(--paper-2);
+}
+.leads-search-input {
+  flex: 1; font-family: var(--mono); font-size: 0.8rem;
+  padding: 0.45rem 0.75rem; border: 1px solid var(--ink-line);
+  border-radius: 3px; background: var(--paper); color: var(--ink);
+  outline: none;
+}
+.leads-search-input:focus { border-color: var(--p); }
+.leads-search-clear {
+  font-size: 0.75rem; padding: 0.35rem 0.6rem; border: 1px solid var(--ink-line);
+  border-radius: 3px; background: var(--paper-2); color: var(--ink-soft);
+  cursor: pointer; line-height: 1;
+}
+.leads-search-clear:hover { background: var(--paper-3); color: var(--ink); }
 .today-group {
   background: var(--paper-2); border: 1px solid var(--ink-line);
   border-radius: 4px; padding: 1.1rem 1.25rem 1.25rem;
@@ -2743,9 +2766,12 @@ function renderToday() {
       '</div>',
       '<div class="today-summary">',
         renderTodayKpi("Total leads", totalLeads, ""),
-        renderTodayKpi("Need attention today", triageCount, "overdue or hot untouched"),
-        renderTodayKpi("Hot untouched", state.data.leads.filter((l) => (l.heat||"").toUpperCase() === "HOT" && (l.touches_count || 0) === 0).length, "leads"),
+        '<div class="today-kpi today-kpi-add" onclick="newLeadCard()" title="New lead"><div class="kpi-num">+</div><div class="kpi-label">New lead</div></div>',
       '</div>',
+    '</div>',
+    '<div class="leads-search-bar">',
+      '<input class="leads-search-input" id="leads-search" type="search" placeholder="Search leads by name, city, category, phone…" value="' + escHtml(state.search) + '" autocomplete="off" />',
+      (state.search ? '<button class="leads-search-clear" id="leads-search-clear" title="Clear">✕</button>' : ''),
     '</div>'
   ];
 
@@ -2843,6 +2869,20 @@ function renderToday() {
       }
     };
   });
+  // Leads search bar.
+  const lsi = document.getElementById("leads-search");
+  if (lsi) {
+    lsi.oninput = (e) => {
+      const pos = e.target.selectionStart;
+      state.search = e.target.value;
+      renderToday();
+      const fresh = document.getElementById("leads-search");
+      if (fresh) { fresh.focus(); fresh.setSelectionRange(pos, pos); }
+    };
+  }
+  const lsc = document.getElementById("leads-search-clear");
+  if (lsc) lsc.onclick = () => { state.search = ""; renderToday(); };
+
   renderTodayBulkBar();
 }
 
@@ -4687,6 +4727,19 @@ async function save(table, id, col, val) {
 }
 
 // ----------- add / delete -----------
+async function newLeadCard() {
+  const defaults = { source: "manual", status: "new", language: "en", lead_stage: "new", touches_count: 0 };
+  try {
+    const res = await api("/api/admin/crm/leads", { method: "POST", body: JSON.stringify(defaults) });
+    state.data.leads.unshift(res.row);
+    state.counts.leads = (state.counts.leads || 0) + 1;
+    rebuildLookups();
+    renderToday();
+    openCard("lead", res.row.id);
+    toast("New lead created");
+  } catch (e) { toast(e.message, true); }
+}
+
 async function addRow() {
   const t = state.active;
   // Lead funnel adds into the leads table.
