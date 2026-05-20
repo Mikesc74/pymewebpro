@@ -48,13 +48,13 @@ bucket_name = "pymewebpro-client-assets"
 #                 nightly cadence sweep in src/index.js scheduled() · creates
 #                 D+1/D+3/D+7/D+14 follow-up tasks in `activities` for any
 #                 open-funnel lead whose last touch landed on a bucket boundary.
-# "0 */2 * * *" · every 2 hours. Runs runBulkProspectBatch only · pulls another
-#                 ~60 Places queries worth of outbound leads for the active
-#                 prospecting_jobs row until its target is met, then no-ops.
-#                 The 14:00 run ALSO calls the bulk batch (handled in scheduled()
-#                 by branching on event.cron), so the two crons overlap by design.
+#                 This run ALSO calls runBulkProspectBatch, so if a
+#                 prospecting_jobs row is armed it pulls one bulk batch per day.
+#                 (A second "0 */2 * * *" cron was dropped to stay under the
+#                 account-wide 5-cron limit · the daily run is enough at cron
+#                 pace, and bulk prospecting is on hold anyway.)
 [triggers]
-crons = ["0 14 * * *", "0 */2 * * *"]
+crons = ["0 14 * * *"]
 
 # --- Plain-text vars ------------------------------------------------------
 # These are visible in the Worker; don't put secrets here.
