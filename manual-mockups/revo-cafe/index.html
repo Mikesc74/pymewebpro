@@ -220,6 +220,29 @@ section{padding:5rem 0}
 
 @media (max-width: 880px){.menu-grid{grid-template-columns:1fr;gap:1.25rem}}
 
+/* ─── Nature · "el café también sale contigo" ─── */
+.outdoors{
+  position:relative;color:#fff;overflow:hidden;
+  background-color:var(--ink);
+  background-image:linear-gradient(105deg, rgba(31,42,46,.85) 0%, rgba(31,42,46,.55) 55%, rgba(31,42,46,.20) 100%), url('./hero-mountain.jpg');
+  background-size:cover;background-position:center;
+  padding:6rem 0;
+}
+.outdoors h2,.outdoors h3{color:#fff}
+.outdoors .eyebrow{color:var(--mint-pale)}
+.outdoors .eyebrow::before{background:var(--terra)}
+.outdoors .wrap{max-width:680px;margin:0 auto;text-align:left}
+.outdoors h2{margin-bottom:1.25rem;font-size:clamp(2rem,4.5vw,3rem)}
+.outdoors .lead{font-size:1.15rem;color:rgba(255,255,255,.92);margin-bottom:1.2rem;max-width:560px}
+.outdoors .secondary{font-size:1rem;color:rgba(255,255,255,.78);max-width:560px}
+.outdoors blockquote{
+  margin:2rem 0 0;padding:0 0 0 1.25rem;
+  border-left:3px solid var(--terra);
+  font-family:var(--serif);font-style:italic;font-size:1.3rem;
+  color:#fff;line-height:1.4;
+}
+.outdoors cite{display:block;margin-top:.5rem;font-style:normal;font-family:var(--sans);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+
 /* ─── Café especialidad ─── */
 .coffee{background:var(--cream)}
 .coffee-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;margin-top:2rem}
@@ -229,23 +252,15 @@ section{padding:5rem 0}
 .coffee-list li{padding-left:1.25rem;position:relative;color:var(--ink);font-size:.95rem;line-height:1.5}
 .coffee-list li::before{content:'';position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--mint)}
 
-.coffee-cup{
-  position:relative;aspect-ratio:1/1;max-width:380px;margin-left:auto;
-  border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, var(--mint) 0%, var(--mint-deep) 80%);
-  display:flex;align-items:center;justify-content:center;color:#fff;
-  box-shadow:0 30px 60px -20px rgba(46,138,126,.35);
+.coffee-photo{
+  position:relative;aspect-ratio:4/5;max-width:380px;margin-left:auto;
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(31,42,46,.30), 0 6px 18px rgba(31,42,46,.12);
+  background:var(--ink);
 }
-.coffee-cup::after{
-  content:'';position:absolute;inset:10px;border-radius:50%;border:2px solid rgba(255,255,255,.18);
-}
-.coffee-cup .quote{
-  position:relative;z-index:2;font-family:var(--serif);font-style:italic;font-weight:500;
-  font-size:clamp(1.4rem,3vw,2rem);text-align:center;line-height:1.15;padding:0 2rem;
-}
-.coffee-cup .quote .small{display:block;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-family:var(--sans);font-style:normal;font-weight:600;color:rgba(255,255,255,.72);margin-top:.8rem}
+.coffee-photo img{width:100%;height:100%;object-fit:cover;display:block}
 
-@media (max-width: 880px){.coffee-grid{grid-template-columns:1fr;gap:2rem}.coffee-cup{margin:0 auto;max-width:280px}.coffee-list{grid-template-columns:1fr}}
+@media (max-width: 880px){.coffee-grid{grid-template-columns:1fr;gap:2rem}.coffee-photo{margin:0 auto;max-width:280px}.coffee-list{grid-template-columns:1fr}}
 
 /* ─── Domicilios + para llevar ─── */
 .delivery{background:var(--ink);color:rgba(255,255,255,.92);position:relative;overflow:hidden}
@@ -452,7 +467,7 @@ footer a:hover{color:var(--mint-pale)}
         <li><a href="#visitanos">Visítanos</a></li>
       </ul>
     </nav>
-    <button type="button" class="btn btn-primary" data-action="open-chat" aria-label="Hablar con el asistente de Café Rev">
+    <button type="button" class="btn btn-primary" data-action="open-chat" aria-label="Hablar con Capi de Café Rev">
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       Pide o consulta
     </button>
@@ -471,7 +486,7 @@ footer a:hover{color:var(--mint-pale)}
       <div class="hero-ctas">
         <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Pide o consulta con nuestro asistente
+          Pide o consulta con Capi
         </button>
         <a class="btn btn-ghost btn-lg" href="#brunch">
           Ver la carta
@@ -488,10 +503,14 @@ footer a:hover{color:var(--mint-pale)}
     <figure class="hero-graphic" id="heroGallery" aria-label="Café Rev · platos y espacio">
       <img class="slide is-active" src="./hero-salmon-bagel.jpg" alt="Smoked Salmon Bagel · bagel con salmón ahumado, queso crema, eneldo, pepino y cebolla morada" width="900" height="1080" decoding="async" fetchpriority="high">
       <img class="slide" src="./hero-bagels.jpg" alt="Tabla de bagels y sándwiches estilo brunch · varias opciones de proteína" width="900" height="1080" decoding="async" loading="lazy">
-      <img class="slide" src="./hero-interior.jpg" alt="Interior del café · ambiente bohemio, mesas comunales y plantas" width="900" height="1080" decoding="async" loading="lazy">
+      <img class="slide" src="./hero-coldbrew.jpg" alt="Cold brew tonic servido en vaso alto con limón y burbujas" width="900" height="1080" decoding="async" loading="lazy">
+      <img class="slide" src="./hero-machine.jpg" alt="Barista de Café Rev frente al menú · espresso y máquina de café" width="900" height="1080" decoding="async" loading="lazy">
+      <img class="slide" src="./hero-mountain.jpg" alt="Café en la montaña · estufa, taza humeante y montañas al fondo" width="900" height="1080" decoding="async" loading="lazy">
       <span class="caption is-active" data-i="0">Smoked Salmon Bagel</span>
       <span class="caption" data-i="1">Tabla para compartir</span>
-      <span class="caption" data-i="2">El espacio</span>
+      <span class="caption" data-i="2">Cold brew tonic</span>
+      <span class="caption" data-i="3">El café del día</span>
+      <span class="caption" data-i="4">Del barrio a la montaña</span>
       <div class="hero-stamp" aria-hidden="true">
         <span class="top">Café</span>
         <span class="big"><em>Rev</em></span>
@@ -532,14 +551,56 @@ footer a:hover{color:var(--mint-pale)}
       </article>
 
       <article class="card menu-card">
-        <div class="ph"><img src="./menu-mini-bagels.jpg" alt="Tabla de mini bagels variados para compartir"></div>
+        <div class="ph"><img src="./menu-mini-bagels.jpg" alt="Tabla de mini bagels variados para compartir" loading="lazy"></div>
         <div class="body">
           <span class="kicker">Para compartir</span>
           <h3>Tabla de mini bagels</h3>
           <p>Una selección con todos los favoritos: salmón premium, bacon-egg-cheese, atún, y más. Perfecta para reuniones, parches matutinos, o para no decidirse por uno solo.</p>
         </div>
       </article>
+
+      <article class="card menu-card">
+        <div class="ph"><img src="./menu-panini.jpg" alt="Panini sandwiches calientes en tabla de madera" loading="lazy"></div>
+        <div class="body">
+          <span class="kicker">Almuerzo perfecto</span>
+          <h3>Panini sandwiches</h3>
+          <p>Pan tostado en la prensa, rellenos generosos, queso derretido. La opción del medio día cuando querés algo caliente, sustancioso y para sentarte un rato.</p>
+        </div>
+      </article>
+
+      <article class="card menu-card">
+        <div class="ph"><img src="./menu-carrotcake.jpg" alt="Torta de zanahoria hecha en casa con frosting de queso crema" loading="lazy"></div>
+        <div class="body">
+          <span class="kicker">Hecha en casa, todos los días</span>
+          <h3>Torta de zanahoria</h3>
+          <p>Receta de la casa, horneada fresca cada mañana. Húmeda, con nueces y frosting de queso crema. Pedila la porción · o llevátela entera para el parche del finde.</p>
+        </div>
+      </article>
+
+      <article class="card menu-card">
+        <div class="ph"><img src="./menu-lattecup.jpg" alt="Café latte con arte en taza oscura sobre concreto" loading="lazy"></div>
+        <div class="body">
+          <span class="kicker">Tu barrio, tu café</span>
+          <h3>Café para llevar</h3>
+          <p>Espresso, latte, cappuccino, americano, cold brew, filtrados. Si lo querés acompañar con algo dulce o un bagel, te lo armamos para que salgas sin esperar.</p>
+        </div>
+      </article>
     </div>
+    <p style="margin-top:1.5rem;text-align:center;color:var(--ink-mute);font-size:.85rem;font-style:italic">Y mucho más en la carta del día · pancakes, huevos benedictinos, ensaladas, jugos naturales. Pregúntale a Capi.</p>
+  </div>
+</section>
+
+<!-- ─── El café también sale contigo · outdoors / nature thread ─── -->
+<section class="outdoors" aria-label="Café Rev y la naturaleza">
+  <div class="wrap">
+    <span class="eyebrow">Del barrio a la montaña</span>
+    <h2>El café <em>también sale contigo.</em></h2>
+    <p class="lead">El Rev no termina cuando salís de la tienda. Lo armás afuera, en la finca de un amigo, en un páramo, en un trail antes del amanecer. Para nosotros el café no es solo una bebida · es una excusa para parar, mirar el paisaje, y volver a vos mismo.</p>
+    <p class="secondary">Por eso seleccionamos granos de origen colombiano, los tostamos pensando en cómo van a viajar, y vendemos café molido o en grano para que te lo lleves donde sea que vayas. Y por eso apoyamos The Capy Project · la naturaleza que disfrutamos también necesita gente que la cuide.</p>
+    <blockquote>
+      No hay día malo cuando hay café, monte, y silencio.
+      <cite>Alejo · dueño de Café Rev</cite>
+    </blockquote>
   </div>
 </section>
 
@@ -562,11 +623,8 @@ footer a:hover{color:var(--mint-pale)}
         </ul>
       </div>
 
-      <div class="coffee-cup">
-        <div class="quote">
-          <em>Blindfolded latte test.</em>
-          <span class="small">Sí, lo hacemos.</span>
-        </div>
+      <div class="coffee-photo">
+        <img src="./blindfolded-test.jpg" alt="Barista de Café Rev preparando un espresso · prueba de latte a ciegas" loading="lazy">
       </div>
     </div>
   </div>
@@ -702,10 +760,10 @@ footer a:hover{color:var(--mint-pale)}
 
       <div class="visit-cta">
         <h3>¿Antojo? <em>Pedílo ahora.</em></h3>
-        <p>Nuestro asistente arma el pedido con vos, te confirma disponibilidad, y coordina con Alejo si hace falta algo a mano.</p>
+        <p>Capi arma el pedido con vos, te confirma disponibilidad, y coordina con Alejo si hace falta algo a mano.</p>
         <button type="button" class="btn btn-lg" data-action="open-chat">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Hablar con el asistente
+          Hablar con Capi
         </button>
       </div>
     </div>
@@ -755,16 +813,16 @@ footer a:hover{color:var(--mint-pale)}
 </footer>
 
 <!-- ─── Chat widget ─── -->
-<button class="chat-fab" id="chatOpenBtn" aria-label="Hablar con el asistente" aria-expanded="false" aria-controls="chatPanel">
+<button class="chat-fab" id="chatOpenBtn" aria-label="Hablar con Capi" aria-expanded="false" aria-controls="chatPanel">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 
 <aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
   <header class="chat-header">
     <div class="who">
-      <div class="avatar" role="img" aria-label="Capy, mascota de Café Rev"></div>
+      <div class="avatar" role="img" aria-label="Capi, mascota de Café Rev"></div>
       <div>
-        <div class="title" id="chatTitle">Capy</div>
+        <div class="title" id="chatTitle">Capi</div>
         <div class="subtitle">Asistente Café Rev · en línea</div>
       </div>
     </div>
@@ -876,7 +934,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     body.scrollTop = body.scrollHeight;
   }
   function greet(){
-    addBubble('bot', '¡Hola! Soy Capy, la mascota de Café Rev. Te ayudo con el menú, domicilios, para llevar, o lo que quieras saber del café o de The Capy Project. ¿En qué te ayudo?');
+    addBubble('bot', '¡Hola! Soy Capi, la mascota de Café Rev. Te ayudo con el menú, domicilios, para llevar, o lo que quieras saber del café o de The Capy Project. ¿En qué te ayudo?');
   }
 
   async function send(text){
