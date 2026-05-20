@@ -388,6 +388,14 @@ async function enrichLead(env, leadId, opts) {
     patch.score = score;
     state.heat = heat;
     state.score = score;
+
+    // Second lens · landing-page fit. Independent of the no-site fit score:
+    // a digitally-mature business is a PRIME landing-page customer. Overwrite.
+    const { landing_heat, landing_score } = computeLandingScore(state);
+    patch.landing_heat = landing_heat;
+    patch.landing_score = landing_score;
+    state.landing_heat = landing_heat;
+    state.landing_score = landing_score;
   }
 
   // Drop any fields that normalized to null/empty (but keep numeric 0 / false).
@@ -601,6 +609,54 @@ export function computeFitScore(lead) {
   else heat = "DEAD";
 
   return { heat, score };
+}
+
+// ---- Landing-page-fit scoring --------------------------------------------
+
+// Second, independent scoring lens. Where computeFitScore rewards businesses
+// with NO site (a new-build play), computeLandingScore rewards digital
+// maturity: a business with a real site, social presence, lots of reviews and
+// a real address is a PRIME landing-page customer (singular CTA pages, often
+// several for different product lines). Pure function · no DB, no fetch.
+// Returns { landing_heat, landing_score } where score is 0..100.
+export function computeLandingScore(lead) {
+  let landing_score = 0;
+  const has = (v) => v != null && String(v).trim() !== "";
+  const cmsLower = lead.cms ? String(lead.cms).toLowerCase() : null;
+  const reachableSite = has(lead.current_site) && cmsLower && cmsLower !== "site_unreachable";
+
+  // +25 if they have a reachable current site · they already invest in digital,
+  // so a conversion-focused landing page is an upsell they understand.
+  if (reachableSite) landing_score += 25;
+
+  // +15 if they run social marketing (Instagram OR Facebook) · understands funnels.
+  if (has(lead.instagram) || has(lead.facebook_url)) landing_score += 15;
+
+  // +15 high transaction volume · wants more conversions.
+  if (typeof lead.review_count === "number" && lead.review_count >= 50) landing_score += 15;
+
+  // +10 well-rated, real operation.
+  if (typeof lead.rating === "number" && lead.rating >= 4.0) landing_score += 10;
+
+  // +15 closeable · a reachable contact channel.
+  if (has(lead.whatsapp) || has(lead.phone)) landing_score += 15;
+
+  // +10 real, locatable business.
+  if (has(lead.address)) landing_score += 10;
+
+  // +10 an audience to convert.
+  if (typeof lead.followers === "number" && lead.followers >= 1000) landing_score += 10;
+
+  if (landing_score > 100) landing_score = 100;
+
+  let landing_heat;
+  if (landing_score >= 70) landing_heat = "HOT";
+  else if (landing_score >= 50) landing_heat = "WARM";
+  else if (landing_score >= 30) landing_heat = "COOL";
+  else if (landing_score >= 10) landing_heat = "COLD";
+  else landing_heat = "DEAD";
+
+  return { landing_heat, landing_score };
 }
 
 // ---- Helpers -------------------------------------------------------------

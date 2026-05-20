@@ -24,7 +24,7 @@ import { santiPageHTML } from "./santi.js";
 // Lead enrichment · Claude Haiku + web search to fill missing phone/email/socials.
 import { handleEnrich } from "./enrich.js";
 // Outbound prospecting loader · Google Places search -> dedupe -> bulk insert.
-import { handleProspecting } from "./prospecting.js";
+import { handleProspecting, runBulkProspectBatch } from "./prospecting.js";
 // Outreach drafter (Claude Haiku) + log-send + cadence queue.
 //   POST /api/admin/outreach/draft     · Claude-generated WA or email draft
 //   POST /api/admin/outreach/log-send  · records an outbound touch
@@ -1906,14 +1906,37 @@ const src_default = {
     return __pwpResponse;
   },
 
-  // Nightly cron · runs at 09:00 America/Bogota (14:00 UTC, see wrangler.toml).
-  // Creates D+1 / D+3 / D+7 / D+14 follow-up tasks in `activities` for any
-  // lead in the open funnel whose last touch landed exactly N days ago.
-  // Capped at 50 task inserts per run; wraps in try/catch.
+  // Cron handler. Two schedules (see wrangler.toml [triggers] crons):
+  //   "0 14 * * *"   · 09:00 America/Bogota · nightly cadence sweep (creates
+  //                    D+1/D+3/D+7/D+14 follow-up tasks for open-funnel leads).
+  //   "0 */2 * * *"  · every 2 hours · bulk prospecting batch only.
+  // EVERY run (including the 14:00 one) also pulls another ~60 Places queries
+  // worth of leads via runBulkProspectBatch until the active job's target is
+  // met, then the job flips to 'done' and the batch runner no-ops. Both paths
+  // wrap in try/catch + ctx.waitUntil so one failing path never wedges the other.
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(runNightlyCadenceSweep(env, event).catch((e) => {
-      console.error("scheduled: cadence sweep crashed: " + (e && e.stack || e));
-    }));
+    const cron = (event && event.cron) || "";
+
+    // Nightly cadence sweep only on the 14:00 UTC trigger.
+    if (cron === "0 14 * * *") {
+      ctx.waitUntil(runNightlyCadenceSweep(env, event).catch((e) => {
+        console.error("scheduled: cadence sweep crashed: " + (e && e.stack || e));
+      }));
+    }
+
+    // Bulk prospecting batch on every run (including 14:00).
+    ctx.waitUntil(
+      (async () => {
+        try {
+          const r = await runBulkProspectBatch(env, { maxPlacesCalls: 60 });
+          if (r && r.ran) {
+            console.log("scheduled: bulk prospecting · " + JSON.stringify(r));
+          }
+        } catch (e) {
+          console.error("scheduled: bulk prospecting crashed: " + (e && e.stack || e));
+        }
+      })()
+    );
   }
 };
 

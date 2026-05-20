@@ -19,27 +19,81 @@
 //   env.TOKENS                (KV · daily cap counter, key prospecting:places:YYYY-MM-DD)
 //   env.DB                    (D1)
 
-import { computeFitScore, enrichWithPlaces, normalizePhone } from "./enrich.js";
+import { computeFitScore, computeLandingScore, enrichWithPlaces, normalizePhone } from "./enrich.js";
 
 const DAILY_PLACES_CAP = 500;
 const DEFAULT_LIMIT = 20;
 const MAX_LIMIT = 60;
 
-// Industry seed queries · pick one distinctive Spanish phrase per industry.
+// Separate, generous daily cap for the server-side bulk runner so it does not
+// starve the interactive enrich/prospecting caps. Key: prospecting:bulk:<date>.
+const DAILY_BULK_CAP = 2000;
+// Per-invocation safety limits for the bulk runner (Cloudflare Worker
+// subrequest budget is 1000/invocation; ~60 Places + up to ~600 D1 ops is safe).
+const BULK_MAX_PLACES_CALLS = 60;
+const BULK_MAX_INSERTS = 400;
+
+// Industry seed queries · pick one distinctive Spanish phrase per vertical.
 // Lower-case dashed slugs in code; display form is up to the UI.
+// The original 4 ICPs (dental, legal, hoteles-boutique, turismo) stay first so
+// existing callers keep working; the rest are a BROAD general-SMB set.
 const INDUSTRY_SEEDS = {
+  // Original 4 ICPs.
   "dental": "clínica dental",
   "legal": "abogado",
   "hoteles-boutique": "hotel boutique",
   "turismo": "agencia de viajes",
+  // Broad general-SMB verticals.
+  "restaurante": "restaurante",
+  "cafe": "café",
+  "tienda-ropa": "tienda de ropa",
+  "gimnasio": "gimnasio",
+  "inmobiliaria": "inmobiliaria",
+  "spa": "spa",
+  "salon-belleza": "salón de belleza",
+  "barberia": "barbería",
+  "clinica-dental": "clínica dental",
+  "clinica-estetica": "clínica estética",
+  "consultorio-medico": "consultorio médico",
+  "veterinaria": "veterinaria",
+  "abogados": "abogado",
+  "contador": "contador",
+  "ferreteria": "ferretería",
+  "panaderia": "panadería",
+  "hotel-boutique": "hotel boutique",
+  "agencia-viajes": "agencia de viajes",
+  "agencia-marketing": "agencia de marketing",
+  "constructora": "constructora",
+  "autopartes": "repuestos para autos",
+  "escuela-idiomas": "escuela de idiomas",
+  "joyeria": "joyería",
+  "floristeria": "floristería",
+  "optica": "óptica",
 };
 
 // City slug -> display form (proper accents) used in the Places textQuery.
+// 5 metros.
 const CITY_DISPLAY = {
   "medellin": "Medellín",
   "bogota": "Bogotá",
   "barranquilla": "Barranquilla",
+  "cali": "Cali",
+  "cartagena": "Cartagena",
 };
+
+// The 25-vertical broad SMB set used by the bulk runner when no explicit list
+// is supplied. Excludes the legacy duplicate slugs (dental, legal,
+// hoteles-boutique, turismo) which alias newer ones (clinica-dental, abogados,
+// hotel-boutique, agencia-viajes) to avoid double-pulling the same searches.
+const BULK_DEFAULT_VERTICALS = [
+  "restaurante", "cafe", "tienda-ropa", "gimnasio", "inmobiliaria",
+  "spa", "salon-belleza", "barberia", "clinica-dental", "clinica-estetica",
+  "consultorio-medico", "veterinaria", "abogados", "contador", "ferreteria",
+  "panaderia", "hotel-boutique", "agencia-viajes", "agencia-marketing", "constructora",
+  "autopartes", "escuela-idiomas", "joyeria", "floristeria", "optica",
+];
+
+const BULK_DEFAULT_CITIES = ["medellin", "bogota", "barranquilla", "cali", "cartagena"];
 
 // TODO: re-map to /sitio-web-<industry>-<city>/ if those landings come back.
 const LANDING_PAGE_FALLBACK = "https://pymewebpro.com/sitios-web/";
@@ -71,6 +125,12 @@ export async function handleProspecting(request, env, ctx, helpers) {
     }
     if (path === "/api/admin/prospecting/sweep" && method === "POST") {
       return await sweep(request, env, json, helpers);
+    }
+    if (path === "/api/admin/prospecting/bulk-start" && method === "POST") {
+      return await bulkStart(request, env, json);
+    }
+    if (path === "/api/admin/prospecting/bulk-status" && method === "GET") {
+      return await bulkStatus(env, json);
     }
     return json({ ok: false, error: "Not found" }, 404);
   } catch (e) {
@@ -338,6 +398,7 @@ async function load(request, env, json, helpers) {
       facebook_url: null,
     };
     const { heat, score } = computeFitScore(leadState);
+    const { landing_heat, landing_score } = computeLandingScore(leadState);
 
     const metadata = JSON.stringify({
       landing_page: landingPage,
@@ -354,7 +415,7 @@ async function load(request, env, json, helpers) {
         "  id, source, business_name, language, status, lead_stage, " +
         "  phone, address, " +
         "  category, city, current_site, " +
-        "  heat, score, " +
+        "  heat, score, landing_heat, landing_score, " +
         "  on_today_list, touches_count, " +
         "  place_id, rating, review_count, hours, " +
         "  metadata, " +
@@ -363,7 +424,7 @@ async function load(request, env, json, helpers) {
         "  ?, 'outbound', ?, 'es', 'new', 'new', " +
         "  ?, ?, " +
         "  ?, ?, ?, " +
-        "  ?, ?, " +
+        "  ?, ?, ?, ?, " +
         "  0, 0, " +
         "  ?, ?, ?, ?, " +
         "  ?, " +
@@ -378,6 +439,8 @@ async function load(request, env, json, helpers) {
         c.website || null,
         heat,
         score,
+        landing_heat,
+        landing_score,
         c.place_id || null,
         typeof c.rating === "number" ? c.rating : null,
         typeof c.review_count === "number" ? c.review_count : null,
@@ -512,7 +575,393 @@ async function sweep(request, env, json, helpers) {
   });
 }
 
+// ---- Bulk job: arm + status (HTTP) ---------------------------------------
+
+// POST /api/admin/prospecting/bulk-start
+// Inserts a prospecting_jobs row so a large pull is armed. The cron's
+// runBulkProspectBatch picks it up and chews through it over many runs.
+async function bulkStart(request, env, json) {
+  let body = {};
+  try { body = await request.json(); } catch {}
+
+  let target = parseInt(body && body.target, 10);
+  if (!Number.isFinite(target) || target <= 0) target = 5000;
+
+  let verticals = Array.isArray(body && body.verticals) && body.verticals.length
+    ? body.verticals.map((v) => String(v).toLowerCase().trim()).filter((v) => INDUSTRY_SEEDS[v])
+    : BULK_DEFAULT_VERTICALS.slice();
+  if (!verticals.length) verticals = BULK_DEFAULT_VERTICALS.slice();
+
+  let cities = Array.isArray(body && body.cities) && body.cities.length
+    ? body.cities.map((c) => String(c).toLowerCase().trim()).filter((c) => CITY_DISPLAY[c])
+    : BULK_DEFAULT_CITIES.slice();
+  if (!cities.length) cities = BULK_DEFAULT_CITIES.slice();
+
+  const id = crypto.randomUUID();
+  const now = Date.now();
+  await env.DB.prepare(
+    "INSERT INTO prospecting_jobs (id, status, target, inserted, skipped, cursor, cities, verticals, notes, created_at, updated_at) " +
+    "VALUES (?, 'running', ?, 0, 0, NULL, ?, ?, ?, ?, ?)"
+  ).bind(
+    id,
+    target,
+    JSON.stringify(cities),
+    JSON.stringify(verticals),
+    (body && body.notes) ? String(body.notes) : null,
+    now, now,
+  ).run();
+
+  return json({
+    ok: true,
+    job: { id, status: "running", target, inserted: 0, skipped: 0, cities, verticals },
+  });
+}
+
+// GET /api/admin/prospecting/bulk-status
+// Returns the active (running) job if any, else the most recent job.
+async function bulkStatus(env, json) {
+  let job = await env.DB.prepare(
+    "SELECT * FROM prospecting_jobs WHERE status = 'running' ORDER BY created_at ASC LIMIT 1"
+  ).first();
+  if (!job) {
+    job = await env.DB.prepare(
+      "SELECT * FROM prospecting_jobs ORDER BY created_at DESC LIMIT 1"
+    ).first();
+  }
+  if (!job) return json({ ok: true, job: null });
+
+  const today = new Date().toISOString().slice(0, 10);
+  const bulkUsed = parseInt((await env.TOKENS.get("prospecting:bulk:" + today)) || "0", 10);
+
+  return json({
+    ok: true,
+    job: {
+      ...job,
+      cities: safeParseArr(job.cities),
+      verticals: safeParseArr(job.verticals),
+      cursor: safeParseObj(job.cursor),
+    },
+    bulk_places_used_today: bulkUsed,
+    bulk_places_remaining_today: Math.max(0, DAILY_BULK_CAP - bulkUsed),
+    bulk_daily_cap: DAILY_BULK_CAP,
+  });
+}
+
+// ---- Bulk job: server-side batch runner (called by the cron) --------------
+
+// Loads the oldest running job and pulls another batch of leads, resuming from
+// the saved cursor. Capped per invocation by maxPlacesCalls (Places calls) and
+// BULK_MAX_INSERTS (rows). Uses a SEPARATE daily KV cap (prospecting:bulk:<date>)
+// so it never starves the interactive enrich/prospecting caps. Returns a
+// summary object; never throws to the caller (the cron wraps in try/catch too).
+export async function runBulkProspectBatch(env, opts) {
+  const maxPlacesCalls = Math.max(1, (opts && opts.maxPlacesCalls) || BULK_MAX_PLACES_CALLS);
+
+  if (!env.GOOGLE_PLACES_API_KEY) {
+    return { ran: false, reason: "GOOGLE_PLACES_API_KEY not set" };
+  }
+
+  // 1. Oldest running job.
+  const job = await env.DB.prepare(
+    "SELECT * FROM prospecting_jobs WHERE status = 'running' ORDER BY created_at ASC LIMIT 1"
+  ).first();
+  if (!job) return { ran: false, reason: "no running job" };
+
+  // Separate daily KV cap for bulk.
+  const today = new Date().toISOString().slice(0, 10);
+  let bulkUsed = parseInt((await env.TOKENS.get("prospecting:bulk:" + today)) || "0", 10);
+  if (bulkUsed >= DAILY_BULK_CAP) {
+    return { ran: false, reason: "bulk daily cap reached", bulk_used: bulkUsed, cap: DAILY_BULK_CAP };
+  }
+
+  const verticals = safeParseArr(job.verticals).filter((v) => INDUSTRY_SEEDS[v]);
+  const cities = safeParseArr(job.cities).filter((c) => CITY_DISPLAY[c]);
+  if (!verticals.length || !cities.length) {
+    await markJobDone(env, job.id, job, "no valid verticals/cities");
+    return { ran: false, reason: "job has no valid verticals/cities", job_id: job.id };
+  }
+
+  let cursor = safeParseObj(job.cursor) || { vIndex: 0, cIndex: 0, pageToken: null };
+  if (typeof cursor.vIndex !== "number") cursor.vIndex = 0;
+  if (typeof cursor.cIndex !== "number") cursor.cIndex = 0;
+
+  let inserted = 0;
+  let skipped = 0;
+  let placesCalls = 0;
+  const remainingTarget = Math.max(0, (job.target || 0) - (job.inserted || 0));
+
+  // Iterate verticals x cities from the cursor, paginating each combo via
+  // nextPageToken until we hit a per-invocation budget or finish the grid.
+  let exhausted = false;
+  while (true) {
+    if (placesCalls >= maxPlacesCalls) break;
+    if (bulkUsed + placesCalls >= DAILY_BULK_CAP) break;
+    if (inserted >= BULK_MAX_INSERTS) break;
+    if (inserted >= remainingTarget) break;
+
+    if (cursor.vIndex >= verticals.length) { exhausted = true; break; }
+
+    const vSlug = verticals[cursor.vIndex];
+    const cSlug = cities[cursor.cIndex];
+
+    const search = await bulkPlacesSearch(env, vSlug, cSlug, cursor.pageToken);
+    placesCalls += 1;
+
+    if (!search.ok) {
+      // On a search error, advance past this combo so one bad query does not
+      // wedge the whole job. Drop any pageToken.
+      cursor.pageToken = null;
+      ({ cursor, exhausted } = advanceCursor(cursor, verticals, cities));
+      if (exhausted) break;
+      continue;
+    }
+
+    const cityDisplay = CITY_DISPLAY[cSlug];
+    const seedQuery = INDUSTRY_SEEDS[vSlug] + ", " + cityDisplay + ", Colombia";
+
+    for (const cand of search.results) {
+      if (inserted >= BULK_MAX_INSERTS || inserted >= remainingTarget) break;
+      const annotated = await annotateOne(env, { ...cand, _city: cityDisplay });
+      if (annotated.exists) { skipped += 1; continue; }
+      const ins = await insertBulkLead(env, annotated, vSlug, cityDisplay, seedQuery, job.id);
+      if (ins) inserted += 1;
+      else skipped += 1;
+    }
+
+    // Advance pagination: follow nextPageToken on the same combo, else move on.
+    if (search.nextPageToken) {
+      cursor.pageToken = search.nextPageToken;
+    } else {
+      cursor.pageToken = null;
+      const adv = advanceCursor(cursor, verticals, cities);
+      cursor = adv.cursor;
+      if (adv.exhausted) { exhausted = true; break; }
+    }
+  }
+
+  // Persist the bulk daily counter.
+  if (placesCalls > 0) {
+    await env.TOKENS.put(
+      "prospecting:bulk:" + today,
+      String(bulkUsed + placesCalls),
+      { expirationTtl: 172800 },
+    );
+  }
+
+  // One summary activity row per run (not per lead) to avoid bloating activities.
+  if (inserted > 0 || skipped > 0) {
+    try {
+      const now = Date.now();
+      await env.DB.prepare(
+        "INSERT INTO activities (id, kind, subject, body, owner, occurred_at, created_at, updated_at, done) " +
+        "VALUES (?, 'note', ?, ?, 'system', ?, ?, ?, 1)"
+      ).bind(
+        crypto.randomUUID(),
+        "Outbound: bulk Places import",
+        JSON.stringify({
+          bulk_job_id: job.id,
+          inserted, skipped,
+          places_calls: placesCalls,
+          vertical: verticals[Math.min(cursor.vIndex, verticals.length - 1)] || null,
+          city: cities[Math.min(cursor.cIndex, cities.length - 1)] || null,
+        }),
+        now, now, now,
+      ).run();
+    } catch (e) {
+      console.warn("prospecting bulk: summary activity insert failed: " + (e && e.message || e));
+    }
+  }
+
+  // Update the job row.
+  const newInserted = (job.inserted || 0) + inserted;
+  const newSkipped = (job.skipped || 0) + skipped;
+  const done = exhausted || newInserted >= (job.target || 0);
+  const now = Date.now();
+  await env.DB.prepare(
+    "UPDATE prospecting_jobs SET inserted = ?, skipped = ?, cursor = ?, status = ?, updated_at = ? WHERE id = ?"
+  ).bind(
+    newInserted,
+    newSkipped,
+    done ? null : JSON.stringify(cursor),
+    done ? "done" : "running",
+    now,
+    job.id,
+  ).run();
+
+  return {
+    ran: true,
+    job_id: job.id,
+    inserted,
+    skipped,
+    places_calls: placesCalls,
+    total_inserted: newInserted,
+    target: job.target,
+    status: done ? "done" : "running",
+  };
+}
+
+// Advance the (vIndex, cIndex) grid cursor by one city, wrapping to the next
+// vertical. Returns { cursor, exhausted }.
+function advanceCursor(cursor, verticals, cities) {
+  const next = { vIndex: cursor.vIndex, cIndex: cursor.cIndex + 1, pageToken: null };
+  if (next.cIndex >= cities.length) {
+    next.cIndex = 0;
+    next.vIndex = cursor.vIndex + 1;
+  }
+  return { cursor: next, exhausted: next.vIndex >= verticals.length };
+}
+
+async function markJobDone(env, jobId, job, note) {
+  const now = Date.now();
+  await env.DB.prepare(
+    "UPDATE prospecting_jobs SET status = 'done', cursor = NULL, notes = ?, updated_at = ? WHERE id = ?"
+  ).bind(
+    [job.notes, note].filter(Boolean).join(" · ") || note,
+    now,
+    jobId,
+  ).run();
+}
+
+// Places searchText for one vertical+city, returning normalized candidates plus
+// the nextPageToken for pagination. Wrapped in try/catch + 10s AbortController.
+async function bulkPlacesSearch(env, vSlug, cSlug, pageToken) {
+  const seed = INDUSTRY_SEEDS[vSlug];
+  const cityDisplay = CITY_DISPLAY[cSlug];
+  const seedQuery = seed + ", " + cityDisplay + ", Colombia";
+
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 10000);
+  try {
+    const reqBody = {
+      textQuery: seedQuery,
+      languageCode: "es",
+      regionCode: "CO",
+      maxResultCount: MAX_LIMIT,
+    };
+    if (pageToken) reqBody.pageToken = pageToken;
+    const resp = await fetch("https://places.googleapis.com/v1/places:searchText", {
+      method: "POST",
+      signal: ctrl.signal,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": env.GOOGLE_PLACES_API_KEY,
+        "X-Goog-FieldMask": "nextPageToken,places.id,places.displayName,places.formattedAddress,places.internationalPhoneNumber,places.websiteUri,places.rating,places.userRatingCount,places.regularOpeningHours.weekdayDescriptions,places.businessStatus",
+      },
+      body: JSON.stringify(reqBody),
+    });
+    if (!resp.ok) {
+      const errText = await resp.text();
+      console.warn("prospecting bulk: Places " + resp.status + ": " + errText.slice(0, 200));
+      return { ok: false, results: [], nextPageToken: null };
+    }
+    const data = await resp.json();
+    const places = Array.isArray(data && data.places) ? data.places : [];
+    return {
+      ok: true,
+      results: places.map((p) => normalizePlace(p)).filter(Boolean),
+      nextPageToken: (data && data.nextPageToken) || null,
+    };
+  } catch (e) {
+    console.warn("prospecting bulk: Places fetch failed · " + (e && e.message || e));
+    return { ok: false, results: [], nextPageToken: null };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Insert a single bulk candidate with dual scores. Returns true on insert,
+// false on skip/collision. Never throws.
+async function insertBulkLead(env, c, vSlug, cityDisplay, seedQuery, jobId) {
+  if (!c || !c.business_name) return false;
+  const id = crypto.randomUUID();
+  const now = Date.now();
+  const landingPage = landingPageFor(vSlug, cityDisplay);
+
+  const leadState = {
+    business_name: c.business_name,
+    city: cityDisplay,
+    category: vSlug,
+    phone: c.phone || null,
+    whatsapp: null,
+    current_site: c.website || null,
+    cms: null,
+    address: c.address || null,
+    rating: typeof c.rating === "number" ? c.rating : null,
+    review_count: typeof c.review_count === "number" ? c.review_count : null,
+    followers: null,
+    instagram: null,
+    facebook_url: null,
+  };
+  const { heat, score } = computeFitScore(leadState);
+  const { landing_heat, landing_score } = computeLandingScore(leadState);
+
+  const metadata = JSON.stringify({
+    landing_page: landingPage,
+    prospected_at: now,
+    seed_query: seedQuery,
+    bulk_job_id: jobId,
+    place_status: c.place_status || null,
+  });
+  const hoursJson = Array.isArray(c.hours) && c.hours.length ? JSON.stringify(c.hours) : null;
+
+  try {
+    const res = await env.DB.prepare(
+      "INSERT OR IGNORE INTO leads (" +
+      "  id, source, business_name, language, status, lead_stage, " +
+      "  phone, address, " +
+      "  category, city, current_site, " +
+      "  heat, score, landing_heat, landing_score, " +
+      "  on_today_list, touches_count, " +
+      "  place_id, rating, review_count, hours, " +
+      "  metadata, " +
+      "  created_at, updated_at, last_enriched_at" +
+      ") VALUES (" +
+      "  ?, 'outbound', ?, 'es', 'new', 'new', " +
+      "  ?, ?, " +
+      "  ?, ?, ?, " +
+      "  ?, ?, ?, ?, " +
+      "  0, 0, " +
+      "  ?, ?, ?, ?, " +
+      "  ?, " +
+      "  ?, ?, ?)"
+    ).bind(
+      id,
+      c.business_name,
+      c.phone || null,
+      c.address || null,
+      vSlug,
+      cityDisplay,
+      c.website || null,
+      heat,
+      score,
+      landing_heat,
+      landing_score,
+      c.place_id || null,
+      typeof c.rating === "number" ? c.rating : null,
+      typeof c.review_count === "number" ? c.review_count : null,
+      hoursJson,
+      metadata,
+      now, now, now,
+    ).run();
+    const changes = res && res.meta && typeof res.meta.changes === "number" ? res.meta.changes : 1;
+    return changes !== 0;
+  } catch (e) {
+    console.warn("prospecting bulk: insert failed for " + c.business_name + ": " + (e && e.message || e));
+    return false;
+  }
+}
+
 // ---- Helpers -------------------------------------------------------------
+
+function safeParseArr(s) {
+  if (!s) return [];
+  try { const v = JSON.parse(s); return Array.isArray(v) ? v : []; } catch { return []; }
+}
+
+function safeParseObj(s) {
+  if (!s) return null;
+  try { const v = JSON.parse(s); return v && typeof v === "object" ? v : null; } catch { return null; }
+}
 
 function parseIndustryCityLimit(body) {
   const industry = String((body && body.industry) || "").toLowerCase().trim();

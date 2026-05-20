@@ -44,12 +44,17 @@ binding = "ASSETS"
 bucket_name = "pymewebpro-client-assets"
 
 # --- Cron triggers --------------------------------------------------------
-# 14:00 UTC == 09:00 America/Bogota (UTC-5, no DST). Drives the nightly
-# cadence sweep in src/index.js scheduled() · creates D+1/D+3/D+7/D+14
-# follow-up tasks in `activities` for any open-funnel lead whose last touch
-# landed on one of those bucket boundaries.
+# "0 14 * * *"  · 14:00 UTC == 09:00 America/Bogota (UTC-5, no DST). Drives the
+#                 nightly cadence sweep in src/index.js scheduled() · creates
+#                 D+1/D+3/D+7/D+14 follow-up tasks in `activities` for any
+#                 open-funnel lead whose last touch landed on a bucket boundary.
+# "0 */2 * * *" · every 2 hours. Runs runBulkProspectBatch only · pulls another
+#                 ~60 Places queries worth of outbound leads for the active
+#                 prospecting_jobs row until its target is met, then no-ops.
+#                 The 14:00 run ALSO calls the bulk batch (handled in scheduled()
+#                 by branching on event.cron), so the two crons overlap by design.
 [triggers]
-crons = ["0 14 * * *"]
+crons = ["0 14 * * *", "0 */2 * * *"]
 
 # --- Plain-text vars ------------------------------------------------------
 # These are visible in the Worker; don't put secrets here.
