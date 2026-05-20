@@ -405,11 +405,51 @@ footer a:hover{color:var(--mint-pale)}
 @media (max-width: 780px){.foot-grid{grid-template-columns:1fr;gap:2rem}}
 
 /* ─── Chat widget ─── */
-.chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--terra);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(216,110,58,.45), 0 4px 8px rgba(216,110,58,.25);transition:transform .2s ease, background .2s ease, opacity .2s ease;font-family:inherit}
-.chat-fab:hover{background:var(--terra-deep);transform:scale(1.05)}
+/* Floating "Chat with Capy" CTA · pill on desktop, circle on mobile. */
+.chat-fab{
+  position:fixed;bottom:1.4rem;right:1.4rem;z-index:60;
+  display:flex;align-items:center;gap:.7rem;
+  padding:.45rem .95rem .45rem .45rem;
+  border:none;border-radius:999px;
+  background:var(--terra);color:#fff;
+  font:inherit;cursor:pointer;
+  box-shadow:0 16px 38px rgba(216,110,58,.45), 0 4px 10px rgba(216,110,58,.28);
+  transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.chat-fab:hover{background:var(--terra-deep);transform:translateY(-2px);box-shadow:0 22px 46px rgba(216,110,58,.55), 0 6px 14px rgba(216,110,58,.35)}
 .chat-fab:focus-visible{outline:3px solid var(--mint-pale);outline-offset:3px}
-.chat-fab svg{width:28px;height:28px}
 .chat-fab[hidden]{display:none}
+.chat-fab .fab-avatar{
+  width:46px;height:46px;border-radius:50%;flex:0 0 46px;
+  background:#fff url('./capy-avatar.jpg') center/cover no-repeat;
+  border:2px solid #fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.20);
+}
+.chat-fab .fab-label{display:inline-flex;flex-direction:column;line-height:1.1;text-align:left;padding-right:.2rem}
+.chat-fab .fab-label .top{font-size:.68rem;font-weight:500;opacity:.92;letter-spacing:.04em}
+.chat-fab .fab-label .bottom{font-size:.95rem;font-weight:700;letter-spacing:-.005em}
+.chat-fab .fab-arrow{
+  width:26px;height:26px;border-radius:50%;flex:0 0 26px;
+  background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+}
+.chat-fab .fab-arrow svg{width:14px;height:14px}
+/* Subtle pulse · gently animates to draw the eye, never aggressive */
+.chat-fab::before{
+  content:'';position:absolute;inset:0;border-radius:999px;
+  background:var(--terra);z-index:-1;pointer-events:none;
+  animation:fabPulse 2.6s ease-in-out infinite;
+}
+@keyframes fabPulse{
+  0%,100%{transform:scale(1);opacity:.55}
+  50%{transform:scale(1.08);opacity:0}
+}
+@media (prefers-reduced-motion: reduce){.chat-fab::before{animation:none;opacity:0}}
+/* Mobile · collapse to compact pill, hide label */
+@media (max-width: 640px){
+  .chat-fab{padding:.4rem;gap:0}
+  .chat-fab .fab-label,.chat-fab .fab-arrow{display:none}
+}
 .chat-panel{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:380px;max-width:calc(100vw - 2rem);height:560px;max-height:calc(100vh - 3rem);background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(31,42,46,.22), 0 8px 16px rgba(31,42,46,.12);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .25s ease, opacity .25s ease}
 .chat-panel[data-open="true"]{transform:translateY(0);opacity:1;pointer-events:auto}
 .chat-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.95rem 1.1rem;background:var(--mint-deep);color:#fff}
@@ -503,7 +543,7 @@ footer a:hover{color:var(--mint-pale)}
       </button>
       <button type="button" class="btn btn-primary" data-action="open-chat" aria-label="Chat with Capy">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <span data-es>Pide o consulta</span><span data-en>Order or chat</span>
+        <span data-es>Pide o consulta</span><span data-en>Order or ask</span>
       </button>
     </div>
   </div>
@@ -521,7 +561,7 @@ footer a:hover{color:var(--mint-pale)}
       <div class="hero-ctas">
         <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span data-es>Pide o consulta con Capy</span><span data-en>Order or chat with Capy</span>
+          <span data-es>Pide o consulta con Capy</span><span data-en>Order or ask Capy</span>
         </button>
         <a class="btn btn-ghost btn-lg" href="#brunch">
           <span data-es>Ver la carta</span><span data-en>See the menu</span>
@@ -539,11 +579,13 @@ footer a:hover{color:var(--mint-pale)}
       <img class="slide is-active" src="./hero-salmon-bagel.jpg" alt="Smoked Salmon Bagel · bagel con salmón ahumado, queso crema, eneldo, pepino y cebolla morada" width="900" height="1080" decoding="async" fetchpriority="high">
       <img class="slide" src="./hero-bagels.jpg" alt="Tabla de bagels y sándwiches estilo brunch · varias opciones de proteína" width="900" height="1080" decoding="async" loading="lazy">
       <img class="slide" src="./hero-coldbrew.jpg" alt="Cold brew tonic servido en vaso alto con limón y burbujas" width="900" height="1080" decoding="async" loading="lazy">
+      <img class="slide" src="./coffee-corner.jpg" alt="Coffee corner · iced coffee Café Revolución on warm wood counter" width="900" height="1080" decoding="async" loading="lazy">
       <img class="slide" src="./hero-mountain.jpg" alt="Café en la montaña · estufa, taza humeante y montañas al fondo" width="900" height="1080" decoding="async" loading="lazy">
       <span class="caption is-active" data-i="0">Smoked Salmon Bagel</span>
       <span class="caption" data-i="1">Tabla para compartir</span>
       <span class="caption" data-i="2">Cold brew tonic</span>
-      <span class="caption" data-i="3">Del barrio a la montaña</span>
+      <span class="caption" data-i="3"><span data-es>El coffee corner</span><span data-en>The coffee corner</span></span>
+      <span class="caption" data-i="4"><span data-es>Del barrio a la montaña</span><span data-en>From the block to the mountain</span></span>
       <div class="hero-stamp" aria-hidden="true">
         <span class="top">Café</span>
         <span class="big"><em>Rev</em></span>
@@ -856,8 +898,15 @@ footer a:hover{color:var(--mint-pale)}
 </footer>
 
 <!-- ─── Chat widget ─── -->
-<button class="chat-fab" id="chatOpenBtn" aria-label="Hablar con Capy" aria-expanded="false" aria-controls="chatPanel">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+<button class="chat-fab" id="chatOpenBtn" aria-label="Chat with Capy · Hablar con Capy" aria-expanded="false" aria-controls="chatPanel">
+  <span class="fab-avatar" aria-hidden="true"></span>
+  <span class="fab-label">
+    <span class="top"><span data-es>¿Hablamos?</span><span data-en>Got a sec?</span></span>
+    <span class="bottom"><span data-es>Habla con Capy</span><span data-en>Chat with Capy</span></span>
+  </span>
+  <span class="fab-arrow" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </span>
 </button>
 
 <aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
