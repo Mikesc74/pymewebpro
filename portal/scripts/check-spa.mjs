@@ -81,37 +81,32 @@ function findContextLine(src, lineNum, range = 3) {
 }
 
 function main() {
-  const src = fs.readFileSync(SRC, "utf8");
-  const fhtml = extractFrontendHtml(src);
-  if (!fhtml) {
-    console.error("[check-spa] FRONTEND_HTML not found in src/index.js");
-    process.exit(2);
-  }
-
-  // Layer 1 — outer-template-literal sanity. The FRONTEND_HTML body must not
-  // contain unescaped `${` or backticks; those would be interpreted by the
-  // OUTER JS template literal at worker-load time, which usually crashes the
-  // worker upload (ReferenceError) before any browser sees the JSX.
-  const unescapedInterp = [];
-  for (let i = 0; i < fhtml.length; i++) {
-    if (fhtml[i] === "\\") { i++; continue; }
-    if (fhtml[i] === "$" && fhtml[i + 1] === "{") unescapedInterp.push(i);
-  }
-  if (unescapedInterp.length > 0) {
-    console.error("[check-spa] " + unescapedInterp.length + " unescaped `${` inside FRONTEND_HTML — this will crash worker upload.");
-    for (const pos of unescapedInterp.slice(0, 5)) {
-      const before = fhtml.slice(Math.max(0, pos - 60), pos);
-      const after = fhtml.slice(pos, pos + 80);
-      console.error("    near: …" + before.replace(/\n/g, "\\n") + ">>>" + after.replace(/\n/g, "\\n") + "…");
+  // 2026-05-19 (later x11): FRONTEND_HTML was migrated out of the template
+  // literal in src/index.js to its own file (src/frontend.html), bundled by
+  // Wrangler's Text rule. The escape-collision bug class this script was
+  // written to catch can no longer occur at the template-literal layer · we
+  // now just parse the inline babel script directly from the .html file.
+  const FRONTEND_HTML_PATH = path.resolve(__dirname, "..", "src", "frontend.html");
+  if (!fs.existsSync(FRONTEND_HTML_PATH)) {
+    // Backstop: fall back to the old template-literal path if anyone reverts
+    // the migration. Keeps the safety net in place either way.
+    const src = fs.readFileSync(SRC, "utf8");
+    const fhtml = extractFrontendHtml(src);
+    if (!fhtml) {
+      console.error("[check-spa] Neither src/frontend.html nor FRONTEND_HTML template literal found.");
+      process.exit(2);
     }
-    console.error("\nFix: replace `${expr}` with JSX string concat — `\"text \" + expr + \" more\"` — or escape the dollar as \\${ if you really want a literal `${` to render.");
-    process.exit(1);
+    const html = unescapeTemplateLiteral(fhtml);
+    return parseAndReport(html);
   }
+  const html = fs.readFileSync(FRONTEND_HTML_PATH, "utf8");
+  return parseAndReport(html);
+}
 
-  const html = unescapeTemplateLiteral(fhtml);
+function parseAndReport(html) {
   const babel = extractBabelScript(html);
   if (!babel) {
-    console.error("[check-spa] No <script type='text/babel'> block found inside FRONTEND_HTML");
+    console.error("[check-spa] No <script type='text/babel'> block found in frontend HTML");
     process.exit(2);
   }
   try {
@@ -124,12 +119,8 @@ function main() {
     const m = e.message.match(/\((\d+):(\d+)\)/);
     if (m) {
       const line = parseInt(m[1], 10);
-      console.error("\nContext (after template-literal evaluation):");
+      console.error("\nContext:");
       console.error(findContextLine(babel, line));
-      console.error("\nIf you see a multi-line string literal above, the cause is");
-      console.error("almost certainly a JS string with `\\n` (single backslash) inside");
-      console.error("the FRONTEND_HTML template literal. Change `\\n` to `\\\\n` so the");
-      console.error("template renders `\\n` and JS reads it as the newline escape.");
     }
     process.exit(1);
   }

@@ -3,6 +3,15 @@ main = "src/index.js"
 compatibility_date = "2026-04-01"
 account_id = "c98561adefb602704d4e7a6a1b7e7597"
 
+# Bundle *.html files as Text imports so the inline-SPA HTML can live in its
+# own file (src/frontend.html) instead of as a JS template literal. Eliminates
+# the class of bug where `\n` inside the literal silently became a real
+# newline at worker boot · see CLAUDE.md Recent changes 2026-05-19 (later x10).
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
+
 # Custom domain route (already configured on the live Worker · keep here for parity)
 # *.sites.pymewebpro.com is the tenant namespace · every client site auto-publishes
 # to <slug>.sites.pymewebpro.com with no per-client DNS work. Requires a wildcard
