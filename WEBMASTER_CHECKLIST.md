@@ -1,4 +1,4 @@
-# Webmaster's Checklist — pymewebpro.com
+# Webmaster's Checklist · pymewebpro.com
 
 Consolidated from three audits conducted in late April–May 2026.
 
@@ -14,14 +14,14 @@ Consolidated from three audits conducted in late April–May 2026.
 - Scroll-triggered animations that fail to fire on fast scroll
 - Lean payload target (~270 KB / few resources)
 
-## SEO — Technical & On-Page
+## SEO · Technical & On-Page
 - Real `robots.txt` (not the homepage HTML at 200)
 - Real `sitemap.xml` (not the homepage HTML at 200)
-- Proper 404s — every nonexistent path was returning 200 with the homepage (soft-404 catastrophe; bait for `/wp-admin`, `/.env`, `/.git/HEAD`, `/backup.zip`)
+- Proper 404s · every nonexistent path was returning 200 with the homepage (soft-404 catastrophe; bait for `/wp-admin`, `/.env`, `/.git/HEAD`, `/backup.zip`)
 - JSON-LD structured data (Organization, LocalBusiness, FAQ, Review/AggregateRating)
 - Title, meta description, H1 hierarchy, canonical
 - `og:locale` and `<title>` updating on locale change
-- Sitemap depth — ship city/industry landing pages
+- Sitemap depth · ship city/industry landing pages
 - `sameAs` includes LinkedIn, GBP, social profiles
 - Local SEO: Google Business Profile, NAP consistency
 - Keyword targeting matched to local SMB intent
@@ -37,7 +37,7 @@ Consolidated from three audits conducted in late April–May 2026.
 - HTTPS + valid cert + HSTS
 - CSP, X-Frame-Options, Referrer-Policy, Permissions-Policy
 - `www` → apex 301 redirect
-- Form `method=post` to a real endpoint (never `method=get` to homepage — leaks PII via Referer)
+- Form `method=post` to a real endpoint (never `method=get` to homepage · leaks PII via Referer)
 - CSRF protection on forms
 - No exposed `.env`, `.git`, admin paths, stack traces
 - Honeypot on forms
@@ -49,7 +49,7 @@ Consolidated from three audits conducted in late April–May 2026.
 - Habeas Data consent checkbox on contact forms
 - Privacy policy reflects what actually loads (don't list trackers you don't run)
 - Cámara de Comercio + NIT visible
-- Estatuto del Consumidor (Ley 1480) compliance — no fabricated testimonials
+- Estatuto del Consumidor (Ley 1480) compliance · no fabricated testimonials
 
 ## Analytics & Conversion Tracking
 - Privacy-friendly basics (Cloudflare Web Analytics)
@@ -70,10 +70,10 @@ Consolidated from three audits conducted in late April–May 2026.
 - Tap targets, sticky elements, form usability on mobile
 - Cross-browser sanity (Chrome, Safari)
 - Console errors, broken images, redirect chains
-- Authentic imagery — no stock photos on a "made locally" panel
+- Authentic imagery · no stock photos on a "made locally" panel
 
 ## Content, Copy & Localization
-- Tone consistency — pick `usted` or `tú` and don't mix
+- Tone consistency · pick `usted` or `tú` and don't mix
 - No truncated/Frankenstein sentences in the hero
 - Speak to PyME pain (DIAN, facturación electrónica, payroll, cash flow)
 - Plain language, benefits over features
@@ -83,7 +83,7 @@ Consolidated from three audits conducted in late April–May 2026.
 ## Trust, Credibility & Social Proof
 - Real, named testimonials with quantified outcomes
 - No self-referential case studies presented as arms-length clients
-- Founder bios when client list is thin — founders ARE the trust signal
+- Founder bios when client list is thin · founders ARE the trust signal
 - Aggregate honesty stats ("1 cliente activo · garantía 30 días")
 - Capture pre-launch baselines so testimonials can be quantified later
 - Get testimonial usage rights in writing (perpetual, royalty-free, with Habeas Data authorization)
@@ -114,7 +114,7 @@ Consolidated from three audits conducted in late April–May 2026.
 
 ## Competitive Positioning
 - Identify undercutters (Wompea $350k bundled hosting) and articulate counter-differentiators
-- Lift up SLA, refund guarantee, registration, bilingual capability — they were latent
+- Lift up SLA, refund guarantee, registration, bilingual capability · they were latent
 
 ## Launch / GTM
 - Cohort offer with visible decrementing scarcity

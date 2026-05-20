@@ -14,7 +14,7 @@
 
 ## What it is
 
-Wedding & events venue marketing site. Photo gallery, lead form, full Spanish localization. The venue does weddings, fog/dance shows, brand activations — the gallery shows real shots from past events.
+Wedding & events venue marketing site. Photo gallery, lead form, full Spanish localization. The venue does weddings, fog/dance shows, brand activations · the gallery shows real shots from past events.
 
 ## Brand identity
 
@@ -26,11 +26,11 @@ Wedding & events venue marketing site. Photo gallery, lead form, full Spanish lo
 ## Imagery
 
 8 photos curated from 35+ Instagram screenshots (filtered out portal screenshots that contaminated the original folder):
-- `hero-stage.jpg` — stage with concert lights
+- `hero-stage.jpg` · stage with concert lights
 - `gallery-1-bride-lift.jpg`
 - `gallery-2-fog-dance.jpg`
 - `gallery-3-confetti.jpg` (largest, 86 KB)
-- `gallery-4-cake.jpg` — currently UNUSED in HTML
+- `gallery-4-cake.jpg` · currently UNUSED in HTML
 - `gallery-5-projection.jpg`
 - `gallery-6-branding.jpg`
 - `gallery-7-decor.jpg`

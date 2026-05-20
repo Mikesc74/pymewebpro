@@ -33,7 +33,7 @@ DO:
 
 ## Me
 
-**Michael Chartrand** ("Mike") — Canadian citizen by nationality, full-time resident of Medellín, Founder & Legal Representative of **Norte Sur Consulting S.A.S.**, doing business as **PymeWebPro**.
+**Michael Chartrand** ("Mike") · Canadian citizen by nationality, full-time resident of Medellín, Founder & Legal Representative of **Norte Sur Consulting S.A.S.**, doing business as **PymeWebPro**.
 - **Legal entity:** Norte Sur Consulting S.A.S. (Colombian Sociedad por Acciones Simplificada)
 - **NIT:** 901.956.771-1
 - **DBA / brand:** PymeWebPro
@@ -49,7 +49,7 @@ PymeWebPro is the public-facing brand and trade name. Norte Sur Consulting S.A.S
 
 Colombian web design studio targeting Colombian SMBs.
 
-Do NOT describe the studio as "solo operator" or imply Mike works alone — Santiago is a real, named partner who shares profit and is publicly named in the FAQ + privacy policy as a person with access to client records.
+Do NOT describe the studio as "solo operator" or imply Mike works alone · Santiago is a real, named partner who shares profit and is publicly named in the FAQ + privacy policy as a person with access to client records.
 
 ## Studio · One-line
 
@@ -57,7 +57,7 @@ PymeWebPro = a Medellín-based, AI-leveraged web design studio that ships custom
 
 ## Location
 
-- **Medellín, Antioquia, Colombia** — studio · design, code & deploy · Colombian clients billed in COP via Wompi.
+- **Medellín, Antioquia, Colombia** · studio · design, code & deploy · Colombian clients billed in COP via Wompi.
 
 Single location. No London office. Mike's family home is in London, Ontario but that is a personal fact, not a business location and must not appear on pymewebpro public surfaces.
 
@@ -79,8 +79,8 @@ Single location. No London office. Mike's family home is in London, Ontario but 
 
 ## Payment terms
 
-- **30% deposit to start** — no design or development begins until deposit clears ($117.000 COP Essential / $207.000 COP Pro)
-- **70% on launch** — site sits on staging URL; DNS to client domain not connected until balance clears
+- **30% deposit to start** · no design or development begins until deposit clears ($117.000 COP Essential / $207.000 COP Pro)
+- **70% on launch** · site sits on staging URL; DNS to client domain not connected until balance clears
 - Payments via **Wompi** (cards, PSE, bank transfer) in COP only
 - **30-day money-back guarantee post-launch:** site goes offline + full refund within 14 days if client unhappy. After 30 days, fee is non-refundable.
 
@@ -94,7 +94,7 @@ Switched from 50/50 to 30/70 on 2026-05-05. Lower psychological barrier to start
 |------|-----|
 | `<pymewebpro/>` | Site header, footer, email, invoices |
 | `<pwp/>` | Favicon, social profile pic, app icon |
-| `#FF5C2E` | Single accent (orange) — bracket color in small format |
+| `#FF5C2E` | Single accent (orange) · bracket color in small format |
 | Inter Tight + JetBrains Mono | Display / mono pair |
 → Full design system: `memory/context/brand.md`
 
@@ -102,7 +102,7 @@ Switched from 50/50 to 30/70 on 2026-05-05. Lower psychological barrier to start
 
 Build process for every client site:
 1. Write self-contained HTML in `manual-mockups/<slug>/index.html`
-2. Run `node portal/scripts/rebuild-mockups.mjs` — auto-discovers wired mockups from `portal/src/manual-mockups.js` imports and regenerates each `portal/src/manual-mockups-<slug>.js` module from its source HTML (base64-embeds local jpg/png references, applies template-literal escapes). Avoids the trap of hardcoded site lists going stale.
+2. Run `node portal/scripts/rebuild-mockups.mjs` · auto-discovers wired mockups from `portal/src/manual-mockups.js` imports and regenerates each `portal/src/manual-mockups-<slug>.js` module from its source HTML (base64-embeds local jpg/png references, applies template-literal escapes). Avoids the trap of hardcoded site lists going stale.
 3. New site only: add the import + map entry to `portal/src/manual-mockups.js`, add the file to `portal/package.json` `check:worker` script
 4. `npm run check` → verify
 5. `npm run deploy` → goes live at `mockups.pymewebpro.com/<slug>/`
@@ -270,7 +270,7 @@ Adding a new direct `fetch('/api/...')` or `window.location.href = '/...'` anywh
 
 `portal.pymewebpro.com` is retained as the legacy URL during the cutover and will be removed from `wrangler.toml` routes once the master portal is verified.
 
-## Payments — what we accept
+## Payments · what we accept
 
 | Method | Currency | Use |
 |--------|----------|-----|
@@ -313,7 +313,7 @@ Adding a new direct `fetch('/api/...')` or `window.location.href = '/...'` anywh
 
 These are non-negotiable. If a brief asks for something that violates these, push back.
 
-1. **No runtime CSS frameworks via CDN.** Never use `<script src="https://cdn.tailwindcss.com">` or any equivalent. That CDN is for prototyping only and adds a 3MB+ JS payload that destroys LCP. We ship custom inline `<style>` blocks (AI-built, human-reviewed; no framework runtime). Tailwind, Bootstrap, Bulma, Pico — none belong in production output.
+1. **No runtime CSS frameworks via CDN.** Never use `<script src="https://cdn.tailwindcss.com">` or any equivalent. That CDN is for prototyping only and adds a 3MB+ JS payload that destroys LCP. We ship custom inline `<style>` blocks (AI-built, human-reviewed; no framework runtime). Tailwind, Bootstrap, Bulma, Pico · none belong in production output.
 2. **No CDN scripts at all** except: Google Fonts (preconnect + stylesheet), Pexels images (CDN URLs OK), and explicitly-allowed libraries we choose case-by-case (e.g., a small Chart.js or three.js when the build genuinely needs it).
 3. **Real product photos required.** A fashion site without product photos is wireframe-tier. A real-estate site without property shots is wireframe-tier. Use Pexels CDN URLs at minimum, base64-embed when local files are provided. CSS gradients are NEVER an acceptable substitute for images on product, portfolio, or gallery cards.
 4. **No marquee scrolling text bars.** Dated 2018 e-comm trope. If you need to convey shipping/return/promo info, use a static notice bar.
@@ -322,7 +322,7 @@ These are non-negotiable. If a brief asks for something that violates these, pus
    - For Colombian-facing sites: NIT, registered address, Cámara de Comercio compliance line
    - For all sites: "Sitio web por PymeWebPro" (Spanish) or "Built by PymeWebPro" (English) credit, linking to https://pymewebpro.com
 7. **Sub-1s LCP is a baseline, not a stretch goal.** Critical CSS inlined, fonts preconnected, images width/height locked, lazy-loading below the fold, no render-blocking JS.
-8. **Self-contained single-file HTML.** All CSS in `<style>`, all JS in `<script>`. The mockup pipeline wraps each file as a JS template literal — external dependencies break this.
+8. **Self-contained single-file HTML.** All CSS in `<style>`, all JS in `<script>`. The mockup pipeline wraps each file as a JS template literal · external dependencies break this.
 9. **Lighthouse 100 across Performance, Accessibility, Best Practices, SEO** at launch. If any score drops below 95, fix before shipping.
 10. **Schema.org JSON-LD baseline.** Every site ships with at minimum: Organization, WebSite, Service (one per pricing tier), and FAQPage blocks. Inline `<script type="application/ld+json">` in head. Any inline JSON-LD must have its SHA-256 hash added to the CSP allowlist in `_headers` for sites served by Cloudflare Pages.
 11. **Security headers baseline (Cloudflare Pages sites).** `_headers` must include: `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, a `Permissions-Policy` zeroing out unused features, and a `Content-Security-Policy` with hash-locked inline scripts. Goal is qualys.ssllabs.com A+ on day one.
@@ -330,11 +330,11 @@ These are non-negotiable. If a brief asks for something that violates these, pus
 ### Pre-deploy validation
 
 Run `npm run check` from `portal/`. The check pipeline includes:
-- `check:worker` — every JS file in src/ parses cleanly
-- `check:spa` — the Babel-transpiled SPA template literal parses cleanly
-- `check:standards` — every `manual-mockups/<slug>/index.html` validates against the build constraints above
+- `check:worker` · every JS file in src/ parses cleanly
+- `check:spa` · the Babel-transpiled SPA template literal parses cleanly
+- `check:standards` · every `manual-mockups/<slug>/index.html` validates against the build constraints above
 
-Any failure blocks deploy. Don't bypass with `--no-verify` — fix the underlying issue.
+Any failure blocks deploy. Don't bypass with `--no-verify` · fix the underlying issue.
 
 ## Brand voice rules
 
@@ -354,7 +354,7 @@ If you find yourself reaching for any of these patterns, stop and reconsider:
 - Marquee bars (see build constraint #4)
 - Em dashes (see writing rule #1)
 - "Marketplace" claims with no marketplace mechanics
-- Edgy product naming for sensual/luxury brands ("Veneno", "Medusa", "Latigazo" — leans tasteless)
+- Edgy product naming for sensual/luxury brands ("Veneno", "Medusa", "Latigazo" · leans tasteless)
 - Fake addresses and phone numbers
 - Generic stock copy like "made with passion in Medellín"
 - Skipping favicon, OG image, schema.org JSON-LD
@@ -382,7 +382,7 @@ When in doubt, look at how Daga, BWI, or Espacio Dental handle the equivalent mo
 - **2026-05-19 (later x6)** · **CRM WhatsApp templates · replaced 4 generic cold-outreach openers with 5 problem-led versions.** Edited `WA_TEMPLATES` in `portal/src/crm.js` (lines ~3783). Removed: `cold-hot`, `cold-dead`, `cold-hotel`, `cold-restaurant` (all generic "tiene mucho potencial" type pitches). Added: `cold-slow` (sitio carga lento en celular), `cold-no-cta` (no boton de WhatsApp ni CTA clara), `cold-seo` (no aparece bien en Google), `cold-no-site` (no encontre sitio propio), `cold-broken` (sitio no carga bien o desactualizado). Each opens with a specific observable problem on the prospect's site instead of a vague pitch · the hook is "I looked at your site and noticed X" rather than "we can help you." Kept the 4 follow-up templates (after-quote, followup-3day, followup-week, final-touch) untouched. Style matches existing templates: informal "tu", ASCII Spanish (no accents to avoid WA URL-encoding issues), `{business}` substitution, single-line. All include the pymewebpro.com URL at the end. **Deploy:** `cd portal && wrangler deploy`. **Verify:** open colguides.com/portal/pymewebpro/admin/crm, click ▾ next to any contact's WhatsApp button, confirm the picker now shows the 5 new openers + 4 follow-ups.
 - **2026-05-19 (later x5)** · **Commit 2 of 3 of the mockup-prospects pipeline · build playbook landed in CLAUDE.md.** Added a "Prospect mockups · build playbook for Claude in Cowork" section (after "Pipeline · manual mockup"). Documents the 11-step procedure a future Claude session follows when it hears `build mockup for <slug>`: get brief from D1 via Mike, study sources, pick bespoke design direction, build HTML, handle images (compress PNGs to JPGs, Imagen text gotchas, CSS overlays), avoid the documented gotchas (aspect-ratio + absolute children collapses, CSP allowlist, stale WA copy), run check-standards, wire into registry, deploy, log to changelog, populate `chatbot_system_prompt` with real FAQ. Captures lessons from the CF build so the next prospect doesn't re-derive them.
 - **2026-05-19 (later x4)** · **CF mockup · chat agent is the front door, WhatsApp CTAs replaced.** Nav, hero, and visit-panel buttons no longer dump to wa.me. They open the chat panel via `data-action="open-chat"` (JS extracted `openPanel` to a shared dispatcher). Customer talks to the agent first; the agent decides if/when to escalate to Carlos via the existing `[ORDER]` / `[HANDOFF]` markers → wa.me link. WhatsApp links in the contact info cards + footer stay (those are contact data, not action CTAs). **Substantive system prompt drafted** at `manual-mockups/central-farma-drogueria/chatbot-prompt.md` (~1900 tokens of Spanish brand-aware FAQ: products carried, prices, delivery zones, payment methods, inyectología services + costs, escalation rules). Mock data, plausibly Colombian, marked clearly as approximate so Carlos can replace with real figures. **Studio admin SPA gains a `chatbot_system_prompt` textarea** in the chatbot section of MockupProspectDetail · 14 rows, monospace, with a live char/token counter, so Mike can paste/iterate the prompt from the UI without SQL. Save payload + API already accept the field. **Deploy:** `cd portal && wrangler deploy`. **Next:** Mike pastes the chatbot-prompt.md contents into the new admin textarea on the CF row, saves, tests chat. If the agent still escalates too eagerly, tighten the HANDOFF criteria section of the prompt.
-- **2026-05-19 (later x3)** · **CF mockup hero gallery + real logo.** Replaced the SVG monogram-on-green-ring hero graphic with a 4:5 rotating photo carousel (2s crossfade, hover-pause, pauses when tab is hidden, respects `prefers-reduced-motion`). Three Gemini-generated photos: `hero-pharmacist.jpg` (Diana P., handing a box to a customer), `hero-delivery.jpg` (delivery driver lifting helmet next to scooter), `hero-injection.jpg` (Paula R. administering a vaccine). All shot to read as the same studio session. Compressed from ~6MB raw PNG to ~424KB total JPG (q=82, 1000px max) via `convert` in sandbox. **Per-slide overlays** composited only when the delivery slide is active: a white circular CF logo badge (`.crate-badge` at `left:30%, top:62%, width:16%`) sits on the green delivery crate, and a synthetic Colombian motorcycle plate (`.plate-cover` showing "FAR42M", positioned over the AI-garbled original) covers up Imagen's mangled plate text. **Real CF logo wired everywhere.** Logo image `logo-mark.png` (97KB) base64-embedded ONCE via CSS `background-image` on `.brand-mark`, then reused across nav, footer, hero badge, chat avatar, crate overlay. Spans/divs are now empty with `role="img"` + Spanish `aria-label`. **Final bundle: 1125KB** (vs. espacio-dental at 1725KB). Position tuning for crate badge + plate cover is eyeballed — needs visual fine-tune after deploy. **Deploy:** `cd portal && wrangler deploy`. **Note:** original .png hero files are still on disk in `manual-mockups/central-farma-drogueria/` (sandbox can't delete). Mike to `rm hero-*.png` manually.
+- **2026-05-19 (later x3)** · **CF mockup hero gallery + real logo.** Replaced the SVG monogram-on-green-ring hero graphic with a 4:5 rotating photo carousel (2s crossfade, hover-pause, pauses when tab is hidden, respects `prefers-reduced-motion`). Three Gemini-generated photos: `hero-pharmacist.jpg` (Diana P., handing a box to a customer), `hero-delivery.jpg` (delivery driver lifting helmet next to scooter), `hero-injection.jpg` (Paula R. administering a vaccine). All shot to read as the same studio session. Compressed from ~6MB raw PNG to ~424KB total JPG (q=82, 1000px max) via `convert` in sandbox. **Per-slide overlays** composited only when the delivery slide is active: a white circular CF logo badge (`.crate-badge` at `left:30%, top:62%, width:16%`) sits on the green delivery crate, and a synthetic Colombian motorcycle plate (`.plate-cover` showing "FAR42M", positioned over the AI-garbled original) covers up Imagen's mangled plate text. **Real CF logo wired everywhere.** Logo image `logo-mark.png` (97KB) base64-embedded ONCE via CSS `background-image` on `.brand-mark`, then reused across nav, footer, hero badge, chat avatar, crate overlay. Spans/divs are now empty with `role="img"` + Spanish `aria-label`. **Final bundle: 1125KB** (vs. espacio-dental at 1725KB). Position tuning for crate badge + plate cover is eyeballed · needs visual fine-tune after deploy. **Deploy:** `cd portal && wrangler deploy`. **Note:** original .png hero files are still on disk in `manual-mockups/central-farma-drogueria/` (sandbox can't delete). Mike to `rm hero-*.png` manually.
 - **2026-05-19 (later x2)** · **Generic prospect chat agent · Commit 3 of the mockup-prospects pipeline.** Every prospect mockup now gets a real chat agent that answers questions, takes orders, and hands off to the owner by WhatsApp · without per-brand code. Endpoint: `POST mockups.pymewebpro.com/api/chat/<slug>`. **Files added:** `portal/src/prospect-chat.js` (loads `mockup_prospects` row by slug, auto-synthesizes a Spanish system prompt from `business_name` + `style_brief` + `owner_name` + `owner_whatsapp` + `cal_link` unless `chatbot_system_prompt` column is set as a manual override; runs Claude Haiku 4.5; detects `[ORDER: items=...; address=...; phone=...]` and `[HANDOFF: reason=...]` markers in the reply and converts them to a `wa.me` link with a pre-filled message to the owner; returns `{reply, wa_link?, mode}`). **Files changed:** `portal/src/mockups.js` imports + dispatches `handleProspectChat` for any path matching `/api/chat/<slug>` on `mockups.pymewebpro.com`, ordered after the hardcoded espacio-dental matcher so legacy traffic keeps working. **CF mockup wired to the new agent:** replaced the placeholder WhatsApp fab in `manual-mockups/central-farma-drogueria/index.html` with a full chat panel · slide-up modal, brand-green header with "CF" avatar + live indicator, message bubbles, typing dots, error states, WhatsApp CTA when the agent emits an ORDER/HANDOFF marker. Mobile: full-screen modal. Bundle: 32KB → 41KB raw. **Espacio Dental NOT cut over** in this commit · keeps its hardcoded `espacio-dental-chat.js` (different language flow, different booking marker) until a separate migration commit. **Secret:** uses existing `env.ANTHROPIC_API_KEY` already set on the worker. **Deploy:** `cd portal && wrangler deploy`. **Follow-ups:** "Generate system prompt" button in the studio admin SPA (let Mike review/edit the auto-synthesized prompt before going live); cut espacio-dental over to the generic handler once we've verified the Spanish flow on CF; rate limiting per IP; "Open in WhatsApp now" passthrough button at top of chat for users who just want to skip the bot.
 - **2026-05-19 (later x1)** · **First prospect mockup built via the new workflow · `central-farma-drogueria`.** Brief came in through the studio admin (status: brief, IG @centralfarmamed, owner Carlos, WA 573023877739). Built bespoke at `manual-mockups/central-farma-drogueria/index.html` (~31KB raw, 32KB bundled). Spanish-only (neighborhood market, not expats). Type-and-icon driven (no photos) to match their actual IG aesthetic which is graphic-driven, hit Lighthouse-100 prereqs, and keep page weight tiny. Sections: nav · hero with CF monogram in brand-green ring · 3-card services (domicilios, inyectología, productos) · inyectología deep-dive with "qué traer" checklist · 3-step domicilios + coverage pills · address/hours/WA/IG cards + visit CTA · footer · floating WA fab. JSON-LD: Pharmacy + Service (Inyectología) + OpeningHoursSpecification. Brand palette extracted from CF wordmark (`#2E8B6A` green, `#0E2A4D` navy, `#D7E8F4` soft blue, `#F8EFD4` cream). Type pairing: Fraunces (display, opsz 144) + Inter (body), distinct from existing 8 mockups. WhatsApp fab is a placeholder · gets replaced with the generic chat agent in Commit 3 of the mockup-prospects pipeline. **Files added:** `manual-mockups/central-farma-drogueria/index.html`, `portal/src/manual-mockups-centralfarma.js` (auto-generated by rebuild-mockups). **Files changed:** `portal/src/manual-mockups.js` (imported + registered slug), `portal/src/chief-of-staff.js` (added to `toolListMockups` static list). Quality gate: `check-standards` passes 0 FAILs · only the standard "Has Organization JSON-LD" WARN that affects 5 other production mockups (Pharmacy is a schema.org subtype of Organization, so this is regex-only and not a real SEO issue). **Deploy:** `cd portal && wrangler deploy`. **Follow-ups:** in the admin form, flip status to `live`. Mike + Carlos to confirm payment-method copy on the domicilios section (currently says "tú decides cómo pagar al recibir", neutral) and the inyectología pricing line (currently honest "consulta el costo por WhatsApp"). Phase 2 hardening: per-mockup HTTP-header CSP via mockups.js (currently only `<meta>` CSP via inline tags possible).
 - **2026-05-19** · **Mockup-prospects pipeline · Commit 1 of 3.** New workflow for sales-prospect mockups: Mike fills in a brief in the studio admin (`/portal/pymewebpro/admin` → Mockups tab), then asks Claude in Cowork to build the bespoke site at `manual-mockups/<slug>/index.html`. The portal is a brief tracker, NOT a generator · per Mike's quality bar, every site is hand-built in Cowork to bespoke + A+ security + 100 Lighthouse + <1s load. **Files added:** `portal/migrations/0008_mockup_prospects.sql` (new `mockup_prospects` table: slug, business_name, instagram_url, facebook_url, tiktok_url, website_url, style_brief, owner_name, owner_whatsapp, cal_link, notes, chatbot_system_prompt, status, created_at, updated_at; seeds an `espacio-dental` row for the Commit 3 chat cutover), `portal/src/mockup-prospects.js` (CRUD handler exporting `handleMockupProspects`; admin-only; soft-delete via `status='archived'`). **Files changed:** `portal/src/mockups.js` imports + dispatches `handleMockupProspects` before the existing `/api/admin/mockups` matchers. `portal/src/index.js` SPA gains a Mockups tab (Palette icon) with list view, new-mockup modal, and full detail/edit page (brief fields + chatbot fields + iteration-notes textarea). New state: `mockups`, `mockupDetail`, `showNewMockup`. New routes: `/admin/mockups`, `/admin/mockups/<slug>`. New components: `MockupRow`, `NewMockupModal`, `MockupProspectDetail`. **Apply + deploy:** `cd portal && wrangler d1 execute pymewebpro-portal --remote --file=migrations/0008_mockup_prospects.sql && wrangler deploy`. **Commit 2 (next):** Cowork-side build playbook lives in CLAUDE.md so Claude can build mockups from a brief by slug. **Commit 3:** generic `prospect-chat.js` reads brand profile from `mockup_prospects` by slug, replacing the hardcoded `espacio-dental-chat.js`.

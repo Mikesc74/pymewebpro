@@ -22,7 +22,7 @@
 
 // Reveal on scroll. Two gotchas the original implementation hit:
 //   1. threshold:.12 didn't fire until an element was 12% on-screen, which
-//      a fast-scrolling mobile user could blow past — leaving a blank
+//      a fast-scrolling mobile user could blow past · leaving a blank
 //      cream gap before the section animated in.
 //   2. Above-the-fold elements with .reveal start at opacity:0 in the CSS,
 //      so any delay between DOM parse and JS run produced a flash of
@@ -37,7 +37,7 @@
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight + 100) el.classList.add('in');
   });
-  // 2. Observer for the rest — pre-fires 200px before the element scrolls in
+  // 2. Observer for the rest · pre-fires 200px before the element scrolls in
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -46,13 +46,13 @@
     }, { threshold: 0, rootMargin: '0px 0px 200px 0px' });
     document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
   } else {
-    // Old browsers — just reveal everything, no animation
+    // Old browsers · just reveal everything, no animation
     document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
   }
 })();
 
 // Plan-picker behavior. Two places use .btn-reserve[data-plan]:
-//   1. The pricing cards higher up — clicking jumps to #contacto, which is
+//   1. The pricing cards higher up · clicking jumps to #contacto, which is
 //      a server-side anchor scroll. The plan cards in the contact section
 //      ARE the source of truth, so we just store the picked plan in a
 //      hidden input + update the in-form summary + scroll the form into
@@ -173,7 +173,7 @@ async function submitForm(e){
       // Paid plan with a portal confirm URL → straight to pay page.
       // Otherwise → /gracias.html (mirrors what the no-JS native form post
       // already does via the server-side 303). The user is never left in an
-      // ambiguous "did this work?" state — they always end up on a real page.
+      // ambiguous "did this work?" state · they always end up on a real page.
       window.location.href = result.confirm_url || '/gracias.html';
       return false;
     }
@@ -183,7 +183,7 @@ async function submitForm(e){
   }
 
   // API call failed (network or 5xx). Don't pretend success and don't
-  // auto-open a WhatsApp tab — both behaviors hide the failure and produce
+  // auto-open a WhatsApp tab · both behaviors hide the failure and produce
   // the "form sent, nobody replied" pattern. Surface it inline and offer
   // WhatsApp as an explicit alternative the user can choose.
   btn.disabled = false;
@@ -223,7 +223,7 @@ function showFormError(f, data) {
 }
 
 // Wire up contact form submit (was previously inline onsubmit attribute,
-// removed for CSP compliance — script-src 'self' without 'unsafe-inline').
+// removed for CSP compliance · script-src 'self' without 'unsafe-inline').
 (function bindContactForm(){
   const f = document.getElementById('contactForm');
   if (!f) return;
@@ -249,7 +249,7 @@ function showFormError(f, data) {
 // Pattern: show banner once on first visit; persist choice in localStorage
 // under 'pwp_consent'. Set window.__pwpConsent so future trackers (GA4,
 // Meta Pixel, etc.) can gate initialization on consent. Currently the site
-// runs no third-party tracking, so this is purely informational — but it
+// runs no third-party tracking, so this is purely informational · but it
 // has to ship before any tracker does, not after.
 (function bindCookieBanner(){
   const STORAGE_KEY = 'pwp_consent';

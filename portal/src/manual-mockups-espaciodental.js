@@ -1,4 +1,4 @@
-// manual-mockups-espaciodental.js — auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-espaciodental.js · auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/espacio-dental/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["espacio-dental"].

@@ -10,7 +10,7 @@ Operationally: a one-person studio (Mike) using Anthropic Claude as a force mult
 
 ## Founder
 
-- **Michael Chartrand** ("Mike") — Canadian citizen, hasn't lived in Canada in 20+ years
+- **Michael Chartrand** ("Mike") · Canadian citizen, hasn't lived in Canada in 20+ years
 - Based in Medellín, Antioquia, Colombia
 - Email: mike@mikec.pro
 - Solo operator (no team, no contractors)
@@ -57,11 +57,11 @@ Display NIT on:
 ## Legal / financial setup
 
 - **Currently:** Sole proprietor, not yet incorporated as a Canadian Inc.
-- **Future option:** Register a Canadian sole proprietorship (~30 min, ~$60–100 CAD online — ON or BC) to fully back the "Canadian-owned" framing
+- **Future option:** Register a Canadian sole proprietorship (~30 min, ~$60–100 CAD online · ON or BC) to fully back the "Canadian-owned" framing
 - **Banking + payments:**
-  - **Wise Business** (CAD + USD accounts) — handles BOTH bank wires AND credit/debit cards (1% on domestic cards, 2.9% on international, plus Apple Pay and Google Pay). Single account covers all NA payment needs.
-  - **Wompi** (COP) — Colombian bank transfers and cards
-  - **Colombian bank account** — primary operating account
+  - **Wise Business** (CAD + USD accounts) · handles BOTH bank wires AND credit/debit cards (1% on domestic cards, 2.9% on international, plus Apple Pay and Google Pay). Single account covers all NA payment needs.
+  - **Wompi** (COP) · Colombian bank transfers and cards
+  - **Colombian bank account** · primary operating account
   - **No Canadian retail bank account, no Stripe account.** Don't claim either.
 - **Stripe is NOT a PymeWebPro payment method.** We can build Stripe Checkout INTO client sites (they own the merchant account, we wire the integration), but we don't accept Stripe ourselves.
 
@@ -87,9 +87,9 @@ Display NIT on:
 
 ### Payment terms (both markets)
 
-- **30% deposit to start** — no design or development work begins until deposit clears
-- **70% on launch** — site sits on staging URL until paid; DNS to client domain not connected until balance clears
-- NA: Wise Business in CAD or USD (cards, Apple/Google Pay, wires) — milestone billing supported
+- **30% deposit to start** · no design or development work begins until deposit clears
+- **70% on launch** · site sits on staging URL until paid; DNS to client domain not connected until balance clears
+- NA: Wise Business in CAD or USD (cards, Apple/Google Pay, wires) · milestone billing supported
 - LATAM: Wompi in COP (cards, PSE, bank transfer)
 
 Switched from 50/50 to 30/70 on 2026-05-05. A productized $500-800 / $690.000-1.080.000 build doesn't need an agency-style 50% deposit; the lower barrier to start makes the buy decision easier while DNS gating on the 70% balance still protects against non-payment.
@@ -107,13 +107,13 @@ Deposit numbers by tier: Essential $150 CAD / $117.000 COP · Pro $240 CAD / $20
 
 ### Live pay-links (set 2026-05-05)
 
-**Wise (NA — CAD):**
+**Wise (NA · CAD):**
 - Essential deposit ($150): `https://wise.com/pay/r/rhZaZERQUcEuitY` ← on public site (Essential card)
 - Pro deposit ($240): `https://wise.com/pay/r/qYRloHLYQcF098c` ← on public site (Pro card)
 - Essential balance ($350): `https://wise.com/pay/r/4fQsK_MOcPZwagQ` ← send at launch
 - Pro balance ($560): `https://wise.com/pay/r/I-G0t2wOE1CRJYI` ← send at launch
 
-**Wompi (LATAM — COP):**
+**Wompi (LATAM · COP):**
 - Essential deposit ($117.000): `https://checkout.wompi.co/l/IjE5K4` ← on public site (Essential card)
 - Pro deposit ($207.000): `https://checkout.wompi.co/l/xzGeMX` ← on public site (Pro card)
 - Essential balance ($273.000): `https://checkout.wompi.co/l/HdCwpF` ← email at launch
@@ -149,7 +149,7 @@ Build time: ~15 min per mockup (5 min brief + 10 min build with Claude). Wire-up
 | 1-in-5 | ~$138/hr | ~$400/hr | ~$1,600/hr |
 | 1-in-3 | ~$229/hr | ~$667/hr | ~$2,700/hr |
 
-Constraint: not build capacity (Claude+files makes that near-infinite) — outreach throughput. The bottleneck is qualified prospects per week, not mockups built per hour.
+Constraint: not build capacity (Claude+files makes that near-infinite) · outreach throughput. The bottleneck is qualified prospects per week, not mockups built per hour.
 
 ## Positioning · the four-part stack
 
@@ -163,20 +163,20 @@ The narrative: "Canadian-owned studio, based in Medellín. We use modern AI tool
 ## Why we cost less (the honest pitch)
 
 Three pillars, deployed verbatim on the PymeWebPro CA site:
-- **Geography** — Canadian-led, Medellín-built. Real structural cost advantage.
-- **Tooling** — Anthropic AI as design partner. Capability still novel in 2026.
-- **Stack** — No WordPress, no plugin subscriptions. Smaller cost base, smaller invoice.
+- **Geography** · Canadian-led, Medellín-built. Real structural cost advantage.
+- **Tooling** · Anthropic AI as design partner. Capability still novel in 2026.
+- **Stack** · No WordPress, no plugin subscriptions. Smaller cost base, smaller invoice.
 
 This section is the conversion driver. Honest > marketing-speak.
 
 ## Target verticals (Canadian / NA market)
 
 In priority order:
-1. **Independent dental clinics** — Espacio Dental is proof. High-revenue customers, dentists obsess over patient acquisition.
-2. **Boutique fitness / yoga / pilates** — design-conscious owners, willing to pay for quality, high LTV.
-3. **Real estate agents without personal sites** — they all want one, brokerages don't always provide.
-4. **Restaurants with Instagram-only presence** — fastest close, lower ticket, high volume.
-5. **B&Bs / boutique hotels** — visual portfolio sells itself.
+1. **Independent dental clinics** · Espacio Dental is proof. High-revenue customers, dentists obsess over patient acquisition.
+2. **Boutique fitness / yoga / pilates** · design-conscious owners, willing to pay for quality, high LTV.
+3. **Real estate agents without personal sites** · they all want one, brokerages don't always provide.
+4. **Restaurants with Instagram-only presence** · fastest close, lower ticket, high volume.
+5. **B&Bs / boutique hotels** · visual portfolio sells itself.
 
 Avoid: chains, businesses with "marketing manager" job titles (they have process), highly-regulated SaaS / fintech (long sales cycle).
 
@@ -190,24 +190,24 @@ The "build mockup, then pitch" inversion:
 5. Track open/reply/close in a tracker
 
 ### Sample outreach (Canadian English, dental):
-> Hey [first name], I'm Mike — Canadian web designer based out of Medellín. I noticed [clinic name] doesn't have a website yet, just an IG, so I built a quick concept of what one could look like for you: [mockup URL]. No pressure to buy — just figured it'd be more useful than a cold email. If you like it, I can make it yours for $500 CAD, live in 48 hours. — Mike
+> Hey [first name], I'm Mike · Canadian web designer based out of Medellín. I noticed [clinic name] doesn't have a website yet, just an IG, so I built a quick concept of what one could look like for you: [mockup URL]. No pressure to buy · just figured it'd be more useful than a cold email. If you like it, I can make it yours for $500 CAD, live in 48 hours. · Mike
 
 ### Tools for prospecting:
-- **Outscraper** (~$30/mo) — Google Maps with website-null filter
-- **Apollo** (free tier OK) — owner email/phone enrichment
-- **Airtable / spreadsheet** — outreach tracker
+- **Outscraper** (~$30/mo) · Google Maps with website-null filter
+- **Apollo** (free tier OK) · owner email/phone enrichment
+- **Airtable / spreadsheet** · outreach tracker
 
 ## Risk · what NOT to overclaim
 
 | Phrase | Honest | Overclaim |
 |--------|--------|-----------|
-| "Canadian-owned" | ✓ true | — |
-| "Canadian founder" | ✓ true | — |
+| "Canadian-owned" | ✓ true | · |
+| "Canadian founder" | ✓ true | · |
 | "Founded in Canada" | ✓ if registered as sole prop | otherwise softer phrasing |
 | "Canadian entity" | ✗ requires registration | use "Canadian-owned business" instead |
 | "Full North American legal recourse" | ✗ depends on contract jurisdiction | drop or soften |
-| "Pricing in CAD/USD" | ✓ true (Wise + Stripe) | — |
-| "Wire to a Canadian (CAD) account" | ✓ true (Wise CAD) | — |
+| "Pricing in CAD/USD" | ✓ true (Wise + Stripe) | · |
+| "Wire to a Canadian (CAD) account" | ✓ true (Wise CAD) | · |
 | "Registered in Canada" | ✗ until sole prop registered | use "Canadian-owned" instead |
 
 ## Wise Business · About-Us blurb (200 words, KYB-approved)

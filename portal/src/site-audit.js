@@ -55,7 +55,7 @@ async function checkSiteFetch(url, findings, ctx) {
 function checkHttps(url, findings) {
   if (!/^https:/i.test(url)) {
     findings.push(finding("Security", "critical",
-      "No padlock — your site is marked 'Not Secure'",
+      "No padlock · your site is marked 'Not Secure'",
       "Modern browsers show a big 'Not Secure' warning when visiting your site. Customers see this before they see your homepage, and most leave immediately. It also tells Google your site is untrustworthy, which hurts your search ranking.",
       "Install a free SSL certificate (Let's Encrypt) so your address bar shows the padlock and https://. Most hosting companies do this in one click."));
   }
@@ -93,13 +93,13 @@ async function checkObservatory(host, findings) {
       if (["D", "E", "F"].includes(grade)) {
         findings.push(finding("Security", "high",
           `Independent security scan: poor grade (${grade})`,
-          "Mozilla, a major non-profit, runs a free security checker that grades websites like a school report card. Your site scored " + score + "/100 (grade " + grade + "). Customers can run this same scan and use it to decide whether to trust you — especially if you take payments or personal info.",
+          "Mozilla, a major non-profit, runs a free security checker that grades websites like a school report card. Your site scored " + score + "/100 (grade " + grade + "). Customers can run this same scan and use it to decide whether to trust you · especially if you take payments or personal info.",
           "Address the security issues listed in this report. A web developer can typically bring this to a B or A grade in an hour."));
       } else if (grade === "C") {
         findings.push(finding("Security", "medium",
           `Independent security scan: mediocre grade (${grade})`,
           "Mozilla's free security scanner graded your site " + score + "/100. Not failing, but well below what a customer-facing business should have. Easy to bring up to an A.",
-          "Address the missing security settings — your web developer can raise this in well under an hour."));
+          "Address the missing security settings · your web developer can raise this in well under an hour."));
       }
     }
   } catch (e) { /* swallow */ }
@@ -113,8 +113,8 @@ function checkSEO(html, baseUrl, findings) {
   if (!title || !title.trim()) {
     findings.push(finding("SEO", "high",
       "Your page has no title",
-      "The title is the blue clickable headline that shows up in Google search results. Without one, your business shows up looking broken — or doesn't show up at all. This is the single most important thing to fix for getting found on Google.",
-      "Your web developer should add a clear title to each page, like 'Bluebird Dental Clinic — Family Dentistry in Medellín'."));
+      "The title is the blue clickable headline that shows up in Google search results. Without one, your business shows up looking broken · or doesn't show up at all. This is the single most important thing to fix for getting found on Google.",
+      "Your web developer should add a clear title to each page, like 'Bluebird Dental Clinic · Family Dentistry in Medellín'."));
   } else {
     const t = title.trim();
     if (t.length > 70) {
@@ -126,7 +126,7 @@ function checkSEO(html, baseUrl, findings) {
       findings.push(finding("SEO", "medium",
         `Your page title is too short (${t.length} characters)`,
         `A very short title misses a chance to tell Google (and customers) what you do. Your current title is: "${t}"`,
-        "Expand to roughly 50 characters and include your business type and city, e.g. 'Bluebird Dental Clinic — Family Dentistry in Medellín'."));
+        "Expand to roughly 50 characters and include your business type and city, e.g. 'Bluebird Dental Clinic · Family Dentistry in Medellín'."));
     }
   }
 
@@ -136,7 +136,7 @@ function checkSEO(html, baseUrl, findings) {
   if (!desc || !desc.trim()) {
     findings.push(finding("SEO", "high",
       "No description for Google to show under your listing",
-      "When your site appears in Google, there's a short description below the blue title. You haven't written one, so Google grabs random text from the page — which is usually awful. A good description is one of the biggest factors in whether someone clicks your listing instead of a competitor's.",
+      "When your site appears in Google, there's a short description below the blue title. You haven't written one, so Google grabs random text from the page · which is usually awful. A good description is one of the biggest factors in whether someone clicks your listing instead of a competitor's.",
       "Your web developer can add a 1–2 sentence description for each page, summarizing what you offer and where you are."));
   } else if (desc.length > 170) {
     findings.push(finding("SEO", "low",
@@ -165,7 +165,7 @@ function checkSEO(html, baseUrl, findings) {
   if (imgs.length && missingAlt.length >= Math.max(3, Math.floor(imgs.length / 4))) {
     findings.push(finding("SEO", "medium",
       `${missingAlt.length} of ${imgs.length} photos have no text description`,
-      "Every photo on your site should have a short text description attached (called 'alt text'). Two reasons: (1) Google can't see images, only read text, so good descriptions help your photos show up in Google Image search. (2) Blind visitors using screen readers depend on these descriptions — in many countries you can be sued for not having them.",
+      "Every photo on your site should have a short text description attached (called 'alt text'). Two reasons: (1) Google can't see images, only read text, so good descriptions help your photos show up in Google Image search. (2) Blind visitors using screen readers depend on these descriptions · in many countries you can be sued for not having them.",
       "Your web developer can add a one-line description to each photo, like 'Dr. Garcia performing a teeth cleaning' or 'Front desk of our Medellín office'."));
   }
 
@@ -175,7 +175,7 @@ function checkSEO(html, baseUrl, findings) {
   if (!hasOgTitle || !hasOgImage) {
     findings.push(finding("SEO", "low",
       "Your site looks ugly when shared on Facebook or WhatsApp",
-      "When someone copies your link and pastes it into Facebook, WhatsApp, LinkedIn, or iMessage, those apps look for a special title, description, and preview image. You haven't set them, so your link shows up as plain text or a broken-looking card — which gets dramatically fewer clicks than a polished preview with your photo.",
+      "When someone copies your link and pastes it into Facebook, WhatsApp, LinkedIn, or iMessage, those apps look for a special title, description, and preview image. You haven't set them, so your link shows up as plain text or a broken-looking card · which gets dramatically fewer clicks than a polished preview with your photo.",
       "Your web developer can add the right tags so your site shows a clean preview card with photo, title, and description when shared."));
   }
 
@@ -194,7 +194,7 @@ function checkSEO(html, baseUrl, findings) {
     findings.push(finding("Mobile", "high",
       "Your site is not set up for phones",
       "Over half of website visits come from phones. Your site is missing the basic setting that tells phones how to display the page. Visitors on a phone see tiny, unreadable text and have to pinch-zoom around. Most of them leave immediately.",
-      "Your web developer can fix this with a single line of code — but the deeper fix is making sure the whole site is designed to work on phones, not just desktops."));
+      "Your web developer can fix this with a single line of code · but the deeper fix is making sure the whole site is designed to work on phones, not just desktops."));
   }
 
   // Lang
@@ -210,7 +210,7 @@ function checkSEO(html, baseUrl, findings) {
   if (!/<script[^>]+type=["']application\/ld\+json["']/i.test(html)) {
     findings.push(finding("SEO", "low",
       "Missing the tags that get you stars, hours, and photos in Google",
-      "You know how some Google results show star ratings, opening hours, prices, or a map right in the search result? That's powered by a special set of behind-the-scenes tags. Yours has none, so your listing in Google looks plain — just a blue link and a sentence — while competitors stand out with rich extra info.",
+      "You know how some Google results show star ratings, opening hours, prices, or a map right in the search result? That's powered by a special set of behind-the-scenes tags. Yours has none, so your listing in Google looks plain · just a blue link and a sentence · while competitors stand out with rich extra info.",
       "Your web developer can add 'LocalBusiness' tags listing your name, address, phone, hours, and reviews. This often moves the needle on clicks more than anything else."));
   }
 }
@@ -226,7 +226,7 @@ async function checkRobotsAndSitemap(baseUrl, findings) {
     if (!robotsR || robotsR.status !== 200) {
       findings.push(finding("SEO", "low",
         "Missing the file that tells Google what to look at",
-        "There's a small standard file ('robots.txt') that tells Google's crawler what pages to read and what to skip. Yours is missing. Not the end of the world, but professional sites have one — and it's where you point Google to your sitemap (see next finding).",
+        "There's a small standard file ('robots.txt') that tells Google's crawler what pages to read and what to skip. Yours is missing. Not the end of the world, but professional sites have one · and it's where you point Google to your sitemap (see next finding).",
         "Your web developer can add this in 5 minutes."));
     }
     if (sitemapR && sitemapR.status === 200) {
@@ -234,20 +234,20 @@ async function checkRobotsAndSitemap(baseUrl, findings) {
       if (!/<urlset|<sitemapindex/i.test(t)) {
         findings.push(finding("SEO", "medium",
           "No map of your site for Google to follow",
-          "A 'sitemap' is a list of every page on your site that you hand to Google so it can find and index everything. Without it, Google may miss your less-linked pages entirely — meaning they never show up in search.",
+          "A 'sitemap' is a list of every page on your site that you hand to Google so it can find and index everything. Without it, Google may miss your less-linked pages entirely · meaning they never show up in search.",
           "Your web developer can generate a sitemap and submit it to Google Search Console. Most website platforms (WordPress, Shopify, etc.) can do this automatically."));
       }
     } else {
       findings.push(finding("SEO", "medium",
         "No map of your site for Google to follow",
-        "A 'sitemap' is a list of every page on your site that you hand to Google so it can find and index everything. Without it, Google may miss your less-linked pages entirely — meaning they never show up in search.",
+        "A 'sitemap' is a list of every page on your site that you hand to Google so it can find and index everything. Without it, Google may miss your less-linked pages entirely · meaning they never show up in search.",
         "Your web developer can generate a sitemap and submit it to Google Search Console. Most website platforms (WordPress, Shopify, etc.) can do this automatically."));
     }
   } catch (e) { /* swallow */ }
 }
 
 async function checkPageSpeed(url, findings, results, apiKey) {
-  // PageSpeed Insights v5 — free, no API key needed for low volume.
+  // PageSpeed Insights v5 · free, no API key needed for low volume.
   for (const strategy of ["mobile", "desktop"]) {
     try {
       const params = new URLSearchParams();
@@ -269,7 +269,7 @@ async function checkPageSpeed(url, findings, results, apiKey) {
       if (perf < 50) {
         findings.push(finding("Performance", strategy === "mobile" ? "high" : "medium",
           `Your site is slow ${device} (Google's score: ${perf}/100)`,
-          "Google graded your site's speed as poor. Studies show that for every extra second a site takes to load, about half of mobile visitors give up and leave. Slow sites also get ranked lower in Google search results — so you're losing customers two ways: they can't find you, and the ones who do find you don't wait around.",
+          "Google graded your site's speed as poor. Studies show that for every extra second a site takes to load, about half of mobile visitors give up and leave. Slow sites also get ranked lower in Google search results · so you're losing customers two ways: they can't find you, and the ones who do find you don't wait around.",
           "Common fixes: compress oversized photos (the biggest win for most sites), remove unused plugins, switch to faster hosting. A web developer can usually double the speed in a day's work."));
       } else if (perf < 75) {
         findings.push(finding("Performance", "medium",
@@ -282,7 +282,7 @@ async function checkPageSpeed(url, findings, results, apiKey) {
       if (a11y < 80) {
         findings.push(finding("Accessibility", strategy === "mobile" ? "medium" : "low",
           `Site is hard to use for people with disabilities (${a11y}/100 ${device})`,
-          "Google scored your site low for accessibility — meaning blind users, color-blind users, and people with motor difficulties have a hard time using it. Two reasons to care: (1) you're turning away real customers, and (2) in many countries (USA, Canada, parts of EU) you can be sued for an inaccessible business website.",
+          "Google scored your site low for accessibility · meaning blind users, color-blind users, and people with motor difficulties have a hard time using it. Two reasons to care: (1) you're turning away real customers, and (2) in many countries (USA, Canada, parts of EU) you can be sued for an inaccessible business website.",
           "Common fixes: improve color contrast (text vs. background), add descriptions to photos, make sure buttons are big enough to tap, label every form field."));
       }
 
@@ -290,7 +290,7 @@ async function checkPageSpeed(url, findings, results, apiKey) {
       if (seoScore < 80) {
         findings.push(finding("SEO", "medium",
           `Google's SEO grade for your site is low (${seoScore}/100 ${device})`,
-          "Google's own scanner found several basic SEO issues. These are the easy wins that every business website should have — missing them is leaving free Google traffic on the table.",
+          "Google's own scanner found several basic SEO issues. These are the easy wins that every business website should have · missing them is leaving free Google traffic on the table.",
           "A web developer can run Google's free PageSpeed Insights tool and walk through the SEO checklist. Most issues are small fixes."));
       }
 
@@ -307,13 +307,13 @@ async function checkPageSpeed(url, findings, results, apiKey) {
         } else if (lcp && lcp > 2500) {
           findings.push(finding("Performance", "medium",
             `Main content shows up slower than ideal on phones (${(lcp/1000).toFixed(1)}s)`,
-            "Google wants to see your main content within 2.5 seconds. You're at " + (lcp/1000).toFixed(1) + " seconds — not awful, but improvable. Faster pages convert better and rank higher.",
+            "Google wants to see your main content within 2.5 seconds. You're at " + (lcp/1000).toFixed(1) + " seconds · not awful, but improvable. Faster pages convert better and rank higher.",
             "Compress your hero image and any other large photos near the top of the page."));
         }
         if (cls && cls > 0.25) {
           findings.push(finding("Performance", "high",
             "Your page jumps around as it loads",
-            "When someone opens your site, things move around as the page loads — text shifts, buttons jump. People tap the wrong link or get frustrated and leave. Google measures this and penalizes sites for it.",
+            "When someone opens your site, things move around as the page loads · text shifts, buttons jump. People tap the wrong link or get frustrated and leave. Google measures this and penalizes sites for it.",
             "Usually fixed by telling the browser the size of each photo before it loads, so the browser can reserve space for it instead of pushing other content around."));
         }
         if (tbt && tbt > 600) {
@@ -335,7 +335,7 @@ async function checkPageSpeed(url, findings, results, apiKey) {
           findings.push(finding("Performance", "medium",
             `Biggest single speed fix would save about ${(opps[0][0]/1000).toFixed(1)} seconds`,
             "Google identified one specific change that would shave " + (opps[0][0]/1000).toFixed(1) + " seconds off your page load. The technical name is: " + opps[0][1] + ". That's a lot of speed for a single fix.",
-            "Worth prioritizing — your web developer can look this up in Google's free PageSpeed report and apply the fix."));
+            "Worth prioritizing · your web developer can look this up in Google's free PageSpeed report and apply the fix."));
         }
       }
     } catch (e) { /* swallow */ }
@@ -359,7 +359,7 @@ function detectTech(html, headers, findings, results) {
   if (stack.includes("Wix") || stack.includes("Squarespace")) {
     findings.push(finding("Tech", "info",
       `Built on ${stack[0]}`,
-      "DIY website builders are limiting — SEO, speed, and customization are constrained by the platform.",
+      "DIY website builders are limiting · SEO, speed, and customization are constrained by the platform.",
       "Consider migrating to WordPress or a custom build for more control and better performance."));
   }
 }
@@ -413,7 +413,7 @@ export function siteAuditReportHTML(targetUrl) {
   const safe = escapeHtml(targetUrl);
   // The page calls the JSON API itself (with the admin token from localStorage),
   // renders the report, then opens the browser's print dialog so the user can
-  // "Save as PDF" — no PDF library needed on the server.
+  // "Save as PDF" · no PDF library needed on the server.
   return `<!doctype html>
 <html lang="en">
 <head>

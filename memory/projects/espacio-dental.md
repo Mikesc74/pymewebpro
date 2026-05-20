@@ -13,7 +13,7 @@ Real Medellín-area dental clinic.
 - Location: Itagüí parque principal
 - Founders: dentists graduated from CES (top Colombian dental school)
 
-**Mockup only — not yet a paying client.** Built as a pitch.
+**Mockup only · not yet a paying client.** Built as a pitch.
 
 ## Positioning play
 

@@ -1,7 +1,7 @@
 # Patch: add the mockup engine to pymewebpro-portal
 
 This adds mockup generation, signed share links, comment widget, and ship-to-Pages
-on top of the existing portal worker — without disturbing payments, intake, auth,
+on top of the existing portal worker · without disturbing payments, intake, auth,
 or the admin panel that's already running.
 
 ## What's already done (by the engine kickoff)
@@ -10,12 +10,12 @@ or the admin panel that's already running.
   `pymewebpro-portal` (id `93fc7e21-713c-4479-bb55-69ae05c275dc`).
   See `mockups-schema.sql` for the DDL.
 - Two new source files:
-  - `portal/src/blueprint.js` — parameterized landing template
-  - `portal/src/mockups.js` — module that adds all the new routes
+  - `portal/src/blueprint.js` · parameterized landing template
+  - `portal/src/mockups.js` · module that adds all the new routes
 
-## What you do — three options
+## What you do · three options
 
-### Option A — Cloudflare dashboard inline editor (fastest, ~10 min)
+### Option A · Cloudflare dashboard inline editor (fastest, ~10 min)
 
 The existing portal source was lost locally; you can edit the deployed bundle in
 place. Adding the new module is a copy/paste job.
@@ -45,7 +45,7 @@ place. Adding the new module is a copy/paste job.
      actually ship to Pages)
 7. **Save and deploy.**
 
-### Option B — Reconstruct full source, then `wrangler deploy`
+### Option B · Reconstruct full source, then `wrangler deploy`
 
 The recovered source is at `portal/src/index.js` (pulled from the live worker).
 Lines 1-879 are bundler polyfills you can delete; the real code starts at the
@@ -58,7 +58,7 @@ first `// src/<module>.js` marker.
 3. Add the import + dispatcher hook to `index.js` as in Option A step 5.
 4. `wrangler deploy` from `portal/`.
 
-### Option C — Treat the bundle as a single source file
+### Option C · Treat the bundle as a single source file
 
 If splitting is too fiddly, just paste the contents of `mockups.js` and
 `blueprint.js` directly at the bottom of the recovered `index.js` (above the
@@ -86,7 +86,7 @@ Admin (Bearer ADMIN_TOKEN):
 | GET    | `/api/admin/mockups/<id>/comments`                      | List comments                    |
 | POST   | `/api/admin/mockups/<id>/ship`                          | Mark shipped + create Pages project |
 
-## Admin SPA — minimum changes
+## Admin SPA · minimum changes
 
 The portal's admin panel is a React SPA in `frontend.js`. To expose the new
 routes you'll add a small "Mockups" panel inside the existing client detail
@@ -132,7 +132,7 @@ client pays via Wompi
 ## Why we did it this way
 
 The standalone `engine/` folder built earlier in the session duplicated the
-portal's payments + intake + auth — separate D1, separate R2, separate Wompi
+portal's payments + intake + auth · separate D1, separate R2, separate Wompi
 secrets. Two checkout systems would have been a refund/chargeback bait. The
 graft keeps payments and customers in one database and adds only what the
 portal genuinely lacked: the mockup generator, the share-link viewer, and the

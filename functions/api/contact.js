@@ -3,11 +3,11 @@
 // to the PymeWebPro Portal so it shows up in /admin/leads.
 //
 // Required environment variable (set in Cloudflare Pages → Settings → Environment variables):
-//   RESEND_API_KEY   — from resend.com (free tier covers 3,000 emails/mo)
+//   RESEND_API_KEY   · from resend.com (free tier covers 3,000 emails/mo)
 // Optional:
-//   ADMIN_EMAIL      — defaults to hello@pymewebpro.com
-//   FROM_EMAIL       — defaults to "PymeWebPro <noreply@pymewebpro.com>"
-//   PORTAL_URL       — defaults to https://portal.pymewebpro.com
+//   ADMIN_EMAIL      · defaults to hello@pymewebpro.com
+//   FROM_EMAIL       · defaults to "PymeWebPro <noreply@pymewebpro.com>"
+//   PORTAL_URL       · defaults to https://portal.pymewebpro.com
 
 const escape = (s) =>
   String(s ?? "")
@@ -43,7 +43,7 @@ const isFormPost = (req) => {
   );
 };
 
-// Build a Response that either redirects (for native form posts — Post-Redirect-Get
+// Build a Response that either redirects (for native form posts · Post-Redirect-Get
 // so a reload doesn't resubmit) or returns JSON (for JS fetch).
 const respond = (request, formMode, jsonBody, redirectTo, status = 200) => {
   if (formMode) {
@@ -78,7 +78,7 @@ export async function onRequestPost(context) {
     );
   }
 
-  // Honeypot — bots auto-fill any field they see. If the hidden 'website'
+  // Honeypot · bots auto-fill any field they see. If the hidden 'website'
   // field has any value, silently 200 without sending or storing anything.
   if (data.website || data.url_field) {
     return respond(request, formMode, { success: true }, "/gracias.html");
@@ -199,7 +199,7 @@ export async function onRequestPost(context) {
         leadId = portalData.lead_id || null;
       }
     } catch (err) {
-      // Don't fail the user request if the portal forward fails — they already
+      // Don't fail the user request if the portal forward fails · they already
       // got their auto-confirmation and Mike already got the lead email.
       console.error("Portal lead forward failed:", err.message);
     }

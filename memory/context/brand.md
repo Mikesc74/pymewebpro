@@ -67,11 +67,11 @@ Per-client brand systems live in `memory/projects/<slug>.md`.
 ## Visual references (mood)
 
 When in doubt, look at:
-- Linear (linear.app) — tightest type, most restrained
-- Vercel (vercel.com) — geometric sans + monospace
-- Stripe (stripe.com) — gradients done well
-- Cal.com — clean SMB-friendly
-- Brookfield — corporate gravitas (when needed)
+- Linear (linear.app) · tightest type, most restrained
+- Vercel (vercel.com) · geometric sans + monospace
+- Stripe (stripe.com) · gradients done well
+- Cal.com · clean SMB-friendly
+- Brookfield · corporate gravitas (when needed)
 
 ## Common UI patterns we use
 
@@ -129,7 +129,7 @@ Other AI tells to avoid: "delve", "tapestry", "navigate" (metaphorical), "in the
 
 ## Hard rule · No mobile horizontal-scroll
 
-Every site MUST set `overflow-x: hidden` on **both `html` and `body`**, plus `max-width: 100%` on `html`. Body alone is not enough — sticky-positioned elements (typical for our headers) break out of body's overflow context and cause horizontal scrolling on mobile.
+Every site MUST set `overflow-x: hidden` on **both `html` and `body`**, plus `max-width: 100%` on `html`. Body alone is not enough · sticky-positioned elements (typical for our headers) break out of body's overflow context and cause horizontal scrolling on mobile.
 
 Required CSS at the top of every site's `<style>` block:
 
@@ -146,27 +146,27 @@ body {
 }
 ```
 
-**This was a real production bug** (May 2026) — six client mockups shipped with mobile horizontal-scroll because we only had it on body. Don't repeat it.
+**This was a real production bug** (May 2026) · six client mockups shipped with mobile horizontal-scroll because we only had it on body. Don't repeat it.
 
 ## Hard rule · No third-party screenshot services on client sites
 
 **Never** use thum.io, urlbox, screenshotmachine, microlink, or any other "give us a URL, we'll return a PNG" service in a site we're shipping to a client (or to mockups.pymewebpro.com).
 
-**Why:** They paywall, rate-limit, or shut down. When that happens, every site referencing them shows a "Image not authorized — please sign up for a paid account" placeholder where the client's hero or portfolio thumbnail should be. Catastrophic for credibility.
+**Why:** They paywall, rate-limit, or shut down. When that happens, every site referencing them shows a "Image not authorized · please sign up for a paid account" placeholder where the client's hero or portfolio thumbnail should be. Catastrophic for credibility.
 
 **What to use instead:**
-- **Manual screenshots** — take once, base64-embed into HTML or save as static asset in `manual-mockups/<slug>/photos/`. One-time effort, zero ongoing cost, works forever.
-- **Inline CSS/SVG mockups** — for product UIs (like Schedulator's schedule grid), build a stylized HTML representation. Often looks better than a screenshot anyway because it stays sharp at any size and matches the surrounding design system.
-- **Brand-colored gradient cards with text** — for portfolio thumbnails when you don't have screenshots yet. The PymeWebPro CA portfolio uses this pattern: dark/light gradient + brand wordmark + tagline.
-- **Cloudflare Browser Rendering API** — if we ever need on-demand screenshots in production, build it on the existing Workers stack, cache to R2. We own the pipeline.
+- **Manual screenshots** · take once, base64-embed into HTML or save as static asset in `manual-mockups/<slug>/photos/`. One-time effort, zero ongoing cost, works forever.
+- **Inline CSS/SVG mockups** · for product UIs (like Schedulator's schedule grid), build a stylized HTML representation. Often looks better than a screenshot anyway because it stays sharp at any size and matches the surrounding design system.
+- **Brand-colored gradient cards with text** · for portfolio thumbnails when you don't have screenshots yet. The PymeWebPro CA portfolio uses this pattern: dark/light gradient + brand wordmark + tagline.
+- **Cloudflare Browser Rendering API** · if we ever need on-demand screenshots in production, build it on the existing Workers stack, cache to R2. We own the pipeline.
 
-**This rule has bitten us once already** (May 2026, thum.io paywalled the Schedulator demo URL and the PymeWebPro CA portfolio thumbnails — every card showed "Image not authorized"). Don't repeat it.
+**This rule has bitten us once already** (May 2026, thum.io paywalled the Schedulator demo URL and the PymeWebPro CA portfolio thumbnails · every card showed "Image not authorized"). Don't repeat it.
 
-## "Why we cost less" — the conversion paragraph
+## "Why we cost less" · the conversion paragraph
 
 Always include three pillars on any pitch site:
-1. **Geography** — Canadian-led. Built in Medellín. Real, structural cost advantage.
-2. **Tooling** — Anthropic AI as design partner. Capability still novel in 2026.
-3. **Stack** — No WordPress. No subscriptions. Smaller cost base, smaller invoice.
+1. **Geography** · Canadian-led. Built in Medellín. Real, structural cost advantage.
+2. **Tooling** · Anthropic AI as design partner. Capability still novel in 2026.
+3. **Stack** · No WordPress. No subscriptions. Smaller cost base, smaller invoice.
 
 This is the conversion driver on the PymeWebPro CA site. Don't bury it; put it in the top half.

@@ -1,4 +1,4 @@
-// functions/api/lead.js — DEPRECATED.
+// functions/api/lead.js · DEPRECATED.
 //
 // The v4 page now POSTs lead submissions directly to the portal worker at
 // https://portal.pymewebpro.com/api/leads, which handles validation, D1

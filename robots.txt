@@ -1,4 +1,4 @@
-# PymeWebPro — robots.txt
+# PymeWebPro · robots.txt
 # Marketing site is fully indexable. Crawlers will see the canonical
 # URLs in the sitemap; landing pages flagged for noindex (vertical ×
 # city pattern) declare that via meta robots in their <head>.

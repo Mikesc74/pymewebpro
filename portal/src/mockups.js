@@ -1,4 +1,4 @@
-// mockups.js — manual mockup uploads, share links, comments, and ship-to-Pages.
+// mockups.js · manual mockup uploads, share links, comments, and ship-to-Pages.
 //
 // As of May 2026, mockups are NO LONGER auto-generated. Mike builds sites by
 // hand in Cowork and uploads the rendered HTML + assets through the admin UI.
@@ -11,15 +11,15 @@
 // custom-domain attach, Email Routing, screenshot capture).
 //
 // R2 layout for manual mockups:
-//   manual/<clientId>/<mockupId>/index.html   — required
-//   manual/<clientId>/<mockupId>/<file>        — optional sibling files
+//   manual/<clientId>/<mockupId>/index.html   · required
+//   manual/<clientId>/<mockupId>/<file>        · optional sibling files
 //
-// Legacy auto-gen mockups still serve fine — their html_r2_key starts with
+// Legacy auto-gen mockups still serve fine · their html_r2_key starts with
 // `mockups/...` and assets live at `<prefix>/asset/<name>`. The previewAsset
 // route handles both layouts.
 
 import { renderRobots, renderSitemap } from "./legal.js";
-// Admin AI chat removed — no Anthropic-in-the-portal. All build work happens in Cowork now.
+// Admin AI chat removed · no Anthropic-in-the-portal. All build work happens in Cowork now.
 // import { handleAdminChat } from "./admin-chat.js";  // archived → src/_archived/admin-chat.js
 import { MANUAL_MOCKUPS } from "./manual-mockups.js";
 import { handleEspacioDentalChat } from "./espacio-dental-chat.js";
@@ -34,11 +34,11 @@ export async function handleMockups(req, env, ctx, helpers) {
   const p = url.pathname;
   const m = req.method;
 
-  // Custom-domain serving — if the request Host matches a custom_domain, route to that client's site
+  // Custom-domain serving · if the request Host matches a custom_domain, route to that client's site
   const reqHost = (req.headers.get("host") || "").toLowerCase().replace(/^www\./, "");
   const knownHosts = ["portal.pymewebpro.com", "pymewebpro.com"];
 
-  // ── inviersol.com — production custom domain for the inviersol mockup ────
+  // ── inviersol.com · production custom domain for the inviersol mockup ────
   // Serves MANUAL_MOCKUPS.inviersol at the root. Form posts to
   // /api/inviersol/contact which forwards to inviersol@hotmail.com via Resend.
   if (reqHost === "inviersol.com") {
@@ -84,7 +84,7 @@ export async function handleMockups(req, env, ctx, helpers) {
   // Custom-built one-off marketing sites (e.g. Schedulator) that bypass the
   // PYME auto-generator. Keyed by URL slug; HTML is fully self-contained and
   // lives in src/manual-mockups.js. New mockups can be added by appending to
-  // the MANUAL_MOCKUPS map — no other code changes required.
+  // the MANUAL_MOCKUPS map · no other code changes required.
   if (m === "GET" && reqHost === "mockups.pymewebpro.com") {
     const slugMatch = p.match(/^\/([a-z0-9-]+)\/?$/);
     const slug = slugMatch ? slugMatch[1] : null;
@@ -104,7 +104,7 @@ export async function handleMockups(req, env, ctx, helpers) {
     return new Response("Mockup not found", { status: 404 });
   }
 
-  // Tenant subdomain: <slug>.sites.pymewebpro.com — every client auto-published here
+  // Tenant subdomain: <slug>.sites.pymewebpro.com · every client auto-published here
   const sitesMatch = reqHost.match(/^([a-z0-9-]+)\.sites\.pymewebpro\.com$/);
   if (m === "GET" && sitesMatch) {
     const slug = sitesMatch[1];
@@ -141,7 +141,7 @@ export async function handleMockups(req, env, ctx, helpers) {
   if (mt && m === "POST") return newsletterSubscribe(env, helpers, mt[1], req);
   if (mt && m === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders() });
 
-  // Public lead-form endpoint — every customer site posts here; we forward to client's email
+  // Public lead-form endpoint · every customer site posts here; we forward to client's email
   mt = p.match(/^\/api\/lead\/([A-Za-z0-9-]+)$/);
   if (mt && m === "POST") return leadFormSubmit(env, helpers, mt[1], req);
   if (mt && m === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders() });
@@ -163,7 +163,7 @@ export async function handleMockups(req, env, ctx, helpers) {
   if (mt && m === "GET") return previewAsset(env, mt[1], decodeURIComponent(mt[2]));
   mt = p.match(/^\/api\/m\/([A-Za-z0-9_-]+)\/comment$/);
   if (mt && m === "POST") return previewComment(env, helpers, mt[1], req);
-  // Generic preview file (legal pages, etc) — must be last among /m/ routes
+  // Generic preview file (legal pages, etc) · must be last among /m/ routes
   mt = p.match(/^\/m\/([A-Za-z0-9_-]+)\/(.+)$/);
   if (mt && m === "GET") return previewFile(env, mt[1], mt[2]);
 
@@ -184,7 +184,7 @@ export async function handleMockups(req, env, ctx, helpers) {
     if (!helpers.isAdmin(req, env)) return helpers.json({ error: "unauthorized" }, 401);
 
     mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/mockups$/);
-    // POST (auto-generate) was removed in the May 2026 refactor — manual uploads
+    // POST (auto-generate) was removed in the May 2026 refactor · manual uploads
     // are the new path. Mocking this with 410 Gone so any stale clients (browser
     // tabs, scripts) get a clear signal instead of a confusing 404.
     if (mt && m === "POST") return helpers.json({ error: "auto_generation_removed", msg: "Auto-generation is no longer supported. Upload mockup files via POST /api/admin/clients/:id/manual-mockup/upload + /finalize." }, 410);
@@ -245,7 +245,7 @@ export async function handleMockups(req, env, ctx, helpers) {
     mt = p.match(/^\/api\/admin\/clients\/([A-Za-z0-9-]+)\/email-forwarding$/);
     if (mt && m === "POST") return enableEmailForwarding(env, helpers, mt[1], req);
 
-    // Admin AI chat endpoint removed — return 410 Gone for any old SPA still calling it
+    // Admin AI chat endpoint removed · return 410 Gone for any old SPA still calling it
     if (/^\/api\/admin\/clients\/[A-Za-z0-9-]+\/ai-chat$/.test(p)) {
       return helpers.json({ error: "removed", msg: "AI chat moved out of the portal. All site building now happens in Cowork." }, 410);
     }
@@ -260,8 +260,8 @@ export async function handleMockups(req, env, ctx, helpers) {
 // files (CSS, JS, images, fonts, sub-pages) through the admin SPA.
 //
 // Two-step flow so the client SPA can stream individual files via fetch():
-//   1) POST /upload — one file per call, identified by X-Mockup-Id + X-Filename
-//   2) POST /finalize — once all files are in R2, create the mockups row
+//   1) POST /upload · one file per call, identified by X-Mockup-Id + X-Filename
+//   2) POST /finalize · once all files are in R2, create the mockups row
 //
 // R2 layout:  manual/<clientId>/<mockupId>/<filename>
 // Mockup row: blueprint_key='manual', html_r2_key='manual/<...>/index.html'
@@ -363,7 +363,7 @@ async function manualMockupFinalize(env, helpers, clientId, req) {
   `).bind(mockupId, clientId, version, indexKey).run();
 
   // Auto-mark the deliverables that an uploaded mockup necessarily implies.
-  // Mike still owns whether each one is *actually* satisfied by the upload —
+  // Mike still owns whether each one is *actually* satisfied by the upload,
   // these are reasonable defaults so the deliverables panel doesn't lie.
   const autoKeys = [
     "design_brand_colors", "design_typography",
@@ -386,7 +386,7 @@ async function manualMockupDeleteFile(env, helpers, clientId, mockupId, filename
   return helpers.json({ ok: true, key });
 }
 
-// ─── Legacy auto-gen entry points (REMOVED — see src/_archived/auto-gen.js) ─
+// ─── Legacy auto-gen entry points (REMOVED · see src/_archived/auto-gen.js) ─
 // generateForClient / regenerate / callClaude / translateToEnglish /
 // parseTestimonials / parseFaqs / setClientBlueprint were here.
 // They are NOT imported anywhere now; the dispatcher returns 410 Gone for
@@ -440,7 +440,7 @@ async function loadShare(env, token) {
 // Renders an HTML wrapper with desktop/tablet/mobile viewport switcher buttons.
 // The actual mockup loads inside an iframe at the selected width.
 async function previewFrame(env, token) {
-  // Verify the token is still valid before rendering the chrome — avoids the
+  // Verify the token is still valid before rendering the chrome · avoids the
   // "frame loads but iframe shows 'Enlace caducado'" confusion.
   const link = await loadShare(env, token);
   if (!link) return new Response("Enlace caducado o no válido", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
@@ -466,7 +466,7 @@ async function previewFrame(env, token) {
   .stage{position:absolute;inset:60px 0 0 0;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:1.5rem;background:repeating-linear-gradient(45deg,rgba(255,255,255,.015) 0 2px,transparent 2px 12px)}
   .frame{background:#fff;border-radius:8px;box-shadow:0 12px 50px rgba(0,0,0,.4);transition:width .35s cubic-bezier(.4,0,.2,1),height .35s cubic-bezier(.4,0,.2,1);overflow:hidden;border:1px solid rgba(255,255,255,.06)}
   .frame iframe{width:100%;height:100%;border:0;display:block;background:#fff}
-  /* Sizes match common device viewports — frames keep their TRUE width so the
+  /* Sizes match common device viewports · frames keep their TRUE width so the
      site's media queries fire as they would on a real device. The .stage has
      overflow:auto, so admins on narrow laptops can horizontally scroll to see
      the full desktop layout instead of squashing it into mobile. */
@@ -527,7 +527,7 @@ async function previewIndex(env, helpers, token, language) {
   if (!m) return new Response("Mockup no encontrado", { status: 404 });
   let key = m.html_r2_key;
   if (language === "en") {
-    // EN at <prefix>/en/index.html — derive prefix from the stored ES key
+    // EN at <prefix>/en/index.html · derive prefix from the stored ES key
     const prefix = key.replace(/\/index\.html$/, "");
     key = `${prefix}/en/index.html`;
   }
@@ -649,12 +649,12 @@ async function preflightMockup(env, helpers, mockupId) {
   if (isManual) {
     const obj = await env.ASSETS.get(m.html_r2_key);
     if (!obj) {
-      errors.push({ code: "html_missing", msg: "index.html missing from R2 — re-upload before publishing." });
+      errors.push({ code: "html_missing", msg: "index.html missing from R2 · re-upload before publishing." });
     } else {
       const html = await obj.text();
-      if (!/<h1\b/i.test(html)) warnings.push({ code: "no_h1", msg: "No <h1> tag — bad for SEO." });
+      if (!/<h1\b/i.test(html)) warnings.push({ code: "no_h1", msg: "No <h1> tag · bad for SEO." });
       if (!/<meta\s+name=["']description["']/i.test(html)) warnings.push({ code: "no_meta_desc", msg: "Missing meta description tag." });
-      if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "No og:image — link previews on Slack/WhatsApp/Facebook will look bare." });
+      if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "No og:image · link previews on Slack/WhatsApp/Facebook will look bare." });
       if (/src=["']http:\/\//i.test(html) || /href=["']http:\/\/(?!schema\.org)/i.test(html)) {
         warnings.push({ code: "mixed_content", msg: "http:// URLs detected in the HTML (mixed-content risk on https sites)." });
       }
@@ -682,14 +682,14 @@ async function preflightMockup(env, helpers, mockupId) {
   const growth = intake.growth || {};
 
   if (!biz.bizName) errors.push({ code: "no_biz_name", msg: "Falta el nombre del negocio." });
-  if (!biz.tagline && !biz.whatYouDo) warnings.push({ code: "no_tagline", msg: "Sin tagline ni descripción — la página se verá vacía." });
-  if (!contact.phone && !contact.email && !contact.whatsapp) errors.push({ code: "no_contact", msg: "Sin teléfono, email ni WhatsApp — el sitio no tendrá manera de contactar." });
+  if (!biz.tagline && !biz.whatYouDo) warnings.push({ code: "no_tagline", msg: "Sin tagline ni descripción · la página se verá vacía." });
+  if (!contact.phone && !contact.email && !contact.whatsapp) errors.push({ code: "no_contact", msg: "Sin teléfono, email ni WhatsApp · el sitio no tendrá manera de contactar." });
 
-  // NIT / Cámara — required for full Ley 1581 compliance on the customer site
-  if (!biz.nit) warnings.push({ code: "no_nit", msg: "Sin NIT/cédula — la política de privacidad mostrará '[NIT no proporcionado]' y el footer no incluirá identificación legal." });
+  // NIT / Cámara · required for full Ley 1581 compliance on the customer site
+  if (!biz.nit) warnings.push({ code: "no_nit", msg: "Sin NIT/cédula · la política de privacidad mostrará '[NIT no proporcionado]' y el footer no incluirá identificación legal." });
 
   const services = String(biz.whatYouDo || "").split(/[\n,]+/).filter(s => s.trim());
-  if (services.length < 3) warnings.push({ code: "few_services", msg: `Solo ${services.length} servicios listados — recomendado mínimo 3.` });
+  if (services.length < 3) warnings.push({ code: "few_services", msg: `Solo ${services.length} servicios listados · recomendado mínimo 3.` });
 
   // Color contrast (WCAG AA ≥ 4.5:1 for normal text)
   // Pull whatever colors the latest mockup decided on
@@ -698,35 +698,35 @@ async function preflightMockup(env, helpers, mockupId) {
     const promptObj = lastMockup?.prompt ? JSON.parse(lastMockup.prompt) : null;
     if (promptObj && promptObj.primary && promptObj.bg) {
       const cr = contrastRatio(promptObj.primary, promptObj.bg);
-      if (cr < 3) errors.push({ code: "low_contrast", msg: `Contraste primary↔bg = ${cr.toFixed(2)}:1 — texto ilegible (WCAG AA exige ≥ 4.5:1).` });
-      else if (cr < 4.5) warnings.push({ code: "borderline_contrast", msg: `Contraste primary↔bg = ${cr.toFixed(2)}:1 — pasa WCAG AA Large pero no normal text. Considere oscurecer primary o aclarar bg.` });
+      if (cr < 3) errors.push({ code: "low_contrast", msg: `Contraste primary↔bg = ${cr.toFixed(2)}:1 · texto ilegible (WCAG AA exige ≥ 4.5:1).` });
+      else if (cr < 4.5) warnings.push({ code: "borderline_contrast", msg: `Contraste primary↔bg = ${cr.toFixed(2)}:1 · pasa WCAG AA Large pero no normal text. Considere oscurecer primary o aclarar bg.` });
     }
     if (promptObj && promptObj.ink && promptObj.bg) {
       const cr = contrastRatio(promptObj.ink, promptObj.bg);
-      if (cr < 4.5) errors.push({ code: "low_contrast_text", msg: `Contraste ink↔bg = ${cr.toFixed(2)}:1 — texto principal ilegible (WCAG AA ≥ 4.5:1).` });
+      if (cr < 4.5) errors.push({ code: "low_contrast_text", msg: `Contraste ink↔bg = ${cr.toFixed(2)}:1 · texto principal ilegible (WCAG AA ≥ 4.5:1).` });
     }
-  } catch (_) { /* prompt JSON malformed — skip contrast check */ }
+  } catch (_) { /* prompt JSON malformed · skip contrast check */ }
 
-  // Trust signals — at least one social proof must exist or sales suffer
+  // Trust signals · at least one social proof must exist or sales suffer
   const testimonialsText = (intake.growth || {}).testimonials || "";
   const hasTestimonials = testimonialsText.split(/\r?\n/).filter(l => l.includes("|")).length > 0;
   if (!hasTestimonials && !cats.includes("photo")) {
-    warnings.push({ code: "no_social_proof", msg: "Sin testimonios ni fotos — el sitio carecerá de prueba social." });
+    warnings.push({ code: "no_social_proof", msg: "Sin testimonios ni fotos · el sitio carecerá de prueba social." });
   }
 
   // ── HTML checks (fetch the rendered ES mockup and inspect) ───────────────
   const obj = await env.ASSETS.get(m.html_r2_key);
   if (!obj) {
-    errors.push({ code: "html_missing", msg: "El HTML del mockup no está en R2 — regenere." });
+    errors.push({ code: "html_missing", msg: "El HTML del mockup no está en R2 · regenere." });
   } else {
     const html = await obj.text();
-    if (!/<h1\b/i.test(html)) errors.push({ code: "no_h1", msg: "No hay <h1> — mal para SEO." });
+    if (!/<h1\b/i.test(html)) errors.push({ code: "no_h1", msg: "No hay <h1> · mal para SEO." });
     if (!/<meta\s+name=["']description["']/i.test(html)) errors.push({ code: "no_meta_desc", msg: "Falta meta description." });
-    if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "Sin og:image — se verá feo en WhatsApp/Facebook." });
+    if (!/property=["']og:image["']/i.test(html)) warnings.push({ code: "no_og_image", msg: "Sin og:image · se verá feo en WhatsApp/Facebook." });
     // Imgs without alt
     const imgMatches = [...html.matchAll(/<img\b[^>]*>/gi)];
     const imgsNoAlt = imgMatches.filter(m => !/alt=/.test(m[0]) || /alt=["']\s*["']/.test(m[0]));
-    if (imgsNoAlt.length) warnings.push({ code: "imgs_no_alt", msg: `${imgsNoAlt.length} imagen(es) sin texto alt — accesibilidad y SEO.` });
+    if (imgsNoAlt.length) warnings.push({ code: "imgs_no_alt", msg: `${imgsNoAlt.length} imagen(es) sin texto alt · accesibilidad y SEO.` });
     // No mixed content
     if (/src=["']http:\/\//i.test(html) || /href=["']http:\/\/(?!schema\.org)/i.test(html)) {
       warnings.push({ code: "mixed_content", msg: "Hay URLs http:// (no https) en el HTML." });
@@ -744,13 +744,13 @@ async function preflightMockup(env, helpers, mockupId) {
     if (proFeatures === 0) {
       errors.push({ code: "no_pro_feature", msg: "Plan Crecimiento requiere al menos una de: reservas, PDF, newsletter, o catálogo WhatsApp." });
     }
-    if (!growth.ga4Id) warnings.push({ code: "no_ga4", msg: "Sin GA4 ID — no medirá tráfico." });
-    if (!growth.metaPixelId) warnings.push({ code: "no_pixel", msg: "Sin Meta Pixel — no medirá conversiones de Facebook/Instagram ads." });
+    if (!growth.ga4Id) warnings.push({ code: "no_ga4", msg: "Sin GA4 ID · no medirá tráfico." });
+    if (!growth.metaPixelId) warnings.push({ code: "no_pixel", msg: "Sin Meta Pixel · no medirá conversiones de Facebook/Instagram ads." });
 
     if (growth.bilingual === "1") {
       const enKey = m.html_r2_key.replace(/\/index\.html$/, "/en/index.html");
       const enObj = await env.ASSETS.head(enKey).catch(() => null);
-      if (!enObj) errors.push({ code: "no_en_version", msg: "Versión bilingüe activada pero no hay /en/index.html — regenere." });
+      if (!enObj) errors.push({ code: "no_en_version", msg: "Versión bilingüe activada pero no hay /en/index.html · regenere." });
     }
   }
 
@@ -830,7 +830,7 @@ async function deleteR2Prefix(env, prefix) {
 }
 
 // Push a draft mockup to the client portal (gates the iframe via shipped_at).
-// This does NOT publish the production site — that's still shipMockup/launch.
+// This does NOT publish the production site · that's still shipMockup/launch.
 // Sends "Tu mockup está listo" email via Resend (bilingual for Crecimiento).
 async function pushMockupToClient(env, helpers, mockupId) {
   const m = await env.DB.prepare("SELECT id, client_id, version, shipped_at FROM mockups WHERE id = ?")
@@ -852,7 +852,7 @@ async function pushMockupToClient(env, helpers, mockupId) {
   // (Project portal auto-mints its own share link on first read; no need here.)
   const portalUrl = `${env.APP_URL || "https://portal.pymewebpro.com"}/`;
 
-  // Notify client — bilingual for Crecimiento clients, ES otherwise
+  // Notify client · bilingual for Crecimiento clients, ES otherwise
   const isPro = client.plan === "pro" || client.plan === "crecimiento" || client.plan === "growth";
   const isEn = client.language === "en";
   const subject = isEn
@@ -863,14 +863,14 @@ async function pushMockupToClient(env, helpers, mockupId) {
     <p style="line-height:1.6;color:#444">Hola${client.business_name ? ` <strong>${escapeHtml(client.business_name)}</strong>` : ""}, ya puede revisar el primer diseño de su sitio en su Portal del Proyecto.</p>
     <p style="margin:24px 0"><a href="${portalUrl}" style="display:inline-block;background:#0a0e27;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600">Ver mi mockup →</a></p>
     <p style="line-height:1.6;color:#666;font-size:.92rem">Desde el portal puede pedir cambios por chat o aprobar el diseño. Tiene <strong>${isPro ? 5 : 2} rondas de cambios</strong> incluidas en su plan.</p>
-    <p style="line-height:1.6;color:#999;font-size:.85rem;margin-top:32px;border-top:1px solid #eee;padding-top:16px">Si no abrió este correo, puede ignorarlo. — PymeWebPro</p>
+    <p style="line-height:1.6;color:#999;font-size:.85rem;margin-top:32px;border-top:1px solid #eee;padding-top:16px">Si no abrió este correo, puede ignorarlo. · PymeWebPro</p>
   </div>`;
   const htmlEn = `<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:540px;margin:0 auto;padding:24px;color:#1a1a1a">
     <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:1.8rem;margin:0 0 16px">Your mockup is ready</h1>
     <p style="line-height:1.6;color:#444">Hi${client.business_name ? ` <strong>${escapeHtml(client.business_name)}</strong>` : ""}, the first design of your site is ready to review in your Project Portal.</p>
     <p style="margin:24px 0"><a href="${portalUrl}" style="display:inline-block;background:#0a0e27;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600">View my mockup →</a></p>
     <p style="line-height:1.6;color:#666;font-size:.92rem">From the portal you can request changes via chat or approve the design. You have <strong>${isPro ? 5 : 2} revision rounds</strong> included in your plan.</p>
-    <p style="line-height:1.6;color:#999;font-size:.85rem;margin-top:32px;border-top:1px solid #eee;padding-top:16px">If you didn't expect this email, you can ignore it. — PymeWebPro</p>
+    <p style="line-height:1.6;color:#999;font-size:.85rem;margin-top:32px;border-top:1px solid #eee;padding-top:16px">If you didn't expect this email, you can ignore it. · PymeWebPro</p>
   </div>`;
   const html = isEn ? htmlEn : htmlEs;
 
@@ -999,7 +999,7 @@ async function shipMockup(env, helpers, mockupId, req) {
   return helpers.json({ ok: true, slug, url: liveUrl, bilingual: isBilingual });
 }
 
-// Known scanner / exploit paths — never look these up in R2; cheap 404.
+// Known scanner / exploit paths · never look these up in R2; cheap 404.
 const SCANNER_PATTERNS = [
   /^\/wp-admin\b/i, /^\/wp-login\.php$/i, /^\/wp-content\b/i, /^\/wp-includes\b/i, /^\/xmlrpc\.php$/i,
   /^\/\.env(\.|$)/i, /^\/\.git\b/i, /^\/\.svn\b/i, /^\/\.htaccess$/i, /^\/\.aws\b/i, /^\/\.ssh\b/i,
@@ -1022,7 +1022,7 @@ function notFoundPage(slug, env) {
 // it into the admin panel. We:
 //   1. Save the mapping in live_sites.custom_domain
 //   2. If CLOUDFLARE_API_TOKEN is configured, attempt to add a Worker route on
-//      that zone so requests to <domain>/* hit this worker. Best-effort —
+//      that zone so requests to <domain>/* hit this worker. Best-effort,
 //      if it fails (e.g. zone not in this account, missing scopes), we still
 //      save the mapping; Mike can add the route manually in the dashboard.
 async function attachDomain(env, helpers, clientId, req) {
@@ -1040,13 +1040,13 @@ async function attachDomain(env, helpers, clientId, req) {
   ).bind(domain, clientId).first();
   if (conflict) return helpers.json({ error: "domain_taken", msg: "Ese dominio ya está asignado a otro cliente." }, 409);
 
-  // Save in live_sites (creates row if none — handles case of attaching domain before first ship)
+  // Save in live_sites (creates row if none · handles case of attaching domain before first ship)
   const existing = await env.DB.prepare("SELECT slug FROM live_sites WHERE client_id = ?").bind(clientId).first();
   if (existing) {
     await env.DB.prepare("UPDATE live_sites SET custom_domain = ?, updated_at = ? WHERE client_id = ?")
       .bind(domain, Math.floor(Date.now() / 1000), clientId).run();
   } else {
-    // No live site yet — store pending domain in client metadata so we can wire it on first ship.
+    // No live site yet · store pending domain in client metadata so we can wire it on first ship.
     // We'll create a placeholder live_sites row (slug = client uuid prefix) so the lookup works
     // for the eventual ship.
     const slug = `pending-${clientId.slice(0, 8)}`;
@@ -1090,7 +1090,7 @@ async function attachDomain(env, helpers, clientId, req) {
       }
       nameservers = zone.name_servers || zone.original_name_servers || null;
 
-      // 3) Add the Worker route (idempotent — code 10020 = "already exists" treated as success)
+      // 3) Add the Worker route (idempotent · code 10020 = "already exists" treated as success)
       const routeRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/workers/routes`, {
         method: "POST",
         headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" },
@@ -1100,7 +1100,7 @@ async function attachDomain(env, helpers, clientId, req) {
       const errCode = routeJson?.errors?.[0]?.code;
       if (routeJson.success || errCode === 10020) {
         // 4) Add a placeholder DNS record so the zone validates
-        // (root A record pointing at a Cloudflare anycast IP — proxied=true so Worker route catches the traffic)
+        // (root A record pointing at a Cloudflare anycast IP · proxied=true so Worker route catches the traffic)
         await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/dns_records`, {
           method: "POST",
           headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" },
@@ -1133,7 +1133,7 @@ async function attachDomain(env, helpers, clientId, req) {
 // Enables Email Routing on the client's zone and creates rule(s):
 //   <localPart>@<domain>  →  <forwardTo>
 // Multiple local parts supported via comma-separated string ("hola, info, ventas").
-// Cloudflare emails the destination address a verification link — the client (or you)
+// Cloudflare emails the destination address a verification link · the client (or you)
 // must click it before forwarding actually fires.
 async function enableEmailForwarding(env, helpers, clientId, req) {
   const body = await req.json().catch(() => ({}));
@@ -1171,7 +1171,7 @@ async function enableEmailForwarding(env, helpers, clientId, req) {
     if (!zone) return helpers.json({ error: "zone_not_found", msg: `No encontré la zona ${domain} en Cloudflare.` }, 404);
     log.push(`Zone found: ${zone.id}`);
 
-    // 2) Enable Email Routing on the zone (idempotent — code 1004 = already enabled)
+    // 2) Enable Email Routing on the zone (idempotent · code 1004 = already enabled)
     const enableRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/email/routing/enable`, {
       method: "POST", headers: cfHeaders,
     });
@@ -1182,14 +1182,14 @@ async function enableEmailForwarding(env, helpers, clientId, req) {
       log.push("Enable warning: " + (enableJson?.errors?.[0]?.message || "unknown"));
     }
 
-    // 3) Add MX/SPF DNS records (idempotent — Cloudflare API handles duplicates)
+    // 3) Add MX/SPF DNS records (idempotent · Cloudflare API handles duplicates)
     const dnsRes = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone.id}/email/routing/dns`, {
       method: "POST", headers: cfHeaders,
     });
     const dnsJson = await dnsRes.json();
     log.push(dnsJson.success ? "MX records added" : "MX warning: " + (dnsJson?.errors?.[0]?.message || ""));
 
-    // 4) Register the destination address — sends a verification email
+    // 4) Register the destination address · sends a verification email
     const destRes = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/email/routing/addresses`, {
       method: "POST", headers: cfHeaders,
       body: JSON.stringify({ email: forwardTo }),
@@ -1197,7 +1197,7 @@ async function enableEmailForwarding(env, helpers, clientId, req) {
     const destJson = await destRes.json();
     let destinationVerified = false;
     if (destJson.success) {
-      log.push(`Destination ${forwardTo} created — verification email sent`);
+      log.push(`Destination ${forwardTo} created · verification email sent`);
     } else if (destJson?.errors?.[0]?.code === 1003 /* already exists */) {
       log.push(`Destination ${forwardTo} already registered`);
       destinationVerified = true;
@@ -1244,12 +1244,12 @@ async function enableEmailForwarding(env, helpers, clientId, req) {
 }
 
 // Admin pastes raw CSS that gets injected at the END of <head> on every
-// rendered page for this client. Total visual control — overrides anything
+// rendered page for this client. Total visual control · overrides anything
 // the blueprint sets. Capped at 64KB to keep R2 / D1 sane.
 async function setClientAdminCss(env, helpers, clientId, req) {
   const body = await req.json().catch(() => ({}));
   const css = String(body.admin_css || "").slice(0, 64 * 1024);
-  // Strip any </style> sequences — would break the wrapping <style> tag.
+  // Strip any </style> sequences · would break the wrapping <style> tag.
   // Also strip any <script> tags as a defense-in-depth measure (CSS shouldn't
   // contain scripts, but admin-pasted content shouldn't be a vector either).
   const safe = css.replace(/<\/style>/gi, "").replace(/<script[\s\S]*?<\/script>/gi, "");
@@ -1261,7 +1261,7 @@ async function setClientAdminCss(env, helpers, clientId, req) {
 async function detachDomain(env, helpers, clientId) {
   await env.DB.prepare("UPDATE live_sites SET custom_domain = NULL, updated_at = ? WHERE client_id = ?")
     .bind(Math.floor(Date.now() / 1000), clientId).run();
-  // Note: we deliberately don't auto-remove the Cloudflare route — Mike can do that manually
+  // Note: we deliberately don't auto-remove the Cloudflare route · Mike can do that manually
   // if he wants to fully release the domain. Detach just stops us routing requests on it.
   return helpers.json({ ok: true, msg: "Domain unbound. Remove the Worker route in Cloudflare manually if you want to fully release it." });
 }
@@ -1298,7 +1298,7 @@ function disabledPage(reason) {
 async function serveLiveSite(env, slug, path) {
   let p = path || "/";
 
-  // Cheap 404 for scanner traffic — no DB, no R2 reads
+  // Cheap 404 for scanner traffic · no DB, no R2 reads
   for (const re of SCANNER_PATTERNS) {
     if (re.test(p)) {
       return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8", ...siteHeaders() } });
@@ -1312,7 +1312,7 @@ async function serveLiveSite(env, slug, path) {
       status: 404, headers: { "content-type": "text/html; charset=utf-8", ...siteHeaders() },
     });
   }
-  // Refund / take-down — site disabled
+  // Refund / take-down · site disabled
   if (site.disabled_at) {
     return new Response(disabledPage(site.disable_reason || "unavailable"), {
       status: 410, // Gone
@@ -1340,7 +1340,7 @@ async function serveLiveSite(env, slug, path) {
   const key = `${site.r2_prefix}${p.replace(/^\//, "")}`;
   const obj = await env.ASSETS.get(key);
   if (!obj) {
-    // Real 404 — styled page, with proper status (no soft-404)
+    // Real 404 · styled page, with proper status (no soft-404)
     return new Response(notFoundPage(slug, env), {
       status: 404, headers: { "content-type": "text/html; charset=utf-8", ...siteHeaders() },
     });
@@ -1351,7 +1351,7 @@ async function serveLiveSite(env, slug, path) {
     "cache-control": ct.startsWith("text/html") ? "public, max-age=300" : "public, max-age=86400",
     ...siteHeaders(),
   };
-  // Canonical Link header (HTML pages only) — search engines respect this
+  // Canonical Link header (HTML pages only) · search engines respect this
   if (ct.startsWith("text/html")) {
     const canonical = `${baseUrl}${p === "/index.html" ? "/" : p}`;
     headers["link"] = `<${canonical}>; rel="canonical"`;
@@ -1436,7 +1436,7 @@ function __cwToggle(){
   p.style.display = p.style.display==='block'?'none':'block';
   if(p.style.display==='block'){
     const sel=document.getElementById('__cw_section');
-    sel.innerHTML='<option value="">— general —</option>';
+    sel.innerHTML='<option value="">· general ·</option>';
     document.querySelectorAll('[data-section]').forEach(el=>{
       const o=document.createElement('option');o.value=el.dataset.section;o.textContent=el.dataset.section;
       sel.appendChild(o);
@@ -1510,11 +1510,11 @@ async function newsletterSubscribe(env, helpers, clientId, req) {
     body = Object.fromEntries(fd.entries());
   }
 
-  // Honeypot — bots usually fill this hidden field. Silent 200, no DB write.
+  // Honeypot · bots usually fill this hidden field. Silent 200, no DB write.
   if (body.company_url) {
     return new Response(JSON.stringify({ ok: true }), { headers: { "content-type": "application/json", ...cors } });
   }
-  // Habeas Data consent required (Ley 1581 — required to process visitor emails for marketing)
+  // Habeas Data consent required (Ley 1581 · required to process visitor emails for marketing)
   if (body.habeas_data_accepted !== true && body.habeas_data_accepted !== "true" && body.habeas_data_accepted !== "on") {
     return new Response(JSON.stringify({ error: "habeas_data_required" }), { status: 400, headers: { "content-type": "application/json", ...cors } });
   }
@@ -1537,7 +1537,7 @@ async function newsletterSubscribe(env, helpers, clientId, req) {
       VALUES (?, ?, ?, ?, 'site_form', ?, ?, ?)
     `).bind(id, clientId, email, name || null, ipHash, now, consentVersion).run();
   } catch (e) {
-    // Most likely UNIQUE(client_id, email) collision — silently OK
+    // Most likely UNIQUE(client_id, email) collision · silently OK
     return new Response(JSON.stringify({ ok: true, already: true }), { headers: { "content-type": "application/json", ...cors } });
   }
 
@@ -1553,7 +1553,7 @@ async function newsletterSubscribe(env, helpers, clientId, req) {
         html: `<p>Hola,</p><p>Acaba de suscribirse alguien al newsletter de su sitio:</p>
                <p><strong>${name ? helpers.escapeHtml(name) + " · " : ""}${helpers.escapeHtml(email)}</strong></p>
                <p>Esta persona aceptó recibir sus comunicaciones.</p>
-               <p style="color:#666;font-size:.85rem">— PymeWebPro</p>`,
+               <p style="color:#666;font-size:.85rem">· PymeWebPro</p>`,
       }),
     }).catch(() => {});
   }
@@ -1625,7 +1625,7 @@ async function leadFormSubmit(env, helpers, clientId, req) {
             ${source ? `<tr><td style="padding:6px 0;color:#666">Página:</td><td style="padding:6px 0;color:#999;font-size:.85rem">${helpers.escapeHtml(source)}</td></tr>` : ""}
           </table>
           <div style="background:#f7f5f0;border-left:3px solid #fbbf24;padding:14px 18px;border-radius:4px;white-space:pre-wrap;line-height:1.5">${helpers.escapeHtml(message)}</div>
-          <p style="margin:24px 0 0;color:#999;font-size:.82rem">Puede responder directamente a este correo — irá al lead.<br>— PymeWebPro</p>
+          <p style="margin:24px 0 0;color:#999;font-size:.82rem">Puede responder directamente a este correo · irá al lead.<br>· PymeWebPro</p>
         </div>`,
       }),
     }).catch(() => {});

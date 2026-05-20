@@ -2845,7 +2845,7 @@ function renderToday() {
       renderTodayBulkBar();
     };
   });
-  // Business name cell click — open card.
+  // Business name cell click · open card.
   wrap.querySelectorAll("td.td-biz[data-type]").forEach((td) => {
     td.onclick = () => openCard(td.dataset.type, td.dataset.id);
   });

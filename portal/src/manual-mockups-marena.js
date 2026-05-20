@@ -1,4 +1,4 @@
-// manual-mockups-marena.js — auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-marena.js · auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/marena/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["marena"].

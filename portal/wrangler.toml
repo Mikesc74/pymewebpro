@@ -3,8 +3,8 @@ main = "src/index.js"
 compatibility_date = "2026-04-01"
 account_id = "c98561adefb602704d4e7a6a1b7e7597"
 
-# Custom domain route (already configured on the live Worker — keep here for parity)
-# *.sites.pymewebpro.com is the tenant namespace — every client site auto-publishes
+# Custom domain route (already configured on the live Worker · keep here for parity)
+# *.sites.pymewebpro.com is the tenant namespace · every client site auto-publishes
 # to <slug>.sites.pymewebpro.com with no per-client DNS work. Requires a wildcard
 # DNS record (CNAME *.sites pymewebpro-portal.workers.dev) configured one-time on the zone.
 routes = [
@@ -76,7 +76,7 @@ COS_EMAIL_REPLY_TO = "mike@mikec.pro"
 TASKS_PORTAL_URL       = "https://tasks.colguides.com"
 TASKS_ACCESS_CLIENT_ID = "ebf6ce7ef81ee9f7cb28774011630ce4.access"
 
-# --- Secrets (NOT stored here — set via wrangler) -------------------------
+# --- Secrets (NOT stored here · set via wrangler) -------------------------
 # Run these once after `wrangler login`:
 #
 #   wrangler secret put ADMIN_TOKEN          --name pymewebpro-portal
@@ -85,5 +85,5 @@ TASKS_ACCESS_CLIENT_ID = "ebf6ce7ef81ee9f7cb28774011630ce4.access"
 #   wrangler secret put WOMPI_INTEGRITY      --name pymewebpro-portal
 #   wrangler secret put WOMPI_EVENTS         --name pymewebpro-portal
 #
-# Values are already set on the live Worker — view/copy them from
+# Values are already set on the live Worker · view/copy them from
 # Cloudflare dashboard → Workers & Pages → pymewebpro-portal → Settings → Variables.

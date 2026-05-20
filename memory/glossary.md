@@ -10,8 +10,8 @@ Workplace shorthand, internal terms, and project codenames.
 | **the worker** | The single Cloudflare Worker `pymewebpro-portal`. Handles everything: portal SPA, admin, intake, manual mockups, customer sites under `*.sites.pymewebpro.com`. |
 | **the SPA** | The React admin/portal interface, embedded as `FRONTEND_HTML` template literal inside `portal/src/index.js`. Uses React 18 + Babel standalone. |
 | **the engine** | The original (now archived) auto-generator that built sites from intake forms. Folded into the portal. |
-| **mockups subdomain** | `mockups.pymewebpro.com` — host-routed in `mockups.js`, serves any `MANUAL_MOCKUPS[slug]` entry. |
-| **sites subdomain** | `*.sites.pymewebpro.com` — auto-published customer sites after "Lanzar final". |
+| **mockups subdomain** | `mockups.pymewebpro.com` · host-routed in `mockups.js`, serves any `MANUAL_MOCKUPS[slug]` entry. |
+| **sites subdomain** | `*.sites.pymewebpro.com` · auto-published customer sites after "Lanzar final". |
 | **Lanzar final** | Admin action that publishes a customer's bundled site to production at `<slug>.sites.pymewebpro.com`. |
 | **wizard intake** | Step-by-step onboarding flow customers complete after paying. Replaced the old sidebar Portal. |
 | **Project Portal** | Post-submit customer view: countdown to mockup ready, mockup iframe, revision counter. |
@@ -51,7 +51,7 @@ Workplace shorthand, internal terms, and project codenames.
 | **Schedulator** | Patrick Detzner's B2B SaaS (elementary school class scheduling). schedulator.net. |
 | **Blues Kitchen** | Bogotá events venue. theblueskitchen_co. |
 | **Daga / Daga Parfum** | Medellín luxury fragrance brand (mockup, not real client yet). |
-| **BWI / BWI Talent** | Blue Whale International — finance + tech recruiting platform. Founder Jorge Restrepo. |
+| **BWI / BWI Talent** | Blue Whale International · finance + tech recruiting platform. Founder Jorge Restrepo. |
 | **Espacio Dental** | Itagüí dental clinic, expat-targeted (mockup, not real client yet). |
 | **PWP CA** | PymeWebPro's own Canadian-market pitch site at mockups.pymewebpro.com/pymewebpro-ca/. |
 
@@ -86,7 +86,7 @@ Workplace shorthand, internal terms, and project codenames.
 | **AUM** | Assets Under Management (BWI uses $1B+ AUM) |
 | **IRR** | Internal Rate of Return (BWI cites 18.4%) |
 | **CFA / CAIA** | Finance certifications (BWI benefit: $8K/yr learning budget covers these) |
-| **MBB** | McKinsey, Bain, BCG (consulting firms — feeder for BWI's analyst roles) |
+| **MBB** | McKinsey, Bain, BCG (consulting firms · feeder for BWI's analyst roles) |
 | **VC** | Venture Capital |
 | **PE** | Private Equity |
 | **SaaS** | Software as a Service |
@@ -94,7 +94,7 @@ Workplace shorthand, internal terms, and project codenames.
 | **SMB** | Small and Medium-sized Business (PymeWebPro's target market) |
 | **PYME** | Spanish equivalent of SMB ("Pequeña Y Mediana Empresa") |
 | **NIT** | Colombian tax ID |
-| **CES** | Universidad CES (top Colombian dental school — Espacio Dental's credential) |
+| **CES** | Universidad CES (top Colombian dental school · Espacio Dental's credential) |
 
 ## Common file paths (workspace)
 

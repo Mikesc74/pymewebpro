@@ -10,21 +10,21 @@ Write a single self-contained HTML file at:
 ```
 
 Constraints:
-- Single file — all CSS inlined in `<style>`, all JS inlined in `<script>`
+- Single file · all CSS inlined in `<style>`, all JS inlined in `<script>`
 - Only external dependencies: Google Fonts (preconnect), Pexels CDN images, optional CDN scripts (Chart.js etc.)
-- No external CSS/JS files — bundle must be self-contained
+- No external CSS/JS files · bundle must be self-contained
 - Include `<link rel="icon">` for favicon (data URI SVG works great)
 - Include OG meta tags (`og:title`, `og:description`, `og:image`, `og:type`)
 - Footer credit: `Sitio web por <a href="https://pymewebpro.com">PymeWebPro</a>` (Spanish sites) or `Built by PymeWebPro` (English)
 
-If the site needs photos that aren't on Pexels (e.g., Blues Kitchen used Instagram-sourced shots), put them in `manual-mockups/<slug>/photos/` and reference as `./filename.jpg` — they'll be base64-embedded in step 2.
+If the site needs photos that aren't on Pexels (e.g., Blues Kitchen used Instagram-sourced shots), put them in `manual-mockups/<slug>/photos/` and reference as `./filename.jpg` · they'll be base64-embedded in step 2.
 
 ## Step 2 · Wrap as JS module
 
 Create `~/code/pymewebpro/portal/src/manual-mockups-<slug>.js`:
 
 ```javascript
-// manual-mockups-<slug>.js — <Brand> marketing site.
+// manual-mockups-<slug>.js · <Brand> marketing site.
 // Brief description of what this mockup is.
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["<slug>"].
@@ -72,7 +72,7 @@ escaped = re.sub(r"\\([0-9])", r"\\\\\1", escaped)  # octal escapes
 escaped = escaped.replace(r'content:"\201C"', r'content:"\\201C"')
 
 header = (
-    "// manual-mockups-<slug>.js — <Brand> marketing site.\n"
+    "// manual-mockups-<slug>.js · <Brand> marketing site.\n"
     "// Brief description.\n"
     "//\n"
     "// Imported by manual-mockups.js → MANUAL_MOCKUPS[\"<slug>\"].\n"
@@ -127,8 +127,8 @@ npm run check
 
 Should output:
 ```
-[check-worker] OK — worker source files parse cleanly
-[check-spa] OK — SPA babel script parses cleanly (XXXXX chars)
+[check-worker] OK · worker source files parse cleanly
+[check-spa] OK · SPA babel script parses cleanly (XXXXX chars)
 ```
 
 If parse fails, the error message points to the issue. Common ones:
@@ -175,7 +175,7 @@ if (m === "GET" && reqHost === "mockups.pymewebpro.com") {
 }
 ```
 
-Slug regex: `^\/([a-z0-9-]+)\/?$` — lowercase, alphanumeric, hyphens. Must use kebab-case.
+Slug regex: `^\/([a-z0-9-]+)\/?$` · lowercase, alphanumeric, hyphens. Must use kebab-case.
 
 ## Reference: clients shipped with this pipeline
 

@@ -1,4 +1,4 @@
-// manual-mockups-start.js — auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-start.js · auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/start/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["start"].

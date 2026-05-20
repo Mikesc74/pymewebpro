@@ -1,4 +1,4 @@
-// manual-mockups-centralfarma.js — auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-centralfarma.js · auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/central-farma-drogueria/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["central-farma-drogueria"].

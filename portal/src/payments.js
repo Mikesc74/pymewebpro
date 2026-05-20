@@ -6,11 +6,11 @@
 //   Esencial: 390.000 COP  (was 890.000)
 //   Crecimiento (key=pro): 690.000 COP  (was 1.790.000)
 // Hosting prices unchanged.
-// 24-hour $100k discount DISABLED — the launch-offer pricing IS the discount.
+// 24-hour $100k discount DISABLED · the launch-offer pricing IS the discount.
 // Setting WINDOW=0 means `now < deadline` is always false → discount_active = false
 // → countdown banner and discount row are conditionally hidden in confirmationHtml.
 // IMPORTANT: confirmationHtml's else-branch for the expired-banner must also be
-// emptied — otherwise users see "La oferta de descuento expiró..." every time.
+// emptied · otherwise users see "La oferta de descuento expiró..." every time.
 
 import { sha256, uuid, randomToken, json } from "./utils.js";
 import { sendEmail, logEvent } from "./utils.js";
@@ -20,8 +20,8 @@ const DISCOUNT_WINDOW_MS = 0;
 const DISCOUNT_AMOUNT_COP = 0;
 
 const PLAN_PRICES_COP = {
-  esencial: 390_000,    // launch offer — was 890_000
-  pro: 690_000,         // launch offer — was 1_790_000 (display name: "Crecimiento")
+  esencial: 390_000,    // launch offer · was 890_000
+  pro: 690_000,         // launch offer · was 1_790_000 (display name: "Crecimiento")
 };
 
 const HOSTING_PRICES_COP = {
@@ -238,7 +238,7 @@ async function convertLeadOnApproval(env, payment) {
     const token = randomToken(32);
     await env.TOKENS.put(`magic:${token}`, clientId, { expirationTtl: 60 * 60 * 24 * 7 });
     const loginUrl = `${env.APP_URL}/auth/verify?token=${token}`;
-    const subject = lang === "es" ? "Pago recibido — comencemos su sitio web" : "Payment received — let's start your site";
+    const subject = lang === "es" ? "Pago recibido · comencemos su sitio web" : "Payment received · let's start your site";
     const html = lang === "es" ? paidInviteEs(loginUrl, businessName) : paidInviteEn(loginUrl, businessName);
     try { await sendEmail(env, { to: lead.email, subject, html }); }
     catch (e) { console.error("Paid invite email failed:", e); }
@@ -262,7 +262,7 @@ async function convertLeadOnApproval(env, payment) {
         subject: `💰 Payment received: ${businessName || lead.email}`,
         html: `<div style="font-family:Georgia,serif;padding:24px">
           <h2>Payment approved on Wompi</h2>
-          <p><strong>${businessName || "(no business)"}</strong> — ${lead.email}</p>
+          <p><strong>${businessName || "(no business)"}</strong> · ${lead.email}</p>
           <p>Plan: <strong>${payment.plan}</strong> · Hosting: <strong>${payment.hosting}</strong></p>
           <p>Amount: <strong>${formatCop(payment.amount_cents / 100)} COP</strong>${payment.discount_applied ? " (discount applied)" : ""}</p>
           <p>Wompi tx: ${payment.wompi_transaction_id || "(pending)"}</p>
@@ -285,7 +285,7 @@ function notFoundHtml() {
   <body><h1>PymeWebPro</h1><p>No encontramos esta página.</p><p><a href="https://pymewebpro.com" style="color:#fbbf24">Volver al inicio</a></p></body></html>`;
 }
 
-// confirmationHtml() and statusPage() — see deployed bundle (lines 2398-2613).
+// confirmationHtml() and statusPage() · see deployed bundle (lines 2398-2613).
 //
 // LIVE EDITS APPLIED IN CF DASHBOARD (keep in sync if you ever rebuild source):
 //   1. Empty the else-branch of the discount banner so the "expired"

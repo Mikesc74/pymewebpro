@@ -88,7 +88,7 @@ function withSecurityHeaders(response, opts = {}) {
   if (!headers.has("Cross-Origin-Opener-Policy")) headers.set("Cross-Origin-Opener-Policy", "same-origin");
   if (!headers.has("Cross-Origin-Resource-Policy")) headers.set("Cross-Origin-Resource-Policy", "same-origin");
 
-  // Strip ACAO from HTML responses — CORS is for API calls, not pages.
+  // Strip ACAO from HTML responses · CORS is for API calls, not pages.
   if (isHtml && headers.get("Access-Control-Allow-Origin") === "*") {
     headers.delete("Access-Control-Allow-Origin");
     headers.delete("Access-Control-Allow-Methods");
@@ -322,7 +322,7 @@ async function getClientProject(session, env) {
   const revisionsUsed = Math.max(0, shippedCount - 1);  // first push is the initial, not a "revision"
   const revisionsRemaining = Math.max(0, revisionsTotal - revisionsUsed);
 
-  // Comments thread (both directions: client + admin) — keyed to latest pushed mockup
+  // Comments thread (both directions: client + admin) · keyed to latest pushed mockup
   const commentsRes = mockup ? await env.DB.prepare(
     "SELECT id, body, author, created_at FROM mockup_comments WHERE mockup_id = ? ORDER BY created_at ASC",
   ).bind(mockup.id).all() : { results: [] };
@@ -344,7 +344,7 @@ async function getClientProject(session, env) {
     previewUrl = `${env.APP_URL || "https://portal.pymewebpro.com"}/m/${shareRow.token}/`;
   }
 
-  // Live site URL (if shipped) — custom domain wins; otherwise the included
+  // Live site URL (if shipped) · custom domain wins; otherwise the included
   // <slug>.sites.pymewebpro.com tenant subdomain (clean, brandable, free).
   const live = await env.DB.prepare(
     "SELECT slug, custom_domain FROM live_sites WHERE client_id = ? AND r2_prefix != ''",
@@ -353,7 +353,7 @@ async function getClientProject(session, env) {
     ? (live.custom_domain ? `https://${live.custom_domain}` : `https://${live.slug}.sites.pymewebpro.com/`)
     : null;
 
-  // Derive state — mockup iframe only appears AFTER admin "Push to client" (shipped_at IS NOT NULL)
+  // Derive state · mockup iframe only appears AFTER admin "Push to client" (shipped_at IS NOT NULL)
   let state = "intake_in_progress";
   if (client.status === "submitted") {
     if (!mockup) state = "waiting_for_mockup";       // 48h countdown shown
@@ -368,7 +368,7 @@ async function getClientProject(session, env) {
     client,
     project: {
       state,
-      submitted_at: client.submitted_at || null,           // ms epoch — front-end derives 48h countdown
+      submitted_at: client.submitted_at || null,           // ms epoch · front-end derives 48h countdown
       mockup: mockup ? { id: mockup.id, version: mockup.version, status: mockup.status, approved_at: mockup.approved_at, shipped_at: mockup.shipped_at, preview_url: previewUrl } : null,
       live_url: liveUrl,
       comments: commentsRes.results || [],
@@ -756,7 +756,7 @@ async function getClientDetail(env, id) {
   const submissions = await env.DB.prepare("SELECT section, data, updated_at FROM submissions WHERE client_id = ?").bind(id).all();
   const sections = {};
   // Internal sections (prefixed with _, e.g. _revision_notes) are workflow metadata
-  // and contain nested objects — don't expose them to the SPA, which renders flat.
+  // and contain nested objects · don't expose them to the SPA, which renders flat.
   for (const row of submissions.results || []) {
     if (row.section && row.section.startsWith("_")) continue;
     sections[row.section] = { data: JSON.parse(row.data), updated_at: row.updated_at };
@@ -1219,7 +1219,7 @@ function computeQuote(lead) {
   let hostingPrice = HOSTING_PRICES_COP[hosting] || 0;
   // Esencial = $390k flat (includes 1 month free, monthly billing starts later).
   // Pro + annual = bundled (1 year hosting included).
-  // Hosting is never charged at /start/ checkout for Esencial — buyer can
+  // Hosting is never charged at /start/ checkout for Esencial · buyer can
   // upgrade to annual via /hosting after the first month.
   const hostingBundled = (plan === "esencial") || (plan === "pro" && hosting === "annual");
   if (hostingBundled) hostingPrice = 0;
@@ -1377,7 +1377,7 @@ async function processUpgradePayment(env, payment) {
   const clientId = m[1];
   const client = await env.DB.prepare("SELECT id, email, business_name, plan FROM clients WHERE id = ?").bind(clientId).first();
   if (!client) return;
-  if (client.plan === "pro") return; // already upgraded — idempotent
+  if (client.plan === "pro") return; // already upgraded · idempotent
 
   await env.DB.prepare("UPDATE clients SET plan = 'pro', updated_at = ? WHERE id = ?")
     .bind(Date.now(), clientId).run();
@@ -1427,7 +1427,7 @@ async function processHostingPayment(env, payment) {
     .bind(newExpiry, period, Date.now(), clientId).run();
   await logEvent(env, clientId, "hosting_paid", { payment_id: payment.id, period, expires_at: newExpiry, amount_cents: payment.amount_cents });
 
-  // Mirror into the legacy hosting_payments table (different schema — has wompi_reference UNIQUE).
+  // Mirror into the legacy hosting_payments table (different schema · has wompi_reference UNIQUE).
   // This is best-effort historical bookkeeping; the canonical record is in `payments` + `clients.hosting_expires_at`.
   try {
     await env.DB.prepare(
@@ -1519,7 +1519,7 @@ const ENCARGADO_CLAUSE_ES = `Autorizo a PymeWebPro (operado por NSC, NIT registr
 const ENCARGADO_CLAUSE_EN = `I authorize PymeWebPro (operated by NSC, registered in Colombia) to act as Data Processor for the personal data my website receives from its visitors (contact forms, newsletter subscriptions, analytics data) under Colombian Law 1581 of 2012. As Data Controller, I assume legal obligations toward data subjects and authorize PymeWebPro to process such data on my behalf, store it on secure servers (Cloudflare), and transfer it when necessary to provide the service. PymeWebPro will maintain confidentiality and apply reasonable security measures. I may revoke this authorization by cancelling my service subscription.`;
 
 function confirmationHtml({ lead, quote, lang, lastPayment, justReturned }) {
-  // Local alias — body uses esc() throughout; the worker-level helper is escapeHtml
+  // Local alias · body uses esc() throughout; the worker-level helper is escapeHtml
   const esc = escapeHtml;
   const isEs = lang !== "en";
   if (lastPayment && lastPayment.status === "approved") return statusPage({ title: isEs ? "¡Pago recibido!" : "Payment received!", body: isEs ? "Le enviamos un correo con el enlace para empezar su proyecto." : "Check your email for the link to start your project.", color: "#10b981", icon: "✓" });
@@ -1913,7 +1913,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         Object.values(res.sections || {}).forEach(s => Object.assign(flat, s.data || {}));
         setData(flat);
         try { const f = await api('/api/client/files'); setFiles(f.files || []); } catch {}
-        // If the client already submitted, jump straight to the Project Portal —
+        // If the client already submitted, jump straight to the Project Portal,
         // otherwise show the wizard so they can continue / complete intake.
         if (res.client && (res.client.status === 'submitted' || res.client.status === 'active')) {
           setStage('submitted');
@@ -2068,7 +2068,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         );
       }
 
-      // Top nav button — used across all views (list AND detail) so admin always
+      // Top nav button · used across all views (list AND detail) so admin always
       // has one-click access to Clients / Leads / WhatsApp regardless of where they are.
       const tabBtn = (id, label, Icon, count) => (
         <button onClick={() => setRoute('/admin' + (id==='clients'?'':'/'+id))} style={{
@@ -2084,7 +2084,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         </button>
       );
 
-      // Persistent admin chrome — always-on header + nav, content slot below.
+      // Persistent admin chrome · always-on header + nav, content slot below.
       const Shell = ({ children }) => (
         <div style={{minHeight:'100vh',background:'var(--pwp-bg)'}}>
           <header style={{...headerStyle, position:'sticky', top:0, zIndex:50, backdropFilter:'blur(8px)', background:'rgba(26,22,18,0.94)', borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
@@ -2225,7 +2225,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
     function LeadRow({ l, onClick }) {
       const statusColor = { new: '#D24A1D', contacted: '#2563EB', converted: '#16a34a', dismissed: '#9CA3AF' }[l.status] || '#9CA3AF';
       const sourceLabel = { contact_form: 'Form', whatsapp_click: 'WA click', whatsapp_message: 'WhatsApp', manual: 'Manual' }[l.source] || l.source;
-      const planLabel = l.plan === 'esencial' ? 'Essential' : l.plan === 'pro' ? 'Pro' : '—';
+      const planLabel = l.plan === 'esencial' ? 'Essential' : l.plan === 'pro' ? 'Pro' : '·';
       const hostingLabel = l.hosting === 'annual' ? '+ annual host' : l.hosting === 'monthly' ? '+ monthly host' : '';
       return (
         <div onClick={onClick} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto auto',gap:'1.25rem',alignItems:'center',padding:'1.25rem 1.5rem',background:'var(--pwp-surface)',border:'1px solid var(--pwp-line)',borderRadius:'4px',cursor:'pointer'}}>
@@ -2442,7 +2442,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
       const healthSlow = sh && sh.ok && sh.total_ms != null && sh.total_ms >= 2500;
       const healthBad = sh && !sh.ok;
       const healthColor = healthOk ? '#16a34a' : healthSlow ? '#D24A1D' : healthBad ? '#DC2626' : 'rgba(26,22,18,0.18)';
-      const healthLabel = sh ? (sh.ok ? (sh.total_ms < 1000 ? '<1s' : (sh.total_ms/1000).toFixed(1) + 's') : (sh.status_code || 'down')) : '—';
+      const healthLabel = sh ? (sh.ok ? (sh.total_ms < 1000 ? '<1s' : (sh.total_ms/1000).toFixed(1) + 's') : (sh.status_code || 'down')) : '·';
 
       async function resend(e) { e.stopPropagation(); await adminApi('/api/admin/clients/' + c.id + '/resend', { method: 'POST' }); alert('Magic link resent to ' + c.email); }
       async function openAsClient(e) {
@@ -2506,10 +2506,10 @@ const FRONTEND_HTML = `<!DOCTYPE html>
               <span style={{color:'var(--pwp-mute)',fontSize:'0.9rem'}}>{client.email}</span>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1rem',marginBottom:'3rem'}}>
-              <Stat label="Plan" value={deliverables?.plan === 'pro' ? 'Growth' : deliverables?.plan === 'esencial' ? 'Essential' : '—'} />
+              <Stat label="Plan" value={deliverables?.plan === 'pro' ? 'Growth' : deliverables?.plan === 'esencial' ? 'Essential' : '·'} />
               <Stat label="Status" value={client.status.replace('_',' ')} />
               <Stat label="Language" value={client.language === 'es' ? 'Spanish' : 'English'} />
-              <Stat label="Submitted" value={client.submitted_at ? new Date(client.submitted_at).toLocaleDateString('en-US') : '—'} />
+              <Stat label="Submitted" value={client.submitted_at ? new Date(client.submitted_at).toLocaleDateString('en-US') : '·'} />
             </div>
 
             <SiteHealthPanel client={client} onChange={onRefresh} />
@@ -2640,10 +2640,10 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
               {health && (
                 <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'0.75rem'}}>
-                  <HealthStat label="TTFB" value={ttfb != null ? ttfb + ' ms' : '—'} hint="time to first byte" good={ttfb != null && ttfb < 800} bad={ttfb != null && ttfb > 1500} />
-                  <HealthStat label="Total" value={total != null ? total + ' ms' : '—'} hint="full response" good={total != null && total < 1500} bad={total != null && total > 3000} />
-                  <HealthStat label="Size" value={sizeKB != null ? sizeKB + ' KB' : '—'} hint="HTML payload" good={sizeKB && +sizeKB < 200} bad={sizeKB && +sizeKB > 500} />
-                  <HealthStat label="Status" value={health.status_code || (health.error ? 'error' : '—')} hint={health.server || ''} good={ok} bad={!ok} />
+                  <HealthStat label="TTFB" value={ttfb != null ? ttfb + ' ms' : '·'} hint="time to first byte" good={ttfb != null && ttfb < 800} bad={ttfb != null && ttfb > 1500} />
+                  <HealthStat label="Total" value={total != null ? total + ' ms' : '·'} hint="full response" good={total != null && total < 1500} bad={total != null && total > 3000} />
+                  <HealthStat label="Size" value={sizeKB != null ? sizeKB + ' KB' : '·'} hint="HTML payload" good={sizeKB && +sizeKB < 200} bad={sizeKB && +sizeKB > 500} />
+                  <HealthStat label="Status" value={health.status_code || (health.error ? 'error' : '·')} hint={health.server || ''} good={ok} bad={!ok} />
                 </div>
               )}
             </>
@@ -2939,7 +2939,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         } catch (e) { alert('Error: ' + e.message); }
       }
 
-      const planLabel = client.plan === 'pro' ? 'Growth' : client.plan === 'esencial' ? 'Essential' : '—';
+      const planLabel = client.plan === 'pro' ? 'Growth' : client.plan === 'esencial' ? 'Essential' : '·';
       const planColor = client.plan === 'pro' ? '#16a34a' : 'var(--pwp-accent)';
       const isProClient = client.plan === 'pro' || client.plan === 'crecimiento' || client.plan === 'growth';
       const revisionsTotal = isProClient ? 5 : 2;
@@ -3487,7 +3487,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         var f = form;
         var isFirstBuild = !f.chatbot_system_prompt && f.status !== 'live';
         var action = isFirstBuild ? 'build' : 'revise';
-        function dash(v) { return (v && String(v).trim()) ? v : '—'; }
+        function dash(v) { return (v && String(v).trim()) ? v : '·'; }
         var lines = [
           action + ' mockup for ' + f.slug,
           '',
@@ -3840,7 +3840,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
                 ) : <div style={{padding:"3rem",color:"var(--pwp-mute)"}}>{isEs ? "Mockup no disponible" : "Mockup not available"}</div>}
               </div>
 
-              {/* Right side — chat + approve + upsells */}
+              {/* Right side · chat + approve + upsells */}
               <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
                 <button onClick={approve} style={{...primaryBtn,width:"100%",padding:"1.1rem",fontSize:".95rem"}}>
                   <Check size={18} strokeWidth={3}/> {isEs ? "Aprobar este diseño" : "Approve this design"}
@@ -4015,7 +4015,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         h:{es:'Si tiene una en mente. Si no, elegimos una que combine.',en:"If you've one in mind. Otherwise we pick one that fits."},
         p:{es:'Inter, Montserrat, Lato...',en:'Inter, Montserrat, Lato...'} },
 
-      // Visual — combined upload + per-photo description
+      // Visual · combined upload + per-photo description
       { key:'__photosWithAlts', section:'visual', group:{es:'Imágenes',en:'Imagery'}, type:'photos', category:'photo', multi:true,
         q:{es:'Suba sus fotos y descríbalas',en:'Upload your photos and describe each'},
         h:{es:'Fotos reales del negocio venden mucho mejor que stock. Suba de 3 a 8 fotos. Por cada foto, escriba una breve descripción: se usa para accesibilidad y SEO.',en:'Real photos sell far better than stock. Upload 3 to 8 photos. For each, write a short description (used for accessibility and SEO).'},
@@ -4056,7 +4056,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         q:{es:'¿Tiene hosting actualmente?',en:'Do you currently have hosting?'},
         h:{es:'Si paga hospedaje en algún lado, díganoslo. Si no, sáltelo.',en:'If you pay for hosting somewhere, tell us. Otherwise skip.'},
         p:{es:'',en:''} },
-      // Email forwarding — free via Cloudflare Email Routing once we attach the domain.
+      // Email forwarding · free via Cloudflare Email Routing once we attach the domain.
       // Two clean inputs replace the old open-ended bizEmail prompt.
       { key:'emailLocalPart', section:'tech', group:{es:'Correo profesional',en:'Professional email'}, type:'text',
         q:{es:'¿Qué dirección de correo quiere en su dominio?',en:'What email address do you want on your domain?'},
@@ -4067,7 +4067,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         h:{es:'Su correo personal donde revisa todos los días (Gmail, Outlook, etc). El reenvío es gratuito vía Cloudflare. ¿Quiere un buzón completo? Le ayudamos a configurar Google Workspace ($7/usuario/mes).',en:'Your personal inbox you check daily (Gmail, Outlook, etc). Forwarding is free via Cloudflare. Want a full mailbox? We can help you set up Google Workspace ($7/user/month).'},
         p:{es:'tu@gmail.com',en:'you@gmail.com'} },
 
-      // Tracking IDs — both plans (Esencial gets the site wired for GA4/Meta too)
+      // Tracking IDs · both plans (Esencial gets the site wired for GA4/Meta too)
       { key:'ga4Id', section:'tech', group:{es:'Analítica y marketing',en:'Analytics & marketing'}, type:'text',
         q:{es:'¿ID de Google Analytics 4?',en:'Google Analytics 4 ID?'},
         h:{es:'Formato G-XXXXXXXXXX. Sáltelo si no tiene cuenta: se la creamos.',en:"Format G-XXXXXXXXXX. Skip if you don't have one. We'll set it up."},
@@ -4077,7 +4077,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         h:{es:'15-16 dígitos. Solo si corre ads en Facebook o Instagram.',en:'15-16 digits. Only if you run Facebook or Instagram ads.'},
         p:{es:'1234567890123456',en:'1234567890123456'} },
 
-      // Testimonials — both plans (it's a core Esencial section)
+      // Testimonials · both plans (it's a core Esencial section)
       { key:'testimonials', section:'content', group:{es:'Testimonios',en:'Testimonials'}, type:'textarea',
         q:{es:'¿Tiene testimonios reales de clientes?',en:"Do you have real customer testimonials?"},
         h:{es:'Uno por línea, formato: Nombre | Cita | Rol. Solo testimonios reales con permiso.',en:'One per line: Name | Quote | Role. Only real testimonials with permission.'},
@@ -4175,7 +4175,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
 
       async function handleFileUpload(file, category) {
         if (!file) return;
-        // Truly unique tempId — Date.now() collides for batch drops in the
+        // Truly unique tempId · Date.now() collides for batch drops in the
         // same millisecond, which caused duplicate/lost files in the UI.
         const tempId = "temp-" + Date.now() + "-" + Math.floor(Math.random() * 1e9);
         setFiles(p => [{ id: tempId, filename: file.name, category, uploading: true, size_bytes: file.size }, ...p]);
@@ -4422,7 +4422,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         } catch { setSaveStatus(p => ({ ...p, [sec]: 'error' })); }
       }
 
-      // (kept as legacy stub — wizard's handleFileUpload is the active one)
+      // (kept as legacy stub · wizard's handleFileUpload is the active one)
       async function handleFileUpload(file, category) { /* unused */ }
       async function handleFileDelete(fileId) { /* unused */ }
 
@@ -4441,7 +4441,7 @@ const FRONTEND_HTML = `<!DOCTYPE html>
         return false;
       };
 
-      // First-visit detection — show welcome banner only when nothing has been filled yet
+      // First-visit detection · show welcome banner only when nothing has been filled yet
       const [welcomeDismissed, setWelcomeDismissed] = useState(false);
       const isFirstVisit = filledCount === 0 && !welcomeDismissed;
 
@@ -5168,7 +5168,7 @@ function injectMasterPortalHeader(html, active) {
 export { src_default as default };
 
 // ============================================================================
-// INFERRED D1 SCHEMA  (no CREATE TABLE in worker source — schema is in migrations)
+// INFERRED D1 SCHEMA  (no CREATE TABLE in worker source · schema is in migrations)
 // ============================================================================
 //
 // CREATE TABLE clients (

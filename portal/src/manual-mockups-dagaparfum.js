@@ -1,4 +1,4 @@
-// manual-mockups-dagaparfum.js — auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-dagaparfum.js · auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/daga-parfum/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["daga-parfum"].

@@ -204,7 +204,7 @@ function buildSystemPrompt(p) {
     "· Sé conciso: 2 a 4 frases por mensaje, no párrafos largos.",
     "· Honestidad: si no sabes un precio exacto, un horario específico, o un detalle médico, dilo y ofrece pasar la consulta al dueño con [HANDOFF: ...].",
     "· No inventes información que no esté en este prompt.",
-    "· No uses guiones largos (—). Usa coma, punto, dos puntos, o el separador \" · \".",
+    "· No uses guiones largos. Usa coma, punto, dos puntos, o el separador \" · \".",
     "· No prometas resultados clínicos o garantías médicas. Eso lo maneja el profesional, no tú.",
     "· Si el cliente escribe en inglés, puedes responder en inglés, pero por defecto eres bilingüe con español primario.",
     "",

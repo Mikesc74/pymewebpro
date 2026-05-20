@@ -1,4 +1,4 @@
-// legal.js — auto-generates Política de Tratamiento de Datos Personales (Ley 1581 de 2012)
+// legal.js · auto-generates Política de Tratamiento de Datos Personales (Ley 1581 de 2012)
 // and Términos y Condiciones for each customer site. Spanish + optional English.
 //
 // LEGAL TEMPLATE NOTE: this is a reasonable starter that covers Ley 1581 de 2012,
@@ -38,7 +38,7 @@ ${body}
 </div></body></html>`;
 }
 
-// ─── Privacy policy (Spanish — Ley 1581 de 2012) ───────────────────────────
+// ─── Privacy policy (Spanish · Ley 1581 de 2012) ───────────────────────────
 export function renderPrivacyEs(data) {
   const businessName = data.businessName || "[empresa]";
   const nit = data.nit || "[NIT/cédula no proporcionado]";
@@ -121,7 +121,7 @@ export function renderPrivacyEs(data) {
 <p>Nos reservamos el derecho de modificar esta política en cualquier momento. Los cambios serán publicados en esta misma página con indicación de la fecha de actualización.</p>
 
 <hr>
-<small>Para infracciones a la Ley 1581 de 2012 puede acudir a la Superintendencia de Industria y Comercio (SIC) — Carrera 13 No. 27-00, Bogotá D.C., o a través de www.sic.gov.co.</small>
+<small>Para infracciones a la Ley 1581 de 2012 puede acudir a la Superintendencia de Industria y Comercio (SIC) · Carrera 13 No. 27-00, Bogotá D.C., o a través de www.sic.gov.co.</small>
 `;
   return legalShell({
     title: "Política de Privacidad",
@@ -185,7 +185,7 @@ export function renderPrivacyEn(data) {
 </ul>
 
 <h2>5. How to exercise your rights</h2>
-<p>Send us your request — clearly stating which right you wish to exercise and including a copy of your ID — to <a href="mailto:${esc(email)}">${esc(email)}</a>. We'll respond within fifteen (15) business days as required by Article 14 of Law 1581 of 2012.</p>
+<p>Send us your request · clearly stating which right you wish to exercise and including a copy of your ID · to <a href="mailto:${esc(email)}">${esc(email)}</a>. We'll respond within fifteen (15) business days as required by Article 14 of Law 1581 of 2012.</p>
 
 <h2>6. Cookies</h2>
 <p>This site may use first- and third-party cookies (e.g. Google Analytics, Meta Pixel) for analytics and advertising. You can disable cookies in your browser settings.</p>

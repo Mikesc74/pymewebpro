@@ -2,14 +2,14 @@
 //
 // gtag.js loads on every page (so GA4's tag-installation auto-detector
 // recognises the property as installed), but starts in 'denied' mode for
-// all storage types — no cookies set, no PII sent — until the visitor
+// all storage types · no cookies set, no PII sent · until the visitor
 // explicitly clicks Aceptar on the cookie banner. main.js's bindCookieBanner
 // dispatches the 'pwp:consent-granted' event which we use to flip
 // analytics_storage to 'granted'. Reject or ignore = stays denied.
 //
 // CSP: requires https://www.googletagmanager.com in script-src and
 // https://www.google-analytics.com / .googletagmanager.com in connect-src
-// + img-src — see _headers.
+// + img-src · see _headers.
 
 (function () {
   'use strict';

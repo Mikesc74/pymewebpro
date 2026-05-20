@@ -1,4 +1,4 @@
-// manual-mockups.js — hand-written, fully-inlined static HTML mockups
+// manual-mockups.js · hand-written, fully-inlined static HTML mockups
 // served from mockups.pymewebpro.com/<slug>/.
 //
 // These bypass the PYME auto-generator (which is tuned for Colombian
@@ -9,7 +9,7 @@
 // (DOCTYPE → </html>) with every CSS rule and JS line inlined; only
 // fonts and images may be loaded from external CDNs. To add a new mockup,
 // write a render function below and append it to the MANUAL_MOCKUPS map
-// at the bottom — no other code changes required.
+// at the bottom · no other code changes required.
 
 import { bluesKitchenHtml } from "./manual-mockups-blueskitchen.js";
 import { dagaParfumHtml } from "./manual-mockups-dagaparfum.js";

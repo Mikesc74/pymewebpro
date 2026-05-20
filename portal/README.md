@@ -1,11 +1,11 @@
-# PymeWebPro Portal — Recovery Notes
+# PymeWebPro Portal · Recovery Notes
 
 The Cloudflare Worker behind `portal.pymewebpro.com` handles payments (Wompi),
 client intake, magic-link auth, the admin panel, and the deliverables tracker.
 
 **As of 2026-04-30 the source repo is missing locally.** It used to live at
 `pymewebpro-final/backend/` (per `Projects/PymeWebPro/PROCESS.md`) but isn't on
-disk anywhere we can find. The deployed Worker still runs fine — only the
+disk anywhere we can find. The deployed Worker still runs fine · only the
 source is gone.
 
 This folder is a partial recovery + a deploy plan.
@@ -14,13 +14,13 @@ This folder is a partial recovery + a deploy plan.
 
 ## What's here
 
-- `src/payments.js` — clean source for the payments module, **with the new
+- `src/payments.js` · clean source for the payments module, **with the new
   launch-offer prices already applied** (390k Esencial / 690k Crecimiento).
   The other modules (`utils.js`, `auth.js`, `client.js`, `deliverables.js`,
   `admin.js`, `files.js`, `leads.js`, `frontend.js`, `index.js`) are NOT here
-  — they need to be reconstructed from the deployed bundle if a full source
+  · they need to be reconstructed from the deployed bundle if a full source
   rebuild is desired.
-- `wrangler.toml` — deploy config with the real bindings (D1, KV, R2) pulled
+- `wrangler.toml` · deploy config with the real bindings (D1, KV, R2) pulled
   from the live Cloudflare account.
 
 ## What's missing
@@ -35,7 +35,7 @@ extracted into separate files.
 
 ## Deploying
 
-**Always run `npm run deploy` from `portal/` — never `wrangler deploy` directly.**
+**Always run `npm run deploy` from `portal/` · never `wrangler deploy` directly.**
 
 `npm run deploy` runs a `predeploy` hook that:
 1. Extracts the inline React SPA from `FRONTEND_HTML`.
@@ -45,7 +45,7 @@ extracted into separate files.
 
 This catches the common bug where a JS string with `\n` inside `FRONTEND_HTML`
 (a JS template literal) becomes a multi-line string at runtime, which crashes
-the browser. We've hit it three times — never again.
+the browser. We've hit it three times · never again.
 
 First-time setup (once):
 ```
@@ -61,9 +61,9 @@ npm run deploy
 If the check fails, the error tells you the line + suggests the fix
 (usually `\n` → `\\n`).
 
-## How to fix prices on the live site — three paths
+## How to fix prices on the live site · three paths
 
-### Path A — Edit in the Cloudflare dashboard (fastest, ~3 minutes)
+### Path A · Edit in the Cloudflare dashboard (fastest, ~3 minutes)
 
 This is the recommended path right now. The Worker has an inline editor.
 
@@ -91,20 +91,20 @@ This is the recommended path right now. The Worker has an inline editor.
 
 That's it. Wompi will charge the new amount on the next checkout.
 
-### Path B — Reconstruct full source and `wrangler deploy` (slow, but proper)
+### Path B · Reconstruct full source and `wrangler deploy` (slow, but proper)
 
 Only if you want the source repo back.
 
 1. From the Cloudflare dashboard, download the deployed Worker code (Quick
    Edit → copy whole bundle).
 2. Save as `src/index.js` in this folder (replacing the bundle's single-file
-   layout — the `// src/<module>.js` comments inside mark each module's start).
+   layout · the `// src/<module>.js` comments inside mark each module's start).
 3. Optionally split each module back into its own `src/*.js` file using those
    markers as boundaries.
 4. Apply the same `PLAN_PRICES_COP` edit shown in Path A.
 5. Install wrangler: `npm install -g wrangler`
 6. Login: `wrangler login`
-7. Set secrets (one-time — values are in the dashboard under Settings →
+7. Set secrets (one-time · values are in the dashboard under Settings →
    Variables → "Edit secret"):
    ```
    wrangler secret put ADMIN_TOKEN      --name pymewebpro-portal
@@ -115,7 +115,7 @@ Only if you want the source repo back.
    ```
 8. Deploy: `wrangler deploy`
 
-### Path C — Treat the deployed bundle as source
+### Path C · Treat the deployed bundle as source
 
 The bundle is self-contained. Save it as `src/index.js`, edit the price
 constants in place, and `wrangler deploy` with the `wrangler.toml` here.
@@ -148,7 +148,7 @@ The marketing site at `pymewebpro.com` shows the price on the pricing cards
 actual amount Wompi will charge.
 
 If they disagree, buyers see one number on the marketing site, a different
-number at checkout — refund / chargeback bait. As of 2026-04-30 the marketing
+number at checkout · refund / chargeback bait. As of 2026-04-30 the marketing
 site has been updated to 390k / 690k. **The portal has not been updated yet.**
 Until you do Path A above, hold off on pushing the marketing site to
 production (or at least don't drive paid traffic to it).

@@ -1,4 +1,4 @@
-# Process Document — PymeWebPro Customer Funnel
+# Process Document · PymeWebPro Customer Funnel
 
 **Owner:** Mike Chartrand (build, tech), Santiago Santos (sales, voice)
 **Last Updated:** 2026-04-29
@@ -8,7 +8,7 @@
 
 ## 1. Purpose
 
-This document captures the end-to-end PymeWebPro funnel — from the moment a Colombian SMB first encounters the brand until their site is launched and they enter post-launch support. It exists to:
+This document captures the end-to-end PymeWebPro funnel · from the moment a Colombian SMB first encounters the brand until their site is launched and they enter post-launch support. It exists to:
 
 - Keep Mike and Santiago aligned on responsibilities at every stage.
 - Make new-team-member onboarding (if/when we hire) deterministic.
@@ -107,23 +107,23 @@ This document captures the end-to-end PymeWebPro funnel — from the moment a Co
 
 | Stage | Responsible | Accountable | Consulted | Informed |
 |---|---|---|---|---|
-| Marketing site uptime + copy | Mike | Mike | Santiago | — |
-| Inbound WhatsApp reply | Santiago | Santiago | Mike (technical questions) | — |
-| Lead-form triage in `/admin/leads` | Santiago | Santiago | Mike | — |
-| Quote / plan recommendation | Santiago | Santiago | Mike | — |
-| Payment confirmation + auto-invite email | System (portal Worker) | Mike | — | Santi (via admin notify) |
-| Client intake follow-up if stalled | Santiago | Santiago | Mike | — |
+| Marketing site uptime + copy | Mike | Mike | Santiago | · |
+| Inbound WhatsApp reply | Santiago | Santiago | Mike (technical questions) | · |
+| Lead-form triage in `/admin/leads` | Santiago | Santiago | Mike | · |
+| Quote / plan recommendation | Santiago | Santiago | Mike | · |
+| Payment confirmation + auto-invite email | System (portal Worker) | Mike | · | Santi (via admin notify) |
+| Client intake follow-up if stalled | Santiago | Santiago | Mike | · |
 | Build + design | Mike | Mike | Santiago (client-voice questions) | Client |
-| Review-round handling | Mike | Mike | Santiago, Client | — |
-| Launch + DNS cutover | Mike | Mike | — | Santiago, Client |
+| Review-round handling | Mike | Mike | Santiago, Client | · |
+| Launch + DNS cutover | Mike | Mike | · | Santiago, Client |
 | 30-min training session | Mike or Santi | Santiago | Mike | Client |
-| Plan Hosting upsell | Santiago | Santiago | Mike | — |
-| Deliverable tracker hygiene | Mike | Mike | — | Santiago |
+| Plan Hosting upsell | Santiago | Santiago | Mike | · |
+| Deliverable tracker hygiene | Mike | Mike | · | Santiago |
 | Refund execution | Mike | Mike | Santiago | Client |
 
 ## 6. Detailed Stages
 
-### Stage 1 — Awareness
+### Stage 1 · Awareness
 
 **Trigger:** Prospect lands on `pymewebpro.com` (Instagram, referral, Google, ad, business card).
 
@@ -145,17 +145,17 @@ This document captures the end-to-end PymeWebPro funnel — from the moment a Co
 
 ---
 
-### Stage 2 — Lead Capture
+### Stage 2 · Lead Capture
 
 There are **three** entry points:
 
-#### 2A — Contact form on pymewebpro.com (`#contacto` section)
+#### 2A · Contact form on pymewebpro.com (`#contacto` section)
 
 **Trigger:** Visitor fills the form and submits.
 
 **Flow:**
 
-1. Form POSTs to `/api/contact` (Cloudflare Pages Function — `functions/api/contact.js`).
+1. Form POSTs to `/api/contact` (Cloudflare Pages Function · `functions/api/contact.js`).
 2. Function checks honeypot (`website` hidden field). If filled → silent 200, drop. Bot defense.
 3. Validates required fields: nombre, email, whatsapp.
 4. Sends rich admin email to `hello@pymewebpro.com` (Resend) with all selections.
@@ -175,7 +175,7 @@ There are **three** entry points:
 - Portal `/api/leads` 5xx → Pages function logs error but doesn't fail the customer flow; customer still sees success.
 - Honeypot accidentally filled by autofill → reduces bot defense; review submissions if spam spikes.
 
-#### 2B — WhatsApp click
+#### 2B · WhatsApp click
 
 **Trigger:** Visitor clicks any `/go/whatsapp?campaign=…` link (replaces all direct `wa.me/…` references on the site).
 
@@ -196,13 +196,13 @@ There are **three** entry points:
 - Visitor's device has no WhatsApp installed → `wa.me` shows a "download WhatsApp" page; click is still logged.
 - Outbound message contains characters WhatsApp doesn't like → test before changing prefilled text.
 
-#### 2C — Direct portal form (rare)
+#### 2C · Direct portal form (rare)
 
 A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/forwarded link. Treated identically to a regular paid path; the lead row already exists.
 
 ---
 
-### Stage 3 — Lead Triage
+### Stage 3 · Lead Triage
 
 **Trigger:** New lead appears in `/admin/leads`.
 
@@ -221,7 +221,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 **Owner:** Santiago.
 
-**SLA target:** First reply within 24 business hours (no public promise on the page; copy says "le respondemos cuanto antes" — honest framing).
+**SLA target:** First reply within 24 business hours (no public promise on the page; copy says "le respondemos cuanto antes" · honest framing).
 
 **Failure modes:**
 
@@ -231,7 +231,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 4 — Conversion (Payment Path)
+### Stage 4 · Conversion (Payment Path)
 
 **Trigger:** Lead lands on `/c/<lead_id>` (auto-redirect from form OR Santi-shared link).
 
@@ -270,7 +270,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 5 — Conversion (Talk-First Path)
+### Stage 5 · Conversion (Talk-First Path)
 
 **Trigger:** Lead's plan is "No estoy seguro" OR they came in via WhatsApp.
 
@@ -280,7 +280,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 2. Either:
    - Santiago sends them the form link with plan pre-selected, or
    - Santiago shares `/c/<lead_id>` directly if they already exist in the lead DB.
-3. If they're not in the lead DB yet (came from cold WhatsApp), Santiago can manually create a lead in admin (future feature — for now, ask them to fill the form).
+3. If they're not in the lead DB yet (came from cold WhatsApp), Santiago can manually create a lead in admin (future feature · for now, ask them to fill the form).
 4. From here it's the same as Stage 4.
 
 **Owner:** Santiago.
@@ -292,7 +292,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 6 — Onboarding (Magic Link → Portal)
+### Stage 6 · Onboarding (Magic Link → Portal)
 
 **Trigger:** Wompi webhook arrives with `transaction.updated` and `status=approved`.
 
@@ -337,7 +337,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 7 — Client Intake
+### Stage 7 · Client Intake
 
 **Trigger:** Client clicks magic link, lands on intake portal.
 
@@ -365,7 +365,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 8 — Build & Design
+### Stage 8 · Build & Design
 
 **Trigger:** `clients.status = 'submitted'`.
 
@@ -389,7 +389,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 - Esencial: 7 days from intake submission to first preview.
 - Crecimiento: 14 days from intake submission to first preview.
-- If late → automatic refund per the public guarantee (or partial — see Exceptions).
+- If late → automatic refund per the public guarantee (or partial · see Exceptions).
 
 **Failure modes:**
 
@@ -399,7 +399,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 9 — Review Rounds
+### Stage 9 · Review Rounds
 
 **Trigger:** Client reviews preview URL.
 
@@ -407,8 +407,8 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 1. Client provides feedback via WhatsApp or email (text + screenshots).
 2. Mike consolidates feedback, makes changes, redeploys preview.
-3. Esencial: "2 rondas de cambios incluidas" — flag scope creep beyond round 2.
-4. Crecimiento: "Hasta 5 rondas de cambios" — hard cap at 5; beyond that becomes a paid add-on or Plan Hosting territory.
+3. Esencial: "2 rondas de cambios incluidas" · flag scope creep beyond round 2.
+4. Crecimiento: "Hasta 5 rondas de cambios" · hard cap at 5; beyond that becomes a paid add-on or Plan Hosting territory.
 5. Mike marks `design_approved` in the deliverables tracker once client signs off.
 
 **Owner:** Mike.
@@ -422,7 +422,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 10 — Launch
+### Stage 10 · Launch
 
 **Trigger:** Client approves the final design.
 
@@ -454,7 +454,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 11 — Training & Handover
+### Stage 11 · Training & Handover
 
 **Trigger:** Site is live.
 
@@ -478,14 +478,14 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 
 ---
 
-### Stage 12 — Post-Launch Support & Hosting Plan Upsell
+### Stage 12 · Post-Launch Support & Hosting Plan Upsell
 
 **Trigger:** Launch complete.
 
 **Steps:**
 
 1. Santiago checks in 7 days post-launch via WhatsApp: "How's it going? Any questions?"
-2. If client did not buy Plan Hosting at signup, this is the natural upsell moment. Pitch: "$30k/mes (cancela cuando quiera) o $270k/año — incluye monitoreo, backups, pequeños cambios cada mes, hosting en Cloudflare, respuesta prioritaria por WhatsApp."
+2. If client did not buy Plan Hosting at signup, this is the natural upsell moment. Pitch: "$30k/mes (cancela cuando quiera) o $270k/año · incluye monitoreo, backups, pequeños cambios cada mes, hosting en Cloudflare, respuesta prioritaria por WhatsApp."
 3. If they accept, Mike configures recurring billing manually (Wompi doesn't yet support our subscriptions natively; track in spreadsheet for now until we wire it).
 4. Crecimiento clients already have 1 year hosting bundled; at month 11 Santiago reaches out to renew.
 
@@ -504,7 +504,7 @@ A prospect lands directly at `portal.pymewebpro.com/c/<lead_id>` from a shared/f
 |---|---|
 | Refund requested within 30 days, dissatisfaction-based | Santiago acknowledges, no friction. Mike processes Wompi refund. Mark `clients.status = 'refunded'` (extend status enum), retain client record for audit. |
 | Refund requested due to late delivery | Same as above; we own the SLA breach. |
-| Client requests refund AND wants to keep the site | Decline refund or refund partial — needs case-by-case judgment. Document the decision in client notes. |
+| Client requests refund AND wants to keep the site | Decline refund or refund partial · needs case-by-case judgment. Document the decision in client notes. |
 | Bank-side installments fail mid-cycle | That's between the client and their bank; we already received full payment. Inform client to resolve with their bank. |
 | Lead pays through Wompi but webhook never fires | Mike checks Wompi dashboard daily. Manual conversion: insert client row, generate magic link via `wrangler d1 execute` or admin UI, send invite email manually. |
 | Client wants a feature outside both plans | Santiago scopes a custom add-on price. Take payment via separate Wompi link. Track in client notes. |
