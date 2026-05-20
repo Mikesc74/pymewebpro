@@ -1,4 +1,4 @@
-// manual-mockups-bluewhale.js · auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-bluewhale.js — auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/blue-whale-international/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["blue-whale-international"].

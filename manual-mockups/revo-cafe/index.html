@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4A8A7E">
+<meta name="robots" content="noindex, nofollow">
+
+<title>Café Rev · Café en tu barrio · Brunch todo el día en Medellín</title>
+<meta name="description" content="Café Rev es brunch todo el día en Medellín. Bagels al estilo Nueva York, omelettes, café de especialidad, domicilios y para llevar. Cra 73 #4-6. Apoyamos The Capy Project.">
+
+<meta property="og:title" content="Café Rev · Café en tu barrio · Medellín">
+<meta property="og:description" content="Brunch todo el día, bagels al estilo NY, café de especialidad. Domicilios y para llevar. Cra 73 #4-6, Medellín.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CO">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Work+Sans:wght@400;500;600;700;800&display=swap">
+
+<style>
+/* ─── Tokens · Café Rev palette pulled from capybara mint + their food photography warmth ─── */
+:root{
+  --mint:         #4A8A7E;   /* primary teal-green, slightly darker than the capybara bg so text reads */
+  --mint-deep:    #2E5E55;
+  --mint-pale:    #B8DDD4;   /* capybara badge bg */
+  --mint-fog:     #E8F2EE;   /* section bg tint */
+  --terra:        #D86E3A;   /* terracotta accent, ties to the tile in their mascot shot + food photography */
+  --terra-deep:   #B05525;
+  --cream:        #FCF8F0;   /* warm paper bg */
+  --wood:         #6B4423;   /* warm wood accent · used sparingly */
+  --ink:          #1F2A2E;
+  --ink-mute:     #5A6878;
+  --line:         rgba(31,42,46,.10);
+  --shadow-sm:    0 1px 2px rgba(31,42,46,.06), 0 1px 1px rgba(31,42,46,.04);
+  --shadow-md:    0 10px 26px rgba(31,42,46,.10), 0 3px 8px rgba(31,42,46,.06);
+  --radius:       14px;
+  --radius-sm:    8px;
+  --serif:        'Playfair Display', Georgia, 'Times New Roman', serif;
+  --sans:         'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img,svg{display:block;max-width:100%}
+a{color:var(--mint-deep);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font:inherit;cursor:pointer}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-0.01em;line-height:1.05;color:var(--ink);margin:0}
+h1{font-size:clamp(2.6rem,7vw,5rem);font-style:italic;font-weight:500}
+h2{font-size:clamp(1.9rem,4vw,2.8rem);font-style:italic;font-weight:500}
+h3{font-size:1.3rem;font-weight:700;font-style:normal;font-family:var(--sans);letter-spacing:-.01em}
+p{margin:0 0 1rem}
+section{padding:5rem 0}
+.wrap{max-width:1140px;margin:0 auto;padding:0 1.5rem}
+
+/* ─── Components ─── */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mint-deep);font-weight:700;
+  margin:0 0 1rem;
+}
+.eyebrow::before{content:'';display:inline-block;width:28px;height:1.5px;background:var(--terra)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.85rem 1.4rem;border-radius:99px;
+  font-weight:600;font-size:.95rem;letter-spacing:-.005em;
+  border:1.5px solid transparent;cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  white-space:nowrap;font-family:inherit;
+}
+.btn-primary{background:var(--ink);color:var(--cream);box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--mint-deep);color:#fff;transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{background:var(--mint-fog);color:var(--mint-deep);border-color:var(--mint)}
+.btn-lg{padding:1rem 1.7rem;font-size:1rem}
+.btn .ico{width:18px;height:18px;flex:0 0 18px}
+
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+/* ─── Nav ─── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(252,248,240,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:.75rem 1.5rem;max-width:1140px;margin:0 auto;
+}
+.brand{display:inline-flex;align-items:center;gap:.7rem;color:var(--ink);font-weight:700}
+.brand-mark{
+  width:44px;height:44px;flex:0 0 44px;
+  border-radius:50%;background:var(--mint-pale);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-style:italic;font-weight:700;
+  font-size:1.05rem;color:var(--mint-deep);letter-spacing:-.04em;
+  box-shadow:var(--shadow-sm);
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand-name{font-family:var(--serif);font-size:1.2rem;font-weight:700;font-style:italic;color:var(--ink)}
+.brand-sub{font-size:.68rem;color:var(--ink-mute);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+
+.nav-links{display:flex;align-items:center;gap:.15rem;list-style:none;margin:0;padding:0}
+.nav-links a{
+  padding:.45rem .85rem;border-radius:99px;font-size:.86rem;color:var(--ink);
+  font-weight:500;letter-spacing:-.005em;
+}
+.nav-links a:hover{background:var(--mint-fog);color:var(--mint-deep)}
+
+@media (max-width: 880px){
+  .nav-links{display:none}
+}
+
+/* ─── Hero ─── */
+.hero{padding:3rem 0 4rem;position:relative;overflow:hidden}
+.hero-grid{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;
+  align-items:center;
+}
+.hero h1{margin-bottom:1.5rem;color:var(--ink)}
+.hero h1 .accent{color:var(--terra);font-style:italic}
+.hero p.lead{font-size:1.15rem;color:var(--ink);max-width:520px;margin-bottom:2rem}
+.hero-ctas{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.trust-strip{
+  display:flex;flex-wrap:wrap;gap:.3rem .8rem;
+  font-size:.85rem;color:var(--ink-mute);
+}
+.trust-strip span{display:inline-flex;align-items:center;gap:.4rem}
+.trust-strip .dot{width:5px;height:5px;border-radius:50%;background:var(--terra);display:inline-block}
+
+.hero-graphic{
+  position:relative;
+  width:100%;max-width:480px;
+  padding-top:120%;            /* 5/6, slightly taller than 4:5, fits the IG screenshots better */
+  margin-left:auto;margin-right:0;
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(31,42,46,.30), 0 6px 18px rgba(31,42,46,.12);
+  background:var(--mint-fog);
+}
+.hero-graphic .slide{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:0;transition:opacity .8s ease-in-out;
+  will-change:opacity;
+}
+.hero-graphic .slide.is-active{opacity:1}
+.hero-graphic .caption{
+  position:absolute;left:1rem;bottom:1rem;z-index:3;
+  padding:.4rem .85rem;background:rgba(255,255,255,.94);color:var(--mint-deep);
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  border-radius:99px;backdrop-filter:blur(6px);
+  opacity:0;transform:translateY(4px);transition:opacity .4s ease, transform .4s ease;
+}
+.hero-graphic .caption.is-active{opacity:1;transform:translateY(0)}
+
+/* Soft "capybara sticker" floating over the hero · brand presence without an explicit logo lockup */
+.hero-stamp{
+  position:absolute;right:-26px;top:-26px;z-index:4;
+  width:130px;height:130px;border-radius:50%;
+  background:var(--mint-pale);
+  display:flex;align-items:center;justify-content:center;
+  transform:rotate(-8deg);
+  box-shadow:0 14px 30px rgba(31,42,46,.18);
+  font-family:var(--serif);font-style:italic;color:var(--mint-deep);
+  text-align:center;line-height:1.05;
+  padding:.5rem;
+}
+.hero-stamp .top{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;font-style:normal;font-weight:700;font-family:var(--sans)}
+.hero-stamp .big{font-size:2rem;font-weight:700;margin:.1rem 0}
+.hero-stamp .bot{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;font-style:normal;font-weight:700;font-family:var(--sans)}
+
+@media (prefers-reduced-motion: reduce){
+  .hero-graphic .slide{transition:none}
+  .hero-graphic .slide:not(:first-child){display:none}
+  .hero-graphic .slide:first-child{opacity:1}
+  .hero-graphic .caption.is-active{opacity:1;transform:none}
+}
+@media (max-width: 880px){
+  .hero{padding:2rem 0 2rem}
+  .hero-grid{grid-template-columns:1fr;gap:2.5rem}
+  .hero-graphic{margin:0 auto;max-width:340px}
+  .hero-stamp{width:100px;height:100px;right:-12px;top:-12px}
+  .hero-stamp .big{font-size:1.5rem}
+}
+
+/* ─── La hora del brunch ─── */
+.brunch{background:var(--mint-fog);position:relative}
+.brunch::before,.brunch::after{content:'';position:absolute;left:0;right:0;height:1px;background:var(--line)}
+.brunch::before{top:0}
+.brunch::after{bottom:0}
+.brunch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.brunch-head p{max-width:480px;color:var(--ink);margin:0}
+
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.menu-card .ph{aspect-ratio:1/1;background:var(--mint-pale);overflow:hidden}
+.menu-card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.menu-card .body{padding:1.4rem 1.5rem 1.6rem}
+.menu-card .kicker{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:.4rem}
+.menu-card h3{margin-bottom:.4rem;font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.4rem}
+.menu-card p{color:var(--ink-mute);font-size:.92rem;margin:0;line-height:1.5}
+
+@media (max-width: 880px){.menu-grid{grid-template-columns:1fr;gap:1.25rem}}
+
+/* ─── Café especialidad ─── */
+.coffee{background:var(--cream)}
+.coffee-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;margin-top:2rem}
+.coffee h2{margin-bottom:1rem}
+.coffee .lead{font-size:1.08rem;color:var(--ink);max-width:520px;margin-bottom:1.5rem}
+.coffee-list{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem 1.5rem}
+.coffee-list li{padding-left:1.25rem;position:relative;color:var(--ink);font-size:.95rem;line-height:1.5}
+.coffee-list li::before{content:'';position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--mint)}
+
+.coffee-cup{
+  position:relative;aspect-ratio:1/1;max-width:380px;margin-left:auto;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--mint) 0%, var(--mint-deep) 80%);
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  box-shadow:0 30px 60px -20px rgba(46,138,126,.35);
+}
+.coffee-cup::after{
+  content:'';position:absolute;inset:10px;border-radius:50%;border:2px solid rgba(255,255,255,.18);
+}
+.coffee-cup .quote{
+  position:relative;z-index:2;font-family:var(--serif);font-style:italic;font-weight:500;
+  font-size:clamp(1.4rem,3vw,2rem);text-align:center;line-height:1.15;padding:0 2rem;
+}
+.coffee-cup .quote .small{display:block;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-family:var(--sans);font-style:normal;font-weight:600;color:rgba(255,255,255,.72);margin-top:.8rem}
+
+@media (max-width: 880px){.coffee-grid{grid-template-columns:1fr;gap:2rem}.coffee-cup{margin:0 auto;max-width:280px}.coffee-list{grid-template-columns:1fr}}
+
+/* ─── Domicilios + para llevar ─── */
+.delivery{background:var(--ink);color:rgba(255,255,255,.92);position:relative;overflow:hidden}
+.delivery h2,.delivery h3{color:#fff}
+.delivery .eyebrow{color:var(--mint-pale)}
+.delivery .eyebrow::before{background:var(--terra)}
+.delivery .lead{font-size:1.08rem;max-width:600px;color:rgba(255,255,255,.82);margin-bottom:2.5rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem}
+.step{position:relative;padding:1.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:var(--radius)}
+.step-num{
+  position:absolute;top:1.1rem;right:1.4rem;
+  font-family:var(--serif);font-style:italic;font-weight:500;font-size:2.4rem;
+  color:rgba(184,221,212,.22);line-height:1;
+}
+.step h3{font-size:1.05rem;margin-bottom:.6rem;color:#fff;font-family:var(--sans);font-style:normal;font-weight:700}
+.step p{color:rgba(255,255,255,.72);font-size:.92rem;margin:0;line-height:1.55}
+.delivery-tags{margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:.5rem}
+.delivery-pill{padding:.4rem .9rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:99px;font-size:.85rem;color:rgba(255,255,255,.88)}
+
+@media (max-width: 780px){.steps{grid-template-columns:1fr}}
+
+/* ─── El espacio ─── */
+.space{background:var(--mint-fog)}
+.space-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:2rem}
+.space h2{margin-bottom:1rem}
+.space-photo{
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 24px 50px -20px rgba(31,42,46,.30);
+}
+.space-photo img{width:100%;height:auto;display:block}
+.space p.lead{font-size:1.08rem;color:var(--ink);margin-bottom:1rem}
+.space .micro{font-size:.85rem;color:var(--ink-mute);margin-top:1.5rem}
+.space .micro b{color:var(--mint-deep)}
+
+@media (max-width: 880px){.space-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* ─── The Capy Project ─── */
+.capy{background:var(--cream);position:relative;overflow:hidden}
+.capy-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:3rem;align-items:center;margin-top:2rem}
+.capy h2{margin-bottom:1rem;color:var(--mint-deep)}
+.capy .lead{font-size:1.08rem;color:var(--ink);margin-bottom:1.25rem}
+.capy .by-cafe{font-size:.95rem;color:var(--ink-mute);margin-bottom:1.5rem;font-style:italic}
+.capy .meta{
+  display:grid;grid-template-columns:auto 1fr;gap:.45rem 1rem;
+  margin-top:1.5rem;font-size:.92rem;
+}
+.capy .meta b{color:var(--mint-deep);font-weight:600}
+.capy-photo{
+  aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+  box-shadow:0 24px 50px -20px rgba(31,42,46,.30);
+  background:var(--terra);
+}
+.capy-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.capy-cta{margin-top:1.5rem;display:inline-flex;align-items:center;gap:.5rem;color:var(--mint-deep);font-weight:600}
+.capy-cta:hover{color:var(--terra)}
+
+@media (max-width: 880px){.capy-grid{grid-template-columns:1fr;gap:2rem}.capy-photo{max-width:380px;margin:0 auto}}
+
+/* ─── Visítanos ─── */
+.visit{background:var(--cream)}
+.visit-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;margin-top:2.5rem;align-items:start}
+.info-cards{display:flex;flex-direction:column;gap:.85rem}
+.info-card{
+  display:grid;grid-template-columns:44px 1fr;gap:1rem;
+  padding:1.2rem 1.4rem;background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow-sm);
+}
+.info-card .ico-wrap{
+  width:44px;height:44px;border-radius:12px;background:var(--mint-fog);
+  color:var(--mint-deep);display:flex;align-items:center;justify-content:center;
+}
+.info-card .ico-wrap svg{width:22px;height:22px}
+.info-card .label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:.25rem}
+.info-card .value{font-size:1rem;color:var(--ink);font-weight:500;line-height:1.4}
+.info-card a.value{color:var(--mint-deep)}
+.info-card a.value:hover{color:var(--terra)}
+
+.visit-cta{
+  background:linear-gradient(135deg, var(--terra) 0%, var(--terra-deep) 100%);
+  color:#fff;border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow-md);
+  position:relative;overflow:hidden;
+}
+.visit-cta::before{
+  content:'';position:absolute;width:200px;height:200px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.14);top:-50px;right:-60px;
+}
+.visit-cta h3{color:#fff;font-size:1.4rem;margin-bottom:.6rem;position:relative;font-family:var(--serif);font-style:italic;font-weight:500}
+.visit-cta p{color:rgba(255,255,255,.88);font-size:.95rem;margin-bottom:1.4rem;position:relative}
+.visit-cta .btn{background:#fff;color:var(--terra-deep);border-color:#fff;position:relative}
+.visit-cta .btn:hover{background:var(--cream);color:var(--ink)}
+
+@media (max-width: 880px){.visit-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* ─── Footer ─── */
+footer{background:var(--ink);color:rgba(255,255,255,.72);padding:3rem 0 2rem;font-size:.9rem}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+footer .brand{color:#fff;margin-bottom:1rem}
+footer .brand-name{color:#fff}
+footer .brand-sub{color:rgba(255,255,255,.5)}
+footer h4{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.95);margin:0 0 1rem;font-weight:700}
+footer ul{list-style:none;margin:0;padding:0}
+footer li{padding:.25rem 0;color:rgba(255,255,255,.7)}
+footer a{color:rgba(255,255,255,.85)}
+footer a:hover{color:var(--mint-pale)}
+.foot-bottom{
+  border-top:1px solid rgba(255,255,255,.10);padding-top:1.5rem;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+  font-size:.78rem;color:rgba(255,255,255,.5);
+}
+.foot-bottom a{color:rgba(255,255,255,.7)}
+
+@media (max-width: 780px){.foot-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* ─── Chat widget ─── */
+.chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--terra);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(216,110,58,.45), 0 4px 8px rgba(216,110,58,.25);transition:transform .2s ease, background .2s ease, opacity .2s ease;font-family:inherit}
+.chat-fab:hover{background:var(--terra-deep);transform:scale(1.05)}
+.chat-fab:focus-visible{outline:3px solid var(--mint-pale);outline-offset:3px}
+.chat-fab svg{width:28px;height:28px}
+.chat-fab[hidden]{display:none}
+.chat-panel{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:380px;max-width:calc(100vw - 2rem);height:560px;max-height:calc(100vh - 3rem);background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(31,42,46,.22), 0 8px 16px rgba(31,42,46,.12);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .25s ease, opacity .25s ease}
+.chat-panel[data-open="true"]{transform:translateY(0);opacity:1;pointer-events:auto}
+.chat-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.95rem 1.1rem;background:var(--mint-deep);color:#fff}
+.chat-header .who{display:flex;align-items:center;gap:.65rem}
+.chat-header .avatar{width:40px;height:40px;border-radius:50%;background:var(--mint-pale);background-image:url('./capy-avatar.jpg');background-size:cover;background-position:center;box-shadow:0 1px 4px rgba(0,0,0,.18), inset 0 0 0 2px rgba(255,255,255,.45)}
+.chat-header .title{font-weight:600;font-size:.95rem;line-height:1.15}
+.chat-header .subtitle{font-size:.72rem;opacity:.85;display:flex;align-items:center;gap:.35rem}
+.chat-header .subtitle::before{content:'';width:7px;height:7px;border-radius:50%;background:#7CF7C5;box-shadow:0 0 0 2px rgba(124,247,197,.25)}
+.chat-close{background:transparent;color:rgba(255,255,255,.85);border:none;padding:.3rem;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s ease}
+.chat-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.chat-close svg{width:18px;height:18px}
+.chat-body{flex:1;overflow-y:auto;padding:1rem 1.1rem;background:#FAFBFB;display:flex;flex-direction:column;gap:.6rem;scroll-behavior:smooth}
+.chat-body::-webkit-scrollbar{width:6px}
+.chat-body::-webkit-scrollbar-thumb{background:rgba(31,42,46,.14);border-radius:3px}
+.bubble{max-width:80%;padding:.7rem .9rem;border-radius:14px;font-size:.92rem;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+.bubble.bot{background:#fff;color:var(--ink);align-self:flex-start;border:1px solid var(--line);border-bottom-left-radius:4px}
+.bubble.user{background:var(--mint-deep);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.bubble.typing{display:inline-flex;gap:3px;align-items:center;padding:.85rem 1rem;color:var(--ink-mute)}
+.bubble.typing span{width:6px;height:6px;border-radius:50%;background:var(--ink-mute);animation:tdot 1.2s infinite ease-in-out}
+.bubble.typing span:nth-child(2){animation-delay:.15s}.bubble.typing span:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-3px);opacity:1}}
+.bubble.error{background:#FEF2F2;color:#991B1B;border:1px solid #FEE2E2;align-self:flex-start;border-bottom-left-radius:4px}
+.wa-cta{display:inline-flex;align-items:center;gap:.5rem;align-self:flex-start;margin-top:.2rem;padding:.7rem 1rem;background:#25D366;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:.88rem;box-shadow:0 6px 14px rgba(37,211,102,.32);transition:transform .15s ease}
+.wa-cta:hover{transform:translateY(-1px);color:#fff}
+.wa-cta svg{width:16px;height:16px}
+.chat-input-row{display:flex;gap:.5rem;padding:.75rem;background:#fff;border-top:1px solid var(--line)}
+.chat-input{flex:1;border:1px solid var(--line);border-radius:10px;padding:.6rem .85rem;font:inherit;font-size:.92rem;color:var(--ink);outline:none;background:#FAFBFB;transition:border-color .15s ease, background .15s ease}
+.chat-input:focus{border-color:var(--mint);background:#fff}
+.chat-send{background:var(--mint-deep);color:#fff;border:none;border-radius:10px;padding:0 .9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s ease}
+.chat-send:hover{background:var(--ink)}
+.chat-send:disabled{background:var(--ink-mute);cursor:not-allowed}
+.chat-send svg{width:18px;height:18px}
+.chat-foot{padding:.45rem .75rem;background:#fff;border-top:1px solid var(--line);font-size:.7rem;color:var(--ink-mute);text-align:center;letter-spacing:.02em}
+
+@media (max-width: 500px){.chat-panel{bottom:0;right:0;width:100vw;height:100vh;max-height:100vh;border-radius:0;border:none}.chat-fab{bottom:1rem;right:1rem;width:56px;height:56px}}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}
+@media print{.nav,.chat-fab,.hero-graphic,footer{display:none}body{background:#fff;color:#000}section{padding:1rem 0;page-break-inside:avoid}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "name": "Café Rev",
+  "description": "Café de especialidad y brunch todo el día en Medellín. Bagels al estilo neoyorquino, omelettes, café de origen, domicilios y servicio para llevar.",
+  "url": "https://mockups.pymewebpro.com/revo-cafe/",
+  "image": "https://mockups.pymewebpro.com/revo-cafe/",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Cra 73 #4-6",
+    "addressLocality": "Medellín",
+    "addressRegion": "Antioquia",
+    "addressCountry": "CO"
+  },
+  "servesCuisine": ["Brunch", "Bagels", "Café de especialidad"],
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "08:00",
+    "closes": "20:00"
+  }],
+  "sameAs": ["https://www.instagram.com/caferevmedellin"]
+}
+</script>
+</head>
+<body>
+
+<!-- ─── Nav ─── -->
+<header class="nav" aria-label="Navegación principal">
+  <div class="nav-inner">
+    <a href="#top" class="brand" aria-label="Café Rev · inicio">
+      <span class="brand-mark" aria-hidden="true">Rev</span>
+      <span class="brand-text">
+        <span class="brand-name">Café Rev</span>
+        <span class="brand-sub">Café en tu barrio</span>
+      </span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#brunch">Brunch</a></li>
+        <li><a href="#cafe">Café</a></li>
+        <li><a href="#domicilios">Domicilios</a></li>
+        <li><a href="#capy">The Capy Project</a></li>
+        <li><a href="#visitanos">Visítanos</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="btn btn-primary" data-action="open-chat" aria-label="Hablar con el asistente de Café Rev">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Pide o consulta
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ─── Hero ─── -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Café · Brunch · Medellín</span>
+      <h1><em>Café</em><br>en tu <span class="accent">barrio.</span></h1>
+      <p class="lead">Brunch todo el día. Bagels al estilo neoyorquino, omelettes generosos, café de origen, y domicilios para que comas rico sin moverte. Vení, pedí, o llevátelo.</p>
+      <div class="hero-ctas">
+        <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Pide o consulta con nuestro asistente
+        </button>
+        <a class="btn btn-ghost btn-lg" href="#brunch">
+          Ver la carta
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="trust-strip">
+        <span><span class="dot"></span>Brunch todo el día</span>
+        <span><span class="dot"></span>Domicilios y para llevar</span>
+        <span><span class="dot"></span>Apoyamos The Capy Project</span>
+      </div>
+    </div>
+
+    <figure class="hero-graphic" id="heroGallery" aria-label="Café Rev · platos y espacio">
+      <img class="slide is-active" src="./hero-salmon-bagel.jpg" alt="Smoked Salmon Bagel · bagel con salmón ahumado, queso crema, eneldo, pepino y cebolla morada" width="900" height="1080" decoding="async" fetchpriority="high">
+      <img class="slide" src="./hero-bagels.jpg" alt="Tabla de bagels y sándwiches estilo brunch · varias opciones de proteína" width="900" height="1080" decoding="async" loading="lazy">
+      <img class="slide" src="./hero-interior.jpg" alt="Interior del café · ambiente bohemio, mesas comunales y plantas" width="900" height="1080" decoding="async" loading="lazy">
+      <span class="caption is-active" data-i="0">Smoked Salmon Bagel</span>
+      <span class="caption" data-i="1">Tabla para compartir</span>
+      <span class="caption" data-i="2">El espacio</span>
+      <div class="hero-stamp" aria-hidden="true">
+        <span class="top">Café</span>
+        <span class="big"><em>Rev</em></span>
+        <span class="bot">Medellín</span>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ─── Brunch ─── -->
+<section id="brunch" class="brunch">
+  <div class="wrap">
+    <div class="brunch-head">
+      <div>
+        <span class="eyebrow">La carta</span>
+        <h2>El brunch <em>no tiene hora.</em></h2>
+      </div>
+      <p>Porciones grandes, productos frescos, recetas que no escatiman. Bagels horneados en casa con un partner neoyorquino, omelettes que llenan, y postres que se acaban antes del mediodía.</p>
+    </div>
+
+    <div class="menu-grid">
+      <article class="card menu-card">
+        <div class="ph"><img src="./hero-salmon-bagel.jpg" alt="Smoked Salmon Bagel servido en plato negro"></div>
+        <div class="body">
+          <span class="kicker">Estrella de la casa</span>
+          <h3>Smoked Salmon Bagel</h3>
+          <p>Bagel tostado, queso crema, salmón ahumado premium, eneldo fresco, pepino, cebolla morada y un toque de limón. La razón por la que mucha gente vuelve.</p>
+        </div>
+      </article>
+
+      <article class="card menu-card">
+        <div class="ph"><img src="./menu-omelette.jpg" alt="Chili Cheese Omelette · omelette amarillo grande con especias"></div>
+        <div class="body">
+          <span class="kicker">Para los que aman el picante</span>
+          <h3>Chili Cheese Omelette</h3>
+          <p>Tres huevos, queso, mezcla de chiles, y una sorpresa que solo descubrís al primer bocado. Un must si te va lo picante. Sirve con acompañamiento del día.</p>
+        </div>
+      </article>
+
+      <article class="card menu-card">
+        <div class="ph"><img src="./menu-mini-bagels.jpg" alt="Tabla de mini bagels variados para compartir"></div>
+        <div class="body">
+          <span class="kicker">Para compartir</span>
+          <h3>Tabla de mini bagels</h3>
+          <p>Una selección con todos los favoritos: salmón premium, bacon-egg-cheese, atún, y más. Perfecta para reuniones, parches matutinos, o para no decidirse por uno solo.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Café especialidad ─── -->
+<section id="cafe" class="coffee">
+  <div class="wrap">
+    <span class="eyebrow">Café de especialidad</span>
+    <h2>El café no es accesorio. <em>Es el motivo.</em></h2>
+
+    <div class="coffee-grid">
+      <div>
+        <p class="lead">Trabajamos con granos de origen colombiano, tostado fresco, y baristas que respetan cada extracción. Si querés probar algo distinto, pedí el <b>cold brew tonic</b>. Fresco, ligero y con burbujas.</p>
+        <ul class="coffee-list">
+          <li>Espresso, americano, cortado</li>
+          <li>Latte, cappuccino, flat white</li>
+          <li>Cold brew · cold brew tonic</li>
+          <li>Filtrados V60 y AeroPress</li>
+          <li>Matcha, té chai, chocolate caliente</li>
+          <li>Granos de origen para llevar</li>
+        </ul>
+      </div>
+
+      <div class="coffee-cup">
+        <div class="quote">
+          <em>Blindfolded latte test.</em>
+          <span class="small">Sí, lo hacemos.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Domicilios ─── -->
+<section id="domicilios" class="delivery">
+  <div class="wrap">
+    <span class="eyebrow">Domicilios · Para llevar</span>
+    <h2>Tu brunch, <em>donde vos quieras.</em></h2>
+    <p class="lead">Llevamos el brunch hasta tu casa, oficina, o coworking. También podés pasar y recoger tu pedido en menos de lo que tardás en parquear.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3>Escribínos por chat</h3>
+        <p>Abrí el asistente acá mismo. Te ayudamos a armar el pedido, te confirmamos disponibilidad y total al instante.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3>Domicilio o pickup</h3>
+        <p>Elegís: te lo llevamos al portón, o lo recogés en la tienda sin esperar fila. Sin sorpresas en el precio.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3>Comé delicioso</h3>
+        <p>Listo. Empacado bien, todavía calientito, con la misma porción generosa que vas a encontrar acá adentro.</p>
+      </div>
+    </div>
+
+    <div class="delivery-tags">
+      <span class="delivery-pill">El Estadio y aledaños</span>
+      <span class="delivery-pill">Laureles</span>
+      <span class="delivery-pill">Belén La Mota</span>
+      <span class="delivery-pill">Pickup en la tienda</span>
+      <span class="delivery-pill">Pago en efectivo, Nequi, Daviplata, tarjeta</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── El espacio ─── -->
+<section class="space">
+  <div class="wrap">
+    <div class="space-grid">
+      <div>
+        <span class="eyebrow">El espacio</span>
+        <h2>Pequeño, <em>como debe ser.</em></h2>
+        <p class="lead">Un café de barrio, no una franquicia. Mesas comunales, plantas, música que no te grita, y gente que se queda. Trabajamos como casa propia: si necesitás un enchufe, hay; si querés quedarte a leer, quedate.</p>
+        <p>El sitio es paisa de raíz, abierto a todos los que llegan: vecinos, expats, parches de fin de semana, gente sola con su libro. Acá te conocemos por nombre la segunda vez.</p>
+        <div class="micro"><b>Tip de cuneta:</b> los sábados a las 9 a.m. está perfecto. Los domingos al mediodía toca esperar mesa, vale la pena.</div>
+      </div>
+      <div class="space-photo">
+        <img src="./hero-interior.jpg" alt="Interior del café · ambiente bohemio con mesas comunales y plantas">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── The Capy Project ─── -->
+<section id="capy" class="capy">
+  <div class="wrap">
+    <div class="capy-grid">
+      <div class="capy-photo">
+        <img src="./mascot-sticker.jpg" alt="Mascota capibara de Café Rev sobre baldosa de terracota">
+      </div>
+      <div>
+        <span class="eyebrow">Apoyamos</span>
+        <h2>The Capy <em>Project.</em></h2>
+        <p class="by-cafe">No usamos al capibara solo porque es bonito.</p>
+        <p class="lead">Una parte de lo que vendés acá termina en <b>The Capy Project Foundation</b>, un santuario de vida silvestre en Orocué, Casanare. Protegen capibaras, jaguarundis, babillas, y flora local que sin gente que la cuide ya no estaría.</p>
+        <p>Si te gusta el café, también te gustó saber esto. Si querés conocerlos, seguilos:</p>
+        <a class="capy-cta" href="https://www.instagram.com/thecapyproject/" target="_blank" rel="noopener">
+          @thecapyproject en Instagram
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+        <div class="meta">
+          <b>Sede:</b><span>Orocué, Casanare · Colombia</span>
+          <b>Misión:</b><span>Santuario de vida silvestre, conservación de flora y fauna, protección de especies en peligro.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Visítanos ─── -->
+<section id="visitanos" class="visit">
+  <div class="wrap">
+    <span class="eyebrow">Pásate por la tienda</span>
+    <h2>Cerca de todo, <em>fácil de encontrar.</em></h2>
+
+    <div class="visit-grid">
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5-7-11a7 7 0 0 1 14 0c0 6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="label">Dirección</div>
+            <div class="value">Cra 73 #4-6<br>Medellín, Antioquia · Colombia</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="label">Horario</div>
+            <div class="value">Lunes a Domingo · 8:00 a.m. a 8:00 p.m.<br><span style="color:var(--ink-mute);font-size:.88rem">Brunch todo el día</span></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/></svg>
+          </div>
+          <div>
+            <div class="label">Instagram</div>
+            <a class="value" href="https://www.instagram.com/caferevmedellin" target="_blank" rel="noopener">@caferevmedellin</a>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l-6-6 6-6"/><path d="M3 12h18"/></svg>
+          </div>
+          <div>
+            <div class="label">Cómo llegar</div>
+            <a class="value" href="https://maps.google.com/?q=Cra+73+%234-6,+Medellin" target="_blank" rel="noopener">Abrir en Google Maps</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="visit-cta">
+        <h3>¿Antojo? <em>Pedílo ahora.</em></h3>
+        <p>Nuestro asistente arma el pedido con vos, te confirma disponibilidad, y coordina con Alejo si hace falta algo a mano.</p>
+        <button type="button" class="btn btn-lg" data-action="open-chat">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Hablar con el asistente
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ─── Footer ─── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="brand" aria-label="Café Rev · inicio">
+          <span class="brand-mark" style="background:var(--mint);color:#fff" aria-hidden="true">Rev</span>
+          <span class="brand-text">
+            <span class="brand-name" style="color:#fff;font-family:var(--serif);font-style:italic">Café Rev</span>
+            <span class="brand-sub">Café en tu barrio</span>
+          </span>
+        </a>
+        <p style="color:rgba(255,255,255,.6);font-size:.88rem;margin-top:1rem;max-width:320px">Café de barrio, brunch todo el día, café de especialidad y comunidad #cafecapybaras. Apoyamos The Capy Project Foundation.</p>
+      </div>
+
+      <div>
+        <h4>Visítanos</h4>
+        <ul>
+          <li>Cra 73 #4-6</li>
+          <li>Medellín · Antioquia</li>
+          <li style="margin-top:.5rem">Lun a Dom · 8 a.m. a 8 p.m.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Encuéntranos</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/caferevmedellin" target="_blank" rel="noopener">Instagram · @caferevmedellin</a></li>
+          <li><a href="https://www.instagram.com/thecapyproject" target="_blank" rel="noopener">@thecapyproject</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Café Rev · Medellín, Colombia</span>
+      <span>Sitio web por <a href="https://pymewebpro.com" rel="noopener">PymeWebPro</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── Chat widget ─── -->
+<button class="chat-fab" id="chatOpenBtn" aria-label="Hablar con el asistente" aria-expanded="false" aria-controls="chatPanel">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
+  <header class="chat-header">
+    <div class="who">
+      <div class="avatar" role="img" aria-label="Capy, mascota de Café Rev"></div>
+      <div>
+        <div class="title" id="chatTitle">Capy</div>
+        <div class="subtitle">Asistente Café Rev · en línea</div>
+      </div>
+    </div>
+    <button class="chat-close" id="chatCloseBtn" aria-label="Cerrar chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </header>
+  <div class="chat-body" id="chatBody" aria-live="polite" aria-atomic="false"></div>
+  <form class="chat-input-row" id="chatForm" autocomplete="off">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu mensaje…" aria-label="Mensaje" maxlength="500" required />
+    <button type="submit" class="chat-send" id="chatSendBtn" aria-label="Enviar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </form>
+  <div class="chat-foot">Atendido por IA · siempre puedes hablar con un humano por WhatsApp</div>
+</aside>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Hero gallery rotation
+(function(){
+  var gallery = document.getElementById('heroGallery');
+  if (!gallery) return;
+  var slides = Array.prototype.slice.call(gallery.querySelectorAll('.slide'));
+  var captions = Array.prototype.slice.call(gallery.querySelectorAll('.caption'));
+  if (slides.length < 2) return;
+  var motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!motionOK) return;
+  var i = 0, timer = null;
+  function show(n){
+    slides.forEach(function(s, idx){ s.classList.toggle('is-active', idx === n); });
+    captions.forEach(function(c, idx){ c.classList.toggle('is-active', idx === n); });
+  }
+  function tick(){ i = (i + 1) % slides.length; show(i); }
+  function start(){ if (!timer) timer = setInterval(tick, 2500); }
+  function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+  gallery.addEventListener('mouseenter', stop);
+  gallery.addEventListener('mouseleave', start);
+  document.addEventListener('visibilitychange', function(){ if (document.hidden) stop(); else start(); });
+  start();
+})();
+
+// Chat widget
+(function(){
+  var SLUG = 'revo-cafe';
+  var ENDPOINT = 'https://mockups.pymewebpro.com/api/chat/' + SLUG;
+  var WA_FALLBACK = 'https://wa.me/573001234567?text=' + encodeURIComponent('Hola Café Rev, tengo una pregunta');
+
+  var fab = document.getElementById('chatOpenBtn');
+  var panel = document.getElementById('chatPanel');
+  var closeBtn = document.getElementById('chatCloseBtn');
+  var body = document.getElementById('chatBody');
+  var form = document.getElementById('chatForm');
+  var input = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+
+  var history = [];
+  var greeted = false;
+
+  function openPanel(){
+    panel.setAttribute('data-open','true');
+    panel.setAttribute('aria-hidden','false');
+    fab.setAttribute('aria-expanded','true');
+    fab.hidden = true;
+    if (!greeted){ greet(); greeted = true; }
+    setTimeout(function(){ input.focus(); }, 280);
+  }
+  function closePanel(){
+    panel.setAttribute('data-open','false');
+    panel.setAttribute('aria-hidden','true');
+    fab.setAttribute('aria-expanded','false');
+    fab.hidden = false;
+  }
+  fab.addEventListener('click', openPanel);
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.getAttribute('data-open') === 'true') closePanel(); });
+  document.querySelectorAll('[data-action="open-chat"]').forEach(function(btn){
+    btn.addEventListener('click', function(e){ e.preventDefault(); openPanel(); });
+  });
+
+  function addBubble(role, text, opts){
+    opts = opts || {};
+    var el = document.createElement('div');
+    el.className = 'bubble ' + role + (opts.error ? ' error' : '');
+    el.textContent = text;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+  function addTyping(){
+    var el = document.createElement('div');
+    el.className = 'bubble bot typing';
+    el.setAttribute('aria-label','escribiendo');
+    el.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+  function addWaCta(url, label){
+    var a = document.createElement('a');
+    a.className = 'wa-cta';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span></span>';
+    a.querySelector('span').textContent = label;
+    body.appendChild(a);
+    body.scrollTop = body.scrollHeight;
+  }
+  function greet(){
+    addBubble('bot', '¡Hola! Soy Capy, la mascota de Café Rev. Te ayudo con el menú, domicilios, para llevar, o lo que quieras saber del café o de The Capy Project. ¿En qué te ayudo?');
+  }
+
+  async function send(text){
+    history.push({ role:'user', content:text });
+    addBubble('user', text);
+    input.value = '';
+    sendBtn.disabled = true;
+    var typing = addTyping();
+    try {
+      var res = await fetch(ENDPOINT, {
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body: JSON.stringify({ messages: history }),
+      });
+      typing.remove();
+      if (!res.ok){
+        var detail = '';
+        try { var j = await res.json(); detail = j.error || ''; } catch(e){}
+        var msg = res.status === 503
+          ? 'El asistente está temporalmente fuera de línea. Habla directamente con nosotros por WhatsApp.'
+          : 'Hmm, algo no salió bien. Escríbenos directamente por WhatsApp y te atendemos al instante.';
+        addBubble('bot', msg, { error:true });
+        addWaCta(WA_FALLBACK, 'Hablar por WhatsApp');
+        return;
+      }
+      var data = await res.json();
+      var reply = (data.reply || '').trim();
+      if (reply) addBubble('bot', reply);
+      if (data.wa_link){
+        var label = data.mode === 'order' ? 'Confirmar pedido por WhatsApp' : 'Continuar por WhatsApp';
+        addWaCta(data.wa_link, label);
+      }
+      history.push({ role:'assistant', content: reply });
+    } catch(err) {
+      typing.remove();
+      addBubble('bot', 'No pude enviar tu mensaje. Habla con nosotros por WhatsApp y te atendemos de una.', { error:true });
+      addWaCta(WA_FALLBACK, 'Hablar por WhatsApp');
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text = (input.value || '').trim();
+    if (!text || sendBtn.disabled) return;
+    send(text);
+  });
+})();
+</script>
+
+</body>
+</html>

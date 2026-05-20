@@ -1,4 +1,4 @@
-// manual-mockups-blueskitchen.js · auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-blueskitchen.js — auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/blues-kitchen/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["blues-kitchen"].

@@ -1,4 +1,4 @@
-// manual-mockups-medellinguide.js · auto-rebuilt by scripts/rebuild-mockups.mjs
+// manual-mockups-medellinguide.js — auto-rebuilt by scripts/rebuild-mockups.mjs
 // Source: manual-mockups/medellin-guide/index.html
 //
 // Imported by manual-mockups.js → MANUAL_MOCKUPS["medellin-guide"].

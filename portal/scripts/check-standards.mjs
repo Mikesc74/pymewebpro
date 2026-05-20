@@ -147,6 +147,12 @@ const mockupSites = fs.readdirSync(MOCKUPS_DIR, { withFileTypes: true })
   .filter((d) => d.isDirectory() && !d.name.startsWith("_"))
   .map((d) => d.name)
   .filter((s) => !FULL_SITE_EXEMPT.has(s))
+  // Skip directories that don't have an index.html yet. These are research /
+  // WIP folders (Instagram pulls, mood-board screenshots, hero photo drafts)
+  // that haven't been built into a mockup. A missing index.html is not a
+  // deploy-blocking failure for the WORKER · it just means the directory
+  // exists but the build hasn't happened yet.
+  .filter((s) => fs.existsSync(path.join(MOCKUPS_DIR, s, "index.html")))
   .map((slug) => ({ label: slug, file: path.join(MOCKUPS_DIR, slug, "index.html") }));
 
 const sites = [...PRODUCTION_SITES, ...mockupSites];

@@ -1,38 +1,59 @@
-// manual-mockups.js · hand-written, fully-inlined static HTML mockups
-// served from mockups.pymewebpro.com/<slug>/.
+// manual-mockups.js · registry of mockup slugs served from
+// pymewebpro.com/manual-mockups/<slug>/ (Cloudflare Pages).
 //
-// These bypass the PYME auto-generator (which is tuned for Colombian
-// small businesses) so we can hand-craft polished marketing sites for
-// US/B2B clients whose product, tone, and audience don't fit that mold.
+// Previously this file imported the auto-generated `./manual-mockups-*.js`
+// modules (each 100KB-1.7MB after photo base64-inlining), exposing them as
+// `MANUAL_MOCKUPS[slug]` to be served inline by the worker. That pushed the
+// worker bundle over the 3MB free-tier limit on 2026-05-19 and blocked the
+// admin SPA fix from deploying.
 //
-// Each entry is keyed by URL slug. The value is a complete HTML document
-// (DOCTYPE → </html>) with every CSS rule and JS line inlined; only
-// fonts and images may be loaded from external CDNs. To add a new mockup,
-// write a render function below and append it to the MANUAL_MOCKUPS map
-// at the bottom · no other code changes required.
+// New architecture (2026-05-19):
+//   1. Mockup HTML + photos live in `~/code/pymewebpro/manual-mockups/<slug>/`
+//      and are deployed by the pymewebpro.com Cloudflare Pages project on
+//      every git push. URL: https://pymewebpro.com/manual-mockups/<slug>/
+//   2. The worker no longer bundles the HTML. Slug validation uses the
+//      `MOCKUP_SLUGS` set below.
+//   3. GET requests to `mockups.pymewebpro.com/<slug>/` 301-redirect to the
+//      Pages URL · keeps existing share links working.
+//   4. POST API endpoints (chat, lead, contact) still served by the worker.
+//      Mockup HTML calls them via absolute URLs (https://mockups.pymewebpro.com/api/...).
+//
+// To add a new mockup: drop the HTML + assets in
+// `~/code/pymewebpro/manual-mockups/<new-slug>/`, add the slug to MOCKUP_SLUGS
+// below, git push. No more rebuild-mockups.mjs round-trip.
 
-import { bluesKitchenHtml } from "./manual-mockups-blueskitchen.js";
-import { dagaParfumHtml } from "./manual-mockups-dagaparfum.js";
-import { blueWhaleHtml } from "./manual-mockups-bluewhale.js";
-import { espacioDentalHtml } from "./manual-mockups-espaciodental.js";
-import { marenaHtml } from "./manual-mockups-marena.js";
-import { startHtml } from "./manual-mockups-start.js";
-import { medellinGuideHtml } from "./manual-mockups-medellinguide.js";
-import { medellinGuideBoutiqueHtml } from "./manual-mockups-medellinguideboutique.js";
-import { centralFarmaHtml } from "./manual-mockups-centralfarma.js";
+export const MOCKUP_SLUGS = new Set([
+  "blues-kitchen",
+  "daga-parfum",
+  "blue-whale-international",
+  "espacio-dental",
+  "marena",
+  "start",
+  "medellin-guide",
+  "medellin-guide-boutique",
+  "central-farma-drogueria",
+  "revo-cafe",
+]);
 
-// ─── Registry ───────────────────────────────────────────────────────────────
-// Keys must be lowercase, URL-safe slugs (a-z, 0-9, hyphen). Each value is a
-// fully-rendered HTML string, served as-is from mockups.pymewebpro.com/<slug>/.
-
-export const MANUAL_MOCKUPS = {
-  "blues-kitchen": bluesKitchenHtml,
-  "daga-parfum": dagaParfumHtml,
-  "blue-whale-international": blueWhaleHtml,
-  "espacio-dental": espacioDentalHtml,
-  marena: marenaHtml,
-  start: startHtml,
-  "medellin-guide": medellinGuideHtml,
-  "medellin-guide-boutique": medellinGuideBoutiqueHtml,
-  "central-farma-drogueria": centralFarmaHtml,
-};
+// Backwards-compat shim: a few callers still read `MANUAL_MOCKUPS[slug]`
+// expecting a truthy HTML string. Return a sentinel that's truthy but
+// doesn't contain any HTML payload (so it can't accidentally get served).
+// Callers should migrate to `MOCKUP_SLUGS.has(slug)` over time.
+export const MANUAL_MOCKUPS = new Proxy({}, {
+  get(_t, key) {
+    if (typeof key !== "string") return undefined;
+    return MOCKUP_SLUGS.has(key) ? true : undefined;
+  },
+  has(_t, key) {
+    return typeof key === "string" && MOCKUP_SLUGS.has(key);
+  },
+  ownKeys() {
+    return Array.from(MOCKUP_SLUGS);
+  },
+  getOwnPropertyDescriptor(_t, key) {
+    if (typeof key === "string" && MOCKUP_SLUGS.has(key)) {
+      return { enumerable: true, configurable: true, value: true };
+    }
+    return undefined;
+  },
+});

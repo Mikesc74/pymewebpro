@@ -1578,6 +1578,7 @@ async function toolListMockups() {
       "medellin-guide",
       "medellin-guide-boutique",
       "central-farma-drogueria",
+      "revo-cafe",
     ],
   };
 }

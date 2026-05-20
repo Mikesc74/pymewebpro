@@ -21,7 +21,23 @@
 import { renderRobots, renderSitemap } from "./legal.js";
 // Admin AI chat removed · no Anthropic-in-the-portal. All build work happens in Cowork now.
 // import { handleAdminChat } from "./admin-chat.js";  // archived → src/_archived/admin-chat.js
-import { MANUAL_MOCKUPS } from "./manual-mockups.js";
+import { MANUAL_MOCKUPS, MOCKUP_SLUGS } from "./manual-mockups.js";
+
+// Allow the mockup HTML (now served from pymewebpro.com/manual-mockups/<slug>/
+// via Cloudflare Pages) to call back to the worker's chat / lead / contact API
+// at mockups.pymewebpro.com/api/*. The cross-origin POST needs CORS.
+const MOCKUP_API_CORS = {
+  "Access-Control-Allow-Origin": "https://pymewebpro.com",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Max-Age": "86400",
+  "Vary": "Origin",
+};
+function withMockupApiCors(resp) {
+  const h = new Headers(resp.headers);
+  for (const [k, v] of Object.entries(MOCKUP_API_CORS)) h.set(k, v);
+  return new Response(resp.body, { status: resp.status, headers: h });
+}
 import { handleEspacioDentalChat } from "./espacio-dental-chat.js";
 import { handleMockupProspects } from "./mockup-prospects.js";
 import { handleProspectChat } from "./prospect-chat.js";
@@ -38,27 +54,25 @@ export async function handleMockups(req, env, ctx, helpers) {
   const reqHost = (req.headers.get("host") || "").toLowerCase().replace(/^www\./, "");
   const knownHosts = ["portal.pymewebpro.com", "pymewebpro.com"];
 
-  // ── inviersol.com · production custom domain for the inviersol mockup ────
-  // Serves MANUAL_MOCKUPS.inviersol at the root. Form posts to
-  // /api/inviersol/contact which forwards to inviersol@hotmail.com via Resend.
+  // ── inviersol.com · routes REMOVED 2026-05-19 (now on its own Pages
+  // project at ~/code/Inviersol/). If for any reason this host hits the
+  // worker, just 404.
   if (reqHost === "inviersol.com") {
-    if (m === "POST" && p === "/api/inviersol/contact") {
-      return await handleInviersolContact(req, env, helpers);
-    }
-    if (m === "GET" && (p === "/" || p === "")) {
-      return new Response(MANUAL_MOCKUPS.inviersol, {
-        headers: {
-          "content-type": "text/html; charset=utf-8",
-          "cache-control": "public, max-age=300",
-        },
-      });
-    }
-    return new Response("Not found", { status: 404 });
+    return new Response("Not found · inviersol.com is now served by its own Pages project", { status: 404 });
   }
 
-  // Same contact endpoint also works under mockups.pymewebpro.com
+  // ── API · CORS preflight for cross-origin mockup chat/lead/contact ────────
+  // Mockup HTML lives on pymewebpro.com (Pages) but POSTs to this worker at
+  // mockups.pymewebpro.com/api/*. Browsers need an OPTIONS preflight.
+  if (m === "OPTIONS" && reqHost === "mockups.pymewebpro.com" && p.startsWith("/api/")) {
+    return new Response(null, { status: 204, headers: MOCKUP_API_CORS });
+  }
+
+  // Inviersol contact endpoint (still served by the worker even though the
+  // mockup HTML moved to its own project · the contact form continues to POST
+  // here for backwards-compat with anyone who still has the old URL).
   if (m === "POST" && p === "/api/inviersol/contact" && reqHost === "mockups.pymewebpro.com") {
-    return await handleInviersolContact(req, env, helpers);
+    return withMockupApiCors(await handleInviersolContact(req, env, helpers));
   }
 
   // ── Espacio Dental chat agent ─────────────────────────────────────────────
@@ -66,7 +80,7 @@ export async function handleMockups(req, env, ctx, helpers) {
   // for the espacio-dental mockup. Bilingual EN/ES, emits WhatsApp links for
   // booking. See espacio-dental-chat.js for the system prompt + booking flow.
   if (reqHost === "mockups.pymewebpro.com" && p === "/api/espacio-dental/chat") {
-    return handleEspacioDentalChat(req, env);
+    return withMockupApiCors(await handleEspacioDentalChat(req, env));
   }
 
   // ── Generic prospect chat agent ──────────────────────────────────────────
@@ -77,29 +91,32 @@ export async function handleMockups(req, env, ctx, helpers) {
   // markers. See prospect-chat.js.
   if (reqHost === "mockups.pymewebpro.com" && p.startsWith("/api/chat/")) {
     const r = await handleProspectChat(req, env);
-    if (r) return r;
+    if (r) return withMockupApiCors(r);
   }
 
   // ── Manual mockups host (mockups.pymewebpro.com) ─────────────────────────
-  // Custom-built one-off marketing sites (e.g. Schedulator) that bypass the
-  // PYME auto-generator. Keyed by URL slug; HTML is fully self-contained and
-  // lives in src/manual-mockups.js. New mockups can be added by appending to
-  // the MANUAL_MOCKUPS map · no other code changes required.
+  // Mockup HTML now lives on pymewebpro.com Cloudflare Pages at
+  // /manual-mockups/<slug>/. The worker only redirects GETs here so the old
+  // share links (mockups.pymewebpro.com/<slug>/) keep working. The bulky
+  // inline HTML serving was retired on 2026-05-19 because it pushed the
+  // worker bundle past the 3MB free-tier limit. See ~/code/PLATFORM.md
+  // §15 (Template-literal hardening) and the 2026-05-19 entry in
+  // ~/code/pymewebpro/CLAUDE.md.
   if (m === "GET" && reqHost === "mockups.pymewebpro.com") {
     const slugMatch = p.match(/^\/([a-z0-9-]+)\/?$/);
     const slug = slugMatch ? slugMatch[1] : null;
-    if (slug && MANUAL_MOCKUPS[slug]) {
-      return new Response(MANUAL_MOCKUPS[slug], {
-        headers: {
-          "content-type": "text/html; charset=utf-8",
-          "x-robots-tag": "noindex, nofollow",
-          "cache-control": "public, max-age=300",
-        },
-      });
+    if (slug && MOCKUP_SLUGS.has(slug)) {
+      return Response.redirect("https://pymewebpro.com/manual-mockups/" + slug + "/", 301);
     }
-    // Index page listing available mockups
     if (p === "/" || p === "") {
-      return new Response(`<html><body style="font-family:system-ui;padding:40px;background:#0a0e1a;color:#fff"><h1>PymeWebPro Mockups</h1><ul>${Object.keys(MANUAL_MOCKUPS).map(s => "<li><a href=\"/" + s + "\" style=\"color:#fbbf24\">" + s + "</a></li>").join("")}</ul></body></html>`, { headers: { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex" } });
+      // Index of available mockups · links straight to the Pages URLs.
+      const links = Array.from(MOCKUP_SLUGS).sort()
+        .map(s => `<li><a href="https://pymewebpro.com/manual-mockups/${s}/" style="color:#fbbf24">${s}</a></li>`)
+        .join("");
+      return new Response(
+        `<html><body style="font-family:system-ui;padding:40px;background:#0a0e1a;color:#fff"><h1>PymeWebPro Mockups</h1><ul>${links}</ul><p style="color:#888;font-size:14px">Mockups now served from pymewebpro.com/manual-mockups/&lt;slug&gt;/</p></body></html>`,
+        { headers: { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex" } }
+      );
     }
     return new Response("Mockup not found", { status: 404 });
   }
