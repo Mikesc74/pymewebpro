@@ -276,6 +276,10 @@ section{padding:5rem 0}
   color:rgba(184,221,212,.22);line-height:1;
 }
 .step h3{font-size:1.05rem;margin-bottom:.6rem;color:#fff;font-family:var(--sans);font-style:normal;font-weight:700}
+.step h3 .step-link{display:inline-flex;align-items:center;gap:.4rem;color:#fff;background:linear-gradient(180deg, transparent 60%, rgba(216,110,58,.45) 60%);padding:0 .15rem;transition:background .15s ease, transform .15s ease}
+.step h3 .step-link:hover{background:linear-gradient(180deg, transparent 60%, var(--terra) 60%);color:#fff}
+.step h3 .step-link .arrow{font-size:.9em;transition:transform .15s ease}
+.step h3 .step-link:hover .arrow{transform:translateX(3px)}
 .step p{color:rgba(255,255,255,.72);font-size:.92rem;margin:0;line-height:1.55}
 .delivery-tags{margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:.5rem}
 .delivery-pill{padding:.4rem .9rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:99px;font-size:.85rem;color:rgba(255,255,255,.88)}
@@ -624,7 +628,7 @@ footer a:hover{color:var(--mint-pale)}
       </div>
 
       <div class="coffee-photo">
-        <img src="./blindfolded-test.jpg" alt="Barista de Café Rev preparando un espresso · prueba de latte a ciegas" loading="lazy">
+        <img src="./coffee-love.jpg" alt="Taza de café Rev sobre mesa de madera · manos tatuadas sosteniéndola" loading="lazy">
       </div>
     </div>
   </div>
@@ -640,8 +644,8 @@ footer a:hover{color:var(--mint-pale)}
     <div class="steps">
       <div class="step">
         <span class="step-num">01</span>
-        <h3>Escribínos por chat</h3>
-        <p>Abrí el asistente acá mismo. Te ayudamos a armar el pedido, te confirmamos disponibilidad y total al instante.</p>
+        <h3><a href="#" class="step-link" data-action="open-chat">Escribínos por chat <span class="arrow">→</span></a></h3>
+        <p>Abrí el chat con Capi acá mismo. Te ayuda a armar el pedido y te confirma disponibilidad y total al instante.</p>
       </div>
       <div class="step">
         <span class="step-num">02</span>
