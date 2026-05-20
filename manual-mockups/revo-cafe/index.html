@@ -109,12 +109,9 @@ section{padding:5rem 0}
 }
 .brand{display:inline-flex;align-items:center;gap:.7rem;color:var(--ink);font-weight:700}
 .brand-mark{
-  width:44px;height:44px;flex:0 0 44px;
-  border-radius:50%;background:var(--mint-pale);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--serif);font-style:italic;font-weight:700;
-  font-size:1.05rem;color:var(--mint-deep);letter-spacing:-.04em;
-  box-shadow:var(--shadow-sm);
+  width:48px;height:48px;flex:0 0 48px;
+  background-image:url('./logo-mark.jpg');
+  background-size:contain;background-position:center;background-repeat:no-repeat;
 }
 .brand-text{display:flex;flex-direction:column;line-height:1.1}
 .brand-name{font-family:var(--serif);font-size:1.2rem;font-weight:700;font-style:italic;color:var(--ink)}
@@ -241,7 +238,17 @@ section{padding:5rem 0}
   font-family:var(--serif);font-style:italic;font-size:1.3rem;
   color:#fff;line-height:1.4;
 }
-.outdoors cite{display:block;margin-top:.5rem;font-style:normal;font-family:var(--sans);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.outdoors cite{display:flex;align-items:center;gap:.85rem;margin-top:1rem;font-style:normal;font-family:var(--sans);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.82)}
+.outdoors .owner-portrait{
+  width:54px;height:54px;border-radius:50%;
+  background-image:url('./owner.jpg');background-size:cover;background-position:center top;
+  border:2px solid rgba(184,221,212,.55);
+  box-shadow:0 4px 12px rgba(0,0,0,.35);
+  flex:0 0 54px;
+}
+.outdoors .owner-meta{display:flex;flex-direction:column;gap:.15rem;line-height:1.2}
+.outdoors .owner-name{font-weight:700;color:#fff;letter-spacing:.06em;font-size:.85rem}
+.outdoors .owner-role{color:rgba(184,221,212,.7);font-size:.7rem;letter-spacing:.14em}
 
 /* ─── Café especialidad ─── */
 .coffee{background:var(--cream)}
@@ -456,7 +463,7 @@ footer a:hover{color:var(--mint-pale)}
 <header class="nav" aria-label="Navegación principal">
   <div class="nav-inner">
     <a href="#top" class="brand" aria-label="Café Rev · inicio">
-      <span class="brand-mark" aria-hidden="true">Rev</span>
+      <span class="brand-mark" role="img" aria-label="Café Rev"></span>
       <span class="brand-text">
         <span class="brand-name">Café Rev</span>
         <span class="brand-sub">Café en tu barrio</span>
@@ -601,7 +608,13 @@ footer a:hover{color:var(--mint-pale)}
     <p class="secondary">Por eso seleccionamos granos de origen colombiano, los tostamos pensando en cómo van a viajar, y vendemos café molido o en grano para que te lo lleves donde sea que vayas. Y por eso apoyamos The Capy Project · la naturaleza que disfrutamos también necesita gente que la cuide.</p>
     <blockquote>
       No hay día malo cuando hay café, monte, y silencio.
-      <cite>Alejo · dueño de Café Rev</cite>
+      <cite>
+        <span class="owner-portrait" role="img" aria-label="Zsolt, dueño de Café Rev"></span>
+        <span class="owner-meta">
+          <span class="owner-name">Zsolt</span>
+          <span class="owner-role">Dueño · Café Rev</span>
+        </span>
+      </cite>
     </blockquote>
   </div>
 </section>
@@ -762,7 +775,7 @@ footer a:hover{color:var(--mint-pale)}
 
       <div class="visit-cta">
         <h3>¿Antojo? <em>Pedílo ahora.</em></h3>
-        <p>Capy arma el pedido con vos, te confirma disponibilidad, y coordina con Alejo si hace falta algo a mano.</p>
+        <p>Capy arma el pedido con vos, te confirma disponibilidad, y coordina con Zsolt si hace falta algo a mano.</p>
         <button type="button" class="btn btn-lg" data-action="open-chat">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Hablar con Capy
@@ -780,7 +793,7 @@ footer a:hover{color:var(--mint-pale)}
     <div class="foot-grid">
       <div>
         <a href="#top" class="brand" aria-label="Café Rev · inicio">
-          <span class="brand-mark" style="background:var(--mint);color:#fff" aria-hidden="true">Rev</span>
+          <span class="brand-mark" role="img" aria-label="Café Rev" style="background-color:#fff;border-radius:8px"></span>
           <span class="brand-text">
             <span class="brand-name" style="color:#fff;font-family:var(--serif);font-style:italic">Café Rev</span>
             <span class="brand-sub">Café en tu barrio</span>
