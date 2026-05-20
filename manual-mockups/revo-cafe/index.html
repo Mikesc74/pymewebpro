@@ -42,6 +42,19 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
+
+/* ─── Bilingual ES/EN toggle · default Spanish, JS swaps html[lang] ─── */
+html[lang="es"] [data-en],
+html[lang="en"] [data-es]{display:none !important}
+.lang-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:32px;border-radius:99px;
+  background:transparent;border:1px solid var(--line);color:var(--ink);
+  font:inherit;font-size:.72rem;font-weight:700;letter-spacing:.08em;
+  cursor:pointer;margin-right:.6rem;
+  transition:background .15s ease, border-color .15s ease;
+}
+.lang-toggle:hover{background:var(--mint-fog);border-color:var(--mint)}
 html,body{margin:0;padding:0}
 body{
   background:var(--cream);
@@ -207,6 +220,12 @@ section{padding:5rem 0}
 .brunch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
 .brunch-head p{max-width:480px;color:var(--ink);margin:0}
 
+.brunch-banner{
+  margin:0 0 2.5rem;
+  aspect-ratio:16/9;border-radius:18px;overflow:hidden;
+  box-shadow:0 24px 50px -18px rgba(31,42,46,.32), 0 6px 14px rgba(31,42,46,.10);
+}
+.brunch-banner img{width:100%;height:100%;object-fit:cover;display:block}
 .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .menu-card .ph{aspect-ratio:1/1;background:var(--mint-pale);overflow:hidden}
 .menu-card .ph img{width:100%;height:100%;object-fit:cover;display:block}
@@ -466,22 +485,27 @@ footer a:hover{color:var(--mint-pale)}
       <span class="brand-mark" role="img" aria-label="Café Rev"></span>
       <span class="brand-text">
         <span class="brand-name">Café Rev</span>
-        <span class="brand-sub">Café en tu barrio</span>
+        <span class="brand-sub"><span data-es>Café en tu barrio</span><span data-en>Coffee in your neighborhood</span></span>
       </span>
     </a>
     <nav>
       <ul class="nav-links">
         <li><a href="#brunch">Brunch</a></li>
-        <li><a href="#cafe">Café</a></li>
-        <li><a href="#domicilios">Domicilios</a></li>
+        <li><a href="#cafe"><span data-es>Café</span><span data-en>Coffee</span></a></li>
+        <li><a href="#domicilios"><span data-es>Domicilios</span><span data-en>Delivery</span></a></li>
         <li><a href="#capy">The Capy Project</a></li>
-        <li><a href="#visitanos">Visítanos</a></li>
+        <li><a href="#visitanos"><span data-es>Visítanos</span><span data-en>Visit us</span></a></li>
       </ul>
     </nav>
-    <button type="button" class="btn btn-primary" data-action="open-chat" aria-label="Hablar con Capy de Café Rev">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Pide o consulta
-    </button>
+    <div style="display:flex;align-items:center;gap:.4rem">
+      <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch language">
+        <span data-es>EN</span><span data-en>ES</span>
+      </button>
+      <button type="button" class="btn btn-primary" data-action="open-chat" aria-label="Chat with Capy">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span data-es>Pide o consulta</span><span data-en>Order or chat</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -491,23 +515,23 @@ footer a:hover{color:var(--mint-pale)}
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Café · Brunch · Medellín</span>
-      <h1>Café<br>en <span class="accent">tu barrio.</span></h1>
-      <p class="lead">Brunch todo el día. Bagels al estilo neoyorquino, omelettes generosos, café de origen, y domicilios para que comas rico sin moverte. Vení, pedí, o llevátelo.</p>
+      <span class="eyebrow"><span data-es>Café · Brunch · Medellín</span><span data-en>Coffee · Brunch · Medellín</span></span>
+      <h1><span data-es>Café<br>en <span class="accent">tu barrio.</span></span><span data-en>Coffee<br>in <span class="accent">your hood.</span></span></h1>
+      <p class="lead"><span data-es>Brunch todo el día. Bagels al estilo neoyorquino, omelettes generosos, café de origen, y domicilios para que comas rico sin moverte. Vení, pedí, o llevátelo.</span><span data-en>All-day brunch. NY-style bagels, hearty omelettes, single-origin coffee, and delivery so you can eat well without leaving the house. Drop by, order in, or take it to go.</span></p>
       <div class="hero-ctas">
         <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Pide o consulta con Capy
+          <span data-es>Pide o consulta con Capy</span><span data-en>Order or chat with Capy</span>
         </button>
         <a class="btn btn-ghost btn-lg" href="#brunch">
-          Ver la carta
+          <span data-es>Ver la carta</span><span data-en>See the menu</span>
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
       </div>
       <div class="trust-strip">
-        <span><span class="dot"></span>Brunch todo el día</span>
-        <span><span class="dot"></span>Domicilios y para llevar</span>
-        <span><span class="dot"></span>Apoyamos The Capy Project</span>
+        <span><span class="dot"></span><span data-es>Brunch todo el día</span><span data-en>All-day brunch</span></span>
+        <span><span class="dot"></span><span data-es>Domicilios y para llevar</span><span data-en>Delivery & takeout</span></span>
+        <span><span class="dot"></span><span data-es>Apoyamos The Capy Project</span><span data-en>We support The Capy Project</span></span>
       </div>
     </div>
 
@@ -534,11 +558,15 @@ footer a:hover{color:var(--mint-pale)}
   <div class="wrap">
     <div class="brunch-head">
       <div>
-        <span class="eyebrow">La carta</span>
-        <h2>El brunch <em>no tiene hora.</em></h2>
+        <span class="eyebrow"><span data-es>La carta</span><span data-en>The menu</span></span>
+        <h2><span data-es>El brunch <em>no tiene hora.</em></span><span data-en>Brunch <em>knows no clock.</em></span></h2>
       </div>
-      <p>Porciones grandes, productos frescos, recetas que no escatiman. Bagels horneados en casa con un partner neoyorquino, omelettes que llenan, y postres que se acaban antes del mediodía.</p>
+      <p><span data-es>Porciones grandes, productos frescos, recetas que no escatiman. Bagels horneados en casa con un partner neoyorquino, omelettes que llenan, y postres que se acaban antes del mediodía.</span><span data-en>Generous portions, fresh ingredients, recipes that don't cut corners. Bagels baked in-house with a New York partner, omelettes that fill you up, and desserts that disappear before noon.</span></p>
     </div>
+
+    <figure class="brunch-banner" aria-label="Brunch completo · french toast, omelette, bacon, frutas frescas y café">
+      <img src="./brunch-spread.jpg" alt="Plato completo de brunch · french toast con frutas frescas, omelette, bacon, jugo de naranja y pancakes" loading="lazy">
+    </figure>
 
     <div class="menu-grid">
       <article class="card menu-card">
@@ -602,8 +630,8 @@ footer a:hover{color:var(--mint-pale)}
 <!-- ─── El café también sale contigo · outdoors / nature thread ─── -->
 <section class="outdoors" aria-label="Café Rev y la naturaleza">
   <div class="wrap">
-    <span class="eyebrow">Del barrio a la montaña</span>
-    <h2>El café <em>también sale contigo.</em></h2>
+    <span class="eyebrow"><span data-es>Del barrio a la montaña</span><span data-en>From the block to the mountain</span></span>
+    <h2><span data-es>El café <em>también sale contigo.</em></span><span data-en>The coffee <em>comes outside with you.</em></span></h2>
     <p class="lead">El Rev no termina cuando salís de la tienda. Lo armás afuera, en la finca de un amigo, en un páramo, en un trail antes del amanecer. Para nosotros el café no es solo una bebida · es una excusa para parar, mirar el paisaje, y volver a vos mismo.</p>
     <p class="secondary">Por eso seleccionamos granos de origen colombiano, los tostamos pensando en cómo van a viajar, y vendemos café molido o en grano para que te lo lleves donde sea que vayas. Y por eso apoyamos The Capy Project · la naturaleza que disfrutamos también necesita gente que la cuide.</p>
     <blockquote>
@@ -622,8 +650,8 @@ footer a:hover{color:var(--mint-pale)}
 <!-- ─── Café especialidad ─── -->
 <section id="cafe" class="coffee">
   <div class="wrap">
-    <span class="eyebrow">Café de especialidad</span>
-    <h2>El café no es accesorio. <em>Es el motivo.</em></h2>
+    <span class="eyebrow"><span data-es>Café de especialidad</span><span data-en>Specialty coffee</span></span>
+    <h2><span data-es>El café no es accesorio. <em>Es el motivo.</em></span><span data-en>Coffee isn't an accessory. <em>It's the point.</em></span></h2>
 
     <div class="coffee-grid">
       <div>
@@ -648,8 +676,8 @@ footer a:hover{color:var(--mint-pale)}
 <!-- ─── Domicilios ─── -->
 <section id="domicilios" class="delivery">
   <div class="wrap">
-    <span class="eyebrow">Domicilios · Para llevar</span>
-    <h2>Tu brunch, <em>donde vos quieras.</em></h2>
+    <span class="eyebrow"><span data-es>Domicilios · Para llevar</span><span data-en>Delivery · Takeout</span></span>
+    <h2><span data-es>Tu brunch, <em>donde vos quieras.</em></span><span data-en>Your brunch, <em>wherever you want it.</em></span></h2>
     <p class="lead">Llevamos el brunch hasta tu casa, oficina, o coworking. También podés pasar y recoger tu pedido en menos de lo que tardás en parquear.</p>
 
     <div class="steps">
@@ -685,8 +713,8 @@ footer a:hover{color:var(--mint-pale)}
   <div class="wrap">
     <div class="space-grid">
       <div>
-        <span class="eyebrow">El espacio</span>
-        <h2>Pequeño, <em>como debe ser.</em></h2>
+        <span class="eyebrow"><span data-es>El espacio</span><span data-en>The space</span></span>
+        <h2><span data-es>Pequeño, <em>como debe ser.</em></span><span data-en>Small, <em>the way it should be.</em></span></h2>
         <p class="lead">Un café de barrio, no una franquicia. Mesas comunales, plantas, música que no te grita, y gente que se queda. Trabajamos como casa propia: si necesitás un enchufe, hay; si querés quedarte a leer, quedate.</p>
         <p>El sitio es paisa de raíz, abierto a todos los que llegan: vecinos, expats, parches de fin de semana, gente sola con su libro. Acá te conocemos por nombre la segunda vez.</p>
         <div class="micro"><b>Tip de cuneta:</b> los sábados a las 9 a.m. está perfecto. Los domingos al mediodía toca esperar mesa, vale la pena.</div>
@@ -706,7 +734,7 @@ footer a:hover{color:var(--mint-pale)}
         <img src="./mascot-sticker.jpg" alt="Mascota capibara de Café Rev sobre baldosa de terracota">
       </div>
       <div>
-        <span class="eyebrow">Apoyamos</span>
+        <span class="eyebrow"><span data-es>Apoyamos</span><span data-en>We support</span></span>
         <h2>The Capy <em>Project.</em></h2>
         <p class="by-cafe">No usamos al capibara solo porque es bonito.</p>
         <p class="lead">Una parte de lo que vendés acá termina en <b>The Capy Project Foundation</b>, un santuario de vida silvestre en Orocué, Casanare. Protegen capibaras, jaguarundis, babillas, y flora local que sin gente que la cuide ya no estaría.</p>
@@ -727,8 +755,8 @@ footer a:hover{color:var(--mint-pale)}
 <!-- ─── Visítanos ─── -->
 <section id="visitanos" class="visit">
   <div class="wrap">
-    <span class="eyebrow">Pásate por la tienda</span>
-    <h2>Cerca de todo, <em>fácil de encontrar.</em></h2>
+    <span class="eyebrow"><span data-es>Pásate por la tienda</span><span data-en>Drop by the shop</span></span>
+    <h2><span data-es>Cerca de todo, <em>fácil de encontrar.</em></span><span data-en>Close to everything, <em>easy to find.</em></span></h2>
 
     <div class="visit-grid">
       <div class="info-cards">
@@ -858,6 +886,21 @@ footer a:hover{color:var(--mint-pale)}
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// ─── Language toggle · ES default, persists in localStorage ───
+(function(){
+  var btn = document.getElementById('langToggle');
+  if (!btn) return;
+  try {
+    var saved = localStorage.getItem('caferev-lang');
+    if (saved === 'en') document.documentElement.lang = 'en';
+  } catch(e) {}
+  btn.addEventListener('click', function(){
+    var next = document.documentElement.lang === 'es' ? 'en' : 'es';
+    document.documentElement.lang = next;
+    try { localStorage.setItem('caferev-lang', next); } catch(e) {}
+  });
+})();
+
 // Hero gallery rotation
 (function(){
   var gallery = document.getElementById('heroGallery');
@@ -949,7 +992,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
     body.scrollTop = body.scrollHeight;
   }
   function greet(){
-    addBubble('bot', '¡Hola! Soy Capy, la mascota de Café Rev. Te ayudo con el menú, domicilios, para llevar, o lo que quieras saber del café o de The Capy Project. ¿En qué te ayudo?');
+    var lang = document.documentElement.lang === 'en' ? 'en' : 'es';
+    var greeting = lang === 'en'
+      ? "Hey! I'm Capy, Café Rev's mascot. I can help with the menu, delivery, takeout, or anything about the café or The Capy Project. What can I help you with?"
+      : '¡Hola! Soy Capy, la mascota de Café Rev. Te ayudo con el menú, domicilios, para llevar, o lo que quieras saber del café o de The Capy Project. ¿En qué te ayudo?';
+    addBubble('bot', greeting);
   }
 
   async function send(text){
