@@ -140,6 +140,16 @@ section{padding:5rem 0}
 @media (max-width: 880px){
   .nav-links{display:none}
 }
+/* Mobile · nav primary button collapses to icon-only so it doesn't overflow.
+   The full "Hablar con Capy" CTA still sits as the floating FAB bottom-right. */
+@media (max-width: 640px){
+  .nav .btn-primary [data-es],
+  .nav .btn-primary [data-en]{display:none !important}
+  .nav .btn-primary{padding:.55rem .7rem;border-radius:99px}
+  .nav .brand-sub{display:none}
+  .nav-inner{padding:.6rem 1rem}
+  .lang-toggle{margin-right:.25rem;width:38px;height:30px}
+}
 
 /* ─── Hero ─── */
 .hero{padding:3rem 0 4rem;position:relative;overflow:hidden}
@@ -561,7 +571,7 @@ footer a:hover{color:var(--mint-pale)}
       <div class="hero-ctas">
         <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span data-es>Pide o consulta con Capy</span><span data-en>Order or ask Capy</span>
+          <span data-es>Pide aquí</span><span data-en>Order here</span>
         </button>
         <a class="btn btn-ghost btn-lg" href="#brunch">
           <span data-es>Ver la carta</span><span data-en>See the menu</span>
@@ -719,7 +729,7 @@ footer a:hover{color:var(--mint-pale)}
 <section id="domicilios" class="delivery">
   <div class="wrap">
     <span class="eyebrow"><span data-es>Domicilios · Para llevar</span><span data-en>Delivery · Takeout</span></span>
-    <h2><span data-es>Tu brunch, <em>donde vos quieras.</em></span><span data-en>Your brunch, <em>wherever you want it.</em></span></h2>
+    <h2><span data-es>Tu brunch, <em>donde vos querás.</em></span><span data-en>Your brunch, <em>wherever you want it.</em></span></h2>
     <p class="lead"><span data-es>Llevamos el brunch hasta tu casa, oficina, o coworking. También podés pasar y recoger tu pedido en menos de lo que tardás en parquear.</span><span data-en>We bring brunch to your home, office, or coworking spot. Or swing by and pick it up faster than you can park.</span></p>
 
     <div class="steps">
@@ -891,7 +901,7 @@ footer a:hover{color:var(--mint-pale)}
     </div>
 
     <div class="foot-bottom">
-      <span>© <span id="year">2026</span> Café Rev · Medellín, Colombia</span>
+      <span>© <span id="year">2026</span> Café Revolución · <a href="https://www.instagram.com/caferevmedellin" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">@caferevmedellin</a></span>
       <span><span data-es>Sitio web por</span><span data-en>Website by</span> <a href="https://pymewebpro.com" rel="noopener">PymeWebPro</a></span>
     </div>
   </div>
@@ -1044,7 +1054,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     var lang = document.documentElement.lang === 'en' ? 'en' : 'es';
     var greeting = lang === 'en'
       ? "Hey! I'm Capy, Café Rev's mascot. I can help with the menu, delivery, takeout, or anything about the café or The Capy Project. What can I help you with?"
-      : '¡Hola! Soy Capy, la mascota de Café Rev. Te ayudo con el menú, domicilios, para llevar, o lo que quieras saber del café o de The Capy Project. ¿En qué te ayudo?';
+      : '¡Hola! Soy Capy, la mascota de Café Rev. Te ayudo con el menú, domicilios, para llevar, o lo que querás saber del café o de The Capy Project. ¿En qué te ayudo?';
     addBubble('bot', greeting);
   }
 
