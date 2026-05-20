@@ -151,6 +151,27 @@ const CSP = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+// Relaxed CSP for /manual-mockups/<slug>/* · the prospect mockups have their
+// own self-contained inline <style> + <script> blocks that are NOT part of
+// the marketing site's hash allowlist (the hash collector explicitly excludes
+// `manual-mockups/`). Without this carve-out, every mockup page renders
+// unstyled because the browser blocks the inline <style>. Mockups are sales
+// previews, not the strict-CSP marketing site, so `'unsafe-inline'` is fine.
+// connect-src allows the chat widget to POST to mockups.pymewebpro.com/api/*.
+const CSP_MOCKUPS = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://mockups.pymewebpro.com https://valentina.pymewebpro.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "img-src 'self' data: blob: https://images.pexels.com https://www.google-analytics.com",
+  "connect-src 'self' https://mockups.pymewebpro.com https://valentina.pymewebpro.com https://www.google-analytics.com https://www.googletagmanager.com",
+  "form-action 'self' https://mockups.pymewebpro.com",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 export const onRequest = async (context) => {
   const response = await context.next();
   const ct = response.headers.get("content-type") || "";
@@ -161,7 +182,12 @@ export const onRequest = async (context) => {
   // Clone response so we can mutate headers (response.headers is immutable
   // when returned from context.next() in some runtime versions).
   const headers = new Headers(response.headers);
-  headers.set("Content-Security-Policy", CSP);
+
+  // Path-aware CSP. Mockups get the relaxed policy so their inline blocks
+  // render. Everything else gets the hash-locked marketing-site policy.
+  const path = new URL(context.request.url).pathname;
+  const isMockup = path.startsWith("/manual-mockups/");
+  headers.set("Content-Security-Policy", isMockup ? CSP_MOCKUPS : CSP);
 
   // Cloudflare Pages adds Access-Control-Allow-Origin: * to every static
   // asset by default. Strip it from HTML , these pages never need to be
