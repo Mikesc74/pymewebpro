@@ -138,7 +138,8 @@ section{padding:5rem 0}
   align-items:center;
 }
 .hero h1{margin-bottom:1.5rem;color:var(--ink)}
-.hero h1 .accent{color:var(--terra);font-style:italic}
+.hero h1 .accent{color:var(--terra);font-weight:700;position:relative;padding:0 .12em}
+.hero h1 .accent::after{content:'';position:absolute;left:.05em;right:.05em;bottom:.05em;height:.18em;background:rgba(216,110,58,.22);z-index:-1;border-radius:2px}
 .hero p.lead{font-size:1.15rem;color:var(--ink);max-width:520px;margin-bottom:2rem}
 .hero-ctas{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:2.5rem}
 .trust-strip{
@@ -485,7 +486,7 @@ footer a:hover{color:var(--mint-pale)}
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Café · Brunch · Medellín</span>
-      <h1><em>Café</em><br>en tu <span class="accent">barrio.</span></h1>
+      <h1>Café<br>en <span class="accent">tu</span> barrio.</h1>
       <p class="lead">Brunch todo el día. Bagels al estilo neoyorquino, omelettes generosos, café de origen, y domicilios para que comas rico sin moverte. Vení, pedí, o llevátelo.</p>
       <div class="hero-ctas">
         <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
