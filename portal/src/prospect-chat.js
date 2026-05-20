@@ -20,6 +20,8 @@
 //
 // Uses env.ANTHROPIC_API_KEY (already set on the worker for espacio-dental).
 
+import { checkChatRateLimit } from "./chat-ratelimit.js";
+
 const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
 const MODEL = "claude-haiku-4-5-20251001";
 
@@ -65,6 +67,16 @@ export async function handleProspectChat(req, env) {
     .slice(-30)
     .map((mm) => ({ role: mm.role, content: String(mm.content).slice(0, 4096) }));
   if (clean.length === 0) return json({ error: "No valid messages" }, 400);
+
+  // Rate limit BEFORE calling Anthropic (public endpoint, anonymous internet).
+  const rl = await checkChatRateLimit(req, env);
+  if (!rl.ok) {
+    const headers = rl.retryAfter ? { "retry-after": String(rl.retryAfter) } : {};
+    return new Response(JSON.stringify({ error: rl.error }), {
+      status: rl.status,
+      headers: { "content-type": "application/json; charset=utf-8", ...corsHeaders(), ...headers },
+    });
+  }
 
   const systemPrompt = (profile.chatbot_system_prompt && profile.chatbot_system_prompt.trim())
     || buildSystemPrompt(profile);

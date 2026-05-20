@@ -10,6 +10,8 @@
 // in kind. The booking flow gathers (name, service, dates if international),
 // then surfaces a pre-filled wa.me link.
 
+import { checkChatRateLimit } from "./chat-ratelimit.js";
+
 const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
 const MODEL = "claude-haiku-4-5-20251001"; // Haiku for speed + cost; clinic Q&A doesn't need Sonnet-level reasoning
 
@@ -114,6 +116,16 @@ export async function handleEspacioDentalChat(req, env) {
     }));
   if (clean.length === 0) {
     return json({ error: "No valid messages" }, 400);
+  }
+
+  // Rate limit BEFORE calling Anthropic (public endpoint, anonymous internet).
+  const rl = await checkChatRateLimit(req, env);
+  if (!rl.ok) {
+    const headers = rl.retryAfter ? { "retry-after": String(rl.retryAfter) } : {};
+    return new Response(JSON.stringify({ error: rl.error }), {
+      status: rl.status,
+      headers: { "content-type": "application/json; charset=utf-8", ...corsHeaders(), ...headers },
+    });
   }
 
   try {
