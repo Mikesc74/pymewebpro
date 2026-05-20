@@ -51,10 +51,8 @@
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Is this just a one-page website?","acceptedAnswer":{"@type":"Answer","text":"It's one page, designed to do one job: turn visitors into customers. That's not a limit, it's the point. Every section earns its place by moving the visitor closer to a yes."}},
 {"@type":"Question","name":"How is this different from Wix or Squarespace?","acceptedAnswer":{"@type":"Answer","text":"Wix sells you a brochure. We build you a salesperson. Custom-coded, sub-1-second load, written to convert, owned by you outright."}},
 {"@type":"Question","name":"Do you guarantee leads?","acceptedAnswer":{"@type":"Answer","text":"No. We can't promise traffic (that's your ads, your SEO, your channels) and we can't promise conversions (that depends on traffic quality and offer fit, things we don't control). What we promise is the page itself: clear structure, fast load, working form, written to convert. The 30-day money-back guarantee covers your satisfaction with the work."}},
-{"@type":"Question","name":"Who actually builds it?","acceptedAnswer":{"@type":"Answer","text":"Mike and Santiago run the work. Anthropic's Claude does the design and code under our supervision. That's why $390.000 buys what used to cost $3.900.000."}},
 {"@type":"Question","name":"What if I don't like it?","acceptedAnswer":{"@type":"Answer","text":"30-day money-back guarantee. If the page doesn't work for you, you get every dollar back."}},
 {"@type":"Question","name":"Do I need to buy a domain?","acceptedAnswer":{"@type":"Answer","text":"Yes. After you pay, we walk you through it inside the portal. If you already have a domain, we attach it. If you don't, we point you at Cloudflare Registrar or Namecheap (around $50.000 COP per year, sometimes less with our referral), help you buy in 5 minutes, then handle all the technical setup (Cloudflare zone, DNS records, SSL certificate) on our end. The domain is always registered in your name, never ours, so you can take it anywhere if you ever leave."}}
 ]}
@@ -94,6 +92,9 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .brand:hover .br{color:#FF5C2E}
 .brand .word{font-family:'Inter Tight',sans-serif;font-weight:700;color:inherit;margin:0 1.5px}
 .brand .web{color:#FF5C2E}
+footer.site .brand{color:#FBF7F0}
+footer.site .brand .br{color:#7A6957}
+footer.site .brand:hover .br{color:#FF5C2E}
 .lang-switch{display:inline-flex;gap:2px;font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.04em;background:rgba(27,20,16,.05);border-radius:999px;padding:3px;margin-right:.5rem}
 .lang-switch a{padding:5px 11px;border-radius:999px;color:#7A4828;opacity:.7;transition:opacity .15s,background .15s,color .15s}
 .lang-switch a:hover{opacity:1;color:#1B1410}
@@ -804,12 +805,11 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
         <ul>
           <li><span class="check">✓</span><span>Everything in Essential</span></li>
           <li><span class="check">✓</span><span>Google Business Profile setup</span></li>
-          <li><span class="check">✓</span><span>Lead-capture chatbot</span></li>
           <li><span class="check">✓</span><span>Google Analytics 4 + Meta Pixel embed</span></li>
           <li><span class="check">✓</span><span>CRM / email integration (HubSpot, Mailchimp, etc.)</span></li>
           <li><span class="check">✓</span><span>1 year of hosting and support</span></li>
         </ul>
-        <p class="sub" style="margin-top:.5rem;font-size:13px;opacity:.75">The chatbot has a monthly run fee of $80.000 COP/mo (up to ~300 conversations). With the chatbot, renewal after the year is $110.000 COP/mo (hosting + support + chatbot).</p>
+        <p class="sub" style="margin-top:.5rem;font-size:13px;opacity:.75">Want a chatbot that captures leads 24/7? It's an optional add-on on any plan: $80.000 COP/mo (up to ~300 conversations). The funnel is one-time; only the chatbot adds a monthly.</p>
         <div class="actions">
           <a class="btn btn-orange" href="/start/?plan=pro">Choose Pro →</a>
           <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">Or, get more info first</a>
@@ -955,15 +955,11 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
 <!-- FAQ (unnumbered, after the 6 chapters) -->
 <section class="faq" id="faq">
   <div class="wrap">
-    <h2>Before you say yes.</h2>
+    <h2>Frequently asked questions.</h2>
     <div class="list">
       <details>
         <summary>Do you have free guides on how to bring in customers?</summary>
         <div class="answer">Yes. We publish a series of <a href="/en/guides/traffic/">11 free guides</a> (in English and Spanish) on how to bring traffic to a sales page in Colombia: Google Ads, Meta Ads, local SEO + Google Business Profile, WhatsApp Business, word-of-mouth, email marketing, affiliates, trade shows and local events, local PR, and AI search visibility. All with real COP budgets, tools that work, and the common mistakes that burn money. No signup, no downloads, no email required.</div>
-      </details>
-      <details>
-        <summary>Is this just a one-page website?</summary>
-        <div class="answer">It's one page, designed to do one job: turn visitors into customers. That's not a limit, it's the point. Every section earns its place by moving the visitor closer to a yes. If you need a 30-page site with a blog and a documentation hub, we're not the right fit. If you need the one page that closes, we are.</div>
       </details>
       <details>
         <summary>How is this different from Wix or Squarespace?</summary>
@@ -980,18 +976,6 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       <details>
         <summary>Do I need to buy a domain?</summary>
         <div class="answer">Yes. After you pay, we walk you through it inside the portal. If you already have a domain, we attach it. If you don't, we point you at Cloudflare Registrar or <a href="REPLACE_WITH_NAMECHEAP_REFERRAL_URL" target="_blank" rel="noopener">Namecheap (referral link)</a> (around $50.000 COP per year, sometimes less with our referral), help you buy in 5 minutes, then handle all the technical setup (Cloudflare zone, DNS records, SSL certificate) on our end. The domain is always registered in your name, never ours, so you can take it anywhere if you ever leave.</div>
-      </details>
-      <details>
-        <summary>Who actually builds it?</summary>
-        <div class="answer">Mike and Santiago run the work. Anthropic's Claude does the design and code under our supervision. We're not hiding that, we're proud of it. It's why $390.000 buys what used to cost $3.900.000.</div>
-      </details>
-      <details>
-        <summary>Can you write the copy or do I need to?</summary>
-        <div class="answer">We write the copy. You're paying for our judgment about what the page should say and how it should be said. You'll see the draft before we build, and you can rewrite anything you want.</div>
-      </details>
-      <details>
-        <summary>What happens after launch?</summary>
-        <div class="answer">A live page on your domain. You own everything we ship: the code, the copy, the analytics setup, the domain. Hosting included: <strong>1 month</strong> with Essential, <strong>1 year</strong> with Pro. Pro adds a lead-capture chatbot, Google Business Profile, GA4, Meta Pixel, and CRM integration. Booking/appointment integration comes with both plans. After the included hosting, it renews on a simple flat plan ($30.000 COP/mo or $300.000 COP/year, VAT included); with the chatbot, renewal is $110.000 COP/mo.</div>
       </details>
       <details>
         <summary>How much does hosting cost after the included period?</summary>

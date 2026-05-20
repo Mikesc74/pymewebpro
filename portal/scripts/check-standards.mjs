@@ -78,6 +78,21 @@ const checks = [
     },
   },
   {
+    name: "Footer brand legible on dark footer (no '< web />' regression)",
+    severity: "FAIL",
+    // The brand mark <pymewebpro/> inherits the default dark .brand color
+    // (#1B1410). On the dark footer that is invisible, so "pyme" and "pro"
+    // vanish and only the orange "web" survives -> "< web />". It MUST be
+    // overridden to a light color via `footer.site .brand`. This has regressed
+    // 3+ times because the brand CSS is inline-duplicated per language file and
+    // a fix to one file never reaches the other. This guard fails the build if
+    // either production page is missing the override.
+    test: (html, slug) => {
+      if (slug !== "pymewebpro.com (ES)" && slug !== "pymewebpro.com (EN)") return true;
+      return /footer\.site\s+\.brand\s*\{[^}]*color:\s*#(?:FBF7F0|F4ECDF|FFF|FFFFFF)\b/i.test(html);
+    },
+  },
+  {
     name: "Has og:title",
     severity: "WARN",
     test: (html) => /<meta[^>]+property=["']og:title["']/i.test(html),
