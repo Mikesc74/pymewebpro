@@ -44,10 +44,7 @@
 {"@context":"https://schema.org","@type":"WebSite","name":"PymeWebPro","url":"https://pymewebpro.com/","inLanguage":["en","es"]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Service","serviceType":"Diseño y construcción de página de ventas","provider":{"@type":"Organization","name":"PymeWebPro"},"name":"Página de ventas Essential","areaServed":["CO"],"offers":{"@type":"Offer","price":"390000","priceCurrency":"COP","availability":"https://schema.org/InStock"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Service","serviceType":"Diseño y construcción de página de ventas","provider":{"@type":"Organization","name":"PymeWebPro"},"name":"Página de ventas Pro","areaServed":["CO"],"offers":{"@type":"Offer","price":"690000","priceCurrency":"COP","availability":"https://schema.org/InStock"}}
+{"@context":"https://schema.org","@type":"Service","serviceType":"Diseño y construcción de página de ventas","provider":{"@type":"Organization","name":"PymeWebPro"},"name":"Página de ventas","areaServed":["CO"],"offers":{"@type":"Offer","price":"390000","priceCurrency":"COP","availability":"https://schema.org/InStock"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
@@ -55,7 +52,7 @@
 {"@type":"Question","name":"¿Garantizan leads?","acceptedAnswer":{"@type":"Answer","text":"No. No podemos prometer tráfico (eso es su publicidad, su SEO, sus canales) ni podemos prometer conversiones (eso depende de la calidad del tráfico y el ajuste de la oferta, cosas que no controlamos). Lo que prometemos es la página en sí: estructura clara, carga rápida, formulario que funciona, escrita para convertir. La garantía de devolución a 30 días cubre su satisfacción con el trabajo."}},
 {"@type":"Question","name":"¿Y si no me gusta?","acceptedAnswer":{"@type":"Answer","text":"Garantía de devolución a 30 días. Si la página no le funciona, le devolvemos cada peso."}},
 {"@type":"Question","name":"¿Necesito comprar un dominio?","acceptedAnswer":{"@type":"Answer","text":"Sí. Después de pagar, lo acompañamos dentro del portal. Si ya tiene un dominio, lo conectamos. Si no, le indicamos Cloudflare Registrar o Namecheap (alrededor de $50.000 COP al año, a veces menos con nuestro link de referido), lo ayudamos a comprarlo en 5 minutos y manejamos toda la configuración técnica (zona en Cloudflare, registros DNS, certificado SSL) por nuestra cuenta. El dominio siempre se registra a su nombre, nunca al nuestro."}},
-{"@type":"Question","name":"¿Cuánto cuesta el hosting después del período incluido?","acceptedAnswer":{"@type":"Answer","text":"Esencial incluye 1 mes; Pro incluye 1 año. Después: $30.000 COP al mes, o $300.000 COP al año si paga por adelantado (ahorra dos meses) · IVA incluido. Incluye hospedaje en Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes. Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos."}}
+{"@type":"Question","name":"¿Cuánto cuesta el hosting después del período incluido?","acceptedAnswer":{"@type":"Answer","text":"La página incluye 1 mes de hosting y soporte. Después: $30.000 COP al mes, o $300.000 COP al año si paga por adelantado (ahorra dos meses) · IVA incluido. Incluye hospedaje en Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes. Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos."}}
 ]}
 </script>
 
@@ -756,14 +753,14 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       </div>
     </div>
     <div class="grid">
-      <div class="tier">
-        <div class="tag">Essential</div>
-        <h3>La página</h3>
-        <p class="sub">Para dueños que quieren una buena página de ventas, rápido.</p>
+      <div class="tier featured">
+        <div class="tag">Pago único</div>
+        <h3>La página de ventas</h3>
+        <p class="sub">Una página de alta conversión, hecha a la medida. Todo lo demás se suma como add-on, solo si lo necesita.</p>
         <div class="price">$390.000<small>COP</small></div>
         <div class="deposit">30% de depósito ($117.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></div>
         <ul>
-          <li><span class="check">✓</span><span>1 página de ventas de alta conversión</span></li>
+          <li><span class="check">✓</span><span>Página de ventas de alta conversión, estructura de 6 pasos</span></li>
           <li><span class="check">✓</span><span>Optimizada para móvil</span></li>
           <li><span class="check">✓</span><span>Botón click-para-llamar + WhatsApp</span></li>
           <li><span class="check">✓</span><span>Formulario de contacto</span></li>
@@ -776,27 +773,28 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <li><span class="check">✓</span><span>1 mes de hosting y soporte incluido</span></li>
         </ul>
         <div class="actions">
-          <a class="btn btn-orange" href="/start/?plan=esencial">Elegir Essential →</a>
-          <a class="btn btn-ghost-light" href="#ask">O, infórmese primero</a>
+          <a class="btn btn-orange" href="/start/?plan=esencial">Empezar →</a>
+          <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">O, infórmese primero</a>
         </div>
       </div>
-      <div class="tier featured">
-        <div class="tag">Pro · Mejor valor</div>
-        <h3>La página conectada</h3>
-        <p class="sub">Para dueños que ya usan analíticas, anuncios, un CRM o reservas en línea, y quieren la página conectada a todo eso.</p>
-        <div class="price">$690.000<small>COP</small></div>
-        <div class="deposit">30% de depósito ($207.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></div>
+      <div class="tier">
+        <div class="tag">Add-ons</div>
+        <h3>Suma solo lo que necesita</h3>
+        <p class="sub">Precio fijo, IVA incluido. Su asesor arma la cotización exacta desde el configurador.</p>
         <ul>
-          <li><span class="check">✓</span><span>Todo lo de Essential</span></li>
-          <li><span class="check">✓</span><span>Configuración de Perfil de Empresa de Google</span></li>
-          <li><span class="check">✓</span><span>Embed de Google Analytics 4 + Meta Pixel</span></li>
-          <li><span class="check">✓</span><span>Integración con CRM / correo (HubSpot, Mailchimp, etc.)</span></li>
-          <li><span class="check">✓</span><span>1 año de hosting y soporte</span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Perfil de Empresa de Google</span><b style="white-space:nowrap;opacity:.85">$90.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Analítica avanzada (GA4 + GTM + Pixel)</span><b style="white-space:nowrap;opacity:.85">$120.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Integración con CRM</span><b style="white-space:nowrap;opacity:.85">$190.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Versión bilingüe (ES/EN)</span><b style="white-space:nowrap;opacity:.85">$75.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Copywriting profesional</span><b style="white-space:nowrap;opacity:.85">$150.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Catálogo simple (máx. 30, vía portal)</span><b style="white-space:nowrap;opacity:.85">$180.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Botón de descarga de PDF</span><b style="white-space:nowrap;opacity:.85">$50.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Página adicional (máx. 3)</span><b style="white-space:nowrap;opacity:.85">$50.000</b></span></li>
+          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Chatbot de captura</span><b style="white-space:nowrap;opacity:.85">$190.000 + $80.000/mes</b></span></li>
         </ul>
-        <p class="sub" style="margin-top:.5rem;font-size:13px;opacity:.75">¿Quieres un chatbot que capture leads 24/7? Es un add-on opcional en cualquier plan: $80.000 COP/mes (hasta ~300 conversaciones). El funnel es pago único; solo el chatbot agrega una mensualidad.</p>
+        <p class="sub" style="margin-top:.25rem;font-size:13px;opacity:.75">El chatbot es lo único que agrega una mensualidad. La página es pago único.</p>
         <div class="actions">
-          <a class="btn btn-orange" href="/start/?plan=pro">Elegir Pro →</a>
-          <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">O, infórmese primero</a>
+          <a class="btn btn-ghost-light" href="#ask">Cotizar con un asesor</a>
         </div>
       </div>
     </div>
@@ -964,7 +962,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       </details>
       <details>
         <summary>¿Cuánto cuesta el hosting después del período incluido?</summary>
-        <div class="answer">Esencial incluye <strong>1 mes</strong>; Pro incluye <strong>1 año</strong>. Después: $30.000 COP al mes, o $300.000 COP al año si paga por adelantado (ahorra dos meses) · IVA incluido. El plan incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" style="color:#FF5C2E">Ver el plan o renovar</a>.</div>
+        <div class="answer">La página incluye <strong>1 mes</strong> de hosting y soporte. Después: $30.000 COP al mes, o $300.000 COP al año si paga por adelantado (ahorra dos meses) · IVA incluido. El plan incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" style="color:#FF5C2E">Ver el plan o renovar</a>.</div>
       </details>
       <details>
         <summary>¿Y si no me gusta?</summary>

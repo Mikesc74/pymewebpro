@@ -115,8 +115,8 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
     <div class="plan-card" id="plan-card" hidden>
       <div class="row">
         <div>
-          <span class="tag" id="plan-tag">Essential</span>
-          <div class="name" id="plan-name">La página</div>
+          <span class="tag" id="plan-tag">Pago único</span>
+          <div class="name" id="plan-name">La página de ventas</div>
         </div>
         <div class="price" id="plan-price"></div>
       </div>
@@ -159,9 +159,10 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
 <script>
 (function(){
   var PORTAL_URL = 'https://portal.pymewebpro.com';
+  // Single product. The portal still keys the base page as 'esencial' for
+  // checkout/pricing, so we keep that key and just drop the tier wording.
   var PLANS = {
-    esencial: { tag: 'Essential', name: 'La página', cop: '$390.000 COP', dep_cop: '$117.000 COP' },
-    pro: { tag: 'Pro · Mejor valor', name: 'La página conectada', cop: '$690.000 COP', dep_cop: '$207.000 COP' }
+    esencial: { tag: 'Pago único', name: 'La página de ventas', cop: '$390.000 COP', dep_cop: '$117.000 COP' }
   };
 
   var params = new URLSearchParams(window.location.search);
@@ -172,7 +173,7 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
   var card = document.getElementById('plan-card');
   document.getElementById('plan-tag').textContent = plan.tag;
   document.getElementById('plan-name').textContent = plan.name;
-  document.getElementById('kicker').textContent = 'Empezando su plan ' + plan.tag.split(' ')[0];
+  document.getElementById('kicker').textContent = 'Empezando con ' + plan.name;
 
   function renderPrice(){
     document.getElementById('plan-price').innerHTML = plan.cop;
@@ -197,14 +198,14 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
       name: fd.get('name'),
       email: fd.get('email'),
       business_name: fd.get('business_name'),
-      message: 'Quiere el plan ' + plan.tag.split(' ')[0] + '. Vino de /es/start.',
+      message: 'Quiere la página de ventas. Vino de /start.',
       language: 'es',
       source: 'pymewebpro_start',
       page: '/start/',
       website: fd.get('company_website') || '',
-      // Hosting at checkout: Pro bundles annual (free), Esencial includes only
-      // the first month (then $30k/mo), so we send 'monthly' for Esencial.
-      extra: { plan: planKey, hosting: planKey === 'pro' ? 'annual' : 'monthly' }
+      // Single product: base page includes the first month of hosting (then
+      // $30k/mo). Keep the portal key 'esencial' for pricing/checkout.
+      extra: { plan: planKey, hosting: 'monthly' }
     };
     if (window.PwpAttribution) {
       var attr = window.PwpAttribution.get();
