@@ -825,8 +825,8 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <div class="bs-eyebrow">Your quote</div>
           <div class="bs-total" id="bs-total">$390.000<small>COP</small></div>
           <div class="bs-split">
-            <div><span class="k">To start · deposit</span><span class="v" id="bs-deposit">$117.000</span></div>
-            <div><span class="k">Balance on launch</span><span class="v" id="bs-balance">$273.000</span></div>
+            <div><span class="k">To start · 30%</span><span class="v" id="bs-deposit">$117.000</span></div>
+            <div><span class="k">On launch · 70%</span><span class="v" id="bs-balance">$273.000</span></div>
           </div>
           <div class="bs-monthly" id="bs-monthly">No monthly. The page is one-time.</div>
           <a class="btn btn-orange" id="bs-start" href="/start/?plan=esencial">Get started →</a>
@@ -1200,7 +1200,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       var v = parseInt(row.querySelector(".qval").textContent, 10) || 0;
       total += v * parseInt(row.getAttribute("data-qprice"), 10);
     });
-    var dep = 117000; // deposit reserves the build slot · 30% of the base page · matches the Wompi checkout
+    var dep = Math.round(total * 0.30); // 30% deposit of the configured total · matches the Wompi checkout
     document.getElementById("bs-total").innerHTML = fmt(total) + "<small>COP</small>";
     document.getElementById("bs-deposit").textContent = fmt(dep);
     document.getElementById("bs-balance").textContent = fmt(total - dep);

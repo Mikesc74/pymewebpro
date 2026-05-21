@@ -1214,28 +1214,31 @@ const HOSTING_PRICES_COP = {
   monthly: 0,         // billed separately, not on Wompi
   none: 0
 };
+const DEPOSIT_RATIO = 0.30;   // 30% deposit at /start, 70% balance at launch
 function computeQuote(lead) {
   const plan = lead.plan;
   const hosting = lead.hosting || "none";
   const planPrice = PLAN_PRICES_COP[plan] || 0;
   let hostingPrice = HOSTING_PRICES_COP[hosting] || 0;
-  // Esencial = $390k flat (includes 1 month free, monthly billing starts later).
-  // Pro + annual = bundled (1 year hosting included).
-  // Hosting is never charged at /start/ checkout for Esencial · buyer can
-  // upgrade to annual via /hosting after the first month.
   const hostingBundled = (plan === "esencial") || (plan === "pro" && hosting === "annual");
   if (hostingBundled) hostingPrice = 0;
-  const now = Date.now();
-  const deadline = (lead.created_at || 0) + DISCOUNT_WINDOW_MS;
-  const discountActive = planPrice > 0 && now < deadline;
-  const discount = discountActive ? DISCOUNT_AMOUNT_COP : 0;
-  const subtotal = planPrice + hostingPrice;
-  const total = Math.max(0, subtotal - discount);
+  // Project total: prefer the configured total carried from the section-5
+  // calculator (persisted in lead.metadata.extra.total_cop = base + add-ons).
+  // Fall back to the base plan (+ chargeable hosting) when no config was sent.
+  let configuredTotal = 0;
+  try { const md = JSON.parse(lead.metadata || "{}"); configuredTotal = parseInt(md && md.extra && md.extra.total_cop, 10) || 0; } catch (_) {}
+  const baseTotal = planPrice + hostingPrice;
+  const projectTotal = (configuredTotal && configuredTotal >= planPrice) ? configuredTotal : baseTotal;
+  // Wompi charges the 30% deposit now; the 70% balance is collected at launch.
+  const deposit = Math.round(projectTotal * DEPOSIT_RATIO);
+  const balance = Math.max(0, projectTotal - deposit);
   return {
     plan, hosting,
     plan_price_cop: planPrice, hosting_price_cop: hostingPrice, hosting_bundled: hostingBundled,
-    discount_active: discountActive, discount_cop: discount, discount_deadline: deadline,
-    subtotal_cop: subtotal, total_cop: total, total_cents: total * 100,
+    discount_active: false, discount_cop: 0, discount_deadline: 0,
+    project_total_cop: projectTotal, deposit_cop: deposit, balance_cop: balance, deposit_ratio: DEPOSIT_RATIO,
+    subtotal_cop: projectTotal,
+    total_cop: deposit, total_cents: deposit * 100,   // amount charged now = 30% deposit
     currency: "COP", chargeable: planPrice > 0
   };
 }
@@ -1605,9 +1608,10 @@ function confirmationHtml({ lead, quote, lang, lastPayment, justReturned }) {
   <div class="card">
     <div class="row"><span class="lbl">${esc(t.plan)}</span><span class="val">${esc(planLabel(quote.plan, lang))}</span></div>
     <div class="row"><span class="lbl">${esc(t.hosting)}</span><span class="val">${esc(hostingLabel(quote.hosting, lang))}${quote.hosting_bundled ? ` <small style="color:#10b981">(${isEs ? "incluido" : "included"})</small>` : ""}</span></div>
-    ${quote.discount_active ? `<div class="row discount-row"><span class="lbl">${esc(t.discount)}</span><span class="val">−${esc(formatCop(quote.discount_cop))} COP</span></div>` : ""}
+    <div class="row"><span class="lbl">${isEs ? "Total del proyecto" : "Project total"}</span><span class="val">${esc(formatCop(quote.project_total_cop))} COP</span></div>
+    <div class="row"><span class="lbl">${isEs ? "Saldo al lanzar (70%)" : "Balance on launch (70%)"}</span><span class="val">${esc(formatCop(quote.balance_cop))} COP</span></div>
     <div class="total">
-      <div><div class="lbl">${esc(t.total)}</div><div class="iva">${esc(t.iva)}</div></div>
+      <div><div class="lbl">${isEs ? "Depósito hoy (30%)" : "Deposit today (30%)"}</div><div class="iva">${esc(t.iva)}</div></div>
       <div class="val">${esc(formatCop(quote.total_cop))} COP</div>
     </div>
     <div class="installments">${esc(t.installments)}</div>

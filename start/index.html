@@ -181,9 +181,9 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
 
   function renderPrice(){
     var total = (cfgTotal && cfgTotal > 0) ? cfgTotal : 390000;
-    var dep = 117000;
+    var dep = Math.round(total * 0.30);
     document.getElementById('plan-price').innerHTML = copFmt(total);
-    var html = '<strong>Depósito hoy</strong> (' + copFmt(dep) + ') reserva tu cupo. Saldo al lanzar: <strong>' + copFmt(total - dep) + '</strong>';
+    var html = '<strong>Depósito hoy (30%)</strong>: ' + copFmt(dep) + '. Saldo al lanzar (70%): <strong>' + copFmt(total - dep) + '</strong>';
     if (cfgItems) html += ' · incluye: ' + cfgItems;
     if (cfgMonthly > 0) html += '. El chatbot suma ' + copFmt(cfgMonthly) + '/mes.';
     html += ' <strong>Garantía de devolución a 30 días.</strong>';
