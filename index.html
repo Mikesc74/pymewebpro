@@ -101,30 +101,23 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 /* HERO (intro section) - v3-style positioning + full anatomy preview.
    Renamed from .intro to .hero to avoid clashing with .solution .intro
    used inside Capítulo 03. */
-.hero{padding:48px 0 88px;position:relative}
-/* Desktop: marker spans top row (giant 01), then text + anatomy below.
-   Mobile: marker stays at top but in compact one-line form so H1 stays above the fold. */
-.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:36px 64px;align-items:center}
-.hero .chapter-marker{grid-column:1/-1;margin-bottom:0}
-@media (max-width:980px){
-  .hero{padding:24px 0 48px}
-  .hero .wrap{display:flex;flex-direction:column;gap:20px}
-  .hero .chapter-marker{margin:0;padding:0 0 12px;border-top:0;border-bottom:1px solid rgba(27,20,16,.1);gap:12px;align-items:center}
-  .hero .chapter-marker .num{font-size:34px;line-height:1;margin:0}
-  .hero .chapter-marker .meta{flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap;padding-top:0}
-  .hero .chapter-marker .lbl{font-size:10.5px}
-  .hero .chapter-marker .name{font-size:17px;line-height:1.1}
-  .hero .chapter-marker .role{display:none}
-  .hero .eyebrow{display:none}
-}
-.hero h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:.98;font-size:clamp(40px,5.8vw,72px);margin:.85rem 0 1.1rem;color:#1B1410}
-.hero h1 .strike{color:rgba(27,20,16,.32);text-decoration:line-through;text-decoration-thickness:4px;text-decoration-color:rgba(255,92,46,.85)}
+/* Section 0 hero · single column: idea + the six parts + CTA + traffic teaser */
+.hero{padding:40px 0 60px;position:relative}
+.hero .wrap{max-width:920px}
+.hero .eyebrow{margin-bottom:1.1rem}
+.hero h1{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:1.0;font-size:clamp(38px,5.4vw,66px);margin:0 0 1.15rem;color:#1B1410}
 .hero h1 .accent{color:#FF5C2E}
-.hero .lede{font-size:19.5px;line-height:1.5;color:#3a2a1f;max-width:560px;margin:0 0 1.75rem}
-.hero .cta-row{display:flex;gap:.65rem;flex-wrap:wrap}
-.hero .micro{margin-top:1.25rem;font-size:13.5px;color:#7A4828;display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
-.hero .micro .ok{color:#206B3A;font-weight:700}
+.hero .lede{font-size:20px;line-height:1.5;color:#3a2a1f;max-width:680px;margin:0}
+.hero .lede strong{font-weight:700;color:#1B1410}
+.hero-rule{height:1px;background:rgba(27,20,16,.1);margin:30px 0}
+.hero .cta-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin:0}
+.hero .cta-note{font-size:14.5px;color:#7A4828}
+.hero-traffic{margin:0;font-size:15px;color:#7A4828}
+.hero-traffic a{color:#FF5C2E;font-weight:600;text-decoration:none}
 .hero .dot{opacity:.4}
+@media (max-width:980px){
+  .hero{padding:20px 0 40px}
+}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#7A4828;background:rgba(255,92,46,.08);padding:.5rem .85rem;border-radius:999px}
 
 .chapter{padding:96px 0 104px;position:relative}
@@ -204,8 +197,9 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .solution .carousel .ctag .pulse{width:7px;height:7px;border-radius:50%;background:#FF5C2E;box-shadow:0 0 0 0 rgba(255,92,46,.7);animation:carouselPulse 2s infinite}
 @keyframes carouselPulse{0%{box-shadow:0 0 0 0 rgba(255,92,46,.7)}70%{box-shadow:0 0 0 8px rgba(255,92,46,0)}100%{box-shadow:0 0 0 0 rgba(255,92,46,0)}}
 .solution .ingredients-block, .hero .ingredients-block{background:#fff;border:1px solid rgba(27,20,16,.07);border-radius:22px;padding:36px;margin-bottom:36px}
-.hero .ingredients-block{margin-bottom:0;padding:28px;box-shadow:0 30px 60px -28px rgba(27,20,16,.25), 0 4px 14px -6px rgba(27,20,16,.08)}
+.hero .ingredients-block{margin:0;padding:0;background:transparent;border:none;box-shadow:none}
 .solution .ingredients-block h4, .hero .ingredients-block h4{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#7A4828;margin:0 0 24px}
+.hero .ingredients-block h4{font-weight:700;font-size:17px;letter-spacing:-.01em;text-transform:none;color:#1B1410;margin:0 0 18px}
 .solution .ingredients{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
 .hero .ingredients{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media (max-width:980px){.solution .ingredients{grid-template-columns:repeat(3,1fr)}.hero .ingredients{grid-template-columns:repeat(2,1fr)}}
@@ -300,6 +294,43 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .offer .tier li{display:flex;gap:.65rem;align-items:flex-start;font-size:15px;line-height:1.45}
 .offer .tier li .check{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(255,92,46,.18);color:#FF5C2E;display:grid;place-items:center;font-size:11px;font-weight:800;margin-top:2px}
 .offer .tier .actions{margin-top:auto;display:flex;flex-direction:column;gap:.5rem}
+
+/* Section 05 public price builder */
+.builder{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+@media (max-width:860px){.builder{grid-template-columns:1fr}}
+.builder-intro{font-size:16px;line-height:1.55;color:rgba(244,236,223,.82);max-width:640px;margin:0 0 22px}
+.builder-base{background:#FBF7F0;color:#1B1410;border-radius:18px;padding:24px 26px;margin-bottom:18px}
+.bb-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}
+.bb-name{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:20px}
+.bb-sub{font-size:13px;color:#7A4828;margin-top:2px}
+.bb-price{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;white-space:nowrap}
+.bb-price small{font-size:12px;color:#7A4828;margin-left:4px;font-weight:600}
+.bb-includes{list-style:none;margin:0;padding:14px 0 0;border-top:1px solid rgba(27,20,16,.1);display:grid;gap:7px}
+.bb-includes li{font-size:13.5px;color:#3a2a1f;padding-left:18px;position:relative}
+.bb-includes li::before{content:"\2713";position:absolute;left:0;color:#FF5C2E;font-weight:800}
+.builder-addons{background:rgba(244,236,223,.05);border:1px solid rgba(244,236,223,.14);border-radius:18px;padding:18px 20px}
+.ba-head{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#FFB28A;margin-bottom:10px}
+.addon{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(244,236,223,.08);color:#F4ECDF;font-size:14.5px;cursor:pointer}
+.addon:last-child{border-bottom:none}
+.addon input{width:18px;height:18px;accent-color:#FF5C2E;flex-shrink:0}
+.addon .a-name{flex:1}
+.addon .a-name em{color:#FFB28A;font-style:normal;font-size:12.5px}
+.addon .a-price{font-family:'Inter Tight',sans-serif;font-weight:700;color:#FBF7F0;white-space:nowrap}
+.addon-qty{cursor:default}
+.qty{display:inline-flex;align-items:center;gap:10px}
+.qty button{width:26px;height:26px;border-radius:7px;border:1px solid rgba(244,236,223,.3);background:transparent;color:#F4ECDF;font-size:16px;cursor:pointer;line-height:1}
+.builder-summary{position:sticky;top:20px}
+.bs-card{background:#120E0B;border:1px solid rgba(244,236,223,.16);border-radius:18px;padding:24px}
+.bs-eyebrow{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#FFB28A;margin-bottom:10px}
+.bs-total{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:40px;letter-spacing:-.03em;line-height:1;color:#FBF7F0}
+.bs-total small{font-size:14px;color:rgba(244,236,223,.6);margin-left:6px;font-weight:600}
+.bs-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.bs-split>div{background:rgba(244,236,223,.06);border-radius:10px;padding:10px 12px}
+.bs-split .k{display:block;font-size:11.5px;color:rgba(244,236,223,.6);margin-bottom:3px}
+.bs-split .v{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:17px;color:#FBF7F0}
+.bs-monthly{font-size:13px;color:rgba(244,236,223,.78);margin-bottom:16px;min-height:18px}
+.bs-card .btn{width:100%;justify-content:center;margin-bottom:8px}
+.bs-note{font-size:11.5px;color:rgba(244,236,223,.5);line-height:1.5;margin-top:6px}
 
 .ask .panel{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
 @media (max-width:920px){.ask .panel{grid-template-columns:1fr}}
@@ -404,8 +435,6 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
     <span>Desde $390.000 COP</span>
     <span class="dot">·</span>
     <span>En línea en 48 horas</span>
-    <span class="dot">·</span>
-    <a class="topbar-link" href="/guides/traffic/">11 guías gratis para conseguir tráfico →</a>
   </div>
 </div>
 
@@ -419,51 +448,42 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
         <a href="/" class="active" aria-current="page">ES</a>
         <a href="/en/" hreflang="en">EN</a>
       </div>
-      <a class="btn btn-orange" href="#ask">Cuéntenos sobre su negocio</a>
+      <button class="btn btn-orange" type="button" data-valentina-open>Hablar con Valentina →</button>
     </div>
   </div>
 </header>
 
 <main id="main">
 
-<!-- CAPÍTULO 01 / EL GANCHO (intro hero) -->
+<!-- SECCIÓN 0 / EL GANCHO (intro hero · vende la idea, luego transiciona a 1-6) -->
 <section class="hero" id="top">
   <div class="wrap">
-    <div class="chapter-marker">
-      <span class="num">01</span>
-      <div class="meta">
-        <span class="lbl">Capítulo 01</span>
-        <span class="name">El Gancho</span>
-        <span class="role">Donde aterriza el visitante. El titular o se gana los próximos diez segundos o los pierde.</span>
-      </div>
-    </div>
-    <div class="text">
-      <span class="eyebrow">Los líderes de la página de ventas</span>
-      <h1>No necesita <span class="strike">un sitio web</span>. Necesita una <span class="accent fr">página de ventas</span>.</h1>
-      <p class="lede">Un sitio web le dice a la gente que existe. Una página de ventas convierte visitantes en clientes. Construimos la segunda, en 48 horas, desde $390.000 COP.</p>
-      <div class="cta-row">
-        <a class="btn btn-orange" href="#ask">Cuéntenos sobre su negocio</a>
-        <a class="btn btn-ghost" href="#problem">Vea cómo funciona</a>
-      </div>
-      <div class="micro">
-        <span><span class="ok">✓</span> En línea en 48 horas</span>
-        <span class="dot">·</span>
-        <span><span class="ok">✓</span> Garantía de 30 días</span>
-        <span class="dot">·</span>
-        <span><span class="ok">✓</span> Usted es dueño del código</span>
-      </div>
-    </div>
-    <div class="ingredients-block" aria-label="Seis ingredientes de una página de ventas">
-      <h4>Seis ingredientes en cada página que construimos</h4>
+    <span class="eyebrow">Páginas de ventas de alta conversión · Colombia</span>
+    <h1>No un sitio web. Una <span class="accent fr">página de ventas</span> de alta conversión.</h1>
+    <p class="lede">Un sitio web informa. Una página de ventas hace <strong>un solo trabajo</strong>: convertir visitantes en clientes. Diseñamos la segunda, en 48 horas, desde $390.000 COP.</p>
+
+    <div class="hero-rule"></div>
+
+    <div class="ingredients-block" aria-label="Las seis partes de una página de ventas">
+      <h4>Toda página de alta conversión tiene 6 partes. Esta es una. Bájela y véalas en acción:</h4>
       <div class="ingredients">
-        <div class="ingredient"><div class="num">01</div><h5>El Gancho</h5><p>Tres segundos para ganarse la atención.</p></div>
-        <div class="ingredient"><div class="num">02</div><h5>El Problema</h5><p>Nombre lo que vinieron a resolver.</p></div>
-        <div class="ingredient"><div class="num">03</div><h5>La Solución</h5><p>Lo que usted hace, en simple.</p></div>
-        <div class="ingredient"><div class="num">04</div><h5>La Prueba</h5><p>Nombres reales, números reales.</p></div>
-        <div class="ingredient"><div class="num">05</div><h5>La Oferta</h5><p>Lo que cuesta, en texto claro.</p></div>
-        <div class="ingredient"><div class="num">06</div><h5>El Pedido</h5><p>Un siguiente paso, sin desorden.</p></div>
+        <div class="ingredient"><div class="num">01</div><h5>El Gancho</h5><p>Gana los 3 segundos.</p></div>
+        <div class="ingredient"><div class="num">02</div><h5>El Problema</h5><p>Nombre su dolor.</p></div>
+        <div class="ingredient"><div class="num">03</div><h5>La Solución</h5><p>Lo que hace, simple.</p></div>
+        <div class="ingredient"><div class="num">04</div><h5>La Prueba</h5><p>Razones para creer.</p></div>
+        <div class="ingredient"><div class="num">05</div><h5>La Oferta</h5><p>Qué cuesta, claro.</p></div>
+        <div class="ingredient"><div class="num">06</div><h5>El Pedido</h5><p>Un paso siguiente.</p></div>
       </div>
     </div>
+
+    <div class="cta-row">
+      <button class="btn btn-orange" type="button" data-valentina-open>Hablar con Valentina ahora</button>
+      <span class="cta-note">Responde en segundos · sin formularios</span>
+    </div>
+
+    <div class="hero-rule"></div>
+
+    <p class="hero-traffic">¿Y las visitas? El tráfico se trata más abajo: <a href="/guides/traffic/">11 guías gratis →</a></p>
   </div>
 </section>
 
@@ -752,109 +772,57 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
         <div class="step-detail">En vivo en su dominio</div>
       </div>
     </div>
-    <div class="grid">
-      <div class="tier featured">
-        <div class="tag">Pago único</div>
-        <h3>La página de ventas</h3>
-        <p class="sub">Una página de alta conversión, hecha a la medida. Todo lo demás se suma como add-on, solo si lo necesita.</p>
-        <div class="price">$390.000<small>COP</small></div>
-        <div class="deposit">30% de depósito ($117.000 COP), 70% al lanzar. <span style="opacity:.7">· IVA incluido</span></div>
-        <ul>
-          <li><span class="check">✓</span><span>Página de ventas de alta conversión, estructura de 6 pasos</span></li>
-          <li><span class="check">✓</span><span>Optimizada para móvil</span></li>
-          <li><span class="check">✓</span><span>Botón click-para-llamar + WhatsApp</span></li>
-          <li><span class="check">✓</span><span>Formulario de contacto</span></li>
-          <li><span class="check">✓</span><span>Sección de confianza con testimonios</span></li>
-          <li><span class="check">✓</span><span>Integración de reservas/citas (Cal.com, Calendly)</span></li>
-          <li><span class="check">✓</span><span>Configuración SEO sólida (schema, meta, sitemap)</span></li>
-          <li><span class="check">✓</span><span>Conexión de dominio + SSL (el dominio va por tu cuenta, te ayudamos a conseguirlo)</span></li>
-          <li><span class="check">✓</span><span>Embed de Google Maps</span></li>
-          <li><span class="check">✓</span><span>Analíticas privacy-first instaladas</span></li>
-          <li><span class="check">✓</span><span>1 mes de hosting y soporte incluido</span></li>
-        </ul>
-        <div class="actions">
+    <div class="builder" id="builder">
+      <div class="builder-config">
+        <p class="builder-intro">Una página de ventas es una sola página, hecha para que el visitante haga una cosa: contactarte. Esto es lo que incluye, y lo que cuesta. Ármala y ve el precio al instante.</p>
+        <div class="builder-base">
+          <div class="bb-row">
+            <div>
+              <div class="bb-name">La página de ventas</div>
+              <div class="bb-sub">La base. Siempre incluida.</div>
+            </div>
+            <div class="bb-price">$390.000<small>COP</small></div>
+          </div>
+          <ul class="bb-includes">
+            <li>Página de alta conversión, estructura de 6 partes</li>
+            <li>Optimizada para móvil, carga en menos de 1 segundo</li>
+            <li>Botón de WhatsApp, click-para-llamar y formulario</li>
+            <li>Reservas/citas, testimonios y mapa de Google</li>
+            <li>SEO, dominio + SSL y analíticas privacy-first</li>
+            <li>1 mes de hosting y soporte, 2 rondas de ajustes</li>
+          </ul>
+        </div>
+        <div class="builder-addons">
+          <div class="ba-head">Suma add-ons (opcional)</div>
+          <label class="addon"><input type="checkbox" data-addon data-price="90000"><span class="a-name">Perfil de Empresa de Google</span><span class="a-price">$90.000</span></label>
+          <label class="addon"><input type="checkbox" data-addon data-price="120000"><span class="a-name">Analítica avanzada (GA4 + GTM + Pixel)</span><span class="a-price">$120.000</span></label>
+          <label class="addon"><input type="checkbox" data-addon data-price="190000"><span class="a-name">Integración con CRM</span><span class="a-price">$190.000</span></label>
+          <label class="addon"><input type="checkbox" data-addon data-price="75000"><span class="a-name">Versión bilingüe (ES/EN)</span><span class="a-price">$75.000</span></label>
+          <label class="addon"><input type="checkbox" data-addon data-price="150000"><span class="a-name">Copywriting profesional</span><span class="a-price">$150.000</span></label>
+          <label class="addon"><input type="checkbox" data-addon data-price="180000"><span class="a-name">Catálogo simple (máx. 30, vía portal)</span><span class="a-price">$180.000</span></label>
+          <label class="addon"><input type="checkbox" data-addon data-price="50000"><span class="a-name">Botón de descarga de PDF</span><span class="a-price">$50.000</span></label>
+          <div class="addon addon-qty">
+            <span class="a-name">Página adicional (máx. 3)</span>
+            <div class="qty"><button type="button" data-step="-1" aria-label="Quitar página">−</button><span id="q-pagina">0</span><button type="button" data-step="1" aria-label="Agregar página">+</button></div>
+            <span class="a-price">$50.000 c/u</span>
+          </div>
+          <label class="addon"><input type="checkbox" data-addon data-price="190000" data-monthly="80000"><span class="a-name">Chatbot de captura <em>· +$80.000/mes</em></span><span class="a-price">$190.000</span></label>
+        </div>
+      </div>
+      <div class="builder-summary">
+        <div class="bs-card">
+          <div class="bs-eyebrow">Tu cotización</div>
+          <div class="bs-total" id="bs-total">$390.000<small>COP</small></div>
+          <div class="bs-split">
+            <div><span class="k">Para arrancar · 30%</span><span class="v" id="bs-deposit">$117.000</span></div>
+            <div><span class="k">Al lanzar · 70%</span><span class="v" id="bs-balance">$273.000</span></div>
+          </div>
+          <div class="bs-monthly" id="bs-monthly">Sin mensualidad. La página es pago único.</div>
           <a class="btn btn-orange" href="/start/?plan=esencial">Empezar →</a>
-          <a class="btn btn-ghost" href="#ask" style="border-color:rgba(27,20,16,.2);color:#1B1410">O, infórmese primero</a>
+          <button class="btn btn-ghost-light" type="button" data-valentina-open>Hablar con Valentina</button>
+          <div class="bs-note">IVA incluido. Pago en COP por Wompi. Los add-ons se confirman en tu cotización; el depósito reserva tu cupo de construcción.</div>
         </div>
       </div>
-      <div class="tier">
-        <div class="tag">Add-ons</div>
-        <h3>Suma solo lo que necesita</h3>
-        <p class="sub">Precio fijo, IVA incluido. Su asesor arma la cotización exacta desde el configurador.</p>
-        <ul>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Perfil de Empresa de Google</span><b style="white-space:nowrap;opacity:.85">$90.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Analítica avanzada (GA4 + GTM + Pixel)</span><b style="white-space:nowrap;opacity:.85">$120.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Integración con CRM</span><b style="white-space:nowrap;opacity:.85">$190.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Versión bilingüe (ES/EN)</span><b style="white-space:nowrap;opacity:.85">$75.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Copywriting profesional</span><b style="white-space:nowrap;opacity:.85">$150.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Catálogo simple (máx. 30, vía portal)</span><b style="white-space:nowrap;opacity:.85">$180.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Botón de descarga de PDF</span><b style="white-space:nowrap;opacity:.85">$50.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Página adicional (máx. 3)</span><b style="white-space:nowrap;opacity:.85">$50.000</b></span></li>
-          <li><span class="check">+</span><span style="display:flex;justify-content:space-between;gap:12px;flex:1"><span>Chatbot de captura</span><b style="white-space:nowrap;opacity:.85">$190.000 + $80.000/mes</b></span></li>
-        </ul>
-        <p class="sub" style="margin-top:.25rem;font-size:13px;opacity:.75">El chatbot es lo único que agrega una mensualidad. La página es pago único.</p>
-        <div class="actions">
-          <a class="btn btn-ghost-light" href="#ask">Cotizar con un asesor</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BIBLIOTECA / Guías gratis -->
-<section class="library" id="guias">
-  <div class="wrap">
-    <div class="lib-head">
-      <div class="meta">
-        <span class="lbl">Recursos · gratis</span>
-        <h2>11 guías para que su página <span class="accent">consiga tráfico.</span></h2>
-        <p class="role">Una página de ventas que no recibe visitas no vende nada. Por eso escribimos esta serie: cómo atraer clientes a un sitio nuevo en Colombia, canal por canal, con presupuestos reales en COP, herramientas que funcionan, y los errores que queman plata. Gratis, sin registro, sin descargas.</p>
-      </div>
-      <span class="stat-pill"><span class="num">11</span> guías · gratis · bilingüe</span>
-    </div>
-
-    <div class="grid">
-      <a class="card" href="/guides/google-ads/">
-        <span class="n">Guía 02</span>
-        <h3>Google Ads para pymes</h3>
-        <p>Estructura de cuenta, palabras clave, negativas que le salvan la plata, presupuestos reales, y los 8 errores que matan el 70% de las cuentas nuevas.</p>
-        <span class="arrow">Leer guía →</span>
-      </a>
-      <a class="card" href="/guides/meta-ads/">
-        <span class="n">Guía 03</span>
-        <h3>Meta Ads · playbook creativo</h3>
-        <p>Estructura 1-1-6, audiencias Advantage+, la fórmula creativa de 5 segundos, los 9 hooks que paran el scroll en Colombia.</p>
-        <span class="arrow">Leer guía →</span>
-      </a>
-      <a class="card" href="/guides/seo-local/">
-        <span class="n">Guía 04</span>
-        <h3>SEO local + Google Business Profile</h3>
-        <p>Cómo aparecer en el map pack. Optimización de perfil, reseñas, citas locales, schema, y el plan de 90 días para empezar de cero.</p>
-        <span class="arrow">Leer guía →</span>
-      </a>
-      <a class="card" href="/guides/whatsapp-business/">
-        <span class="n">Guía 05</span>
-        <h3>WhatsApp Business y catálogo</h3>
-        <p>El canal #1 para pymes colombianas. Setup, catálogo, etiquetas, click-to-WA Ads, pagos por Wompi, y los 9 errores que lo hacen banear.</p>
-        <span class="arrow">Leer guía →</span>
-      </a>
-      <a class="card" href="/guides/voz-a-voz/">
-        <span class="n">Guía 06</span>
-        <h3>Voz a voz y referidos formalizados</h3>
-        <p>El canal con mayor ROI que existe. Cómo pedir sin incomodidad, incentivos que funcionan en Colombia, y cómo trackear sin software.</p>
-        <span class="arrow">Leer guía →</span>
-      </a>
-      <a class="card" href="/guides/busqueda-ia/">
-        <span class="n">Guía 11</span>
-        <h3>Visibilidad en búsqueda con IA</h3>
-        <p>Cómo ser citado por ChatGPT, Claude, Perplexity y las AI Overviews de Google. La nueva pelea de SEO.</p>
-        <span class="arrow">Leer guía →</span>
-      </a>
-    </div>
-
-    <div class="footer-row">
-      <p>Y 5 más: email marketing, afiliados, ferias y eventos, prensa local, y la guía pillar que las une todas.</p>
-      <a class="btn-orange" href="/guides/traffic/">Ver toda la serie →</a>
     </div>
   </div>
 </section>
@@ -981,6 +949,64 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
     Su navegador no soporta reproducción de video.
   </video>
 </dialog>
+
+<!-- BIBLIOTECA / Guías gratis (tráfico · justo antes del footer) -->
+<section class="library" id="guias">
+  <div class="wrap">
+    <div class="lib-head">
+      <div class="meta">
+        <span class="lbl">Recursos · gratis</span>
+        <h2>11 guías para que su página <span class="accent">consiga tráfico.</span></h2>
+        <p class="role">Una página de ventas que no recibe visitas no vende nada. Por eso escribimos esta serie: cómo atraer clientes a un sitio nuevo en Colombia, canal por canal, con presupuestos reales en COP, herramientas que funcionan, y los errores que queman plata. Gratis, sin registro, sin descargas.</p>
+      </div>
+      <span class="stat-pill"><span class="num">11</span> guías · gratis · bilingüe</span>
+    </div>
+
+    <div class="grid">
+      <a class="card" href="/guides/google-ads/">
+        <span class="n">Guía 02</span>
+        <h3>Google Ads para pymes</h3>
+        <p>Estructura de cuenta, palabras clave, negativas que le salvan la plata, presupuestos reales, y los 8 errores que matan el 70% de las cuentas nuevas.</p>
+        <span class="arrow">Leer guía →</span>
+      </a>
+      <a class="card" href="/guides/meta-ads/">
+        <span class="n">Guía 03</span>
+        <h3>Meta Ads · playbook creativo</h3>
+        <p>Estructura 1-1-6, audiencias Advantage+, la fórmula creativa de 5 segundos, los 9 hooks que paran el scroll en Colombia.</p>
+        <span class="arrow">Leer guía →</span>
+      </a>
+      <a class="card" href="/guides/seo-local/">
+        <span class="n">Guía 04</span>
+        <h3>SEO local + Google Business Profile</h3>
+        <p>Cómo aparecer en el map pack. Optimización de perfil, reseñas, citas locales, schema, y el plan de 90 días para empezar de cero.</p>
+        <span class="arrow">Leer guía →</span>
+      </a>
+      <a class="card" href="/guides/whatsapp-business/">
+        <span class="n">Guía 05</span>
+        <h3>WhatsApp Business y catálogo</h3>
+        <p>El canal #1 para pymes colombianas. Setup, catálogo, etiquetas, click-to-WA Ads, pagos por Wompi, y los 9 errores que lo hacen banear.</p>
+        <span class="arrow">Leer guía →</span>
+      </a>
+      <a class="card" href="/guides/voz-a-voz/">
+        <span class="n">Guía 06</span>
+        <h3>Voz a voz y referidos formalizados</h3>
+        <p>El canal con mayor ROI que existe. Cómo pedir sin incomodidad, incentivos que funcionan en Colombia, y cómo trackear sin software.</p>
+        <span class="arrow">Leer guía →</span>
+      </a>
+      <a class="card" href="/guides/busqueda-ia/">
+        <span class="n">Guía 11</span>
+        <h3>Visibilidad en búsqueda con IA</h3>
+        <p>Cómo ser citado por ChatGPT, Claude, Perplexity y las AI Overviews de Google. La nueva pelea de SEO.</p>
+        <span class="arrow">Leer guía →</span>
+      </a>
+    </div>
+
+    <div class="footer-row">
+      <p>Y 5 más: email marketing, afiliados, ferias y eventos, prensa local, y la guía pillar que las une todas.</p>
+      <a class="btn-orange" href="/guides/traffic/">Ver toda la serie →</a>
+    </div>
+  </div>
+</section>
 
 <footer class="site">
   <div class="wrap">
@@ -1174,6 +1200,44 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
         submit.textContent = 'Enviar a Mike y Santiago →';
       });
   });
+})();
+</script>
+
+<!-- Section 05 price builder -->
+<script>
+(function(){
+  var BASE = 390000, PAGINA = 50000, MAXPAG = 3;
+  var root = document.getElementById("builder");
+  if(!root) return;
+  var fmt = function(n){ return "$" + Math.round(n).toLocaleString("es-CO"); };
+  var qEl = document.getElementById("q-pagina");
+  function calc(){
+    var total = BASE, monthly = 0;
+    root.querySelectorAll("input[data-addon]").forEach(function(cb){
+      if(cb.checked){
+        total += parseInt(cb.getAttribute("data-price"), 10);
+        var m = cb.getAttribute("data-monthly");
+        if(m) monthly += parseInt(m, 10);
+      }
+    });
+    total += (parseInt(qEl.textContent, 10) || 0) * PAGINA;
+    var dep = Math.round(total * 0.30);
+    document.getElementById("bs-total").innerHTML = fmt(total) + "<small>COP</small>";
+    document.getElementById("bs-deposit").textContent = fmt(dep);
+    document.getElementById("bs-balance").textContent = fmt(total - dep);
+    document.getElementById("bs-monthly").textContent = monthly > 0
+      ? "+ " + fmt(monthly) + "/mes por el chatbot. Es lo único mensual; la página es pago único."
+      : "Sin mensualidad. La página es pago único.";
+  }
+  root.querySelectorAll("input[data-addon]").forEach(function(cb){ cb.addEventListener("change", calc); });
+  root.querySelectorAll("button[data-step]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var v = parseInt(qEl.textContent, 10) || 0;
+      v = Math.max(0, Math.min(MAXPAG, v + parseInt(b.getAttribute("data-step"), 10)));
+      qEl.textContent = v; calc();
+    });
+  });
+  calc();
 })();
 </script>
 
