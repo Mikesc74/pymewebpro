@@ -50,7 +50,7 @@
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"How is this different from Wix or Squarespace?","acceptedAnswer":{"@type":"Answer","text":"Wix sells you a brochure. We build you a salesperson. Custom-coded, sub-1-second load, written to convert, owned by you outright."}},
 {"@type":"Question","name":"Do you guarantee leads?","acceptedAnswer":{"@type":"Answer","text":"No. We can't promise traffic (that's your ads, your SEO, your channels) and we can't promise conversions (that depends on traffic quality and offer fit, things we don't control). What we promise is the page itself: clear structure, fast load, working form, written to convert. The 30-day money-back guarantee covers your satisfaction with the work."}},
-{"@type":"Question","name":"What if I don't like it?","acceptedAnswer":{"@type":"Answer","text":"30-day money-back guarantee. If the page doesn't work for you, you get every dollar back."}},
+{"@type":"Question","name":"What if I don't like it?","acceptedAnswer":{"@type":"Answer","text":"30-day money-back guarantee. If the page doesn't work for you, you get every peso back."}},
 {"@type":"Question","name":"Do I need to buy a domain?","acceptedAnswer":{"@type":"Answer","text":"Yes. After you pay, we walk you through it inside the portal. If you already have a domain, we attach it. If you don't, we point you at Cloudflare Registrar or Namecheap (around $50.000 COP per year, sometimes less with our referral), help you buy in 5 minutes, then handle all the technical setup (Cloudflare zone, DNS records, SSL certificate) on our end. The domain is always registered in your name, never ours, so you can take it anywhere if you ever leave."}}
 ]}
 </script>
@@ -63,6 +63,11 @@ body{line-height:1.55;font-size:17px;font-weight:500}
 img,svg{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 .faq .answer a,footer.site .copy a,.hero-traffic a{text-decoration:underline;text-underline-offset:2px}
+.u-offscreen{position:absolute;left:-9999px}
+.u-orange{color:#FF5C2E}
+.u-tc{text-align:center}
+.receipt-proof{display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none}
+.foot-blurb{margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px}
 button{font:inherit;cursor:pointer;border:0;background:transparent;color:inherit;padding:0}
 .fr{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
@@ -452,7 +457,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
 
 <header class="site">
   <div class="wrap">
-    <a class="brand" href="#hook" aria-label="PymeWebPro home">
+    <a class="brand" href="#top" aria-label="PymeWebPro home">
       <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
     </a>
     <div class="right">
@@ -725,9 +730,9 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       </div>
     </div>
     <div class="receipts">
-      <div class="receipt"><div class="num">100</div><div class="label">Perfect Google Lighthouse score · top marks for speed, accessibility, SEO and best practices. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" style="display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none">See proof →</a></div></div>
-      <div class="receipt"><div class="num">&lt;0.9s</div><div class="label">Page becomes useful in under one second. Industry average is around four. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" style="display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none">See proof →</a></div></div>
-      <div class="receipt"><div class="num">A+</div><div class="label">Mozilla's top security grade. Most sites score B or worse. <a href="https://developer.mozilla.org/en-US/observatory/analyze?host=pymewebpro.com" target="_blank" rel="noopener" style="display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none">See proof →</a></div></div>
+      <div class="receipt"><div class="num">100</div><div class="label">Perfect Google Lighthouse score · top marks for speed, accessibility, SEO and best practices. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" class="receipt-proof">See proof →</a></div></div>
+      <div class="receipt"><div class="num">&lt;0.9s</div><div class="label">Page becomes useful in under one second. Industry average is around four. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" class="receipt-proof">See proof →</a></div></div>
+      <div class="receipt"><div class="num">A+</div><div class="label">Mozilla's top security grade. Most sites score B or worse. <a href="https://developer.mozilla.org/en-US/observatory/analyze?host=pymewebpro.com" target="_blank" rel="noopener" class="receipt-proof">See proof →</a></div></div>
       <div class="receipt"><div class="num">48hr</div><div class="label">From paid deposit to a live page on your domain.</div></div>
     </div>
   </div>
@@ -806,11 +811,6 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <label class="addon"><input type="checkbox" data-addon data-price="150000"><span class="a-name">Professional copywriting</span><span class="a-price">$150.000</span></label>
           <label class="addon"><input type="checkbox" data-addon data-price="180000"><span class="a-name">Simple catalog (max 30, via portal)</span><span class="a-price">$180.000</span></label>
           <label class="addon"><input type="checkbox" data-addon data-price="50000"><span class="a-name">PDF download button</span><span class="a-price">$50.000</span></label>
-          <div class="addon addon-qty" data-qprice="50000" data-qmax="3">
-            <span class="a-name">Extra page (max 3)</span>
-            <div class="qty"><button type="button" data-step="-1" aria-label="Remove page">−</button><span class="qval">0</span><button type="button" data-step="1" aria-label="Add page">+</button></div>
-            <span class="a-price">$50.000 ea</span>
-          </div>
           <label class="addon"><input type="checkbox" data-addon data-price="190000" data-monthly="80000"><span class="a-name">Lead-capture chatbot <em>· +$80.000/mo</em></span><span class="a-price">$190.000</span></label>
           <div class="addon addon-qty" data-qprice="30000" data-qmax="24">
             <span class="a-name">Hosting + support · by the month</span>
@@ -825,8 +825,8 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <div class="bs-eyebrow">Your quote</div>
           <div class="bs-total" id="bs-total">$390.000<small>COP</small></div>
           <div class="bs-split">
-            <div><span class="k">To start · 30%</span><span class="v" id="bs-deposit">$117.000</span></div>
-            <div><span class="k">On launch · 70%</span><span class="v" id="bs-balance">$273.000</span></div>
+            <div><span class="k">To start · deposit</span><span class="v" id="bs-deposit">$117.000</span></div>
+            <div><span class="k">Balance on launch</span><span class="v" id="bs-balance">$273.000</span></div>
           </div>
           <div class="bs-monthly" id="bs-monthly">No monthly. The page is one-time.</div>
           <a class="btn btn-orange" href="/start/?plan=esencial">Get started →</a>
@@ -866,7 +866,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <label for="lf-about">Tell us about your business</label>
           <textarea id="lf-about" name="about" required placeholder="What you do, who buys, what isn't working, current website if you have one"></textarea>
         </div>
-        <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="u-offscreen" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Send to Mike and Santiago →</button>
           <span class="reply">We reply within one business day.</span>
@@ -940,11 +940,11 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       </details>
       <details>
         <summary>How much does hosting cost after the included period?</summary>
-        <div class="answer">The page includes <strong>1 month</strong> of hosting and support. After: $30.000 COP/mo, or $300.000 COP/year if you prepay (save two months) · VAT included. Includes hosting on the global Cloudflare network, SSL, automatic backups, priority WhatsApp support, and small monthly changes (text, photos, hours, prices). No contract, cancel anytime, the site files are always yours. <a href="/hosting" style="color:#FF5C2E">View the plan or renew</a>.</div>
+        <div class="answer">The page includes <strong>1 month</strong> of hosting and support. After: $30.000 COP/mo, or $300.000 COP/year if you prepay (save two months) · VAT included. Includes hosting on the global Cloudflare network, SSL, automatic backups, priority WhatsApp support, and small monthly changes (text, photos, hours, prices). No contract, cancel anytime, the site files are always yours. <a href="/hosting" class="u-orange">View the plan or renew</a>.</div>
       </details>
       <details>
         <summary>What if I don't like it?</summary>
-        <div class="answer">30-day money-back guarantee. If the page doesn't work for you, we refund every dollar. We've never had to.</div>
+        <div class="answer">30-day money-back guarantee. If the page doesn't work for you, we refund every peso. We've never had to.</div>
       </details>
     </div>
   </div>
@@ -1014,10 +1014,10 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
   <div class="wrap">
     <div class="top">
       <div>
-        <a class="brand" href="#hook" style="color:#FBF7F0">
-          <span class="br" style="color:#A89788">&lt;</span><span class="word" style="color:#FBF7F0">pyme<span class="web">web</span>pro</span><span class="br" style="color:#A89788">/&gt;</span>
+        <a class="brand" href="#top">
+          <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
         </a>
-        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">The marketing page leaders. Pages that turn visitors into customers, in 48 hours, from $390.000 COP. Built in Medellín, Canadian-owned, for Colombian SMBs.</p>
+        <p class="foot-blurb">The marketing page leaders. Pages that turn visitors into customers, in 48 hours, from $390.000 COP. Built in Medellín, Canadian-owned, for Colombian SMBs.</p>
         <div class="socials">
           <a href="https://www.facebook.com/pymewebpro" target="_blank" rel="noopener" aria-label="PymeWebPro on Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
@@ -1030,7 +1030,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       <div>
         <h5>Chapters</h5>
         <ul>
-          <li><a href="#hook">01 The Hook</a></li>
+          <li><a href="#top">01 The Hook</a></li>
           <li><a href="#problem">02 The Problem</a></li>
           <li><a href="#solution">03 The Solution</a></li>
           <li><a href="#proof">04 The Proof</a></li>
@@ -1077,7 +1077,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
         <p>London, Ontario, Canada</p>
       </div>
     </div>
-    <div class="legal-block" style="text-align:center">
+    <div class="legal-block u-tc">
       Norte Sur Consulting S.A.S. · NIT 901.956.771-1 · Cámara de Comercio matrícula 21-817900-12
     </div>
     <div class="copy">
@@ -1200,7 +1200,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       var v = parseInt(row.querySelector(".qval").textContent, 10) || 0;
       total += v * parseInt(row.getAttribute("data-qprice"), 10);
     });
-    var dep = Math.round(total * 0.30);
+    var dep = 117000; // deposit reserves the build slot · 30% of the base page · matches the Wompi checkout
     document.getElementById("bs-total").innerHTML = fmt(total) + "<small>COP</small>";
     document.getElementById("bs-deposit").textContent = fmt(dep);
     document.getElementById("bs-balance").textContent = fmt(total - dep);

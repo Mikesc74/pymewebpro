@@ -64,6 +64,11 @@ body{line-height:1.55;font-size:17px;font-weight:500}
 img,svg{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 .faq .answer a,footer.site .copy a,.hero-traffic a{text-decoration:underline;text-underline-offset:2px}
+.u-offscreen{position:absolute;left:-9999px}
+.u-orange{color:#FF5C2E}
+.u-tc{text-align:center}
+.receipt-proof{display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none}
+.foot-blurb{margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px}
 button{font:inherit;cursor:pointer;border:0;background:transparent;color:inherit;padding:0}
 .fr{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
@@ -709,9 +714,9 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       </div>
     </div>
     <div class="receipts">
-      <div class="receipt"><div class="num">100</div><div class="label">Puntaje perfecto en Google Lighthouse · velocidad, accesibilidad, SEO y buenas prácticas, todo al máximo. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" style="display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none">Ver prueba →</a></div></div>
-      <div class="receipt"><div class="num">&lt;0,9s</div><div class="label">La página se vuelve útil en menos de un segundo. El promedio de la industria es cerca de cuatro. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" style="display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none">Ver prueba →</a></div></div>
-      <div class="receipt"><div class="num">A+</div><div class="label">La nota más alta de seguridad de Mozilla. La mayoría de sitios sacan B o menos. <a href="https://developer.mozilla.org/en-US/observatory/analyze?host=pymewebpro.com" target="_blank" rel="noopener" style="display:inline-block;margin-top:6px;font-weight:700;color:#FF5C2E;text-decoration:none">Ver prueba →</a></div></div>
+      <div class="receipt"><div class="num">100</div><div class="label">Puntaje perfecto en Google Lighthouse · velocidad, accesibilidad, SEO y buenas prácticas, todo al máximo. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" class="receipt-proof">Ver prueba →</a></div></div>
+      <div class="receipt"><div class="num">&lt;0,9s</div><div class="label">La página se vuelve útil en menos de un segundo. El promedio de la industria es cerca de cuatro. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpymewebpro.com" target="_blank" rel="noopener" class="receipt-proof">Ver prueba →</a></div></div>
+      <div class="receipt"><div class="num">A+</div><div class="label">La nota más alta de seguridad de Mozilla. La mayoría de sitios sacan B o menos. <a href="https://developer.mozilla.org/en-US/observatory/analyze?host=pymewebpro.com" target="_blank" rel="noopener" class="receipt-proof">Ver prueba →</a></div></div>
       <div class="receipt"><div class="num">48h</div><div class="label">Del depósito pagado a una página en vivo en su dominio.</div></div>
     </div>
   </div>
@@ -788,11 +793,6 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <label class="addon"><input type="checkbox" data-addon data-price="150000"><span class="a-name">Copywriting profesional</span><span class="a-price">$150.000</span></label>
           <label class="addon"><input type="checkbox" data-addon data-price="180000"><span class="a-name">Catálogo simple (máx. 30, vía portal)</span><span class="a-price">$180.000</span></label>
           <label class="addon"><input type="checkbox" data-addon data-price="50000"><span class="a-name">Botón de descarga de PDF</span><span class="a-price">$50.000</span></label>
-          <div class="addon addon-qty" data-qprice="50000" data-qmax="3">
-            <span class="a-name">Página adicional (máx. 3)</span>
-            <div class="qty"><button type="button" data-step="-1" aria-label="Quitar página">−</button><span class="qval">0</span><button type="button" data-step="1" aria-label="Agregar página">+</button></div>
-            <span class="a-price">$50.000 c/u</span>
-          </div>
           <label class="addon"><input type="checkbox" data-addon data-price="190000" data-monthly="80000"><span class="a-name">Chatbot de captura <em>· +$80.000/mes</em></span><span class="a-price">$190.000</span></label>
           <div class="addon addon-qty" data-qprice="30000" data-qmax="24">
             <span class="a-name">Hosting + soporte · por mes</span>
@@ -807,8 +807,8 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <div class="bs-eyebrow">Tu cotización</div>
           <div class="bs-total" id="bs-total">$390.000<small>COP</small></div>
           <div class="bs-split">
-            <div><span class="k">Para arrancar · 30%</span><span class="v" id="bs-deposit">$117.000</span></div>
-            <div><span class="k">Al lanzar · 70%</span><span class="v" id="bs-balance">$273.000</span></div>
+            <div><span class="k">Para arrancar · depósito</span><span class="v" id="bs-deposit">$117.000</span></div>
+            <div><span class="k">Saldo al lanzar</span><span class="v" id="bs-balance">$273.000</span></div>
           </div>
           <div class="bs-monthly" id="bs-monthly">Sin mensualidad. La página es pago único.</div>
           <a class="btn btn-orange" href="/start/?plan=esencial">Empezar →</a>
@@ -845,7 +845,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
           <label for="lf-about">Cuéntenos sobre su negocio</label>
           <textarea id="lf-about" name="about" required placeholder="Qué hace, quién compra, qué no funciona, sitio web actual si tiene"></textarea>
         </div>
-        <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="u-offscreen" aria-hidden="true">
         <div class="submit-row">
           <button type="submit" class="btn btn-orange" id="lf-submit">Enviar a Mike y Santiago →</button>
           <span class="reply">Respondemos en un día hábil.</span>
@@ -910,7 +910,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       </details>
       <details>
         <summary>¿Y si necesito un sitio web completo o una tienda en línea?</summary>
-        <div class="answer">Una página de ventas es una página, hecha para convertir. Si su negocio necesita varias páginas (servicios separados, blog, portafolio, equipo) eso es nuestro <a href="/sitios-web/" style="color:#FF5C2E">sitio web completo</a>. Si necesita carrito, catálogo y procesar pagos, eso es nuestra <a href="/tienda/" style="color:#FF5C2E">tienda en línea</a>. Mismo equipo, misma garantía, mismo proceso, distintos productos.</div>
+        <div class="answer">Una página de ventas es una página, hecha para convertir. Si su negocio necesita varias páginas (servicios separados, blog, portafolio, equipo) eso es nuestro <a href="/sitios-web/" class="u-orange">sitio web completo</a>. Si necesita carrito, catálogo y procesar pagos, eso es nuestra <a href="/tienda/" class="u-orange">tienda en línea</a>. Mismo equipo, misma garantía, mismo proceso, distintos productos.</div>
       </details>
       <details>
         <summary>¿Y si ya tengo un sitio web?</summary>
@@ -922,7 +922,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       </details>
       <details>
         <summary>¿Cuánto cuesta el hosting después del período incluido?</summary>
-        <div class="answer">La página incluye <strong>1 mes</strong> de hosting y soporte. Después: $30.000 COP al mes, o $300.000 COP al año si paga por adelantado (ahorra dos meses) · IVA incluido. El plan incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" style="color:#FF5C2E">Ver el plan o renovar</a>.</div>
+        <div class="answer">La página incluye <strong>1 mes</strong> de hosting y soporte. Después: $30.000 COP al mes, o $300.000 COP al año si paga por adelantado (ahorra dos meses) · IVA incluido. El plan incluye hospedaje en la red global de Cloudflare, SSL, copias de seguridad automáticas, soporte prioritario por WhatsApp y pequeños cambios cada mes (textos, fotos, horarios, precios). Sin contrato, cancelable cuando quiera, los archivos del sitio siempre son suyos. <a href="/hosting" class="u-orange">Ver el plan o renovar</a>.</div>
       </details>
       <details>
         <summary>¿Y si no me gusta?</summary>
@@ -999,7 +999,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
         <a class="brand" href="#top">
           <span class="br">&lt;</span><span class="word">pyme<span class="web">web</span>pro</span><span class="br">/&gt;</span>
         </a>
-        <p style="margin:1rem 0 0;font-size:14px;line-height:1.55;color:#A89788;max-width:340px">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde $390.000 COP. Hecho en Medellín, propiedad canadiense, para pymes colombianas.</p>
+        <p class="foot-blurb">Los líderes de la página de ventas. Páginas que convierten visitantes en clientes, en 48 horas, desde $390.000 COP. Hecho en Medellín, propiedad canadiense, para pymes colombianas.</p>
         <div class="socials">
           <a href="https://www.facebook.com/pymewebpro" target="_blank" rel="noopener" aria-label="PymeWebPro en Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
@@ -1056,7 +1056,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
         <p>London, Ontario, Canadá</p>
       </div>
     </div>
-    <div class="legal-block" style="text-align:center">
+    <div class="legal-block u-tc">
       Norte Sur Consulting S.A.S. · NIT 901.956.771-1 · Cámara de Comercio matrícula 21-817900-12
     </div>
     <div class="copy">
@@ -1179,7 +1179,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
       var v = parseInt(row.querySelector(".qval").textContent, 10) || 0;
       total += v * parseInt(row.getAttribute("data-qprice"), 10);
     });
-    var dep = Math.round(total * 0.30);
+    var dep = 117000; // deposit reserves the build slot · 30% of the base page · matches the Wompi checkout
     document.getElementById("bs-total").innerHTML = fmt(total) + "<small>COP</small>";
     document.getElementById("bs-deposit").textContent = fmt(dep);
     document.getElementById("bs-balance").textContent = fmt(total - dep);
