@@ -8,8 +8,11 @@ account_id = "c98561adefb602704d4e7a6a1b7e7597"
 # to <slug>.sites.pymewebpro.com with no per-client DNS work. Requires a wildcard
 # DNS record (CNAME *.sites pymewebpro-portal.workers.dev) configured one-time on the zone.
 routes = [
-  # portal.pymewebpro.com retired 2026-05-13. Studio admin lives under the
-  # master portal at colguides.com/portal/pymewebpro/* (Access-gated).
+  # portal.pymewebpro.com RESTORED 2026-05-20 as the PUBLIC checkout host: the
+  # /start wizard POSTs to /api/leads here and the /c/ checkout + Wompi redirect
+  # run here. Studio ADMIN still lives gated at colguides.com/portal/pymewebpro/*;
+  # the worker's own login protects admin routes served on this host.
+  { pattern = "portal.pymewebpro.com", zone_name = "pymewebpro.com", custom_domain = true },
   { pattern = "*.sites.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   { pattern = "mockups.pymewebpro.com/*", zone_name = "pymewebpro.com" },
   # santi.pymewebpro.com - Santi's bilingual sales site. See src/santi.js.

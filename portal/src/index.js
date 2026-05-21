@@ -1306,7 +1306,12 @@ async function handleCreateCheckout(request, env, leadId) {
     `INSERT INTO payments (id, lead_id, reference, amount_cents, currency, plan, hosting, discount_applied, status, created_at, updated_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?)`
   ).bind(paymentId, leadId, reference, amountInCents, currency, quote.plan, quote.hosting, quote.discount_active ? 1 : 0, now, now).run();
-  const redirectUrl = `${env.APP_URL}/c/${leadId}?status=back`;
+  // Keep the buyer on the host they checked out from (public portal.pymewebpro.com),
+  // not APP_URL (the Access-gated colguides admin mount), so the post-payment
+  // return page is reachable. Falls back to APP_URL if the origin can't be read.
+  let checkoutOrigin = env.APP_URL;
+  try { checkoutOrigin = new URL(request.url).origin; } catch (_) {}
+  const redirectUrl = `${checkoutOrigin}/c/${leadId}?status=back`;
   const params = new URLSearchParams({
     "public-key": env.WOMPI_PUBLIC_KEY,
     "currency": currency,
