@@ -168,14 +168,26 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
   if (!PLANS[planKey]) planKey = 'esencial';
   var plan = PLANS[planKey];
 
+  // Config carried over from the section-5 calculator on pymewebpro.com (optional).
+  var cfgTotal = parseInt(params.get('total'), 10);
+  var cfgItems = (params.get('items') || '').trim();
+  var cfgMonthly = parseInt(params.get('monthly'), 10) || 0;
+  var copFmt = function(n){ return '$' + Number(n).toLocaleString('es-CO') + ' COP'; };
+
   var card = document.getElementById('plan-card');
   document.getElementById('plan-tag').textContent = plan.tag;
   document.getElementById('plan-name').textContent = plan.name;
   document.getElementById('kicker').textContent = 'Empezando con ' + plan.name;
 
   function renderPrice(){
-    document.getElementById('plan-price').innerHTML = plan.cop;
-    document.getElementById('plan-deposit').innerHTML = '<strong>30% de depósito</strong> (' + plan.dep_cop + ') hoy, 70% al lanzar. <strong>Garantía de devolución a 30 días.</strong>';
+    var total = (cfgTotal && cfgTotal > 0) ? cfgTotal : 390000;
+    var dep = 117000;
+    document.getElementById('plan-price').innerHTML = copFmt(total);
+    var html = '<strong>Depósito hoy</strong> (' + copFmt(dep) + ') reserva tu cupo. Saldo al lanzar: <strong>' + copFmt(total - dep) + '</strong>';
+    if (cfgItems) html += ' · incluye: ' + cfgItems;
+    if (cfgMonthly > 0) html += '. El chatbot suma ' + copFmt(cfgMonthly) + '/mes.';
+    html += ' <strong>Garantía de devolución a 30 días.</strong>';
+    document.getElementById('plan-deposit').innerHTML = html;
     card.removeAttribute('hidden');
   }
 
@@ -196,14 +208,16 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
       name: fd.get('name'),
       email: fd.get('email'),
       business_name: fd.get('business_name'),
-      message: 'Quiere la página de ventas. Vino de /start.',
+      message: 'Quiere la página de ventas' + (cfgItems ? ' + add-ons: ' + cfgItems : '') + '. Vino de /start.',
       language: 'es',
       source: 'pymewebpro_start',
       page: '/start/',
       website: fd.get('company_website') || '',
       // Single product: base page includes the first month of hosting (then
-      // $30k/mo). Keep the portal key 'esencial' for pricing/checkout.
-      extra: { plan: planKey, hosting: 'monthly' }
+      // $30k/mo). Keep the portal key 'esencial' for pricing/checkout (deposit
+      // stays $117k); the configured add-ons + total ride along for the rep to
+      // confirm and invoice in the launch balance.
+      extra: { plan: planKey, hosting: 'monthly', total_cop: ((cfgTotal && cfgTotal > 0) ? cfgTotal : 390000), items: cfgItems, monthly_cop: cfgMonthly }
     };
     if (window.PwpAttribution) {
       var attr = window.PwpAttribution.get();

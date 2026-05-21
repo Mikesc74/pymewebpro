@@ -829,7 +829,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
             <div><span class="k">Balance on launch</span><span class="v" id="bs-balance">$273.000</span></div>
           </div>
           <div class="bs-monthly" id="bs-monthly">No monthly. The page is one-time.</div>
-          <a class="btn btn-orange" href="/start/?plan=esencial">Get started →</a>
+          <a class="btn btn-orange" id="bs-start" href="/start/?plan=esencial">Get started →</a>
           <button class="btn btn-ghost-light" type="button" data-valentina-open>Get answers</button>
           <div class="bs-note">VAT included. Paid in COP via Wompi. Add-ons are confirmed on your quote; the deposit reserves your build slot.</div>
         </div>
@@ -1207,6 +1207,11 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
     document.getElementById("bs-monthly").textContent = monthly > 0
       ? "+ " + fmt(monthly) + "/mo for the chatbot. It's the only monthly; the page is one-time."
       : "No monthly. The page is one-time.";
+    var items = [];
+    root.querySelectorAll("input[data-addon]").forEach(function(cb){ if(cb.checked){ items.push(cb.closest(".addon").querySelector(".a-name").textContent.replace(/\s+/g, " ").trim()); } });
+    root.querySelectorAll(".addon-qty").forEach(function(row){ var v = parseInt(row.querySelector(".qval").textContent, 10) || 0; if(v > 0){ items.push(row.querySelector(".a-name").textContent.trim() + " x" + v); } });
+    var sb = document.getElementById("bs-start");
+    if(sb){ sb.href = "/start/?plan=esencial&total=" + total + (monthly > 0 ? "&monthly=" + monthly : "") + (items.length ? "&items=" + encodeURIComponent(items.join(" · ")) : ""); }
   }
   root.querySelectorAll("input[data-addon]").forEach(function(cb){ cb.addEventListener("change", calc); });
   root.querySelectorAll(".addon-qty button[data-step]").forEach(function(b){

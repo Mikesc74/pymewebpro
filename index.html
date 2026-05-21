@@ -811,7 +811,7 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
             <div><span class="k">Saldo al lanzar</span><span class="v" id="bs-balance">$273.000</span></div>
           </div>
           <div class="bs-monthly" id="bs-monthly">Sin mensualidad. La página es pago único.</div>
-          <a class="btn btn-orange" href="/start/?plan=esencial">Empezar →</a>
+          <a class="btn btn-orange" id="bs-start" href="/start/?plan=esencial">Empezar →</a>
           <button class="btn btn-ghost-light" type="button" data-valentina-open>Obtén respuestas</button>
           <div class="bs-note">IVA incluido. Pago en COP por Wompi. Los add-ons se confirman en tu cotización; el depósito reserva tu cupo de construcción.</div>
         </div>
@@ -1186,6 +1186,11 @@ footer.site .top{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}
     document.getElementById("bs-monthly").textContent = monthly > 0
       ? "+ " + fmt(monthly) + "/mes por el chatbot. Es lo único mensual; la página es pago único."
       : "Sin mensualidad. La página es pago único.";
+    var items = [];
+    root.querySelectorAll("input[data-addon]").forEach(function(cb){ if(cb.checked){ items.push(cb.closest(".addon").querySelector(".a-name").textContent.replace(/\s+/g, " ").trim()); } });
+    root.querySelectorAll(".addon-qty").forEach(function(row){ var v = parseInt(row.querySelector(".qval").textContent, 10) || 0; if(v > 0){ items.push(row.querySelector(".a-name").textContent.trim() + " x" + v); } });
+    var sb = document.getElementById("bs-start");
+    if(sb){ sb.href = "/start/?plan=esencial&total=" + total + (monthly > 0 ? "&monthly=" + monthly : "") + (items.length ? "&items=" + encodeURIComponent(items.join(" · ")) : ""); }
   }
   root.querySelectorAll("input[data-addon]").forEach(function(cb){ cb.addEventListener("change", calc); });
   root.querySelectorAll(".addon-qty button[data-step]").forEach(function(b){
