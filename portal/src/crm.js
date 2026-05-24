@@ -3777,6 +3777,75 @@ function closeCard() {
 
 function onCardEsc(e) { if (e.key === "Escape") closeCard(); }
 
+// AI first-touch draft. Calls the outreach drafter endpoint (Claude), shows the
+// returned WhatsApp message for review, then opens WhatsApp and logs the send.
+async function aiDraftFor(leadId, contact) {
+  if (!leadId) { toast("Borrador IA solo disponible para leads", true); return; }
+  toast("Generando borrador con IA...");
+  let r;
+  try {
+    r = await api("/api/admin/outreach/draft", {
+      method: "POST",
+      body: JSON.stringify({ lead_id: leadId, channel: "whatsapp", tone: "santi" }),
+    });
+  } catch (e) { toast("Error: " + (e && e.message || e), true); return; }
+  const text = typeof r.draft === "string" ? r.draft : ((r.draft && r.draft.body) || "");
+  showAiDraftPanel(leadId, text, contact || {});
+}
+
+function showAiDraftPanel(leadId, text, contact) {
+  const old = document.getElementById("ai-draft-panel");
+  if (old) old.remove();
+  const waRaw = (contact.whatsapp || contact.phone || "").toString();
+  let waDigits = "";
+  for (let i = 0; i < waRaw.length; i++) { const c = waRaw[i]; if (c >= "0" && c <= "9") waDigits += c; }
+  const bg = document.createElement("div");
+  bg.id = "ai-draft-panel";
+  bg.className = "modal-bg";
+  bg.style.zIndex = "9999";
+  bg.addEventListener("click", (e) => { if (e.target === bg) bg.remove(); });
+  bg.innerHTML =
+    '<div class="modal" role="dialog" aria-modal="true" style="max-width:520px">' +
+      '<div class="modal-head"><div class="title-wrap"><div class="title-line">' +
+        '<span class="type-pill">IA</span><h2>Borrador de primer mensaje</h2>' +
+      '</div></div><button class="close" data-act="ai-close" title="Cerrar">x</button></div>' +
+      '<div class="modal-body" style="padding:16px">' +
+        '<textarea id="ai-draft-text" style="width:100%;min-height:170px;font:inherit;padding:10px;border:1px solid var(--ink-line);border-radius:8px;background:var(--paper);color:var(--ink)"></textarea>' +
+        '<p style="font-size:12px;color:var(--ink-mute);margin:8px 0 0">Revisa y edita. Al enviar se abre WhatsApp y se registra el toque.</p>' +
+      '</div>' +
+      '<div class="modal-foot"><div class="left">' +
+        '<button class="ghost" data-act="ai-copy">Copiar</button>' +
+      '</div><div class="right">' +
+        '<button class="ghost" data-act="ai-close">Cerrar</button>' +
+        '<button class="primary" data-act="ai-send"' + (waDigits ? "" : " disabled title='Sin numero de WhatsApp'") + '>Abrir WhatsApp y registrar</button>' +
+      '</div></div>' +
+    '</div>';
+  document.body.appendChild(bg);
+  const ta = bg.querySelector("#ai-draft-text");
+  ta.value = text || "";
+  bg.querySelectorAll('[data-act="ai-close"]').forEach((b) => b.onclick = () => bg.remove());
+  bg.querySelector('[data-act="ai-copy"]').onclick = () => {
+    ta.select();
+    try { navigator.clipboard.writeText(ta.value); toast("Copiado"); } catch (e) { toast("Selecciona y copia", true); }
+  };
+  const sendBtn = bg.querySelector('[data-act="ai-send"]');
+  if (sendBtn && waDigits) {
+    sendBtn.onclick = async () => {
+      const msg = ta.value.trim();
+      if (!msg) { toast("Mensaje vacio", true); return; }
+      window.open("https://wa.me/" + waDigits + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+      try {
+        await api("/api/admin/outreach/log-send", {
+          method: "POST",
+          body: JSON.stringify({ lead_id: leadId, channel: "whatsapp", body: msg }),
+        });
+        toast("Enviado y registrado");
+      } catch (e) { toast("Abierto, pero no se registro", true); }
+      bg.remove();
+    };
+  }
+}
+
 // Pre-built WhatsApp opener / follow-up messages. Variables in {braces} are
 // substituted from the lead row at click time. Cold-outreach openers each lead
 // with a specific observable problem on the prospect's site (slow/mobile, no
@@ -3912,6 +3981,10 @@ function renderQuickActionsBar(type, row) {
   buttons.push(url
     ? '<a href="' + escHtml(url) + '" target="_blank" rel="noopener">🌐 Site</a>'
     : '<a class="disabled" title="No website on record">🌐 Site</a>');
+  const aiLeadId = type === "lead" ? row.id : (type === "deal" ? row.lead_id : null);
+  if (aiLeadId) {
+    buttons.push('<button class="ai-draft" type="button" data-act="ai-draft" data-lead="' + escHtml(String(aiLeadId)) + '" title="Generar primer mensaje con IA">🤖 Borrador IA</button>');
+  }
   buttons.push('<button data-act="add-activity" type="button" style="margin-left:auto">+ Log activity</button>');
 
   return '<div class="modal-actions">' + buttons.join("") + '</div>';
@@ -3980,6 +4053,16 @@ function buildCardModal(type, row) {
       openWaTemplatePicker(tplBtn, buildWaUrlForContact(liveContact), liveContact, type, row.id);
     };
   }
+  // AI draft button: generate the first-touch message via the outreach drafter.
+  const aiBtn = bg.querySelector('button[data-act="ai-draft"]');
+  if (aiBtn) {
+    const aiContact = type === "deal" && row.lead_id ? state.lookups.leadById.get(row.lead_id) : row;
+    aiBtn.onclick = (e) => {
+      e.stopPropagation();
+      const liveContact = { ...(aiContact || {}), ...readModalContactInputs(bg) };
+      aiDraftFor(aiBtn.dataset.lead, liveContact);
+    };
+  }
 
   // Re-render the quick-action bar whenever the user edits phone/whatsapp/
   // email/current_site/instagram in the modal · so the Call / WhatsApp / Email
@@ -4006,6 +4089,15 @@ function buildCardModal(type, row) {
     // Re-bind add-activity on the new bar.
     const newAdd = newBar.querySelector('button[data-act="add-activity"]');
     if (newAdd) newAdd.onclick = () => addActivityFor(type, row.id);
+    // Re-bind AI draft on the new bar.
+    const newAi = newBar.querySelector('button[data-act="ai-draft"]');
+    if (newAi) {
+      newAi.onclick = (e) => {
+        e.stopPropagation();
+        const liveContact = { ...row, ...readModalContactInputs(bg) };
+        aiDraftFor(newAi.dataset.lead, liveContact);
+      };
+    }
   };
 
   ["phone", "whatsapp", "email", "current_site", "instagram"].forEach((k) => {

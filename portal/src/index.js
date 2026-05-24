@@ -1708,6 +1708,36 @@ const src_default = {
         },
       }));
     }
+    // ventas.pymewebpro.com: the PymeWebPro SALES HOME for Santi. Serves the
+    // standalone CRM (today / funnel / leads / deals / activities) full-page as a
+    // focused sales workspace, reusing the same /api/admin/crm APIs + D1. The CRM's
+    // own admin-key login handles auth on this origin. API paths (/api/*) fall
+    // through to the normal handlers below. Access-gate this host (Mike + Santi).
+    if (url.hostname === "ventas.pymewebpro.com" && !path.startsWith("/api/")) {
+      if (request.method !== "GET") return new Response("Method not allowed", { status: 405 });
+      if (path === "/robots.txt") return new Response("User-agent: *\nDisallow: /\n", { headers: { "Content-Type": "text/plain" } });
+      const ventasCSP = [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline' https://unpkg.com",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+        "font-src 'self' https://fonts.gstatic.com data:",
+        "img-src 'self' data: blob:",
+        "connect-src 'self'",
+        "frame-ancestors 'none'",
+        "base-uri 'self'",
+        "object-src 'none'",
+        "form-action 'self'",
+      ].join("; ");
+      return withSecurityHeaders(new Response(crmPageHTML(env), {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "strict-origin-when-cross-origin",
+          "Content-Security-Policy": ventasCSP,
+        },
+      }));
+    }
     try {
       if (path === "/api/health") return cors(json({ ok: true, timestamp: Date.now() }));
       // ─── Public Chief of Staff loader script ─────────────────────────

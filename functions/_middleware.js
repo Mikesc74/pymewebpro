@@ -49,7 +49,6 @@ const SCRIPT_HASHES = [
   "sha256-G+zQUXnwYvyXbqM/+nxazbU+422evUBh7lBBULCnL6o=",
   "sha256-GNzSG+JD+AGVSnl9kcoRwnnsq1NT0omKeO/8RT77Zz0=",
   "sha256-GUNlN1EIqBJGKoJRi4QUFUcwszQVtrA5ptGfmaSokWk=",
-  "sha256-HL4hi0H+zBfJAKqprTeSYOQuNIYLI1/uNc1MU5+YJxs=",
   "sha256-HPj/LbwnRSygdZp1cAKo5zRXr2UztC0jXh9f8vI4GR4=",
   "sha256-HxQNaPSjKX4zIcVMwrlirBTYhmqHWr7A77Vfj5JwRh0=",
   "sha256-ILPMXQ+3vbtcQik5/VFgEcxdUMXLIYXEFRWpU/R7Wr4=",

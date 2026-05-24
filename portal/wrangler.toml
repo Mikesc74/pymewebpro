@@ -18,6 +18,11 @@ routes = [
   # santi.pymewebpro.com - Santi's bilingual sales site. See src/santi.js.
   # custom_domain = true → wrangler auto-creates the DNS record on first deploy.
   { pattern = "santi.pymewebpro.com", zone_name = "pymewebpro.com", custom_domain = true },
+  # ventas.pymewebpro.com - the PymeWebPro SALES HOME (outbound funnel + Santi's
+  # scoped cockpit), served by this worker via a host branch in fetch(). Reuses
+  # the same D1 + CRM/prospecting APIs, no new database. DETACH this domain from
+  # the old `pymewebpro-ventas` Pages project BEFORE deploying or the route conflicts.
+  { pattern = "ventas.pymewebpro.com", zone_name = "pymewebpro.com", custom_domain = true },
   # inviersol.com routes REMOVED 2026-05-19 · this site now lives on its own
   # Cloudflare Pages project (`inviersol`, repo ~/code/Inviersol/). If these
   # routes are restored, pymewebpro-portal will hijack inviersol.com again and
