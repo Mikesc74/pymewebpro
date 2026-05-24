@@ -18,7 +18,6 @@ import { handleMockups } from "./mockups.js";
 // API:  /api/admin/crm/grid + /api/admin/crm/<table>[/<id>]
 // Page: /admin/crm  (standalone HTML, not part of the React SPA)
 import { handleAdminCRM, crmPageHTML } from "./crm.js";
-import { FUNNELS_PDF_B64 } from "./funnels-pdf.js";
 import VENTAS_RECURSOS_HTML from "./ventas-recursos.html";
 import { handleSiteAuditAPI, siteAuditReportHTML } from "./site-audit.js";
 // santi.pymewebpro.com · bilingual sales site for Santi to use with prospects.
@@ -1744,7 +1743,7 @@ const src_default = {
         "object-src 'none'",
         "form-action 'self'",
       ].join("; ");
-      // Sales resources: the funnels PDF (client leave-behind) + the manual.
+      // Sales resources: the sales manual (guion, reglas, calificacion, alcance).
       if (path === "/recursos" || path === "/recursos/") {
         return withSecurityHeaders(new Response(VENTAS_RECURSOS_HTML, {
           headers: {
@@ -1755,16 +1754,6 @@ const src_default = {
             "Content-Security-Policy": ventasCSP,
           },
         }));
-      }
-      if (path === "/recursos/funnels.pdf") {
-        const pdfBytes = Uint8Array.from(atob(FUNNELS_PDF_B64), (c) => c.charCodeAt(0));
-        return new Response(pdfBytes, {
-          headers: {
-            "Content-Type": "application/pdf",
-            "Content-Disposition": "inline; filename=\"PymeWebPro-Funnels.pdf\"",
-            "Cache-Control": "private, max-age=300",
-          },
-        });
       }
       const ventasHtml = crmPageHTML(env).replace(
         "<head>",
