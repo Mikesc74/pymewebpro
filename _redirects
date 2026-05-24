@@ -19,6 +19,10 @@ http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
 /es/*   /:splat   301
 /es     /         301
 
+# /privacy (old English PIPEDA / Quebec Law 25 policy) retired · send old links to the Colombian data policy
+/privacy        /politica-de-datos   301!
+/privacy.html   /politica-de-datos   301!
+
 # Note: Cloudflare Pages automatically serves *.html files at the extension-less
 # URL and 308-redirects /name.html → /name. So /hosting.html, /terminos.html,
 # /politica-de-datos.html, /privacy.html all resolve at the extension-less path.

@@ -297,7 +297,6 @@ async function handleClient(request, env) {
   if (path === "/api/client/project" && method === "GET") return await getClientProject(session, env);
   if (path === "/api/client/project/comment" && method === "POST") return await postClientComment(request, session, env);
   if (path === "/api/client/project/approve" && method === "POST") return await approveCurrentMockup(session, env);
-  if (path === "/api/client/project/upgrade" && method === "POST") return await checkoutUpgrade(session, env);
   if (path === "/api/client/project/hosting" && method === "POST") return await checkoutHosting(request, session, env);
   return json({ error: "Not found" }, 404);
 }
@@ -377,8 +376,6 @@ async function getClientProject(session, env) {
       revisions: { used: revisionsUsed, total: revisionsTotal, remaining: revisionsRemaining },
     },
     options: {
-      can_upgrade: !isPro,
-      upgrade_amount_cop: 300000,  // $390k → $690k
       hosting_monthly_cop: 30000,
       hosting_annual_cop: 270000,
     },
@@ -432,27 +429,6 @@ async function approveCurrentMockup(session, env) {
     }).catch(() => {});
   }
   return json({ ok: true });
-}
-
-async function checkoutUpgrade(session, env) {
-  if (!env.WOMPI_PUBLIC_KEY || !env.WOMPI_INTEGRITY) return json({ error: "Payments not configured" }, 503);
-  const reference = `pwp-upg-${session.client_id}-${Date.now().toString(36)}`;
-  const amountInCents = 300000 * 100;  // $300k delta
-  const sig = await sha256(`${reference}${amountInCents}COP${env.WOMPI_INTEGRITY}`);
-  const now = Date.now();
-  await env.DB.prepare(
-    `INSERT INTO payments (id, lead_id, reference, amount_cents, currency, plan, hosting, status, created_at, updated_at)
-     VALUES (?, '', ?, ?, 'COP', 'upgrade', 'none', 'pending', ?, ?)`
-  ).bind(uuid(), reference, amountInCents, now, now).run();
-  const params = new URLSearchParams({
-    "public-key": env.WOMPI_PUBLIC_KEY,
-    "currency": "COP",
-    "amount-in-cents": String(amountInCents),
-    "reference": reference,
-    "signature:integrity": sig,
-    "redirect-url": `${env.APP_URL}/?upgrade=back`,
-  });
-  return json({ ok: true, checkout_url: `https://checkout.wompi.co/p/?${params.toString()}`, reference });
 }
 
 async function checkoutHosting(request, session, env) {
@@ -1243,8 +1219,10 @@ function computeQuote(lead) {
   };
 }
 function planLabel(plan, lang = "es") {
-  if (plan === "esencial") return "Plan Esencial";
-  if (plan === "pro") return lang === "es" ? "Plan Crecimiento" : "Growth Plan";
+  // Single-product model: any stored key (esencial, or legacy pro) is the one
+  // product. Legacy "pro" rows are shown as the same product, marked legacy.
+  if (plan === "esencial") return lang === "es" ? "La página de ventas" : "The sales page";
+  if (plan === "pro") return lang === "es" ? "La página de ventas (legacy)" : "The sales page (legacy)";
   return lang === "es" ? "Plan no seleccionado" : "No plan selected";
 }
 function hostingLabel(hosting, lang = "es") {
@@ -1368,8 +1346,6 @@ async function handleWompiWebhook(request, env) {
       await processDepositPayment(env, payment);
     } else if (ref.startsWith("pwp-bal-")) {
       await processBalancePayment(env, payment);
-    } else if (payment.plan === "upgrade") {
-      await processUpgradePayment(env, payment);
     } else if (payment.plan === "hosting") {
       await processHostingPayment(env, payment);
     } else {
@@ -1377,44 +1353,6 @@ async function handleWompiWebhook(request, env) {
     }
   }
   return json({ ok: true, status: newStatus });
-}
-
-// Upgrade payment (Esencial → Crecimiento). Reference format: pwp-upg-<clientId>-<rand>
-async function processUpgradePayment(env, payment) {
-  // Extract client_id from the reference
-  const m = String(payment.reference || "").match(/^pwp-upg-([a-f0-9-]+)-/);
-  if (!m) { console.warn("upgrade payment reference malformed", payment.reference); return; }
-  const clientId = m[1];
-  const client = await env.DB.prepare("SELECT id, email, business_name, plan FROM clients WHERE id = ?").bind(clientId).first();
-  if (!client) return;
-  if (client.plan === "pro") return; // already upgraded · idempotent
-
-  await env.DB.prepare("UPDATE clients SET plan = 'pro', updated_at = ? WHERE id = ?")
-    .bind(Date.now(), clientId).run();
-  await logEvent(env, clientId, "plan_upgraded", { payment_id: payment.id, amount_cents: payment.amount_cents });
-
-  // Email customer
-  if (client.email && env.RESEND_API_KEY) {
-    sendEmail(env, {
-      to: client.email,
-      subject: "Plan actualizado a Crecimiento ✓",
-      html: `<div style="font-family:system-ui;max-width:540px;margin:0 auto;padding:24px;color:#0a1840">
-        <h1 style="font-family:Georgia,serif">¡Su plan se actualizó a Crecimiento!</h1>
-        <p>Ahora su sitio incluye las secciones extra (blog, galería ampliada, descargas en PDF, equipo y FAQ), versión bilingüe español + inglés (la traducción la hacemos nosotros), 1 año de hosting incluido y 5 rondas de cambios en total.</p>
-        <p>En las próximas horas regeneraremos su mockup con las nuevas funciones y le compartiremos el nuevo enlace de revisión.</p>
-        <p>Equipo PymeWebPro</p>
-      </div>`,
-    }).catch(() => {});
-  }
-  // Email admin to regen
-  if (env.ADMIN_EMAIL) {
-    sendEmail(env, {
-      to: env.ADMIN_EMAIL,
-      subject: `🆙 Upgrade paid: regenerate mockup for ${client.business_name || client.email}`,
-      html: `<p><strong>${escapeHtml(client.business_name || client.email)}</strong> paid the upgrade to Growth.</p>
-        <p>Plan in DB: <code>pro</code>. <a href="${env.APP_URL}/admin/clients/${clientId}">Open client</a> and click "Generate new version".</p>`,
-    }).catch(() => {});
-  }
 }
 
 // Hosting payment. Reference: pwp-host-<period>-<clientId>-<rand>
@@ -1686,7 +1624,7 @@ function paidInviteEn(url, bizName) {
     <h1 style="font-style:italic;color:#fbbf24">PymeWebPro</h1>
     <p style="color:#fbbf24">✓ Payment received</p>
     <h2>${bizName ? `Thank you, ${escapeHtml(bizName)}.` : "Thank you."}</h2>
-    <p>Your payment is confirmed. The 7-day (Essential) or 14-day (Growth) clock starts when you submit your portal details.</p>
+    <p>Your payment is confirmed. The delivery clock starts when you submit your portal details.</p>
     <p><a href="${url}" style="background:#fbbf24;color:#0a0e27;padding:16px 36px;text-decoration:none;font-weight:800">Open my portal →</a></p>
     <p>Questions? WhatsApp +57 301 404 7722.</p>
   </div>`;
@@ -1696,7 +1634,7 @@ function paidInviteEs(url, bizName) {
     <h1 style="font-style:italic;color:#fbbf24">PymeWebPro</h1>
     <p style="color:#fbbf24">✓ Pago recibido</p>
     <h2>${bizName ? `Gracias, ${escapeHtml(bizName)}.` : "Gracias."}</h2>
-    <p>Su pago está confirmado. Los 7 días (Esencial) o 14 días (Crecimiento) arrancan cuando complete la información de su portal.</p>
+    <p>Su pago está confirmado. El reloj de entrega arranca cuando complete la información de su portal.</p>
     <p><a href="${url}" style="background:#fbbf24;color:#0a0e27;padding:16px 36px;text-decoration:none;font-weight:800">Abrir mi portal →</a></p>
     <p>¿Preguntas? WhatsApp +57 301 404 7722.</p>
   </div>`;

@@ -1559,7 +1559,7 @@ function fmtMoney(cents, ccy) {
   const n = Number(cents);
   if (!Number.isFinite(n)) return "";
   const dollars = n / 100;
-  return (ccy === "COP" ? "$" : "CAD $") + dollars.toLocaleString(undefined, { maximumFractionDigits: 0 });
+  return "$" + dollars.toLocaleString(undefined, { maximumFractionDigits: 0 });
 }
 
 function dateInputValue(ms) {
@@ -4624,7 +4624,7 @@ function formatCell(c, v, table) {
   if (v === null || v === undefined || v === "") return '<span style="color:var(--ink-soft)">·</span>';
   if (c.pill) return c.pill(v);
   if (c.type === "date") return escHtml(fmtDate(v));
-  if (c.type === "money") return escHtml(fmtMoney(v, "CAD"));
+  if (c.type === "money") return escHtml(fmtMoney(v, "COP"));
   if (c.type === "checkbox") return v ? "✓" : "";
   if (c.type === "fk") {
     const map = c.fk === "leads" ? state.lookups.leadById : c.fk === "clients" ? state.lookups.clientById : state.lookups.dealById;

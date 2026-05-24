@@ -1,8 +1,9 @@
 // Wompi deposit + balance link generator for the 30/70 payment split.
 //
-// PymeWebPro pricing:
-//   Essential (esencial) · 390.000 COP total
-//   Pro (pro)            · 690.000 COP total
+// PymeWebPro pricing (single-product model as of 2026-05-20):
+//   La página de ventas (key=esencial) · 390.000 COP total (IVA incluido)
+//   The legacy `pro` key (690.000 COP) is retained ONLY to price old stored
+//   deals correctly · it is not offered to new buyers. COP only.
 //
 // Split: 30% deposit (to start work) + 70% balance (on launch).
 //

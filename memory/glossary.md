@@ -20,14 +20,15 @@ Workplace shorthand, internal terms, and project codenames.
 | **the pitch** | WhatsApp/IG DM/email sent with a mockup link to a prospect. |
 | **the bracket logo** | The `<pymewebpro/>` wordmark (full size) and `<pwp/>` monogram (small format). |
 
-## Pricing tiers
+## Pricing (single-product model)
 
 | Term | Meaning |
 |------|---------|
-| **Essential** (Colombia) | $390.000 COP one-time. Multi-page custom site, WhatsApp + lead form, 1 yr hosting+support. |
-| **Pro** (Colombia) | $690.000 COP one-time. Essential + blog, PDF downloads, GA4 + Meta Pixel, bilingual EN/ES, 2 yr hosting+support. |
-| **Essential** (NA) | $500 CAD one-time. Multi-page custom site, WhatsApp + lead form, 1 yr hosting+support, 1 wk revisions. |
-| **Pro** (NA) | $800 CAD one-time. Essential + blog, PDF downloads, GA4 + Meta Pixel, bilingual EN/FR or EN/ES, 2 yr hosting+support, 2 wk revisions. |
+| **La página de ventas** | The one product. $390.000 COP one-time, IVA incluido. Custom 6-step conversion page, 1 primary CTA, WhatsApp button or contact form, click-to-call, Google Maps embed, booking integration (Cal.com/Calendly), testimonials, SEO structure, privacy-first analytics, domain + SSL setup, 1 month hosting + support, 2 revision rounds, live in ~48 hours. |
+| **add-ons (à la carte)** | COP, IVA incl.: página adicional $50.000 (máx 3), versión bilingüe ES/EN $75.000, copywriting $150.000, catálogo simple máx 30 $180.000, Perfil de Empresa de Google $90.000, analítica avanzada (GA4+GTM+Pixel) $120.000, integración CRM $190.000, chatbot de captura $190.000 una vez + $80.000/mes, botón de descarga de PDF $50.000, ronda de revisión adicional $90.000. |
+| **hosting renewal** | After the included month: $30.000 COP/mes or $300.000 COP/año. |
+
+(Retired NA / two-tier Essential-Pro model: there are NO Essential/Pro/Crecimiento tiers and NO CAD pricing anymore. Colombia-only, COP-only since 2026-05-20.)
 
 ## Tech stack acronyms
 
@@ -69,9 +70,7 @@ Workplace shorthand, internal terms, and project codenames.
 |------|----------|
 | Cloudflare | Hosting, DNS, Workers, D1, R2, KV |
 | Wrangler | Worker CLI (`npm run deploy`) |
-| Stripe | Card payments (CAD, USD, COP) |
-| Wise Business | Multi-currency banking (CAD + USD accounts) |
-| Wompi | Colombian payment gateway (COP) |
+| Wompi | Colombian payment gateway (COP) · the only PymeWebPro payment method |
 | Resend | Transactional email |
 | Pexels API | Stock photography for mockups |
 | thum.io | Live URL screenshots (for portfolio thumbnails) |

@@ -65,21 +65,21 @@
   const buttons = document.querySelectorAll('.btn-reserve[data-plan]');
   if (!buttons.length) return;
 
-  // Combined plan+hosting key → human label (sent via hidden input → portal
-  // normalizes "Esencial"/"Crecimiento" to "esencial"/"pro" and
-  // "mensual"/"anual" to "monthly"/"annual" before computing the quote).
+  // Single-product model: one product, "La página de ventas", COP only. The
+  // combined plan+hosting key → human label (sent via hidden input → portal
+  // normalizes "esencial" to the stored key and "mensual"/"anual" to
+  // "monthly"/"annual" before computing the quote). The old crecimiento/Pro
+  // entry is retired.
   const PLAN_LABELS = {
     es: {
-      'esencial:none':        { name: 'Esencial',                       price: '$390.000 COP',          form: 'Esencial ($390k)' },
-      'esencial:monthly':     { name: 'Esencial + Hosting mensual',     price: '$390.000 + $30.000/mes', form: 'Esencial + Hosting mensual ($390k + $30k/mes)' },
-      'esencial:annual':      { name: 'Esencial + Hosting anual',       price: '$660.000 COP',          form: 'Esencial + Hosting anual ($660k)' },
-      'crecimiento:annual':   { name: 'Crecimiento',                    price: '$690.000 COP',          form: 'Crecimiento ($690k)' },
+      'esencial:none':        { name: 'La página de ventas',                   price: '$390.000 COP',           form: 'La página de ventas ($390k)' },
+      'esencial:monthly':     { name: 'La página de ventas + Hosting mensual', price: '$390.000 + $30.000/mes', form: 'La página de ventas + Hosting mensual ($390k + $30k/mes)' },
+      'esencial:annual':      { name: 'La página de ventas + Hosting anual',   price: '$690.000 COP',           form: 'La página de ventas + Hosting anual ($690k)' },
     },
     en: {
-      'esencial:none':        { name: 'Essential',                      price: '$390,000 COP',          form: 'Esencial ($390k)' },
-      'esencial:monthly':     { name: 'Essential + Monthly hosting',    price: '$390,000 + $30,000/mo', form: 'Esencial + Hosting mensual ($390k + $30k/mes)' },
-      'esencial:annual':      { name: 'Essential + Annual hosting',     price: '$660,000 COP',          form: 'Esencial + Hosting anual ($660k)' },
-      'crecimiento:annual':   { name: 'Growth',                         price: '$690,000 COP',          form: 'Crecimiento ($690k)' },
+      'esencial:none':        { name: 'The sales page',                        price: '$390.000 COP',           form: 'La página de ventas ($390k)' },
+      'esencial:monthly':     { name: 'The sales page + Monthly hosting',      price: '$390.000 + $30.000/mes', form: 'La página de ventas + Hosting mensual ($390k + $30k/mes)' },
+      'esencial:annual':      { name: 'The sales page + Annual hosting',       price: '$690.000 COP',           form: 'La página de ventas + Hosting anual ($690k)' },
     },
   };
   const lang = (document.documentElement.lang || 'es').toLowerCase().startsWith('en') ? 'en' : 'es';

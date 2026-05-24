@@ -511,7 +511,7 @@
     function LeadRow({ l, onClick }) {
       const statusColor = { new: '#D24A1D', contacted: '#2563EB', converted: '#16a34a', dismissed: '#9CA3AF' }[l.status] || '#9CA3AF';
       const sourceLabel = { contact_form: 'Form', whatsapp_click: 'WA click', whatsapp_message: 'WhatsApp', manual: 'Manual' }[l.source] || l.source;
-      const planLabel = l.plan === 'esencial' ? 'Essential' : l.plan === 'pro' ? 'Pro' : '·';
+      const planLabel = l.plan === 'esencial' ? 'Página de ventas' : l.plan === 'pro' ? 'Página de ventas (legacy)' : '·';
       const hostingLabel = l.hosting === 'annual' ? '+ annual host' : l.hosting === 'monthly' ? '+ monthly host' : '';
       return (
         <div onClick={onClick} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto auto',gap:'1.25rem',alignItems:'center',padding:'1.25rem 1.5rem',background:'var(--pwp-surface)',border:'1px solid var(--pwp-line)',borderRadius:'4px',cursor:'pointer'}}>
@@ -792,7 +792,7 @@
               <span style={{color:'var(--pwp-mute)',fontSize:'0.9rem'}}>{client.email}</span>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1rem',marginBottom:'3rem'}}>
-              <Stat label="Plan" value={deliverables?.plan === 'pro' ? 'Growth' : deliverables?.plan === 'esencial' ? 'Essential' : '·'} />
+              <Stat label="Plan" value={deliverables?.plan === 'pro' ? 'Página de ventas (legacy)' : deliverables?.plan === 'esencial' ? 'Página de ventas' : '·'} />
               <Stat label="Status" value={client.status.replace('_',' ')} />
               <Stat label="Language" value={client.language === 'es' ? 'Spanish' : 'English'} />
               <Stat label="Submitted" value={client.submitted_at ? new Date(client.submitted_at).toLocaleDateString('en-US') : '·'} />
@@ -1225,7 +1225,7 @@
         } catch (e) { alert('Error: ' + e.message); }
       }
 
-      const planLabel = client.plan === 'pro' ? 'Growth' : client.plan === 'esencial' ? 'Essential' : '·';
+      const planLabel = client.plan === 'pro' ? 'Página de ventas (legacy)' : client.plan === 'esencial' ? 'Página de ventas' : '·';
       const planColor = client.plan === 'pro' ? '#16a34a' : 'var(--pwp-accent)';
       const isProClient = client.plan === 'pro' || client.plan === 'crecimiento' || client.plan === 'growth';
       const revisionsTotal = isProClient ? 5 : 2;
@@ -2512,7 +2512,7 @@
                 </button>
               </div>
               <p style={{textAlign:'center',marginTop:'2rem',fontSize:'.8rem',color:'var(--pwp-mute)'}}>
-                {client && client.plan ? ('Plan: ' + ((client.plan==='pro'||client.plan==='crecimiento')?'Crecimiento':'Esencial')) : ''}
+                {client && client.plan ? ('Plan: ' + ((client.plan==='pro'||client.plan==='crecimiento')?'La página de ventas (legacy)':'La página de ventas')) : ''}
               </p>
             </div>
           </div>

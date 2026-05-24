@@ -16,7 +16,9 @@
 //          proposal_status, proposal_generated_at). Migration 0005.
 //
 // Sin em dashes. Spanish + English copy in the proposal page (clients are
-// bilingual; tier choice toggles pricing currency).
+// bilingual). Single-product model: "La página de ventas" $390.000 COP, IVA
+// incluido. COP only, no CAD/USD. The old plan/tier branching is collapsed:
+// any stored plan key (esencial or legacy pro) maps to the one product.
 // ============================================================================
 
 const MODEL = "claude-sonnet-4-5";
@@ -103,8 +105,9 @@ async function generateProposal(env, dealId, json) {
 }
 
 // Pulls the cross-table data into a single brief object the rest of this
-// module can rely on. Centralizes the "Essential vs Pro" decision and the
-// currency choice (COP for Spanish leads, CAD for everyone else).
+// module can rely on. Single-product model: one page in COP regardless of
+// market or any legacy stored plan key. The tier field is kept (always the
+// single product) so downstream callers and templates don't break.
 function buildBrief(deal, lead, client) {
   const market = pickMarket(lead, client, deal);
   const tier = pickTier(deal, lead);
@@ -146,16 +149,22 @@ function pickMarket(lead, client, deal) {
   return "na";
 }
 
+// Single-product model: there is one product. We still read any stored plan
+// key (esencial or legacy pro) so old data does not error, but everything maps
+// to the one feature bundle key "esencial".
 function pickTier(deal, lead) {
-  const p = (deal && deal.plan) || (lead && lead.plan) || "esencial";
-  return p === "pro" ? "pro" : "esencial";
+  // Read the stored key only to stay compatible with old rows; the product is
+  // the same either way.
+  void ((deal && deal.plan) || (lead && lead.plan));
+  return "esencial";
 }
 
+// One product, COP only, in both languages. Market only selects the copy
+// language elsewhere; price is identical. Additional revision round replaces
+// the old hourly-CAD model.
 function pickPricing(market, tier) {
-  if (market === "co" && tier === "pro")      return { label: "Pro",      currency: "COP", price: "$690.000 COP", deposit: "$207.000 COP", balance: "$483.000 COP", hosting: "incluye 2 años de hosting + soporte", maintenance: "$35 CAD / mes (opcional)", hourly: "$75 CAD / hora" };
-  if (market === "co" && tier === "esencial") return { label: "Esencial", currency: "COP", price: "$390.000 COP", deposit: "$117.000 COP", balance: "$273.000 COP", hosting: "incluye 1 año de hosting + soporte", maintenance: "$35 CAD / mes (opcional)", hourly: "$75 CAD / hora" };
-  if (market === "na" && tier === "pro")      return { label: "Pro",      currency: "CAD", price: "$800 CAD",     deposit: "$240 CAD",     balance: "$560 CAD",     hosting: "includes 2 years hosting + support", maintenance: "$35 CAD / month (optional)", hourly: "$75 CAD / hour" };
-  return                                            { label: "Essential",currency: "CAD", price: "$500 CAD",     deposit: "$150 CAD",     balance: "$350 CAD",     hosting: "includes 1 year hosting + support", maintenance: "$35 CAD / month (optional)", hourly: "$75 CAD / hour" };
+  void market; void tier;
+  return { label: "La página de ventas", currency: "COP", price: "$390.000 COP", deposit: "$117.000 COP", balance: "$273.000 COP", hosting: "incluye 1 mes de hosting + soporte", maintenance: "ronda de revisión adicional $90.000 COP", hourly: "ronda de revisión adicional $90.000 COP" };
 }
 
 // ----------------------------------------------------------------------------
@@ -528,7 +537,7 @@ function buildProposalHtml(deal, lead, client, brief) {
   <div class="section">
     <h2>${escapeForMockup(T.priceHeading)}</h2>
     <div class="price-block">
-      <div class="tier">${escapeForMockup(T.planLabel)} · ${escapeForMockup(p.label)}</div>
+      <div class="tier">${escapeForMockup(p.label)}</div>
       <div class="total">${escapeForMockup(p.price)}</div>
       <div class="sub">${escapeForMockup(p.hosting)}</div>
     </div>
@@ -536,7 +545,7 @@ function buildProposalHtml(deal, lead, client, brief) {
       <div class="cell"><b>${escapeForMockup(T.depositLabel)}</b>${escapeForMockup(p.deposit)} · ${escapeForMockup(T.depositSub)}</div>
       <div class="cell"><b>${escapeForMockup(T.balanceLabel)}</b>${escapeForMockup(p.balance)} · ${escapeForMockup(T.balanceSub)}</div>
       <div class="cell"><b>${escapeForMockup(T.deliveryLabel)}</b>${escapeForMockup(T.deliveryValue.replace("{date}", fmtDelivery))}</div>
-      <div class="cell"><b>${escapeForMockup(T.revisionsLabel)}</b>${escapeForMockup(tierKey === "pro" ? T.revisionsPro : T.revisionsEssential)}</div>
+      <div class="cell"><b>${escapeForMockup(T.revisionsLabel)}</b>${escapeForMockup(T.revisionsValue)}</div>
     </div>
   </div>
 
@@ -556,7 +565,7 @@ function buildProposalHtml(deal, lead, client, brief) {
       <li>${escapeForMockup(T.host3)}</li>
       <li>${escapeForMockup(T.host4)}</li>
     </ul>
-    <p class="terms"><b>${escapeForMockup(T.maintenanceLabel)}:</b> ${escapeForMockup(p.maintenance)} · <b>${escapeForMockup(T.hourlyLabel)}:</b> ${escapeForMockup(p.hourly)}</p>
+    <p class="terms"><b>${escapeForMockup(T.maintenanceLabel)}:</b> ${escapeForMockup(T.maintenanceValue)} · <b>${escapeForMockup(T.hourlyLabel)}:</b> ${escapeForMockup(T.hourlyValue)}</p>
   </div>
 
   <div class="section">
@@ -602,31 +611,32 @@ const PROPOSAL_TEXT_ES = {
   mockupLinkLabel: "Si la previsualización no carga, abre el enlace directo:",
   openInTab: "Abrir en una nueva pestaña",
   priceHeading: "Inversión",
-  planLabel: "Plan",
+  planLabel: "Producto",
   depositLabel: "Depósito inicial (30%)",
   depositSub: "para arrancar diseño y desarrollo",
   balanceLabel: "Saldo al lanzar (70%)",
   balanceSub: "antes de conectar DNS a tu dominio",
   deliveryLabel: "Entrega estimada",
-  deliveryValue: "{date} (7 días hábiles típicos)",
+  deliveryValue: "{date} (en vivo en ~48 horas típicas)",
   revisionsLabel: "Revisiones incluidas",
-  revisionsEssential: "1 semana de revisiones gratis post-lanzamiento",
-  revisionsPro: "2 semanas de revisiones gratis post-lanzamiento",
+  revisionsValue: "2 rondas de revisión incluidas",
   includesHeading: "Qué recibes",
   hostingHeading: "Hosting y soporte",
-  hosting1: "Tu plan incluye hosting durante el período del contrato. Después de eso, mantener el sitio en línea cuesta $15 CAD / mes o $180 CAD / año.",
+  hosting1: "El precio incluye 1 mes de hosting + soporte. Después de eso, mantener el sitio en línea cuesta $30.000 COP / mes o $300.000 COP / año (IVA incluido).",
   host1: "Cloudflare Pages, 330+ ubicaciones edge, sub-1s LCP en cualquier país",
   host2: "Certificado SSL gestionado, renovación automática, sin tarifas extra",
   host3: "Backups automáticos, redundancia geográfica",
   host4: "Soporte por WhatsApp y email durante el período de cobertura",
-  maintenanceLabel: "Mantenimiento mensual",
-  hourlyLabel: "Edits ad-hoc",
+  maintenanceLabel: "Hosting después del mes incluido",
+  maintenanceValue: "$30.000 COP / mes o $300.000 COP / año",
+  hourlyLabel: "Cambios fuera de alcance",
+  hourlyValue: "ronda de revisión adicional $90.000 COP",
   guaranteeHeading: "Garantía",
-  guaranteeBody: "30 días de garantía de devolución post-lanzamiento. Si no estás satisfecho dentro de los primeros 14 días, bajamos el sitio y devolvemos el 100% de lo pagado. Después de 30 días el fee deja de ser reembolsable, pero seguimos respondiendo por el período de hosting incluido.",
+  guaranteeBody: "30 días de garantía de devolución post-lanzamiento. Si no estás satisfecho dentro de los primeros 30 días, bajamos el sitio y devolvemos el 100% de lo pagado. Después de 30 días el fee deja de ser reembolsable, pero seguimos respondiendo por el período de hosting incluido.",
   termsHeading: "Términos",
   terms1: "Contratante: Norte Sur Consulting S.A.S. (NIT 901.956.771-1), también conocido como PymeWebPro.",
-  terms2: "Métodos de pago en Colombia: Wompi (transferencia bancaria, PSE, tarjetas) en COP. Métodos de pago en NA: Wise Business (tarjetas, Apple/Google Pay, wires) en CAD o USD.",
-  terms3: "Esta propuesta es válida durante 30 días desde la fecha indicada arriba. Cualquier cambio de alcance posterior se cotiza por hora.",
+  terms2: "Métodos de pago: Wompi (transferencia bancaria, PSE, tarjetas) en COP. Precios en COP, IVA incluido.",
+  terms3: "Esta propuesta es válida durante 30 días desde la fecha indicada arriba. Cualquier cambio de alcance posterior se cotiza con el menú de add-ons o una ronda de revisión adicional.",
   printButton: "Guardar como PDF",
   openMockupButton: "Ver mockup solo",
   footerCredit: "Propuesta generada por",
@@ -643,80 +653,65 @@ const PROPOSAL_TEXT_EN = {
   mockupLinkLabel: "If the preview doesn't load, open the direct link:",
   openInTab: "Open in a new tab",
   priceHeading: "Investment",
-  planLabel: "Plan",
+  planLabel: "Product",
   depositLabel: "Deposit to start (30%)",
   depositSub: "kicks off design + development",
   balanceLabel: "Balance at launch (70%)",
   balanceSub: "before we connect DNS to your domain",
   deliveryLabel: "Estimated delivery",
-  deliveryValue: "{date} (5 to 7 business days typical)",
+  deliveryValue: "{date} (live in ~48 hours typical)",
   revisionsLabel: "Revisions included",
-  revisionsEssential: "1 week of free revisions post-launch",
-  revisionsPro: "2 weeks of free revisions post-launch",
+  revisionsValue: "2 revision rounds included",
   includesHeading: "What you receive",
   hostingHeading: "Hosting + support",
-  hosting1: "Your plan includes hosting for the contract period. After that, keeping the site online costs $15 CAD / month or $180 CAD / year.",
+  hosting1: "The price includes 1 month of hosting + support. After that, keeping the site online costs $30.000 COP / month or $300.000 COP / year (IVA included).",
   host1: "Cloudflare Pages, 330+ edge locations, sub-1s LCP worldwide",
   host2: "Managed SSL cert, automatic renewal, no extra fees",
   host3: "Automatic backups, geo redundancy",
   host4: "WhatsApp + email support throughout the coverage period",
-  maintenanceLabel: "Monthly maintenance",
-  hourlyLabel: "Ad-hoc edits",
+  maintenanceLabel: "Hosting after the included month",
+  maintenanceValue: "$30.000 COP / month or $300.000 COP / year",
+  hourlyLabel: "Out-of-scope changes",
+  hourlyValue: "additional revision round $90.000 COP",
   guaranteeHeading: "Guarantee",
-  guaranteeBody: "30 day post-launch money-back guarantee. If you're not happy within the first 14 days we take the site offline and refund 100% of what was paid. After 30 days the fee is non-refundable, but we still honor the included hosting period.",
+  guaranteeBody: "30 day post-launch money-back guarantee. If you're not happy within the first 30 days we take the site offline and refund 100% of what was paid. After 30 days the fee is non-refundable, but we still honor the included hosting period.",
   termsHeading: "Terms",
   terms1: "Contracting entity: Norte Sur Consulting S.A.S. (NIT 901.956.771-1), doing business as PymeWebPro.",
-  terms2: "Payment methods (NA): Wise Business (cards, Apple/Google Pay, wires) in CAD or USD. Payment methods (Colombia): Wompi (PSE, bank transfer, cards) in COP.",
-  terms3: "This proposal is valid for 30 days from the date above. Any out-of-scope changes after sign-off are billed hourly.",
+  terms2: "Payment methods: Wompi (PSE, bank transfer, cards) in COP. Prices in COP, IVA included.",
+  terms3: "This proposal is valid for 30 days from the date above. Any out-of-scope changes after sign-off are quoted via the add-on menu or an additional revision round.",
   printButton: "Save as PDF",
   openMockupButton: "Open mockup only",
   footerCredit: "Proposal generated by",
 };
 
-const FEATURES_ES = {
-  esencial: [
-    "Sitio multi-página custom (no plantilla)",
-    "Botón flotante de WhatsApp",
-    "Formulario de contacto que llega a tu email",
-    "Dominio + SSL gestionado",
-    "1 año de hosting + soporte incluidos",
-    "1 semana de revisiones gratis post-lanzamiento",
-    "Lighthouse 100 en performance, SEO, accesibilidad",
-    "Schema.org JSON-LD para que Google entienda el sitio",
-    "Footer NIT + dirección registrada (cumplimiento Colombia)",
-  ],
-  pro: [
-    "Todo lo de Esencial, más:",
-    "Blog con CMS liviano para publicar artículos",
-    "Sección de descargas (PDFs, brochures, menús)",
-    "Google Analytics 4 + Meta Pixel configurados",
-    "Soporte bilingüe EN/ES (o EN/FR)",
-    "2 años de hosting + soporte incluidos",
-    "2 semanas de revisiones gratis post-lanzamiento",
-  ],
-};
-const FEATURES_EN = {
-  esencial: [
-    "Multi-page custom site (no template)",
-    "Floating WhatsApp button",
-    "Contact form that hits your email",
-    "Custom domain + managed SSL",
-    "1 year hosting + support included",
-    "1 week of free revisions post-launch",
-    "Lighthouse 100 across performance, SEO, accessibility",
-    "Schema.org JSON-LD so Google understands the site",
-    "Footer compliance block when required by market",
-  ],
-  pro: [
-    "Everything in Essential, plus:",
-    "Blog with a lightweight CMS for publishing posts",
-    "Downloads section (PDFs, brochures, menus)",
-    "Google Analytics 4 + Meta Pixel pre-wired",
-    "Bilingual support EN/ES (or EN/FR)",
-    "2 years hosting + support included",
-    "2 weeks of free revisions post-launch",
-  ],
-};
+// Single product: "La página de ventas". Both keys point at the same list so
+// any legacy stored plan key still resolves to the one product.
+const FEATURES_ES_LIST = [
+  "Página de conversión custom de 6 pasos con 1 CTA principal",
+  "Botón de WhatsApp o formulario de contacto",
+  "Click-to-call y mapa de Google embebido",
+  "Integración de citas/reservas (Cal.com o Calendly)",
+  "Sección de testimonios",
+  "Estructura SEO y analítica respetuosa de la privacidad",
+  "Dominio + SSL configurados (el costo del dominio es del cliente)",
+  "1 mes de hosting + soporte incluido",
+  "2 rondas de revisión, en vivo en ~48 horas",
+  "Add-ons à la carte disponibles (página adicional, bilingüe, catálogo, GBP, GA4, CRM, chatbot, y más)",
+];
+const FEATURES_ES = { esencial: FEATURES_ES_LIST, pro: FEATURES_ES_LIST };
+const FEATURES_EN_LIST = [
+  "Custom 6-step conversion page with 1 primary CTA",
+  "WhatsApp button or contact form",
+  "Click-to-call and embedded Google Maps",
+  "Booking/appointment integration (Cal.com or Calendly)",
+  "Testimonials section",
+  "SEO structure and privacy-first analytics",
+  "Domain + SSL setup (domain cost is the client's)",
+  "1 month hosting + support included",
+  "2 revision rounds, live in ~48 hours",
+  "À la carte add-ons available (extra page, bilingual, catalog, GBP, GA4, CRM, chatbot, and more)",
+];
+const FEATURES_EN = { esencial: FEATURES_EN_LIST, pro: FEATURES_EN_LIST };
 
 // HTML escape for values we inject into the proposal template. We avoid the
 // project-wide escapeHtml import to keep this module self-contained.

@@ -4,16 +4,16 @@ The full picture of what PymeWebPro is, how it positions, and how it makes money
 
 ## What we are
 
-A Canadian-led, Medellín-based, AI-leveraged web design studio that ships custom-coded marketing sites for SMBs in Colombia, the US, and Canada.
+A Medellín-based, AI-leveraged web design studio that ships custom-coded sales pages for Colombian SMBs. Colombia-only market, COP-only pricing. Canadian ownership is a subtle trust signal, never the headline.
 
-Operationally: a one-person studio (Mike) using Anthropic Claude as a force multiplier through every step of the build. No employees, no agency overhead.
+Operationally: a two-person studio (Mike + Santiago Santos, profit-share partner, both in Medellín) using Anthropic Claude as a force multiplier through every step of the build. No agency overhead.
 
 ## Founder
 
 - **Michael Chartrand** ("Mike") · Canadian citizen, hasn't lived in Canada in 20+ years
 - Based in Medellín, Antioquia, Colombia
 - Email: mike@mikec.pro
-- Solo operator (no team, no contractors)
+- Two-person partnership with Santiago Santos (paisa, Medellín, profit-share partner)
 - Use the full name "Michael Chartrand" on contracts, invoices, and any legal/financial document. "Mike" is fine for marketing copy and casual contexts.
 
 ## Legal entity
@@ -38,7 +38,7 @@ PymeWebPro is **NOT** a sole proprietorship. It is a **DBA (trade name)** under 
 | Client contracts (party block) | **Norte Sur Consulting S.A.S.** doing business as **PymeWebPro** |
 | Invoices to clients | Norte Sur Consulting S.A.S. (DBA PymeWebPro) · NIT 901.956.771-1 |
 | Tax filings, Cámara de Comercio, regulatory | Norte Sur Consulting S.A.S. |
-| Banking (Wise Business, Wompi) | Norte Sur Consulting S.A.S. |
+| Banking (Wompi, Colombian bank account) | Norte Sur Consulting S.A.S. |
 | Mike's own signature on contracts | Michael Chartrand · Founder & Legal Representative |
 | Casual chat, internal notes, team comms | Mike |
 
@@ -56,71 +56,59 @@ Display NIT on:
 
 ## Legal / financial setup
 
-- **Currently:** Sole proprietor, not yet incorporated as a Canadian Inc.
-- **Future option:** Register a Canadian sole proprietorship (~30 min, ~$60–100 CAD online · ON or BC) to fully back the "Canadian-owned" framing
+- **Legal entity:** Norte Sur Consulting S.A.S., a registered Colombian SAS (NIT 901.956.771-1). PymeWebPro is the DBA.
 - **Banking + payments:**
-  - **Wise Business** (CAD + USD accounts) · handles BOTH bank wires AND credit/debit cards (1% on domestic cards, 2.9% on international, plus Apple Pay and Google Pay). Single account covers all NA payment needs.
-  - **Wompi** (COP) · Colombian bank transfers and cards
+  - **Wompi** (COP) · Colombian bank transfers (PSE) and cards · the only PymeWebPro payment method
   - **Colombian bank account** · primary operating account
-  - **No Canadian retail bank account, no Stripe account.** Don't claim either.
+- **COP only.** PymeWebPro the studio bills exclusively in COP via Wompi. We do NOT bill in CAD or USD and do NOT use Wise or Stripe as a payment method.
 - **Stripe is NOT a PymeWebPro payment method.** We can build Stripe Checkout INTO client sites (they own the merchant account, we wire the integration), but we don't accept Stripe ourselves.
 
-## Pricing
+## Pricing (single-product model, set 2026-05-20)
 
-### Colombian market
-| Plan | Pricing | Includes |
-|------|---------|----------|
-| Essential | $390.000 COP one-time | Multi-page custom site, WhatsApp + lead form, 1 yr hosting+support, 1 wk revisions |
-| Pro | $690.000 COP one-time | Everything in Essential + blog, PDF download section, GA4 + Meta Pixel, bilingual EN/ES, 2 yr hosting+support, 2 wk revisions |
+ONE product plus an à la carte add-on menu. No Essential/Pro tiers. Colombia-only, COP-only. Source of truth for add-on prices: `~/code/pymewebpro-sales/internal/add-on-menu.md`.
 
-### NA / Canadian market
+### The product
 
-**Both tiers are multi-page custom sites.** Essential ships with WhatsApp + a lead form that emails the client. Pro adds a blog, a PDF download section (ebooks, guides, menus), GA4 + Meta Pixel, bilingual EN/FR or EN/ES, an extra year of hosting+support (2 yr total), and a longer revision window (2 weeks vs 1).
+| Product | Price | Includes |
+|---------|-------|----------|
+| La página de ventas | $390.000 COP one-time, IVA incluido | Custom 6-step conversion page with 1 primary CTA, WhatsApp button or contact form, click-to-call, Google Maps embed, booking/appointment integration (Cal.com/Calendly), testimonials section, SEO structure, privacy-first analytics, domain + SSL setup (domain cost is the client's), 1 month hosting + support, 2 revision rounds, live in ~48 hours |
 
-| Tier | Price | Includes |
-|------|-------|----------|
-| Essential | $500 CAD one-time | Multi-page custom site, WhatsApp button, lead form to email, custom domain + SSL, mobile responsive, Lighthouse 100, privacy-first analytics, 1 yr hosting+support ($180 value), 1 wk revisions, 48-hr delivery |
-| Pro | $800 CAD one-time | Everything in Essential + blog section, PDF download section (ebooks, guides, menus), GA4 + Meta Pixel, bilingual EN/FR or EN/ES, 2 yr hosting+support ($360 value), 2 wk revisions |
-| Hosting renewal | $15 CAD/mo or $180 CAD/yr | After included period expires |
-| Maintenance add-on | $35 CAD/mo (optional, on top of hosting) | Monthly content updates, security patches, minor design adjustments |
-| Ad-hoc edits | $75 CAD/hr (30-min minimum) | One-off changes, no commitment |
+### Add-ons (à la carte, COP, IVA incl.)
 
-### Payment terms (both markets)
+| Add-on | Price |
+|--------|-------|
+| Página adicional (máx 3) | $50.000 |
+| Versión bilingüe ES/EN | $75.000 |
+| Copywriting profesional | $150.000 |
+| Catálogo simple (máx 30 productos) | $180.000 |
+| Perfil de Empresa de Google | $90.000 |
+| Analítica avanzada (GA4+GTM+Pixel) | $120.000 |
+| Integración con CRM | $190.000 |
+| Chatbot de captura | $190.000 una vez + $80.000/mes |
+| Botón de descarga de PDF | $50.000 |
+| Ronda de revisión adicional | $90.000 |
 
-- **30% deposit to start** · no design or development work begins until deposit clears
-- **70% on launch** · site sits on staging URL until paid; DNS to client domain not connected until balance clears
-- NA: Wise Business in CAD or USD (cards, Apple/Google Pay, wires) · milestone billing supported
-- LATAM: Wompi in COP (cards, PSE, bank transfer)
+A real store and a blog are out of scope but quotable as custom.
 
-Switched from 50/50 to 30/70 on 2026-05-05. A productized $500-800 / $690.000-1.080.000 build doesn't need an agency-style 50% deposit; the lower barrier to start makes the buy decision easier while DNS gating on the 70% balance still protects against non-payment.
+### Hosting after the included month
 
-Deposit numbers by tier: Essential $150 CAD / $117.000 COP · Pro $240 CAD / $207.000 COP.
+$30.000 COP/mes or $300.000 COP/año.
 
-### Pricing structure (set 2026-05-05, restructured to lower COP tiers)
+### Payment terms
 
-| Market | Tier | Full price | 30% deposit | 70% balance | Hosting included |
-|---|---|---|---|---|---|
-| Canada / NA | Essential | $500 CAD | $150 CAD | $350 CAD | 1 year |
-| Canada / NA | Pro | $800 CAD | $240 CAD | $560 CAD | 2 years |
-| Colombia | Essential | $390.000 COP | $117.000 COP | $273.000 COP | 1 year |
-| Colombia | Pro | $690.000 COP | $207.000 COP | $483.000 COP | 2 years |
+- **30% deposit to start** · no design or development work begins until deposit clears. On the base page that is $117.000 COP.
+- **70% on launch** · site sits on staging URL until paid ($273.000 COP on the base page); DNS to client domain not connected until balance clears.
+- Wompi in COP only (cards, PSE, bank transfer).
 
-### Live pay-links (set 2026-05-05)
+Switched from 50/50 to 30/70 on 2026-05-05. The lower barrier to start makes the buy decision easier while DNS gating on the 70% balance still protects against non-payment.
 
-**Wise (NA · CAD):**
-- Essential deposit ($150): `https://wise.com/pay/r/rhZaZERQUcEuitY` ← on public site (Essential card)
-- Pro deposit ($240): `https://wise.com/pay/r/qYRloHLYQcF098c` ← on public site (Pro card)
-- Essential balance ($350): `https://wise.com/pay/r/4fQsK_MOcPZwagQ` ← send at launch
-- Pro balance ($560): `https://wise.com/pay/r/I-G0t2wOE1CRJYI` ← send at launch
+### Base-page payment breakdown
 
-**Wompi (LATAM · COP):**
-- Essential deposit ($117.000): `https://checkout.wompi.co/l/IjE5K4` ← on public site (Essential card)
-- Pro deposit ($207.000): `https://checkout.wompi.co/l/xzGeMX` ← on public site (Pro card)
-- Essential balance ($273.000): `https://checkout.wompi.co/l/HdCwpF` ← email at launch
-- Pro balance ($483.000): `https://checkout.wompi.co/l/VdGy5L` ← email at launch
-- Obsolete after restructure (can be archived/disabled in Wompi):
-  - `kNsvyu` was the old Essential $207.000 link
-  - `3tNB1l` was the old Pro $324.000 link
+| Product | Full price | 30% deposit | 70% balance | Hosting included |
+|---|---|---|---|---|
+| La página de ventas | $390.000 COP | $117.000 COP | $273.000 COP | 1 month |
+
+(Historical note: the studio previously ran a two-tier Essential/Pro model and an NA/CAD price list. Both are retired as of 2026-05-20. CAD pricing is no longer offered.)
 
 ### 30-day satisfaction guarantee
 
@@ -131,34 +119,28 @@ For 30 days after launch, if the client is unhappy for any reason, we:
 
 After 30 days, fee is non-refundable. Hosting is always month-to-month and cancellable anytime regardless.
 
-### Reference: Toronto agency comparison
-| Item | Toronto Agency | PymeWebPro Pro |
-|------|----------------|----------------|
-| Equivalent multi-section site | $4,500–$12,000 CAD | $800 CAD |
-| Timeline | 6–10 weeks | 48 hours |
-| Hosting | $120/mo Wordpress | Included 2 yrs |
-| Tech | Wordpress + plugins | Hand-coded HTML on Cloudflare |
+### Reference: agency comparison
+| Item | Typical agency | PymeWebPro |
+|------|----------------|------------|
+| Equivalent custom sales page | $5.000.000 COP+ | $390.000 COP |
+| Timeline | 6–10 weeks | ~48 hours |
+| Hosting | high monthly WordPress fee | Included 1 month, then $30.000 COP/mes |
+| Tech | WordPress + plugins | Hand-coded HTML on Cloudflare |
 
 ## Unit economics
 
 Build time: ~15 min per mockup (5 min brief + 10 min build with Claude). Wire-up amortizes to near-zero across multiple mockups deployed together.
 
-| Close rate | $172 USD/close (CO) | $500 CAD/close (NA Essential) | $2,000 USD/close (NA Pro upmarket) |
-|-----------|---------------------|-------------------------------|-------------------------------------|
-| 1-in-10 | ~$69/hr | ~$200/hr | ~$800/hr |
-| 1-in-5 | ~$138/hr | ~$400/hr | ~$1,600/hr |
-| 1-in-3 | ~$229/hr | ~$667/hr | ~$2,700/hr |
+At $390.000 COP/close, the bottleneck is outreach throughput, not build capacity (Claude+files makes that near-infinite). The constraint is qualified prospects per week, not mockups built per hour. Add-ons (copywriting, catálogo, CRM, chatbot) raise the average ticket above the base $390.000 without adding meaningful build time.
 
-Constraint: not build capacity (Claude+files makes that near-infinite) · outreach throughput. The bottleneck is qualified prospects per week, not mockups built per hour.
+## Positioning · the stack
 
-## Positioning · the four-part stack
+1. **Medellín-based** → real, structural cost advantage (rent + salaries a fraction of a North American agency)
+2. **AI-leveraged (Anthropic)** → speed + quality multiplier; explains the price without apology
+3. **Paisa partner (Santiago) + Colombian SAS** → a real, local studio with a registered entity, not a freelancer
+4. **Canadian ownership** → a subtle trust signal, never the headline, never positioned as superiority over Colombians
 
-1. **Canadian founder** → trust, North American norms, accountability
-2. **Medellín-based** → real, structural cost advantage (rent + salaries 1/5 of Toronto)
-3. **AI-leveraged (Anthropic)** → speed + quality multiplier; explains the price without apology
-4. **Bilingual delivery** → bonus for Latin-American expat-facing or US-LATAM cross-border clients
-
-The narrative: "Canadian-owned studio, based in Medellín. We use modern AI tooling and a lower cost base to deliver agency-quality sites in days, not weeks, for under $2,000."
+The narrative: "Estudio de diseño web en Medellín. Construido con Claude de Anthropic. Páginas de ventas custom por $390.000 COP, en vivo en ~48 horas."
 
 ## Why we cost less (the honest pitch)
 
@@ -169,7 +151,7 @@ Three pillars, deployed verbatim on the PymeWebPro CA site:
 
 This section is the conversion driver. Honest > marketing-speak.
 
-## Target verticals (Canadian / NA market)
+## Target verticals (Colombian SMBs)
 
 In priority order:
 1. **Independent dental clinics** · Espacio Dental is proof. High-revenue customers, dentists obsess over patient acquisition.
@@ -186,11 +168,11 @@ The "build mockup, then pitch" inversion:
 1. Find SMBs without real websites (Google Business Profile with empty/social-only website field)
 2. Build a custom mockup using their IG/FB content (15 min with Claude)
 3. Push live to `mockups.pymewebpro.com/<slug>/`
-4. Send WhatsApp/IG DM/email with the link: "I built a concept site for [business]. 30 seconds: [link]. If you like it, $500 CAD, 48 hours."
+4. Send WhatsApp/IG DM/email with the link: "Le armé una página de ventas de concepto para [negocio]. 30 segundos: [link]. Si le gusta, $390.000 COP, en vivo en ~48 horas."
 5. Track open/reply/close in a tracker
 
-### Sample outreach (Canadian English, dental):
-> Hey [first name], I'm Mike · Canadian web designer based out of Medellín. I noticed [clinic name] doesn't have a website yet, just an IG, so I built a quick concept of what one could look like for you: [mockup URL]. No pressure to buy · just figured it'd be more useful than a cold email. If you like it, I can make it yours for $500 CAD, live in 48 hours. · Mike
+### Sample outreach (Colombian Spanish, dental):
+> Hola [nombre], soy Santiago de PymeWebPro, estudio de diseño web en Medellín. Vi que [clínica] todavía no tiene página web, solo Instagram, así que le armé un concepto rápido de cómo se vería: [mockup URL]. Sin compromiso, solo me pareció más útil que un correo en frío. Si le gusta, se la dejamos lista por $390.000 COP, en vivo en ~48 horas. · Santiago
 
 ### Tools for prospecting:
 - **Outscraper** (~$30/mo) · Google Maps with website-null filter
@@ -201,23 +183,16 @@ The "build mockup, then pitch" inversion:
 
 | Phrase | Honest | Overclaim |
 |--------|--------|-----------|
-| "Canadian-owned" | ✓ true | · |
-| "Canadian founder" | ✓ true | · |
-| "Founded in Canada" | ✓ if registered as sole prop | otherwise softer phrasing |
-| "Canadian entity" | ✗ requires registration | use "Canadian-owned business" instead |
-| "Full North American legal recourse" | ✗ depends on contract jurisdiction | drop or soften |
-| "Pricing in CAD/USD" | ✓ true (Wise + Stripe) | · |
-| "Wire to a Canadian (CAD) account" | ✓ true (Wise CAD) | · |
-| "Registered in Canada" | ✗ until sole prop registered | use "Canadian-owned" instead |
+| "Canadian-owned" | ✓ true · subtle trust signal only | leading with it as the headline |
+| "Canadian founder" | ✓ true (personal fact) | framing it as superiority over Colombians |
+| "Colombian SAS, NIT 901.956.771-1" | ✓ true | · |
+| "Studio in Medellín" | ✓ true | claiming a separate physical office |
+| "Pricing in COP, IVA incluido" | ✓ true (Wompi) | quoting CAD or USD anywhere |
+| "Pago vía Wompi (PSE, cards)" | ✓ true | claiming Wise/Stripe as our payment rail |
+| "Serving Colombian SMBs" | ✓ true | positioning as an NA / US / international studio |
 
-## Wise Business · About-Us blurb (200 words, KYB-approved)
+## Positioning blurb (current, COP-only)
 
-> PymeWebPro is a web design and development studio that builds custom marketing websites for small and medium-sized businesses across North America and Latin America.
->
-> What we do. We design, hand-code, and deploy modern websites for clients in industries such as healthcare clinics, restaurants, professional services, retail brands, and B2B SaaS companies. Each project is delivered as a complete, production-ready site hosted on the Cloudflare global edge network.
->
-> Revenue model. We charge one-time project fees ranging from CAD $500 to CAD $1,500 per website depending on scope, plus optional monthly hosting and maintenance plans (CAD $25–$50 per month). Clients pay via credit card through Stripe or by direct bank transfer in CAD or USD. Most projects are delivered within 5 business days.
->
-> Customers. Active clients are based in Canada, the United States, Mexico, and Colombia.
->
-> Operations. The studio is led by a Canadian founder and operates from Medellín, Colombia, where the design and build team is based. The business has been delivering websites since 2024.
+> PymeWebPro (DBA de Norte Sur Consulting S.A.S., NIT 901.956.771-1) es un estudio de diseño web en Medellín para PYMEs colombianas. Diseñamos, programamos y publicamos páginas de ventas custom alojadas en la red edge de Cloudflare. Un solo producto, la página de ventas, $390.000 COP (IVA incluido), con add-ons à la carte. Pago vía Wompi en COP. En vivo en ~48 horas. Mercado colombiano únicamente.
+
+(Historical note: an earlier Wise Business KYB blurb described the studio as serving North America and Latin America with CAD pricing. That NA framing is retired. The studio is Colombia-only, COP-only, paid via Wompi.)

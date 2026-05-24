@@ -241,7 +241,7 @@ If Phase 4 metrics miss (reply rate under 5%, or quality rating goes yellow), we
 | Dedicated WA Business number (one-time setup, then carrier fee) | ~$5 |
 | **Total** | **~$100/mo** |
 
-Conservative revenue math: 200 sends → 30 replies (15%) → 5 closes (16% of replies) → 5 × 390k COP = ~1.95M COP/mo gross (~$490 USD). 5x ROI at the floor; closer to 10x if we hit the optimistic end.
+Conservative revenue math: 200 sends → 30 replies (15%) → 5 closes (16% of replies) → 5 × 390k COP = ~1.95M COP/mo gross. 5x ROI at the floor; closer to 10x if we hit the optimistic end.
 
 ---
 

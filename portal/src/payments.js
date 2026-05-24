@@ -2,10 +2,13 @@
 // Pricing, Wompi checkout creation, and webhook handling for the PymeWebPro portal.
 // Reconstructed from the deployed bundle of `pymewebpro-portal` Worker on 2026-04-30.
 //
-// LAUNCH-OFFER PRICING (2026-04-30):
-//   Esencial: 390.000 COP  (was 890.000)
-//   Crecimiento (key=pro): 690.000 COP  (was 1.790.000)
-// Hosting prices unchanged.
+// PRICING (single-product model as of 2026-05-20):
+//   ONE product, "La página de ventas": 390.000 COP (IVA incluido), portal key
+//   `esencial`. Plus an à la carte add-on menu (handled elsewhere). There are
+//   no Essential/Pro tiers anymore. COP only.
+//   The legacy `pro` key (690.000 COP) is retained ONLY to price old stored
+//   leads/deals correctly · it is not offered to new buyers.
+// Hosting after the included month: 30.000 COP/mes or 300.000 COP/año.
 // 24-hour $100k discount DISABLED · the launch-offer pricing IS the discount.
 // Setting WINDOW=0 means `now < deadline` is always false → discount_active = false
 // → countdown banner and discount row are conditionally hidden in confirmationHtml.
@@ -20,8 +23,8 @@ const DISCOUNT_WINDOW_MS = 0;
 const DISCOUNT_AMOUNT_COP = 0;
 
 const PLAN_PRICES_COP = {
-  esencial: 390_000,    // launch offer · was 890_000
-  pro: 690_000,         // launch offer · was 1_790_000 (display name: "Crecimiento")
+  esencial: 390_000,    // "La página de ventas" · the one current product
+  pro: 690_000,         // legacy key · retained only to price old stored rows
 };
 
 const HOSTING_PRICES_COP = {
@@ -35,10 +38,9 @@ export function computeQuote(lead) {
   const hosting = lead.hosting || "none";
   const planPrice = PLAN_PRICES_COP[plan] || 0;
   let hostingPrice = HOSTING_PRICES_COP[hosting] || 0;
-  // Both tiers bundle 1 year of hosting per v4 marketing ("1 year of hosting
-  // and support" listed under Essential AND Pro). Previously only Pro bundled
-  // it, which double-billed Essential buyers who selected hosting=annual at
-  // checkout (390k plan + 270k hosting = 660k instead of 390k).
+  // The page bundles its included hosting period, so an annual hosting line at
+  // checkout would double-bill (390k page + hosting = too much). Zero it out
+  // when hosting=annual. Handles the legacy `pro` key the same way.
   const hostingBundled = (plan === "esencial" || plan === "pro") && hosting === "annual";
   if (hostingBundled) hostingPrice = 0;
 
@@ -67,8 +69,10 @@ export function computeQuote(lead) {
 }
 
 export function planLabel(plan, lang = "es") {
-  if (plan === "esencial") return "Plan Esencial";
-  if (plan === "pro") return lang === "es" ? "Plan Crecimiento" : "Growth Plan";
+  // Single-product model: relabel any stored key to the one product. Legacy
+  // `pro` rows show the same product, marked legacy.
+  if (plan === "esencial") return lang === "es" ? "La página de ventas" : "The sales page";
+  if (plan === "pro") return lang === "es" ? "La página de ventas (legacy)" : "The sales page (legacy)";
   return lang === "es" ? "Plan no seleccionado" : "No plan selected";
 }
 

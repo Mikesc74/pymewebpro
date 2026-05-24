@@ -2,7 +2,9 @@
 // Served by the pymewebpro-portal Worker when the request hostname matches.
 // No external dependencies. All CSS inline. Bilingual (ES + EN) via a
 // language toggle in the header. House style: no em dashes, no marketing-speak,
-// real numbers (COP $390k Essential, COP $690k Pro, COP $150k/yr renewal).
+// real numbers. Single-product model: one product "La página de ventas"
+// COP $390.000 (IVA incl.), à la carte add-ons, hosting after the included
+// month COP $30.000/mes or COP $300.000/año.
 
 export function santiPageHTML() {
   return `<!DOCTYPE html>
@@ -611,13 +613,13 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
       </div>
       <div class="stat">
         <div class="num">$390k</div>
-        <div class="label" data-lang="es">COP, plan Esencial</div>
-        <div class="label" data-lang="en">COP, Essential plan</div>
+        <div class="label" data-lang="es">COP, IVA incluido</div>
+        <div class="label" data-lang="en">COP, IVA included</div>
       </div>
       <div class="stat">
-        <div class="num">1 a 2</div>
-        <div class="label" data-lang="es">anos de hosting</div>
-        <div class="label" data-lang="en">years of hosting</div>
+        <div class="num">1 mes</div>
+        <div class="label" data-lang="es">de hosting incluido</div>
+        <div class="label" data-lang="en">of hosting included</div>
       </div>
       <div class="stat">
         <div class="num">30 / 70</div>
@@ -654,10 +656,10 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <div class="ic">⛅</div>
         <h3 data-lang="es">Hosting incluido</h3>
         <h3 data-lang="en">Hosting included</h3>
-        <p data-lang="es">1 ano (Esencial) o 2 anos (Pro) de hosting,
-          SSL, soporte por WhatsApp y cambios menores incluidos.</p>
-        <p data-lang="en">1 year (Essential) or 2 years (Pro) of hosting,
-          SSL, WhatsApp support, and small changes included.</p>
+        <p data-lang="es">1 mes de hosting, SSL y soporte por WhatsApp
+          incluido. Despues, $30.000 COP/mes o $300.000 COP/ano.</p>
+        <p data-lang="en">1 month of hosting, SSL, and WhatsApp support
+          included. After that, $30.000 COP/mes or $300.000 COP/ano.</p>
       </div>
     </div>
   </div>
@@ -667,85 +669,94 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
 <section class="s" id="precios">
   <div class="wrap">
     <span id="pricing" style="display:block;visibility:hidden;height:0"></span>
-    <h2 data-lang="es">Dos planes claros. Precios en pesos colombianos.</h2>
-    <h2 data-lang="en">Two clear plans. Prices in Colombian pesos.</h2>
+    <h2 data-lang="es">Un producto claro. Precio en pesos colombianos.</h2>
+    <h2 data-lang="en">One clear product. Price in Colombian pesos.</h2>
     <p class="sub" data-lang="es">
-      No hay sorpresas. El primer ano (Esencial) o los primeros dos anos
-      (Pro) de hosting y soporte ya estan incluidos en el precio.
+      No hay sorpresas. El precio incluye 1 mes de hosting y soporte.
+      Agrega solo lo que necesites con los add-ons à la carte.
     </p>
     <p class="sub" data-lang="en">
-      No surprises. The first year (Essential) or first two years (Pro)
-      of hosting and support are already included in the price.
+      No surprises. The price includes 1 month of hosting and support.
+      Add only what you need with the à la carte add-ons.
     </p>
 
     <div class="pricing-grid">
-      <div class="plan">
-        <h3>Esencial</h3>
+      <div class="plan pro">
+        <span class="badge" data-lang="es">Un solo producto</span>
+        <span class="badge" data-lang="en">Single product</span>
+        <h3 data-lang="es">La pagina de ventas</h3>
+        <h3 data-lang="en">The sales page</h3>
         <div class="price">$390.000 <small>COP</small></div>
-        <p class="meta" data-lang="es">Pago 30 / 70. Entrega en 48 horas.</p>
-        <p class="meta" data-lang="en">30 / 70 payment. Delivered in 48 hours.</p>
+        <p class="meta" data-lang="es">IVA incluido. Pago 30 / 70. En vivo en ~48 horas.</p>
+        <p class="meta" data-lang="en">IVA included. 30 / 70 payment. Live in ~48 hours.</p>
         <ul>
-          <li data-lang="es">Hasta 5 paginas</li>
-          <li data-lang="en">Up to 5 pages</li>
-          <li data-lang="es">Diseno a medida</li>
-          <li data-lang="en">Custom design</li>
-          <li data-lang="es">Optimizado para celular</li>
-          <li data-lang="en">Mobile-optimized</li>
-          <li data-lang="es">Formulario de contacto + WhatsApp</li>
-          <li data-lang="en">Contact form + WhatsApp button</li>
-          <li class="highlight" data-lang="es"><b>1 ano de hosting y soporte</b></li>
-          <li class="highlight" data-lang="en"><b>1 year of hosting and support</b></li>
-          <li data-lang="es">SEO basico + Google Analytics</li>
-          <li data-lang="en">Basic SEO + Google Analytics</li>
-          <li data-lang="es">Codigo fuente entregado al cliente</li>
-          <li data-lang="en">Source code handed over to the client</li>
+          <li data-lang="es">Pagina de conversion de 6 pasos con 1 CTA principal</li>
+          <li data-lang="en">6-step conversion page with 1 primary CTA</li>
+          <li data-lang="es">Boton de WhatsApp o formulario de contacto</li>
+          <li data-lang="en">WhatsApp button or contact form</li>
+          <li data-lang="es">Click-to-call y mapa de Google embebido</li>
+          <li data-lang="en">Click-to-call and embedded Google Maps</li>
+          <li data-lang="es">Integracion de citas/reservas (Cal.com o Calendly)</li>
+          <li data-lang="en">Booking/appointment integration (Cal.com or Calendly)</li>
+          <li data-lang="es">Seccion de testimonios + estructura SEO</li>
+          <li data-lang="en">Testimonials section + SEO structure</li>
+          <li data-lang="es">Analitica respetuosa de la privacidad</li>
+          <li data-lang="en">Privacy-first analytics</li>
+          <li class="highlight" data-lang="es"><b>1 mes de hosting + soporte incluido</b></li>
+          <li class="highlight" data-lang="en"><b>1 month of hosting + support included</b></li>
+          <li data-lang="es">Dominio + SSL configurados, 2 rondas de revision</li>
+          <li data-lang="en">Domain + SSL setup, 2 revision rounds</li>
         </ul>
         <a class="btn btn-primary"
-           href="https://wa.me/573014047722?text=Hola%20Santi%2C%20quiero%20el%20plan%20Esencial%20de%20PymeWebPro"
+           href="https://wa.me/573014047722?text=Hola%20Santi%2C%20quiero%20la%20pagina%20de%20ventas%20de%20PymeWebPro"
            target="_blank" rel="noopener">
-          <span data-lang="es">Quiero el Esencial</span>
-          <span data-lang="en">I want Essential</span>
+          <span data-lang="es">Quiero la pagina de ventas</span>
+          <span data-lang="en">I want the sales page</span>
         </a>
       </div>
 
-      <div class="plan pro">
-        <span class="badge" data-lang="es">Recomendado</span>
-        <span class="badge" data-lang="en">Recommended</span>
-        <h3>Pro</h3>
-        <div class="price">$690.000 <small>COP</small></div>
-        <p class="meta" data-lang="es">Pago 30 / 70. Entrega en 48 horas.</p>
-        <p class="meta" data-lang="en">30 / 70 payment. Delivered in 48 hours.</p>
+      <div class="plan">
+        <h3 data-lang="es">Add-ons a la carta</h3>
+        <h3 data-lang="en">À la carte add-ons</h3>
+        <p class="meta" data-lang="es">Agrega solo lo que necesites. Precios en COP, IVA incluido.</p>
+        <p class="meta" data-lang="en">Add only what you need. Prices in COP, IVA included.</p>
         <ul>
-          <li data-lang="es">Hasta 10 paginas</li>
-          <li data-lang="en">Up to 10 pages</li>
-          <li data-lang="es">Todo lo del Esencial</li>
-          <li data-lang="en">Everything in Essential</li>
-          <li data-lang="es">Galeria de productos / servicios con filtros</li>
-          <li data-lang="en">Gallery with filters</li>
-          <li data-lang="es">Sistema de reservas o citas integrado</li>
-          <li data-lang="en">Booking / appointment system</li>
-          <li data-lang="es">Pasarela de pago Wompi (PSE, Nequi, tarjetas)</li>
-          <li data-lang="en">Wompi payment gateway (PSE, Nequi, cards)</li>
-          <li data-lang="es">SEO avanzado + blog opcional</li>
-          <li data-lang="en">Advanced SEO + optional blog</li>
-          <li class="highlight" data-lang="es"><b>2 anos de hosting y soporte</b></li>
-          <li class="highlight" data-lang="en"><b>2 years of hosting and support</b></li>
+          <li data-lang="es">Pagina adicional (max 3): <b>$50.000</b></li>
+          <li data-lang="en">Extra page (max 3): <b>$50.000</b></li>
+          <li data-lang="es">Version bilingue ES/EN: <b>$75.000</b></li>
+          <li data-lang="en">Bilingual ES/EN version: <b>$75.000</b></li>
+          <li data-lang="es">Copywriting profesional: <b>$150.000</b></li>
+          <li data-lang="en">Professional copywriting: <b>$150.000</b></li>
+          <li data-lang="es">Catalogo simple (max 30 productos): <b>$180.000</b></li>
+          <li data-lang="en">Simple catalog (max 30 products): <b>$180.000</b></li>
+          <li data-lang="es">Perfil de Empresa de Google: <b>$90.000</b></li>
+          <li data-lang="en">Google Business Profile: <b>$90.000</b></li>
+          <li data-lang="es">Analitica avanzada (GA4+GTM+Pixel): <b>$120.000</b></li>
+          <li data-lang="en">Advanced analytics (GA4+GTM+Pixel): <b>$120.000</b></li>
+          <li data-lang="es">Integracion con CRM: <b>$190.000</b></li>
+          <li data-lang="en">CRM integration: <b>$190.000</b></li>
+          <li data-lang="es">Chatbot de captura: <b>$190.000 una vez + $80.000/mes</b></li>
+          <li data-lang="en">Capture chatbot: <b>$190.000 once + $80.000/mes</b></li>
+          <li data-lang="es">Boton de descarga de PDF: <b>$50.000</b></li>
+          <li data-lang="en">PDF download button: <b>$50.000</b></li>
+          <li data-lang="es">Ronda de revision adicional: <b>$90.000</b></li>
+          <li data-lang="en">Additional revision round: <b>$90.000</b></li>
         </ul>
         <a class="btn btn-primary"
-           href="https://wa.me/573014047722?text=Hola%20Santi%2C%20quiero%20el%20plan%20Pro%20de%20PymeWebPro"
+           href="https://wa.me/573014047722?text=Hola%20Santi%2C%20quiero%20cotizar%20add-ons%20de%20PymeWebPro"
            target="_blank" rel="noopener">
-          <span data-lang="es">Quiero el Pro</span>
-          <span data-lang="en">I want Pro</span>
+          <span data-lang="es">Cotizar add-ons</span>
+          <span data-lang="en">Quote add-ons</span>
         </a>
       </div>
     </div>
 
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="es">
-      Renovacion anual de hosting y soporte despues del periodo incluido: <b>$150.000 COP por ano</b>.
+      Hosting y soporte despues del mes incluido: <b>$30.000 COP/mes o $300.000 COP/ano</b>.
       Sin candado: si quieres llevarte el sitio a otro hosting, te entregamos el codigo.
     </p>
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="en">
-      Hosting and support renewal after the included period: <b>COP $150,000 per year</b>.
+      Hosting and support after the included month: <b>$30.000 COP/mes or $300.000 COP/ano</b>.
       No lock-in: if you want to move your site elsewhere, we hand over the code.
     </p>
   </div>
@@ -846,8 +857,8 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <div class="when" data-lang="es">Despues</div>
         <div class="when" data-lang="en">After</div>
         <div class="what">
-          <span data-lang="es"><b>1 ano (Esencial) o 2 anos (Pro)</b> de hosting y soporte ya incluidos. Cambios menores y monitoreo por WhatsApp.</span>
-          <span data-lang="en"><b>1 year (Essential) or 2 years (Pro)</b> of hosting and support already included. Small changes and monitoring via WhatsApp.</span>
+          <span data-lang="es"><b>1 mes</b> de hosting y soporte ya incluido. Despues, $30.000 COP/mes o $300.000 COP/ano. Cambios menores y monitoreo por WhatsApp.</span>
+          <span data-lang="en"><b>1 month</b> of hosting and support already included. After that, $30.000 COP/mes or $300.000 COP/ano. Small changes and monitoring via WhatsApp.</span>
         </div>
         <div class="who" data-lang="es">Equipo PymeWebPro</div>
         <div class="who" data-lang="en">PymeWebPro team</div>
@@ -896,8 +907,8 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <div class="domain">inviersol.com</div>
         <p class="desc" data-lang="es">INVIERSOL SAS. Vendedor de parasoles y sombrillas en Envigado. Formulario de cotizacion, galeria, contacto.</p>
         <p class="desc" data-lang="en">INVIERSOL SAS. Umbrellas and outdoor shading vendor in Envigado. Quote form, gallery, contact.</p>
-        <span class="pill" data-lang="es">Cliente Pro</span>
-        <span class="pill" data-lang="en">Pro plan client</span>
+        <span class="pill" data-lang="es">Cliente PymeWebPro</span>
+        <span class="pill" data-lang="en">PymeWebPro client</span>
       </a>
       <a class="example" href="https://thecartagena.guide" target="_blank" rel="noopener">
         <div class="domain">thecartagena.guide</div>
@@ -944,7 +955,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
             <td>$60-120k/mes</td>
             <td>$200-500k</td>
             <td>$2M-8M</td>
-            <td class="us">$390-690k</td>
+            <td class="us">$390k</td>
           </tr>
           <tr>
             <td data-lang="es">Tiempo de entrega</td>
@@ -1077,8 +1088,8 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
       <details class="faq" data-lang="es">
         <summary>¿Que pasa despues del periodo de hosting incluido?</summary>
         <div class="answer">
-          Renovacion anual de hosting y soporte: $150.000 COP por ano.
-          Incluye hosting Cloudflare, SSL renovado, copias de
+          Hosting y soporte despues del mes incluido: $30.000 COP/mes
+          o $300.000 COP/ano. Incluye hosting Cloudflare, SSL renovado, copias de
           seguridad, monitoreo 24/7, cambios menores de contenido, y
           soporte tecnico por WhatsApp. Si prefieres no renovar, te
           entregamos el codigo y puedes llevar el sitio a otro hosting.
@@ -1087,7 +1098,8 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
       <details class="faq" data-lang="en">
         <summary>What happens after the included hosting period ends?</summary>
         <div class="answer">
-          Annual renewal: COP $150,000 per year. Includes Cloudflare
+          Hosting after the included month: $30.000 COP/mes or
+          $300.000 COP/ano. Includes Cloudflare
           hosting, SSL renewal, automatic backups, 24/7 uptime
           monitoring, small content changes, and WhatsApp support. If
           you'd rather not renew, we hand over the code and you can

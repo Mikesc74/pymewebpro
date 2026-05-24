@@ -14,38 +14,46 @@ The Studio and Client are each a "Party" and collectively the "Parties."
 
 ## 1. Scope of Work
 
-The Studio will design, develop, and deploy a custom marketing website (the "**Website**") for the Client according to the tier selected below.
+The Studio will design, develop, and deploy a custom sales page (the "**Website**") for the Client. The Studio offers one product plus an à la carte add-on menu.
 
-**Selected Tier:**
+**Product:**
 
-- [ ] **Essential** (CAD $500), multi-page custom-designed website with WhatsApp + lead form
-- [ ] **Pro** (CAD $800), multi-page site adding blog, PDF downloads, GA4 + Meta tracking, bilingual support
+- [x] **La página de ventas**, $390.000 COP one-time (IVA incluido), a custom-designed, custom-coded sales page
 
-**Schedule A** captures any additional scope beyond the standard tier deliverables, if needed for this engagement. If the project is a standard build, Schedule A may be left blank or omitted.
+**Add-ons (à la carte, COP, IVA incl.):**
+
+- [ ] Página adicional (máx 3), $50.000 each
+- [ ] Versión bilingüe ES/EN, $75.000
+- [ ] Copywriting profesional, $150.000
+- [ ] Catálogo simple (máx 30 productos), $180.000
+- [ ] Perfil de Empresa de Google, $90.000
+- [ ] Analítica avanzada (GA4+GTM+Pixel), $120.000
+- [ ] Integración con CRM, $190.000
+- [ ] Chatbot de captura, $190.000 one-time + $80.000/mes
+- [ ] Botón de descarga de PDF, $50.000
+- [ ] Ronda de revisión adicional, $90.000
+
+**Schedule A** captures any additional scope beyond the product and selected add-ons, if needed for this engagement. If the project is a standard build, Schedule A may be left blank or omitted.
 
 ## 2. Deliverables
 
-Both tiers include:
+La página de ventas includes:
 
-- Custom-designed, custom-coded HTML and CSS website. No WordPress, no themes. Built with Anthropic's Claude as the primary coding partner; every output is reviewed and refined by the Studio before shipping.
-- Cloudflare Workers hosting. 1 year included for Essential, 2 years for Pro.
-- Custom domain configuration with SSL
+- Custom-designed, custom-coded HTML and CSS sales page. No WordPress, no themes. Built with Anthropic's Claude as the primary coding partner; every output is reviewed and refined by the Studio before shipping.
+- A 6-step conversion structure with one primary call to action
+- WhatsApp button or contact form, click-to-call, and an embedded Google Maps location
+- Booking/appointment integration (Cal.com or Calendly)
+- Testimonials section
+- Cloudflare hosting. 1 month of hosting + support included.
+- Custom domain configuration with SSL (the domain registration cost is the Client's)
 - Mobile-responsive design across all devices
 - Lighthouse 100 performance optimization (sub-1-second LCP)
 - Privacy-first analytics (Cloudflare Web Analytics, no cookie banner required)
-- Contact form with email forwarding
 - Schema.org structured data and SEO baseline (sitemap, robots.txt, Open Graph)
 - A+ security headers (HSTS, CSP, X-Frame-Options, Referrer-Policy)
+- 2 revision rounds, live in approximately 48 hours
 
-Pro tier additionally includes:
-
-- Blog section
-- PDF download section (ebooks, guides, menus, lead magnets)
-- GA4 + Meta Pixel tracking integration (Client provides their own GA4 and Meta property IDs)
-- Bilingual support (EN / FR or EN / ES) with hreflang and language toggle
-- Schema.org Service entries for each service offered
-- Extended hosting and support (2 years included, valued at CAD $360, vs. 1 year in Essential, valued at CAD $180)
-- Extended post-launch revision window (2 weeks vs. 1 week in Essential)
+Selected add-ons (see Section 1) are delivered alongside the page at the prices listed above.
 
 ## 3. Timeline
 
@@ -55,21 +63,16 @@ Revision cycles will be completed within forty-eight (48) hours of the Client pr
 
 ## 4. Fees and Payment
 
-**Total Fee:** [AMOUNT] [CAD or USD] (the "**Fee**").
+**Total Fee:** [AMOUNT] COP (the "**Fee**"), being $390.000 COP for la página de ventas plus any selected add-ons. All prices are in Colombian pesos (COP), IVA incluido.
 
 **Payment Schedule.** The Fee is paid in two milestones:
 
-1. **30% deposit to start.** No design or development work begins until this deposit is received.
-2. **70% on launch.** The completed site is hosted on a staging URL until the balance is received. The Studio will not connect the Website to the Client's custom domain (DNS configuration) until the balance clears.
+1. **30% deposit to start** ($117.000 COP on the base page). No design or development work begins until this deposit is received.
+2. **70% on launch** ($273.000 COP on the base page). The completed site is hosted on a staging URL until the balance is received. The Studio will not connect the Website to the Client's custom domain (DNS configuration) until the balance clears.
 
-**Payment Methods.** The Client may pay by:
+**Payment Methods.** The Client pays by card, PSE, or bank transfer through the Studio's Wompi payment portal, in COP. No other currency is accepted.
 
-- Credit card, debit card, Apple Pay, or Google Pay through the Studio's Wise Business invoicing portal (CAD or USD)
-- Direct bank wire to the Studio's Wise Business CAD or USD account
-- For Colombian clients: card, PSE, or bank transfer through the Studio's Wompi payment portal (COP)
-- Other method as mutually agreed in writing
-
-Wire details and Wompi payment links are provided on each issued invoice.
+Wompi payment links are provided on each issued invoice.
 
 **Late Payment.** Invoices are due within seven (7) days of issue. Past-due deposit invoices delay project kickoff. Past-due balance invoices delay DNS connection (the site stays on the staging URL). Past-due balances after thirty (30) days accrue interest at 1.5% per month, calculated daily.
 
@@ -85,26 +88,21 @@ This guarantee is the Client's exclusive refund remedy. After thirty (30) days p
 
 ## 5. Revisions
 
-The Studio includes a free post-launch revision window during which the Client may request changes at no additional cost:
+The product includes **two (2) revision rounds** at no additional cost. The Client submits consolidated feedback per round and the Studio addresses it in good-faith iteration cycles. Out-of-scope work (new sections, new integrations, content the Client did not provide at kickoff) is quoted separately.
 
-- **Essential tier:** one (1) week of free revisions starting on the launch date
-- **Pro tier:** two (2) weeks of free revisions starting on the launch date
-
-During the revision window, the Client can submit consolidated feedback and the Studio will address it in good-faith iteration cycles. Out-of-scope work (new sections, new integrations, content the Client did not provide at kickoff) is quoted separately even within the revision window.
-
-After the revision window expires, additional revisions are billed at **CAD $75 per hour** (or USD equivalent) with a 30-minute minimum. The Studio will provide a written estimate before beginning any out-of-scope or post-window work.
+After the two included rounds, each additional revision round is **$90.000 COP**. The Studio will provide a written estimate before beginning any out-of-scope or additional-round work. There are no unlimited revisions.
 
 ## 6. Hosting, Domain, and Maintenance
 
-**Hosting.** The Website is hosted on Cloudflare Workers infrastructure provided by the Studio. Hosting is included for the period specified in the selected tier (1 or 2 years).
+**Hosting.** The Website is hosted on Cloudflare infrastructure provided by the Studio. One (1) month of hosting + support is included with the product.
 
 **Domain.** The Client owns its domain. The Studio configures DNS records and SSL on the Client's behalf at no additional cost. If the Client does not yet own a domain, the Studio will recommend a registrar (currently Namecheap) and assist with registration. Domain registration fees are paid directly by the Client.
 
-**Renewal and Maintenance (Optional).** After the included hosting period expires, the Client may:
+**Renewal and Maintenance (Optional).** After the included month expires, the Client may:
 
-- Renew hosting at **CAD $15 per month** or **CAD $180 per year**, billed annually or monthly at the Client's preference
-- Subscribe to an optional maintenance add-on (CAD $35 per month on top of hosting) that covers monthly content updates, security patches, and minor design adjustments
-- Request ad-hoc edits at the Studio's standard hourly rate (CAD $75/hr, 30-minute minimum)
+- Renew hosting + support at **$30.000 COP per month** or **$300.000 COP per year**
+- Request an additional revision round at **$90.000 COP** per round
+- Add any item from the à la carte add-on menu (see Section 1) at the listed COP price
 - Migrate the Website to another host of their choice. The Studio will deliver a portable build at no charge.
 
 ## 7. Intellectual Property
@@ -164,9 +162,9 @@ Neither Party is liable for delays or failures caused by events beyond reasonabl
 
 ## 15. Governing Law and Disputes
 
-This Agreement is governed by the laws of the **Province of Ontario, Canada**, without regard to conflict-of-law principles, unless the Parties mutually agree in writing to a different jurisdiction (typically the Client's home province or state).
+This Agreement is governed by the laws of the **Republic of Colombia**, without regard to conflict-of-law principles. The Parties submit to the jurisdiction of the competent courts of Medellín, Antioquia, Colombia.
 
-The Parties will attempt to resolve any dispute through good-faith discussion within thirty (30) days. Unresolved disputes will be submitted to binding arbitration under the rules of the ADR Institute of Canada (or the equivalent body in the selected jurisdiction), with proceedings conducted in English.
+The Parties will attempt to resolve any dispute through good-faith discussion within thirty (30) days. Unresolved disputes will be submitted to the competent courts of Medellín, Antioquia, Colombia, without prejudice to the alternative dispute-resolution mechanisms available under Colombian law.
 
 ## 16. Entire Agreement
 
@@ -219,9 +217,11 @@ Date: ______________________________
 
 **Project Name:** ____________________________________
 
-**Selected Tier:** Essential / Pro (circle one)
+**Product:** La página de ventas ($390.000 COP)
 
-**Total Fee:** [AMOUNT] [CAD or USD]
+**Selected add-ons:** ____________________________________
+
+**Total Fee:** [AMOUNT] COP
 
 **Domain:** ____________________________________
 
