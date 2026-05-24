@@ -259,9 +259,10 @@
         window.open(pwpBase() + '/admin/site-audit?url=' + encodeURIComponent(u), '_blank', 'noopener');
       }
 
-      const tab = route.startsWith('/admin/crm') ? 'crm'
-                : route.startsWith('/admin/leads') ? 'crm'
-                : route.startsWith('/admin/mockups') ? 'mockups'
+      // Sales funnel (CRM / leads) moved to its own home at ventas.pymewebpro.com.
+      // colguides is management-only now, so /admin/crm and /admin/leads fall back
+      // to the Clients (management) tab.
+      const tab = route.startsWith('/admin/mockups') ? 'mockups'
                 : 'clients';
 
       async function tryLogin() {
@@ -380,7 +381,6 @@
                 <span className="serif" style={{fontSize:'1.15rem',color:'#F2E9D5',whiteSpace:'nowrap'}}>Pyme<em style={{color:'#D24A1D',fontStyle:'italic'}}>WebPro</em> · Admin</span>
               </button>
               <div style={{display:'flex',gap:'.4rem',flexWrap:'wrap'}}>
-                {tabBtn('crm', 'CRM', Tag)}
                 {tabBtn('clients', 'Clients', Users, clients.length || undefined)}
                 {tabBtn('mockups', 'Mockups', Palette, mockups.length || undefined)}
               </div>
@@ -447,9 +447,7 @@
 
       return (
         <Shell>
-          <main style={tab === 'crm'
-            ? {padding:0, maxWidth:'none', margin:0, width:'100%'}
-            : {padding:'2.5rem 2rem', maxWidth:'1200px', margin:'0 auto'}}>
+          <main style={{padding:'2.5rem 2rem', maxWidth:'1200px', margin:'0 auto'}}>
 
             {tab === 'clients' && (
               <>
@@ -466,20 +464,6 @@
                   )
                 )}
               </>
-            )}
-
-            {tab === 'crm' && (
-              <iframe
-                src="/admin/crm?embed=1"
-                title="CRM"
-                style={{
-                  width:'100%',
-                  height:'calc(100vh - 110px)',
-                  border:'none',
-                  display:'block',
-                  background:'var(--pwp-bg)'
-                }}
-              />
             )}
 
             {tab === 'mockups' && (
