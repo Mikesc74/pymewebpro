@@ -21,6 +21,7 @@ import { handleAdminCRM, crmPageHTML } from "./crm.js";
 import VENTAS_RECURSOS_HTML from "./ventas-recursos.html";
 import VENTAS_MIDIA_HTML from "./ventas-midia.html";
 import VENTAS_GUIA_HTML from "./ventas-guia.html";
+import DEMO_DENTAL_HTML from "./demo-dental.html";
 import { handleSiteAuditAPI, siteAuditReportHTML } from "./site-audit.js";
 // santi.pymewebpro.com · bilingual sales site for Santi to use with prospects.
 import { santiPageHTML } from "./santi.js";
@@ -164,6 +165,42 @@ function isAdmin(request, env) {
     if (ACCESS_ADMIN_HOSTS.has(host) && request.headers.get("Cf-Access-Authenticated-User-Email")) return true;
   } catch (e) {}
   return false;
+}
+
+// ─── Per-lead demo mockups (templated, personalized, open-tracked) ──────────
+function demoEsc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; }); }
+const DEMO_TEMPLATES = { dental: DEMO_DENTAL_HTML };
+function pickDemoTemplate(cat){
+  cat = (cat || "").toString().toLowerCase();
+  if (/odonto|dental|dentist/.test(cat)) return DEMO_TEMPLATES.dental;
+  return null;
+}
+async function serveDemo(env, leadId){
+  let lead = null;
+  try { lead = await env.DB.prepare("SELECT id, business_name, name, city, category FROM leads WHERE id = ?").bind(leadId).first(); } catch (e) {}
+  if (!lead) return new Response("Ejemplo no encontrado.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  const tpl = pickDemoTemplate(lead.category);
+  if (!tpl) return new Response("Plantilla en construccion para esta categoria.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  const negocio = demoEsc(lead.business_name || lead.name || "Tu negocio");
+  const ciudad = demoEsc(lead.city || "Medellin");
+  const html = tpl.split("{{NEGOCIO}}").join(negocio).split("{{CIUDAD}}").join(ciudad).split("{{LEAD_ID}}").join(leadId);
+  const csp = ["default-src 'self'", "img-src 'self' data: https:", "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com", "font-src 'self' https://fonts.gstatic.com data:", "script-src 'self' 'unsafe-inline'", "connect-src 'self'", "base-uri 'self'", "object-src 'none'", "frame-ancestors 'none'"].join("; ");
+  return new Response(html, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Content-Security-Policy": csp } });
+}
+async function logDemoView(env, leadId){
+  try {
+    const lead = await env.DB.prepare("SELECT id FROM leads WHERE id = ?").bind(leadId).first();
+    if (!lead) return cors(json({ ok: false }, 404));
+    const day = new Date().toISOString().slice(0, 10);
+    const key = "mockview:" + leadId + ":" + day;
+    const seen = await env.TOKENS.get(key);
+    if (!seen) {
+      const now = Date.now();
+      await env.DB.prepare("INSERT INTO activities (id, kind, subject, body, lead_id, owner, occurred_at, created_at, updated_at, done) VALUES (?, 'note', 'Mockup abierto', 'El prospecto abrio su mockup de ejemplo.', ?, 'system', ?, ?, ?, 0)").bind(crypto.randomUUID(), leadId, now, now, now).run();
+      await env.TOKENS.put(key, "1", { expirationTtl: 172800 });
+    }
+    return cors(json({ ok: true }));
+  } catch (e) { return cors(json({ ok: false }, 200)); }
 }
 async function sendEmail(env, { to, subject, html }) {
   if (!env.RESEND_API_KEY) {
@@ -1799,6 +1836,11 @@ const src_default = {
     }
     try {
       if (path === "/api/health") return cors(json({ ok: true, timestamp: Date.now() }));
+      // Per-lead demo mockup (public, no Access) + open-tracking beacon.
+      const __demo = path.match(/^\/demo\/([a-zA-Z0-9-]+)\/?$/);
+      if (__demo && request.method === "GET") return await serveDemo(env, __demo[1]);
+      const __demoSeen = path.match(/^\/api\/demo\/([a-zA-Z0-9-]+)\/seen$/);
+      if (__demoSeen && request.method === "POST") return await logDemoView(env, __demoSeen[1]);
       // ─── Public Chief of Staff loader script ─────────────────────────
       // Served at /cos-widget.js (and the master-portal-prefixed equivalent).
       // No auth needed for the script itself; the chat endpoint it calls

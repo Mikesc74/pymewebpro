@@ -67,6 +67,9 @@ button.act.ghost{background:transparent;color:var(--mute)}
 .tl-kind{font-weight:600;font-size:.82rem}
 .tl-when{font-size:.74rem;color:var(--mute)}
 .tl-body{font-size:.82rem;color:var(--ink2);margin-top:.2rem;white-space:pre-wrap}
+.badge-hot{display:inline-block;margin-left:.45rem;font-size:.6rem;font-weight:800;letter-spacing:.05em;background:var(--ink);color:#fff;border:1px solid var(--accent);border-radius:999px;padding:.12rem .45rem;vertical-align:middle}
+.alert{background:var(--ink);color:var(--paper);border-radius:12px;padding:.75rem 1.1rem;margin:0 0 1rem;font-weight:600;display:flex;gap:.5rem;align-items:center}
+.alert b{color:#F2896A}
 .loading{text-align:center;color:var(--mute);padding:4rem}
 .modal-bg{position:fixed;inset:0;background:rgba(26,22,18,.45);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
 .modal{background:var(--paper);border-radius:14px;max-width:540px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
@@ -104,6 +107,7 @@ button.act.ghost{background:transparent;color:var(--mute)}
 "use strict";
 var CAL_LINK = "https://cal.com/medellinguide/intro"; // TODO: cambiar al Cal de Santi cuando lo tenga
 var DEPOSITO = "$117.000 COP (30%)";
+var DEMO_BASE = "https://mockups.pymewebpro.com";
 var LEADS = [], CADENCE = [], BY_ID = {}, ACTS_BY_LEAD = {};
 
 function el(html){ var d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstElementChild; }
@@ -189,6 +193,8 @@ function stageLabel(l){
 }
 function kindLabel(k){ return {'note':'Borrador / nota','whatsapp':'WhatsApp','email':'Email','call':'Llamada','meeting':'Reunión','task':'Tarea'}[k] || k || 'Actividad'; }
 function fmtWhen(ms){ if(!ms) return ''; var d=Math.floor((Date.now()-ms)/86400000); if(d<=0) return 'hoy'; if(d===1) return 'ayer'; if(d<30) return 'hace '+d+'d'; return new Date(ms).toISOString().slice(0,10); }
+function hasDemo(l){ return /odonto|dental|dentist/i.test(String(l.category||'')); }
+function mockOpened(l){ var acts=ACTS_BY_LEAD[l.id]||[]; for(var i=0;i<acts.length;i++){ if(acts[i].subject==='Mockup abierto') return acts[i].occurred_at||acts[i].created_at||1; } return 0; }
 
 function funnelStripHTML(){
   var c={nuevo:0,proceso:0,interesado:0,ganado:0,perdido:0};
@@ -255,12 +261,12 @@ function cardHTML(l, kind){
          + '<button class="act ghost" data-a="drop">Descartar</button>';
   }
   return '<div class="card" data-id="'+esc(l.id)+'">'
-    + '<div class="biz">'+esc(l.business_name||l.name||'Sin nombre')+heatPill(l.heat)+'</div>'
+    + '<div class="biz">'+esc(l.business_name||l.name||'Sin nombre')+heatPill(l.heat)+(mockOpened(l)?'<span class="badge-hot">VIO EL MOCKUP</span>':'')+'</div>'
     + '<div class="meta">'+(meta||'&nbsp;')+'</div>'
     + contactRow(l)
     + why
     + '<div class="track">'+esc(touchLine(l))+' · próximo: '+esc(nextStep(l))+'</div>'
-    + '<div class="row">'+btns+'<button class="act ghost" data-a="detail">Ver</button></div>'
+    + '<div class="row">'+btns+(hasDemo(l)?'<button class="act" data-a="mockup">Enviar mockup</button>':'')+'<button class="act ghost" data-a="detail">Ver</button></div>'
     + '</div>';
 }
 
@@ -273,9 +279,12 @@ function render(){
   var nuevos = LEADS.filter(isNew);
   var contact = nuevos.filter(function(l){return !!waNum(l);}).sort(function(a,b){return (b.score||0)-(a.score||0);});
   var sinNum = nuevos.filter(function(l){return !waNum(l);}).sort(function(a,b){return (b.score||0)-(a.score||0);});
-  var follow = dueFollowups().sort(function(a,b){return (b.days_since_touch||0)-(a.days_since_touch||0);});
+  var follow = dueFollowups().sort(function(a,b){ var ao=mockOpened(a)?1:0, bo=mockOpened(b)?1:0; if(ao!==bo) return bo-ao; return (b.days_since_touch||0)-(a.days_since_touch||0); });
   var warm = LEADS.filter(isWarm).sort(function(a,b){return (b.score||0)-(a.score||0);});
-  var html = funnelStripHTML()
+  var opened = LEADS.filter(function(l){return mockOpened(l) && l.lead_stage!=='disqualified' && l.status!=='converted';});
+  var html = '';
+  if(opened.length) html += '<div class="alert"><span><b>'+opened.length+'</b> '+(opened.length===1?'prospecto vio':'prospectos vieron')+' tu mockup. Escríbeles ahora, están calientes.</span></div>';
+  html += funnelStripHTML()
     + '<div class="cols">'
     + colHTML('Para contactar', 'Con WhatsApp, listos para escribir.', contact, 'contact')
     + colHTML('Seguimientos', 'Ya les escribiste, toca insistir.', follow, 'followup')
@@ -312,6 +321,7 @@ document.getElementById('app').addEventListener('click', function(e){
   else if(a==='drop') setStage(lead, 'disqualified', 'Descartado');
   else if(a==='won') setStage(lead, 'sales_qualified', 'Marcado ganado', 'won');
   else if(a==='call') bookCall(lead);
+  else if(a==='mockup') sendMockup(lead);
   else if(a==='addnum') addNumber(lead);
   else if(a==='detail') openDetail(lead);
 });
@@ -339,6 +349,14 @@ async function addNumber(lead){
   if(!d){ toast('Número inválido', true); return; }
   try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({whatsapp: d})}); toast('Número agregado'); loadAll(); }
   catch(err){ toast('Error: '+err.message, true); }
+}
+
+function sendMockup(lead){
+  if(!hasDemo(lead)){ toast('Aún no hay plantilla para este tipo de negocio', true); return; }
+  var url = DEMO_BASE + '/demo/' + lead.id;
+  var biz = lead.business_name || lead.name || 'tu negocio';
+  var text = 'Hola, soy Santi de PymeWebPro. Te dejo el ejemplo que te comenté para ' + biz + ':\n' + url + '\n\nEs una muestra del estilo que hacemos. El tuyo sería a la medida, con tu marca y tus fotos. ¿Lo abres y me dices qué te parece?';
+  showPanel(lead, null, text);
 }
 
 async function aiDraft(lead, mode){
