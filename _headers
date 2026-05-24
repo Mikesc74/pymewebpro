@@ -46,10 +46,6 @@
   Cache-Control: public, max-age=600, must-revalidate
   CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
-/privacy
-  Cache-Control: public, max-age=600, must-revalidate
-  CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400
-
 /hosting
   Cache-Control: public, max-age=600, must-revalidate
   CDN-Cache-Control: public, max-age=86400, stale-while-revalidate=86400

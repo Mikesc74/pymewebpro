@@ -377,7 +377,7 @@ async function getClientProject(session, env) {
     },
     options: {
       hosting_monthly_cop: 30000,
-      hosting_annual_cop: 270000,
+      hosting_annual_cop: 300000,
     },
   });
 }
@@ -435,7 +435,7 @@ async function checkoutHosting(request, session, env) {
   if (!env.WOMPI_PUBLIC_KEY || !env.WOMPI_INTEGRITY) return json({ error: "Payments not configured" }, 503);
   const body = await request.json().catch(() => ({}));
   const period = body.period === "monthly" ? "monthly" : "annual";
-  const amount_cop = period === "annual" ? 270000 : 30000;
+  const amount_cop = period === "annual" ? 300000 : 30000;
   const reference = `pwp-host-${period}-${session.client_id}-${Date.now().toString(36)}`;
   const amountInCents = amount_cop * 100;
   const sig = await sha256(`${reference}${amountInCents}COP${env.WOMPI_INTEGRITY}`);
@@ -1186,7 +1186,7 @@ const PLAN_PRICES_COP = {
   pro: 690000         // 69e4 in original
 };
 const HOSTING_PRICES_COP = {
-  annual: 270000,     // 27e4
+  annual: 300000,     // 30e4 · año prepagado, ahorra dos meses vs $360k
   monthly: 0,         // billed separately, not on Wompi
   none: 0
 };
