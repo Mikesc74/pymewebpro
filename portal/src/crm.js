@@ -1433,7 +1433,7 @@ const LEAD_FUNNEL_COLS = [
 ];
 
 const state = {
-  authed: !!localStorage.getItem(ADMIN_KEY),
+  authed: !!localStorage.getItem(ADMIN_KEY) || !!window.PWP_ACCESS_OK,
   active: (location.hash.replace("#", "") || "today").replace("leadfunnel", "funnel"),
   data: { leads: [], clients: [], deals: [], activities: [] },
   counts: {},
@@ -1524,7 +1524,7 @@ async function api(path, opts) {
       ...(opts && opts.headers || {}),
     },
   });
-  if (res.status === 401) { localStorage.removeItem(ADMIN_KEY); state.authed = false; render(); throw new Error("Unauthorized"); }
+  if (res.status === 401) { localStorage.removeItem(ADMIN_KEY); if (!window.PWP_ACCESS_OK) { state.authed = false; render(); } throw new Error("Unauthorized"); }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || ("HTTP " + res.status));
   return data;

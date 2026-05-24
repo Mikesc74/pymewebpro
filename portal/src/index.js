@@ -142,11 +142,25 @@ async function getSession(request, env) {
   ).bind(token, Date.now()).first();
   return session;
 }
+// Hosts that sit behind Cloudflare Access (Mike + Santi policies). On these, a
+// request carrying a Cf-Access-Authenticated-User-Email has already passed the
+// Access policy, so we trust it as admin without a bearer token. Other hosts
+// (e.g. the public checkout on portal.pymewebpro.com) are NOT in this set and
+// still require the bearer token.
+const ACCESS_ADMIN_HOSTS = new Set([
+  "ventas.pymewebpro.com",
+  "colguides.com",
+  "www.colguides.com",
+]);
 function isAdmin(request, env) {
   const auth = request.headers.get("Authorization");
-  if (!auth || !auth.startsWith("Bearer ")) return false;
-  const token = auth.slice(7);
-  return token === env.ADMIN_TOKEN;
+  if (auth && auth.startsWith("Bearer ") && env.ADMIN_TOKEN && auth.slice(7) === env.ADMIN_TOKEN) return true;
+  // Cloudflare Access fallback: an Access-authenticated user on a gated host is admin.
+  try {
+    const host = new URL(request.url).hostname;
+    if (ACCESS_ADMIN_HOSTS.has(host) && request.headers.get("Cf-Access-Authenticated-User-Email")) return true;
+  } catch (e) {}
+  return false;
 }
 async function sendEmail(env, { to, subject, html }) {
   if (!env.RESEND_API_KEY) {
@@ -1728,7 +1742,11 @@ const src_default = {
         "object-src 'none'",
         "form-action 'self'",
       ].join("; ");
-      return withSecurityHeaders(new Response(crmPageHTML(env), {
+      const ventasHtml = crmPageHTML(env).replace(
+        "<head>",
+        "<head>\n<script>window.PWP_ACCESS_OK=true;</script>"
+      );
+      return withSecurityHeaders(new Response(ventasHtml, {
         headers: {
           "Content-Type": "text/html; charset=utf-8",
           "Cache-Control": "no-store",
