@@ -44,6 +44,29 @@ button.act.primary{background:var(--accent);color:#fff;border-color:var(--accent
 button.act.primary:hover{background:var(--accent2);color:#fff}
 button.act.ghost{background:transparent;color:var(--mute)}
 .empty{color:var(--mute);font-size:.85rem;text-align:center;padding:1.6rem .5rem;border:1px dashed var(--line);border-radius:10px}
+.nn-wrap{margin:1.6rem 0 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem}
+.nn-wrap h2{font-family:Georgia,serif;font-size:1.1rem;margin:0 0 .2rem;display:flex;align-items:center;gap:.5rem}
+.nn-wrap .count{background:var(--accent);color:#fff;border-radius:999px;font-size:.72rem;padding:.1rem .5rem;font-weight:700}
+.nn-wrap .sub{color:var(--mute);font-size:.8rem;margin:0 0 .9rem}
+.nn-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nn-row:last-child{border-bottom:none}
+.nn-biz{font-weight:600;font-size:.92rem}
+.nn-meta{color:var(--mute);font-weight:400;font-size:.82rem}
+.nn-act{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.funnel{display:flex;align-items:stretch;gap:.3rem;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.7rem .9rem;margin:0 0 1.3rem;overflow-x:auto}
+.funnel .fstep{flex:1;min-width:88px;text-align:center}
+.funnel .fn{font-size:1.5rem;font-weight:800;line-height:1}
+.funnel .fl{font-size:.7rem;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;margin-top:.25rem}
+.funnel .farr{align-self:center;color:var(--line);font-size:1.3rem;flex:none}
+.card .track{font-size:.76rem;color:var(--mute);margin:0 0 .6rem}
+.d-sub{font-size:.85rem;color:var(--ink2);margin:0 0 .6rem}
+.d-next{font-size:.9rem;margin:.7rem 0;background:var(--paper2);border-radius:8px;padding:.5rem .7rem}
+.tl-title{margin:1.1rem 0 .5rem;font-size:.95rem}
+.tl-item{border-left:2px solid var(--line);padding:.1rem 0 .7rem .8rem}
+.tl-head{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}
+.tl-kind{font-weight:600;font-size:.82rem}
+.tl-when{font-size:.74rem;color:var(--mute)}
+.tl-body{font-size:.82rem;color:var(--ink2);margin-top:.2rem;white-space:pre-wrap}
 .loading{text-align:center;color:var(--mute);padding:4rem}
 .modal-bg{position:fixed;inset:0;background:rgba(26,22,18,.45);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
 .modal{background:var(--paper);border-radius:14px;max-width:540px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
@@ -81,7 +104,7 @@ button.act.ghost{background:transparent;color:var(--mute)}
 "use strict";
 var CAL_LINK = "https://cal.com/medellinguide/intro"; // TODO: cambiar al Cal de Santi cuando lo tenga
 var DEPOSITO = "$117.000 COP (30%)";
-var LEADS = [], CADENCE = [], BY_ID = {};
+var LEADS = [], CADENCE = [], BY_ID = {}, ACTS_BY_LEAD = {};
 
 function el(html){ var d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstElementChild; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -100,8 +123,9 @@ async function api(path, opts){
 }
 
 async function loadAll(){
+  var grid;
   try {
-    var grid = await api('/api/admin/crm/grid');
+    grid = await api('/api/admin/crm/grid');
     LEADS = (grid && grid.leads) || [];
   } catch(e){
     document.getElementById('app').innerHTML = '<div class="empty">No se pudo cargar la informacion. Recarga la pagina. ('+esc(e.message)+')</div>';
@@ -109,6 +133,8 @@ async function loadAll(){
   }
   try { var c = await api('/api/admin/outreach/cadence'); CADENCE = (c && c.buckets) || []; } catch(e){ CADENCE = []; }
   BY_ID = {}; LEADS.forEach(function(l){ BY_ID[l.id]=l; });
+  ACTS_BY_LEAD = {};
+  (((grid && grid.activities) || [])).forEach(function(a){ if(!a.lead_id) return; (ACTS_BY_LEAD[a.lead_id] = ACTS_BY_LEAD[a.lead_id] || []).push(a); });
   render();
 }
 
@@ -142,6 +168,72 @@ function contactRow(l){
   return '<div class="contact">'+bits.join('')+'</div>';
 }
 
+function touchLine(l){
+  var t = l.touches_count||0;
+  if(!t && !l.last_touched_at) return 'Sin contactar';
+  var s = t+' toque'+(t===1?'':'s');
+  if(l.last_touched_at){ var d=Math.floor((Date.now()-l.last_touched_at)/86400000); s += ' · último '+(d<=0?'hoy':'hace '+d+'d'); }
+  return s;
+}
+function nextStep(l){
+  if(l.status==='converted') return 'Ganado';
+  if(l.lead_stage==='disqualified') return 'Descartado';
+  if(l.lead_stage==='sales_qualified') return 'Cerrar o agendar';
+  if(!l.last_touched_at) return waNum(l) ? 'Contactar' : 'Conseguir número';
+  var d=Math.floor((Date.now()-l.last_touched_at)/86400000);
+  return d>=3 ? 'Seguimiento' : 'Esperar respuesta';
+}
+function stageLabel(l){
+  if(l.status==='converted') return 'Ganado';
+  return {'new':'Sin contactar','contacted':'Contactado','marketing_qualified':'En seguimiento','sales_qualified':'Interesado','disqualified':'Perdido'}[l.lead_stage] || 'Sin contactar';
+}
+function kindLabel(k){ return {'note':'Borrador / nota','whatsapp':'WhatsApp','email':'Email','call':'Llamada','meeting':'Reunión','task':'Tarea'}[k] || k || 'Actividad'; }
+function fmtWhen(ms){ if(!ms) return ''; var d=Math.floor((Date.now()-ms)/86400000); if(d<=0) return 'hoy'; if(d===1) return 'ayer'; if(d<30) return 'hace '+d+'d'; return new Date(ms).toISOString().slice(0,10); }
+
+function funnelStripHTML(){
+  var c={nuevo:0,proceso:0,interesado:0,ganado:0,perdido:0};
+  LEADS.forEach(function(l){
+    if(l.status==='converted'){c.ganado++;return;}
+    if(l.lead_stage==='disqualified'){c.perdido++;return;}
+    if(l.lead_stage==='sales_qualified'){c.interesado++;return;}
+    if(l.lead_stage==='contacted'||l.lead_stage==='marketing_qualified'||l.last_touched_at){c.proceso++;return;}
+    c.nuevo++;
+  });
+  function step(lbl,n){return '<div class="fstep"><div class="fn">'+n+'</div><div class="fl">'+lbl+'</div></div>';}
+  return '<div class="funnel">'+step('Sin contactar',c.nuevo)+'<div class="farr">&rsaquo;</div>'+step('En conversación',c.proceso)+'<div class="farr">&rsaquo;</div>'+step('Interesados',c.interesado)+'<div class="farr">&rsaquo;</div>'+step('Ganados',c.ganado)+'<div class="farr">&rsaquo;</div>'+step('Perdidos',c.perdido)+'</div>';
+}
+
+function openDetail(lead){
+  closePanel();
+  var acts=(ACTS_BY_LEAD[lead.id]||[]).slice().sort(function(a,b){return (b.occurred_at||b.created_at||0)-(a.occurred_at||a.created_at||0);});
+  var tl = acts.length ? acts.map(function(a){
+    var when=a.occurred_at||a.created_at||0;
+    var body=(a.body||'').toString(); if(body.length>240) body=body.slice(0,240)+'...';
+    return '<div class="tl-item"><div class="tl-head"><span class="tl-kind">'+esc(kindLabel(a.kind))+'</span><span class="tl-when">'+esc(fmtWhen(when))+'</span></div>'+(body?'<div class="tl-body">'+esc(body)+'</div>':'')+'</div>';
+  }).join('') : '<div class="empty">Todavía no hay actividad.</div>';
+  var bg=el('<div class="modal-bg"><div class="modal" style="max-width:600px"><div class="mh"><h3>'+esc(lead.business_name||lead.name||'Prospecto')+'</h3><button data-x="close">&times;</button></div>'
+    + '<div class="mb">'
+    + '<div class="d-sub">'+esc(stageLabel(lead)+' · '+touchLine(lead))+'</div>'
+    + (lead.suggested_pitch?'<div class="why">'+esc(lead.suggested_pitch)+'</div>':'')
+    + contactRow(lead)
+    + '<div class="d-next">Próximo paso: <b>'+esc(nextStep(lead))+'</b></div>'
+    + '<h4 class="tl-title">Historial</h4>'+tl
+    + '</div>'
+    + '<div class="mf">'
+    + '<button class="act" data-d="msg">Generar mensaje</button>'
+    + '<button class="act" data-d="call">Agendar llamada</button>'
+    + '<button class="act" data-d="warm">Interesado</button>'
+    + '<button class="act ghost" data-d="drop">Descartar</button>'
+    + '</div></div></div>');
+  bg.addEventListener('click',function(e){if(e.target===bg) bg.remove();});
+  document.getElementById('modal-root').appendChild(bg);
+  bg.querySelectorAll('[data-x="close"]').forEach(function(b){b.onclick=function(){bg.remove();};});
+  bg.querySelector('[data-d="msg"]').onclick=function(){bg.remove();aiDraft(lead, lead.lead_stage==='sales_qualified'?'close':(lead.last_touched_at?'follow':'first'));};
+  bg.querySelector('[data-d="call"]').onclick=function(){bookCall(lead);};
+  bg.querySelector('[data-d="warm"]').onclick=function(){bg.remove();setStage(lead,'sales_qualified','Marcado como interesado');};
+  bg.querySelector('[data-d="drop"]').onclick=function(){bg.remove();setStage(lead,'disqualified','Descartado');};
+}
+
 function cardHTML(l, kind){
   var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
   var why = l.suggested_pitch ? '<div class="why">'+esc(l.suggested_pitch)+'</div>' : '';
@@ -167,7 +259,8 @@ function cardHTML(l, kind){
     + '<div class="meta">'+(meta||'&nbsp;')+'</div>'
     + contactRow(l)
     + why
-    + '<div class="row">'+btns+'</div>'
+    + '<div class="track">'+esc(touchLine(l))+' · próximo: '+esc(nextStep(l))+'</div>'
+    + '<div class="row">'+btns+'<button class="act ghost" data-a="detail">Ver</button></div>'
     + '</div>';
 }
 
@@ -177,20 +270,41 @@ function colHTML(title, sub, items, kind){
 }
 
 function render(){
-  var contact = LEADS.filter(isNew).sort(function(a,b){return (b.score||0)-(a.score||0);});
+  var nuevos = LEADS.filter(isNew);
+  var contact = nuevos.filter(function(l){return !!waNum(l);}).sort(function(a,b){return (b.score||0)-(a.score||0);});
+  var sinNum = nuevos.filter(function(l){return !waNum(l);}).sort(function(a,b){return (b.score||0)-(a.score||0);});
   var follow = dueFollowups().sort(function(a,b){return (b.days_since_touch||0)-(a.days_since_touch||0);});
   var warm = LEADS.filter(isWarm).sort(function(a,b){return (b.score||0)-(a.score||0);});
-  document.getElementById('app').innerHTML = '<div class="cols">'
-    + colHTML('Para contactar', 'Prospectos nuevos. Empieza aqui.', contact, 'contact')
+  var html = funnelStripHTML()
+    + '<div class="cols">'
+    + colHTML('Para contactar', 'Con WhatsApp, listos para escribir.', contact, 'contact')
     + colHTML('Seguimientos', 'Ya les escribiste, toca insistir.', follow, 'followup')
     + colHTML('Por cerrar', 'Interesados. Cierra o agenda llamada.', warm, 'warm')
     + '</div>';
+  if(sinNum.length) html += noNumSectionHTML(sinNum);
+  document.getElementById('app').innerHTML = html;
+}
+
+function noNumSectionHTML(items){
+  var rows = items.map(function(l){
+    var links = [];
+    if(l.instagram){ var ig = String(l.instagram).replace(/^@+/, ''); links.push('<a class="ci" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">IG</a>'); }
+    if(l.current_site){ var u = /^https?:\/\//i.test(l.current_site) ? l.current_site : 'https://'+l.current_site; links.push('<a class="ci" href="'+esc(u)+'" target="_blank" rel="noopener">Sitio</a>'); }
+    var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
+    return '<div class="nn-row" data-id="'+esc(l.id)+'">'
+      + '<div class="nn-biz">'+esc(l.business_name||l.name||'Sin nombre')+(meta?'<span class="nn-meta"> · '+meta+'</span>':'')+'</div>'
+      + '<div class="nn-act">'+links.join('')+'<button class="act" data-a="addnum">Agregar número</button></div>'
+      + '</div>';
+  }).join('');
+  return '<div class="nn-wrap"><h2>Por conseguir número <span class="count">'+items.length+'</span></h2>'
+    + '<div class="sub">No tienen WhatsApp todavía. Mira su Instagram o Google, consigue el número y agrégalo para poder contactarlos. Tu motor de prospección también los va llenando.</div>'
+    + rows + '</div>';
 }
 
 // ---- actions (event delegation) ----
 document.getElementById('app').addEventListener('click', function(e){
   var btn = e.target.closest('button[data-a]'); if(!btn) return;
-  var card = e.target.closest('.card'); var id = card && card.getAttribute('data-id'); if(!id) return;
+  var card = e.target.closest('[data-id]'); var id = card && card.getAttribute('data-id'); if(!id) return;
   var lead = BY_ID[id]; if(!lead) return;
   var a = btn.getAttribute('data-a');
   if(a==='msg') aiDraft(lead, btn.getAttribute('data-mode'));
@@ -198,6 +312,8 @@ document.getElementById('app').addEventListener('click', function(e){
   else if(a==='drop') setStage(lead, 'disqualified', 'Descartado');
   else if(a==='won') setStage(lead, 'sales_qualified', 'Marcado ganado', 'won');
   else if(a==='call') bookCall(lead);
+  else if(a==='addnum') addNumber(lead);
+  else if(a==='detail') openDetail(lead);
 });
 
 async function setStage(lead, stage, msg, special){
@@ -214,6 +330,15 @@ function bookCall(lead){
   window.open(CAL_LINK, '_blank', 'noopener');
   api('/api/admin/outreach/log-send', {method:'POST', body: JSON.stringify({lead_id:lead.id, channel:'whatsapp', body:'[Agendar llamada] Se abrio el calendario para agendar con el prospecto.'})}).catch(function(){});
   toast('Calendario abierto. Comparte el link con el prospecto.');
+}
+
+async function addNumber(lead){
+  var num = prompt('WhatsApp del prospecto, con indicativo (ej: 573001234567):', '');
+  if(num===null) return;
+  var d = digits(num);
+  if(!d){ toast('Número inválido', true); return; }
+  try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({whatsapp: d})}); toast('Número agregado'); loadAll(); }
+  catch(err){ toast('Error: '+err.message, true); }
 }
 
 async function aiDraft(lead, mode){
