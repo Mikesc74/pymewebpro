@@ -19,6 +19,8 @@ import { handleMockups } from "./mockups.js";
 // Page: /admin/crm  (standalone HTML, not part of the React SPA)
 import { handleAdminCRM, crmPageHTML } from "./crm.js";
 import VENTAS_RECURSOS_HTML from "./ventas-recursos.html";
+import VENTAS_MIDIA_HTML from "./ventas-midia.html";
+import VENTAS_GUIA_HTML from "./ventas-guia.html";
 import { handleSiteAuditAPI, siteAuditReportHTML } from "./site-audit.js";
 // santi.pymewebpro.com · bilingual sales site for Santi to use with prospects.
 import { santiPageHTML } from "./santi.js";
@@ -1755,11 +1757,37 @@ const src_default = {
           },
         }));
       }
-      const ventasHtml = crmPageHTML(env).replace(
-        "<head>",
-        "<head>\n<script>window.PWP_ACCESS_OK=true;</script>"
-      );
-      return withSecurityHeaders(new Response(ventasHtml, {
+      // Santi's instruction manual / how-to.
+      if (path === "/guia" || path === "/guia/") {
+        return withSecurityHeaders(new Response(VENTAS_GUIA_HTML, {
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Security-Policy": ventasCSP,
+          },
+        }));
+      }
+      // Full CRM (advanced) lives at /crm. The default landing is the guided
+      // "Mi dia" screen built for Santi.
+      if (path === "/crm" || path === "/crm/") {
+        const crmHtml = crmPageHTML(env).replace(
+          "<head>",
+          "<head>\n<script>window.PWP_ACCESS_OK=true;</script>"
+        );
+        return withSecurityHeaders(new Response(crmHtml, {
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Security-Policy": ventasCSP,
+          },
+        }));
+      }
+      // Default landing: Santi's guided daily screen.
+      return withSecurityHeaders(new Response(VENTAS_MIDIA_HTML, {
         headers: {
           "Content-Type": "text/html; charset=utf-8",
           "Cache-Control": "no-store",

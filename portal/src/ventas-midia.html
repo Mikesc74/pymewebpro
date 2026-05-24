@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi día | PymeWebPro Ventas</title>
+<style>
+*{box-sizing:border-box}
+:root{--paper:#F2E9D5;--paper2:#E8DFC8;--card:#FBF7EC;--ink:#1A1612;--ink2:#3A2F26;--mute:rgba(26,22,18,.5);--line:rgba(26,22,18,.14);--accent:#D24A1D;--accent2:#A8381A;--green:#166534;--amber:#92400E;--red:#991B1B}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.5;background-image:radial-gradient(rgba(26,22,18,.05) 1px,transparent 1px);background-size:3px 3px}
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:1rem;padding:.7rem 1.4rem;border-bottom:3px double rgba(242,233,213,.2)}
+.topbar .brand{font-weight:800;font-size:1.05rem}
+.topbar .brand em{font-style:italic;font-weight:500;color:var(--accent)}
+.topbar .brand b{font-weight:500;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(242,233,213,.5);margin-left:.5rem}
+.topbar .sp{flex:1}
+.topbar a,.topbar button.link{color:rgba(242,233,213,.75);text-decoration:none;font-size:.8rem;background:none;border:none;cursor:pointer;font-family:inherit}
+.topbar a:hover,.topbar button.link:hover{color:#F2896A}
+.topbar .add{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:.45rem .9rem;font-weight:600;font-size:.82rem;cursor:pointer;font-family:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:1.5rem 1.4rem 5rem}
+.intro{color:var(--ink2);margin:.2rem 0 1.4rem;font-size:.95rem}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.col h2{font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;margin:0 0 .2rem;display:flex;align-items:center;gap:.5rem}
+.col .sub{color:var(--mute);font-size:.8rem;margin:0 0 .9rem}
+.col .count{background:var(--accent);color:#fff;border-radius:999px;font-size:.72rem;padding:.1rem .5rem;font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;margin:0 0 .8rem;box-shadow:0 1px 0 rgba(26,22,18,.03)}
+.card .biz{font-weight:700;font-size:1rem;margin:0 0 .15rem}
+.card .meta{color:var(--mute);font-size:.78rem;margin:0 0 .5rem}
+.card .why{font-size:.85rem;color:var(--ink2);background:rgba(210,74,29,.06);border-left:3px solid var(--accent);padding:.4rem .6rem;border-radius:4px;margin:0 0 .7rem}
+.pill{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.04em;padding:.12rem .45rem;border-radius:999px;margin-left:.4rem;vertical-align:middle}
+.pill.HOT{background:rgba(153,27,27,.14);color:var(--red)}
+.pill.WARM{background:rgba(146,64,14,.14);color:var(--amber)}
+.pill.COOL,.pill.COLD,.pill.DEAD{background:rgba(26,22,18,.08);color:var(--mute)}
+.row{display:flex;flex-wrap:wrap;gap:.4rem}
+button.act{font-family:inherit;font-size:.8rem;font-weight:600;border-radius:7px;padding:.45rem .7rem;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink)}
+button.act:hover{border-color:var(--accent);color:var(--accent2)}
+button.act.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+button.act.primary:hover{background:var(--accent2);color:#fff}
+button.act.ghost{background:transparent;color:var(--mute)}
+.empty{color:var(--mute);font-size:.85rem;text-align:center;padding:1.6rem .5rem;border:1px dashed var(--line);border-radius:10px}
+.loading{text-align:center;color:var(--mute);padding:4rem}
+.modal-bg{position:fixed;inset:0;background:rgba(26,22,18,.45);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
+.modal{background:var(--paper);border-radius:14px;max-width:540px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
+.modal .mh{background:var(--ink);color:var(--paper);padding:.8rem 1.1rem;display:flex;align-items:center;justify-content:space-between}
+.modal .mh h3{margin:0;font-size:1rem}
+.modal .mh button{background:none;border:none;color:rgba(242,233,213,.7);font-size:1.3rem;cursor:pointer;line-height:1}
+.modal .mb{padding:1.1rem}
+.modal textarea{width:100%;min-height:170px;font:inherit;font-size:.92rem;padding:.7rem;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);resize:vertical}
+.modal .note{font-size:.78rem;color:var(--mute);margin:.5rem 0 0}
+.modal .mf{display:flex;gap:.5rem;justify-content:flex-end;padding:.9rem 1.1rem;border-top:1px solid var(--line);flex-wrap:wrap}
+.modal .field{margin:0 0 .7rem}
+.modal label{display:block;font-size:.78rem;color:var(--mute);margin:0 0 .25rem;text-transform:uppercase;letter-spacing:.04em}
+.modal input,.modal select{width:100%;font:inherit;padding:.5rem .6rem;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+#toast{position:fixed;left:50%;bottom:1.5rem;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:.6rem 1.1rem;border-radius:8px;font-size:.85rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:200}
+#toast.show{opacity:1}
+#toast.err{background:var(--red)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Pyme<em>WebPro</em><b>Mi día</b></span>
+  <span class="sp"></span>
+  <button class="add" id="btn-add">+ Agregar prospecto</button>
+  <a href="/guia">Guía</a>
+  <a href="/recursos">Recursos</a>
+  <a href="/crm">CRM completo</a>
+</div>
+<div class="wrap">
+  <p class="intro">Tu día en 3 pasos: <b>contacta</b> prospectos nuevos, haz <b>seguimiento</b> a los que ya escribiste, y <b>cierra</b> a los interesados. La IA escribe cada mensaje por ti, tú solo revisas y envías.</p>
+  <div id="app"><div class="loading">Cargando tu día...</div></div>
+</div>
+<div id="modal-root"></div>
+<div id="toast"></div>
+<script>
+"use strict";
+var CAL_LINK = "https://cal.com/medellinguide/intro"; // TODO: cambiar al Cal de Santi cuando lo tenga
+var DEPOSITO = "$117.000 COP (30%)";
+var LEADS = [], CADENCE = [], BY_ID = {};
+
+function el(html){ var d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstElementChild; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function digits(s){ s=String(s||''); var o=''; for(var i=0;i<s.length;i++){var c=s[i]; if(c>='0'&&c<='9')o+=c;} return o; }
+function waNum(l){ return digits(l.whatsapp||l.phone||''); }
+function toast(m,err){ var t=document.getElementById('toast'); t.textContent=m; t.className=err?'show err':'show'; clearTimeout(toast._t); toast._t=setTimeout(function(){t.className='';},2600); }
+
+async function api(path, opts){
+  opts = opts||{};
+  opts.credentials = 'same-origin';
+  opts.headers = Object.assign({'Content-Type':'application/json'}, opts.headers||{});
+  var r = await fetch(path, opts);
+  var data = {}; try{ data = await r.json(); }catch(e){}
+  if(!r.ok) throw new Error(data.error || ('HTTP '+r.status));
+  return data;
+}
+
+async function loadAll(){
+  try {
+    var grid = await api('/api/admin/crm/grid');
+    LEADS = (grid && grid.leads) || [];
+  } catch(e){
+    document.getElementById('app').innerHTML = '<div class="empty">No se pudo cargar la informacion. Recarga la pagina. ('+esc(e.message)+')</div>';
+    return;
+  }
+  try { var c = await api('/api/admin/outreach/cadence'); CADENCE = (c && c.buckets) || []; } catch(e){ CADENCE = []; }
+  BY_ID = {}; LEADS.forEach(function(l){ BY_ID[l.id]=l; });
+  render();
+}
+
+function isNew(l){ return (!l.lead_stage || l.lead_stage==='new') && !l.last_touched_at && l.lead_stage!=='disqualified' && l.status!=='converted'; }
+function isWarm(l){ return l.lead_stage==='sales_qualified'; }
+function dueFollowups(){
+  var ids = {}, out = [];
+  (CADENCE||[]).forEach(function(b){ (b.leads||[]).forEach(function(x){
+    var full = BY_ID[x.id]; if(!full) return;
+    if(full.lead_stage==='disqualified' || full.status==='converted' || isWarm(full)) return;
+    if(ids[x.id]) return; ids[x.id]=1;
+    out.push(Object.assign({}, full, {bucket:b.bucket, days_since_touch:x.days_since_touch, suggested_action:x.suggested_action}));
+  });});
+  return out;
+}
+
+function heatPill(h){ return h ? '<span class="pill '+esc(h)+'">'+esc(h)+'</span>' : ''; }
+
+function cardHTML(l, kind){
+  var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
+  var why = l.suggested_pitch ? '<div class="why">'+esc(l.suggested_pitch)+'</div>' : '';
+  var extra = '';
+  if(kind==='followup' && l.days_since_touch!=null) meta += (meta?' · ':'')+'hace '+l.days_since_touch+' dias';
+  var btns = '';
+  if(kind==='contact'){
+    btns = '<button class="act primary" data-a="msg" data-mode="first">Generar mensaje</button>'
+         + '<button class="act" data-a="warm">Interesado</button>'
+         + '<button class="act ghost" data-a="drop">Descartar</button>';
+  } else if(kind==='followup'){
+    btns = '<button class="act primary" data-a="msg" data-mode="follow">Generar seguimiento</button>'
+         + '<button class="act" data-a="warm">Interesado</button>'
+         + '<button class="act ghost" data-a="drop">Descartar</button>';
+  } else { // warm / por cerrar
+    btns = '<button class="act primary" data-a="msg" data-mode="close">Generar cierre</button>'
+         + '<button class="act" data-a="call">Agendar llamada</button>'
+         + '<button class="act" data-a="won">Ganado</button>'
+         + '<button class="act ghost" data-a="drop">Descartar</button>';
+  }
+  return '<div class="card" data-id="'+esc(l.id)+'">'
+    + '<div class="biz">'+esc(l.business_name||l.name||'Sin nombre')+heatPill(l.heat)+'</div>'
+    + '<div class="meta">'+(meta||'&nbsp;')+'</div>'
+    + why
+    + '<div class="row">'+btns+'</div>'
+    + '</div>';
+}
+
+function colHTML(title, sub, items, kind){
+  var body = items.length ? items.map(function(l){return cardHTML(l,kind);}).join('') : '<div class="empty">Nada por ahora.</div>';
+  return '<div class="col"><h2>'+esc(title)+' <span class="count">'+items.length+'</span></h2><div class="sub">'+esc(sub)+'</div>'+body+'</div>';
+}
+
+function render(){
+  var contact = LEADS.filter(isNew).sort(function(a,b){return (b.score||0)-(a.score||0);});
+  var follow = dueFollowups().sort(function(a,b){return (b.days_since_touch||0)-(a.days_since_touch||0);});
+  var warm = LEADS.filter(isWarm).sort(function(a,b){return (b.score||0)-(a.score||0);});
+  document.getElementById('app').innerHTML = '<div class="cols">'
+    + colHTML('Para contactar', 'Prospectos nuevos. Empieza aqui.', contact, 'contact')
+    + colHTML('Seguimientos', 'Ya les escribiste, toca insistir.', follow, 'followup')
+    + colHTML('Por cerrar', 'Interesados. Cierra o agenda llamada.', warm, 'warm')
+    + '</div>';
+}
+
+// ---- actions (event delegation) ----
+document.getElementById('app').addEventListener('click', function(e){
+  var btn = e.target.closest('button[data-a]'); if(!btn) return;
+  var card = e.target.closest('.card'); var id = card && card.getAttribute('data-id'); if(!id) return;
+  var lead = BY_ID[id]; if(!lead) return;
+  var a = btn.getAttribute('data-a');
+  if(a==='msg') aiDraft(lead, btn.getAttribute('data-mode'));
+  else if(a==='warm') setStage(lead, 'sales_qualified', 'Marcado como interesado');
+  else if(a==='drop') setStage(lead, 'disqualified', 'Descartado');
+  else if(a==='won') setStage(lead, 'sales_qualified', 'Marcado ganado', 'won');
+  else if(a==='call') bookCall(lead);
+});
+
+async function setStage(lead, stage, msg, special){
+  try{
+    var body = {lead_stage: stage};
+    if(special==='won') body.status = 'converted';
+    await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify(body)});
+    lead.lead_stage = stage; if(special==='won') lead.status='converted';
+    toast(msg); render();
+  }catch(err){ toast('Error: '+err.message, true); }
+}
+
+function bookCall(lead){
+  window.open(CAL_LINK, '_blank', 'noopener');
+  api('/api/admin/outreach/log-send', {method:'POST', body: JSON.stringify({lead_id:lead.id, channel:'whatsapp', body:'[Agendar llamada] Se abrio el calendario para agendar con el prospecto.'})}).catch(function(){});
+  toast('Calendario abierto. Comparte el link con el prospecto.');
+}
+
+async function aiDraft(lead, mode){
+  var instruct = '';
+  if(mode==='follow') instruct = 'Este es un mensaje de SEGUIMIENTO, ya le escribiste antes y no ha respondido. Se breve, amable y sin presion, dale una razon concreta para responder.';
+  if(mode==='close') instruct = 'Este prospecto esta interesado. Escribe un mensaje corto y calido para avanzar al cierre: propone el siguiente paso, empezar con el deposito del 30% ('+DEPOSITO+') o agendar una llamada rapida. Sin presion.';
+  showPanel(lead, '<div class="loading">Generando mensaje con IA...</div>', null);
+  try{
+    var r = await api('/api/admin/outreach/draft', {method:'POST', body: JSON.stringify({lead_id:lead.id, channel:'whatsapp', tone:'santi', instruct:instruct})});
+    var text = (typeof r.draft==='string') ? r.draft : ((r.draft&&r.draft.body)||'');
+    showPanel(lead, null, text);
+  }catch(err){ closePanel(); toast('Error: '+err.message, true); }
+}
+
+function showPanel(lead, loadingHtml, text){
+  closePanel();
+  var wa = waNum(lead);
+  var bodyInner = loadingHtml!=null ? loadingHtml :
+    '<textarea id="ai-text"></textarea><p class="note">Revisa y edita. Al enviar se abre WhatsApp con el mensaje y se registra el toque.</p>';
+  var foot = loadingHtml!=null ? '' :
+    '<button class="act ghost" data-x="copy">Copiar</button><span style="flex:1"></span>'
+    + '<button class="act" data-x="close">Cerrar</button>'
+    + '<button class="act primary" data-x="send"'+(wa?'':' disabled title="Sin numero de WhatsApp"')+'>Abrir WhatsApp y registrar</button>';
+  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>'+esc(lead.business_name||'Mensaje')+'</h3><button data-x="close">&times;</button></div><div class="mb">'+bodyInner+'</div><div class="mf">'+foot+'</div></div></div>');
+  bg.addEventListener('click', function(e){ if(e.target===bg) closePanel(); });
+  document.getElementById('modal-root').appendChild(bg);
+  var ta = bg.querySelector('#ai-text'); if(ta && text!=null) ta.value = text;
+  bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
+  var copyB = bg.querySelector('[data-x="copy"]'); if(copyB) copyB.onclick=function(){ ta.select(); try{navigator.clipboard.writeText(ta.value);toast('Copiado');}catch(e){toast('Selecciona y copia',true);} };
+  var sendB = bg.querySelector('[data-x="send"]');
+  if(sendB && wa){ sendB.onclick = async function(){
+    var msg = (ta.value||'').trim(); if(!msg){toast('Mensaje vacio',true);return;}
+    window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg), '_blank', 'noopener');
+    try{ await api('/api/admin/outreach/log-send', {method:'POST', body: JSON.stringify({lead_id:lead.id, channel:'whatsapp', body:msg})}); toast('Enviado y registrado'); }
+    catch(err){ toast('Abierto, pero no se registro: '+err.message, true); }
+    closePanel(); loadAll();
+  }; }
+}
+function closePanel(){ var m=document.querySelector('#modal-root .modal-bg'); if(m) m.remove(); }
+
+// ---- add prospect ----
+document.getElementById('btn-add').addEventListener('click', function(){
+  closePanel();
+  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Agregar prospecto</h3><button data-x="close">&times;</button></div>'
+    + '<div class="mb">'
+    + '<div class="field"><label>Nombre del negocio</label><input id="np-biz" placeholder="Clinica Sonrisa"></div>'
+    + '<div class="field"><label>Tipo / sector</label><input id="np-cat" placeholder="odontologia, estetica, restaurante..."></div>'
+    + '<div class="field"><label>Ciudad</label><input id="np-city" placeholder="Medellin" value="Medellin"></div>'
+    + '<div class="field"><label>WhatsApp (opcional)</label><input id="np-wa" placeholder="573001234567"></div>'
+    + '<div class="field"><label>Sitio actual (opcional)</label><input id="np-site" placeholder="https://..."></div>'
+    + '<div class="field"><label>Que arreglar / por que (opcional)</label><input id="np-why" placeholder="No tiene sitio, solo Instagram"></div>'
+    + '</div>'
+    + '<div class="mf"><button class="act ghost" data-x="close">Cancelar</button><button class="act primary" data-x="save">Agregar</button></div>'
+    + '</div></div>');
+  bg.addEventListener('click', function(e){ if(e.target===bg) closePanel(); });
+  document.getElementById('modal-root').appendChild(bg);
+  bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
+  bg.querySelector('[data-x="save"]').onclick = async function(){
+    var biz = (bg.querySelector('#np-biz').value||'').trim();
+    if(!biz){ toast('Escribe el nombre del negocio', true); return; }
+    var payload = {
+      business_name: biz,
+      category: (bg.querySelector('#np-cat').value||'').trim() || null,
+      city: (bg.querySelector('#np-city').value||'').trim() || null,
+      whatsapp: digits(bg.querySelector('#np-wa').value) || null,
+      current_site: (bg.querySelector('#np-site').value||'').trim() || null,
+      suggested_pitch: (bg.querySelector('#np-why').value||'').trim() || null,
+      source: 'manual', lead_stage: 'new', status: 'new'
+    };
+    try{
+      await api('/api/admin/crm/leads', {method:'POST', body: JSON.stringify(payload)});
+      toast('Prospecto agregado'); closePanel(); loadAll();
+    }catch(err){ toast('Error: '+err.message, true); }
+  };
+});
+
+loadAll();
+</script>
+</body>
+</html>
