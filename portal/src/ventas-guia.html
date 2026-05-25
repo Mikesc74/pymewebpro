@@ -6,7 +6,7 @@
 <title>Guía de Santi | Cómo vender con Mi día</title>
 <style>
 *{box-sizing:border-box}
-:root{--paper:#F2E9D5;--paper2:#E8DFC8;--card:#FBF7EC;--ink:#1A1612;--ink2:#3A2F26;--mute:rgba(26,22,18,.55);--line:rgba(26,22,18,.14);--accent:#D24A1D;--accent2:#A8381A}
+:root{--paper:#F2E9D5;--paper2:#E8DFC8;--card:#FBF7EC;--ink:#1A1612;--ink2:#3A2F26;--mute:rgba(26,22,18,.55);--line:rgba(26,22,18,.14);--accent:#D24A1D;--accent2:#A8381A;--red:#991B1B;--blue:#1f4e79}
 html,body{margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6;background-image:radial-gradient(rgba(26,22,18,.05) 1px,transparent 1px);background-size:3px 3px}
 .topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:1rem;padding:.7rem 1.4rem;border-bottom:3px double rgba(242,233,213,.2)}
@@ -35,6 +35,9 @@ ol.steps li:last-child{border-bottom:none}
 ol.steps li::before{content:counter(s);position:absolute;left:0;top:.7rem;width:1.7rem;height:1.7rem;background:var(--ink);color:var(--paper);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600}
 ol.steps b{color:var(--accent2)}
 .tag{display:inline-block;background:var(--ink);color:var(--paper);font-size:.78rem;font-weight:600;padding:.15rem .55rem;border-radius:6px}
+.pill{display:inline-block;font-size:.78rem;font-weight:700;padding:.12rem .5rem;border-radius:999px;border:1px solid currentColor}
+.pill.red{color:var(--red)}
+.pill.blue{color:var(--blue)}
 .rules li{margin:.4rem 0}
 .rules b{color:var(--accent2)}
 .callout{border-left:4px solid var(--accent);background:rgba(210,74,29,.06);padding:.8rem 1rem;border-radius:6px;margin:1.2rem 0}
@@ -56,7 +59,7 @@ a.inline{color:var(--accent2)}
 <div class="wrap">
 
 <h1>Tu guía para vender con <em>Mi día</em></h1>
-<p class="lede">Santi, esta es tu herramienta de ventas. Vive en <b>ventas.pymewebpro.com</b>. Cada mañana la abres, ella te dice exactamente a quién contactar, y la inteligencia artificial escribe los mensajes por ti. Tú revisas, ajustas si quieres, y envías por WhatsApp. Nada de planillas complicadas.</p>
+<p class="lede">Santi, esta es tu herramienta de ventas. Vive en <b>ventas.pymewebpro.com</b>. Es un tablero: cada prospecto es una tarjeta que vas moviendo de izquierda a derecha a medida que avanza. La inteligencia artificial escribe los mensajes y arma los ejemplos por ti. Tú revisas, ajustas si quieres, y envías por WhatsApp. Nada de planillas.</p>
 
 <h2><span class="n">1</span> Cómo entrar</h2>
 <p class="section-sub">No hay contraseña ni token que memorizar.</p>
@@ -64,41 +67,74 @@ a.inline{color:var(--accent2)}
 Abre <b>ventas.pymewebpro.com</b> en tu navegador. Inicias sesión con tu cuenta de Google (la misma que usas en el portal). Si ya iniciaste sesión, entras directo. Eso es todo.
 </div>
 
-<h2><span class="n">2</span> Tu día en 3 columnas</h2>
-<p class="section-sub">La pantalla principal tiene tres columnas. Trabaja de izquierda a derecha.</p>
+<h2><span class="n">2</span> El tablero: 6 columnas</h2>
+<p class="section-sub">El prospecto viaja de izquierda a derecha. Para moverlo, <b>arrastras la tarjeta</b> a la columna siguiente (o la abres y usas "Mover a").</p>
 <div class="cols3">
-  <div class="mini"><h3>Para contactar</h3><p>Prospectos nuevos que nadie ha tocado. Aquí empiezas el día.</p></div>
-  <div class="mini"><h3>Seguimientos</h3><p>Negocios a los que ya escribiste y no han respondido. Toca insistir, sin presionar.</p></div>
-  <div class="mini"><h3>Por cerrar</h3><p>Los que mostraron interés. Aquí cierras la venta o agendas una llamada.</p></div>
+  <div class="mini"><h3>Para contactar</h3><p>Prospectos nuevos con WhatsApp. Aquí empiezas.</p></div>
+  <div class="mini"><h3>Seguimiento</h3><p>Ya les escribiste y esperas respuesta.</p></div>
+  <div class="mini"><h3>Mockup</h3><p>Les vas a enviar un ejemplo de su página.</p></div>
+  <div class="mini"><h3>Propuesta</h3><p>Quieren cotización. Aquí armas la propuesta.</p></div>
+  <div class="mini"><h3>Por cerrar</h3><p>Propuesta enviada. Cierras el trato.</p></div>
+  <div class="mini"><h3>Cerrados</h3><p>Ganados y perdidos.</p></div>
+</div>
+<div class="card">Abajo del tablero hay una lista aparte, <b>Por conseguir número</b>: prospectos sin WhatsApp. Mira su Instagram o Google, consigue el número y agrégalo para poder escribirles. Arriba tienes un buscador para encontrar cualquier lead por nombre.</div>
+<div class="callout"><b>Para abrir una tarjeta, haz clic en ella.</b> Ahí ves el contacto, el historial, y los botones para actuar.</div>
+
+<h2><span class="n">3</span> Los colores te dicen qué hacer</h2>
+<p class="section-sub">No tienes que adivinar a quién atender. El color y el ícono te lo dicen.</p>
+<div class="cols3">
+  <div class="mini"><h3><span class="pill red">⚠ Roja</span></h3><p>Te toca actuar ya: hay que insistir, enviar algo que está listo, o el trato se enfrió.</p></div>
+  <div class="mini"><h3><span class="pill blue">Azul</span></h3><p>El prospecto <b>abrió el mockup</b>. Está caliente. Escríbele de una.</p></div>
+  <div class="mini"><h3>Normal</h3><p>Tranquila: ya hiciste lo tuyo, estás esperando respuesta. No hace falta nada todavía.</p></div>
 </div>
 
-<h2><span class="n">3</span> Cómo enviar un mensaje (lo más importante)</h2>
-<p class="section-sub">El mismo flujo sirve para contactar, hacer seguimiento y cerrar.</p>
+<h2><span class="n">4</span> Contactar (el primer mensaje)</h2>
+<p class="section-sub">Empieza por la columna "Para contactar".</p>
 <ol class="steps">
-  <li>En una tarjeta, lee el nombre del negocio y la nota de <b>por qué</b> es buen prospecto (por ejemplo: "su sitio no tiene botón de WhatsApp").</li>
+  <li>Haz clic en una tarjeta. Lee el nombre y la nota de <b>por qué</b> es buen prospecto (ej: "su sitio no tiene botón de WhatsApp").</li>
   <li>Toca <span class="tag">Generar mensaje</span>. La IA escribe un primer WhatsApp en tu estilo paisa, mencionando ese problema concreto.</li>
-  <li>Léelo. Si quieres, edítalo en el cuadro de texto. Es tu mensaje, ajústalo a tu gusto.</li>
-  <li>Toca <span class="tag">Abrir WhatsApp y registrar</span>. Se abre WhatsApp con el mensaje ya escrito, y el sistema anota que contactaste a ese prospecto.</li>
-  <li>En WhatsApp, solo dale enviar. Listo.</li>
+  <li>Léelo, edítalo si quieres. Es tu mensaje.</li>
+  <li>Toca <span class="tag">Abrir WhatsApp y registrar</span>. Se abre WhatsApp con el mensaje listo y el sistema anota el contacto.</li>
+  <li>En WhatsApp solo dale enviar. La tarjeta pasa sola a <b>Seguimiento</b>.</li>
 </ol>
-<div class="callout">La IA escribe el borrador, pero <b>tú envías</b>. Nunca se manda nada solo. Siempre revisas antes.</div>
+<div class="callout">La IA escribe el borrador, pero <b>tú envías</b>. Nunca se manda nada solo.</div>
 
-<h2><span class="n">4</span> Seguimientos</h2>
-<p class="section-sub">Casi nadie compra al primer mensaje. El seguimiento es donde se cierran las ventas.</p>
+<h2><span class="n">5</span> Seguimiento</h2>
+<p class="section-sub">Casi nadie compra al primer mensaje. Aquí se cierran las ventas.</p>
 <div class="card">
-La columna <b>Seguimientos</b> te muestra a quién ya escribiste y cuántos días han pasado. Toca <span class="tag">Generar seguimiento</span> y la IA escribe un mensaje corto y amable para insistir, sin sonar pesado. Mismo flujo: revisas, abres WhatsApp, envías. Si alguien responde con interés, márcalo con <span class="tag">Interesado</span> para que pase a la columna "Por cerrar".
+Cuando un prospecto lleva días sin responder, su tarjeta se pone <span class="pill red">⚠ roja</span> ("Sigue ahora") y sube al tope. Ábrela, toca <span class="tag">Generar mensaje</span> y la IA escribe un seguimiento corto y amable. Cuando alguien responde con interés y quiere ver un ejemplo, <b>arrastra su tarjeta a la columna Mockup</b>.
 </div>
 
-<h2><span class="n">5</span> Cerrar la venta</h2>
-<p class="section-sub">Cuando un prospecto está interesado, vive en la columna "Por cerrar".</p>
+<h2><span class="n">6</span> Mockup (el ejemplo de su página)</h2>
+<p class="section-sub">Es tu mejor anzuelo: le muestras cómo se vería SU página, gratis.</p>
 <ol class="steps">
-  <li><b>Generar cierre:</b> la IA escribe un mensaje para avanzar, proponiendo empezar con el depósito del 30% o agendar una llamada.</li>
-  <li><b>Agendar llamada:</b> abre el calendario para coordinar una llamada con el prospecto cuando prefiere hablar antes de decidir.</li>
-  <li><b>Ganado:</b> cuando paga y arranca, márcalo. Sale de tu lista de pendientes.</li>
-  <li><b>Descartar:</b> si dice que no o se enfría, descártalo. Mejor enfocar tu energía en los que sí.</li>
+  <li><b>Arrastra la tarjeta a Mockup.</b> Se abre una ventanita que te pregunta el <b>idioma del ejemplo</b>: Local (español) o Inglés (si el negocio le vende a extranjeros). Eliges y tocas <span class="tag">Generar mockup</span>.</li>
+  <li>El sistema arma el ejemplo con el nombre del negocio y escribe el mensaje de WhatsApp para acompañarlo. La tarjeta se pone <span class="pill red">⚠ roja</span> "Listo para enviar".</li>
+  <li>Abre la tarjeta, toca <span class="tag">Enviar mockup</span>, revisa el mensaje (ya trae el link del ejemplo) y envíalo por WhatsApp.</li>
+  <li>Cuando el prospecto <b>abre el ejemplo</b>, su tarjeta se pone <span class="pill blue">azul</span>. Eso es oro: está mirando su página justo ahora. Escríbele de una.</li>
+</ol>
+<div class="callout">Para ver tú mismo el ejemplo antes de enviarlo, usa el link "Ver mockup" dentro de la tarjeta (ese no cuenta como visita del prospecto).</div>
+
+<h2><span class="n">7</span> Propuesta</h2>
+<p class="section-sub">Cuando ya vio el ejemplo y le gustó, le armas la propuesta formal.</p>
+<ol class="steps">
+  <li><b>Arrastra la tarjeta a Propuesta.</b> Se abre una ventanita: marca los <b>adicionales</b> que pidió el cliente (Ficha de Google, bilingüe, CRM, catálogo, etc.) y escribe en la nota lo que quiere.</li>
+  <li>Toca <span class="tag">Generar propuesta</span>. El sistema arma una propuesta limpia con los precios en pesos y el pago 30% / 70%.</li>
+  <li>La tarjeta queda "Listo para enviar". Ábrela y usa <span class="tag">Ver propuesta</span> para abrir el documento y compartirlo con el prospecto.</li>
 </ol>
 
-<h2><span class="n">6</span> Qué responder cuando dudan</h2>
+<h2><span class="n">8</span> Cerrar</h2>
+<p class="section-sub">Propuesta enviada: la tarjeta está en "Por cerrar".</p>
+<ol class="steps">
+  <li><b>Generar mensaje:</b> la IA escribe un cierre para avanzar, proponiendo arrancar con el depósito del 30%.</li>
+  <li><b>Agendar llamada:</b> arma un WhatsApp con tu link de calendario para que <b>el prospecto</b> elija la hora. Úsalo cuando prefiere hablar antes de decidir.</li>
+  <li>Si lleva días sin moverse, la tarjeta se pone <span class="pill red">⚠ roja</span> para que insistas.</li>
+  <li><b>Cobrar depósito:</b> cuando dice que sí, toca este botón. Arma un WhatsApp con el link de pago de Wompi por el <b>30%</b> (incluye los adicionales de la propuesta). Apenas el cliente paga, la tarjeta pasa <b>sola a Ganado</b>.</li>
+  <li><b>Ganado:</b> se marca solo cuando entra el depósito. También puedes marcarlo a mano si cerraste por otro medio.</li>
+  <li><b>Perdido:</b> si dice que no o se enfría, <b>arrástralo a Cerrados</b>. Mejor enfocar tu energía en los que sí.</li>
+</ol>
+
+<h2><span class="n">9</span> Qué responder cuando dudan</h2>
 <p class="section-sub">Las objeciones son normales. El truco casi siempre es el mismo: primero dale la razón, luego reencuadra. Nunca discutas.</p>
 <div class="card">
   <p style="margin:0 0 .35rem"><span class="tag">Te dicen</span> "Ya nadie usa páginas web."</p>
@@ -130,21 +166,14 @@ La columna <b>Seguimientos</b> te muestra a quién ya escribiste y cuántos día
 </div>
 <div class="callout">Hay más objeciones resueltas en el guion completo, dentro de <a class="inline" href="/recursos">Recursos</a>. La regla siempre: valida, no discutas, y vuelve al resultado (más clientes).</div>
 
-<h2><span class="n">7</span> Agregar un prospecto a mano</h2>
+<h2><span class="n">10</span> Agregar un prospecto a mano</h2>
 <div class="card">
-¿Conociste a alguien que necesita página? Toca <span class="tag">+ Agregar prospecto</span> arriba a la derecha. Pon el nombre del negocio, el tipo, y si tienes el WhatsApp o el sitio, agrégalos. Aparece de una en "Para contactar".
+¿Conociste a alguien que necesita página? Toca <span class="tag">+ Agregar prospecto</span> arriba. Pon el nombre del negocio, el tipo, y si tienes el WhatsApp o el sitio, agrégalos. Aparece de una al tope de "Para contactar" (o en "Por conseguir número" si no pusiste WhatsApp). El sistema te dice a cuál fue.
 </div>
 
-<h2><span class="n">8</span> Recursos y CRM completo</h2>
-<div class="cols3">
-  <div class="mini"><h3>Recursos</h3><p>El guion de WhatsApp, las reglas de venta, a quién sí y a quién no venderle, y los límites de alcance. Tu manual de bolsillo.</p></div>
-  <div class="mini"><h3>CRM completo</h3><p>La vista avanzada con todos los prospectos, etapas y actividad. Úsala cuando quieras ver el panorama completo.</p></div>
-  <div class="mini"><h3>Mi día</h3><p>El día a día. Si dudas qué hacer, vuelve siempre aquí: te dice el siguiente paso.</p></div>
-</div>
-
-<h2><span class="n">9</span> Reglas de oro</h2>
+<h2><span class="n">11</span> Reglas de oro</h2>
 <ul class="rules">
-  <li>El producto es <b>la página de ventas: $390.000 COP</b>, pago único, IVA incluido. Add-ons aparte, según el menú.</li>
+  <li>El producto es <b>la página de ventas: $390.000 COP</b>, pago único, IVA incluido. Adicionales aparte, según el menú.</li>
   <li>Pago <b>30% para arrancar ($117.000)</b> y <b>70% al lanzar</b>. Siempre por Wompi, siempre en pesos.</li>
   <li><b>Solo COP.</b> Nunca dólares ni otra moneda.</li>
   <li>Entrega en <b>~48 horas</b> desde que llega el contenido y el depósito.</li>
@@ -154,14 +183,14 @@ La columna <b>Seguimientos</b> te muestra a quién ya escribiste y cuántos día
 </ul>
 
 <div class="routine">
-<h2><span class="n">10</span> Tu rutina diaria sugerida</h2>
+<h2><span class="n">12</span> Tu rutina diaria sugerida</h2>
 <p style="margin:.3rem 0 0">Cada mañana, en orden:</p>
 <ol class="steps" style="margin-top:.6rem">
   <li>Abre <b>Mi día</b> con un café.</li>
-  <li>Vacía la columna <b>Seguimientos</b> primero (son los más cerca de comprar).</li>
-  <li>Atiende <b>Por cerrar</b>: cierra o agenda llamadas con los interesados.</li>
+  <li>Primero las tarjetas <span class="pill blue">azules</span>: vieron su mockup, están calientes. Escríbeles ya.</li>
+  <li>Luego las <span class="pill red">⚠ rojas</span>: seguimientos que tocan, mockups listos para enviar, cierres pendientes.</li>
   <li>Contacta <b>5 a 10 prospectos nuevos</b> de "Para contactar".</li>
-  <li>Si alguien respondió por WhatsApp, contéstale y muévelo a "Interesado" o "Descartar".</li>
+  <li>Si alguien respondió por WhatsApp, contéstale y arrastra su tarjeta a la columna que toca (Mockup, Propuesta, o Cerrados).</li>
 </ol>
 <p style="margin:.6rem 0 0">15 a 30 minutos al día, constante, vale más que una hora una vez por semana.</p>
 </div>

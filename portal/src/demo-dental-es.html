@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>{{NEGOCIO}} · Dental care in {{CIUDAD}} (ejemplo)</title>
-<meta property="og:title" content="{{NEGOCIO}} · Implants & Smile Design in {{CIUDAD}}">
-<meta property="og:description" content="Book in English. Modern dental care in {{CIUDAD}}, Colombia. (Ejemplo de PymeWebPro)">
+<title>{{NEGOCIO}} · Odontología en {{CIUDAD}} (ejemplo)</title>
+<meta property="og:title" content="{{NEGOCIO}} · Odontología en {{CIUDAD}}">
+<meta property="og:description" content="Ejemplo de página hecha por PymeWebPro para {{NEGOCIO}}.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,16 +18,13 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--
 img{max-width:100%}
 .serif{font-family:'Fraunces',Georgia,serif}
 .wrap{max-width:1080px;margin:0 auto;padding:0 1.4rem}
-/* PymeWebPro preview banner */
 .pwp-bar{background:#0E2433;color:#EAF4F4;font-size:.82rem;padding:.5rem 1.4rem;display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;text-align:center}
 .pwp-bar b{color:#fff}
 .pwp-bar a{color:#7FE3E3;text-decoration:none;font-weight:600;white-space:nowrap}
-/* nav */
 nav{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0}
 nav .logo{font-size:1.25rem;font-weight:700;color:var(--ink)}
 nav .logo span{color:var(--teal)}
 nav .cta{background:var(--teal);color:#fff;text-decoration:none;padding:.55rem 1.1rem;border-radius:8px;font-weight:600;font-size:.9rem}
-/* hero */
 .hero{background:linear-gradient(160deg,#EAF4F4 0%,#FBFCFD 60%);padding:3rem 0 3.5rem}
 .hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
 @media(max-width:820px){.hero .grid{grid-template-columns:1fr}}
@@ -45,10 +42,8 @@ nav .cta{background:var(--teal);color:#fff;text-decoration:none;padding:.55rem 1
 .hero-card .chip{flex:1;background:var(--soft);border-radius:10px;padding:.7rem;text-align:center}
 .hero-card .chip b{display:block;font-size:1.2rem;color:var(--teal-d)}
 .hero-card .chip span{font-size:.72rem;color:var(--mute)}
-/* trust */
 .trust{background:#0E2433;color:#cfe0e8;text-align:center;padding:.9rem 1.4rem;font-size:.9rem}
 .trust b{color:#fff}
-/* sections */
 section.pad{padding:3.2rem 0}
 h2.sec{font-size:clamp(1.6rem,3.2vw,2.2rem);letter-spacing:-.01em;margin-bottom:.4rem}
 .sub{color:var(--mute);margin-bottom:1.8rem;max-width:52ch}
@@ -78,7 +73,6 @@ h2.sec{font-size:clamp(1.6rem,3.2vw,2.2rem);letter-spacing:-.01em;margin-bottom:
 .cta-band h2{font-size:1.8rem;margin-bottom:.6rem}
 .cta-band p{opacity:.92;margin-bottom:1.3rem}
 .cta-band .btn.primary{background:#fff;color:var(--teal-d)}
-/* how we work (PymeWebPro) */
 .funnel-explain{background:#fff}
 .steps{display:flex;align-items:stretch;gap:.8rem;flex-wrap:wrap}
 .steps .step{flex:1;min-width:160px;background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:1.2rem}
@@ -102,111 +96,111 @@ footer{padding:1.6rem 0;text-align:center;color:var(--mute);font-size:.82rem}
 <body>
 
 <div class="pwp-bar">
-  <span>Vista previa para <b>{{NEGOCIO}}</b>, hecha por PymeWebPro · Preview, not your live site</span>
+  <span>Vista previa para <b>{{NEGOCIO}}</b>, hecha por PymeWebPro · Ejemplo, no es tu sitio real</span>
   <a href="https://wa.me/573014047722" target="_blank" rel="noopener">Hablar con PymeWebPro &rsaquo;</a>
 </div>
 
 <div class="wrap">
   <nav>
     <div class="logo">{{NEGOCIO}}<span>.</span></div>
-    <a class="cta" href="#book">Book appointment</a>
+    <a class="cta" href="#cita">Agenda tu cita</a>
   </nav>
 </div>
 
 <header class="hero">
   <div class="wrap grid">
     <div>
-      <div class="eyebrow">Dental care in {{CIUDAD}}, Colombia</div>
-      <h1 class="serif">Your new smile in {{CIUDAD}}, handled in English.</h1>
-      <p class="lede">{{NEGOCIO}} treats international patients every week: implants, veneers and full smile design, with a team that answers in English and a plan before you book your flight.</p>
+      <div class="eyebrow">Odontología en {{CIUDAD}}, Colombia</div>
+      <h1 class="serif">Tu nueva sonrisa, cuidada en {{CIUDAD}}.</h1>
+      <p class="lede">{{NEGOCIO}} atiende implantes, carillas y diseño de sonrisa con un equipo cercano y un plan claro antes de empezar. Agenda tu cita por WhatsApp en un toque.</p>
       <div class="btns">
-        <a class="btn primary" href="#book">Message us on WhatsApp</a>
-        <a class="btn ghost" href="#book">Get a free quote</a>
+        <a class="btn primary" href="#cita">Escríbenos por WhatsApp</a>
+        <a class="btn ghost" href="#cita">Pide tu cotización</a>
       </div>
     </div>
     <div class="hero-card">
       <div class="hero-photo"><span class="tag">{{NEGOCIO}}, {{CIUDAD}}</span></div>
       <div class="row">
-        <div class="chip"><b>4.9</b><span>Patient rating</span></div>
-        <div class="chip"><b>EN</b><span>We speak English</span></div>
-        <div class="chip"><b>48h</b><span>Quote turnaround</span></div>
+        <div class="chip"><b>4.9</b><span>Calificación</span></div>
+        <div class="chip"><b>WA</b><span>Citas directas</span></div>
+        <div class="chip"><b>Plan</b><span>Precio por escrito</span></div>
       </div>
     </div>
   </div>
 </header>
 
-<div class="trust">Trusted by patients from the <b>US, Canada and Europe</b> · English-speaking team · Transparent pricing in writing</div>
+<div class="trust">Pacientes en <b>{{CIUDAD}}</b> confían en nosotros · Precios claros por escrito · Atención cercana</div>
 
 <section class="pad">
   <div class="wrap">
-    <h2 class="sec serif">What we do best</h2>
-    <p class="sub">The treatments international patients come to {{CIUDAD}} for, done right the first time.</p>
+    <h2 class="sec serif">Lo que hacemos mejor</h2>
+    <p class="sub">Los tratamientos por los que la gente de {{CIUDAD}} nos elige, hechos bien desde la primera vez.</p>
     <div class="cards">
-      <div class="svc"><div class="ico">01</div><h3>Dental implants</h3><p>Single implants to full-arch. Clear plan, clear cost, before you travel.</p></div>
-      <div class="svc"><div class="ico">02</div><h3>Veneers & smile design</h3><p>Natural-looking veneers designed around your face, not a template.</p></div>
-      <div class="svc"><div class="ico">03</div><h3>Whitening & cleaning</h3><p>A bright, healthy smile to finish your visit, in a single appointment.</p></div>
+      <div class="svc"><div class="ico">01</div><h3>Implantes dentales</h3><p>Desde un implante hasta arcada completa. Plan claro y costo claro antes de empezar.</p></div>
+      <div class="svc"><div class="ico">02</div><h3>Carillas y diseño de sonrisa</h3><p>Carillas de aspecto natural, diseñadas para tu rostro, no de plantilla.</p></div>
+      <div class="svc"><div class="ico">03</div><h3>Blanqueamiento y limpieza</h3><p>Una sonrisa sana y brillante, en una sola cita.</p></div>
     </div>
   </div>
 </section>
 
 <section class="why">
   <div class="wrap">
-    <h2 class="sec serif">Why patients fly to {{NEGOCIO}}</h2>
-    <p class="sub">Built for someone deciding from another country.</p>
+    <h2 class="sec serif">Por qué elegir a {{NEGOCIO}}</h2>
+    <p class="sub">Pensado para alguien que decide desde el celular.</p>
     <div class="cards">
-      <div class="item"><div class="n">1</div><div><h3>Everything in English</h3><p>From your first message to your final appointment, no language barrier.</p></div></div>
-      <div class="item"><div class="n">2</div><div><h3>A plan before you fly</h3><p>Photos, a treatment plan and a written quote so there are no surprises.</p></div></div>
-      <div class="item"><div class="n">3</div><div><h3>Care around your trip</h3><p>Appointments scheduled around your stay in {{CIUDAD}}, with help when you need it.</p></div></div>
-      <div class="item"><div class="n">4</div><div><h3>Honest pricing</h3><p>Excellent work at {{CIUDAD}} prices, written down, no moving numbers.</p></div></div>
+      <div class="item"><div class="n">1</div><div><h3>Cita fácil por WhatsApp</h3><p>Escribes y agendas en minutos, sin formularios largos ni llamadas eternas.</p></div></div>
+      <div class="item"><div class="n">2</div><div><h3>Plan y precio por escrito</h3><p>Fotos, plan de tratamiento y cotización clara, sin sorpresas.</p></div></div>
+      <div class="item"><div class="n">3</div><div><h3>Atención cercana</h3><p>Un equipo que te explica todo con calma y te acompaña en el proceso.</p></div></div>
+      <div class="item"><div class="n">4</div><div><h3>Precios claros</h3><p>Buen trabajo a precios de {{CIUDAD}}, por escrito, sin números que cambian.</p></div></div>
     </div>
   </div>
 </section>
 
 <section class="pad">
   <div class="wrap">
-    <h2 class="sec serif">Before and after</h2>
-    <p class="sub">Real results, real smiles. (Your own photos go here on the live site.)</p>
+    <h2 class="sec serif">Antes y después</h2>
+    <p class="sub">Resultados reales, sonrisas reales. (Aquí van tus propias fotos en el sitio final.)</p>
     <div class="ba">
-      <div class="shot ba-before"><span>Before</span></div>
-      <div class="shot ba-after"><span>After</span></div>
+      <div class="shot ba-before"><span>Antes</span></div>
+      <div class="shot ba-after"><span>Después</span></div>
     </div>
   </div>
 </section>
 
 <section class="pad" style="padding-top:0">
   <div class="wrap">
-    <h2 class="sec serif">What patients say</h2>
-    <p class="sub">A few words from people who made the trip.</p>
+    <h2 class="sec serif">Lo que dicen los pacientes</h2>
+    <p class="sub">Unas palabras de quienes ya confiaron en nosotros.</p>
     <div class="quotes">
-      <div class="q"><p>"I was nervous about getting dental work abroad. They walked me through everything in English and the result is better than I imagined."</p><div class="who">Jennifer R. <span>· Texas, USA</span></div></div>
-      <div class="q"><p>"Got a full quote and plan before I booked my flight. No surprises, and the team was wonderful."</p><div class="who">Mark D. <span>· Toronto, Canada</span></div></div>
-      <div class="q"><p>"Implants done in two visits while I explored {{CIUDAD}}. Painless and professional."</p><div class="who">Sophie L. <span>· London, UK</span></div></div>
+      <div class="q"><p>"Me explicaron todo con calma y el resultado quedó mejor de lo que esperaba."</p><div class="who">Paciente de ejemplo <span>· {{CIUDAD}}</span></div></div>
+      <div class="q"><p>"Agendé por WhatsApp en un momento y me dieron el plan por escrito. Sin sorpresas."</p><div class="who">Paciente de ejemplo <span>· {{CIUDAD}}</span></div></div>
+      <div class="q"><p>"Atención cercana y profesional. Volvería sin pensarlo."</p><div class="who">Paciente de ejemplo <span>· {{CIUDAD}}</span></div></div>
     </div>
   </div>
 </section>
 
-<section class="pad" id="book" style="padding-top:0">
+<section class="pad" id="cita" style="padding-top:0">
   <div class="wrap">
     <div class="cta-band">
-      <h2 class="serif">Ready to plan your visit to {{NEGOCIO}}?</h2>
-      <p>Send us a message in English. We will reply with the next steps and a quote.</p>
-      <a class="btn primary" href="#book">Message us on WhatsApp</a>
+      <h2 class="serif">¿Listo para tu cita en {{NEGOCIO}}?</h2>
+      <p>Escríbenos por WhatsApp y te respondemos con los siguientes pasos y tu cotización.</p>
+      <a class="btn primary" href="#cita">Escríbenos por WhatsApp</a>
     </div>
   </div>
 </section>
 
 <section class="pad funnel-explain">
   <div class="wrap">
-    <h2 class="sec serif">Not just a page, a sales funnel</h2>
-    <p class="sub">Every section guides the visitor toward one action: messaging you. Less distraction, more patients.</p>
+    <h2 class="sec serif">No es solo una página, es un embudo de ventas</h2>
+    <p class="sub">Cada sección lleva al visitante a una sola acción: escribirte. Menos distracción, más pacientes.</p>
     <div class="steps">
-      <div class="step"><div class="sn">1</div><h3>They arrive</h3><p>They find you on Google or an ad and open the page on their phone.</p></div>
+      <div class="step"><div class="sn">1</div><h3>Llega</h3><p>Te encuentra en Google o por un anuncio y entra desde el celular.</p></div>
       <div class="arrow">&rsaquo;</div>
-      <div class="step"><div class="sn">2</div><h3>They get interested</h3><p>They see your treatments, your photos and why to trust you, with no clutter.</p></div>
+      <div class="step"><div class="sn">2</div><h3>Se interesa</h3><p>Ve tus tratamientos, tus fotos y por qué confiar, sin distracciones.</p></div>
       <div class="arrow">&rsaquo;</div>
-      <div class="step"><div class="sn">3</div><h3>They message you</h3><p>A clear WhatsApp button turns the visit into a conversation.</p></div>
+      <div class="step"><div class="sn">3</div><h3>Te escribe</h3><p>Un botón de WhatsApp claro convierte la visita en una cita.</p></div>
     </div>
-    <div class="imgband"><span>Your real photos go here</span></div>
+    <div class="imgband"><span>Tus fotos reales van aquí</span></div>
   </div>
 </section>
 

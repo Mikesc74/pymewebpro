@@ -59,7 +59,7 @@ export async function handleProposalRoutes(request, env, helpers) {
 // Generation
 // ----------------------------------------------------------------------------
 
-async function generateProposal(env, dealId, json) {
+export async function generateProposal(env, dealId, json) {
   if (!env.ANTHROPIC_API_KEY) {
     return json({ error: "Missing ANTHROPIC_API_KEY", detail: "wrangler secret put ANTHROPIC_API_KEY" }, 500);
   }
@@ -130,13 +130,18 @@ function buildBrief(deal, lead, client) {
     x_url:        (lead && lead.x_url)        || "",
     tiktok_url:   (lead && lead.tiktok_url)   || "",
   };
+  let addons = [];
+  try { addons = deal && deal.addons ? JSON.parse(deal.addons) : []; } catch (e) { addons = []; }
+  if (!Array.isArray(addons)) addons = [];
+  const reqNotes = (deal && deal.notes) || "";
   return {
     market, tier, language,
     businessName, contactName, contactEmail, phone, whatsapp,
     category, city, address, currentSite,
     suggestedPitch, notes, message,
     socials,
-    pricing: pickPricing(market, tier),
+    addons, reqNotes,
+    pricing: computePricing(addons, language === "es"),
   };
 }
 
@@ -165,6 +170,50 @@ function pickTier(deal, lead) {
 function pickPricing(market, tier) {
   void market; void tier;
   return { label: "La página de ventas", currency: "COP", price: "$390.000 COP", deposit: "$117.000 COP", balance: "$273.000 COP", hosting: "incluye 1 mes de hosting + soporte", maintenance: "ronda de revisión adicional $90.000 COP", hourly: "ronda de revisión adicional $90.000 COP" };
+}
+
+// Add-on menu (COP). Keys match what the Mi día "Propuesta" form sends.
+const BASE_PRICE = 390000;
+const ADDON_CATALOG = {
+  gbp:         { es: "Ficha de Google (GBP)",   en: "Google Business Profile",  price: 90000 },
+  analytics:   { es: "Analítica avanzada",       en: "Advanced analytics",       price: 120000 },
+  crm:         { es: "CRM",                       en: "CRM",                      price: 190000 },
+  bilingual:   { es: "Versión bilingüe",         en: "Bilingual version",        price: 75000 },
+  copywriting: { es: "Copywriting profesional",  en: "Professional copywriting", price: 150000 },
+  catalog:     { es: "Catálogo simple",          en: "Simple catalog",           price: 180000 },
+  pdf:         { es: "Botón de catálogo PDF",    en: "PDF catalog button",       price: 50000 },
+  extra_page:  { es: "Página adicional",         en: "Extra page",               price: 50000 },
+  chatbot:     { es: "Chatbot",                   en: "Chatbot",                  price: 190000 },
+};
+// Format an integer as Colombian pesos: 390000 -> "$390.000 COP".
+function fmtCOP(n) {
+  n = Math.round(Number(n) || 0);
+  const s = String(n);
+  let out = "", c = 0;
+  for (let i = s.length - 1; i >= 0; i--) { out = s[i] + out; if (++c % 3 === 0 && i > 0) out = "." + out; }
+  return "$" + out + " COP";
+}
+// Base page + selected add-ons -> priced line items, total, 30/70 split.
+function computePricing(addons, isEs) {
+  const lines = [{ label: isEs ? "La página de ventas" : "The sales page", price: BASE_PRICE }];
+  let total = BASE_PRICE;
+  (addons || []).forEach((k) => {
+    const a = ADDON_CATALOG[k];
+    if (a) { lines.push({ label: isEs ? a.es : a.en, price: a.price }); total += a.price; }
+  });
+  const deposit = Math.round(total * 0.30);
+  return { lines, total, deposit, balance: total - deposit, chatbotMonthly: (addons || []).indexOf("chatbot") >= 0 ? 80000 : 0 };
+}
+
+// Total COP for a deal (base + stored add-ons). Used by the deposit/balance
+// link generator so the 30/70 split matches what the proposal actually quoted.
+export function dealTotalCop(deal) {
+  const base = (deal && deal.plan === "pro") ? 690000 : BASE_PRICE;
+  let addons = [];
+  try { addons = deal && deal.addons ? JSON.parse(deal.addons) : []; } catch (e) { addons = []; }
+  let total = base;
+  (Array.isArray(addons) ? addons : []).forEach((k) => { const a = ADDON_CATALOG[k]; if (a) total += a.price; });
+  return total;
 }
 
 // ----------------------------------------------------------------------------
@@ -537,16 +586,20 @@ function buildProposalHtml(deal, lead, client, brief) {
   <div class="section">
     <h2>${escapeForMockup(T.priceHeading)}</h2>
     <div class="price-block">
-      <div class="tier">${escapeForMockup(p.label)}</div>
-      <div class="total">${escapeForMockup(p.price)}</div>
-      <div class="sub">${escapeForMockup(p.hosting)}</div>
+      <ul class="feat" style="margin:0 0 .6rem">
+        ${p.lines.map((l) => "<li>" + escapeForMockup(l.label) + " <b style='float:right'>" + escapeForMockup(fmtCOP(l.price)) + "</b></li>").join("\n        ")}
+      </ul>
+      <div class="total">${escapeForMockup(fmtCOP(p.total))}</div>
+      <div class="sub">${escapeForMockup(T.totalSub)}</div>
     </div>
     <div class="grid-2">
-      <div class="cell"><b>${escapeForMockup(T.depositLabel)}</b>${escapeForMockup(p.deposit)} · ${escapeForMockup(T.depositSub)}</div>
-      <div class="cell"><b>${escapeForMockup(T.balanceLabel)}</b>${escapeForMockup(p.balance)} · ${escapeForMockup(T.balanceSub)}</div>
+      <div class="cell"><b>${escapeForMockup(T.depositLabel)}</b>${escapeForMockup(fmtCOP(p.deposit))} · ${escapeForMockup(T.depositSub)}</div>
+      <div class="cell"><b>${escapeForMockup(T.balanceLabel)}</b>${escapeForMockup(fmtCOP(p.balance))} · ${escapeForMockup(T.balanceSub)}</div>
       <div class="cell"><b>${escapeForMockup(T.deliveryLabel)}</b>${escapeForMockup(T.deliveryValue.replace("{date}", fmtDelivery))}</div>
       <div class="cell"><b>${escapeForMockup(T.revisionsLabel)}</b>${escapeForMockup(T.revisionsValue)}</div>
     </div>
+    ${p.chatbotMonthly ? '<p class="terms">' + escapeForMockup(T.chatbotNote.replace("{m}", fmtCOP(p.chatbotMonthly))) + '</p>' : ''}
+    ${brief.reqNotes ? '<p class="terms"><b>' + escapeForMockup(T.reqLabel) + ':</b> ' + escapeForMockup(brief.reqNotes) + '</p>' : ''}
   </div>
 
   <div class="section">
@@ -612,6 +665,9 @@ const PROPOSAL_TEXT_ES = {
   openInTab: "Abrir en una nueva pestaña",
   priceHeading: "Inversión",
   planLabel: "Producto",
+  totalSub: "Total, IVA incluido. Incluye 1 mes de hosting y soporte.",
+  chatbotNote: "Chatbot: incluye {m}/mes de operación.",
+  reqLabel: "Lo que pediste",
   depositLabel: "Depósito inicial (30%)",
   depositSub: "para arrancar diseño y desarrollo",
   balanceLabel: "Saldo al lanzar (70%)",
@@ -654,6 +710,9 @@ const PROPOSAL_TEXT_EN = {
   openInTab: "Open in a new tab",
   priceHeading: "Investment",
   planLabel: "Product",
+  totalSub: "Total, IVA included. Includes 1 month of hosting and support.",
+  chatbotNote: "Chatbot: includes {m}/month of operation.",
+  reqLabel: "What you asked for",
   depositLabel: "Deposit to start (30%)",
   depositSub: "kicks off design + development",
   balanceLabel: "Balance at launch (70%)",

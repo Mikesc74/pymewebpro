@@ -22,7 +22,12 @@ import VENTAS_RECURSOS_HTML from "./ventas-recursos.html";
 import VENTAS_MIDIA_HTML from "./ventas-midia.html";
 import VENTAS_GUIA_HTML from "./ventas-guia.html";
 import DEMO_DENTAL_HTML from "./demo-dental.html";
+import DEMO_DENTAL_ES_HTML from "./demo-dental-es.html";
+import DEMO_GENERIC_HTML from "./demo-generic.html";
+import DEMO_GENERIC_EN_HTML from "./demo-generic-en.html";
 import { handleSiteAuditAPI, siteAuditReportHTML } from "./site-audit.js";
+import { handleCockpitRoutes } from "./cockpit.js";
+import { serveDemoImg } from "./demo-img.js";
 // santi.pymewebpro.com · bilingual sales site for Santi to use with prospects.
 import { santiPageHTML } from "./santi.js";
 // Lead enrichment · Claude Haiku + web search to fill missing phone/email/socials.
@@ -169,17 +174,23 @@ function isAdmin(request, env) {
 
 // ─── Per-lead demo mockups (templated, personalized, open-tracked) ──────────
 function demoEsc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; }); }
-const DEMO_TEMPLATES = { dental: DEMO_DENTAL_HTML };
-function pickDemoTemplate(cat){
-  cat = (cat || "").toString().toLowerCase();
-  if (/odonto|dental|dentist/.test(cat)) return DEMO_TEMPLATES.dental;
-  return null;
+// Templates by vertical + language. Default is Spanish/local; English variants
+// are for businesses that target foreign customers (lead.language = 'en').
+const DEMO_TEMPLATES = {
+  dental_en: DEMO_DENTAL_HTML, dental_es: DEMO_DENTAL_ES_HTML,
+  generic_en: DEMO_GENERIC_EN_HTML, generic_es: DEMO_GENERIC_HTML,
+};
+function pickDemoTemplate(cat, lang){
+  const en = (lang || "").toString().toLowerCase().indexOf("en") === 0;
+  const dental = /odonto|dental|dentist/.test((cat || "").toString().toLowerCase());
+  if (dental) return en ? DEMO_TEMPLATES.dental_en : DEMO_TEMPLATES.dental_es;
+  return en ? DEMO_TEMPLATES.generic_en : DEMO_TEMPLATES.generic_es;
 }
 async function serveDemo(env, leadId){
   let lead = null;
-  try { lead = await env.DB.prepare("SELECT id, business_name, name, city, category FROM leads WHERE id = ?").bind(leadId).first(); } catch (e) {}
+  try { lead = await env.DB.prepare("SELECT id, business_name, name, city, category, demo_lang FROM leads WHERE id = ?").bind(leadId).first(); } catch (e) {}
   if (!lead) return new Response("Ejemplo no encontrado.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
-  const tpl = pickDemoTemplate(lead.category);
+  const tpl = pickDemoTemplate(lead.category, lead.demo_lang);
   if (!tpl) return new Response("Plantilla en construccion para esta categoria.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
   const negocio = demoEsc(lead.business_name || lead.name || "Tu negocio");
   const ciudad = demoEsc(lead.city || "Medellin");
@@ -191,7 +202,9 @@ async function logDemoView(env, leadId){
   try {
     const lead = await env.DB.prepare("SELECT id FROM leads WHERE id = ?").bind(leadId).first();
     if (!lead) return cors(json({ ok: false }, 404));
-    const day = new Date().toISOString().slice(0, 10);
+    // Dedup per Medellin calendar day (UTC-5), not UTC, so a view at 8pm local
+    // (1am UTC next day) doesn't count as a separate day from one at 6pm local.
+    const day = new Date(Date.now() - 5 * 3600 * 1000).toISOString().slice(0, 10);
     const key = "mockview:" + leadId + ":" + day;
     const seen = await env.TOKENS.get(key);
     if (!seen) {
@@ -202,6 +215,7 @@ async function logDemoView(env, leadId){
     return cors(json({ ok: true }));
   } catch (e) { return cors(json({ ok: false }, 200)); }
 }
+
 async function sendEmail(env, { to, subject, html }) {
   if (!env.RESEND_API_KEY) {
     console.warn("RESEND_API_KEY not set; skipping email send");
@@ -1841,6 +1855,8 @@ const src_default = {
       if (__demo && request.method === "GET") return await serveDemo(env, __demo[1]);
       const __demoSeen = path.match(/^\/api\/demo\/([a-zA-Z0-9-]+)\/seen$/);
       if (__demoSeen && request.method === "POST") return await logDemoView(env, __demoSeen[1]);
+      const __demoImg = path.match(/^\/demo-img\/([a-z0-9-]+)$/);
+      if (__demoImg && request.method === "GET") return await serveDemoImg(env, __demoImg[1]);
       // ─── Public Chief of Staff loader script ─────────────────────────
       // Served at /cos-widget.js (and the master-portal-prefixed equivalent).
       // No auth needed for the script itself; the chat endpoint it calls
@@ -1897,6 +1913,12 @@ const src_default = {
       {
         const __propResp = await handleProposalRoutes(request, env, { json, isAdmin, escapeHtml });
         if (__propResp) return cors(__propResp);
+      }
+      // Cockpit auto-generation routes (Mi día kanban). Must run BEFORE the
+      // /api/admin/* catch-all.
+      {
+        const __cockpitResp = await handleCockpitRoutes(request, env, { json, isAdmin });
+        if (__cockpitResp) return cors(__cockpitResp);
       }
       // ─── mockup engine routes (must run BEFORE the /api/admin/* and /api/* catch-alls) ───
       const __mockupResp = await handleMockups(request, env, ctx, { json, isAdmin, randomToken, uuid, sha256, escapeHtml });

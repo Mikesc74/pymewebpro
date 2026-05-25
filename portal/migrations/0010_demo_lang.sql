@@ -1,0 +1,12 @@
+-- 0010_demo_lang.sql
+-- Per-lead mockup language/variant for the Mi día kanban. This is SEPARATE from
+-- leads.language (which controls how Santi communicates with the owner, normally
+-- Spanish). demo_lang only controls the mockup teaser page:
+--   'es' (default / null) -> local Spanish template
+--   'en'                  -> English / foreigner-focused template
+-- A Colombian owner targeting foreign customers is communicated with in Spanish
+-- but shown an English site preview.
+--
+-- Not idempotent: ALTER TABLE ADD COLUMN errors if the column already exists,
+-- which is fine on re-run.
+ALTER TABLE leads ADD COLUMN demo_lang TEXT;

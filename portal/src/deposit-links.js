@@ -22,6 +22,8 @@
 // The webhook branches in src/index.js (handleWompiWebhook) call back into
 // processDepositPayment / processBalancePayment exported here.
 
+import { dealTotalCop } from "./proposal-generator.js";
+
 const PRICE_COP = { esencial: 390000, pro: 690000 };
 
 export async function handleDepositLinks(request, env, ctx, helpers) {
@@ -49,15 +51,16 @@ export async function handleDepositLinks(request, env, ctx, helpers) {
 async function makeLink(env, json, uuid, dealId, kind) {
   try {
     const deal = await env.DB.prepare(
-      "SELECT id, lead_id, client_id, plan, title FROM deals WHERE id = ?"
+      "SELECT id, lead_id, client_id, plan, title, addons FROM deals WHERE id = ?"
     ).bind(dealId).first();
     if (!deal) return json({ ok: false, error: "Deal not found" }, 404);
 
     const plan = deal.plan === "pro" ? "pro" : "esencial";
-    const planPriceCop = PRICE_COP[plan];
+    // Total = base + selected add-ons (matches the proposal), not just the base.
+    const totalCop = dealTotalCop(deal);
     const portion = kind === "balance" ? 0.70 : 0.30;
     // amount in cents: round COP portion first, then * 100.
-    const amountCop = Math.round(planPriceCop * portion);
+    const amountCop = Math.round(totalCop * portion);
     const amountCents = amountCop * 100;
 
     const prefix = kind === "balance" ? "pwp-bal-" : "pwp-dep-";
@@ -174,10 +177,11 @@ export async function processDepositPayment(env, payment) {
     now, now, now,
   ).run();
 
-  // Bump the linked lead to sales_qualified so it drops out of the outreach queue.
+  // Deposit paid = the sale is won. Flip the lead to sales_qualified + converted
+  // so the Mi día cockpit auto-moves the card into Cerrados / Ganado.
   if (deal.lead_id) {
     await env.DB.prepare(
-      "UPDATE leads SET lead_stage = 'sales_qualified', " +
+      "UPDATE leads SET lead_stage = 'sales_qualified', status = 'converted', " +
       "       last_touched_at = ?, last_touched_kind = 'payment', " +
       "       touches_count = COALESCE(touches_count, 0) + 1, updated_at = ? " +
       " WHERE id = ?"

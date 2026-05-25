@@ -32,6 +32,8 @@ const EDITABLE_COLUMNS = {
     "followers", "on_today_list",
     // Social URL columns (added by 0005_socials_and_proposals.sql).
     "facebook_url", "x_url", "tiktok_url",
+    // Mockup variant language (added by 0010_demo_lang.sql).
+    "demo_lang",
   ],
   clients: [
     "email", "business_name", "status", "language", "plan", "site_url",
@@ -99,7 +101,7 @@ async function loadGrid(env, json) {
               heat, score, category, city, instagram, whatsapp,
               current_site, cms, motion, address, suggested_pitch,
               followers, on_today_list,
-              facebook_url, x_url, tiktok_url,
+              facebook_url, x_url, tiktok_url, demo_lang,
               created_at, updated_at
          FROM leads ORDER BY COALESCE(updated_at, created_at) DESC LIMIT 8000`
     ).all(),
@@ -1367,8 +1369,9 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
 <header>
   <div class="brand">Pyme<em>WebPro</em><span>CRM</span></div>
   <div class="spacer"></div>
+  <a href="/" class="back" style="margin-right:1rem">← Mi día</a>
   <a href="/recursos" class="back" style="margin-right:1rem">Recursos</a>
-  <a href="/admin" class="back">← admin</a>
+  <a href="/admin" class="back">admin</a>
 </header>
 
 <div id="root"></div>
@@ -3818,7 +3821,7 @@ function showAiDraftPanel(leadId, text, contact) {
         '<button class="ghost" data-act="ai-copy">Copiar</button>' +
       '</div><div class="right">' +
         '<button class="ghost" data-act="ai-close">Cerrar</button>' +
-        '<button class="primary" data-act="ai-send"' + (waDigits ? "" : " disabled title='Sin numero de WhatsApp'") + '>Abrir WhatsApp y registrar</button>' +
+        '<button class="primary" data-act="ai-send">' + (waDigits ? "Abrir WhatsApp y registrar" : "Copiar mensaje") + '</button>' +
       '</div></div>' +
     '</div>';
   document.body.appendChild(bg);
@@ -3830,10 +3833,15 @@ function showAiDraftPanel(leadId, text, contact) {
     try { navigator.clipboard.writeText(ta.value); toast("Copiado"); } catch (e) { toast("Selecciona y copia", true); }
   };
   const sendBtn = bg.querySelector('[data-act="ai-send"]');
-  if (sendBtn && waDigits) {
+  if (sendBtn) {
     sendBtn.onclick = async () => {
       const msg = ta.value.trim();
       if (!msg) { toast("Mensaje vacio", true); return; }
+      if (!waDigits) {
+        try { await navigator.clipboard.writeText(msg); toast("Copiado, pegalo donde lo envies"); }
+        catch (e) { ta.select(); toast("Selecciona y copia", true); }
+        return;
+      }
       window.open("https://wa.me/" + waDigits + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
       try {
         await api("/api/admin/outreach/log-send", {
