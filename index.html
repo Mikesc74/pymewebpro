@@ -175,66 +175,6 @@
   section.proofband .sec{color:#fff}
   section.proofband .sub{color:#C9BFB2}
   section.proofband .proof,section.proofband .stat{background:var(--paper)}
-
-  /* ===== Free-example preview modal (pv-) ===== */
-  .pv-overlay{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:1.1rem;background:rgba(27,20,16,.62);backdrop-filter:blur(3px)}
-  .pv-overlay.open{display:flex}
-  .pv-modal{position:relative;background:var(--paper);border-radius:18px;width:100%;max-width:560px;max-height:93vh;overflow:auto;box-shadow:0 30px 80px -20px rgba(27,20,16,.5);padding:1.6rem 1.5rem 1.7rem}
-  .pv-close{position:absolute;top:.6rem;right:.7rem;background:none;border:0;font-size:1.15rem;line-height:1;color:var(--mute);cursor:pointer;padding:.35rem}
-  .pv-close:hover{color:var(--ink)}
-  .pv-h{font-size:1.32rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.25rem}
-  .pv-sub{color:var(--ink2);font-size:.97rem;margin-bottom:1.05rem}
-  .pv-field{margin-bottom:.8rem}
-  .pv-field label{display:block;font-weight:700;font-size:.84rem;margin-bottom:.28rem}
-  .pv-field input,.pv-field select{width:100%;font-family:inherit;font-size:1rem;padding:.7rem .8rem;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-  .pv-field input:focus,.pv-field select:focus{outline:none;border-color:var(--accent)}
-  .pv-swatches{display:flex;gap:.5rem;flex-wrap:wrap}
-  .pv-swatch{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;position:relative;padding:0}
-  .pv-swatch[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
-  .pv-swatch[aria-pressed="true"]::after{content:"\2713";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.45)}
-  .pv-go{width:100%;margin-top:.45rem;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:.9rem;font-size:1.02rem;font-weight:800;cursor:pointer;font-family:inherit}
-  .pv-go:hover{background:var(--accent-d)}
-  .pv-note{color:var(--mute);font-size:.8rem;text-align:center;margin-top:.65rem;line-height:1.4}
-  .pv-tablet{margin:0 auto;width:100%;max-width:440px}
-  .pv-tablet-frame{background:#1B1410;border-radius:26px;padding:13px;box-shadow:0 20px 50px -16px rgba(27,20,16,.55)}
-  .pv-tablet-screen{background:#fff;border-radius:12px;overflow:auto;-webkit-overflow-scrolling:touch;position:relative;height:62vh;max-height:560px;--pvm-accent:#FF5C2E;--pvm-accent-d:#D9430F;--pvm-lite:#FF5C2E1F;--pvm-soft:#FF5C2E2E}
-  .pvm-wrap{font-family:'Inter',system-ui,sans-serif;color:#1b1410;line-height:1.5;background:#fff;font-size:14px}
-  .pvm-wrap *{box-sizing:border-box;margin:0;padding:0}
-  .pvm-hd{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border-bottom:1px solid #eee;z-index:5}
-  .pvm-bz{font-weight:800;font-size:15px}
-  .pvm-wb{background:var(--pvm-accent);color:#fff;font-weight:700;font-size:12px;padding:7px 12px;border-radius:8px}
-  .pvm-hero{padding:32px 18px 28px;background:linear-gradient(160deg,var(--pvm-lite),#fff)}
-  .pvm-eg{color:var(--pvm-accent-d);font-weight:700;font-size:11px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px}
-  .pvm-h1{font-size:25px;line-height:1.13;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
-  .pvm-sub{color:#574e45;font-size:14px;margin-bottom:16px}
-  .pvm-bt{display:flex;gap:8px;flex-wrap:wrap}
-  .pvm-b{font-weight:800;font-size:13px;padding:11px 15px;border-radius:9px;display:inline-block}
-  .pvm-b-p{background:var(--pvm-accent);color:#fff}
-  .pvm-b-g{background:#fff;border:1px solid #e2dbcf;color:#1b1410}
-  .pvm-sp{display:flex;gap:6px;padding:16px;background:#1b1410;color:#fff}
-  .pvm-sp-i{flex:1;text-align:center}
-  .pvm-sp-b{display:block;font-size:15px;font-weight:800}
-  .pvm-sp-s{color:#c9bfb2;font-size:10.5px}
-  .pvm-sc{padding:26px 18px}
-  .pvm-sc-h{font-size:18px;font-weight:800;margin-bottom:3px}
-  .pvm-sc-s{color:#8a8076;font-size:12.5px;margin-bottom:14px}
-  .pvm-cdg{display:grid;gap:10px}
-  .pvm-card{border:1px solid #eee;border-radius:12px;padding:14px}
-  .pvm-ic{width:32px;height:32px;border-radius:8px;background:var(--pvm-soft);color:var(--pvm-accent-d);display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:8px}
-  .pvm-card-h{font-size:13.5px;font-weight:700;margin-bottom:3px}
-  .pvm-card-p{color:#574e45;font-size:12px}
-  .pvm-cta{margin:6px 18px 18px;background:linear-gradient(160deg,var(--pvm-accent),var(--pvm-accent-d));color:#fff;border-radius:16px;padding:24px 18px;text-align:center}
-  .pvm-cta-h{font-size:18px;font-weight:800;margin-bottom:10px}
-  .pvm-cta-a{display:inline-block;background:#fff;color:var(--pvm-accent-d);font-weight:800;font-size:13px;padding:11px 18px;border-radius:9px}
-  .pvm-ft{padding:18px;text-align:center;color:#9a9088;font-size:11px}
-  .pv-scroll-hint{text-align:center;color:var(--mute);font-size:.8rem;margin:.55rem 0 0}
-  .pv-result-cta{display:flex;flex-direction:column;gap:.55rem;margin-top:1rem}
-  .pv-wa{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#1B6E4B;color:#fff;border:0;border-radius:10px;padding:.85rem;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;text-decoration:none}
-  .pv-wa:hover{background:#155b3d}
-  .pv-secondary{background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:.8rem;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;text-align:center}
-  .pv-secondary:hover{border-color:var(--ink)}
-  .pv-back{background:none;border:0;color:var(--mute);font-size:.85rem;cursor:pointer;font-family:inherit;text-decoration:underline}
-  @media(max-width:520px){.pv-modal{padding:1.3rem 1.05rem}.pv-tablet-screen{height:58vh}}
 </style>
 </head>
 <body>
@@ -260,7 +200,7 @@
     <h1>Una página que hace que te elijan a ti.</h1>
     <p class="lede">Tus clientes ya te buscan: en Google, en redes y por recomendación. Nosotros hacemos que cuando te encuentren, te veas serio y profesional, y que escribirte sea de un solo toque.</p>
     <div class="cta-row">
-      <button class="btn btn-orange" type="button" data-preview-open>Pídenos un ejemplo gratis</button>
+      <button class="btn btn-orange" type="button" data-valentina-open="start">Pídenos un ejemplo gratis</button>
       <a class="btn btn-ghost" href="#como">Ver cómo funciona</a>
     </div>
     <p class="note">Página propia, hecha a tu medida, lista en 48 horas. Desde $400.000 COP, pago único.</p>
@@ -274,20 +214,6 @@
   </div>
 </div>
 
-<section class="pad">
-  <div class="wrap">
-    <h2 class="sec">Para quién es</h2>
-    <p class="sub">Para negocios que viven de que los busquen y los recomienden, donde el cliente compara antes de decidir y necesita confiar en ti.</p>
-    <div class="chips">
-      <span class="chip">Vendedores y fabricantes</span>
-      <span class="chip">Talleres y herrería</span>
-      <span class="chip">Instaladores (toldos, aire, vidrios)</span>
-      <span class="chip">Construcción y remodelación</span>
-      <span class="chip">Servicios especializados</span>
-      <span class="chip">Consultorios y clínicas</span>
-    </div>
-  </div>
-</section>
 
 <section class="pad" id="como" style="padding-top:0">
   <div class="wrap">
@@ -443,126 +369,6 @@
 <script>(function(){var l=document.querySelector('link.async-font');if(l){l.media='all';}})();</script>
 
 <!-- Valentina · PymeWebPro sales agent. Loads asynchronously after the page. -->
-
-<div class="pv-overlay" id="pvOverlay" aria-hidden="true">
-  <div class="pv-modal" id="pvModal" role="dialog" aria-modal="true" aria-labelledby="pvTitle">
-    <button class="pv-close" id="pvClose" type="button" aria-label="Cerrar / Close">&#10005;</button>
-    <div id="pvStepForm">
-      <h3 class="pv-h" id="pvTitle"></h3>
-      <p class="pv-sub" id="pvSubtitle"></p>
-      <div class="pv-field"><label id="lblName" for="pvName"></label><input id="pvName" type="text" autocomplete="name"></div>
-      <div class="pv-field"><label id="lblPhone" for="pvPhone"></label><input id="pvPhone" type="tel" inputmode="tel" autocomplete="tel"></div>
-      <div class="pv-field"><label id="lblBiz" for="pvBiz"></label><input id="pvBiz" type="text"></div>
-      <div class="pv-field"><label id="lblIndustry" for="pvIndustry"></label><select id="pvIndustry"></select></div>
-      <div class="pv-field"><label id="lblOffer" for="pvOffer"></label><input id="pvOffer" type="text"></div>
-      <div class="pv-field"><label id="lblColor"></label><div class="pv-swatches" id="pvSwatches"></div></div>
-      <button class="pv-go" id="pvGo" type="button"></button>
-      <p class="pv-note" id="pvNote"></p>
-    </div>
-    <div id="pvStepResult" hidden>
-      <h3 class="pv-h" id="pvResultTitle"></h3>
-      <div class="pv-tablet"><div class="pv-tablet-frame"><div class="pv-tablet-screen" id="pvScreen" tabindex="0"></div></div></div>
-      <p class="pv-scroll-hint" id="pvScrollHint"></p>
-      <div class="pv-result-cta">
-        <a class="pv-wa" id="pvWa" target="_blank" rel="noopener"></a>
-        <button class="pv-secondary" id="pvStart" type="button" data-valentina-open="start"></button>
-        <button class="pv-back" id="pvBack" type="button"></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<script>
-(function(){
-  var isEn=(document.documentElement.lang||"").toLowerCase().indexOf("en")===0;
-  var WA="573014047722";
-  var ES={
-    ui:{title:"Mira cómo podría quedar tu página",sub:"Responde unos datos y te armamos un ejemplo al instante. Sin compromiso.",name:"Tu nombre",phone:"Tu WhatsApp",biz:"Nombre de tu negocio",ind:"Tipo de negocio",offer:"¿Qué vendes u ofreces?",color:"Color de tu marca",go:"Ver mi ejemplo",note:"Es un ejemplo de muestra. Tu página final se hace a tu medida, con tus fotos.",req:"Completa tu nombre, WhatsApp y el nombre del negocio.",rTitle:"Así podría quedar tu página",scroll:"Desliza dentro de la tablet para ver toda la página",wa:"Hablar por WhatsApp",start:"Quiero empezar mi página",back:"Cambiar mis datos",offerPh:"Ej: parasoles y toldos a la medida"},
-    strip:[["48 h","lista para vender"],["WhatsApp","te escriben en un toque"],["Google","apareces en el mapa"]],
-    heroCta:"Escríbenos por WhatsApp",heroSec:"Ver más",bandCta:"WhatsApp",foot:"Ejemplo hecho por PymeWebPro",
-    industries:[{key:"vendedores",label:"Vendedores y fabricantes"},{key:"talleres",label:"Talleres y herrería"},{key:"instaladores",label:"Instaladores (toldos, aire, vidrios)"},{key:"construccion",label:"Construcción y remodelación"},{key:"servicios",label:"Servicios especializados"},{key:"salud",label:"Consultorios y clínicas"},{key:"otro",label:"Otro"}],
-    copy:{
-      vendedores:{eg:"Catálogo y ventas",h1:"Tus productos, presentados para vender.",subf:"Productos de calidad para tu ciudad.",st:"Lo que ofrecemos",ss:"Claro y fácil de pedir.",svc:[["Catálogo claro","Tus productos con fotos, precios y detalles."],["Pedido por WhatsApp","Te escriben y cierras la venta al instante."],["Entrega y garantía","Condiciones claras que dan confianza."]],band:"¿Listo para tu pedido?"},
-      talleres:{eg:"Taller y herrería",h1:"Trabajo serio, hecho a la medida.",subf:"Herrería y reparaciones con buenos acabados.",st:"Lo que hacemos",ss:"A la medida de lo que necesitas.",svc:[["Trabajos a la medida","Rejas, portones, estructuras y más."],["Cotización rápida","Mándanos la idea y te damos precio."],["Cumplimiento","Entregamos cuando decimos."]],band:"Cuéntanos qué necesitas"},
-      instaladores:{eg:"Instalación profesional",h1:"Instalación limpia, sin demoras.",subf:"Toldos, aire y vidrios, instalados bien.",st:"Nuestro servicio",ss:"Desde la visita hasta el soporte.",svc:[["Visita y medición","Vamos, medimos y te asesoramos."],["Instalación garantizada","Trabajo prolijo y a tiempo."],["Soporte después","Quedamos pendientes si necesitas algo."]],band:"Agenda tu instalación"},
-      construccion:{eg:"Construcción y remodelación",h1:"Tu obra, en buenas manos.",subf:"Remodelación y construcción con trabajo ordenado.",st:"Cómo trabajamos",ss:"Claro, ordenado y a tiempo.",svc:[["Presupuesto claro","Sabes cuánto y en cuánto tiempo."],["Obra ordenada","Avances, fechas y comunicación."],["Acabados de calidad","Resultados de los que quedas orgulloso."]],band:"Hablemos de tu proyecto"},
-      servicios:{eg:"Servicio profesional",h1:"El servicio que necesitas, sin enredos.",subf:"Atención profesional y resultados confiables.",st:"Lo que ofrecemos",ss:"Atención cercana y resultados.",svc:[["Atención cercana","Te explicamos todo con claridad."],["Resultados","Hacemos el trabajo bien desde la primera."],["Reserva fácil","Agenda por WhatsApp en segundos."]],band:"Reserva tu cita"},
-      salud:{eg:"Salud y bienestar",h1:"Cuidado profesional y cercano.",subf:"Atención cálida y puntual para ti y tu familia.",st:"Nuestra atención",ss:"Pensada en tu bienestar.",svc:[["Agenda tu cita","Reserva por WhatsApp, sin filas."],["Equipo profesional","Profesionales con experiencia y calidez."],["Seguimiento","Te acompañamos en cada paso."]],band:"Agenda tu cita hoy"},
-      otro:{eg:"Tu negocio en línea",h1:"Una página que hace que te elijan.",subf:"Cuéntale a tus clientes lo que haces.",st:"Lo que ofrecemos",ss:"Claro y fácil de contactar.",svc:[["Quiénes somos","Tu historia y lo que te hace diferente."],["Lo que ofreces","Tus servicios o productos, claros."],["Contacto fácil","WhatsApp y formulario a un toque."]],band:"Escríbenos hoy"}
-    }
-  };
-  var EN={
-    ui:{title:"See how your page could look",sub:"Answer a few details and we'll build an example instantly. No commitment.",name:"Your name",phone:"Your WhatsApp",biz:"Your business name",ind:"Type of business",offer:"What do you sell or offer?",color:"Your brand color",go:"See my example",note:"This is a sample. Your final page is fully custom, with your own photos.",req:"Please add your name, WhatsApp and business name.",rTitle:"Here's how your page could look",scroll:"Scroll inside the tablet to see the whole page",wa:"Chat on WhatsApp",start:"I want to start my page",back:"Change my details",offerPh:"e.g. custom awnings and sunshades"},
-    strip:[["48 h","ready to sell"],["WhatsApp","one-tap contact"],["Google","found on the map"]],
-    heroCta:"Message us on WhatsApp",heroSec:"Learn more",bandCta:"WhatsApp",foot:"Sample by PymeWebPro",
-    industries:[{key:"vendedores",label:"Sellers & manufacturers"},{key:"talleres",label:"Workshops & metalwork"},{key:"instaladores",label:"Installers (awnings, A/C, glass)"},{key:"construccion",label:"Construction & remodeling"},{key:"servicios",label:"Specialized services"},{key:"salud",label:"Clinics & medical offices"},{key:"otro",label:"Other"}],
-    copy:{
-      vendedores:{eg:"Catalog & sales",h1:"Your products, made to sell.",subf:"Quality products for your city.",st:"What we offer",ss:"Clear and easy to order.",svc:[["Clear catalog","Your products with photos, prices and details."],["Order by WhatsApp","They message you and you close the sale."],["Delivery & warranty","Clear terms that build trust."]],band:"Ready to order?"},
-      talleres:{eg:"Workshop & metalwork",h1:"Serious work, made to measure.",subf:"Metalwork and repairs done right.",st:"What we do",ss:"Built to what you need.",svc:[["Custom work","Gates, railings, structures and more."],["Fast quote","Send the idea, get a price."],["On time","We deliver when we say."]],band:"Tell us what you need"},
-      instaladores:{eg:"Professional installation",h1:"Clean installation, no delays.",subf:"Awnings, A/C and glass, installed right.",st:"Our service",ss:"From the visit to after-support.",svc:[["Visit & measure","We come, measure and advise."],["Guaranteed install","Tidy work, on time."],["After-support","We stay available if you need us."]],band:"Book your installation"},
-      construccion:{eg:"Construction & remodeling",h1:"Your project, in good hands.",subf:"Remodeling and construction done with care.",st:"How we work",ss:"Clear, organized and on time.",svc:[["Clear budget","You know the cost and timeline."],["Organized work","Updates, dates and communication."],["Quality finishes","Results you'll be proud of."]],band:"Let's talk about your project"},
-      servicios:{eg:"Professional service",h1:"The service you need, made simple.",subf:"Professional service and results you can trust.",st:"What we offer",ss:"Personal attention and results.",svc:[["Personal attention","We explain everything clearly."],["Real results","Done right the first time."],["Easy booking","Book by WhatsApp in seconds."]],band:"Book your appointment"},
-      salud:{eg:"Health & wellness",h1:"Professional, caring treatment.",subf:"Warm, on-time care for you and your family.",st:"Our care",ss:"Built around your wellbeing.",svc:[["Book your visit","Reserve by WhatsApp, no lines."],["Expert team","Experienced, caring professionals."],["Follow-up","We're with you every step."]],band:"Book your appointment today"},
-      otro:{eg:"Your business online",h1:"A page that gets you chosen.",subf:"Tell customers what you do.",st:"What we offer",ss:"Clear and easy to reach.",svc:[["About us","Your story and what makes you different."],["What you offer","Your services or products, made clear."],["Easy contact","WhatsApp and form, one tap away."]],band:"Get in touch today"}
-    }
-  };
-  var T=isEn?EN:ES;
-  var COLORS=[{n:isEn?"Orange":"Naranja",h:"#FF5C2E",d:"#D9430F"},{n:isEn?"Blue":"Azul",h:"#2563EB",d:"#1D4ED8"},{n:isEn?"Green":"Verde",h:"#1B6E4B",d:"#145239"},{n:isEn?"Red":"Rojo",h:"#DC2626",d:"#B91C1C"},{n:isEn?"Purple":"Morado",h:"#7C3AED",d:"#6D28D9"},{n:isEn?"Teal":"Turquesa",h:"#0D9488",d:"#0B7A6F"}];
-  var selColor=COLORS[0];
-  function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-  function buildMockup(d){
-    var k=d.industry;var cp=T.copy[k]||T.copy.otro;
-    var biz=esc(d.biz)||(isEn?"Your business":"Tu negocio");
-    var sub=esc(d.offer)||esc(cp.subf);var s=T.strip;
-    function card(x){return '<div class="pvm-card"><div class="pvm-ic">+</div><div class="pvm-card-h">'+esc(x[0])+'</div><div class="pvm-card-p">'+esc(x[1])+'</div></div>';}
-    return '<div class="pvm-wrap">'
-      +'<div class="pvm-hd"><div class="pvm-bz">'+biz+'</div><span class="pvm-wb">WhatsApp</span></div>'
-      +'<div class="pvm-hero"><div class="pvm-eg">'+esc(cp.eg)+'</div><div class="pvm-h1">'+esc(cp.h1)+'</div><div class="pvm-sub">'+sub+'</div><div class="pvm-bt"><span class="pvm-b pvm-b-p">'+esc(T.heroCta)+'</span><span class="pvm-b pvm-b-g">'+esc(T.heroSec)+'</span></div></div>'
-      +'<div class="pvm-sp"><div class="pvm-sp-i"><span class="pvm-sp-b">'+esc(s[0][0])+'</span><span class="pvm-sp-s">'+esc(s[0][1])+'</span></div><div class="pvm-sp-i"><span class="pvm-sp-b">'+esc(s[1][0])+'</span><span class="pvm-sp-s">'+esc(s[1][1])+'</span></div><div class="pvm-sp-i"><span class="pvm-sp-b">'+esc(s[2][0])+'</span><span class="pvm-sp-s">'+esc(s[2][1])+'</span></div></div>'
-      +'<div class="pvm-sc"><div class="pvm-sc-h">'+esc(cp.st)+'</div><div class="pvm-sc-s">'+esc(cp.ss)+'</div><div class="pvm-cdg">'+card(cp.svc[0])+card(cp.svc[1])+card(cp.svc[2])+'</div></div>'
-      +'<div class="pvm-cta"><div class="pvm-cta-h">'+esc(cp.band)+'</div><span class="pvm-cta-a">'+esc(T.bandCta)+'</span></div>'
-      +'<div class="pvm-ft">'+biz+' · '+esc(T.foot)+'</div>'
-      +'</div>';
-  }
-  function ready(fn){if(document.readyState!=="loading")fn();else document.addEventListener("DOMContentLoaded",fn);}
-  ready(function(){
-    var overlay=document.getElementById("pvOverlay");if(!overlay)return;
-    var modal=document.getElementById("pvModal"),stepForm=document.getElementById("pvStepForm"),stepRes=document.getElementById("pvStepResult");
-    var elName=document.getElementById("pvName"),elPhone=document.getElementById("pvPhone"),elBiz=document.getElementById("pvBiz"),elInd=document.getElementById("pvIndustry"),elOffer=document.getElementById("pvOffer"),note=document.getElementById("pvNote");
-    function txt(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-    txt("pvTitle",T.ui.title);txt("pvSubtitle",T.ui.sub);txt("lblName",T.ui.name);txt("lblPhone",T.ui.phone);txt("lblBiz",T.ui.biz);txt("lblIndustry",T.ui.ind);txt("lblOffer",T.ui.offer);txt("lblColor",T.ui.color);txt("pvGo",T.ui.go);txt("pvNote",T.ui.note);txt("pvResultTitle",T.ui.rTitle);txt("pvScrollHint",T.ui.scroll);txt("pvStart",T.ui.start);txt("pvBack",T.ui.back);txt("pvWa",T.ui.wa);
-    elOffer.setAttribute("placeholder",T.ui.offerPh);
-    T.industries.forEach(function(it){var o=document.createElement("option");o.value=it.key;o.textContent=it.label;elInd.appendChild(o);});
-    var sw=document.getElementById("pvSwatches");
-    COLORS.forEach(function(col,i){var b=document.createElement("button");b.type="button";b.className="pv-swatch";b.style.background=col.h;b.setAttribute("aria-label",col.n);b.setAttribute("aria-pressed",i===0?"true":"false");b.addEventListener("click",function(){selColor=col;[].forEach.call(sw.children,function(x){x.setAttribute("aria-pressed","false");});b.setAttribute("aria-pressed","true");});sw.appendChild(b);});
-    function openM(){overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";setTimeout(function(){elName.focus();},60);}
-    function closeM(){overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");document.body.style.overflow="";}
-    function reset(){stepRes.hidden=true;stepForm.hidden=false;}
-    document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-preview-open]");if(!t)return;e.preventDefault();reset();openM();});
-    document.getElementById("pvClose").addEventListener("click",closeM);
-    overlay.addEventListener("click",function(e){if(e.target===overlay)closeM();});
-    document.addEventListener("keydown",function(e){if(e.key==="Escape"&&overlay.classList.contains("open"))closeM();});
-    document.getElementById("pvBack").addEventListener("click",reset);
-    document.getElementById("pvStart").addEventListener("click",closeM);
-    document.getElementById("pvGo").addEventListener("click",function(){
-      var name=elName.value.trim(),phone=elPhone.value.trim(),biz=elBiz.value.trim();
-      if(!name||!phone||!biz){note.textContent=T.ui.req;note.style.color="#D9430F";(!name?elName:!phone?elPhone:elBiz).focus();return;}
-      note.style.color="";note.textContent=T.ui.note;
-      var d={name:name,phone:phone,biz:biz,industry:elInd.value||"otro",offer:elOffer.value.trim(),color:selColor.h,colorDark:selColor.d};
-      var screenEl=document.getElementById("pvScreen");
-      screenEl.style.setProperty("--pvm-accent",d.color);screenEl.style.setProperty("--pvm-accent-d",d.colorDark);
-      screenEl.style.setProperty("--pvm-lite",d.color+"1F");screenEl.style.setProperty("--pvm-soft",d.color+"2E");
-      screenEl.innerHTML=buildMockup(d);screenEl.scrollTop=0;
-      var indLabel=(T.industries.filter(function(x){return x.key===d.industry;})[0]||{}).label||"";
-      var msg=isEn?("Hi, I'm "+name+". I have "+biz+(indLabel?" ("+indLabel+")":"")+". I saw the example page and I'd like more info."):("Hola, soy "+name+". Tengo "+biz+(indLabel?" ("+indLabel+")":"")+". Vi el ejemplo de página y quiero más información.");
-      document.getElementById("pvWa").href="https://wa.me/"+WA+"?text="+encodeURIComponent(msg);
-      try{fetch("https://valentina.pymewebpro.com/lead",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:name,phone:phone,business:biz,industry:indLabel,offer:d.offer,color:d.color,language:isEn?"en":"es"}),keepalive:true}).catch(function(){});}catch(e){}
-      stepForm.hidden=true;stepRes.hidden=false;modal.scrollTop=0;
-    });
-  });
-})();
-</script>
 
 <script src="https://valentina.pymewebpro.com/widget.js" defer></script>
 
