@@ -760,7 +760,7 @@ async function preflightMockup(env, helpers, mockupId) {
     const hasWaCatalog = !!growth.waCatalogUrl;
     const proFeatures = [hasBookings, hasPdf, hasNewsletter, hasWaCatalog].filter(Boolean).length;
     if (proFeatures === 0) {
-      errors.push({ code: "no_pro_feature", msg: "Plan Crecimiento requiere al menos una de: reservas, PDF, newsletter, o catálogo WhatsApp." });
+      errors.push({ code: "no_pro_feature", msg: "Marca al menos una función opcional: reservas, PDF, newsletter, o catálogo WhatsApp." });
     }
     if (!growth.ga4Id) warnings.push({ code: "no_ga4", msg: "Sin GA4 ID · no medirá tráfico." });
     if (!growth.metaPixelId) warnings.push({ code: "no_pixel", msg: "Sin Meta Pixel · no medirá conversiones de Facebook/Instagram ads." });

@@ -702,6 +702,8 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
           <li data-lang="en">Testimonials section + SEO structure</li>
           <li data-lang="es">Analitica respetuosa de la privacidad</li>
           <li data-lang="en">Privacy-first analytics</li>
+          <li class="highlight" data-lang="es"><b>Tu Ficha de Google configurada</b></li>
+          <li class="highlight" data-lang="en"><b>Your Google Business Profile set up</b></li>
           <li class="highlight" data-lang="es"><b>1 mes de hosting + soporte incluido</b></li>
           <li class="highlight" data-lang="en"><b>1 month of hosting + support included</b></li>
           <li data-lang="es">Dominio + SSL configurados, 2 rondas de revision</li>
@@ -721,26 +723,14 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <p class="meta" data-lang="es">Agrega solo lo que necesites. Precios en COP, IVA incluido.</p>
         <p class="meta" data-lang="en">Add only what you need. Prices in COP, IVA included.</p>
         <ul>
-          <li data-lang="es">Pagina adicional (max 3): <b>$50.000</b></li>
-          <li data-lang="en">Extra page (max 3): <b>$50.000</b></li>
+          <li data-lang="es">Catalogo simple (max 30 productos): <b>$75.000</b></li>
+          <li data-lang="en">Simple catalog (max 30 products): <b>$75.000</b></li>
+          <li data-lang="es">Catalogo o menu descargable en PDF: <b>$75.000</b></li>
+          <li data-lang="en">Downloadable catalog or menu (PDF): <b>$75.000</b></li>
           <li data-lang="es">Version bilingue ES/EN: <b>$75.000</b></li>
           <li data-lang="en">Bilingual ES/EN version: <b>$75.000</b></li>
-          <li data-lang="es">Copywriting profesional: <b>$150.000</b></li>
-          <li data-lang="en">Professional copywriting: <b>$150.000</b></li>
-          <li data-lang="es">Catalogo simple (max 30 productos): <b>$180.000</b></li>
-          <li data-lang="en">Simple catalog (max 30 products): <b>$180.000</b></li>
-          <li data-lang="es">Perfil de Empresa de Google: <b>$90.000</b></li>
-          <li data-lang="en">Google Business Profile: <b>$90.000</b></li>
-          <li data-lang="es">Analitica avanzada (GA4+GTM+Pixel): <b>$120.000</b></li>
-          <li data-lang="en">Advanced analytics (GA4+GTM+Pixel): <b>$120.000</b></li>
-          <li data-lang="es">Integracion con CRM: <b>$190.000</b></li>
-          <li data-lang="en">CRM integration: <b>$190.000</b></li>
-          <li data-lang="es">Chatbot de captura: <b>$190.000 una vez + $80.000/mes</b></li>
-          <li data-lang="en">Capture chatbot: <b>$190.000 once + $80.000/mes</b></li>
-          <li data-lang="es">Boton de descarga de PDF: <b>$50.000</b></li>
-          <li data-lang="en">PDF download button: <b>$50.000</b></li>
-          <li data-lang="es">Ronda de revision adicional: <b>$90.000</b></li>
-          <li data-lang="en">Additional revision round: <b>$90.000</b></li>
+          <li class="meta" data-lang="es">La Ficha de Google ya va incluida en la pagina base. El chatbot va en el Plan de ventas mensual.</li>
+          <li class="meta" data-lang="en">The Google Business Profile is included in the base page. The chatbot lives in the monthly Plan de ventas.</li>
         </ul>
         <a class="btn btn-primary"
            href="https://wa.me/573014047722?text=Hola%20Santi%2C%20quiero%20cotizar%20add-ons%20de%20PymeWebPro"
@@ -752,11 +742,15 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
     </div>
 
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="es">
-      Hosting y soporte despues del mes incluido: <b>$30.000 COP/mes o $300.000 COP/ano</b>.
+      Planes mensuales opcionales despues del mes incluido (sin contrato): hosting <b>$30.000/mes</b> ·
+      Plan de presencia <b>$59.000/mes</b> (hosting + Ficha de Google activa + hasta 2 cambios + reporte) ·
+      Plan de ventas <b>$150.000/mes</b> (todo + asistente de ventas 24/7: un chatbot que responde y pasa al cliente a tu WhatsApp).
       Sin candado: si quieres llevarte el sitio a otro hosting, te entregamos el codigo.
     </p>
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="en">
-      Hosting and support after the included month: <b>$30.000 COP/mes or $300.000 COP/ano</b>.
+      Optional monthly plans after the included month (no contract): hosting <b>$30.000/mo</b> ·
+      Plan de presencia <b>$59.000/mo</b> (hosting + active Google Business Profile + up to 2 changes + report) ·
+      Plan de ventas <b>$150.000/mo</b> (everything + a 24/7 sales assistant: a chatbot that answers and sends customers to your WhatsApp).
       No lock-in: if you want to move your site elsewhere, we hand over the code.
     </p>
   </div>

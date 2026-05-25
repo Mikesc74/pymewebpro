@@ -4,6 +4,8 @@
 **Last Updated:** 2026-04-29
 **Review Cadence:** Quarterly, or after every batch of 5 closed clients
 
+> ⚠ **OUTDATED · superseded by the single-product model (2026-05).** This document still describes the retired two-tier Esencial/Crecimiento funnel and its tier-gated pricing/process. The CURRENT offer is: ONE product, "La página de ventas" $390.000 COP (incluye la Ficha de Google), plus 3 add-ons at $75.000 c/u (catálogo simple, catálogo o menú descargable en PDF, versión bilingüe), plus optional monthly plans (hosting $30.000/mes, Plan de presencia $59.000/mes, Plan de ventas $150.000/mes which includes the chatbot / 24/7 sales assistant). No Esencial/Pro/Crecimiento tiers. The chatbot is not a one-time add-on. Source of truth for the offer: `CLAUDE.md`. Treat the tier-specific steps below as historical reference only until this doc is rewritten.
+
 ---
 
 ## 1. Purpose
