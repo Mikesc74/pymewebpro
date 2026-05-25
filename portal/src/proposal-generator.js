@@ -196,7 +196,7 @@ function computePricing(addons, isEs) {
     if (a) { lines.push({ label: isEs ? a.es : a.en, price: a.price }); total += a.price; }
   });
   const deposit = Math.round(total * 0.30);
-  return { lines, total, deposit, balance: total - deposit, chatbotMonthly: (addons || []).indexOf("chatbot") >= 0 ? 80000 : 0 };
+  return { lines, total, deposit, balance: total - deposit };
 }
 
 // Total COP for a deal (base + stored add-ons). Used by the deposit/balance
@@ -592,7 +592,6 @@ function buildProposalHtml(deal, lead, client, brief) {
       <div class="cell"><b>${escapeForMockup(T.deliveryLabel)}</b>${escapeForMockup(T.deliveryValue.replace("{date}", fmtDelivery))}</div>
       <div class="cell"><b>${escapeForMockup(T.revisionsLabel)}</b>${escapeForMockup(T.revisionsValue)}</div>
     </div>
-    ${p.chatbotMonthly ? '<p class="terms">' + escapeForMockup(T.chatbotNote.replace("{m}", fmtCOP(p.chatbotMonthly))) + '</p>' : ''}
     ${brief.reqNotes ? '<p class="terms"><b>' + escapeForMockup(T.reqLabel) + ':</b> ' + escapeForMockup(brief.reqNotes) + '</p>' : ''}
   </div>
 
@@ -660,7 +659,6 @@ const PROPOSAL_TEXT_ES = {
   priceHeading: "Inversión",
   planLabel: "Producto",
   totalSub: "Total, IVA incluido. Incluye 1 mes de hosting y soporte.",
-  chatbotNote: "Chatbot: incluye {m}/mes de operación.",
   reqLabel: "Lo que pediste",
   depositLabel: "Depósito inicial (30%)",
   depositSub: "para arrancar diseño y desarrollo",
@@ -705,7 +703,6 @@ const PROPOSAL_TEXT_EN = {
   priceHeading: "Investment",
   planLabel: "Product",
   totalSub: "Total, IVA included. Includes 1 month of hosting and support.",
-  chatbotNote: "Chatbot: includes {m}/month of operation.",
   reqLabel: "What you asked for",
   depositLabel: "Deposit to start (30%)",
   depositSub: "kicks off design + development",
