@@ -139,6 +139,13 @@
   .addon-row{display:flex;justify-content:space-between;gap:.8rem;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.6rem .85rem;font-size:.95rem}
   .addon-row b{color:var(--accent-d);white-space:nowrap}
   .addon-row em{color:var(--mute);font-style:normal;font-size:.8rem;display:block}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.6rem}
+  @media(max-width:620px){.plans{grid-template-columns:1fr}}
+  .plan{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+  .plan.feature{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .plan .pt{font-weight:800}
+  .plan .pp{color:var(--accent-d);font-weight:800;font-size:1.15rem;margin:.1rem 0 .4rem}
+  .plan p{font-size:.9rem;color:var(--ink2)}
 </style>
 </head>
 <body>
@@ -228,22 +235,30 @@
     <h2 class="sec">Precio claro</h2>
     <div class="price">
       <div class="big">$390.000 COP</div>
-      <div class="small">La página de ventas. Pago único, IVA incluido. Incluye 1 mes de hosting y soporte.</div>
-      <div class="pres"><b>Plan de presencia (opcional): $59.000/mes.</b> Incluye el hosting, tu página siempre al día, tu Ficha de Google activa, hasta 2 cambios al mes, y un reporte mensual con tus números. Después del primer mes hay hosting desde $30.000/mes, o el plan completo a $59.000/mes. Sin contrato.</div>
+      <div class="small">La página de ventas. Pago único, IVA incluido. Incluye tu Ficha de Google y 1 mes de hosting y soporte.</div>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Planes mensuales (opcionales)</h3>
+    <p class="sub" style="margin-bottom:.7rem">Después del primer mes. Sin contrato, cancela cuando quieras.</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="pt">Plan de presencia</div>
+        <div class="pp">$59.000/mes</div>
+        <p>Hosting, tu Ficha de Google activa, página al día, hasta 2 cambios al mes y un reporte mensual con tus números.</p>
+      </div>
+      <div class="plan feature">
+        <div class="pt">Plan de ventas</div>
+        <div class="pp">$150.000/mes</div>
+        <p>Todo lo del Plan de presencia, más tu asistente de ventas 24/7: un chatbot en tu página y WhatsApp que capta, responde y agenda. Sin costo de instalación.</p>
+      </div>
     </div>
 
     <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Adicionales (opcionales)</h3>
     <p class="sub" style="margin-bottom:.7rem">Súmalos solo si los necesitas. Todo en pesos, sin sorpresas.</p>
     <div class="addons">
-      <div class="addon-row"><span>Ficha de Google</span><b>$90.000</b></div>
-      <div class="addon-row"><span>Versión bilingüe (ES/EN)</span><b>$75.000</b></div>
-      <div class="addon-row"><span>Copywriting profesional</span><b>$150.000</b></div>
       <div class="addon-row"><span>Catálogo simple</span><b>$180.000</b></div>
-      <div class="addon-row"><span>Analítica avanzada</span><b>$120.000</b></div>
-      <div class="addon-row"><span>CRM</span><b>$190.000</b></div>
       <div class="addon-row"><span>Botón de catálogo PDF</span><b>$50.000</b></div>
-      <div class="addon-row"><span>Página adicional</span><b>$50.000</b></div>
-      <div class="addon-row"><span>Chatbot de captura<em>+ $80.000/mes</em></span><b>$190.000</b></div>
+      <div class="addon-row"><span>Versión bilingüe (ES/EN)</span><b>$75.000</b></div>
     </div>
   </div>
 </section>

@@ -175,15 +175,9 @@ function pickPricing(market, tier) {
 // Add-on menu (COP). Keys match what the Mi día "Propuesta" form sends.
 const BASE_PRICE = 390000;
 const ADDON_CATALOG = {
-  gbp:         { es: "Ficha de Google (GBP)",   en: "Google Business Profile",  price: 90000 },
-  analytics:   { es: "Analítica avanzada",       en: "Advanced analytics",       price: 120000 },
-  crm:         { es: "CRM",                       en: "CRM",                      price: 190000 },
+  catalog:     { es: "Catálogo simple",          en: "Simple catalog",           price: 75000 },
+  pdf:         { es: "Botón de catálogo PDF",    en: "PDF catalog button",       price: 75000 },
   bilingual:   { es: "Versión bilingüe",         en: "Bilingual version",        price: 75000 },
-  copywriting: { es: "Copywriting profesional",  en: "Professional copywriting", price: 150000 },
-  catalog:     { es: "Catálogo simple",          en: "Simple catalog",           price: 180000 },
-  pdf:         { es: "Botón de catálogo PDF",    en: "PDF catalog button",       price: 50000 },
-  extra_page:  { es: "Página adicional",         en: "Extra page",               price: 50000 },
-  chatbot:     { es: "Chatbot",                   en: "Chatbot",                  price: 190000 },
 };
 // Format an integer as Colombian pesos: 390000 -> "$390.000 COP".
 function fmtCOP(n) {
@@ -678,7 +672,7 @@ const PROPOSAL_TEXT_ES = {
   revisionsValue: "2 rondas de revisión incluidas",
   includesHeading: "Qué recibes",
   hostingHeading: "Hosting y soporte",
-  hosting1: "El precio incluye 1 mes de hosting + soporte. Después de eso, mantener el sitio en línea cuesta $30.000 COP / mes o $300.000 COP / año (IVA incluido).",
+  hosting1: "El precio incluye tu Ficha de Google y 1 mes de hosting + soporte. Después, eliges un plan mensual opcional, sin contrato: hosting solo $30.000 COP/mes, Plan de presencia $59.000 COP/mes (hosting + Ficha de Google activa + hasta 2 cambios + reporte mensual), o Plan de ventas $150.000 COP/mes (todo lo anterior + tu asistente de ventas 24/7, un chatbot que capta, responde y agenda).",
   host1: "Cloudflare Pages, 330+ ubicaciones edge, sub-1s LCP en cualquier país",
   host2: "Certificado SSL gestionado, renovación automática, sin tarifas extra",
   host3: "Backups automáticos, redundancia geográfica",
@@ -752,6 +746,7 @@ const FEATURES_ES_LIST = [
   "Integración de citas/reservas (Cal.com o Calendly)",
   "Sección de testimonios",
   "Estructura SEO y analítica respetuosa de la privacidad",
+  "Ficha de Google (perfil de negocio) configurada para que te encuentren en el mapa",
   "Dominio + SSL configurados (el costo del dominio es del cliente)",
   "1 mes de hosting + soporte incluido",
   "2 rondas de revisión, en vivo en ~48 horas",
@@ -765,6 +760,7 @@ const FEATURES_EN_LIST = [
   "Booking/appointment integration (Cal.com or Calendly)",
   "Testimonials section",
   "SEO structure and privacy-first analytics",
+  "Google Business Profile set up so customers find you on the map",
   "Domain + SSL setup (domain cost is the client's)",
   "1 month hosting + support included",
   "2 revision rounds, live in ~48 hours",

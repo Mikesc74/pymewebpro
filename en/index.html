@@ -139,6 +139,13 @@
   .addon-row{display:flex;justify-content:space-between;gap:.8rem;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.6rem .85rem;font-size:.95rem}
   .addon-row b{color:var(--accent-d);white-space:nowrap}
   .addon-row em{color:var(--mute);font-style:normal;font-size:.8rem;display:block}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.6rem}
+  @media(max-width:620px){.plans{grid-template-columns:1fr}}
+  .plan{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+  .plan.feature{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .plan .pt{font-weight:800}
+  .plan .pp{color:var(--accent-d);font-weight:800;font-size:1.15rem;margin:.1rem 0 .4rem}
+  .plan p{font-size:.9rem;color:var(--ink2)}
 </style>
 </head>
 <body>
@@ -228,22 +235,30 @@
     <h2 class="sec">Clear pricing</h2>
     <div class="price">
       <div class="big">$390.000 COP</div>
-      <div class="small">The sales page. One-time, IVA included. Includes 1 month of hosting and support.</div>
-      <div class="pres"><b>Plan de presencia (optional): $59.000/mo.</b> Includes hosting, your page always current, your Google Business Profile active, up to 2 changes a month, and a monthly report with your numbers. After the first month, hosting from $30.000/mo, or the full plan at $59.000/mo. No contract.</div>
+      <div class="small">The sales page. One-time, IVA included. Includes your Google Business Profile and 1 month of hosting and support.</div>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Monthly plans (optional)</h3>
+    <p class="sub" style="margin-bottom:.7rem">After the first month. No contract, cancel anytime.</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="pt">Plan de presencia</div>
+        <div class="pp">$59.000/mo</div>
+        <p>Hosting, your Google Business Profile active, page kept current, up to 2 changes a month, and a monthly report with your numbers.</p>
+      </div>
+      <div class="plan feature">
+        <div class="pt">Plan de ventas</div>
+        <div class="pp">$150.000/mo</div>
+        <p>Everything in Plan de presencia, plus your 24/7 sales assistant: a chatbot on your page and WhatsApp that captures, answers and books. No setup fee.</p>
+      </div>
     </div>
 
     <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Add-ons (optional)</h3>
     <p class="sub" style="margin-bottom:.7rem">Add them only if you need them. All in COP, no surprises.</p>
     <div class="addons">
-      <div class="addon-row"><span>Google Business Profile</span><b>$90.000</b></div>
-      <div class="addon-row"><span>Bilingual version (ES/EN)</span><b>$75.000</b></div>
-      <div class="addon-row"><span>Professional copywriting</span><b>$150.000</b></div>
       <div class="addon-row"><span>Simple catalog</span><b>$180.000</b></div>
-      <div class="addon-row"><span>Advanced analytics</span><b>$120.000</b></div>
-      <div class="addon-row"><span>CRM</span><b>$190.000</b></div>
       <div class="addon-row"><span>PDF catalog button</span><b>$50.000</b></div>
-      <div class="addon-row"><span>Extra page</span><b>$50.000</b></div>
-      <div class="addon-row"><span>Lead-capture chatbot<em>+ $80.000/mo</em></span><b>$190.000</b></div>
+      <div class="addon-row"><span>Bilingual version (ES/EN)</span><b>$75.000</b></div>
     </div>
   </div>
 </section>
