@@ -104,6 +104,7 @@ const SCRIPT_HASHES = [
 ];
 
 const STYLE_HASHES = [
+  "sha256-+iNQAg6oJjnOVPBlQxLd1ska7v1WiRhYh7/OeZ6rLUI=",
   "sha256-13ibskFxM+oBG1GOKCF2RlES6jq9ZsjpijA1hToibN8=",
   "sha256-1nPELemA6W56auTRzuELYIQ0Y00KXwgS7Pvn+J0V+a8=",
   "sha256-7nRJxaCwAoBm8Q2TIPJM3lvz0i93AW46r4kGfzixCRs=",
@@ -117,7 +118,6 @@ const STYLE_HASHES = [
   "sha256-doXDWDnFtR++rkKHwPPnw6kUf5ilZjfH1br6DHIaVe0=",
   "sha256-he/U2UugO0I/zdHSoWJVnm8TCLC73TbZGeE6QSho6HE=",
   "sha256-lWVMuCo0MpbjLXrbx+ZgF9cPY+Svag7Szm0eitGBmk4=",
-  "sha256-sKcwdT6xfJBM4c/kPFJ6nMAbR1TUkU37/58cCIhTDbs=",
   "sha256-tkldcovVxCmq7Hv0c/JoqM+RBZHndsHIZ3gvmp2X4mY=",
   "sha256-z78aRRwtiALpgnA2EoaF9e3HCbQY2wxXnsM3vLqf0ww=",
 ];
