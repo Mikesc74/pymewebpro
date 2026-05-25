@@ -1,418 +1,225 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Recursos de ventas | PymeWebPro</title><style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Manual de ventas | PymeWebPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
 *{box-sizing:border-box}
-body{margin:0;background:#F2E9D5;color:#1A1612;font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6;background-image:radial-gradient(rgba(26,22,18,.05) 1px,transparent 1px);background-size:3px 3px}
-.topbar{position:sticky;top:0;z-index:20}
-header{display:flex;align-items:center;gap:1rem;padding:.7rem 1.5rem;background:#1A1612;color:#F2E9D5;border-bottom:3px double rgba(242,233,213,.2)}
-header .brand{font-weight:800;font-size:1.05rem}
-header .brand em{font-style:italic;font-weight:500;color:#D24A1D}
-header .spacer{flex:1}
-header a{color:rgba(242,233,213,.75);text-decoration:none;font-size:.8rem;letter-spacing:.04em}
-header a:hover{color:#F2896A}
-.tabs{display:flex;flex-wrap:wrap;gap:.5rem;background:#E8DFC8;padding:.6rem 1.5rem;border-bottom:1px solid rgba(26,22,18,.18);overflow-x:auto}
-.tabs a{background:#F2E9D5;border:1px solid rgba(26,22,18,.16);color:#1A1612;padding:.4rem .8rem;border-radius:6px;text-decoration:none;font-size:.85rem;white-space:nowrap}
-.tabs a:hover{background:#fff;border-color:#D24A1D;color:#A8381A}
-.wrap{max-width:820px;margin:0 auto;padding:2rem 1.5rem 5rem}
-section{background:#FBF7EC;border:1px solid rgba(26,22,18,.12);border-radius:12px;padding:1.5rem 1.75rem;margin:0 0 1.5rem;scroll-margin-top:130px}
-.doc h1{font-size:1.6rem;margin:.2rem 0 1rem;color:#1A1612}
-.doc h2{font-size:1.2rem;margin:1.5rem 0 .5rem;color:#A8381A}
-.doc h3{font-size:1rem;margin:1.1rem 0 .4rem}
-.doc code{background:#E8DFC8;padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:.88em}
-.doc pre{background:#1A1612;color:#F2E9D5;padding:1rem;border-radius:8px;overflow:auto}
-.doc pre code{background:transparent;color:inherit}
-.doc table{border-collapse:collapse;width:100%;margin:1rem 0}
-.doc th,.doc td{border:1px solid rgba(26,22,18,.16);padding:.5rem .7rem;text-align:left;font-size:.9rem}
-.doc th{background:#E8DFC8}
-.doc blockquote{border-left:3px solid #D24A1D;margin:.8rem 0;padding:.2rem 0 .2rem 1rem;color:#3A2F26;background:rgba(210,74,29,.05)}
-.doc ul,.doc ol{padding-left:1.4rem}
-.doc a{color:#A8381A}
-</style></head><body><div class="topbar"><header><span class="brand">Pyme<em>WebPro</em></span><a href="/">CRM</a><span class="spacer"></span><span style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(242,233,213,.5)">Manual de ventas</span></header><nav class="tabs"><a href="#guion">Guion de ventas (WhatsApp)</a><a href="#reglas">Reglas de venta</a><a href="#calificacion">Calificacion de clientes</a><a href="#alcance">Limites de alcance</a></nav></div><div class="wrap"><section id="guion"><div class="doc"><h1>Guion de ventas · WhatsApp</h1>
-<p>Marco de mensajes para vender la página de ventas de PymeWebPro por WhatsApp. Hay un solo producto ($400.000) más add-ons del menú. Estilo corto, directo, paisa-amigable, sin sonar a robot ni a agencia. Tú adaptas las palabras; la estructura no cambia.</p>
-<p>Reglas de oro:</p>
-<ul>
-<li>Un mensaje, una idea. Nada de párrafos largos por WhatsApp.</li>
-<li>Habla de resultados (más clientes, más reservas, mejor primera impresión), no de "páginas web".</li>
-<li>Cotiza siempre desde el configurador. Nunca un número de tu cabeza.</li>
-<li>Precios solo en COP. Sin USD, sin CAD.</li>
-<li>Sin guiones largos en ningún mensaje. Usa comas, puntos, dos puntos, paréntesis, " · ".</li>
-<li>Si piden algo fuera del menú: "déjame confirmarte", no "sí". Lee el rulebook.</li>
+:root{--paper:#F2E9D5;--paper2:#E8DFC8;--card:#FBF7EC;--ink:#1A1612;--ink2:#3A2F26;--mute:rgba(26,22,18,.55);--line:rgba(26,22,18,.14);--accent:#D24A1D;--accent2:#A8381A;--red:#991B1B;--green:#166534;--blue:#1f4e79}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6;background-image:radial-gradient(rgba(26,22,18,.05) 1px,transparent 1px);background-size:3px 3px}
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:1rem;padding:.7rem 1.4rem;border-bottom:3px double rgba(242,233,213,.2)}
+.topbar .brand{font-weight:800;font-size:1.05rem}
+.topbar .brand em{font-style:italic;font-weight:500;color:var(--accent)}
+.topbar .sp{flex:1}
+.topbar a{color:rgba(242,233,213,.78);text-decoration:none;font-size:.82rem}
+.topbar a:hover{color:#F2896A}
+.topbar a.cta{background:var(--accent);color:#fff;padding:.45rem .9rem;border-radius:7px;font-weight:600}
+.wrap{max-width:820px;margin:0 auto;padding:2.2rem 1.4rem 5rem}
+h1{font-family:Georgia,serif;font-size:2.1rem;line-height:1.15;margin:0 0 .4rem}
+h1 em{color:var(--accent);font-style:italic}
+.lede{font-size:1.05rem;color:var(--ink2);margin:0 0 1.4rem}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;margin:0 0 1rem}
+.toc b{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin:0 0 .5rem}
+.toc ol{margin:0;padding-left:1.2rem;columns:2;font-size:.92rem}
+@media(max-width:560px){.toc ol{columns:1}}
+.toc a{color:var(--accent2);text-decoration:none}
+h2{font-family:Georgia,serif;font-size:1.35rem;margin:2.6rem 0 .3rem;display:flex;align-items:baseline;gap:.6rem;scroll-margin-top:4rem}
+h2 .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.9rem;color:#fff;background:var(--accent);width:1.7rem;height:1.7rem;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+.section-sub{color:var(--mute);margin:.2rem 0 1rem;font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.3rem;margin:1rem 0}
+.price-big{font-size:1.6rem;font-weight:800;color:var(--accent2)}
+.price-sub{color:var(--ink2);font-size:.95rem;margin:.2rem 0 0}
+ul.feat{list-style:none;padding:0;margin:.6rem 0 0}
+ul.feat li{padding:.35rem 0 .35rem 1.4rem;position:relative;font-size:.95rem;border-bottom:1px solid var(--line)}
+ul.feat li:last-child{border-bottom:none}
+ul.feat li::before{content:"+";position:absolute;left:0;color:var(--accent);font-weight:800}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.9rem 1.1rem;margin:.6rem 0}
+.plan.feature{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.plan .pt{font-weight:800}
+.plan .pp{color:var(--accent2);font-weight:800;margin:.05rem 0 .3rem}
+.plan p{margin:0;font-size:.9rem;color:var(--ink2)}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:.66rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:.12rem .5rem;margin-bottom:.35rem}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:1rem 0}
+ol.steps li{counter-increment:s;position:relative;padding:.7rem 0 .7rem 2.6rem;border-bottom:1px solid var(--line)}
+ol.steps li:last-child{border-bottom:none}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:.7rem;width:1.7rem;height:1.7rem;background:var(--ink);color:var(--paper);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600}
+ol.steps b{color:var(--accent2)}
+.tag{display:inline-block;background:var(--ink);color:var(--paper);font-size:.74rem;font-weight:600;padding:.12rem .5rem;border-radius:6px;margin-right:.3rem}
+.obj p{margin:0}
+.obj .q{margin:0 0 .4rem;font-weight:600}
+.callout{border-left:4px solid var(--accent);background:rgba(210,74,29,.06);padding:.8rem 1rem;border-radius:6px;margin:1.2rem 0}
+.rules li{margin:.45rem 0}
+.rules b{color:var(--accent2)}
+.foot{margin-top:3rem;color:var(--mute);font-size:.82rem;border-top:1px solid var(--line);padding-top:1rem}
+b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Pyme<em>WebPro</em></span>
+  <span class="sp"></span>
+  <a href="/guia">Guía de Mi día</a>
+  <a class="cta" href="/">Ir a Mi día</a>
+</div>
+<div class="wrap">
+
+<h1>Manual de <em>ventas</em></h1>
+<p class="lede">Santi, esto es todo lo que necesitas para entender qué vendemos y cómo manejar una conversación, por WhatsApp, por teléfono o en persona. Si algo no está aquí, no lo prometas: escríbeme y te confirmo. Todo en pesos colombianos (COP), IVA incluido. Nunca cotices en dólares.</p>
+
+<div class="toc">
+  <b>Índice</b>
+  <ol>
+    <li><a href="#s1">Lo que vendemos</a></li>
+    <li><a href="#s2">El producto</a></li>
+    <li><a href="#s3">Adicionales</a></li>
+    <li><a href="#s4">Planes mensuales</a></li>
+    <li><a href="#s5">El pago (30/70)</a></li>
+    <li><a href="#s6">Cómo lo explicas</a></li>
+    <li><a href="#s7">Objeciones</a></li>
+    <li><a href="#s8">Lo que NO vendemos</a></li>
+    <li><a href="#s9">Cuándo escalar</a></li>
+    <li><a href="#s10">Reglas de oro</a></li>
+  </ol>
+</div>
+
+<h2 id="s1"><span class="n">1</span> Lo que vendemos, en una frase</h2>
+<p class="section-sub">Una sola idea, dícela tal cual.</p>
+<div class="card">
+<p style="margin:0 0 .6rem">Una <b>página de ventas</b>: una sola página, hecha a la medida, enfocada en que el cliente del negocio escriba, llame o reserve. No es "una web más" con muchas pestañas. Es una herramienta para conseguir clientes, lista en 48 horas.</p>
+<p style="margin:0"><b>"Tú traes la gente (Instagram, Google, voz a voz). Nosotros hacemos que, cuando lleguen, te vean serio y te escriban fácil."</b> No prometemos clientes de la nada. Hacemos que los que ya te buscan no se te escapen.</p>
+</div>
+
+<h2 id="s2"><span class="n">2</span> El producto · La página de ventas</h2>
+<div class="card">
+<div class="price-big">$400.000 COP</div>
+<p class="price-sub">Pago único, IVA incluido. En línea en ~48 horas. Incluye tu Ficha de Google.</p>
+<ul class="feat">
+  <li>Página de conversión de 6 pasos, enfocada en <b>una</b> acción principal.</li>
+  <li>Se ve y funciona bien en celular, tablet y computador.</li>
+  <li>Botón de WhatsApp o formulario de contacto (el cliente elige el principal).</li>
+  <li>Botón de "llamar" (click-para-llamar) y mapa de Google embebido.</li>
+  <li>Integración de reservas/citas si el negocio las usa (Cal.com o Calendly).</li>
+  <li>Sección de testimonios.</li>
+  <li><b>Su Ficha de Google configurada</b>, para que aparezca en el mapa cuando lo buscan.</li>
+  <li>Estructura SEO básica y analítica respetuosa de la privacidad.</li>
+  <li>Dominio + SSL configurados (el dominio, ~$50.000 a $150.000/año, lo paga el cliente; lo ayudamos a conseguirlo).</li>
+  <li>1 mes de hosting y soporte incluido.</li>
+  <li>2 rondas de ajustes.</li>
 </ul>
-<hr />
-<h2>1. Apertura (en frío)</h2>
-<p>Engancha con un problema concreto que viste en su negocio, no con un pitch genérico. La fórmula: lo que vi + por qué importa + una pregunta corta.</p>
-<p><strong>Si no tienen sitio:</strong></p>
-<blockquote>
-<p>Hola [nombre], vi el Instagram de [negocio] y me parece muy bueno lo que hacen. Una cosa: busqué la página y no encontré un sitio propio donde la gente cierre el contacto o el pedido. ¿Hoy por dónde te llegan los clientes nuevos?</p>
-</blockquote>
-<p><strong>Si tienen sitio lento o sin CTA:</strong></p>
-<blockquote>
-<p>Hola [nombre], entré a la página de [negocio] desde el celular. Carga lento y no vi un botón claro para escribirte o pedir. Eso hace que la gente se vaya antes de contactarte. ¿Te muestro cómo lo resolveríamos?</p>
-</blockquote>
-<p><strong>Si llegan por referido o por anuncio:</strong></p>
-<blockquote>
-<p>Hola [nombre], gracias por escribir. Cuéntame rápido: ¿qué es lo que más necesitas que tu página haga por ti, más mensajes por WhatsApp, más reservas, o más ventas de un producto puntual?</p>
-</blockquote>
-<p>Notas:</p>
-<ul>
-<li>Una sola pregunta. Que sea fácil responder.</li>
-<li>Nunca abras con precio. Primero el problema.</li>
-<li>Si no contestan en 2 o 3 días, un solo seguimiento (ver sección 6). No insistas más de eso.</li>
+</div>
+<div class="callout">El reloj de las 48 horas arranca <b>cuando tenemos el contenido y entró el depósito</b>. Siempre menciona las dos condiciones.</div>
+
+<h2 id="s3"><span class="n">3</span> Adicionales (opcionales, $75.000 c/u)</h2>
+<p class="section-sub">Súmalos solo si el cliente los necesita, no para inflar la cuenta.</p>
+<ul class="feat">
+  <li><b>Catálogo simple</b> · hasta 30 productos con foto, nombre, precio y descripción corta (el cliente sube su contenido a un portal). Sin carrito ni inventario.</li>
+  <li><b>Catálogo o menú descargable en PDF</b> · un PDF que el cliente puede guardar y compartir por WhatsApp.</li>
+  <li><b>Versión bilingüe ES/EN</b> · la misma página en español e inglés.</li>
 </ul>
-<hr />
-<h2>2. Descubrimiento</h2>
-<p>Cuatro preguntas, no más. Cada una te dice qué add-ons sumar a la página base y si el cliente califica (ver client-qualification).</p>
-<ol>
-<li><strong>La oferta:</strong> ¿Cuál es el servicio o producto principal que quieres que la página venda? (Si no pueden nombrar uno solo, es bandera roja.)</li>
-<li><strong>El objetivo:</strong> ¿Qué quieres que haga el visitante: escribirte por WhatsApp, dejar sus datos, reservar, o pedir?</li>
-<li><strong>Medición y seguimiento:</strong> ¿Quieres medir cuánta gente te contacta y que los datos te lleguen ordenados, o por ahora basta con que te escriban?</li>
-<li><strong>El contenido:</strong> ¿Tienes fotos y los textos listos, o prefieres que nosotros escribamos el texto?</li>
+<p class="section-sub">La Ficha de Google ya va incluida en la página, no es adicional.</p>
+
+<h2 id="s4"><span class="n">4</span> Planes mensuales (opcionales, sin contrato)</h2>
+<p class="section-sub">La página es pago único. Después del mes incluido, si quiere, hay un plan mensual. Ninguno es obligatorio.</p>
+<div class="plan">
+  <div class="pt">Hosting solo</div>
+  <div class="pp">$30.000/mes</div>
+  <p>(o $300.000/año). Mantiene la página en línea.</p>
+</div>
+<div class="plan">
+  <div class="pt">Plan de presencia</div>
+  <div class="pp">$50.000/mes</div>
+  <p>Hosting + Ficha de Google activa + hasta 2 cambios al mes + un reporte mensual.</p>
+</div>
+<div class="plan feature">
+  <span class="badge">El que da ingreso recurrente</span>
+  <div class="pt">Plan de ventas</div>
+  <div class="pp">$150.000/mes</div>
+  <p>Todo lo del Plan de presencia + un asistente de ventas 24/7: un chatbot en la página que responde las preguntas de los clientes y los pasa al WhatsApp del negocio con un clic. Sin costo de instalación.</p>
+</div>
+<div class="callout">El <b>chatbot va dentro del Plan de ventas</b>, no se vende como pago único. Si el cliente lo quiere, declara el mensual <b>antes</b> de cerrar, nunca después.</div>
+
+<h2 id="s5"><span class="n">5</span> El pago (30 / 70)</h2>
+<ul class="feat">
+  <li><b>30% para arrancar: $120.000.</b> No empezamos diseño ni desarrollo hasta que entre el depósito.</li>
+  <li><b>70% al lanzar: $280.000.</b> La página queda en una URL de prueba hasta que se pague el saldo; el dominio del cliente se conecta cuando se paga.</li>
+  <li>Todo por <b>Wompi</b> (tarjetas, PSE, transferencia), en COP.</li>
+  <li><b>Garantía de devolución a 30 días:</b> si no queda contento, bajamos la página y le devolvemos el dinero.</li>
+</ul>
+<p class="section-sub">Si suma adicionales, el total sube; el depósito sigue siendo $120.000 (30% de la página) y los adicionales van en el saldo al lanzar.</p>
+
+<h2 id="s6"><span class="n">6</span> Cómo lo explicas (llamada o en persona)</h2>
+<p class="section-sub">Primero <b>toma sus datos</b>: nombre, WhatsApp y correo. Sin eso no hay seguimiento. Luego: resultado, diferencia, recomendación. No leas una lista de funciones.</p>
+<div class="card">
+<p style="margin:0 0 .4rem"><span class="tag">Pitch corto</span> (adáptalo, no lo leas como robot):</p>
+<p style="margin:0;font-style:italic">"Lo que hacemos es una página de ventas: una sola página pensada para que el cliente te escriba o reserve. Se ve profesional, carga rápido y aparece en Google. Queda lista en 48 horas, a precio fijo: $400.000, pago único. Para arrancar es el 30% ($120.000) y el resto al lanzar. ¿Te armo un ejemplo gratis con tu negocio para que veas cómo quedaría?"</p>
+</div>
+<p class="section-sub">Cuatro preguntas para entender al cliente:</p>
+<ol class="steps">
+  <li><b>La oferta:</b> ¿cuál es el servicio o producto principal que quieres que la página venda?</li>
+  <li><b>El objetivo:</b> ¿qué quieres que haga el visitante: escribirte, dejar sus datos, reservar o pedir?</li>
+  <li><b>El contenido:</b> ¿tienes fotos y algo de texto, o prefieres que nosotros lo redactemos a partir de lo que tengas?</li>
+  <li><b>El seguimiento:</b> ¿quieres que la página atienda y agende sola 24/7? (ahí entra el Plan de ventas).</li>
 </ol>
-<p>Cómo leer las respuestas (todos parten de la misma página de $400.000, que ya incluye la Ficha de Google):</p>
-<ul>
-<li>Quiere que la página capte, responda y agende sola, y seguir a sus leads → ofrécele el <strong>Plan de ventas</strong> ($150.000/mes): asistente de ventas 24/7, un chatbot que responde las preguntas y pasa al cliente a su WhatsApp. Si solo quiere mantenimiento + Ficha de Google activa + reportes → <strong>Plan de presencia</strong> ($50.000/mes).</li>
-<li>Caso simple, una oferta, un botón, sin plan todavía → la página base sola; puede sumar un plan mensual después.</li>
-<li>Quiere mostrar productos → suma <strong>Catálogo simple</strong> ($75.000) o un <strong>catálogo o menú descargable en PDF</strong> ($75.000).</li>
-<li>Vende en dos idiomas → suma <strong>Versión bilingüe</strong> ($75.000).</li>
-<li>Pide tienda real o blog → no es la página base; se cotiza aparte como custom (escala). Pide app, portal, membresías → no es cliente. Léelo en scope-boundaries y suéltalo con honestidad.</li>
+
+<h2 id="s7"><span class="n">7</span> Manejo de objeciones</h2>
+<p class="section-sub">La regla: primero dale la razón, luego reencuadra. Nunca discutas.</p>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Está caro / lo consigo más barato."</p><p><b>Respondé:</b> Entiendo. Más barato siempre hay: una plantilla lenta o un conocido que no termina. Esto es una página propia, hecha a tu medida, que carga en menos de 1 segundo, lista en 48 horas y a precio fijo. Por lo que entrega, es de lo más rentable.</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Déjame pensarlo."</p><p><b>Respondé:</b> Claro. Solo para ayudarte: ¿qué te genera duda, el precio, el tiempo, o si va a funcionar para tu caso? Así resolvemos la duda real ahí mismo.</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "¿Me haces un descuento?"</p><p><b>Respondé:</b> El precio es fijo justamente para mantenerlo bajo y entregar rápido. Lo que sí puedo es ajustar el alcance: arrancamos con la página ($400.000) y le sumamos adicionales solo si los necesitas. (Nunca prometas descuento sin que Mike o yo lo aprobemos.)</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Ya nadie usa páginas web."</p><p><b>Respondé:</b> Tienes razón, los sitios viejos llenos de pestañas ya no sirven. Por eso no hacemos eso. Hacemos una página de ventas: una sola página enfocada en que te escriban. Hoy es más necesario que nunca, porque la gente te busca desde el celular y decide en segundos.</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Con Instagram me basta."</p><p><b>Respondé:</b> Instagram es buenísimo para que te descubran, sigue con eso. Pero ahí no controlas el algoritmo, no hay un botón claro para reservar y los mensajes se pierden. La página es donde cierras: trabaja 24/7, aparece en Google y todo lleva a una sola acción. Se complementan.</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Tengo un familiar que sabe de eso."</p><p><b>Respondé:</b> Buenísimo que tengas a alguien de confianza. La diferencia es la entrega: lista en 48 horas, precio fijo, soporte y garantía. Un favor muchas veces se queda a medias por falta de tiempo. Si quieres, te muestro un ejemplo y comparas.</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Mándame la info y la reviso."</p><p><b>Respondé:</b> Te paso el detalle con gusto. Pero lo más útil es que veas cómo quedaría TU página: te armo un ejemplo gratis con tu negocio, sin compromiso. ¿Te lo preparo?</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "¿Y si no me trae clientes?"</p><p><b>Respondé:</b> No te prometo clientes mágicos, sería mentira. Lo que sí: una página rápida, profesional y hecha para convertir, más 30 días de garantía. Si no quedas contento, te devolvemos el dinero. El riesgo lo asumimos nosotros.</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "No tengo los textos / las fotos."</p><p><b>Respondé:</b> Tranquilo. Nosotros pulimos y ordenamos tus textos como parte de la página; tú nos das lo que tengas, aunque sea en notas de voz. Para las fotos te digo qué necesito. El reloj de las 48 horas arranca cuando tenemos el contenido.</p></div>
+
+<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "¿Por qué el Plan de ventas tiene un mensual?"</p><p><b>Respondé:</b> Porque el asistente responde con inteligencia artificial en cada conversación, y eso tiene un costo real cada mes. Por eso el Plan de ventas es $150.000/mes e incluye el chatbot que capta, responde y pasa al cliente a tu WhatsApp, además del hosting, la Ficha activa y los cambios. La página en sí es pago único; el plan mensual es opcional.</p></div>
+
+<h2 id="s8"><span class="n">8</span> Lo que NO vendemos</h2>
+<p class="section-sub">Si la necesidad central del cliente es esto, no es nuestro cliente para la página. Se puede cotizar aparte, pero nunca lo prometas tú: "déjame confirmarte".</p>
+<ul class="feat">
+  <li>Tienda en línea real (carrito, inventario, pagos, variantes, envíos). El catálogo simple es hasta donde llegamos.</li>
+  <li>Blog real (CMS, artículos, publicación continua).</li>
+  <li>Páginas extra, más de un idioma extra, o "cambios ilimitados".</li>
+  <li>Apps, portales con login, membresías, automatizaciones complejas.</li>
 </ul>
-<hr />
-<h2>3. Posicionamiento</h2>
-<p>Después de descubrir, presenta en 3 mensajes cortos. Vende el sistema, la velocidad y la certeza.</p>
-<p><strong>Mensaje 1 · el qué:</strong></p>
-<blockquote>
-<p>Lo que hacemos es un funnel: una página enfocada en una sola acción, diseñada para que el visitante te contacte. No es "una web más", es una herramienta para conseguir clientes.</p>
-</blockquote>
-<p><strong>Mensaje 2 · la diferencia (velocidad + precio fijo):</strong></p>
-<blockquote>
-<p>Precio fijo, alcance definido, y en línea en ~48 horas desde que tenemos el contenido. Lo que una agencia te cobra en millones y te entrega en semanas, nosotros lo entregamos en días con un precio claro.</p>
-</blockquote>
-<p><strong>Mensaje 3 · la recomendación concreta:</strong></p>
-<blockquote>
-<p>Para [negocio] arrancamos con la página de ventas ($400.000) y le sumamos [add-on(s) que apliquen]. [Una línea de por qué, atada a lo que dijo en descubrimiento.] Te paso el detalle y la cotización.</p>
-</blockquote>
-<p>Luego envías el one-pager y la cotización del configurador (con el resumen de alcance).</p>
-<p>Frases que SÍ usamos: "alcance fijo", "precio claro", "en ~48 horas", "hecho para convertir", "carga en menos de 1 segundo".
-Frases que NO usamos: "somos los mejores", "calidad mundial", "soluciones a tu medida", "lo que necesites", "revisiones ilimitadas".</p>
-<hr />
-<h2>4. Cómo presentar el precio</h2>
-<ul>
-<li>Manda el número con seguridad, sin pedir perdón. El precio es el precio.</li>
-<li>Siempre acompáñalo del resumen de qué incluye y qué no. Eso evita malentendidos después.</li>
-<li>Recuerda el split: 30% para arrancar, 70% al lanzar. Wompi, en pesos.</li>
+
+<h2 id="s9"><span class="n">9</span> Cuándo escalar (a Mike o a mí)</h2>
+<ul class="rules">
+  <li>El cliente pide algo fuera de la lista de arriba.</li>
+  <li>Pide un descuento o condiciones de pago distintas al 30/70.</li>
+  <li>Tiene una fecha urgente que no estás seguro de poder cumplir.</li>
+  <li>Cualquier cosa que no estés 100% seguro de que está incluida. Cuando dudes: "déjame confirmarte", no "sí".</li>
 </ul>
-<p><strong>Plantilla (página base):</strong></p>
-<blockquote>
-<p>La página de ventas son $400.000 COP, pago único, IVA incluido. Incluye [3 a 4 cosas clave]. Para arrancar es el 30% ($120.000) y el 70% restante al lanzar. ¿Te lo dejo listo para empezar?</p>
-</blockquote>
-<p><strong>Plantilla (página + add-ons):</strong></p>
-<blockquote>
-<p>Con [add-on(s)] el total queda en $[total del configurador] COP, pago único, IVA incluido. Para arrancar es el 30% ($[depósito]) y el resto al lanzar.</p>
-</blockquote>
-<p>Si suman add-ons, manda el total del configurador, no sumes a mano.</p>
-<p><strong>El chatbot va dentro del Plan de ventas mensual, no es pago único.</strong> Si el cliente quiere el asistente 24/7, es el Plan de ventas ($150.000/mes). Declara el mensual desde ya, nunca lo vendas como si fuera solo pago único.</p>
-<blockquote>
-<p>La página es pago único. Después del mes incluido, si quieres, hay planes mensuales (sin contrato): hosting $30.000/mes, Plan de presencia $50.000/mes (hosting + Ficha de Google activa + hasta 2 cambios + reporte), o Plan de ventas $150.000/mes (todo + tu asistente de ventas 24/7, el chatbot que responde y pasa al cliente a tu WhatsApp). Te lo digo desde ahora para que no haya sorpresas.</p>
-</blockquote>
-<p>Si el cliente va a tomar un plan mensual, tiene que escucharlo ANTES de pagar, nunca después.</p>
-<hr />
-<h2>5. Manejo de objeciones</h2>
-<p>Responde corto, valida, y reencuadra. Nunca discutas.</p>
-<p><strong>"Está caro / lo puedo conseguir más barato."</strong></p>
-<blockquote>
-<p>Entiendo. Hay opciones más baratas, casi siempre plantillas lentas o un primo que no termina. Esto es una página propia, custom, que carga en menos de 1 segundo y está hecha para convertir, lista en ~48 horas. Por el precio fijo, es de lo más rentable que vas a encontrar.</p>
-</blockquote>
-<p><strong>"Déjame pensarlo."</strong></p>
-<blockquote>
-<p>Claro. Para ayudarte a decidir: ¿qué es lo que te genera duda, el precio, el tiempo, o si va a funcionar para tu caso?</p>
-</blockquote>
-<p><strong>"¿Me haces un descuento?"</strong></p>
-<blockquote>
-<p>El precio es fijo justamente para poder mantenerlo bajo y entregar rápido. Lo que sí puedo hacer es ajustar el alcance: arrancamos con la página base ($400.000) y le sumamos add-ons solo si los necesitas. (Nunca prometas descuento sin aprobación.)</p>
-</blockquote>
-<p><strong>"¿Y si no me gusta?"</strong></p>
-<blockquote>
-<p>Tienes 30 días de garantía: si no quedas contento, bajamos el sitio y te devolvemos el dinero dentro de la ventana. El riesgo lo asumimos nosotros.</p>
-</blockquote>
-<p><strong>"¿Me pueden hacer también [tienda / app / portal / algo custom]?"</strong></p>
-<blockquote>
-<p>Eso es más grande que lo que cubre un funnel. Nosotros hacemos funnels de conversión, no [tiendas / apps]. Déjame confirmarte si hay forma de ayudarte con eso aparte. (Esto va a aprobación. No prometas nada.)</p>
-</blockquote>
-<p><strong>"Necesito muchísimos cambios / que quede perfecto."</strong></p>
-<blockquote>
-<p>Incluimos 2 rondas de ajustes, y cada ronda es un paquete de cambios juntos. Si necesitas más, hay rondas adicionales. Así avanzamos rápido y sin que se eternice.</p>
-</blockquote>
-<p><strong>"No tengo los textos / las fotos."</strong></p>
-<blockquote>
-<p>Tranquilo. Pulimos y ordenamos tus textos como parte de la página; tú nos das lo que tengas (aunque sea en notas de voz) y nosotros lo dejamos vendedor. Para las fotos te digo qué necesito. El reloj de las 48 horas arranca cuando tenemos el contenido.</p>
-</blockquote>
-<p><strong>"¿Por qué el Plan de ventas tiene un mensual?"</strong></p>
-<blockquote>
-<p>Porque el asistente de ventas responde con inteligencia artificial en cada conversación y eso tiene un costo real cada mes. Por eso el Plan de ventas es $150.000 COP/mes e incluye el chatbot que capta, responde y pasa al cliente a tu WhatsApp, además del hosting, la Ficha de Google activa y los cambios. La página en sí es pago único; el plan mensual es opcional. Es de lo más rentable para tener un asistente capturando clientes 24/7.</p>
-</blockquote>
-<hr />
-<h2>6. Seguimiento</h2>
-<ul>
-<li>Un solo seguimiento si no responden. Corto, sin culpa, con una razón para responder.</li>
+
+<h2 id="s10"><span class="n">10</span> Reglas de oro</h2>
+<ul class="rules">
+  <li>El producto es <b>la página de ventas: $400.000 COP</b>, pago único, IVA incluido. Incluye la Ficha de Google. Adicionales a <b>$75.000 c/u</b>.</li>
+  <li>Pago <b>30% para arrancar ($120.000)</b> y <b>70% al lanzar ($280.000)</b>. Siempre por Wompi, siempre en COP.</li>
+  <li>Entrega en <b>~48 horas</b> desde que llega el contenido y el depósito.</li>
+  <li>Habla de <b>resultados</b> (más clientes, más reservas), no de "páginas web".</li>
+  <li><b>Nunca prometas resultados garantizados</b> (número de clientes, quedar #1 en Google). Sí: la página está hecha para convertir, más la garantía de 30 días.</li>
+  <li>Toma siempre <b>nombre, WhatsApp y correo</b> antes de avanzar.</li>
+  <li>Mejor preguntar que prometer algo que no podemos cumplir.</li>
 </ul>
-<blockquote>
-<p>Hola [nombre], te dejo el detalle por si lo viste rápido. ¿Lo dejamos andando esta semana o prefieres que te llame 5 minutos para resolver dudas?</p>
-</blockquote>
-<ul>
-<li>Después de cotizar y quedar en "lo pienso", un toque a los 3 días:</li>
-</ul>
-<blockquote>
-<p>[nombre], ¿alguna duda que te haya quedado del funnel? Si quieres arrancamos con el 30% y en ~48 horas lo tienes en línea.</p>
-</blockquote>
-<ul>
-<li>Si no hay respuesta tras el segundo toque, cierra el hilo con elegancia y déjalo para más adelante. No persigas.</li>
-</ul>
-<hr />
-<h2>7. Cierre</h2>
-<p>El cierre es pedir el depósito con naturalidad. Asume la venta.</p>
-<blockquote>
-<p>Perfecto. Te paso el link de Wompi para el 30% y arrancamos hoy mismo. Apenas entre, te pido el contenido y en ~48 horas lo tienes en línea. ¿Te lo envío?</p>
-</blockquote>
-<p>Después del sí:</p>
-<ul>
-<li>Manda el link de depósito de Wompi.</li>
-<li>Pide el contenido (textos, fotos, logo, datos de contacto) en una sola lista clara.</li>
-<li>Recuérdale: las ~48 horas arrancan cuando llega el contenido y entra el depósito.</li>
-<li>Confirma qué quedó dentro del alcance (manda otra vez el resumen del configurador). Sin sorpresas después.</li>
-</ul>
-<hr />
-<h2>Recordatorio final</h2>
-<p>Tu trabajo es conectar al cliente correcto con el funnel correcto y cerrar limpio. No inventes alcance, ni precio, ni tiempos. Si algo no está en el configurador, el one-pager o el rulebook, no lo prometas: "déjame confirmarte" y escala a Mike (clientes en inglés / expats) o a Santi (clientes en español).</p></div></section><section id="reglas"><div class="doc"><h1>Reglas de venta</h1>
-<p>Documento interno. Para vendedores por comisión. Corto a propósito. Léelo completo una vez, y déjalo abierto mientras vendes.</p>
-<p>Tu trabajo es cerrar la página de ventas estandarizada, rápido y limpio. No eres un ejecutivo de cuenta negociando una construcción a la medida. El producto es fijo: una página, más add-ons del menú. Tu habilidad es emparejar al prospecto correcto con la página y los add-ons correctos, y llevarlo al sí sin prometer cosas que no vendemos.</p>
-<p><strong>La regla por encima de todas:</strong> nunca inventes alcance, precio ni tiempos. Si no está en el configurador, ni en este documento, no tienes la autoridad para prometerlo.</p>
-<hr />
-<h2>Qué SÍ puedes prometer</h2>
-<ul>
-<li>La página de ventas exactamente como está: $400.000 COP, pago único, IVA incluido.</li>
-<li>Cualquier add-on del menú, a su precio de lista, dentro de su tope (ver <code>add-on-menu.md</code>).</li>
-<li>Lanzamiento en aproximadamente 48 horas <strong>después</strong> de que tengamos el contenido y haya entrado el depósito. Siempre menciona las dos condiciones.</li>
-<li>Todo lo de la lista de incluidos de la página (ver <code>scope-boundaries.md</code>).</li>
-<li>30% de depósito para arrancar, 70% al lanzar. Wompi, en COP.</li>
-<li>2 rondas de ajustes incluidas en la página.</li>
-<li>La garantía de devolución a 30 días tal cual (bajamos el sitio + devolución total dentro de la ventana si el cliente no queda contento).</li>
-<li>Carga en menos de 1 segundo como nuestro estándar de calidad. Es real, lo puedes prometer.</li>
-</ul>
-<h2>Qué NO puedes prometer</h2>
-<ul>
-<li>Cualquier precio distinto al del configurador. Sin descuentos, sin "te lo redondeo", sin add-ons gratis para cerrar. Los descuentos requieren aprobación.</li>
-<li>Cualquier cosa que no esté en la lista de incluidos o en el menú de add-ons. Ni "una cosita custom", ni "eso seguro también lo podemos hacer".</li>
-<li>Un tiempo más rápido que 48 horas, o las 48 horas sin tener el contenido y el depósito.</li>
-<li>Desarrollo a la medida, apps, portales, plataformas de ecommerce, membresías, integraciones más allá del menú. Eso está totalmente fuera del modelo. (Tienda real y blog se pueden cotizar aparte como custom, pero nunca desde el configurador y nunca sin aprobación.)</li>
-<li>"Revisiones ilimitadas". Esta frase nunca sale de tu boca. Las revisiones son rondas, y las rondas extra se cobran.</li>
-<li>Trabajo continuo (SEO, contenido, pauta, ediciones mensuales) empaquetado en el pago único.</li>
-<li>Un chatbot sin costo continuo. El chatbot va dentro del Plan de ventas mensual ($150.000/mes), no es pago único. Nunca lo vendas ni lo insinúes como solo pago único. Declara el mensual antes de que compre, nunca después.</li>
-<li>Promesas de resultados ("vas a recibir X leads/ventas"). Vendemos una página bien hecha, no un resultado garantizado. Puedes decir que la página está hecha para convertir; no puedes garantizar números.</li>
-<li>Resultados de terceros que no controlas (quedar #1 en Google, un CPC de pauta específico, etc.).</li>
-</ul>
-<h2>Qué REQUIERE aprobación (Mike o Santi, antes de prometerlo)</h2>
-<p>Manda un mensaje de una línea y espera el sí. No te comprometas con el cliente antes.</p>
-<ul>
-<li>Cualquier descuento o cambio de precio.</li>
-<li>Cualquier add-on por encima de su tope (4+ páginas extra, 31+ productos, un tercer idioma, etc.).</li>
-<li>Cualquier pedido fuera de alcance que tal vez consideremos como una cotización custom puntual (tienda real, blog, etc.).</li>
-<li>Términos de pago distintos al 30/70 (depósitos partidos en más, plazos, etc.).</li>
-<li>Tiempos urgentes o fechas externas duras que no estés seguro de poder cumplir.</li>
-<li>Cualquier cosa que no estés 100% seguro de que está incluida. Cuando dudes, la respuesta al cliente es "déjame confirmarte", no "sí".</li>
-</ul>
-<hr />
-<h2>Cómo posicionar el producto</h2>
-<p>Lidera con el resultado, no con la construcción. El cliente compra más clientes y una buena primera impresión, no "una página web".</p>
-<ul>
-<li><strong>Ancla en el problema.</strong> La mayoría de los prospectos no tiene sitio, tiene un sitio lento, o un sitio sin una llamada a la acción clara. Nombra el problema específico que ves, y luego presenta la página como la solución.</li>
-<li><strong>Vende primero la página base.</strong> Una sola oferta limpia: $400.000, pago único, en línea en ~48 horas. No hay planes que comparar ni decisión de tier que trabar la venta. Cierra la página, después suma add-ons según la necesidad real.</li>
-<li><strong>Suma add-ons o un plan mensual cuando el prospecto los necesita, no para inflar el ticket.</strong> La Ficha de Google ya va en la página base. Add-ons a $75.000 c/u: Catálogo simple, Catálogo o menú descargable en PDF, Versión bilingüe. Si quiere que la página capte/responda/agende sola y seguir leads, ofrece el Plan de ventas ($150.000/mes, incluye el chatbot); si solo quiere mantenimiento + Ficha activa + reportes, el Plan de presencia ($50.000/mes). Declara cualquier mensual antes de que compre.</li>
-<li><strong>Vende velocidad y certeza.</strong> "Alcance fijo, precio fijo, en línea en ~48 horas" es el pitch. Las agencias cotizan dos semanas y cobran millones. Nosotros cotizamos en un mensaje y lanzamos en dos días.</li>
-<li><strong>Vende el nivel de calidad con honestidad.</strong> Números reales (carga menor a 1s, mobile perfecto, hecho para convertir) le ganan a los adjetivos. Sin "calidad mundial", sin "agencia premium", sin relleno.</li>
-</ul>
-<h2>Cómo evitar el scope creep</h2>
-<p>El scope creep mata tu margen y el nuestro, y un proyecto que se eterniza no te paga más rápido. Protege el alcance y proteges tu comisión.</p>
-<ul>
-<li><strong>Cotiza desde el configurador, siempre.</strong> Nunca un número de tu cabeza. La salida del configurador es el alcance. Lo que está ahí entra; lo que no, no.</li>
-<li><strong>Manda el resumen de alcance con la cotización.</strong> El configurador genera "qué incluye / qué no". Mandarlo fija las expectativas antes de que cambie el dinero de manos, que es cuando más barato cuesta fijarlas.</li>
-<li><strong>Cuando el cliente suma un pedido a mitad de conversación, pásalo por el test de límites</strong> (<code>scope-boundaries.md</code>): incluido → add-on → fuera de alcance. Cotiza el add-on o di que está fuera de la página. No lo absorbas por ser amable.</li>
-<li><strong>"¿Y también me puedes...?" es un cambio pago o un no.</strong> Amable y firme: "Eso lo hacemos, es el [add-on] a $X", o "Eso está fuera de lo que cubre la página, esto es lo que sí puedo hacer".</li>
-<li><strong>Bloquea el contenido como dependencia.</strong> Las 48 horas arrancan cuando llega el contenido. Un cliente que cambia el brief una y otra vez está atrasando su propio lanzamiento, no ganándose trabajo gratis. Dilo con amabilidad y claridad.</li>
-<li><strong>Una ronda consolidada por ciclo.</strong> No dejes que las revisiones se vuelvan un goteo de cambios sueltos. Pide al cliente que mande todos los cambios de una ronda juntos.</li>
-</ul>
-<h2>Cómo calificar (versión rápida)</h2>
-<p>Versión completa en <code>client-qualification.md</code>. El filtro de 60 segundos:</p>
-<ul>
-<li><strong>¿Necesita convertir leads en clientes?</strong> Esa es toda la audiencia: cualquier pyme, cualquier sector. Durante la construcción enfocamos la página en una acción principal; si se niega a priorizar un objetivo, espera menos conversión y más revisiones.</li>
-<li><strong>¿Lo que necesita es de verdad una página de ventas?</strong> Si su necesidad central es una tienda real, una app, un portal o un motor de reservas, no es nuestro cliente (tienda real y blog se pueden cotizar aparte, pero no son la página). Dilo temprano.</li>
-<li><strong>¿Puede entregar contenido (o al menos lo básico para que nosotros lo redactemos)?</strong> Nosotros pulimos y ordenamos el texto como parte de la página, pero sin nada de su parte (ni fotos ni la info básica del negocio) el proyecto se estanca.</li>
-<li><strong>¿Es decisivo, y la persona con la que hablas es quien decide?</strong> Las compras por comité y los "déjame preguntarle a cinco personas" queman rondas de revisión.</li>
-<li><strong>¿Las expectativas son realistas?</strong> Quien quiere un imperio de ecommerce por $400.000, o "cambios ilimitados", es una futura carga de soporte. Resetea expectativas o suéltalo.</li>
-</ul>
-<p>Un prospecto descalificado que sueltas temprano es una victoria. Protege tu tiempo para los negocios que de verdad cierran y pagan.</p>
-<hr />
-<h2>Higiene de comisión (protege tu propio pago)</h2>
-<ul>
-<li>Un negocio limpio y dentro de alcance te paga y cierra rápido. Un negocio desordenado y sobre-prometido se atasca en entrega y atrasa a todos.</li>
-<li>Si sobre-prometes para cerrar, el proyecto cae roto en operaciones, y ese patrón se nota. A los vendedores que cotizan limpio se les enrutan más leads.</li>
-<li>Cuando dudes, promete de menos y deja que el producto entregue de más. La calidad de la construcción te respalda.</li>
-</ul>
-<h2>Escalamiento, en una línea</h2>
-<p>Cualquier cosa fuera de la página + el menú de add-ons + estas reglas: un mensaje a Mike (clientes en inglés / expats) o a Santi (clientes en español / colombianos), espera la respuesta, y luego le respondes al cliente.</p></div></section><section id="calificacion"><div class="doc"><h1>Calificación de clientes</h1>
-<p>Documento interno. El negocio más barato de arreglar es el que nunca tomaste. Este marco existe para que los vendedores descalifiquen temprano a los prospectos que no encajan, antes de que consuman rondas de revisión, tiempo de soporte y buena voluntad que el precio de $400.000 nunca fue diseñado para cubrir.</p>
-<p>Calificar no es poner trabas. Es emparejar. Un prospecto que necesita una plataforma de ecommerce no es mala persona, simplemente no es nuestro cliente, y decírselo rápido es la respuesta profesional y honesta que protege a ambas partes.</p>
-<hr />
-<h2>El cliente ideal</h2>
-<p>Estas señales significan "vende con confianza".</p>
-<ul>
-<li><strong>Cualquier pyme colombiana que necesita convertir leads en clientes.</strong> El sector da igual. Si tiene visitantes, tráfico de pauta o seguidores que no se están volviendo clientes, encaja. Ese es el problema que resolvemos.</li>
-<li><strong>Sin sitio, con un sitio lento, o con un sitio sin llamada a la acción clara.</strong> El problema es obvio y el funnel es la solución obvia.</li>
-<li><strong>Quiere leads, reservas o pedidos, medidos de forma simple.</strong> Su objetivo coincide directo con lo que hace un funnel.</li>
-<li><strong>Puede entregar contenido, o nos deja redactarlo a partir de lo que tenga.</strong> Fotos, textos básicos, su oferta. Está listo para alimentar la construcción.</li>
-<li><strong>Decisivo, y la persona con la que hablas puede decir que sí.</strong> Dueño o quien decide con autoridad. Paga el depósito sin comité.</li>
-<li><strong>Expectativas realistas.</strong> Entiende que compra un funnel rápido y bien hecho a un precio fijo justo, no un proyecto de software a la medida.</li>
-<li><strong>Valora la velocidad.</strong> El lanzamiento en 48 horas es una característica que de verdad quiere, no un detalle que ignora.</li>
-</ul>
-<h2>El encaje es por la necesidad, no por el sector</h2>
-<p>Somos para cualquier pyme que necesita convertir leads en clientes. La industria es irrelevante: una clínica, un restaurante, un SaaS, una constructora, un reclutador, una marca de producto, un gimnasio, un importador, un agente inmobiliario, todos encajan igual si tienen tráfico o leads que no convierten. No filtres por sector. Filtra por el problema (¿están perdiendo clientes potenciales?) y por los descartes de abajo (¿su necesidad central es de verdad un funnel?).</p>
-<hr />
-<h2>Banderas rojas (baja el ritmo, resetea expectativas, o suéltalo)</h2>
-<p>Una bandera roja significa avanzar con cuidado y resetear expectativas. Dos o más, considera seriamente soltarlo.</p>
-<ul>
-<li><strong>No quiere priorizar una acción principal para la página.</strong> Un funnel convierte cuando apunta a una acción principal. Si insiste en que la página empuje todo a la vez y se niega a elegir el objetivo, espera menos conversión y más revisiones. Es un problema de enfoque, no una razón para descalificar por sí solo.</li>
-<li><strong>No puede ni quiere entregar nada de contenido,</strong> ni siquiera lo básico para que nosotros lo redactemos. La construcción se estanca de su lado y nos echa la culpa.</li>
-<li><strong>Pedidos vagos.</strong> "Quiero algo moderno, diferente y especial." La vaguedad de ahora se vuelve revisiones interminables después.</li>
-<li><strong>Quiere estar en cada llamada, cambia de opinión seguido, diseña por comité.</strong> Las rondas de revisión se evaporan.</li>
-<li><strong>Anclado a gratis o casi gratis.</strong> Quien cree que $400.000 es caro por un funnel a la medida no valora el trabajo y será la carga de soporte más pesada.</li>
-<li><strong>Nos compara con una construcción de agencia a la medida</strong> y espera alcance de agencia a nuestro precio. Modelo equivocado. Resetea o suéltalo.</li>
-<li><strong>Urgencia sin flexibilidad</strong> y sin contenido listo. "Lo necesito en línea mañana" más "todavía no tengo los textos" no pueden ser ciertas a la vez.</li>
-<li><strong>Trata la garantía de 30 días como una prueba gratis,</strong> señalando que planea sacar trabajo y pedir devolución. Raro, pero el lenguaje lo delata.</li>
-</ul>
-<hr />
-<h2>Tipos de proyecto que descartamos (esto no es un funnel)</h2>
-<p>Si la necesidad <strong>central</strong> del prospecto es cualquiera de estas, está fuera de alcance como cliente, no solo como cotización. No intentes encoger su proyecto a un funnel para hacer la venta. No va a entregar y no va a pagar.</p>
-<ul>
-<li>Una tienda de ecommerce real: carrito, inventario, fulfillment, varias pasarelas de pago, cientos de SKUs.</li>
-<li>Una app web o móvil, SaaS, o cualquier software bespoke.</li>
-<li>Un marketplace o plataforma multi-vendedor.</li>
-<li>Un portal de cliente, dashboard, o cualquier área de usuario con login.</li>
-<li>Una plataforma de membresía, cursos o suscripción.</li>
-<li>Un motor de reservas con lógica a la medida (no solo integrar una herramienta existente).</li>
-<li>Una migración de un sitio grande existente o un trabajo de "recibir y arreglar esta construcción compleja".</li>
-<li>Un proyecto de branding/rebranding (logo, identidad completa).</li>
-<li>Un servicio continuo disfrazado de proyecto: SEO mensual, producción de contenido, redes sociales, manejo de pauta.</li>
-</ul>
-<p>El movimiento correcto: "Lo que describes es más grande que lo que cubren nuestros funnels. Nosotros hacemos funnels de conversión, no [tiendas / apps / portales]. Si algún día quieres una página rápida y enfocada para volver visitantes en clientes, eso es justo lo nuestro." Y lo sueltas con elegancia.</p>
-<hr />
-<h2>Señales de que un cliente saldrá caro a nivel operativo</h2>
-<p>No siempre descalifican, pero predicen que la entrega costará más de lo que deja la venta. Pésalas con honestidad, porque un cliente caro atrasa tu próxima comisión tanto como la nuestra.</p>
-<ul>
-<li><strong>Compra rondas de revisión una y otra vez.</strong> Un cliente en la ronda cuatro o cinco no está iterando, es incapaz de decidir. El producto no es el problema.</li>
-<li><strong>Trata el alcance fijo como punto de partida para negociar.</strong> Cada conversación suma un "y también me puedes". El scope creep es su modo por defecto.</li>
-<li><strong>Comunicación de alto contacto para un producto de bajo contacto.</strong> Mensajes diarios, llamadas por detalles mínimos, quiere aprobar cada pixel. El margen no lo aguanta.</li>
-<li><strong>El contenido llega tarde, mal y en pedazos,</strong> y luego espera que absorbamos el atraso.</li>
-<li><strong>Confunde pago único con continuo.</strong> Asume que el pago único incluye ediciones y soporte para siempre. Corrígelo antes del depósito, por escrito, siempre.</li>
-<li><strong>Pide "una cosita más" después del lanzamiento,</strong> una y otra vez, esperando que sea gratis. La ventana de ajustes gratis tiene un final duro por una razón.</li>
-<li><strong>Quiere resultados garantizados</strong> y tratará cualquier cosa por debajo de eso como un motivo para pedir devolución.</li>
-</ul>
-<hr />
-<h2>El flujo de calificación (úsalo en orden)</h2>
-<ol>
-<li><strong>¿Cuál es la acción principal?</strong> Define la única cosa que la página debe lograr que el visitante haga (escribir, reservar, comprar, registrarse). Esto enfoca la construcción. Es un insumo de diseño, no un descarte: todos los sectores califican.</li>
-<li><strong>¿Es un funnel?</strong> Pasa su necesidad central por la lista de proyectos descartados. Si su necesidad central está ahí, suéltalo.</li>
-<li><strong>¿Contenido listo, o al menos lo básico para redactarlo?</strong> Si no hay nada, el proyecto se estanca. Fija la dependencia: que entregue fotos e info básica, o que acepte que nosotros redactemos a partir de lo que tenga.</li>
-<li><strong>¿Quien decide, y es decisivo?</strong> Si es un comité o un "déjame preguntar por ahí", espera quema de revisiones. Cotiza y maneja el ritmo en consecuencia.</li>
-<li><strong>¿Expectativas realistas?</strong> Resetea el modelo (alcance fijo, rápido, precio justo) hasta que asienta, o suéltalo.</li>
-<li><strong>¿Señales de cliente caro?</strong> Si hay dos o más, o aprietas los términos (contenido bloqueado, rondas con tope, alcance por escrito) o pasas.</li>
-</ol>
-<p>Un prospecto que no pasa esto no es ingreso perdido. Es costo evitado. Suéltalo con cortesía, mantén tu pipeline limpio, y dedica el tiempo a un negocio que cierra rápido y paga.</p></div></section><section id="alcance"><div class="doc"><h1>Límites de alcance</h1>
-<p>Documento interno. Es el documento más importante del sistema a nivel operativo. Define, sin ambigüedad, qué entregamos, qué nunca entregamos, y dónde está la línea. Si un vendedor, un cliente o un futuro compañero alguna vez duda si algo "entra", la respuesta está en este archivo. Si no está escrito aquí como incluido, no está incluido.</p>
-<p>La frase para memorizar: <strong>vendemos una página de ventas estandarizada con alcance fijo, más un menú fijo de add-ons. Todo lo demás está fuera de alcance por defecto.</strong></p>
-<hr />
-<h2>Por qué la disciplina de alcance es todo el negocio</h2>
-<p>PymeWebPro es un estudio productizado, no una agencia. El precio ($400.000 COP por la página de ventas) y el lanzamiento en 48 horas solo funcionan porque el alcance es fijo y repetible. En el momento en que decimos sí a "una cosita custom", se rompen tres cosas a la vez: el cronograma se atrasa, el margen desaparece, y el siguiente cliente espera el mismo favor. Proteger el alcance no es burocracia. Es la razón por la que el precio puede seguir tan bajo y la entrega tan rápida.</p>
-<p>Un "no, eso está fuera de lo que hacemos" dicho temprano es más barato que un "sí" entregado tarde, por encima del presupuesto y con resentimiento.</p>
-<hr />
-<h2>Qué incluye la página de ventas ($400.000 COP, IVA incluido)</h2>
-<p>Hay un solo producto. Esto es lo que trae, siempre:</p>
-<ul>
-<li>Un funnel de conversión de una página, diseñado a la medida, con estructura de 6 pasos.</li>
-<li>Responsive en celular, tablet y computador.</li>
-<li>Estructura enfocada en el CTA (la página apunta a una sola acción principal).</li>
-<li>Botón de WhatsApp o formulario de contacto (el cliente elige el principal).</li>
-<li>Botón click-para-llamar.</li>
-<li>Mapa de Google embebido.</li>
-<li>Integración de reservas/citas: integramos y damos estilo a una herramienta de agenda que el cliente use (Cal.com, Calendly), para negocios que toman citas. No es un motor de reservas a la medida.</li>
-<li>Sección de testimonios.</li>
-<li>Analítica privacy-first (estadísticas básicas de tráfico, sin cookies).</li>
-<li>Estructura SEO básica (título, meta, encabezados, marcado semántico, sitemap básico).</li>
-<li>Tu Ficha de Google (perfil de negocio) configurada para que te encuentren en el mapa.</li>
-<li>Carga rápida (nuestro estándar es LCP menor a 1 segundo).</li>
-<li>Conexión de dominio + SSL. Configuramos el dominio y el SSL; el costo de registro/renovación del dominio lo asume el cliente. Si no tiene dominio, lo ayudamos a conseguirlo, pero él lo paga.</li>
-<li>1 mes de hosting + soporte Cloudflare incluido.</li>
-<li>2 rondas de ajustes (una ronda es un paquete consolidado de cambios).</li>
-<li>Lanzamiento en aproximadamente 48 horas desde que tenemos el contenido y el depósito.</li>
-</ul>
-<p>La Ficha de Google ya va incluida en la base. Los add-ons opcionales son 3, todos a $75.000 c/u: catálogo simple, catálogo o menú descargable en PDF, y versión bilingüe. El chatbot y el mantenimiento continuo van en los planes mensuales (Plan de presencia $50.000/mes, Plan de ventas $150.000/mes), no como add-on de pago único.</p>
-<hr />
-<h2>Qué NO incluye la página</h2>
-<p>Se asumen a menudo, pero no son parte de la página base. Si un cliente los espera gratis, esa es una conversación de alcance antes del depósito, no después.</p>
-<ul>
-<li>Ecommerce / carrito / checkout.</li>
-<li>Portales de cliente o cualquier área con login.</li>
-<li>Sistemas de membresía o suscripción.</li>
-<li>Automatizaciones avanzadas o de varios pasos.</li>
-<li>Sistemas de inventario o stock.</li>
-<li>Edición continua después de las rondas de ajustes incluidas.</li>
-<li>Branding o rebranding (diseño de logo, identidad de marca, manual de marca).</li>
-<li>Redacción extensa o de marca a la medida. Construimos la estructura y pulimos tu texto como parte de la página; un proyecto de copywriting grande se cotiza aparte.</li>
-<li>SEO avanzado (campañas de keywords, link building, estrategia de contenido, optimización continua).</li>
-<li>El costo de registro/renovación del dominio. Configuramos el dominio y el SSL, pero el cliente es dueño del dominio y lo paga (lo ayudamos a conseguirlo si hace falta).</li>
-</ul>
-<p>Varios de los anteriores tienen una versión <strong>acotada</strong> disponible como add-on. Lea la siguiente sección con cuidado: "disponible como add-on" no es lo mismo que "incluido".</p>
-<hr />
-<h2>Qué requiere un add-on (acotado, en el menú)</h2>
-<p>Son posibles, pero solo en la forma exacta y con el tope definido en <code>add-on-menu.md</code>. Cotícelos desde el configurador, nunca a mano.</p>
-<ul>
-<li>Catálogo simple ($75.000, máx. 30 productos, sin carrito/inventario; el cliente sube su contenido a un portal).</li>
-<li>Catálogo o menú descargable en PDF ($75.000, un imán de leads).</li>
-<li>Versión bilingüe ES/EN ($75.000, un idioma adicional).</li>
-</ul>
-<p>Son los únicos tres add-ons de pago único. La <strong>Ficha de Google</strong> ya va incluida en la base. El <strong>chatbot / asistente 24/7</strong> y el mantenimiento continuo van en los <strong>planes mensuales</strong> (Plan de presencia $50.000/mes, Plan de ventas $150.000/mes), no como add-on. Páginas extra, rondas de ajustes adicionales, o cualquier pedido por encima del tope (50 productos, tres idiomas, "revisiones ilimitadas") dejan de ser add-on y se cotizan aparte con Mike o Santi. Vea las siguientes secciones.</p>
-<hr />
-<h2>Fuera de alcance pero COTIZABLE (cotización custom, nunca del menú)</h2>
-<p>Dos pedidos comunes no son add-ons, pero sí los cotizamos como trabajo a la medida si el cliente califica. Llevan alcance y precio aparte, definidos por Mike o Santi, nunca una línea del configurador:</p>
-<ul>
-<li><strong>Tienda / ecommerce real</strong> (carrito, checkout, inventario, variantes, envíos). El catálogo simple es el tope productizado; una tienda real es cotización aparte.</li>
-<li><strong>Blog</strong> (un CMS, plantillas de artículos, publicación continua). Una sola página tipo artículo, o páginas extra, se cotizan aparte; un blog real es cotización aparte.</li>
-</ul>
-<hr />
-<h2>Qué está completamente fuera de nuestro modelo</h2>
-<p>No hacemos esto a ningún precio dentro del proceso estándar de funnel. No son add-ons, no son favores, no es "ya veremos". Si la necesidad central de un prospecto está en esta lista, no es nuestro cliente (ver <code>client-qualification.md</code>). Decirlo temprano es la respuesta correcta y profesional.</p>
-<ul>
-<li>Aplicaciones web a la medida o software bespoke.</li>
-<li>Marketplaces o sistemas multi-vendedor.</li>
-<li>Portales de cliente, dashboards, o cualquier área de usuario con autenticación.</li>
-<li>Plataformas de membresía, cursos o suscripción.</li>
-<li>Apps móviles (iOS / Android / multiplataforma).</li>
-<li>Automatización de marketing compleja de varios pasos o integraciones a la medida entre muchas herramientas.</li>
-<li>Servicios continuos vendidos como proyecto: retainers de SEO, producción de contenido, manejo de redes sociales, manejo de pauta.</li>
-<li>Migraciones de sitios grandes existentes, o "recibir y arreglar" la construcción compleja de otro.</li>
-<li>Diseño de logo, identidad de marca completa, o proyectos de rebranding.</li>
-<li>Cualquier cosa descrita como "una funcioncita custom" que no esté en el menú de add-ons. El tamaño del pedido es irrelevante. Si es custom y no está en el menú, está fuera.</li>
-</ul>
-<hr />
-<h2>El test de límites (úselo cuando dude)</h2>
-<p>Haga tres preguntas en orden. El primer "no" cierra el tema.</p>
-<ol>
-<li><strong>¿Está en la lista de incluidos de la página de ventas?</strong> Si sí, hágalo. Si no, siga.</li>
-<li><strong>¿Está en el menú de add-ons, dentro de su tope?</strong> Si sí, cotice el add-on. Si no, siga.</li>
-<li><strong>Está fuera de alcance.</strong> No lo prometa. Si es tienda real o blog, ofrézcalo como cotización custom (escale a Mike o Santi). Cualquier otra cosa custom, escale para aprobación (<code>sales-rulebook.md</code>). La respuesta por defecto al cliente es: "eso está fuera de lo que cubre nuestra página, esto es lo que sí podemos hacer".</li>
-</ol>
-<p>No hay una cuarta pregunta. "Es chiquito" no es una cuarta pregunta. "Es un cliente bueno" no es una cuarta pregunta.</p>
-<hr />
-<h2>Recurrente vs pago único (no los mezcle)</h2>
-<ul>
-<li>El precio de la página es <strong>pago único</strong>.</li>
-<li>Hosting y soporte: 1 mes incluido. Después, planes mensuales <strong>opcionales</strong> (sin contrato): hosting solo $30.000/mes (o $300.000/año), <strong>Plan de presencia</strong> $50.000/mes (hosting + Ficha de Google activa + hasta 2 cambios + reporte), o <strong>Plan de ventas</strong> $150.000/mes (todo + asistente de ventas 24/7). Ninguno es obligatorio; sirven para mantener el funnel en línea, sano y actualizado. No son ediciones ilimitadas.</li>
-<li>El <strong>chatbot / asistente de ventas 24/7</strong> va dentro del <strong>Plan de ventas</strong> ($150.000/mes), no es un add-on de pago único. Cubre el procesamiento de IA de cada conversación que responde y pasa al cliente a tu WhatsApp. Nunca lo vendas como solo pago único; declara el mensual antes de cerrar.</li>
-<li>No vendemos trabajo continuo empaquetado en el pago único. "Edición continua" no es algo que incluyamos. Los cambios de contenido después de la ventana de ajustes gratis se cobran aparte (rondas de ajustes adicionales). Nunca dejes que una venta de pago único se convierta en silencio en un compromiso continuo no pagado.</li>
-</ul></div></section></div></body></html>
+
+<p class="foot">PymeWebPro · Norte Sur Consulting S.A.S. · Manual interno de ventas. Vive en ventas.pymewebpro.com/recursos.</p>
+
+</div>
+</body>
+</html>

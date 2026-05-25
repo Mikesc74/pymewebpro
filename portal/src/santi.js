@@ -612,7 +612,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <div class="label" data-lang="en">delivery</div>
       </div>
       <div class="stat">
-        <div class="num">$400k</div>
+        <div class="num">$400.000</div>
         <div class="label" data-lang="es">COP, IVA incluido</div>
         <div class="label" data-lang="en">COP, IVA included</div>
       </div>
@@ -949,7 +949,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
             <td>$60-120k/mes</td>
             <td>$200-500k</td>
             <td>$2M-8M</td>
-            <td class="us">$400k</td>
+            <td class="us">$400.000</td>
           </tr>
           <tr>
             <td data-lang="es">Tiempo de entrega</td>
