@@ -176,7 +176,7 @@ function pickPricing(market, tier) {
 const BASE_PRICE = 390000;
 const ADDON_CATALOG = {
   catalog:     { es: "Catálogo simple",          en: "Simple catalog",           price: 75000 },
-  pdf:         { es: "Botón de catálogo PDF",    en: "PDF catalog button",       price: 75000 },
+  pdf:         { es: "Catálogo o menú descargable (PDF)", en: "Downloadable catalog or menu (PDF)", price: 75000 },
   bilingual:   { es: "Versión bilingüe",         en: "Bilingual version",        price: 75000 },
 };
 // Format an integer as Colombian pesos: 390000 -> "$390.000 COP".
@@ -672,7 +672,7 @@ const PROPOSAL_TEXT_ES = {
   revisionsValue: "2 rondas de revisión incluidas",
   includesHeading: "Qué recibes",
   hostingHeading: "Hosting y soporte",
-  hosting1: "El precio incluye tu Ficha de Google y 1 mes de hosting + soporte. Después, eliges un plan mensual opcional, sin contrato: hosting solo $30.000 COP/mes, Plan de presencia $59.000 COP/mes (hosting + Ficha de Google activa + hasta 2 cambios + reporte mensual), o Plan de ventas $150.000 COP/mes (todo lo anterior + tu asistente de ventas 24/7, un chatbot que capta, responde y agenda).",
+  hosting1: "El precio incluye tu Ficha de Google y 1 mes de hosting + soporte. Después, eliges un plan mensual opcional, sin contrato: hosting solo $30.000 COP/mes, Plan de presencia $59.000 COP/mes (hosting + Ficha de Google activa + hasta 2 cambios + reporte mensual), o Plan de ventas $150.000 COP/mes (todo lo anterior + tu asistente de ventas 24/7: un chatbot en tu página que responde preguntas y pasa al cliente a tu WhatsApp con un clic).",
   host1: "Cloudflare Pages, 330+ ubicaciones edge, sub-1s LCP en cualquier país",
   host2: "Certificado SSL gestionado, renovación automática, sin tarifas extra",
   host3: "Backups automáticos, redundancia geográfica",
@@ -717,7 +717,7 @@ const PROPOSAL_TEXT_EN = {
   revisionsValue: "2 revision rounds included",
   includesHeading: "What you receive",
   hostingHeading: "Hosting + support",
-  hosting1: "The price includes your Google Business Profile and 1 month of hosting + support. After that, you pick an optional monthly plan, no contract: hosting only $30.000 COP/mo, Plan de presencia $59.000 COP/mo (hosting + active Google Business Profile + up to 2 changes + monthly report), or Plan de ventas $150.000 COP/mo (everything above + your 24/7 sales assistant, a chatbot that captures, replies and books).",
+  hosting1: "The price includes your Google Business Profile and 1 month of hosting + support. After that, you pick an optional monthly plan, no contract: hosting only $30.000 COP/mo, Plan de presencia $59.000 COP/mo (hosting + active Google Business Profile + up to 2 changes + monthly report), or Plan de ventas $150.000 COP/mo (everything above + your 24/7 sales assistant: a chatbot on your page that answers questions and sends the customer to your WhatsApp with one tap).",
   host1: "Cloudflare Pages, 330+ edge locations, sub-1s LCP worldwide",
   host2: "Managed SSL cert, automatic renewal, no extra fees",
   host3: "Automatic backups, geo redundancy",
@@ -750,7 +750,7 @@ const FEATURES_ES_LIST = [
   "Dominio + SSL configurados (el costo del dominio es del cliente)",
   "1 mes de hosting + soporte incluido",
   "2 rondas de revisión, en vivo en ~48 horas",
-  "Add-ons à la carte disponibles (página adicional, bilingüe, catálogo, GBP, GA4, CRM, chatbot, y más)",
+  "Adicionales à la carte ($75.000 c/u): catálogo en la página, catálogo o menú descargable en PDF, versión bilingüe",
 ];
 const FEATURES_ES = { esencial: FEATURES_ES_LIST, pro: FEATURES_ES_LIST };
 const FEATURES_EN_LIST = [
@@ -764,7 +764,7 @@ const FEATURES_EN_LIST = [
   "Domain + SSL setup (domain cost is the client's)",
   "1 month hosting + support included",
   "2 revision rounds, live in ~48 hours",
-  "À la carte add-ons available (extra page, bilingual, catalog, GBP, GA4, CRM, chatbot, and more)",
+  "À la carte add-ons ($75.000 each): on-page catalog, downloadable catalog or menu (PDF), bilingual version",
 ];
 const FEATURES_EN = { esencial: FEATURES_EN_LIST, pro: FEATURES_EN_LIST };
 

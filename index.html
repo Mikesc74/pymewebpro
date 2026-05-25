@@ -104,6 +104,11 @@
   .proof .q{font-size:1.1rem;color:var(--ink);max-width:48ch;margin:.4rem 0}
   .proof .who{font-weight:700}
   .proof .who span{color:var(--mute);font-weight:400}
+  .proofs{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:760px){.proofs{grid-template-columns:1fr}}
+  .proof .tnote{font-size:.8rem;color:var(--mute);margin:.3rem 0 0}
+  .proof .gsrc{display:inline-block;margin-top:.7rem;font-weight:700;color:var(--accent-d);text-decoration:none;border-bottom:1px solid var(--accent)}
+  .proof .gsrc:hover{opacity:.8}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
   @media(max-width:620px){.stats{grid-template-columns:1fr}}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;text-align:center}
@@ -217,10 +222,20 @@
   <div class="wrap">
     <h2 class="sec">La prueba</h2>
     <p class="sub">Clientes reales, no promesas.</p>
-    <div class="proof">
-      <div class="stars">★★★★★</div>
-      <p class="q">Le montamos la página a INVIERSOL, vendedor de parasoles y sombrillas en Envigado. Quedó contento y nos dejó 5 estrellas en Google.</p>
-      <div class="who">INVIERSOL <span>· parasoles y sombrillas · Envigado (reseña real, verificable en Google)</span></div>
+    <div class="proofs">
+      <div class="proof">
+        <div class="stars">★★★★★</div>
+        <p class="q">Muy recomendado PymeWebPro. La página quedó excelente y todo fue súper rápido.</p>
+        <div class="who">Santiago Florez <span>· Inviersol · parasoles y sombrillas, Envigado</span></div>
+        <a class="gsrc" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="Ver la reseña de Inviersol en Google">Ver en Google →</a>
+      </div>
+      <div class="proof">
+        <div class="stars">★★★★★</div>
+        <p class="q">Fui profesor y construí una app SaaS para la programación de mi colegio, pero nunca tuve una página de ventas. Mike tomó información extensa del producto y la convirtió en una página limpia, moderna y detallada en menos de 48 horas. Recibí el código fuente para mantenerlo yo mismo. ¡Recomiendo mucho sus servicios!</p>
+        <p class="tnote">Traducido del original en inglés.</p>
+        <div class="who">Patrick Detzner <span>· The Schedulator · herramienta para profesores</span></div>
+        <a class="gsrc" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="Ver la reseña de The Schedulator en Google">Ver en Google →</a>
+      </div>
     </div>
     <div class="stats">
       <div class="stat"><b>48 h</b><span>de tu aprobación a estar en línea</span></div>
@@ -238,7 +253,7 @@
       <div class="small">La página de ventas. Pago único, IVA incluido. Incluye tu Ficha de Google y 1 mes de hosting y soporte.</div>
     </div>
 
-    <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Planes mensuales (opcionales)</h3>
+    <h3 style="font-size:1.1rem;font-weight:700;margin:2.8rem 0 .25rem">Planes mensuales (opcionales)</h3>
     <p class="sub" style="margin-bottom:.7rem">Después del primer mes. Sin contrato, cancela cuando quieras.</p>
     <div class="plans">
       <div class="plan">
@@ -249,15 +264,15 @@
       <div class="plan feature">
         <div class="pt">Plan de ventas</div>
         <div class="pp">$150.000/mes</div>
-        <p>Todo lo del Plan de presencia, más tu asistente de ventas 24/7: un chatbot en tu página y WhatsApp que capta, responde y agenda. Sin costo de instalación.</p>
+        <p>Todo lo del Plan de presencia, más tu asistente de ventas 24/7: un chatbot en tu página que responde las preguntas de tus clientes y los pasa a tu WhatsApp con un clic. Sin costo de instalación.</p>
       </div>
     </div>
 
-    <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Adicionales (opcionales)</h3>
+    <h3 style="font-size:1.1rem;font-weight:700;margin:2.8rem 0 .25rem">Adicionales (opcionales)</h3>
     <p class="sub" style="margin-bottom:.7rem">Súmalos solo si los necesitas. Todo en pesos, sin sorpresas.</p>
     <div class="addons">
       <div class="addon-row"><span>Catálogo simple</span><b>$75.000</b></div>
-      <div class="addon-row"><span>Botón de catálogo PDF</span><b>$75.000</b></div>
+      <div class="addon-row"><span>Catálogo o menú descargable (PDF)</span><b>$75.000</b></div>
       <div class="addon-row"><span>Versión bilingüe (ES/EN)</span><b>$75.000</b></div>
     </div>
   </div>

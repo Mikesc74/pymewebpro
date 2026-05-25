@@ -104,6 +104,11 @@
   .proof .q{font-size:1.1rem;color:var(--ink);max-width:48ch;margin:.4rem 0}
   .proof .who{font-weight:700}
   .proof .who span{color:var(--mute);font-weight:400}
+  .proofs{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:760px){.proofs{grid-template-columns:1fr}}
+  .proof .tnote{font-size:.8rem;color:var(--mute);margin:.3rem 0 0}
+  .proof .gsrc{display:inline-block;margin-top:.7rem;font-weight:700;color:var(--accent-d);text-decoration:none;border-bottom:1px solid var(--accent)}
+  .proof .gsrc:hover{opacity:.8}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
   @media(max-width:620px){.stats{grid-template-columns:1fr}}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;text-align:center}
@@ -217,10 +222,20 @@
   <div class="wrap">
     <h2 class="sec">Proof</h2>
     <p class="sub">Real clients, not promises.</p>
-    <div class="proof">
-      <div class="stars">★★★★★</div>
-      <p class="q">We built the page for INVIERSOL, a parasol and umbrella vendor in Envigado. They were happy and left us 5 stars on Google.</p>
-      <div class="who">INVIERSOL <span>· parasols and umbrellas · Envigado (real review, verifiable on Google)</span></div>
+    <div class="proofs">
+      <div class="proof">
+        <div class="stars">★★★★★</div>
+        <p class="q">Highly recommend PymeWebPro. The page turned out excellent and everything was super fast.</p>
+        <p class="tnote">Translated from Spanish.</p>
+        <div class="who">Santiago Florez <span>· Inviersol · parasol and umbrella vendor, Envigado</span></div>
+        <a class="gsrc" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="See Inviersol's review on Google">See on Google →</a>
+      </div>
+      <div class="proof">
+        <div class="stars">★★★★★</div>
+        <p class="q">I was an elementary PE teacher and built a SaaS app to help my school with annual scheduling, but I never had a proper sales page for it. Mike took extensive product information and turned it into a clean, modern, detailed sales page in under 48 hours. And I got the source code so I could maintain it myself going forward. Highly recommend his services!</p>
+        <div class="who">Patrick Detzner <span>· The Schedulator · a tool for teachers</span></div>
+        <a class="gsrc" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="See The Schedulator's review on Google">See on Google →</a>
+      </div>
     </div>
     <div class="stats">
       <div class="stat"><b>48 h</b><span>from your approval to live</span></div>
@@ -238,7 +253,7 @@
       <div class="small">The sales page. One-time, IVA included. Includes your Google Business Profile and 1 month of hosting and support.</div>
     </div>
 
-    <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Monthly plans (optional)</h3>
+    <h3 style="font-size:1.1rem;font-weight:700;margin:2.8rem 0 .25rem">Monthly plans (optional)</h3>
     <p class="sub" style="margin-bottom:.7rem">After the first month. No contract, cancel anytime.</p>
     <div class="plans">
       <div class="plan">
@@ -249,15 +264,15 @@
       <div class="plan feature">
         <div class="pt">Plan de ventas</div>
         <div class="pp">$150.000/mo</div>
-        <p>Everything in Plan de presencia, plus your 24/7 sales assistant: a chatbot on your page and WhatsApp that captures, answers and books. No setup fee.</p>
+        <p>Everything in Plan de presencia, plus your 24/7 sales assistant: a chatbot on your page that answers your customers' questions and sends them to your WhatsApp with one tap. No setup fee.</p>
       </div>
     </div>
 
-    <h3 style="font-size:1.1rem;font-weight:700;margin:1.5rem 0 .2rem">Add-ons (optional)</h3>
+    <h3 style="font-size:1.1rem;font-weight:700;margin:2.8rem 0 .25rem">Add-ons (optional)</h3>
     <p class="sub" style="margin-bottom:.7rem">Add them only if you need them. All in COP, no surprises.</p>
     <div class="addons">
       <div class="addon-row"><span>Simple catalog</span><b>$75.000</b></div>
-      <div class="addon-row"><span>PDF catalog button</span><b>$75.000</b></div>
+      <div class="addon-row"><span>Downloadable catalog or menu (PDF)</span><b>$75.000</b></div>
       <div class="addon-row"><span>Bilingual version (ES/EN)</span><b>$75.000</b></div>
     </div>
   </div>
