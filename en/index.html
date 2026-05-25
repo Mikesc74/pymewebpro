@@ -110,11 +110,10 @@
   .proof .tnote{font-size:.8rem;color:var(--mute);margin:.3rem 0 0}
   .proof .gsrc{display:inline-block;margin-top:.7rem;font-weight:700;color:var(--accent-d);text-decoration:none;border-bottom:1px solid var(--accent)}
   .proof .gsrc:hover{opacity:.8}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
-  @media(max-width:620px){.stats{grid-template-columns:1fr}}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;text-align:center}
-  .stat b{display:block;font-size:1.7rem;font-weight:800;color:var(--accent-d)}
-  .stat span{font-size:.85rem;color:var(--mute)}
+  .herostats{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+  .herostats .hs b{display:block;font-size:1.7rem;font-weight:800;color:var(--ink);line-height:1.1}
+  .herostats .hs span{font-size:.85rem;color:var(--mute)}
+  @media(max-width:520px){.herostats{gap:1.1rem}.herostats .hs{flex:1;min-width:30%}}
   .team{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1rem}
   @media(max-width:620px){.team{grid-template-columns:1fr}}
   .member{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;text-align:center}
@@ -174,7 +173,7 @@
   section.proofband{background:var(--ink);padding:3rem 0;margin:2.8rem 0}
   section.proofband .sec{color:#fff}
   section.proofband .sub{color:#C9BFB2}
-  section.proofband .proof,section.proofband .stat{background:var(--paper)}
+  section.proofband .proof{background:var(--paper)}
 
   /* Nuestro trabajo showcase */
   .work{padding:2.8rem 0}
@@ -220,6 +219,11 @@
       <a class="btn btn-ghost" href="#how">See how it works</a>
     </div>
     <p class="note">Your own custom page, live in 48 hours. From $400.000 COP, one-time.</p>
+      <div class="herostats">
+        <div class="hs"><b>48 h</b><span>from your approval to live</span></div>
+        <div class="hs"><b>&lt;1 s</b><span>load time on mobile</span></div>
+        <div class="hs"><b>$400.000</b><span>fixed price, no surprises</span></div>
+      </div>
   </div>
 </section>
 
@@ -268,11 +272,6 @@
         <div class="who">Orlando de La Flor Ferrari <span>· Blue Whale International · finance and technology</span></div>
         <a class="gsrc" href="https://www.google.com/maps/place/PymeWebPro/@6.2147899,-75.5686544,1324m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e442978be32d941:0xef4fe733ede86cb9!8m2!3d6.2147899!4d-75.5660795!16s%2Fg%2F11nhznzt0l" target="_blank" rel="noopener" aria-label="See Blue Whale International's review on Google">See on Google →</a>
       </div>
-    </div>
-    <div class="stats">
-      <div class="stat"><b>48 h</b><span>from your approval to live</span></div>
-      <div class="stat"><b>&lt;1 s</b><span>load time on mobile</span></div>
-      <div class="stat"><b>$400.000</b><span>fixed price, no surprises</span></div>
     </div>
   </div>
 </section>
