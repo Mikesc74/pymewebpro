@@ -55,6 +55,11 @@ import { COS_LOADER_JS } from "./cos-loader.js";
 //   GET  /proposal-mockup/:dealId
 //   GET  /admin/proposal/:dealId
 import { handleProposalRoutes } from "./proposal-generator.js";
+// Managed client backups · per-client downloadable .zip (live site + uploaded
+// assets + manifest), stored in the BACKUPS R2 bucket, indexed in `backups` D1.
+//   GET/POST/DELETE /api/admin/backups[...]   · admin list / create / download
+//   runScheduledBackups(env)                   · weekly+monthly cron + prune
+import { handleBackups, runScheduledBackups } from "./backups.js";
 //
 // Modules in order:  utils.js, auth.js, client.js, deliverables.js, admin.js,
 //                    files.js, leads.js, payments.js, frontend.js, index.js
@@ -1923,6 +1928,8 @@ const src_default = {
       // ─── mockup engine routes (must run BEFORE the /api/admin/* and /api/* catch-alls) ───
       const __mockupResp = await handleMockups(request, env, ctx, { json, isAdmin, randomToken, uuid, sha256, escapeHtml });
       if (__mockupResp) return cors(__mockupResp);
+      // Managed client backups. Must run BEFORE the /api/admin/* catch-all.
+      if (path.startsWith("/api/admin/backups")) return cors(await handleBackups(request, env, ctx, { json, isAdmin, uuid }));
       if (path.startsWith("/api/admin/")) return cors(await handleAdmin(request, env, ctx));
       if (path.startsWith("/api/files/")) return cors(await handleFiles(request, env, ctx));
       if (path.startsWith("/api/")) return cors(json({ error: "Not found" }, 404));
@@ -2021,6 +2028,12 @@ const src_default = {
     if (cron === "0 14 * * *") {
       ctx.waitUntil(runNightlyCadenceSweep(env, event).catch((e) => {
         console.error("scheduled: cadence sweep crashed: " + (e && e.stack || e));
+      }));
+      // Managed client backups · weekly (Sundays) + monthly (1st) + daily prune.
+      ctx.waitUntil(runScheduledBackups(env).then((r) => {
+        if (r && (r.ran || r.pruned)) console.log("scheduled: backups · " + JSON.stringify(r));
+      }).catch((e) => {
+        console.error("scheduled: backups crashed: " + (e && e.stack || e));
       }));
     }
 

@@ -1,3 +1,4 @@
+import { createBackup } from "./backups.js";
 // mockups.js · manual mockup uploads, share links, comments, and ship-to-Pages.
 //
 // As of May 2026, mockups are NO LONGER auto-generated. Mike builds sites by
@@ -975,6 +976,15 @@ async function shipMockup(env, helpers, mockupId, req) {
       is_bilingual = excluded.is_bilingual,
       updated_at = excluded.updated_at
   `).bind(slug, m.client_id, mockupId, dstPrefix, isBilingual ? 1 : 0, Math.floor(Date.now() / 1000)).run();
+
+  // Snapshot-on-publish · capture a pre/post copy of the just-published site so
+  // there is always a backup tied to each ship. Best-effort: a backup failure
+  // (e.g. BACKUPS bucket not yet created) must never break a publish.
+  try {
+    await createBackup(env, m.client_id, "publish");
+  } catch (e) {
+    console.warn("shipMockup: publish backup skipped: " + (e && e.message || e));
+  }
 
   // Default published URL is the tenant subdomain; clients can attach their own
   // custom domain afterwards via the admin Domain Panel.

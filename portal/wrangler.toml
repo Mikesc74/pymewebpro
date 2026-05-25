@@ -51,6 +51,14 @@ id = "47573834bfad418aa10b8f851a250a03"
 binding = "ASSETS"
 bucket_name = "pymewebpro-client-assets"
 
+# Managed client backups · one .zip per client snapshot (live site + uploaded
+# assets + manifest). Written by src/backups.js (weekly/monthly cron, snapshot
+# on publish, and the "Backup now" admin button). Create the bucket once:
+#   wrangler r2 bucket create pymewebpro-backups
+[[r2_buckets]]
+binding = "BACKUPS"
+bucket_name = "pymewebpro-backups"
+
 # --- Cron triggers --------------------------------------------------------
 # "0 14 * * *"  · 14:00 UTC == 09:00 America/Bogota (UTC-5, no DST). Drives the
 #                 nightly cadence sweep in src/index.js scheduled() · creates
