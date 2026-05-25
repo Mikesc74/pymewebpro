@@ -114,10 +114,10 @@ const STYLE_HASHES = [
   "sha256-S26/GwbJjQlPbph9YoO29JMyt+6+c+m8lETNQT2O1nc=",
   "sha256-Sqr3A3nF2rYpiE1yGXW9/oX69QxkIJNIt+ZCF4BCa4Y=",
   "sha256-YEph6qo0neaQwZAiVE/stU9OWGO5DyeYPRP/tdmCFuI=",
-  "sha256-apWHi5HVVxHjJtsvXt6sJV1Qph8GNMRqizUry14Gp/k=",
   "sha256-doXDWDnFtR++rkKHwPPnw6kUf5ilZjfH1br6DHIaVe0=",
   "sha256-he/U2UugO0I/zdHSoWJVnm8TCLC73TbZGeE6QSho6HE=",
   "sha256-lWVMuCo0MpbjLXrbx+ZgF9cPY+Svag7Szm0eitGBmk4=",
+  "sha256-tjodX8ViK+QJKwRneyFTWqNpdDO70eGVZITN47+DYyE=",
   "sha256-tkldcovVxCmq7Hv0c/JoqM+RBZHndsHIZ3gvmp2X4mY=",
   "sha256-z78aRRwtiALpgnA2EoaF9e3HCbQY2wxXnsM3vLqf0ww=",
 ];
