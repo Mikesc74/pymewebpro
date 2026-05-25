@@ -110,10 +110,11 @@
   .proof .tnote{font-size:.8rem;color:var(--mute);margin:.3rem 0 0}
   .proof .gsrc{display:inline-block;margin-top:.7rem;font-weight:700;color:var(--accent-d);text-decoration:none;border-bottom:1px solid var(--accent)}
   .proof .gsrc:hover{opacity:.8}
-  .herostats{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line)}
-  .herostats .hs b{display:block;font-size:1.7rem;font-weight:800;color:var(--ink);line-height:1.1}
-  .herostats .hs span{font-size:.85rem;color:var(--mute)}
-  @media(max-width:520px){.herostats{gap:1.1rem}.herostats .hs{flex:1;min-width:30%}}
+  .herostats{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:2rem;background:var(--soft);border:1px solid var(--accent);border-radius:14px;padding:1.3rem 1.6rem}
+  .herostats .hs{flex:1;min-width:140px}
+  .herostats .hs b{display:block;font-size:1.7rem;font-weight:800;color:var(--accent-d);line-height:1.1}
+  .herostats .hs span{font-size:.85rem;color:var(--ink2)}
+  @media(max-width:520px){.herostats{gap:1.1rem;padding:1.1rem 1.2rem}.herostats .hs{flex:1;min-width:30%}}
   .team{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1rem}
   @media(max-width:620px){.team{grid-template-columns:1fr}}
   .member{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;text-align:center}
