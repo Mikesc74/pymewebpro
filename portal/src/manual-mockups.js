@@ -23,11 +23,7 @@
 // below, git push. No more rebuild-mockups.mjs round-trip.
 
 export const MOCKUP_SLUGS = new Set([
-  "blues-kitchen",
-  "daga-parfum",
-  "blue-whale-international",
   "espacio-dental",
-  "marena",
   "start",
   "medellin-guide",
   "medellin-guide-boutique",

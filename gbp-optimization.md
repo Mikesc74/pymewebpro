@@ -17,7 +17,7 @@ PymeWebPro diseña páginas de ventas para pequeños negocios en Colombia, desde
 
 Cada página incluye botón de WhatsApp, formulario que llega a tu correo, click para llamar, mapa de Google, testimonios, SEO y analítica. Dominio y SSL a tu nombre, y carga en menos de un segundo.
 
-En vivo en 48 horas desde $390.000 COP. Pagas 30% para arrancar y 70% al lanzar. Garantía de 30 días: si no te gusta, te devolvemos el dinero.
+En vivo en 48 horas desde $400.000 COP. Pagas 30% para arrancar y 70% al lanzar. Garantía de 30 días: si no te gusta, te devolvemos el dinero.
 
 Atendemos restaurantes, peluquerías, talleres, tiendas, consultorios y profesionales independientes en toda Colombia. Estudio en Medellín, atención en español.
 ```
@@ -25,7 +25,7 @@ Atendemos restaurantes, peluquerías, talleres, tiendas, consultorios y profesio
 **Short fallback (about 300 chars):**
 
 ```
-PymeWebPro diseña páginas de ventas para pymes colombianas. Una sola página, hecha a la medida, escrita para convertir visitantes en clientes. Botón de WhatsApp, formulario, SEO y analítica. Carga en menos de un segundo. Entrega en 48 horas desde $390.000 COP, con garantía de 30 días. Estudio en Medellín.
+PymeWebPro diseña páginas de ventas para pymes colombianas. Una sola página, hecha a la medida, escrita para convertir visitantes en clientes. Botón de WhatsApp, formulario, SEO y analítica. Carga en menos de un segundo. Entrega en 48 horas desde $400.000 COP, con garantía de 30 días. Estudio en Medellín.
 ```
 
 Note: keep the first 1 to 2 sentences strong. Google often shows only the opening line in the knowledge panel before "Read more".
@@ -57,42 +57,25 @@ Skip: Software company, Graphic designer, Computer support. They pull irrelevant
 
 ## 3. Services
 
-Matches the live pymewebpro.com offer (single product + monthly plans + 3 add-ons). Each entry: a name and a short description (GBP allows about 300 chars per service description). Prices in COP are fine in the text.
+Matches the live pymewebpro.com offer (single product + two monthly plans, no à la carte add-ons). Each entry: a name and a short description (GBP allows about 300 chars per service description). Prices in COP are fine in the text.
 
 **Producto base**
 
-**Página de ventas ($390.000 COP)**
+**Página de ventas ($400.000 COP)**
 ```
 Página de conversión de una sola página, hecha a la medida. Incluye tu Ficha de Google, botón de WhatsApp, formulario al correo, click para llamar, mapa, testimonios, SEO y analítica. Dominio y SSL configurados, 1 mes de hosting. En vivo en 48 horas, con 2 rondas de revisión y garantía de 30 días.
 ```
 
 **Planes mensuales (opcionales, después del primer mes)**
 
-**Plan de presencia ($59.000 COP/mes)**
+**Plan de presencia ($50.000 COP/mes)**
 ```
-Hosting, tu Ficha de Google activa, página al día, hasta 2 cambios al mes y un reporte mensual con tus números. Sin contrato, cancela cuando quieras.
+Hosting, tu Ficha de Google activa y al día, versión bilingüe ES/EN, soporte por WhatsApp y hasta 2 cambios al mes. Sin contrato, cancela cuando quieras.
 ```
 
 **Plan de ventas ($150.000 COP/mes)**
 ```
-Todo lo del Plan de presencia más tu asistente de ventas 24/7: un chatbot en tu página que responde a tus clientes y los pasa a tu WhatsApp con un clic. Sin costo de instalación.
-```
-
-**Adicionales (opcionales, $75.000 COP c/u)**
-
-**Catálogo simple ($75.000 COP)**
-```
-Una vitrina de tus productos o servicios con foto, nombre, precio y descripción corta. El pedido se cierra por WhatsApp.
-```
-
-**Catálogo o menú descargable PDF ($75.000 COP)**
-```
-Tu catálogo o menú en PDF, listo para descargar desde tu página. Ideal para restaurantes, tiendas y servicios.
-```
-
-**Versión bilingüe (ES/EN) ($75.000 COP)**
-```
-Tu página en español e inglés, para clientes colombianos y expatriados en Colombia.
+Todo lo del Plan de presencia más tu asistente de ventas 24/7 (un chatbot que responde a tus clientes y los pasa a tu WhatsApp con un clic), vitrina de hasta 30 productos, catálogo o menú descargable y un reporte mensual con tus números.
 ```
 
 ---
@@ -107,7 +90,7 @@ No es un sitio web. Es una página que vende.
 
 La mayoría de las páginas solo cuentan que existes. Nosotros construimos una página de ventas: una sola página, hecha a la medida, pensada para que el visitante haga una cosa, contactarte.
 
-Botón de WhatsApp, formulario al correo, click para llamar, mapa y testimonios. En vivo en 48 horas, desde $390.000 COP. Agenda una llamada de 15 minutos.
+Botón de WhatsApp, formulario al correo, click para llamar, mapa y testimonios. En vivo en 48 horas, desde $400.000 COP. Agenda una llamada de 15 minutos.
 ```
 
 ### Post 2 · Tipo: Oferta · Botón: Llamar ahora
@@ -116,7 +99,7 @@ Tu página en línea en 48 horas.
 
 Nos mandas tu logo, fotos y la info de tu negocio. Nosotros diseñamos, escribimos y publicamos. Pagas 30% para arrancar y el 70% solo cuando la página esté lista y te guste.
 
-Garantía de 30 días: si no te convence, te devolvemos el dinero. Desde $390.000 COP.
+Garantía de 30 días: si no te convence, te devolvemos el dinero. Desde $400.000 COP.
 ```
 
 ### Post 3 · Tipo: Novedad · Botón: Más información (a la página de servicios)
@@ -130,7 +113,7 @@ Construimos sobre la red de Cloudflare con código propio, no con plantillas pes
 ```
 ¿Vives de WhatsApp pero no tienes dónde mandar a la gente?
 
-Tu página de ventas reúne todo en un solo enlace: qué haces, por qué confiar en ti, testimonios y un botón directo a tu WhatsApp. Perfecta para poner en tu bio de Instagram, en tus anuncios y en tu tarjeta. Desde $390.000 COP.
+Tu página de ventas reúne todo en un solo enlace: qué haces, por qué confiar en ti, testimonios y un botón directo a tu WhatsApp. Perfecta para poner en tu bio de Instagram, en tus anuncios y en tu tarjeta. Desde $400.000 COP.
 ```
 
 ### Post 5 · Tipo: Novedad · Botón: Más información
@@ -155,7 +138,7 @@ Owners can ask and answer their own questions. Seed the obvious buyer questions 
 
 **P: ¿Cuánto cuesta una página?**
 ```
-La página de ventas cuesta $390.000 COP, una sola vez, IVA incluido, e incluye tu Ficha de Google. Si quieres, hay planes mensuales opcionales (Plan de presencia $59.000/mes, Plan de ventas $150.000/mes con chatbot) y adicionales de $75.000 (catálogo simple, catálogo o menú en PDF, versión bilingüe).
+La página de ventas cuesta $400.000 COP, una sola vez, IVA incluido, e incluye tu Ficha de Google. Si quieres, hay planes mensuales opcionales: Plan de presencia $50.000/mes (Ficha de Google al día, versión bilingüe, soporte WhatsApp, hasta 2 cambios al mes) y Plan de ventas $150.000/mes (todo lo anterior más chatbot 24/7, vitrina de hasta 30 productos y catálogo descargable).
 ```
 
 **P: ¿En cuánto tiempo está lista?**
@@ -185,12 +168,12 @@ Sí. Trabajamos con pymes de toda Colombia de forma remota. El estudio está en 
 
 **P: ¿Hacen tiendas en línea?**
 ```
-Nuestro producto principal es la página de ventas. Podemos agregar un catálogo simple de hasta 30 productos. Una tienda completa la cotizamos aparte.
+Nuestro producto principal es la página de ventas. Con el Plan de ventas puedes sumar una vitrina de hasta 30 productos y un catálogo descargable. Una tienda completa (carrito, inventario y pagos) la cotizamos aparte.
 ```
 
 **P: ¿Trabajan en inglés?**
 ```
-Sí. Podemos entregar tu página en español e inglés con la versión bilingüe, útil si tu cliente es expatriado en Colombia.
+Sí. Con el Plan de presencia (o el Plan de ventas) entregamos tu página en español e inglés, útil si tu cliente es expatriado en Colombia.
 ```
 
 ---

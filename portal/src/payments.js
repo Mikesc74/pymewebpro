@@ -2,10 +2,12 @@
 // Pricing, Wompi checkout creation, and webhook handling for the PymeWebPro portal.
 // Reconstructed from the deployed bundle of `pymewebpro-portal` Worker on 2026-04-30.
 //
-// PRICING (single-product model as of 2026-05-20):
+// PRICING (single-product model as of 2026-05-20; add-ons folded into plans 2026-05-25):
 //   ONE product, "La página de ventas": 400.000 COP (IVA incluido), portal key
-//   `esencial`. Plus an à la carte add-on menu (handled elsewhere). There are
-//   no Essential/Pro tiers anymore. COP only.
+//   `esencial`. NO à la carte add-ons anymore; the extras (bilingual, showcase,
+//   downloadable catalog, 24/7 assistant) live inside the optional monthly plans
+//   (Plan de presencia 50.000/mes, Plan de ventas 150.000/mes), billed separately.
+//   There are no Essential/Pro tiers anymore. COP only.
 //   The legacy `pro` key (690.000 COP) is retained ONLY to price old stored
 //   leads/deals correctly · it is not offered to new buyers.
 // Hosting after the included month: 30.000 COP/mes or 300.000 COP/año.

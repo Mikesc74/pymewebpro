@@ -25,8 +25,8 @@ Workplace shorthand, internal terms, and project codenames.
 | Term | Meaning |
 |------|---------|
 | **La página de ventas** | The one product. $400.000 COP one-time, IVA incluido. Custom 6-step conversion page, 1 primary CTA, WhatsApp button or contact form, click-to-call, Google Maps embed, booking integration (Cal.com/Calendly), testimonials, SEO structure, privacy-first analytics, domain + SSL setup, 1 month hosting + support, 2 revision rounds, live in ~48 hours. |
-| **add-ons (à la carte)** | COP, IVA incl.: página adicional $50.000 (máx 3), versión bilingüe ES/EN $75.000, copywriting $150.000, catálogo simple máx 30 $180.000, Perfil de Empresa de Google $90.000, analítica avanzada (GA4+GTM+Pixel) $120.000, integración CRM $190.000, chatbot de captura $190.000 una vez + $80.000/mes, botón de descarga de PDF $50.000, ronda de revisión adicional $90.000. |
-| **hosting renewal** | After the included month: $30.000 COP/mes or $300.000 COP/año. |
+| **planes mensuales (opcionales)** | No à la carte add-ons anymore: all paid extras live inside two optional monthly plans (after the included first month, no contract, cancel anytime, both include hosting). **Plan de presencia $50.000 COP/mes**: hosting + Ficha de Google activa y actualizada + versión bilingüe ES/EN + soporte WhatsApp + hasta 2 cambios al mes. **Plan de ventas $150.000 COP/mes**: todo lo de Presencia + asistente de ventas 24/7 (chatbot que conoce el negocio, responde, pasa al WhatsApp con un clic y agenda llamadas) + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual de actividad. The base page already includes the Ficha de Google (NOT an add-on). |
+| **ronda de revisión adicional** | $90.000 COP. A per-revision charge beyond the 2 included rounds, NOT an add-on. |
 
 (Retired NA / two-tier Essential-Pro model: there are NO Essential/Pro/Crecimiento tiers and NO CAD pricing anymore. Colombia-only, COP-only since 2026-05-20.)
 

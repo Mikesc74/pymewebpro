@@ -172,13 +172,13 @@ function pickPricing(market, tier) {
   return { label: "La página de ventas", currency: "COP", price: "$400.000 COP", deposit: "$120.000 COP", balance: "$280.000 COP", hosting: "incluye 1 mes de hosting + soporte", maintenance: "ronda de revisión adicional $90.000 COP", hourly: "ronda de revisión adicional $90.000 COP" };
 }
 
-// Add-on menu (COP). Keys match what the Mi día "Propuesta" form sends.
+// No à la carte add-ons (2026-05-25). The 3 former add-ons were folded into the
+// monthly plans, so a one-time proposal/deposit is base-only. Kept as an empty
+// object so computePricing / dealTotalCop still resolve (any legacy stored
+// addon key is simply ignored -> base price). Do NOT re-add priced one-time
+// add-ons here; recurring extras belong to Plan de presencia / Plan de ventas.
 const BASE_PRICE = 400000;
-const ADDON_CATALOG = {
-  catalog:     { es: "Vitrina de productos",          en: "Product showcase",           price: 75000 },
-  pdf:         { es: "Catálogo o menú descargable (PDF)", en: "Downloadable catalog or menu (PDF)", price: 75000 },
-  bilingual:   { es: "Versión bilingüe",         en: "Bilingual version",        price: 75000 },
-};
+const ADDON_CATALOG = {};
 // Format an integer as Colombian pesos: 400000 -> "$400.000 COP".
 function fmtCOP(n) {
   n = Math.round(Number(n) || 0);

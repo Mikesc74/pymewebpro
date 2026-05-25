@@ -65,30 +65,24 @@ Display NIT on:
 
 ## Pricing (single-product model, set 2026-05-20)
 
-ONE product plus an à la carte add-on menu. No Essential/Pro tiers. Colombia-only, COP-only. Source of truth for add-on prices: `~/code/pymewebpro-sales/internal/add-on-menu.md`.
+ONE product, NO à la carte add-ons. The base page includes the Ficha de Google (Google Business Profile), it is NOT an add-on. All paid extras now live inside two optional monthly plans. No Essential/Pro tiers. Colombia-only, COP-only. Source of truth for the offer: `~/code/pymewebpro-sales/`.
 
 ### The product
 
 | Product | Price | Includes |
 |---------|-------|----------|
-| La página de ventas | $400.000 COP one-time, IVA incluido | Custom 6-step conversion page with 1 primary CTA, WhatsApp button or contact form, click-to-call, Google Maps embed, booking/appointment integration (Cal.com/Calendly), testimonials section, SEO structure, privacy-first analytics, domain + SSL setup (domain cost is the client's), 1 month hosting + support, 2 revision rounds, live in ~48 hours |
+| La página de ventas | $400.000 COP one-time, IVA incluido | Ficha de Google (Google Business Profile) configurada, custom 6-step conversion page with 1 primary CTA, WhatsApp button + click-to-call, contact form, click-to-call, Google Maps embed, booking/appointment integration (Cal.com/Calendly), testimonials section, SEO structure, privacy-first analytics, domain + SSL setup (domain cost is the client's), 1 month hosting + support, 2 revision rounds, live in ~48 hours |
 
-### Add-ons (à la carte, COP, IVA incl.)
+### Optional monthly plans (after the included first month, no contract, cancel anytime)
 
-| Add-on | Price |
-|--------|-------|
-| Página adicional (máx 3) | $50.000 |
-| Versión bilingüe ES/EN | $75.000 |
-| Copywriting profesional | $150.000 |
-| Catálogo simple (máx 30 productos) | $180.000 |
-| Perfil de Empresa de Google | $90.000 |
-| Analítica avanzada (GA4+GTM+Pixel) | $120.000 |
-| Integración con CRM | $190.000 |
-| Chatbot de captura | $190.000 una vez + $80.000/mes |
-| Botón de descarga de PDF | $50.000 |
-| Ronda de revisión adicional | $90.000 |
+Both include hosting. There are no standalone à la carte add-ons: every paid extra lives inside these two plans.
 
-A real store and a blog are out of scope but quotable as custom.
+| Plan | Price | Includes |
+|------|-------|----------|
+| Plan de presencia | $50.000 COP/mes | hosting + Ficha de Google activa y actualizada + versión bilingüe ES/EN + soporte por WhatsApp + hasta 2 cambios al mes |
+| Plan de ventas | $150.000 COP/mes | todo lo del Plan de presencia + asistente de ventas 24/7 (un chatbot en la página que conoce el negocio, responde las preguntas de los clientes, los pasa al WhatsApp con un clic y agenda llamadas) + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual con la actividad de los clientes |
+
+A **ronda de revisión adicional** beyond the 2 included rounds is $90.000 COP (a per-revision charge, not an add-on). Out of scope, quoted separately / escalate (never a productized add-on): tienda en línea real (carrito, inventario, pagos), blog/CMS, sitio multi-página, apps, portales con login, membresías.
 
 ### Hosting after the included month
 
@@ -131,7 +125,7 @@ After 30 days, fee is non-refundable. Hosting is always month-to-month and cance
 
 Build time: ~15 min per mockup (5 min brief + 10 min build with Claude). Wire-up amortizes to near-zero across multiple mockups deployed together.
 
-At $400.000 COP/close, the bottleneck is outreach throughput, not build capacity (Claude+files makes that near-infinite). The constraint is qualified prospects per week, not mockups built per hour. Add-ons (copywriting, catálogo, CRM, chatbot) raise the average ticket above the base $400.000 without adding meaningful build time.
+At $400.000 COP/close, the bottleneck is outreach throughput, not build capacity (Claude+files makes that near-infinite). The constraint is qualified prospects per week, not mockups built per hour. The monthly plans (Plan de presencia $50.000/mes, Plan de ventas $150.000/mes) add recurring revenue above the one-time $400.000 without adding meaningful build time.
 
 ## Positioning · the stack
 
@@ -193,6 +187,6 @@ The "build mockup, then pitch" inversion:
 
 ## Positioning blurb (current, COP-only)
 
-> PymeWebPro (DBA de Norte Sur Consulting S.A.S., NIT 901.956.771-1) es un estudio de diseño web en Medellín para PYMEs colombianas. Diseñamos, programamos y publicamos páginas de ventas custom alojadas en la red edge de Cloudflare. Un solo producto, la página de ventas, $400.000 COP (IVA incluido), con add-ons à la carte. Pago vía Wompi en COP. En vivo en ~48 horas. Mercado colombiano únicamente.
+> PymeWebPro (DBA de Norte Sur Consulting S.A.S., NIT 901.956.771-1) es un estudio de diseño web en Medellín para PYMEs colombianas. Diseñamos, programamos y publicamos páginas de ventas custom alojadas en la red edge de Cloudflare. Un solo producto, la página de ventas, $400.000 COP (IVA incluido), con planes mensuales opcionales. Pago vía Wompi en COP. En vivo en ~48 horas. Mercado colombiano únicamente.
 
 (Historical note: an earlier Wise Business KYB blurb described the studio as serving North America and Latin America with CAD pricing. That NA framing is retired. The studio is Colombia-only, COP-only, paid via Wompi.)

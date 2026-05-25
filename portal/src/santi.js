@@ -3,8 +3,10 @@
 // No external dependencies. All CSS inline. Bilingual (ES + EN) via a
 // language toggle in the header. House style: no em dashes, no marketing-speak,
 // real numbers. Single-product model: one product "La página de ventas"
-// COP $400.000 (IVA incl.), à la carte add-ons, hosting after the included
-// month COP $30.000/mes or COP $300.000/año.
+// COP $400.000 (IVA incl.). No à la carte add-ons; the extras (bilingual,
+// showcase, downloadable catalog, 24/7 assistant) live inside the two optional
+// monthly plans (Presencia $50.000/mes, Ventas $150.000/mes, both include
+// hosting). Standalone hosting after the included month COP $30.000/mes.
 
 export function santiPageHTML() {
   return `<!DOCTYPE html>
@@ -673,11 +675,11 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
     <h2 data-lang="en">One clear product. Price in Colombian pesos.</h2>
     <p class="sub" data-lang="es">
       No hay sorpresas. El precio incluye 1 mes de hosting y soporte.
-      Agrega solo lo que necesites con los add-ons à la carte.
+      Despues, si quieres, hay planes mensuales opcionales.
     </p>
     <p class="sub" data-lang="en">
       No surprises. The price includes 1 month of hosting and support.
-      Add only what you need with the à la carte add-ons.
+      After that, optional monthly plans if you want them.
     </p>
 
     <div class="pricing-grid">
@@ -718,39 +720,31 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
       </div>
 
       <div class="plan">
-        <h3 data-lang="es">Add-ons a la carta</h3>
-        <h3 data-lang="en">À la carte add-ons</h3>
-        <p class="meta" data-lang="es">Agrega solo lo que necesites. Precios en COP, IVA incluido.</p>
-        <p class="meta" data-lang="en">Add only what you need. Prices in COP, IVA included.</p>
+        <h3 data-lang="es">Planes mensuales (opcionales)</h3>
+        <h3 data-lang="en">Monthly plans (optional)</h3>
+        <p class="meta" data-lang="es">Despues del mes incluido. Sin contrato, cancela cuando quieras. Ambos incluyen hosting.</p>
+        <p class="meta" data-lang="en">After the included month. No contract, cancel anytime. Both include hosting.</p>
         <ul>
-          <li data-lang="es">Catalogo simple (max 30 productos): <b>$75.000</b></li>
-          <li data-lang="en">Product showcase (max 30 products): <b>$75.000</b></li>
-          <li data-lang="es">Catalogo o menu descargable en PDF: <b>$75.000</b></li>
-          <li data-lang="en">Downloadable catalog or menu (PDF): <b>$75.000</b></li>
-          <li data-lang="es">Version bilingue ES/EN: <b>$75.000</b></li>
-          <li data-lang="en">Bilingual ES/EN version: <b>$75.000</b></li>
-          <li class="meta" data-lang="es">La Ficha de Google ya va incluida en la pagina base. El chatbot va en el Plan de ventas mensual.</li>
-          <li class="meta" data-lang="en">The Google Business Profile is included in the base page. The chatbot lives in the monthly Plan de ventas.</li>
+          <li data-lang="es"><b>Plan de presencia $50.000/mes:</b> hosting + Ficha de Google activa y actualizada + version bilingue ES/EN + soporte por WhatsApp + hasta 2 cambios al mes</li>
+          <li data-lang="en"><b>Plan de presencia $50.000/mo:</b> hosting + active, updated Google Business Profile + bilingual ES/EN version + WhatsApp support + up to 2 changes a month</li>
+          <li data-lang="es"><b>Plan de ventas $150.000/mes:</b> todo lo de Presencia + asistente de ventas 24/7 (un chatbot que conoce tu negocio, responde y agenda llamadas) + vitrina de hasta 30 productos + catalogo o menu descargable + reporte mensual</li>
+          <li data-lang="en"><b>Plan de ventas $150.000/mo:</b> everything in Presencia + a 24/7 sales assistant (a chatbot that knows your business, answers and books calls) + showcase of up to 30 products + downloadable catalog or menu + monthly report</li>
+          <li class="meta" data-lang="es">La Ficha de Google ya va incluida en la pagina base. Ningun plan mensual es obligatorio.</li>
+          <li class="meta" data-lang="en">The Google Business Profile is included in the base page. No monthly plan is required.</li>
         </ul>
         <a class="btn btn-primary"
-           href="https://wa.me/573014047722?text=Hola%20Santi%2C%20quiero%20cotizar%20add-ons%20de%20PymeWebPro"
+           href="https://wa.me/573014047722?text=Hola%20Santi%2C%20quiero%20saber%20de%20los%20planes%20mensuales%20de%20PymeWebPro"
            target="_blank" rel="noopener">
-          <span data-lang="es">Cotizar add-ons</span>
-          <span data-lang="en">Quote add-ons</span>
+          <span data-lang="es">Preguntar por los planes</span>
+          <span data-lang="en">Ask about the plans</span>
         </a>
       </div>
     </div>
 
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="es">
-      Planes mensuales opcionales despues del mes incluido (sin contrato, ambos incluyen hosting):
-      Plan de presencia <b>$50.000/mes</b> (hosting + Ficha de Google activa + soporte por WhatsApp + hasta 2 cambios + te decimos cuánta gente vio tu página y te escribió) ·
-      Plan de ventas <b>$150.000/mes</b> (todo + asistente de ventas 24/7: un chatbot que responde y pasa al cliente a tu WhatsApp).
       Sin candado: si quieres llevarte el sitio a otro hosting, te entregamos el codigo.
     </p>
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="en">
-      Optional monthly plans after the included month (no contract, both include hosting):
-      Plan de presencia <b>$50.000/mo</b> (hosting + active Google Business Profile + WhatsApp support + up to 2 changes + a note on how many people saw your page and messaged you) ·
-      Plan de ventas <b>$150.000/mo</b> (everything + a 24/7 sales assistant: a chatbot that answers and sends customers to your WhatsApp).
       No lock-in: if you want to move your site elsewhere, we hand over the code.
     </p>
   </div>

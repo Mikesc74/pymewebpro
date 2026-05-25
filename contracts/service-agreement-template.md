@@ -14,26 +14,20 @@ The Studio and Client are each a "Party" and collectively the "Parties."
 
 ## 1. Scope of Work
 
-The Studio will design, develop, and deploy a custom sales page (the "**Website**") for the Client. The Studio offers one product plus an à la carte add-on menu.
+The Studio will design, develop, and deploy a custom sales page (the "**Website**") for the Client. The Studio offers one product, with two optional monthly plans for ongoing service. There are no à la carte add-ons.
 
 **Product:**
 
-- [x] **La página de ventas**, $400.000 COP one-time (IVA incluido), a custom-designed, custom-coded sales page
+- [x] **La página de ventas**, $400.000 COP one-time (IVA incluido), a custom-designed, custom-coded sales page. Includes the Client's Google Business Profile (Ficha de Google) set up.
 
-**Add-ons (à la carte, COP, IVA incl.):**
+**Optional monthly plans (begin after the included first month, no contract, cancellable, both include hosting):**
 
-- [ ] Página adicional (máx 3), $50.000 each
-- [ ] Versión bilingüe ES/EN, $75.000
-- [ ] Copywriting profesional, $150.000
-- [ ] Catálogo simple (máx 30 productos), $180.000
-- [ ] Perfil de Empresa de Google, $90.000
-- [ ] Analítica avanzada (GA4+GTM+Pixel), $120.000
-- [ ] Integración con CRM, $190.000
-- [ ] Chatbot de captura, $190.000 one-time + $80.000/mes
-- [ ] Botón de descarga de PDF, $50.000
-- [ ] Ronda de revisión adicional, $90.000
+- [ ] **Plan de presencia**, $50.000 COP/mes: hosting + Ficha de Google activa y actualizada + versión bilingüe ES/EN + soporte por WhatsApp + hasta 2 cambios al mes
+- [ ] **Plan de ventas**, $150.000 COP/mes: everything in Plan de presencia + a 24/7 sales assistant (a chatbot that answers customer questions, sends them to WhatsApp, and books calls) + a showcase of up to 30 products + a downloadable catalog or menu + a monthly customer-activity report
 
-**Schedule A** captures any additional scope beyond the product and selected add-ons, if needed for this engagement. If the project is a standard build, Schedule A may be left blank or omitted.
+**Other charges:** an additional revision round beyond the 2 included is $90.000 COP. Scope beyond the one sales page (a real online store, a blog/CMS, a multi-page site, apps, or membership/login systems) is out of scope and quoted separately in Schedule A.
+
+**Schedule A** captures any additional custom scope beyond the product, if needed for this engagement. If the project is a standard build, Schedule A may be left blank or omitted.
 
 ## 2. Deliverables
 
@@ -53,7 +47,7 @@ La página de ventas includes:
 - A+ security headers (HSTS, CSP, X-Frame-Options, Referrer-Policy)
 - 2 revision rounds, live in approximately 48 hours
 
-Selected add-ons (see Section 1) are delivered alongside the page at the prices listed above.
+Any optional monthly plan selected in Section 1 begins after the included first month and is billed monthly and separately from the one-time page fee.
 
 ## 3. Timeline
 
@@ -63,7 +57,7 @@ Revision cycles will be completed within forty-eight (48) hours of the Client pr
 
 ## 4. Fees and Payment
 
-**Total Fee:** [AMOUNT] COP (the "**Fee**"), being $400.000 COP for la página de ventas plus any selected add-ons. All prices are in Colombian pesos (COP), IVA incluido.
+**Total Fee:** [AMOUNT] COP (the "**Fee**"), being $400.000 COP for la página de ventas. Any optional monthly plan is billed separately on a monthly basis. All prices are in Colombian pesos (COP), IVA incluido.
 
 **Payment Schedule.** The Fee is paid in two milestones:
 
@@ -102,7 +96,7 @@ After the two included rounds, each additional revision round is **$90.000 COP**
 
 - Continue via a monthly plan that includes hosting: **Plan de presencia $50.000 COP per month** or **Plan de ventas $150.000 COP per month**
 - Request an additional revision round at **$90.000 COP** per round
-- Add any item from the à la carte add-on menu (see Section 1) at the listed COP price
+- Request custom scope beyond the one sales page (real store, blog, extra pages), quoted separately in Schedule A
 - Migrate the Website to another host of their choice. The Studio will deliver a portable build at no charge.
 
 ## 7. Intellectual Property
@@ -219,7 +213,7 @@ Date: ______________________________
 
 **Product:** La página de ventas ($400.000 COP)
 
-**Selected add-ons:** ____________________________________
+**Selected monthly plan (optional):** ____________________________________
 
 **Total Fee:** [AMOUNT] COP
 

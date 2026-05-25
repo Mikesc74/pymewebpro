@@ -156,11 +156,11 @@ var CAL_LINK = "https://cal.com/medellinguide/intro"; // TODO: cambiar al Cal de
 var DEPOSITO = "$120.000 COP (30%)";
 var DEMO_BASE = "https://mockups.pymewebpro.com";
 var LEADS = [], CADENCE = [], BY_ID = {}, ACTS_BY_LEAD = {}, SEARCH = '', DEALS_BY_LEAD = {};
-var ADDONS = [
-  {k:'catalog', l:'Vitrina de productos', p:'$75.000'},
-  {k:'pdf', l:'Catálogo o menú descargable (PDF)', p:'$75.000'},
-  {k:'bilingual', l:'Versión bilingüe', p:'$75.000'}
-];
+// No à la carte add-ons anymore (2026-05-25). The page is one fixed price
+// ($400.000) and the extras (vitrina, catálogo, bilingüe, asistente 24/7) live
+// inside the monthly plans, not in the one-time proposal. Kept as an empty
+// array so the proposal builder still works (base-only quote).
+var ADDONS = [];
 
 function el(html){ var d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstElementChild; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -699,9 +699,9 @@ function showProposalPanel(lead){
   var rows = ADDONS.map(function(a){ return '<label class="np-opt"><input type="checkbox" data-ak="'+a.k+'"'+(pre[a.k]?' checked':'')+'> '+esc(a.l)+' <span class="np-px">'+a.p+'</span></label>'; }).join('');
   var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Armar propuesta · '+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
     + '<div class="mb">'
-    + '<p class="note">Base: La página de ventas $400.000. Marca los adicionales que pidió el cliente.</p>'
-    + '<div class="np-opts">'+rows+'</div>'
-    + '<div class="field"><label>Lo que pidió el cliente (opcional)</label><textarea id="pp-notes" placeholder="Ej: quiere catálogo de productos y reservas..."></textarea></div>'
+    + '<p class="note">La página de ventas: $400.000 (pago 30/70). Precio fijo. Los extras (vitrina, catálogo descargable, bilingüe, asistente 24/7) van en los planes mensuales, no en la propuesta. Escribe en la nota lo que pidió el cliente.</p>'
+    + (rows ? '<div class="np-opts">'+rows+'</div>' : '')
+    + '<div class="field"><label>Lo que pidió el cliente (opcional)</label><textarea id="pp-notes" placeholder="Ej: quiere reservas y que se vea serio en el celular..."></textarea></div>'
     + '</div>'
     + '<div class="mf"><button class="act ghost" data-x="close">Cancelar</button><button class="act primary" data-x="gen">Generar propuesta</button></div>'
     + '</div></div>');
