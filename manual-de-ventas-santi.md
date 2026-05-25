@@ -36,13 +36,13 @@ El reloj de las 48 horas arranca **cuando tenemos el contenido y entró el depó
 
 ---
 
-## 3. Adicionales (opcionales, $75.000 c/u)
+## 3. Lo que puede sumar (va dentro de los planes, no suelto)
 
-Súmalos solo si el cliente los necesita, no para inflar la cuenta:
+Ya no vendemos adicionales sueltos. Estas capacidades viven dentro de los planes mensuales (sección 4):
 
-- **Vitrina de productos** · hasta 30 productos con foto, nombre, precio y descripción corta (el cliente sube su contenido a un portal). Sin carrito ni inventario.
-- **Catálogo o menú descargable en PDF** · un PDF que el cliente puede guardar y compartir por WhatsApp (sirve de imán de clientes).
-- **Versión bilingüe ES/EN** · la misma página en español e inglés.
+- **Vitrina de productos** · hasta 30 productos con foto, nombre, precio y descripción corta (el cliente sube su contenido a un portal). Sin carrito ni inventario. Va en el **Plan de ventas**.
+- **Catálogo o menú descargable en PDF** · un PDF que el cliente puede guardar y compartir por WhatsApp (sirve de imán de clientes). Va en el **Plan de ventas**.
+- **Versión bilingüe ES/EN** · la misma página en español e inglés. Va en el **Plan de presencia**.
 
 La **Ficha de Google ya va incluida** en la página, no es adicional.
 
@@ -52,8 +52,8 @@ La **Ficha de Google ya va incluida** en la página, no es adicional.
 
 La página es pago único. Después del mes incluido, si quiere, hay dos planes mensuales, ambos incluyen hosting. **Ninguno es obligatorio.** Cancela cuando quiera.
 
-- **Plan de presencia · $50.000/mes** · hosting + Ficha de Google activa + soporte por WhatsApp + hasta 2 cambios al mes + te decimos cuánta gente vio tu página y te escribió.
-- **Plan de ventas · $150.000/mes** · todo lo del Plan de presencia + un **asistente de ventas 24/7**: un chatbot en la página que responde las preguntas de los clientes y los pasa al WhatsApp del negocio con un clic. Sin costo de instalación.
+- **Plan de presencia · $50.000/mes** · hosting + Ficha de Google activa y actualizada + **versión bilingüe ES/EN** + soporte por WhatsApp + hasta 2 cambios al mes.
+- **Plan de ventas · $150.000/mes** · todo lo del Plan de presencia + un **asistente de ventas 24/7** (un chatbot en la página que conoce el negocio, responde las preguntas de los clientes, los pasa al WhatsApp con un clic y agenda llamadas) + **vitrina de hasta 30 productos** + **catálogo o menú descargable** + **reporte mensual** con cuánta gente vio la página y escribió. Sin costo de instalación.
 
 El **chatbot va dentro del Plan de ventas**, no se vende como pago único. Si el cliente lo quiere, declara el mensual **antes** de cerrar, nunca después.
 
@@ -66,7 +66,9 @@ El **chatbot va dentro del Plan de ventas**, no se vende como pago único. Si el
 - Todo por **Wompi** (tarjetas, PSE, transferencia bancaria), en COP.
 - **Garantía de devolución a 30 días:** si no queda contento, bajamos la página y le devolvemos el dinero.
 
-Si el cliente suma adicionales, el total sube; el depósito sigue siendo el 30% de la página base ($120.000) y los adicionales van en el saldo al lanzar.
+El precio de la página es fijo: depósito $120.000 (30%) y saldo $280.000 (70%) al lanzar. Los planes mensuales se cobran aparte, mes a mes, y no entran en el depósito.
+
+**Cómo se cobra:** no cobramos en la página web. El enlace de pago de Wompi lo genera Mike y tú se lo pasas al cliente por WhatsApp cuando ya dijo que sí. Tu trabajo es tomar los datos, resolver dudas y dejar el cierre listo.
 
 ---
 
@@ -100,7 +102,7 @@ La regla de oro: **primero dale la razón, luego reencuadra.** Nunca discutas.
 > Claro. Solo para ayudarte: ¿qué te genera duda, el precio, el tiempo, o si va a funcionar para tu caso? Así resolvemos la duda real ahí mismo.
 
 **"¿Me haces un descuento?"**
-> El precio es fijo justamente para mantenerlo bajo y entregar rápido. Lo que sí puedo es ajustar el alcance: arrancamos con la página ($400.000) y le sumamos adicionales solo si los necesitas. (Nunca prometas descuento sin que Mike o yo lo aprobemos.)
+> El precio es fijo justamente para mantenerlo bajo y entregar rápido. El alcance es la página ($400.000); si más adelante quieres que atienda y agende sola, o vender más, ahí está el plan mensual. (Nunca prometas descuento sin que Mike o yo lo aprobemos.)
 
 **"Ya nadie usa páginas web."**
 > Tienes razón, los sitios viejos llenos de pestañas ya no sirven. Por eso no hacemos eso. Hacemos una página de ventas: una sola página enfocada en que te escriban. Hoy es más necesario que nunca, porque la gente te busca desde el celular y decide en segundos.
@@ -129,7 +131,7 @@ La regla de oro: **primero dale la razón, luego reencuadra.** Nunca discutas.
 
 Si la necesidad central del cliente es esto, no es nuestro cliente para la página (se puede cotizar aparte como trabajo a la medida, pero nunca lo prometas tú):
 
-- Tienda en línea real (carrito, inventario, pagos, variantes, envíos). El vitrina de productos es hasta donde llegamos productizado.
+- Tienda en línea real (carrito, inventario, pagos, variantes, envíos). La vitrina de productos del Plan de ventas es hasta donde llegamos productizado.
 - Blog real (CMS, artículos, publicación continua).
 - Páginas extra, más de un idioma extra, o "cambios ilimitados".
 - Apps, portales con login, membresías, automatizaciones complejas.
@@ -149,8 +151,8 @@ Para cualquiera de estas: "déjame confirmarte" y me consultas.
 
 ## 10. Reglas de oro
 
-- El producto es **la página de ventas: $400.000 COP**, pago único, IVA incluido. Incluye la Ficha de Google. Adicionales a **$75.000 c/u**.
-- Pago **30% para arrancar ($120.000)** y **70% al lanzar ($280.000)**. Siempre por Wompi, siempre en COP.
+- El producto es **la página de ventas: $400.000 COP**, pago único, IVA incluido. Incluye la Ficha de Google. Las capacidades extra (vitrina, catálogo, bilingüe, asistente 24/7) van **dentro de los planes mensuales**, no sueltas.
+- Pago **30% para arrancar ($120.000)** y **70% al lanzar ($280.000)**. Siempre por Wompi, siempre en COP. El **enlace de pago lo genera Mike** y tú se lo pasas al cliente; no se cobra en la web.
 - Entrega en **~48 horas** desde que llega el contenido y el depósito.
 - Habla de **resultados** (más clientes, más reservas), no de "páginas web".
 - **Nunca prometas resultados garantizados** (número de clientes, quedar #1 en Google). Sí puedes decir que la página está hecha para convertir, más la garantía de 30 días.

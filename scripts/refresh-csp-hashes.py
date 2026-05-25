@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 # refresh-csp-hashes.py, recompute SHA-256 hashes for every inline <script>
-# AND every inline <style> across the deployed HTML, then rewrite
-# functions/_middleware.js's SCRIPT_HASHES and STYLE_HASHES arrays in place.
+# across the deployed HTML, then rewrite functions/_middleware.js's
+# SCRIPT_HASHES array in place.
 #
-# WHY: the Pages middleware hash-locks both inline scripts and inline styles.
-# If hashes don't match the actual page content the browser blocks them and
-# the site renders unstyled. The previous version of this script only
-# handled SCRIPT_HASHES, which is how the 2026-05-13 GA4 commit broke
-# pymewebpro.com (style hashes went stale).
+# WHY: the Pages middleware hash-locks inline scripts (script execution is the
+# real XSS surface). If a script hash doesn't match the actual page content the
+# browser blocks it. style-src is NOT hash-locked anymore , it uses
+# 'unsafe-inline' (inline styles are presentational, not executable), which
+# ended the recurring "site renders unstyled" breakage that happened whenever
+# _middleware.js lagged an HTML push. So this script only touches scripts now.
 #
 # WHICH FILES: every *.html under the repo root, excluding non-deployed
 # paths (node_modules, manual-mockups, portal/). This matches the
-# middleware's actual surface, the prior hardcoded FILES list was a subset
-# and missed real pages.
+# middleware's actual surface.
 #
 # Usage (from repo root):
 #   python3 scripts/refresh-csp-hashes.py            # rewrites _middleware.js
@@ -69,39 +69,31 @@ def replace_array(mw, name, values):
 
 files = deployed_html_files()
 scripts = hashes_for("script", files)
-styles  = hashes_for("style",  files)
 
-if not scripts and not styles:
-    print("[refresh-csp-hashes] No inline scripts or styles found, did build:bilingual run?",
+if not scripts:
+    print("[refresh-csp-hashes] No inline scripts found, did build:bilingual run?",
           file=sys.stderr)
     sys.exit(1)
 
 mw_path = "functions/_middleware.js"
 mw = open(mw_path, encoding="utf-8").read()
 
-# Compare current arrays to actual hashes for the --check path.
+# Compare current array to actual hashes for the --check path.
 def extract(name):
     m = re.search(rf"const {name} = \[(.*?)\];", mw, re.DOTALL)
     return set(re.findall(r'"(sha256-[^"]+)"', m.group(1))) if m else set()
 
 cur_scripts = extract("SCRIPT_HASHES")
-cur_styles  = extract("STYLE_HASHES")
 
 missing_scripts = set(scripts) - cur_scripts
-missing_styles  = set(styles)  - cur_styles
 stale_scripts   = cur_scripts - set(scripts)
-stale_styles    = cur_styles  - set(styles)
 
 if CHECK_ONLY:
     bad = []
     if missing_scripts:
         bad.append(f"{len(missing_scripts)} inline <script> hash(es) missing from CSP")
-    if missing_styles:
-        bad.append(f"{len(missing_styles)} inline <style> hash(es) missing from CSP")
     if stale_scripts:
         bad.append(f"{len(stale_scripts)} stale <script> hash(es) in CSP")
-    if stale_styles:
-        bad.append(f"{len(stale_styles)} stale <style> hash(es) in CSP")
     if bad:
         print("[refresh-csp-hashes] CSP HASHES OUT OF SYNC:", file=sys.stderr)
         for b in bad:
@@ -112,18 +104,17 @@ if CHECK_ONLY:
               "    git commit --amend --no-edit   # or a new commit\n"
               "    git push\n", file=sys.stderr)
         sys.exit(1)
-    print(f"[refresh-csp-hashes] OK · {len(scripts)} scripts, {len(styles)} styles match")
+    print(f"[refresh-csp-hashes] OK · {len(scripts)} scripts match")
     sys.exit(0)
 
 # Default: rewrite the file
 new_mw = replace_array(mw, "SCRIPT_HASHES", scripts)
-new_mw = replace_array(new_mw, "STYLE_HASHES",  styles)
 
 # Em dash check (Mike's house rule, no em dashes anywhere)
 new_mw = new_mw.replace("—", ",")
 
 if new_mw == mw:
-    print(f"[refresh-csp-hashes] OK · already in sync ({len(scripts)} scripts, {len(styles)} styles)")
+    print(f"[refresh-csp-hashes] OK · already in sync ({len(scripts)} scripts)")
 else:
     open(mw_path, "w", encoding="utf-8").write(new_mw)
-    print(f"[refresh-csp-hashes] OK · wrote {len(scripts)} scripts and {len(styles)} styles to {mw_path}")
+    print(f"[refresh-csp-hashes] OK · wrote {len(scripts)} scripts to {mw_path}")

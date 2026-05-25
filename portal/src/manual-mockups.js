@@ -33,6 +33,15 @@ export const MOCKUP_SLUGS = new Set([
   "medellin-guide-boutique",
   "central-farma-drogueria",
   "revo-cafe",
+  // Spec mockups for IG-first Colombian tradespeople (added 2026-05-25).
+  "dekolux-persianas",
+  "master-key",
+  "plomeros-del-valle",
+  "enchapes-y-cortes",
+  "pisos-y-enchapes",
+  "enchapes-cristal",
+  "plomero-quilla",
+  "electricista-camilo",
 ]);
 
 // Backwards-compat shim: a few callers still read `MANUAL_MOCKUPS[slug]`

@@ -4,38 +4,21 @@
 //
 // Cloudflare Pages enforces a per-header-value byte limit on _headers entries
 // (~2000 chars). Our CSP value is well over that because it hash-locks every
-// inline <script> AND every inline <style> across the site (55 script hashes
-// + 26 style hashes at last count). CF Pages silently strips oversized values,
-// so a CSP defined in _headers never reaches the wire. Pages Functions have
-// no such limit.
+// inline <script> across the site (63 script hashes at last count). CF Pages
+// silently strips oversized values, so a CSP defined in _headers never reaches
+// the wire. Pages Functions have no such limit.
 //
 // Everything else (HSTS, X-Frame-Options, Permissions-Policy, COOP, CORP,
 // Referrer-Policy, X-Content-Type-Options, cache rules) stays in _headers
 // because those values fit comfortably.
 //
-// CSP HASH MAINTENANCE: when an inline <script> or <style> body changes
-// (whitespace counts), recompute hashes for every HTML file under the repo
-// root and update the SCRIPT_HASHES / STYLE_HASHES lists below. The script
-// that emits both lists (run from repo root):
+// CSP HASH MAINTENANCE: only inline <script> is hash-locked. style-src uses
+// 'unsafe-inline' (inline styles are presentational, not executable), so
+// editing a <style> block needs no hash refresh. When an inline <script> body
+// changes (whitespace counts), regenerate the SCRIPT_HASHES list below:
 //
-//   python3 -c "
-//   import re,hashlib,base64,glob,os,json
-//   files=[f for f in sorted(glob.glob('**/*.html', recursive=True))
-//          if 'node_modules' not in f and 'manual-mockups' not in f and 'portal/' not in f]
-//   def hashes_for(tag):
-//     out=set()
-//     for f in files:
-//       if not os.path.exists(f): continue
-//       for m in re.finditer(rf'<{tag}(\\s[^>]*)?>(.*?)</{tag}>', open(f).read(), re.DOTALL):
-//         attrs=m.group(1) or ''
-//         body=m.group(2)
-//         if tag=='script' and 'src=' in attrs: continue
-//         if not body.strip(): continue
-//         out.add('sha256-'+base64.b64encode(hashlib.sha256(body.encode()).digest()).decode())
-//     return sorted(out)
-//   print('SCRIPT_HASHES:'); print(json.dumps(hashes_for('script'), indent=2))
-//   print('STYLE_HASHES:'); print(json.dumps(hashes_for('style'), indent=2))
-//   "
+//   python3 scripts/refresh-csp-hashes.py          # rewrites this file
+//   python3 scripts/refresh-csp-hashes.py --check   # verifies sync (pre-push hook)
 
 const SCRIPT_HASHES = [
   "sha256-+Km2JgOlLQLRi6/81ubHwKC15gRsPeDZA5RisvAUx84=",
@@ -72,6 +55,7 @@ const SCRIPT_HASHES = [
   "sha256-SMgGhWCMIe6hMCFwpbMb4wj9IvyRZBc6iYDeoqKtBCg=",
   "sha256-T5BTDsamdRv4rPYn/o1ekb3JZQNGAUcZG32XUHzFJXg=",
   "sha256-TP4XUMaLFfFpPEpyC7xi7gG/NeNexz/3ecrOWNHdhlM=",
+  "sha256-U/p6HeDxTYvmz4eA/i3GdYV0T8nA1TUWAtdWYFBfPLQ=",
   "sha256-VaWy8PtS6N9pwz8EXxXLzNe4nslRvZ733mSrtMxHpkI=",
   "sha256-W1PMSMp061q45yl5W6fTzX0w9DKuSMQalmHasoGQvZw=",
   "sha256-WhmFk5Bq602xDLYrjYTBZyqPs9SQBZQheN6BGvZxAVk=",
@@ -94,7 +78,6 @@ const SCRIPT_HASHES = [
   "sha256-rBL0PN78SJSNNev7As5kIWYPL9Tnpdm5O7XW3pkHdrc=",
   "sha256-tL06TjhrBnjcVeK3vyLPYFfFW1Hwx8I3oFQ5zC8ml8k=",
   "sha256-u1jBsBUcuemmNvUcavjlIWYLPBz3JO5GOeq0D3eu92w=",
-  "sha256-vDgcCs2ZtyJHZ9SAIj/lExwX80UKM4VvO+22y8Cnao8=",
   "sha256-vOhM5Sr087MCqZBcYtJz61I+X0RZlmZA2ysJk7xJb2Y=",
   "sha256-vZnDzfWFe/3EonS42AgTWkj3/YDvij3ttuzF5E5wTaI=",
   "sha256-voAHiu5C2mwoj653S0ab/1e2+E+vauzGOqaOPY2KvXc=",
@@ -103,39 +86,19 @@ const SCRIPT_HASHES = [
   "sha256-zi2UeItvAYkd1qMVdj3BwXFJ5aXCKsvGffc0qO7D9Ms=",
 ];
 
-const STYLE_HASHES = [
-  "sha256-13ibskFxM+oBG1GOKCF2RlES6jq9ZsjpijA1hToibN8=",
-  "sha256-1nPELemA6W56auTRzuELYIQ0Y00KXwgS7Pvn+J0V+a8=",
-  "sha256-7nRJxaCwAoBm8Q2TIPJM3lvz0i93AW46r4kGfzixCRs=",
-  "sha256-7nqvFdWleb7/odg040lroiCRBGOv/wdF/XovVUCj8cg=",
-  "sha256-9XU+CCn2ChnNIRTRTh07hhVp4LP/1LDAkxxNCCrq1h0=",
-  "sha256-Ct7euMouJpm0oYs7sLrNLK3gBCfY3g5tCkRu6lpWaEI=",
-  "sha256-KNZQJoVLSiFjV9VT7nzhG+ER4g0oTxH1hZE/cta1clw=",
-  "sha256-LFmGeFVusYQPLmvA2CSIZLalqovfUCd8Xkzg1W+XZ5Y=",
-  "sha256-S26/GwbJjQlPbph9YoO29JMyt+6+c+m8lETNQT2O1nc=",
-  "sha256-Sqr3A3nF2rYpiE1yGXW9/oX69QxkIJNIt+ZCF4BCa4Y=",
-  "sha256-YEph6qo0neaQwZAiVE/stU9OWGO5DyeYPRP/tdmCFuI=",
-  "sha256-doXDWDnFtR++rkKHwPPnw6kUf5ilZjfH1br6DHIaVe0=",
-  "sha256-he/U2UugO0I/zdHSoWJVnm8TCLC73TbZGeE6QSho6HE=",
-  "sha256-lWVMuCo0MpbjLXrbx+ZgF9cPY+Svag7Szm0eitGBmk4=",
-  "sha256-tkldcovVxCmq7Hv0c/JoqM+RBZHndsHIZ3gvmp2X4mY=",
-  "sha256-z78aRRwtiALpgnA2EoaF9e3HCbQY2wxXnsM3vLqf0ww=",
-];
-
 const SCRIPT_HASH_LIST = SCRIPT_HASHES.map((h) => `'${h}'`).join(" ");
-const STYLE_HASH_LIST = STYLE_HASHES.map((h) => `'${h}'`).join(" ");
 
 const CSP = [
   "default-src 'self'",
   `script-src 'self' ${SCRIPT_HASH_LIST} https://www.googletagmanager.com https://valentina.pymewebpro.com`,
-  // style-src is now hash-locked. All inline style="..." attributes have been
-  // refactored to .u-* utility classes (see end of each page's <style> block).
-  // Adding a new inline <style> block or editing an existing one means the
-  // SHA-256 changes , recompute STYLE_HASHES per the maintenance script above.
-  // If you absolutely must add a one-off inline style="" attribute, you can
-  // either (a) refactor it to a utility class, or (b) add 'unsafe-hashes'
-  // here plus a per-attribute hash (the latter is brittle, prefer option a).
-  `style-src 'self' ${STYLE_HASH_LIST} https://fonts.googleapis.com https://valentina.pymewebpro.com`,
+  // script-src stays hash-locked (script execution is the real XSS surface).
+  // style-src uses 'unsafe-inline' on purpose: inline <style> is presentational,
+  // not executable, so the risk is low, and hash-locking styles was the recurring
+  // cause of the live site rendering unstyled whenever _middleware.js lagged an
+  // HTML push by even one commit. Per-page <style> blocks now edit freely with
+  // no hash refresh. Note: a CSP3 browser ignores 'unsafe-inline' if any hash or
+  // nonce is also present in style-src, so do NOT re-add style hashes here.
+  `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://valentina.pymewebpro.com`,
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https://images.pexels.com https://www.google-analytics.com",
   // blob: lets the "free example" preview render the generated mockup inside its tablet iframe.
