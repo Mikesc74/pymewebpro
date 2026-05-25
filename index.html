@@ -88,7 +88,7 @@
   .cta-note{color:var(--mute);font-size:.9rem}
   .hero .note{color:var(--mute);font-size:.92rem;margin-top:1rem}
   .band{background:var(--ink);color:#F3EDE4;padding:2.4rem 0;margin:2.4rem 0}
-  .band h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:800;max-width:22ch}
+  .band h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:800;max-width:26ch}
   .band h2 b{color:#F2A07F}
   .band p{color:#C9BFB2;margin-top:.7rem;max-width:60ch;font-size:1.05rem}
   section.pad{padding:2.6rem 0}
@@ -228,6 +228,12 @@
   .guidelinks a{display:inline-flex;align-items:center;gap:.4rem;background:#fff;border:1px solid var(--line);border-radius:999px;padding:.55rem 1rem;font-weight:700;font-size:.9rem;color:var(--ink)}
   .guidelinks a:hover{border-color:var(--accent);color:var(--accent-d)}
   .guidelinks a.all{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .band .layers{display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;margin-top:1.5rem}
+  .band .ly{padding:.55rem 1rem;border:1px solid rgba(255,255,255,.22);border-radius:999px;font-weight:700;font-size:.88rem;color:#F3EDE4}
+  .band .ly.core{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .band .arr{color:#F2A07F;font-weight:800;font-size:1.05rem}
+  .band .lysub{margin-top:1rem;color:#C9BFB2;font-size:.95rem}
 </style>
 </head>
 <body>
@@ -267,15 +273,17 @@
 
 <div class="band">
   <div class="wrap">
-    <h2>Tú traes la gente. Nosotros hacemos que <b>te elijan</b>.</h2>
-    <p>El tráfico es tuyo: tus clientes, tu Instagram, el voz a voz, Google. La página es nuestra: que cuando lleguen te vean como un negocio serio y que contactarte sea facilísimo. No te prometemos clientes de la nada. Nos aseguramos de que los que ya te buscan no se te escapen.</p>
+    <h2>No vendemos páginas. Somos tu <b>socio</b> para conseguir más clientes.</h2>
+    <p>Todo empieza por una página que convierte. De ahí trabajamos hacia afuera: tu Ficha de Google para que te encuentren, un chatbot que cierra 24/7, y anuncios y guías para traer más gente.</p>
+    <div class="layers"><span class="ly core">Tu página de ventas</span><span class="arr">+</span><span class="ly">Ficha de Google</span><span class="arr">+</span><span class="ly">Chatbot 24/7</span><span class="arr">+</span><span class="ly">Anuncios y guías</span></div>
+    <p class="lysub">Y nosotros, tu socio en cada paso.</p>
   </div>
 </div>
 
 
 <section class="pad" id="como" style="padding-top:0">
   <div class="wrap">
-    <h2 class="sec">Qué recibes</h2>
+    <h2 class="sec">Empieza por una página que convierte</h2>
     <p class="sub">Una sola página, enfocada en una acción: que te escriban o reserven. Sin pestañas que nadie lee.</p>
     <ul class="feat">
       <li><span class="check">+</span><div>Una página rápida, hecha a tu medida (<b>no plantilla</b>): tus colores, tus fotos, tu oferta.</div></li>
@@ -290,11 +298,12 @@
   <div class="wrap">
     <div>
       <span class="eyebrow">Incluida en tu página</span>
-      <h2 class="sec">Tu Ficha de Google, lista y optimizada</h2>
-      <p class="sub">Cuando alguien te busca en Google o en Maps, apareces tú: con tus fotos, tus reseñas, tu teléfono y el botón para llegar o escribirte.</p>
+      <h2 class="sec">Tu Ficha de Google, optimizada y actualizada</h2>
+      <p class="sub">Cuando alguien te busca en Google o en Maps, apareces tú: con tus fotos, tus reseñas y el botón para llamarte o escribirte. La mayoría revisa Google antes de decidir, por eso la mantenemos completa y al día.</p>
       <ul class="feat">
         <li><span class="check">+</span><div>Apareces en el mapa cuando te buscan en tu zona.</div></li>
         <li><span class="check">+</span><div>Tus reseñas a la vista, que es lo que genera confianza.</div></li>
+        <li><span class="check">+</span><div>La actualizamos cada mes: horarios, fotos y novedades.</div></li>
         <li><span class="check">+</span><div>Botones para llamar, llegar o escribirte por WhatsApp.</div></li>
       </ul>
     </div>
@@ -315,14 +324,14 @@
   <div class="wrap">
     <div>
       <span class="eyebrow">Plan de ventas</span>
-      <h2>Un asistente que cierra por ti, 24/7</h2>
-      <p>Responde al instante a cada persona que llega, de día o de madrugada, contesta sus dudas y la lleva directo a tu WhatsApp. Ningún interesado se enfría esperando respuesta. Es el mismo asistente que te atiende aquí.</p>
+      <h2>Un asistente 24/7 que conoce tu negocio</h2>
+      <p>Aprende sobre tu negocio para responder bien a cada persona que llega, de día o de madrugada. Contesta dudas, agenda llamadas contigo y pasa al cliente a tu WhatsApp. Ningún interesado se enfría esperando respuesta. Es el mismo asistente que te atiende aquí.</p>
       <button class="btn btn-orange" type="button" data-valentina-open="start">Pruébalo aquí</button>
     </div>
     <div class="chatcard">
       <div class="cb bot">Hola, ¿en qué te ayudo con tu proyecto?</div>
-      <div class="cb user">¿Hacen instalación a domicilio?</div>
-      <div class="cb bot">Sí. Te paso con el equipo por WhatsApp para coordinar.</div>
+      <div class="cb user">¿Tienen disponibilidad esta semana?</div>
+      <div class="cb bot">Sí. ¿Te agendo una llamada con el equipo? Tengo mañana a las 10am.</div>
     </div>
   </div>
 </section>
@@ -331,7 +340,7 @@
   <div class="wrap">
     <span class="eyebrow">Traer la gente</span>
     <h2 class="sec">También te enseñamos a traer tráfico con anuncios</h2>
-    <p class="sub">El tráfico es tuyo, pero no estás solo. Tenemos guías gratuitas de Google Ads, Meta Ads, SEO local y más, y te acompañamos para que tus anuncios traigan clientes, no solo clics.</p>
+    <p class="sub">El tráfico es tuyo, pero no estás solo. Tenemos guías gratuitas de Google Ads, Meta Ads, SEO local y más, y te acompañamos para que, cuando estés listo para invertir, tus anuncios traigan clientes y no solo clics.</p>
     <div class="guidelinks">
       <a href="/guides/google-ads/">Google Ads</a>
       <a href="/guides/meta-ads/">Meta Ads</a>
@@ -427,22 +436,14 @@
         <span class="badge">Primer mes incluido</span>
         <div class="pt">Plan de presencia</div>
         <div class="pp">$50.000/mes</div>
-        <ul class="pfeat"><li>Hosting ultrarrápido y seguro</li><li>Tu Ficha de Google activa</li><li>Soporte por WhatsApp</li><li>Hasta 2 cambios al mes</li><li>Reporte mensual con la actividad de tus clientes</li></ul>
+        <ul class="pfeat"><li>Hosting ultrarrápido y seguro</li><li>Tu Ficha de Google activa y actualizada</li><li>Versión bilingüe (español e inglés)</li><li>Soporte por WhatsApp</li><li>Hasta 2 cambios al mes</li><li>Reporte mensual con la actividad de tus clientes</li></ul>
       </div>
       <div class="plan feature">
         <span class="badge">Recomendado</span>
         <div class="pt">Plan de ventas</div>
         <div class="pp">$150.000/mes</div>
-        <ul class="pfeat"><li>Todo lo del Plan de presencia</li><li>Un asistente de ventas 24/7 en tu página, como el que te atiende aquí</li><li>Responde las preguntas y pasa al cliente a tu WhatsApp</li><li>Te ahorras el costo de instalación</li></ul>
+        <ul class="pfeat"><li>Todo lo del Plan de presencia</li><li>Asistente de ventas 24/7 que conoce tu negocio, responde y agenda llamadas</li><li>Vitrina de hasta 30 productos</li><li>Almacenamiento compartible para catálogos y archivos</li><li>Te ahorras el costo de instalación</li></ul>
       </div>
-    </div>
-
-    <h3 class="tier">Adicionales (opcionales)</h3>
-    <p class="sub">Súmalos solo si los necesitas. Todo en pesos, sin sorpresas.</p>
-    <div class="addons">
-      <div class="addon-row"><span>Vitrina de productos</span><b>$75.000</b></div>
-      <div class="addon-row"><span>Catálogo o menú descargable (PDF)</span><b>$75.000</b></div>
-      <div class="addon-row"><span>Versión bilingüe (ES/EN)</span><b>$75.000</b></div>
     </div>
   </div>
 </section>
