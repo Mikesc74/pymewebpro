@@ -16,7 +16,7 @@
 //          proposal_status, proposal_generated_at). Migration 0005.
 //
 // Sin em dashes. Spanish + English copy in the proposal page (clients are
-// bilingual). Single-product model: "La página de ventas" $390.000 COP, IVA
+// bilingual). Single-product model: "La página de ventas" $400.000 COP, IVA
 // incluido. COP only, no CAD/USD. The old plan/tier branching is collapsed:
 // any stored plan key (esencial or legacy pro) maps to the one product.
 // ============================================================================
@@ -169,17 +169,17 @@ function pickTier(deal, lead) {
 // the old hourly-CAD model.
 function pickPricing(market, tier) {
   void market; void tier;
-  return { label: "La página de ventas", currency: "COP", price: "$390.000 COP", deposit: "$117.000 COP", balance: "$273.000 COP", hosting: "incluye 1 mes de hosting + soporte", maintenance: "ronda de revisión adicional $90.000 COP", hourly: "ronda de revisión adicional $90.000 COP" };
+  return { label: "La página de ventas", currency: "COP", price: "$400.000 COP", deposit: "$120.000 COP", balance: "$280.000 COP", hosting: "incluye 1 mes de hosting + soporte", maintenance: "ronda de revisión adicional $90.000 COP", hourly: "ronda de revisión adicional $90.000 COP" };
 }
 
 // Add-on menu (COP). Keys match what the Mi día "Propuesta" form sends.
-const BASE_PRICE = 390000;
+const BASE_PRICE = 400000;
 const ADDON_CATALOG = {
   catalog:     { es: "Catálogo simple",          en: "Simple catalog",           price: 75000 },
   pdf:         { es: "Catálogo o menú descargable (PDF)", en: "Downloadable catalog or menu (PDF)", price: 75000 },
   bilingual:   { es: "Versión bilingüe",         en: "Bilingual version",        price: 75000 },
 };
-// Format an integer as Colombian pesos: 390000 -> "$390.000 COP".
+// Format an integer as Colombian pesos: 400000 -> "$400.000 COP".
 function fmtCOP(n) {
   n = Math.round(Number(n) || 0);
   const s = String(n);
@@ -670,7 +670,7 @@ const PROPOSAL_TEXT_ES = {
   revisionsValue: "2 rondas de revisión incluidas",
   includesHeading: "Qué recibes",
   hostingHeading: "Hosting y soporte",
-  hosting1: "El precio incluye tu Ficha de Google y 1 mes de hosting + soporte. Después, eliges un plan mensual opcional, sin contrato: hosting solo $30.000 COP/mes, Plan de presencia $59.000 COP/mes (hosting + Ficha de Google activa + hasta 2 cambios + reporte mensual), o Plan de ventas $150.000 COP/mes (todo lo anterior + tu asistente de ventas 24/7: un chatbot en tu página que responde preguntas y pasa al cliente a tu WhatsApp con un clic).",
+  hosting1: "El precio incluye tu Ficha de Google y 1 mes de hosting + soporte. Después, eliges un plan mensual opcional, sin contrato: hosting solo $30.000 COP/mes, Plan de presencia $50.000 COP/mes (hosting + Ficha de Google activa + hasta 2 cambios + reporte mensual), o Plan de ventas $150.000 COP/mes (todo lo anterior + tu asistente de ventas 24/7: un chatbot en tu página que responde preguntas y pasa al cliente a tu WhatsApp con un clic).",
   host1: "Cloudflare Pages, 330+ ubicaciones edge, sub-1s LCP en cualquier país",
   host2: "Certificado SSL gestionado, renovación automática, sin tarifas extra",
   host3: "Backups automáticos, redundancia geográfica",
@@ -714,7 +714,7 @@ const PROPOSAL_TEXT_EN = {
   revisionsValue: "2 revision rounds included",
   includesHeading: "What you receive",
   hostingHeading: "Hosting + support",
-  hosting1: "The price includes your Google Business Profile and 1 month of hosting + support. After that, you pick an optional monthly plan, no contract: hosting only $30.000 COP/mo, Plan de presencia $59.000 COP/mo (hosting + active Google Business Profile + up to 2 changes + monthly report), or Plan de ventas $150.000 COP/mo (everything above + your 24/7 sales assistant: a chatbot on your page that answers questions and sends the customer to your WhatsApp with one tap).",
+  hosting1: "The price includes your Google Business Profile and 1 month of hosting + support. After that, you pick an optional monthly plan, no contract: hosting only $30.000 COP/mo, Plan de presencia $50.000 COP/mo (hosting + active Google Business Profile + up to 2 changes + monthly report), or Plan de ventas $150.000 COP/mo (everything above + your 24/7 sales assistant: a chatbot on your page that answers questions and sends the customer to your WhatsApp with one tap).",
   host1: "Cloudflare Pages, 330+ edge locations, sub-1s LCP worldwide",
   host2: "Managed SSL cert, automatic renewal, no extra fees",
   host3: "Automatic backups, geo redundancy",

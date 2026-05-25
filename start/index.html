@@ -160,7 +160,7 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
   // Single product. The portal still keys the base page as 'esencial' for
   // checkout/pricing, so we keep that key and just drop the tier wording.
   var PLANS = {
-    esencial: { tag: 'Pago único', name: 'La página de ventas', cop: '$390.000 COP', dep_cop: '$117.000 COP' }
+    esencial: { tag: 'Pago único', name: 'La página de ventas', cop: '$400.000 COP', dep_cop: '$120.000 COP' }
   };
 
   var params = new URLSearchParams(window.location.search);
@@ -180,7 +180,7 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
   document.getElementById('kicker').textContent = 'Empezando con ' + plan.name;
 
   function renderPrice(){
-    var total = (cfgTotal && cfgTotal > 0) ? cfgTotal : 390000;
+    var total = (cfgTotal && cfgTotal > 0) ? cfgTotal : 400000;
     var dep = Math.round(total * 0.30);
     document.getElementById('plan-price').innerHTML = copFmt(total);
     var html = '<strong>Depósito hoy (30%)</strong>: ' + copFmt(dep) + '. Saldo al lanzar (70%): <strong>' + copFmt(total - dep) + '</strong>';
@@ -217,7 +217,7 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
       // $30k/mo). Keep the portal key 'esencial' for pricing/checkout (deposit
       // stays $117k); the configured add-ons + total ride along for the rep to
       // confirm and invoice in the launch balance.
-      extra: { plan: planKey, hosting: 'monthly', total_cop: ((cfgTotal && cfgTotal > 0) ? cfgTotal : 390000), items: cfgItems, monthly_cop: cfgMonthly }
+      extra: { plan: planKey, hosting: 'monthly', total_cop: ((cfgTotal && cfgTotal > 0) ? cfgTotal : 400000), items: cfgItems, monthly_cop: cfgMonthly }
     };
     if (window.PwpAttribution) {
       var attr = window.PwpAttribution.get();

@@ -3864,27 +3864,27 @@ const WA_TEMPLATES = [
   {
     id: "cold-slow",
     label: "Cold outreach (Slow/mobile)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Vi el sitio de {business} y carga lento en celular, donde estan la mayoria de tus clientes. Mi socio canadiense y yo armamos sitios rapidos y optimizados para Colombia. Te hago un mockup gratis mostrandote como se veria el tuyo mejorado. Planes desde $390.000 COP, entrega en 48 horas. ¿Tienes 5 minutos? https://pymewebpro.com/",
+    template: "Hola {name}, soy Santi de PymeWebPro. Vi el sitio de {business} y carga lento en celular, donde estan la mayoria de tus clientes. Mi socio canadiense y yo armamos sitios rapidos y optimizados para Colombia. Te hago un mockup gratis mostrandote como se veria el tuyo mejorado. Planes desde $400.000 COP, entrega en 48 horas. ¿Tienes 5 minutos? https://pymewebpro.com/",
   },
   {
     id: "cold-no-cta",
     label: "Cold outreach (No WhatsApp/CTA)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Revise el sitio de {business} y note que no tiene boton de WhatsApp ni una llamada a la accion clara, eso te hace perder clientes que entran pero no saben que hacer. Mi socio canadiense y yo construimos sitios pensados como canal de ventas, no solo vitrina. Te armo un mockup gratis para que veas la diferencia. Desde $390.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
+    template: "Hola {name}, soy Santi de PymeWebPro. Revise el sitio de {business} y note que no tiene boton de WhatsApp ni una llamada a la accion clara, eso te hace perder clientes que entran pero no saben que hacer. Mi socio canadiense y yo construimos sitios pensados como canal de ventas, no solo vitrina. Te armo un mockup gratis para que veas la diferencia. Desde $400.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
   },
   {
     id: "cold-seo",
     label: "Cold outreach (Bad SEO)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Busque {business} en Google y tu sitio no aparece bien posicionado, eso significa clientes yendose a la competencia que si aparece. Mi socio canadiense y yo construimos sitios con SEO local desde el primer dia. Te hago un mockup gratis para que veas el cambio. Desde $390.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
+    template: "Hola {name}, soy Santi de PymeWebPro. Busque {business} en Google y tu sitio no aparece bien posicionado, eso significa clientes yendose a la competencia que si aparece. Mi socio canadiense y yo construimos sitios con SEO local desde el primer dia. Te hago un mockup gratis para que veas el cambio. Desde $400.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
   },
   {
     id: "cold-no-site",
     label: "Cold outreach (No site)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Busque {business} en Google y no encontre un sitio web propio, solo aparecen en redes sociales o directorios. Eso significa que clientes que los buscan terminan en la competencia que si tiene sitio. Mi socio canadiense y yo armamos sitios profesionales para PYMES colombianas, pensados como canal de ventas. Te hago un mockup gratis para que veas como se veria el tuyo. Desde $390.000 COP, entrega en 48 horas. ¿Tienes 5 minutos? https://pymewebpro.com/",
+    template: "Hola {name}, soy Santi de PymeWebPro. Busque {business} en Google y no encontre un sitio web propio, solo aparecen en redes sociales o directorios. Eso significa que clientes que los buscan terminan en la competencia que si tiene sitio. Mi socio canadiense y yo armamos sitios profesionales para PYMES colombianas, pensados como canal de ventas. Te hago un mockup gratis para que veas como se veria el tuyo. Desde $400.000 COP, entrega en 48 horas. ¿Tienes 5 minutos? https://pymewebpro.com/",
   },
   {
     id: "cold-broken",
     label: "Cold outreach (Broken site)",
-    template: "Hola {name}, soy Santi de PymeWebPro. Entre al sitio de {business} y note que no carga bien o se ve desactualizado, eso te resta credibilidad frente a clientes que te estan comparando con la competencia. Mi socio canadiense y yo armamos sitios profesionales para PYMES colombianas, pensados como canal de ventas. Te hago un mockup gratis mostrandote como se veria renovado. Desde $390.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
+    template: "Hola {name}, soy Santi de PymeWebPro. Entre al sitio de {business} y note que no carga bien o se ve desactualizado, eso te resta credibilidad frente a clientes que te estan comparando con la competencia. Mi socio canadiense y yo armamos sitios profesionales para PYMES colombianas, pensados como canal de ventas. Te hago un mockup gratis mostrandote como se veria renovado. Desde $400.000 COP, entrega en 48 horas. ¿5 minutos? https://pymewebpro.com/",
   },
   {
     id: "after-quote",

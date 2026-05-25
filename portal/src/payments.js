@@ -3,7 +3,7 @@
 // Reconstructed from the deployed bundle of `pymewebpro-portal` Worker on 2026-04-30.
 //
 // PRICING (single-product model as of 2026-05-20):
-//   ONE product, "La página de ventas": 390.000 COP (IVA incluido), portal key
+//   ONE product, "La página de ventas": 400.000 COP (IVA incluido), portal key
 //   `esencial`. Plus an à la carte add-on menu (handled elsewhere). There are
 //   no Essential/Pro tiers anymore. COP only.
 //   The legacy `pro` key (690.000 COP) is retained ONLY to price old stored
@@ -23,7 +23,7 @@ const DISCOUNT_WINDOW_MS = 0;
 const DISCOUNT_AMOUNT_COP = 0;
 
 const PLAN_PRICES_COP = {
-  esencial: 390_000,    // "La página de ventas" · the one current product
+  esencial: 400_000,    // "La página de ventas" · the one current product
   pro: 690_000,         // legacy key · retained only to price old stored rows
 };
 
@@ -39,7 +39,7 @@ export function computeQuote(lead) {
   const planPrice = PLAN_PRICES_COP[plan] || 0;
   let hostingPrice = HOSTING_PRICES_COP[hosting] || 0;
   // The page bundles its included hosting period, so an annual hosting line at
-  // checkout would double-bill (390k page + hosting = too much). Zero it out
+  // checkout would double-bill (400k page + hosting = too much). Zero it out
   // when hosting=annual. Handles the legacy `pro` key the same way.
   const hostingBundled = (plan === "esencial" || plan === "pro") && hosting === "annual";
   if (hostingBundled) hostingPrice = 0;

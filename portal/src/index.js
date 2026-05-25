@@ -1255,7 +1255,7 @@ function escapeHtml(s) {
 const DISCOUNT_WINDOW_MS = 0;     // Discount logic preserved but currently inactive
 const DISCOUNT_AMOUNT_COP = 0;
 const PLAN_PRICES_COP = {
-  esencial: 390000,   // 39e4 in original
+  esencial: 400000,   // 39e4 in original
   pro: 690000         // 69e4 in original
 };
 const HOSTING_PRICES_COP = {

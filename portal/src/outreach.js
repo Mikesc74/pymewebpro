@@ -34,8 +34,8 @@ const SYSTEM_PROMPT_SANTI =
   "- Si el negocio atiende turistas o extranjeros (hoteles, clínicas, turismo médico o dental, inmobiliarias, restaurantes de zona expat), menciona captar al cliente extranjero que busca y reserva en inglés, con una versión en inglés. Solo si de verdad aplica.\n" +
   "- Sin em dashes nunca. Usa comas, puntos, dos puntos, paréntesis.\n" +
   "- Sin lenguaje de marketing ('líder', 'mundial', 'aprovechar', 'desbloquear', 'soluciones').\n" +
-  "- Sin precios en CAD/USD. Si mencionas precio, COP solamente (la página de ventas son $390.000 COP).\n" +
-  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base de forma natural, desde $390.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega en ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas de un detalle, no lo menciones.\n" +
+  "- Sin precios en CAD/USD. Si mencionas precio, COP solamente (la página de ventas son $400.000 COP).\n" +
+  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base de forma natural, desde $400.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega en ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas de un detalle, no lo menciones.\n" +
   "- Si NO tienen sitio, sugiere construir su página de ventas. Si tienen buen rating de Google (4.5+), menciónalo con naturalidad como prueba de que su negocio funciona.\n" +
   "- Devuelve SOLO el texto del mensaje listo para enviar: sin comillas, sin notas internas, sin explicaciones, sin separadores (nada de '---' ni 'Notas internas'). Nada antes ni después.";
 
@@ -51,8 +51,8 @@ const SYSTEM_PROMPT_MIKE =
   "- En el primer contacto cierra ofreciendo un mockup gratis ('¿te armo un ejemplo gratis?'). No uses preguntas que lo hagan cuantificar su fracaso. En seguimientos o cierres, sigue la instrucción del operador.\n" +
   "- NO prometas posicionamiento en Google, ni clientes garantizados, ni resultados. Solo beneficios reales: carga rápida, hecha para convertir, botón claro de WhatsApp o reservas.\n" +
   "- Si el negocio atiende turistas o extranjeros, menciona captar al cliente extranjero que busca y reserva en inglés, con versión en inglés. Solo si aplica.\n" +
-  "- Sin em dashes nunca. Sin lenguaje de marketing. Sin precios en CAD/USD, solo COP (la página de ventas son $390.000 COP).\n" +
-  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base de forma natural, desde $390.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega en ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas de un detalle, no lo menciones.\n" +
+  "- Sin em dashes nunca. Sin lenguaje de marketing. Sin precios en CAD/USD, solo COP (la página de ventas son $400.000 COP).\n" +
+  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base de forma natural, desde $400.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega en ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas de un detalle, no lo menciones.\n" +
   "- Si tienen buen rating de Google (4.5+), menciónalo con naturalidad como prueba.\n" +
   "- Devuelve SOLO el texto del mensaje listo para enviar: sin comillas, sin notas internas, sin explicaciones, sin separadores (nada de '---' ni 'Notas internas'). Nada antes ni después.";
 
@@ -68,7 +68,7 @@ const SYSTEM_PROMPT_SANTI_EMAIL =
   "- NO prometas posicionamiento en Google ni resultados garantizados. Solo beneficios reales: carga rápida, hecha para convertir, botón claro de contacto o reservas.\n" +
   "- Si atiende turistas o extranjeros, menciona captar al cliente que busca y reserva en inglés, con versión en inglés. Solo si aplica.\n" +
   "- Sin em dashes nunca. Sin lenguaje de marketing. Sin precios en CAD/USD, solo COP.\n" +
-  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base, desde $390.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas, no lo menciones.\n" +
+  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base, desde $400.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas, no lo menciones.\n" +
   "- Responde SOLO con el objeto JSON. Nada de prosa alrededor.";
 
 const SYSTEM_PROMPT_MIKE_EMAIL =
@@ -81,7 +81,7 @@ const SYSTEM_PROMPT_MIKE_EMAIL =
   "- Cierra ofreciendo un mockup gratis. No prometas posicionamiento en Google ni resultados garantizados.\n" +
   "- Si atiende turistas o extranjeros, menciona captar al cliente que reserva en inglés, con versión en inglés. Solo si aplica.\n" +
   "- Sin em dashes. Sin marketing-speak. Sin precios en CAD/USD, solo COP.\n" +
-  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base, desde $390.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas, no lo menciones.\n" +
+  "- PRECIO Y HECHOS: menciona SIEMPRE el precio base, desde $400.000 COP (pago único, IVA incluido); los adicionales van aparte. No inventes inclusiones: incluye 1 MES de hosting y soporte, NO un año; entrega ~48 horas; 2 rondas de revisión. NUNCA prometas un año de hosting, hosting o dominio gratis, ni inclusiones que no estén aquí. Si dudas, no lo menciones.\n" +
   "- Responde SOLO con el objeto JSON. Nada de prosa alrededor.";
 
 export async function handleOutreach(request, env, ctx, helpers) {

@@ -18,7 +18,7 @@ The Studio will design, develop, and deploy a custom sales page (the "**Website*
 
 **Product:**
 
-- [x] **La página de ventas**, $390.000 COP one-time (IVA incluido), a custom-designed, custom-coded sales page
+- [x] **La página de ventas**, $400.000 COP one-time (IVA incluido), a custom-designed, custom-coded sales page
 
 **Add-ons (à la carte, COP, IVA incl.):**
 
@@ -63,12 +63,12 @@ Revision cycles will be completed within forty-eight (48) hours of the Client pr
 
 ## 4. Fees and Payment
 
-**Total Fee:** [AMOUNT] COP (the "**Fee**"), being $390.000 COP for la página de ventas plus any selected add-ons. All prices are in Colombian pesos (COP), IVA incluido.
+**Total Fee:** [AMOUNT] COP (the "**Fee**"), being $400.000 COP for la página de ventas plus any selected add-ons. All prices are in Colombian pesos (COP), IVA incluido.
 
 **Payment Schedule.** The Fee is paid in two milestones:
 
-1. **30% deposit to start** ($117.000 COP on the base page). No design or development work begins until this deposit is received.
-2. **70% on launch** ($273.000 COP on the base page). The completed site is hosted on a staging URL until the balance is received. The Studio will not connect the Website to the Client's custom domain (DNS configuration) until the balance clears.
+1. **30% deposit to start** ($120.000 COP on the base page). No design or development work begins until this deposit is received.
+2. **70% on launch** ($280.000 COP on the base page). The completed site is hosted on a staging URL until the balance is received. The Studio will not connect the Website to the Client's custom domain (DNS configuration) until the balance clears.
 
 **Payment Methods.** The Client pays by card, PSE, or bank transfer through the Studio's Wompi payment portal, in COP. No other currency is accepted.
 
@@ -217,7 +217,7 @@ Date: ______________________________
 
 **Project Name:** ____________________________________
 
-**Product:** La página de ventas ($390.000 COP)
+**Product:** La página de ventas ($400.000 COP)
 
 **Selected add-ons:** ____________________________________
 

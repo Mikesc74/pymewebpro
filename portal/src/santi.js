@@ -3,7 +3,7 @@
 // No external dependencies. All CSS inline. Bilingual (ES + EN) via a
 // language toggle in the header. House style: no em dashes, no marketing-speak,
 // real numbers. Single-product model: one product "La página de ventas"
-// COP $390.000 (IVA incl.), à la carte add-ons, hosting after the included
+// COP $400.000 (IVA incl.), à la carte add-ons, hosting after the included
 // month COP $30.000/mes or COP $300.000/año.
 
 export function santiPageHTML() {
@@ -13,9 +13,9 @@ export function santiPageHTML() {
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Santi · PymeWebPro · Sitios web en 48 horas para PYMES</title>
-<meta name="description" content="Sitios web profesionales para PYMES en Colombia y LATAM. Entrega en 48 horas. Desde COP $390.000. 1 ano de hosting y soporte incluidos." />
+<meta name="description" content="Sitios web profesionales para PYMES en Colombia y LATAM. Entrega en 48 horas. Desde COP $400.000. 1 ano de hosting y soporte incluidos." />
 <meta property="og:title" content="Santi · PymeWebPro" />
-<meta property="og:description" content="Sitios web profesionales en 48 horas. Desde COP $390.000." />
+<meta property="og:description" content="Sitios web profesionales en 48 horas. Desde COP $400.000." />
 <meta property="og:image" content="https://pymewebpro.com/og-image.jpg" />
 <style>
 :root {
@@ -612,7 +612,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <div class="label" data-lang="en">delivery</div>
       </div>
       <div class="stat">
-        <div class="num">$390k</div>
+        <div class="num">$400k</div>
         <div class="label" data-lang="es">COP, IVA incluido</div>
         <div class="label" data-lang="en">COP, IVA included</div>
       </div>
@@ -686,7 +686,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <span class="badge" data-lang="en">Single product</span>
         <h3 data-lang="es">La pagina de ventas</h3>
         <h3 data-lang="en">The sales page</h3>
-        <div class="price">$390.000 <small>COP</small></div>
+        <div class="price">$400.000 <small>COP</small></div>
         <p class="meta" data-lang="es">IVA incluido. Pago 30 / 70. En vivo en ~48 horas.</p>
         <p class="meta" data-lang="en">IVA included. 30 / 70 payment. Live in ~48 hours.</p>
         <ul>
@@ -743,13 +743,13 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
 
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="es">
       Planes mensuales opcionales despues del mes incluido (sin contrato): hosting <b>$30.000/mes</b> ·
-      Plan de presencia <b>$59.000/mes</b> (hosting + Ficha de Google activa + hasta 2 cambios + reporte) ·
+      Plan de presencia <b>$50.000/mes</b> (hosting + Ficha de Google activa + hasta 2 cambios + reporte) ·
       Plan de ventas <b>$150.000/mes</b> (todo + asistente de ventas 24/7: un chatbot que responde y pasa al cliente a tu WhatsApp).
       Sin candado: si quieres llevarte el sitio a otro hosting, te entregamos el codigo.
     </p>
     <p style="margin-top:1.5rem;color:var(--ink-soft);font-size:0.9rem;text-align:center" data-lang="en">
       Optional monthly plans after the included month (no contract): hosting <b>$30.000/mo</b> ·
-      Plan de presencia <b>$59.000/mo</b> (hosting + active Google Business Profile + up to 2 changes + report) ·
+      Plan de presencia <b>$50.000/mo</b> (hosting + active Google Business Profile + up to 2 changes + report) ·
       Plan de ventas <b>$150.000/mo</b> (everything + a 24/7 sales assistant: a chatbot that answers and sends customers to your WhatsApp).
       No lock-in: if you want to move your site elsewhere, we hand over the code.
     </p>
@@ -949,7 +949,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
             <td>$60-120k/mes</td>
             <td>$200-500k</td>
             <td>$2M-8M</td>
-            <td class="us">$390k</td>
+            <td class="us">$400k</td>
           </tr>
           <tr>
             <td data-lang="es">Tiempo de entrega</td>

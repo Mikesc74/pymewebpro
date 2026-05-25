@@ -72,13 +72,13 @@
   // entry is retired.
   const PLAN_LABELS = {
     es: {
-      'esencial:none':        { name: 'La página de ventas',                   price: '$390.000 COP',           form: 'La página de ventas ($390k)' },
-      'esencial:monthly':     { name: 'La página de ventas + Hosting mensual', price: '$390.000 + $30.000/mes', form: 'La página de ventas + Hosting mensual ($390k + $30k/mes)' },
+      'esencial:none':        { name: 'La página de ventas',                   price: '$400.000 COP',           form: 'La página de ventas ($400k)' },
+      'esencial:monthly':     { name: 'La página de ventas + Hosting mensual', price: '$400.000 + $30.000/mes', form: 'La página de ventas + Hosting mensual ($400k + $30k/mes)' },
       'esencial:annual':      { name: 'La página de ventas + Hosting anual',   price: '$690.000 COP',           form: 'La página de ventas + Hosting anual ($690k)' },
     },
     en: {
-      'esencial:none':        { name: 'The sales page',                        price: '$390.000 COP',           form: 'La página de ventas ($390k)' },
-      'esencial:monthly':     { name: 'The sales page + Monthly hosting',      price: '$390.000 + $30.000/mes', form: 'La página de ventas + Hosting mensual ($390k + $30k/mes)' },
+      'esencial:none':        { name: 'The sales page',                        price: '$400.000 COP',           form: 'La página de ventas ($400k)' },
+      'esencial:monthly':     { name: 'The sales page + Monthly hosting',      price: '$400.000 + $30.000/mes', form: 'La página de ventas + Hosting mensual ($400k + $30k/mes)' },
       'esencial:annual':      { name: 'The sales page + Annual hosting',       price: '$690.000 COP',           form: 'La página de ventas + Hosting anual ($690k)' },
     },
   };

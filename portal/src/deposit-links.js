@@ -1,7 +1,7 @@
 // Wompi deposit + balance link generator for the 30/70 payment split.
 //
 // PymeWebPro pricing (single-product model as of 2026-05-20):
-//   La página de ventas (key=esencial) · 390.000 COP total (IVA incluido)
+//   La página de ventas (key=esencial) · 400.000 COP total (IVA incluido)
 //   The legacy `pro` key (690.000 COP) is retained ONLY to price old stored
 //   deals correctly · it is not offered to new buyers. COP only.
 //
@@ -24,7 +24,7 @@
 
 import { dealTotalCop } from "./proposal-generator.js";
 
-const PRICE_COP = { esencial: 390000, pro: 690000 };
+const PRICE_COP = { esencial: 400000, pro: 690000 };
 
 export async function handleDepositLinks(request, env, ctx, helpers) {
   const { json, isAdmin, uuid } = helpers;
