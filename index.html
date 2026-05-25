@@ -114,6 +114,13 @@
   .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;text-align:center}
   .stat b{display:block;font-size:1.7rem;font-weight:800;color:var(--accent-d)}
   .stat span{font-size:.85rem;color:var(--mute)}
+  .team{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1rem}
+  @media(max-width:620px){.team{grid-template-columns:1fr}}
+  .member{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.4rem;text-align:center}
+  .member .photo{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--soft);margin:0 auto .8rem;display:block}
+  .member .mname{font-weight:800}
+  .member .mrole{color:var(--accent-d);font-size:.85rem;font-weight:700;margin:.1rem 0 .5rem}
+  .member p{color:var(--ink2);font-size:.92rem}
   .price{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:1.4rem 1.5rem}
   .price .big{font-size:2rem;font-weight:800}
   .price .small{color:var(--ink2);margin-top:.3rem}
@@ -248,6 +255,27 @@
       <div class="stat"><b>48 h</b><span>de tu aprobación a estar en línea</span></div>
       <div class="stat"><b>&lt;1 s</b><span>carga en el celular</span></div>
       <div class="stat"><b>$400.000</b><span>precio fijo, sin sorpresas</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="sec">Quiénes somos</h2>
+    <p class="sub">Un estudio pequeño en Medellín. No una agencia con call center: hablas con una persona real, de principio a fin.</p>
+    <div class="team">
+      <div class="member">
+        <img class="photo" src="/screenshots/santi.jpg" alt="Santiago Santos, cofundador de PymeWebPro en Medellín" width="120" height="120" loading="lazy">
+        <div class="mname">Santiago Santos</div>
+        <div class="mrole">Cofundador · Medellín</div>
+        <p>Tu contacto directo. Te atiende por WhatsApp, resuelve tus dudas y te acompaña hasta que tu página esté en línea.</p>
+      </div>
+      <div class="member">
+        <img class="photo" src="/screenshots/mike.jpg" alt="Mike Chartrand, cofundador de PymeWebPro" width="120" height="120" loading="lazy">
+        <div class="mname">Mike Chartrand</div>
+        <div class="mrole">Cofundador · canadiense</div>
+        <p>Diseña y construye las páginas. Somos un estudio colombiano-canadiense, hecho en Medellín para pymes colombianas.</p>
+      </div>
     </div>
   </div>
 </section>
