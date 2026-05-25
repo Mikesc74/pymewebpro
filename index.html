@@ -175,6 +175,22 @@
   section.proofband .sec{color:#fff}
   section.proofband .sub{color:#C9BFB2}
   section.proofband .proof,section.proofband .stat{background:var(--paper)}
+
+  /* Nuestro trabajo showcase */
+  .work{padding:2.8rem 0}
+  .work .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1.4rem}
+  @media(max-width:820px){.work .wgrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.work .wgrid{grid-template-columns:1fr}}
+  .wcard{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .15s ease,box-shadow .15s ease}
+  .wcard:hover{transform:translateY(-3px);box-shadow:0 14px 30px -12px rgba(27,20,16,.25)}
+  .wcard img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;display:block;background:var(--paper2)}
+  .wcard .wb{padding:.85rem 1rem 1.05rem}
+  .wtag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.35rem}
+  .wtag.live{color:var(--green)}
+  .wtag.demo{color:var(--mute)}
+  .wcard .wt{font-weight:800;font-size:1.02rem}
+  .wcard .wd{color:var(--ink2);font-size:.86rem;margin:.1rem 0 .5rem}
+  .wcard .wl{font-weight:700;font-size:.82rem;color:var(--accent-d)}
 </style>
 </head>
 <body>
@@ -251,6 +267,22 @@
       <div class="stat"><b>48 h</b><span>de tu aprobación a estar en línea</span></div>
       <div class="stat"><b>&lt;1 s</b><span>carga en el celular</span></div>
       <div class="stat"><b>$400.000</b><span>precio fijo, sin sorpresas</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="work" id="trabajo">
+  <div class="wrap">
+    <h2 class="sec">Nuestro trabajo</h2>
+    <p class="sub">Sitios en vivo de clientes y ejemplos de diseño. Tu página la armamos contigo, con tu marca y tus fotos.</p>
+    <div class="wgrid">
+      <a class="wcard" href="https://inviersol.com" target="_blank" rel="noopener"><img src="/screenshots/inviersol.jpg" alt="Inviersol" loading="lazy"><div class="wb"><span class="wtag live">Sitio en vivo</span><div class="wt">Inviersol</div><div class="wd">Parasoles y sombrillas · Envigado</div><span class="wl">Ver sitio →</span></div></a>
+      <a class="wcard" href="https://schedulator2.vercel.app" target="_blank" rel="noopener"><img src="/screenshots/schedulator.jpg" alt="The Schedulator" loading="lazy"><div class="wb"><span class="wtag live">Sitio en vivo</span><div class="wt">The Schedulator</div><div class="wd">Herramienta para profesores</div><span class="wl">Ver sitio →</span></div></a>
+      <a class="wcard" href="https://mockups.pymewebpro.com/dekolux-persianas/" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/28729467/pexels-photo-28729467.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Dekolux Persianas" loading="lazy"><div class="wb"><span class="wtag demo">Ejemplo de diseño</span><div class="wt">Dekolux Persianas</div><div class="wd">Persianas, cortinas y toldos</div><span class="wl">Ver ejemplo →</span></div></a>
+      <a class="wcard" href="https://mockups.pymewebpro.com/master-key/" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/9969498/pexels-photo-9969498.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Master Key" loading="lazy"><div class="wb"><span class="wtag demo">Ejemplo de diseño</span><div class="wt">Master Key</div><div class="wd">Llaves con chip y cerrajería</div><span class="wl">Ver ejemplo →</span></div></a>
+      <a class="wcard" href="https://mockups.pymewebpro.com/electricista-camilo/" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/27928762/pexels-photo-27928762.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Electricista Camilo" loading="lazy"><div class="wb"><span class="wtag demo">Ejemplo de diseño</span><div class="wt">Electricista Camilo</div><div class="wd">Electricista 24 horas</div><span class="wl">Ver ejemplo →</span></div></a>
+      <a class="wcard" href="https://mockups.pymewebpro.com/plomeros-del-valle/" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/8486978/pexels-photo-8486978.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Plomeros del Valle" loading="lazy"><div class="wb"><span class="wtag demo">Ejemplo de diseño</span><div class="wt">Plomeros del Valle</div><div class="wd">Plomería 24 horas</div><span class="wl">Ver ejemplo →</span></div></a>
+      <a class="wcard" href="https://mockups.pymewebpro.com/enchapes-y-cortes/" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/29181494/pexels-photo-29181494.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Enchapes y Cortes" loading="lazy"><div class="wb"><span class="wtag demo">Ejemplo de diseño</span><div class="wt">Enchapes y Cortes</div><div class="wd">Porcelanato y enchapes</div><span class="wl">Ver ejemplo →</span></div></a>
     </div>
   </div>
 </section>
