@@ -92,7 +92,7 @@ A real store and a blog are out of scope but quotable as custom.
 
 ### Hosting after the included month
 
-$30.000 COP/mes or $300.000 COP/año.
+Monthly plans (both include hosting): Plan de presencia $50.000 COP/mes or Plan de ventas $150.000 COP/mes.
 
 ### Payment terms
 
@@ -124,7 +124,7 @@ After 30 days, fee is non-refundable. Hosting is always month-to-month and cance
 |------|----------------|------------|
 | Equivalent custom sales page | $5.000.000 COP+ | $400.000 COP |
 | Timeline | 6–10 weeks | ~48 hours |
-| Hosting | high monthly WordPress fee | Included 1 month, then $30.000 COP/mes |
+| Hosting | high monthly WordPress fee | Included, then a plan from $50.000 COP/mes |
 | Tech | WordPress + plugins | Hand-coded HTML on Cloudflare |
 
 ## Unit economics

@@ -40,7 +40,7 @@ El reloj de las 48 horas arranca **cuando tenemos el contenido y entró el depó
 
 Súmalos solo si el cliente los necesita, no para inflar la cuenta:
 
-- **Catálogo simple** · hasta 30 productos con foto, nombre, precio y descripción corta (el cliente sube su contenido a un portal). Sin carrito ni inventario.
+- **Vitrina de productos** · hasta 30 productos con foto, nombre, precio y descripción corta (el cliente sube su contenido a un portal). Sin carrito ni inventario.
 - **Catálogo o menú descargable en PDF** · un PDF que el cliente puede guardar y compartir por WhatsApp (sirve de imán de clientes).
 - **Versión bilingüe ES/EN** · la misma página en español e inglés.
 
@@ -50,10 +50,9 @@ La **Ficha de Google ya va incluida** en la página, no es adicional.
 
 ## 4. Planes mensuales (opcionales, sin contrato)
 
-La página es pago único. Después del mes incluido, si quiere, hay un plan mensual. **Ninguno es obligatorio.** Cancela cuando quiera.
+La página es pago único. Después del mes incluido, si quiere, hay dos planes mensuales, ambos incluyen hosting. **Ninguno es obligatorio.** Cancela cuando quiera.
 
-- **Hosting solo · $30.000/mes** (o $300.000/año). Mantiene la página en línea.
-- **Plan de presencia · $50.000/mes** · hosting + Ficha de Google activa + hasta 2 cambios al mes + un reporte mensual.
+- **Plan de presencia · $50.000/mes** · hosting + Ficha de Google activa + soporte por WhatsApp + hasta 2 cambios al mes + te decimos cuánta gente vio tu página y te escribió.
 - **Plan de ventas · $150.000/mes** · todo lo del Plan de presencia + un **asistente de ventas 24/7**: un chatbot en la página que responde las preguntas de los clientes y los pasa al WhatsApp del negocio con un clic. Sin costo de instalación.
 
 El **chatbot va dentro del Plan de ventas**, no se vende como pago único. Si el cliente lo quiere, declara el mensual **antes** de cerrar, nunca después.
@@ -130,7 +129,7 @@ La regla de oro: **primero dale la razón, luego reencuadra.** Nunca discutas.
 
 Si la necesidad central del cliente es esto, no es nuestro cliente para la página (se puede cotizar aparte como trabajo a la medida, pero nunca lo prometas tú):
 
-- Tienda en línea real (carrito, inventario, pagos, variantes, envíos). El catálogo simple es hasta donde llegamos productizado.
+- Tienda en línea real (carrito, inventario, pagos, variantes, envíos). El vitrina de productos es hasta donde llegamos productizado.
 - Blog real (CMS, artículos, publicación continua).
 - Páginas extra, más de un idioma extra, o "cambios ilimitados".
 - Apps, portales con login, membresías, automatizaciones complejas.

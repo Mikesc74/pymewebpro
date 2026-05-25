@@ -100,7 +100,7 @@ After the two included rounds, each additional revision round is **$90.000 COP**
 
 **Renewal and Maintenance (Optional).** After the included month expires, the Client may:
 
-- Renew hosting + support at **$30.000 COP per month** or **$300.000 COP per year**
+- Continue via a monthly plan that includes hosting: **Plan de presencia $50.000 COP per month** or **Plan de ventas $150.000 COP per month**
 - Request an additional revision round at **$90.000 COP** per round
 - Add any item from the à la carte add-on menu (see Section 1) at the listed COP price
 - Migrate the Website to another host of their choice. The Studio will deliver a portable build at no charge.
