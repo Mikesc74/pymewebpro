@@ -151,6 +151,12 @@
   .plan .pt{font-weight:800}
   .plan .pp{color:var(--accent-d);font-weight:800;font-size:1.15rem;margin:.1rem 0 .4rem}
   .plan p{font-size:.9rem;color:var(--ink2)}
+  .plan .badge{display:inline-block;background:var(--accent);color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:.16rem .55rem;margin-bottom:.45rem}
+  section.pricing{background:var(--ink);padding:3rem 0;margin:2.8rem 0}
+  section.pricing .sec{color:#fff}
+  section.pricing .sub{color:#C9BFB2;margin-bottom:1rem}
+  section.pricing .tier{font-size:1.15rem;font-weight:800;color:#fff;margin:2.8rem 0 .5rem}
+  section.pricing .price{margin-bottom:.2rem}
 </style>
 </head>
 <body>
@@ -245,7 +251,7 @@
   </div>
 </section>
 
-<section class="pad" style="padding-top:0">
+<section class="pricing">
   <div class="wrap">
     <h2 class="sec">Precio claro</h2>
     <div class="price">
@@ -253,8 +259,8 @@
       <div class="small">La página de ventas. Pago único, IVA incluido. Incluye tu Ficha de Google y 1 mes de hosting y soporte.</div>
     </div>
 
-    <h3 style="font-size:1.1rem;font-weight:700;margin:2.8rem 0 .25rem">Planes mensuales (opcionales)</h3>
-    <p class="sub" style="margin-bottom:.7rem">Después del primer mes. Sin contrato, cancela cuando quieras.</p>
+    <h3 class="tier">Planes mensuales (opcionales)</h3>
+    <p class="sub">Después del primer mes. Sin contrato, cancela cuando quieras.</p>
     <div class="plans">
       <div class="plan">
         <div class="pt">Plan de presencia</div>
@@ -262,14 +268,15 @@
         <p>Hosting, tu Ficha de Google activa, página al día, hasta 2 cambios al mes y un reporte mensual con tus números.</p>
       </div>
       <div class="plan feature">
+        <span class="badge">Recomendado</span>
         <div class="pt">Plan de ventas</div>
         <div class="pp">$150.000/mes</div>
         <p>Todo lo del Plan de presencia, más tu asistente de ventas 24/7: un chatbot en tu página que responde las preguntas de tus clientes y los pasa a tu WhatsApp con un clic. Sin costo de instalación.</p>
       </div>
     </div>
 
-    <h3 style="font-size:1.1rem;font-weight:700;margin:2.8rem 0 .25rem">Adicionales (opcionales)</h3>
-    <p class="sub" style="margin-bottom:.7rem">Súmalos solo si los necesitas. Todo en pesos, sin sorpresas.</p>
+    <h3 class="tier">Adicionales (opcionales)</h3>
+    <p class="sub">Súmalos solo si los necesitas. Todo en pesos, sin sorpresas.</p>
     <div class="addons">
       <div class="addon-row"><span>Catálogo simple</span><b>$75.000</b></div>
       <div class="addon-row"><span>Catálogo o menú descargable (PDF)</span><b>$75.000</b></div>
