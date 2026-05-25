@@ -717,7 +717,7 @@ const PROPOSAL_TEXT_EN = {
   revisionsValue: "2 revision rounds included",
   includesHeading: "What you receive",
   hostingHeading: "Hosting + support",
-  hosting1: "The price includes 1 month of hosting + support. After that, keeping the site online costs $30.000 COP / month or $300.000 COP / year (IVA included).",
+  hosting1: "The price includes your Google Business Profile and 1 month of hosting + support. After that, you pick an optional monthly plan, no contract: hosting only $30.000 COP/mo, Plan de presencia $59.000 COP/mo (hosting + active Google Business Profile + up to 2 changes + monthly report), or Plan de ventas $150.000 COP/mo (everything above + your 24/7 sales assistant, a chatbot that captures, replies and books).",
   host1: "Cloudflare Pages, 330+ edge locations, sub-1s LCP worldwide",
   host2: "Managed SSL cert, automatic renewal, no extra fees",
   host3: "Automatic backups, geo redundancy",
