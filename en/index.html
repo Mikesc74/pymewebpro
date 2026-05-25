@@ -159,6 +159,10 @@
   .plan .pt{font-weight:800}
   .plan .pp{color:var(--accent-d);font-weight:800;font-size:1.15rem;margin:.1rem 0 .4rem}
   .plan p{font-size:.9rem;color:var(--ink2)}
+  .plan{display:flex;flex-direction:column}
+  .pfeat{list-style:none;padding:0;margin:.25rem 0 0}
+  .pfeat li{position:relative;padding:.2rem 0 .2rem 1.3rem;font-size:.88rem;color:var(--ink2);line-height:1.35}
+  .pfeat li::before{content:"\2713";position:absolute;left:0;color:var(--accent-d);font-weight:800}
   .plan .badge{display:inline-block;background:var(--accent);color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:.16rem .55rem;margin-bottom:.45rem}
   section.pricing{background:var(--ink);padding:3rem 0;margin:2.8rem 0}
   section.pricing .sec{color:#fff}
@@ -166,6 +170,10 @@
   section.pricing .tier{font-size:1.15rem;font-weight:800;color:#fff;margin:2.8rem 0 .5rem}
   section.pricing .price{margin-bottom:.2rem}
   section.pricing .price,section.pricing .plan,section.pricing .addon-row{background:var(--paper)}
+  section.proofband{background:var(--ink);padding:3rem 0;margin:2.8rem 0}
+  section.proofband .sec{color:#fff}
+  section.proofband .sub{color:#C9BFB2}
+  section.proofband .proof,section.proofband .stat{background:var(--paper)}
 </style>
 </head>
 <body>
@@ -233,7 +241,7 @@
   </div>
 </section>
 
-<section class="pad" style="padding-top:0">
+<section class="proofband">
   <div class="wrap">
     <h2 class="sec">Proof</h2>
     <p class="sub">Real clients, not promises.</p>
@@ -286,22 +294,23 @@
     <h2 class="sec">Clear pricing</h2>
     <div class="price">
       <div class="big">$400.000 COP</div>
-      <div class="small">The sales page. One-time, IVA included. Includes your Google Business Profile and 1 month of hosting and support.</div>
+      <div class="small">The sales page. One-time, IVA included. Includes your Google Business Profile and the first month of Plan de presencia.</div>
     </div>
 
-    <h3 class="tier">Monthly plans (optional)</h3>
-    <p class="sub">After the first month. No contract, cancel anytime.</p>
+    <h3 class="tier">Your monthly plan</h3>
+    <p class="sub">The first month is included with your page. After that, Plan de presencia continues at $50.000/mo. No contract, cancel anytime.</p>
     <div class="plans">
       <div class="plan">
+        <span class="badge">First month included</span>
         <div class="pt">Plan de presencia</div>
         <div class="pp">$50.000/mo</div>
-        <p>Hosting, your Google Business Profile active, WhatsApp support, page kept current, up to 2 changes a month, and a monthly note on how many people saw your page and messaged you.</p>
+        <ul class="pfeat"><li>Ultrafast, secure hosting</li><li>Your Google Business Profile active</li><li>WhatsApp support</li><li>Up to 2 changes a month</li><li>Monthly report of customer activity</li></ul>
       </div>
       <div class="plan feature">
         <span class="badge">Recommended</span>
         <div class="pt">Plan de ventas</div>
         <div class="pp">$150.000/mo</div>
-        <p>Everything in Plan de presencia, plus your 24/7 sales assistant: a chatbot on your page that answers your customers' questions and sends them to your WhatsApp with one tap. No setup fee.</p>
+        <ul class="pfeat"><li>Everything in Plan de presencia</li><li>24/7 sales assistant: a chatbot on your page</li><li>Answers questions and sends the customer to your WhatsApp</li><li>No setup fee</li></ul>
       </div>
     </div>
 
