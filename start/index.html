@@ -185,7 +185,7 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
     document.getElementById('plan-price').innerHTML = copFmt(total);
     var html = '<strong>Depósito hoy (30%)</strong>: ' + copFmt(dep) + '. Saldo al lanzar (70%): <strong>' + copFmt(total - dep) + '</strong>';
     if (cfgItems) html += ' · incluye: ' + cfgItems;
-    if (cfgMonthly > 0) html += '. El chatbot suma ' + copFmt(cfgMonthly) + '/mes.';
+    if (cfgMonthly > 0) html += '. Plan mensual opcional: ' + copFmt(cfgMonthly) + '/mes.';
     html += ' <strong>Garantía de devolución a 30 días.</strong>';
     document.getElementById('plan-deposit').innerHTML = html;
     card.removeAttribute('hidden');
@@ -208,15 +208,17 @@ footer .legal{margin-top:6px;font-size:11.5px;color:#A89788}
       name: fd.get('name'),
       email: fd.get('email'),
       business_name: fd.get('business_name'),
-      message: 'Quiere la página de ventas' + (cfgItems ? ' + add-ons: ' + cfgItems : '') + '. Vino de /start.',
+      message: 'Quiere la página de ventas' + (cfgItems ? ' + extras: ' + cfgItems : '') + '. Vino de /start.',
       language: 'es',
       source: 'pymewebpro_start',
       page: '/start/',
       website: fd.get('company_website') || '',
       // Single product: base page includes the first month of hosting (then
-      // $30k/mo). Keep the portal key 'esencial' for pricing/checkout (deposit
-      // stays $117k); the configured add-ons + total ride along for the rep to
-      // confirm and invoice in the launch balance.
+      // optional Plan de presencia $50k/mes or Plan de ventas $150k/mes; bare
+      // hosting $30k/mes). Keep the portal key 'esencial' for pricing/checkout
+      // (deposit = 30% of the configured total, default $120.000 on the base);
+      // any configured extras + total ride along for the rep to confirm and
+      // invoice in the launch balance.
       extra: { plan: planKey, hosting: 'monthly', total_cop: ((cfgTotal && cfgTotal > 0) ? cfgTotal : 400000), items: cfgItems, monthly_cop: cfgMonthly }
     };
     if (window.PwpAttribution) {

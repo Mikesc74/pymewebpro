@@ -69,7 +69,43 @@ const INDUSTRY_SEEDS = {
   "joyeria": "joyería",
   "floristeria": "floristería",
   "optica": "óptica",
+  // Trades (the IG-or-nothing crowd · added 2026-05-26 for the lead sweep).
+  "electricista": "electricista a domicilio",
+  "plomero": "plomero a domicilio",
+  "cerrajeria": "cerrajería",
+  "vidrieria": "vidriería",
+  "carpinteria": "carpintería",
+  "pintor": "pintor de casas",
+  "enchapador": "enchapes y pisos instalación",
+  "jardineria": "jardinería a domicilio",
+  "fumigacion": "fumigación de plagas",
+  "aire-acondicionado": "servicio de aire acondicionado",
+  "mudanzas": "empresa de mudanzas",
+  "impermeabilizacion": "impermeabilización de techos",
+  // Trades-support / supply (the people who sell to the trades and to homeowners).
+  "pisos-enchapes-tienda": "tienda de pisos y enchapes",
+  "materiales-construccion": "depósito de materiales de construcción",
+  "tienda-pintura": "tienda de pintura",
+  "iluminacion-tienda": "tienda de iluminación",
+  "ceramica-tienda": "almacén de cerámica",
+  "suministros-electricos": "suministros eléctricos",
+  "herrajes-tienda": "herrajes y herramientas",
+  "griferias-tienda": "almacén de griferías",
 };
+
+// Curated preset for the trades sweep (use this in `verticals` when arming a
+// bulk job). Includes the trade itself + the supply chain around it (ferretería
+// + constructora are already in the broad SMB set; included again here so a
+// trades-only run still pulls them).
+const TRADES_VERTICALS = [
+  "electricista", "plomero", "cerrajeria", "vidrieria", "carpinteria",
+  "pintor", "enchapador", "jardineria", "fumigacion", "aire-acondicionado",
+  "mudanzas", "impermeabilizacion",
+  "ferreteria", "constructora",
+  "pisos-enchapes-tienda", "materiales-construccion", "tienda-pintura",
+  "iluminacion-tienda", "ceramica-tienda", "suministros-electricos",
+  "herrajes-tienda", "griferias-tienda",
+];
 
 // City slug -> display form (proper accents) used in the Places textQuery.
 // 5 metros.
