@@ -1370,7 +1370,7 @@ table.sheet tbody tr.new-row td .cell { color: var(--ink-soft); font-style: ital
   <div class="brand">Pyme<em>WebPro</em><span>CRM</span></div>
   <div class="spacer"></div>
   <a href="/" class="back" style="margin-right:1rem">← Mi día</a>
-  <a href="/recursos" class="back" style="margin-right:1rem">Recursos</a>
+  <a href="/recursos" class="back" style="margin-right:1rem" target="_blank" rel="noopener">Manual</a>
   <a href="/admin" class="back">admin</a>
 </header>
 

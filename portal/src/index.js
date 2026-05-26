@@ -20,7 +20,6 @@ import { handleMockups } from "./mockups.js";
 import { handleAdminCRM, crmPageHTML } from "./crm.js";
 import VENTAS_RECURSOS_HTML from "./ventas-recursos.html";
 import VENTAS_MIDIA_HTML from "./ventas-midia.html";
-import VENTAS_GUIA_HTML from "./ventas-guia.html";
 import DEMO_DENTAL_HTML from "./demo-dental.html";
 import DEMO_DENTAL_ES_HTML from "./demo-dental-es.html";
 import DEMO_GENERIC_HTML from "./demo-generic.html";
@@ -1834,17 +1833,12 @@ const src_default = {
           },
         }));
       }
-      // Santi's instruction manual / how-to.
+      // Legacy: /guia now lives inside the unified Manual at /recursos.
       if (path === "/guia" || path === "/guia/") {
-        return withSecurityHeaders(new Response(VENTAS_GUIA_HTML, {
-          headers: {
-            "Content-Type": "text/html; charset=utf-8",
-            "Cache-Control": "no-store",
-            "X-Content-Type-Options": "nosniff",
-            "Referrer-Policy": "strict-origin-when-cross-origin",
-            "Content-Security-Policy": ventasCSP,
-          },
-        }));
+        return new Response(null, {
+          status: 301,
+          headers: { "Location": "/recursos" },
+        });
       }
       // Full CRM (advanced) lives at /crm. The default landing is the guided
       // "Mi dia" screen built for Santi.
