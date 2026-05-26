@@ -29,7 +29,13 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 .col h2{font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;margin:0 0 .2rem;display:flex;align-items:center;gap:.5rem}
 .col .sub{color:var(--mute);font-size:.8rem;margin:0 0 .9rem}
 .col .count{background:var(--accent);color:#fff;border-radius:999px;font-size:.72rem;padding:.1rem .5rem;font-weight:700}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.5rem .6rem;margin:0 0 .5rem;box-shadow:0 1px 0 rgba(26,22,18,.03);overflow:hidden;overflow-wrap:break-word;cursor:pointer}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.5rem .6rem;margin:0 0 .5rem;box-shadow:0 1px 0 rgba(26,22,18,.03);overflow:hidden;overflow-wrap:break-word;cursor:pointer}
+.card .card-del{position:absolute;top:.18rem;right:.22rem;width:1.15rem;height:1.15rem;line-height:1;padding:0;border:0;border-radius:50%;background:transparent;color:var(--mute);font-size:1rem;font-weight:700;cursor:pointer;opacity:0;transition:opacity .12s,background .12s,color .12s}
+.card:hover .card-del{opacity:.7}
+.card .card-del:hover{opacity:1;background:#c0392b;color:#fff}
+.card .card-del:focus-visible{opacity:1;outline:2px solid #c0392b;outline-offset:1px}
+.act.act-del{padding:.18rem .5rem;line-height:1;color:#c0392b;border-color:#e8c5be;background:#fff}
+.act.act-del:hover{background:#c0392b;color:#fff;border-color:#c0392b}
 .card:hover{border-color:var(--accent)}
 .card .biz,.card .meta,.card .cmini{overflow-wrap:break-word;max-width:100%}
 .card .biz{color:var(--ink)}
@@ -460,6 +466,7 @@ function cardHTML(l, col){
   var t = l.touches_count||0;
   var mini = (col==='closed') ? esc(touchLine(l)) : esc(nextStep(l))+(t?' · '+t+' toque'+(t===1?'':'s'):'');
   return '<div class="card'+cls+'" draggable="true" data-id="'+esc(l.id)+'">'
+    + '<button class="card-del" title="Borrar definitivamente" data-del="'+esc(l.id)+'" aria-label="Borrar">×</button>'
     + (chip?'<div class="cardchip">'+chip+'</div>':'')
     + '<div class="biz">'+mark+esc(leadName(l))+heatPill(l.heat)+'</div>'
     + (meta?'<div class="meta">'+meta+'</div>':'')
@@ -514,6 +521,22 @@ function wireDrag(){
     col.addEventListener('dragleave', function(e){ if(e.target===col) col.classList.remove('drop-hot'); });
     col.addEventListener('drop', function(e){ e.preventDefault(); col.classList.remove('drop-hot'); var id=window.__drag||(e.dataTransfer&&e.dataTransfer.getData('text/plain')); if(id) moveTo(id, col.getAttribute('data-drop')); });
   });
+  // Hard-delete buttons on each card (× top-right). Confirm before firing.
+  // Stops propagation so the click doesn't open the card panel.
+  app.querySelectorAll('[data-del]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      e.preventDefault();
+      var id = btn.getAttribute('data-del');
+      var lead = BY_ID[id];
+      var name = lead ? leadName(lead) : 'este prospecto';
+      if(!confirm('¿Borrar definitivamente a "' + name + '"?\n\nEsto elimina la tarjeta, sus actividades y su propuesta. Si el cliente ya pagó, se conservan los pagos. No se puede deshacer.')) return;
+      btn.disabled = true;
+      api('/api/admin/crm/leads/' + id, { method: 'DELETE' })
+        .then(function(){ toast('Borrado'); loadAll(); })
+        .catch(function(err){ toast('Error: ' + (err && err.message || err), true); btn.disabled = false; });
+    });
+  });
 }
 
 function noNumSectionHTML(items){
@@ -524,7 +547,8 @@ function noNumSectionHTML(items){
     var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
     return '<div class="nn-row" data-id="'+esc(l.id)+'">'
       + '<div class="nn-biz">'+esc(leadName(l))+(meta?'<span class="nn-meta"> · '+meta+'</span>':'')+'</div>'
-      + '<div class="nn-act">'+links.join('')+'<button class="act" data-a="addnum">Agregar número</button></div>'
+      + '<div class="nn-act">'+links.join('')+'<button class="act" data-a="addnum">Agregar número</button>'
+      + '<button class="act act-del" data-del="'+esc(l.id)+'" title="Borrar definitivamente" aria-label="Borrar">×</button></div>'
       + '</div>';
   }).join('');
   return '<div class="nn-wrap"><h2>Por conseguir número <span class="count">'+items.length+'</span></h2>'

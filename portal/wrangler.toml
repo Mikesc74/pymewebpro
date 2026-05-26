@@ -97,6 +97,16 @@ COS_EMAIL_REPLY_TO = "mike@mikec.pro"
 TASKS_PORTAL_URL       = "https://tasks.colguides.com"
 TASKS_ACCESS_CLIENT_ID = "ebf6ce7ef81ee9f7cb28774011630ce4.access"
 
+# Google Programmable Search Engine · used by prospecting-deep.js (the search-
+# engine-based "second discovery path" that finds IG-only / FB-only / not-on-
+# Maps tradespeople). The CX is NOT a secret (it's a public engine id). The
+# API key is the existing GOOGLE_PLACES_API_KEY worker secret, reused · just
+# enable the "Custom Search API" on the same Google Cloud project and (if the
+# key is API-restricted) add Custom Search API to its allowed list. To create
+# the engine: programmablesearchengine.google.com → New search engine →
+# "Search the entire web" → Create → copy the "Search engine ID" → paste below.
+GOOGLE_CSE_CX = "644eb200479a74abe"
+
 # --- Secrets (NOT stored here · set via wrangler) -------------------------
 # Run these once after `wrangler login`:
 #

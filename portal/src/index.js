@@ -1175,9 +1175,30 @@ async function updateLead(request, env, id) {
   return json({ ok: true });
 }
 async function deleteLead(env, id) {
-  const result = await env.DB.prepare("DELETE FROM leads WHERE id = ?").bind(id).run();
-  if (!result.meta.changes) return json({ error: "Lead not found" }, 404);
-  return json({ ok: true });
+  // Hard delete with safe cascade. Payments and converted-client links are
+  // preserved (refuse the delete in that case so accounting + audit stay
+  // intact) · activities, deals, and consent rows cascade.
+  const lead = await env.DB.prepare("SELECT id, status, converted_client_id FROM leads WHERE id = ?").bind(id).first();
+  if (!lead) return json({ error: "Lead not found" }, 404);
+  const pay = await env.DB.prepare("SELECT id FROM payments WHERE lead_id = ? LIMIT 1").bind(id).first();
+  if (pay) {
+    return json({
+      error: "Lead has payment history · cannot hard-delete. Mark as Perdido/Closed instead, or resolve in Wompi first.",
+    }, 409);
+  }
+  if (lead.converted_client_id) {
+    return json({
+      error: "Lead is converted to a client · cannot hard-delete. Mark the client as inactive in the clients table if needed.",
+    }, 409);
+  }
+  // D1 batch · all four DELETEs run atomically.
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM activities WHERE lead_id = ?").bind(id),
+    env.DB.prepare("DELETE FROM deals WHERE lead_id = ?").bind(id),
+    env.DB.prepare("DELETE FROM data_processor_authorizations WHERE lead_id = ?").bind(id),
+    env.DB.prepare("DELETE FROM leads WHERE id = ?").bind(id),
+  ]);
+  return json({ ok: true, deleted: id });
 }
 async function convertLead(request, env, id) {
   const lead = await env.DB.prepare("SELECT * FROM leads WHERE id = ?").bind(id).first();

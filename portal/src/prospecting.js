@@ -37,99 +37,18 @@ const BULK_MAX_INSERTS = 400;
 // Lower-case dashed slugs in code; display form is up to the UI.
 // The original 4 ICPs (dental, legal, hoteles-boutique, turismo) stay first so
 // existing callers keep working; the rest are a BROAD general-SMB set.
-const INDUSTRY_SEEDS = {
-  // Original 4 ICPs.
-  "dental": "clínica dental",
-  "legal": "abogado",
-  "hoteles-boutique": "hotel boutique",
-  "turismo": "agencia de viajes",
-  // Broad general-SMB verticals.
-  "restaurante": "restaurante",
-  "cafe": "café",
-  "tienda-ropa": "tienda de ropa",
-  "gimnasio": "gimnasio",
-  "inmobiliaria": "inmobiliaria",
-  "spa": "spa",
-  "salon-belleza": "salón de belleza",
-  "barberia": "barbería",
-  "clinica-dental": "clínica dental",
-  "clinica-estetica": "clínica estética",
-  "consultorio-medico": "consultorio médico",
-  "veterinaria": "veterinaria",
-  "abogados": "abogado",
-  "contador": "contador",
-  "ferreteria": "ferretería",
-  "panaderia": "panadería",
-  "hotel-boutique": "hotel boutique",
-  "agencia-viajes": "agencia de viajes",
-  "agencia-marketing": "agencia de marketing",
-  "constructora": "constructora",
-  "autopartes": "repuestos para autos",
-  "escuela-idiomas": "escuela de idiomas",
-  "joyeria": "joyería",
-  "floristeria": "floristería",
-  "optica": "óptica",
-  // Trades (the IG-or-nothing crowd · added 2026-05-26 for the lead sweep).
-  "electricista": "electricista a domicilio",
-  "plomero": "plomero a domicilio",
-  "cerrajeria": "cerrajería",
-  "vidrieria": "vidriería",
-  "carpinteria": "carpintería",
-  "pintor": "pintor de casas",
-  "enchapador": "enchapes y pisos instalación",
-  "jardineria": "jardinería a domicilio",
-  "fumigacion": "fumigación de plagas",
-  "aire-acondicionado": "servicio de aire acondicionado",
-  "mudanzas": "empresa de mudanzas",
-  "impermeabilizacion": "impermeabilización de techos",
-  // Trades-support / supply (the people who sell to the trades and to homeowners).
-  "pisos-enchapes-tienda": "tienda de pisos y enchapes",
-  "materiales-construccion": "depósito de materiales de construcción",
-  "tienda-pintura": "tienda de pintura",
-  "iluminacion-tienda": "tienda de iluminación",
-  "ceramica-tienda": "almacén de cerámica",
-  "suministros-electricos": "suministros eléctricos",
-  "herrajes-tienda": "herrajes y herramientas",
-  "griferias-tienda": "almacén de griferías",
-};
-
-// Curated preset for the trades sweep (use this in `verticals` when arming a
-// bulk job). Includes the trade itself + the supply chain around it (ferretería
-// + constructora are already in the broad SMB set; included again here so a
-// trades-only run still pulls them).
-const TRADES_VERTICALS = [
-  "electricista", "plomero", "cerrajeria", "vidrieria", "carpinteria",
-  "pintor", "enchapador", "jardineria", "fumigacion", "aire-acondicionado",
-  "mudanzas", "impermeabilizacion",
-  "ferreteria", "constructora",
-  "pisos-enchapes-tienda", "materiales-construccion", "tienda-pintura",
-  "iluminacion-tienda", "ceramica-tienda", "suministros-electricos",
-  "herrajes-tienda", "griferias-tienda",
-];
-
-// City slug -> display form (proper accents) used in the Places textQuery.
-// 5 metros.
-const CITY_DISPLAY = {
-  "medellin": "Medellín",
-  "bogota": "Bogotá",
-  "barranquilla": "Barranquilla",
-  "cali": "Cali",
-  "cartagena": "Cartagena",
-};
-
-// The 25-vertical broad SMB set used by the bulk runner when no explicit list
-// is supplied. Excludes the legacy duplicate slugs (dental, legal,
-// hoteles-boutique, turismo) which alias newer ones (clinica-dental, abogados,
-// hotel-boutique, agencia-viajes) to avoid double-pulling the same searches.
-const BULK_DEFAULT_VERTICALS = [
-  "restaurante", "cafe", "tienda-ropa", "gimnasio", "inmobiliaria",
-  "spa", "salon-belleza", "barberia", "clinica-dental", "clinica-estetica",
-  "consultorio-medico", "veterinaria", "abogados", "contador", "ferreteria",
-  "panaderia", "hotel-boutique", "agencia-viajes", "agencia-marketing", "constructora",
-  "autopartes", "escuela-idiomas", "joyeria", "floristeria", "optica",
-];
-
-const BULK_DEFAULT_CITIES = ["medellin", "bogota", "barranquilla", "cali", "cartagena"];
+// Vertical + city catalogs moved to `prospecting-shared.js` so both this
+// Places-based bulk runner and the search-engine-based deep prospector
+// (`prospecting-deep.js`) can use them without a circular import.
+import {
+  INDUSTRY_SEEDS,
+  CITY_DISPLAY,
+  BULK_DEFAULT_VERTICALS,
+  BULK_DEFAULT_CITIES,
+  // TRADES_VERTICALS is exported from the shared module for callers; this
+  // file doesn't use it directly but the export must stay for the API.
+} from "./prospecting-shared.js";
+import { handleDeepDiscover } from "./prospecting-deep.js";
 
 // TODO: re-map to /sitio-web-<industry>-<city>/ if those landings come back.
 const LANDING_PAGE_FALLBACK = "https://pymewebpro.com/sitios-web/";
@@ -167,6 +86,17 @@ export async function handleProspecting(request, env, ctx, helpers) {
     }
     if (path === "/api/admin/prospecting/bulk-status" && method === "GET") {
       return await bulkStatus(env, json);
+    }
+    if (path === "/api/admin/prospecting/bulk-tick" && method === "POST") {
+      // Manual drain: runs one batch synchronously (same function the cron uses),
+      // so Mike can see results without waiting for the next 14:00 UTC fire.
+      // Subject to the same caps: 60 Places calls + 400 inserts per call, and
+      // the 2000/day KV ceiling for the date.
+      const result = await runBulkProspectBatch(env, {});
+      return json({ ok: true, result }, 200);
+    }
+    if (path === "/api/admin/prospecting/deep-discover" && method === "POST") {
+      return await handleDeepDiscover(request, env, json);
     }
     return json({ ok: false, error: "Not found" }, 404);
   } catch (e) {
