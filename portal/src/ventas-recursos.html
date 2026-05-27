@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="lang-es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Manual de ventas · todo en un solo lugar | PymeWebPro</title>
+<title>Manual de ventas · Sales manual | PymeWebPro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 *{box-sizing:border-box}
 :root{--paper:#F2E9D5;--paper2:#E8DFC8;--card:#FBF7EC;--ink:#1A1612;--ink2:#3A2F26;--mute:rgba(26,22,18,.55);--line:rgba(26,22,18,.14);--accent:#D24A1D;--accent2:#A8381A;--red:#991B1B;--green:#166534;--blue:#1f4e79}
 html,body{margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6;background-image:radial-gradient(rgba(26,22,18,.05) 1px,transparent 1px);background-size:3px 3px}
+body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.65;background-image:radial-gradient(rgba(26,22,18,.05) 1px,transparent 1px);background-size:3px 3px}
 .topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:1rem;padding:.7rem 1.4rem;border-bottom:3px double rgba(242,233,213,.2)}
 .topbar .brand{font-weight:800;font-size:1.05rem}
 .topbar .brand em{font-style:italic;font-weight:500;color:var(--accent)}
@@ -20,290 +20,588 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 .topbar a{color:rgba(242,233,213,.78);text-decoration:none;font-size:.82rem}
 .topbar a:hover{color:#F2896A}
 .topbar a.cta{background:var(--accent);color:#fff;padding:.45rem .9rem;border-radius:7px;font-weight:600}
-.wrap{max-width:820px;margin:0 auto;padding:2.2rem 1.4rem 5rem}
+.langtog{display:inline-flex;align-items:center;border:1px solid rgba(242,233,213,.4);border-radius:999px;padding:2px;font-size:11px;letter-spacing:.1em;font-weight:700;text-transform:uppercase}
+.langtog a{padding:3px 9px;border-radius:999px;color:rgba(242,233,213,.78);cursor:pointer;transition:all .15s ease}
+.langtog a:hover{color:#fff}
+html.lang-en .langtog a[data-l="en"],html.lang-es .langtog a[data-l="es"]{background:var(--accent);color:#fff}
+html.lang-en .pb-es,html.lang-es .pb-en{display:none!important}
+.wrap{max-width:780px;margin:0 auto;padding:2.4rem 1.4rem 5rem}
 h1{font-family:Georgia,serif;font-size:2.1rem;line-height:1.15;margin:0 0 .4rem}
 h1 em{color:var(--accent);font-style:italic}
-.lede{font-size:1.05rem;color:var(--ink2);margin:0 0 1.4rem}
-.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;margin:0 0 1rem}
-.toc b{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin:0 0 .5rem}
-.toc ol{margin:0;padding-left:1.2rem;columns:2;font-size:.92rem}
+.lede{font-size:1rem;color:var(--ink2);margin:0 0 1.4rem}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.95rem 1.15rem;margin:0 0 1rem}
+.toc b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:0 0 .5rem}
+.toc ol{margin:0;padding-left:1.2rem;columns:2;font-size:.92rem;line-height:1.7}
 @media(max-width:560px){.toc ol{columns:1}}
 .toc a{color:var(--accent2);text-decoration:none}
-h2{font-family:Georgia,serif;font-size:1.35rem;margin:2.6rem 0 .3rem;display:flex;align-items:baseline;gap:.6rem;scroll-margin-top:4rem}
-h2 .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.9rem;color:#fff;background:var(--accent);width:1.7rem;height:1.7rem;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
-.section-sub{color:var(--mute);margin:.2rem 0 1rem;font-size:.95rem}
+.toc a:hover{text-decoration:underline}
+h2{font-family:Georgia,serif;font-size:1.4rem;margin:2.8rem 0 .4rem;display:flex;align-items:baseline;gap:.6rem;scroll-margin-top:4rem}
+h2 .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.9rem;color:#fff;background:var(--accent);width:1.75rem;height:1.75rem;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+h3.sub{font-family:Georgia,serif;margin:1.6rem 0 .4rem;font-size:1.1rem;color:var(--ink)}
+.lead{font-size:1.05rem;color:var(--ink);margin:.6rem 0 1rem}
+.sub-line{color:var(--mute);margin:.2rem 0 1rem;font-size:.95rem}
+p{margin:0 0 .9rem}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.3rem;margin:1rem 0}
-.price-big{font-size:1.6rem;font-weight:800;color:var(--accent2)}
-.price-sub{color:var(--ink2);font-size:.95rem;margin:.2rem 0 0}
-ul.feat{list-style:none;padding:0;margin:.6rem 0 0}
-ul.feat li{padding:.35rem 0 .35rem 1.4rem;position:relative;font-size:.95rem;border-bottom:1px solid var(--line)}
-ul.feat li:last-child{border-bottom:none}
-ul.feat li::before{content:"+";position:absolute;left:0;color:var(--accent);font-weight:800}
-.plan{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.9rem 1.1rem;margin:.6rem 0}
+.card.tight{padding:.95rem 1.15rem}
+.price{font-size:1.5rem;font-weight:800;color:var(--accent2)}
+.price-sub{color:var(--ink2);font-size:.92rem;margin:.15rem 0 .8rem}
+.feat{list-style:none;padding:0;margin:.6rem 0 0}
+.feat li{padding:.4rem 0 .4rem 1.4rem;position:relative;font-size:.95rem;border-bottom:1px solid var(--line)}
+.feat li:last-child{border-bottom:none}
+.feat li::before{content:"+";position:absolute;left:0;color:var(--accent);font-weight:800}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem 1.15rem;margin:.7rem 0}
 .plan.feature{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.plan .pt{font-weight:800}
-.plan .pp{color:var(--accent2);font-weight:800;margin:.05rem 0 .3rem}
-.plan p{margin:0;font-size:.9rem;color:var(--ink2)}
-.badge{display:inline-block;background:var(--accent);color:#fff;font-size:.66rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:.12rem .5rem;margin-bottom:.35rem}
+.plan .pt{font-weight:800;font-size:1rem}
+.plan .pp{color:var(--accent2);font-weight:800;margin:.1rem 0 .35rem}
+.plan p{margin:0;font-size:.92rem;color:var(--ink2);line-height:1.55}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:.66rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:.15rem .55rem;margin-bottom:.4rem}
 ol.steps{list-style:none;counter-reset:s;padding:0;margin:1rem 0}
-ol.steps li{counter-increment:s;position:relative;padding:.7rem 0 .7rem 2.6rem;border-bottom:1px solid var(--line)}
+ol.steps li{counter-increment:s;position:relative;padding:.7rem 0 .7rem 2.6rem;border-bottom:1px solid var(--line);font-size:.95rem;line-height:1.55}
 ol.steps li:last-child{border-bottom:none}
 ol.steps li::before{content:counter(s);position:absolute;left:0;top:.7rem;width:1.7rem;height:1.7rem;background:var(--ink);color:var(--paper);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600}
 ol.steps b{color:var(--accent2)}
-.tag{display:inline-block;background:var(--ink);color:var(--paper);font-size:.74rem;font-weight:600;padding:.12rem .5rem;border-radius:6px;margin-right:.3rem}
+.tag{display:inline-block;background:var(--ink);color:var(--paper);font-size:.72rem;font-weight:600;padding:.12rem .5rem;border-radius:6px;margin-right:.3rem;letter-spacing:.02em}
+.obj{margin:.6rem 0}
 .obj p{margin:0}
-.obj .q{margin:0 0 .4rem;font-weight:600}
-.callout{border-left:4px solid var(--accent);background:rgba(210,74,29,.06);padding:.8rem 1rem;border-radius:6px;margin:1.2rem 0}
-.rules li{margin:.45rem 0}
+.obj .q{margin:0 0 .4rem;font-weight:600;color:var(--ink)}
+.obj b{color:var(--accent2)}
+.callout{border-left:4px solid var(--accent);background:rgba(210,74,29,.07);padding:.85rem 1.1rem;border-radius:6px;margin:1.2rem 0;font-size:.95rem}
+.callout b{color:var(--accent2)}
+.rules li{margin:.5rem 0;line-height:1.55}
 .rules b{color:var(--accent2)}
 .foot{margin-top:3rem;color:var(--mute);font-size:.82rem;border-top:1px solid var(--line);padding-top:1rem}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1rem 0}
+@media(max-width:640px){.cols3{grid-template-columns:1fr}}
+.colorbar{display:grid;grid-template-columns:auto 1fr;gap:.6rem 1rem;margin:.6rem 0;font-size:.95rem}
+.colorbar .dot{width:18px;height:18px;border-radius:50%;align-self:center}
+.colorbar .dot.red{background:var(--red)}
+.colorbar .dot.blue{background:var(--blue)}
+.colorbar .dot.norm{background:var(--paper2);border:1px solid var(--line)}
 b{color:var(--ink)}
+em{font-style:italic;color:var(--ink2)}
 </style>
 </head>
 <body>
 <div class="topbar">
   <span class="brand">Pyme<em>WebPro</em></span>
   <span class="sp"></span>
-  <a class="cta" href="/">Ir a Mi día</a>
+  <div class="langtog" role="group" aria-label="Idioma / Language">
+    <a data-l="es" hreflang="es" aria-label="Español">ES</a>
+    <a data-l="en" hreflang="en" aria-label="English">EN</a>
+  </div>
+  <a class="cta" href="/"><span class="pb-es">Ir a Mi día</span><span class="pb-en">Back to Mi día</span></a>
 </div>
 <div class="wrap">
 
-<h1>Manual de <em>ventas</em></h1>
-<p class="lede">Santi, este es tu manual único: qué vendemos, cómo cotizar, cómo manejar la conversación, y cómo usar <b>Mi día</b> (el tablero en ventas.pymewebpro.com) para que ningún prospecto se te escape. Si algo no está aquí, no lo prometas: escríbeme y te confirmo. Todo en pesos colombianos (COP), IVA incluido. Nunca cotices en dólares.</p>
+<h1><span class="pb-es">Manual de <em>ventas</em></span><span class="pb-en">Sales <em>manual</em></span></h1>
+<p class="lede pb-es">Esto es lo que vendemos, cómo se cobra, cómo se explica, y cómo trabajar el día a día con <b>Mi día</b>. Manual interno. Si algo no está aquí, no lo prometas, pregunta primero. Todo en pesos colombianos (COP), IVA incluido. Nunca cotices en dólares.</p>
+<p class="lede pb-en">This is what we sell, how it's billed, how we explain it, and how to run your day with <b>Mi día</b>. Internal manual. If something isn't here, don't promise it, ask first. Everything in Colombian pesos (COP), VAT included. Never quote in dollars.</p>
 
-<div class="toc">
+<div class="toc pb-es">
   <b>Índice</b>
   <ol>
-    <li><a href="#s1">Lo que vendemos</a></li>
-    <li><a href="#s2">El producto</a></li>
-    <li><a href="#s3">Lo que puede sumar</a></li>
-    <li><a href="#s4">Planes mensuales</a></li>
-    <li><a href="#s5">El pago (30/70)</a></li>
-    <li><a href="#s6">Cómo lo explicas</a></li>
-    <li><a href="#s7">Objeciones</a></li>
-    <li><a href="#s8">Lo que NO vendemos</a></li>
-    <li><a href="#s9">Cuándo escalar</a></li>
-    <li><a href="#s10">Mi día · el tablero</a></li>
-    <li><a href="#s11">Workflow paso a paso</a></li>
-    <li><a href="#s12">Agregar un prospecto</a></li>
-    <li><a href="#s13">Tu rutina diaria</a></li>
-    <li><a href="#s14">Reglas de oro</a></li>
+    <li><a href="#s1">La idea, en una frase</a></li>
+    <li><a href="#s2">El producto base · $400.000</a></li>
+    <li><a href="#s3">El asistente 24/7 · nuestro diferenciador</a></li>
+    <li><a href="#s4">La Ficha de Google</a></li>
+    <li><a href="#s5">Guías de tráfico</a></li>
+    <li><a href="#s6">Planes mensuales · soporte + mantenimiento + hosting</a></li>
+    <li><a href="#s7">Pagos (30/70)</a></li>
+    <li><a href="#s8">Cómo lo pitcheas</a></li>
+    <li><a href="#s9">Objeciones</a></li>
+    <li><a href="#s10">Lo que no vendemos · cuándo escalar</a></li>
+    <li><a href="#s11">Mi día · el tablero</a></li>
+    <li><a href="#s12">El flujo en 5 pasos</a></li>
+    <li><a href="#s13">Reglas de oro</a></li>
+  </ol>
+</div>
+<div class="toc pb-en">
+  <b>Contents</b>
+  <ol>
+    <li><a href="#s1">The pitch, in one sentence</a></li>
+    <li><a href="#s2">The base product · $400,000</a></li>
+    <li><a href="#s3">The 24/7 assistant · our differentiator</a></li>
+    <li><a href="#s4">The Google Business Profile</a></li>
+    <li><a href="#s5">Traffic guides</a></li>
+    <li><a href="#s6">Monthly plans · support + maintenance + hosting</a></li>
+    <li><a href="#s7">Payment (30/70)</a></li>
+    <li><a href="#s8">How you pitch it</a></li>
+    <li><a href="#s9">Objections</a></li>
+    <li><a href="#s10">What we don't sell · when to escalate</a></li>
+    <li><a href="#s11">Mi día · the board</a></li>
+    <li><a href="#s12">The workflow in 5 steps</a></li>
+    <li><a href="#s13">Golden rules</a></li>
   </ol>
 </div>
 
-<h2 id="s1"><span class="n">1</span> Lo que vendemos, en una frase</h2>
-<p class="section-sub">Una sola idea, dícela tal cual.</p>
-<div class="card">
-<p style="margin:0 0 .6rem">Lo que el cliente paga no es solo una página: es la <b>confianza</b> de que cuando alguien ve su marca, lo llame o le escriba, en vez de seguir buscando otra opción. Es ponerle <b>una cara profesional</b> a lo que ya tiene (Instagram, voz a voz, Google). La página de conversión, la Ficha de Google configurada, WhatsApp, click-para-llamar, mapa, reservas, dominio y hosting el primer mes: todo conectado y hecho a la medida, para cerrar a quien ya lo encontró. Lista en 48 horas.</p>
-<p style="margin:0"><b>"Tú traes la gente (Instagram, Google, voz a voz). Nosotros hacemos que, cuando lleguen, te vean serio y te escriban fácil."</b> No prometemos clientes de la nada. Hacemos que los que ya te buscan no se te escapen.</p>
+<h2 id="s1"><span class="n">1</span> <span class="pb-es">La idea, en una frase</span><span class="pb-en">The pitch, in one sentence</span></h2>
+<div class="card pb-es">
+<p>Lo que el cliente realmente compra es la <b>confianza</b> de que cuando alguien vea su marca, lo llame o le escriba en vez de seguir buscando.</p>
+<p>Le ponemos <b>cara profesional</b> a lo que ya tiene (Instagram, voz a voz, reseñas en Google) y lo conectamos todo a un solo lugar hecho para convertir.</p>
+<p style="margin:0"><b>Tú haces que te encuentren. Nosotros hacemos que te escriban.</b></p>
+</div>
+<div class="card pb-en">
+<p>What the client really pays for is the <b>confidence</b> that when someone notices their brand, they call or message instead of going to look elsewhere.</p>
+<p>We put a <b>professional face</b> on what they already have (Instagram, word of mouth, Google reviews) and tie it all to one place built to convert.</p>
+<p style="margin:0"><b>You get them to find you. We get them to reach out.</b></p>
 </div>
 
-<h2 id="s2"><span class="n">2</span> El producto · La página de ventas</h2>
-<div class="card">
-<div class="price-big">$400.000 COP</div>
-<p class="price-sub">Pago único, IVA incluido. En línea en ~48 horas. Incluye tu Ficha de Google.</p>
+<h2 id="s2"><span class="n">2</span> <span class="pb-es">El producto base · La página de ventas</span><span class="pb-en">The base product · The sales page</span></h2>
+<div class="card pb-es">
+<div class="price">$400.000 COP</div>
+<p class="price-sub">Pago único, IVA incluido. En línea en ~48 horas.</p>
 <ul class="feat">
-  <li>Página de conversión de 6 pasos, enfocada en <b>una</b> acción principal.</li>
-  <li>Se ve y funciona bien en celular, tablet y computador.</li>
-  <li>Botón de WhatsApp o formulario de contacto (el cliente elige el principal).</li>
-  <li>Botón de "llamar" (click-para-llamar) y mapa de Google embebido.</li>
-  <li>Integración de reservas/citas si el negocio las usa (Cal.com o Calendly).</li>
+  <li>Página de conversión hecha a la medida, enfocada en <b>una</b> acción principal: escribir, llamar o reservar.</li>
+  <li>Diseño propio, sin plantillas. Sus colores, sus fotos, su oferta.</li>
+  <li>Botón de WhatsApp y formulario de contacto, click-para-llamar y mapa de Google embebido.</li>
+  <li>Integración de reservas/citas si la usa (Cal.com o Calendly).</li>
   <li>Sección de testimonios.</li>
-  <li><b>Su Ficha de Google configurada</b>, para que aparezca en el mapa cuando lo buscan.</li>
+  <li><b>Ficha de Google configurada</b>, para aparecer en el mapa cuando lo buscan.</li>
   <li>Estructura SEO básica y analítica respetuosa de la privacidad.</li>
-  <li>Dominio + SSL configurados (el dominio, ~$50.000 a $150.000/año, lo paga el cliente; lo ayudamos a conseguirlo).</li>
-  <li>1 mes de hosting y soporte incluido.</li>
+  <li>Carga en menos de 1 segundo en celular.</li>
+  <li>Dominio propio + SSL conectados. El dominio lo paga el cliente (suele costar entre $20.000 y $60.000 COP al año, depende del proveedor y la extensión); lo ayudamos a comprarlo.</li>
+  <li>Primer mes de hosting de nivel empresarial (ultrarrápido y ultraseguro) incluido.</li>
   <li>2 rondas de ajustes.</li>
+  <li>Garantía de devolución a 30 días.</li>
 </ul>
 </div>
-<div class="callout">El reloj de las 48 horas arranca <b>cuando tenemos el contenido y entró el depósito</b>. Siempre menciona las dos condiciones.</div>
-
-<h2 id="s3"><span class="n">3</span> Lo que puede sumar (va dentro de los planes, no suelto)</h2>
-<p class="section-sub">Ya no vendemos adicionales sueltos. Estas capacidades viven dentro de los planes mensuales (sección 4).</p>
+<div class="card pb-en">
+<div class="price">$400,000 COP</div>
+<p class="price-sub">One-time payment, VAT included. Online in ~48 hours.</p>
 <ul class="feat">
-  <li><b>Vitrina de productos</b> · hasta 30 productos con foto, nombre, precio y descripción corta (el cliente sube su contenido a un portal). Sin carrito ni inventario. Va en el <b>Plan de ventas</b>.</li>
-  <li><b>Catálogo o menú descargable en PDF</b> · un PDF que el cliente puede guardar y compartir por WhatsApp. Va en el <b>Plan de ventas</b>.</li>
-  <li><b>Versión bilingüe ES/EN</b> · la misma página en español e inglés. Va en el <b>Plan de presencia</b>.</li>
+  <li>Custom-built conversion page, focused on <b>one</b> primary action: message, call, or book.</li>
+  <li>Their own design, no templates. Their colors, photos, offer.</li>
+  <li>WhatsApp button and contact form, click-to-call, and an embedded Google map.</li>
+  <li>Bookings integration if they use one (Cal.com or Calendly).</li>
+  <li>Testimonials section.</li>
+  <li><b>Google Business listing configured</b>, so they show up on the map when people search.</li>
+  <li>Basic SEO structure and privacy-respecting analytics.</li>
+  <li>Loads in under 1 second on mobile.</li>
+  <li>Their own domain + SSL connected. The client pays for the domain (typically between $20,000 and $60,000 COP per year, depending on the registrar and extension); we help them buy it.</li>
+  <li>First month of enterprise-grade hosting (ultrafast and ultra-secure) included.</li>
+  <li>2 rounds of revisions.</li>
+  <li>30-day money-back guarantee.</li>
 </ul>
-<p class="section-sub">La Ficha de Google ya va incluida en la página, no es adicional.</p>
+</div>
+<div class="callout pb-es">El reloj de 48 horas arranca <b>cuando llega el contenido y entró el depósito</b>. Menciona siempre las dos condiciones.</div>
+<div class="callout pb-en">The 48-hour clock starts <b>when the content arrives and the deposit has come in</b>. Always mention both conditions.</div>
 
-<h2 id="s4"><span class="n">4</span> Planes mensuales (opcionales, sin contrato)</h2>
-<p class="section-sub">La página es pago único. Después del mes incluido, si quiere, hay dos planes mensuales (ambos incluyen hosting). Ninguno es obligatorio.</p>
-<div class="plan">
+<h2 id="s3"><span class="n">3</span> <span class="pb-es">El asistente 24/7 · nuestro diferenciador</span><span class="pb-en">The 24/7 assistant · our differentiator</span></h2>
+<p class="lead pb-es">Esto es lo que nos separa de cualquier plantilla, freelancer o agencia. Hablá del asistente <b>siempre</b> en cada conversación.</p>
+<p class="lead pb-en">This is what separates us from any template, freelancer, or agency. Talk about the assistant in <b>every</b> conversation.</p>
+<div class="card pb-es">
+<p>El <b>asistente 24/7</b> es un chatbot que aprende sobre el negocio del cliente y lleva a cada interesado <b>directo a su teléfono o calendario</b>. Funciona mientras el dueño duerme, atiende a otros clientes o simplemente no puede contestar.</p>
+<p><b>Qué hace:</b></p>
+<ul class="feat">
+  <li>Responde preguntas frecuentes con la voz del negocio.</li>
+  <li>Pasa al cliente directo al WhatsApp del dueño con un clic.</li>
+  <li>Agenda llamadas en el calendario del dueño automáticamente.</li>
+  <li>Trabaja 24/7, sin descansos, sin festivos, sin pausas para almuerzo.</li>
+  <li>Captura intención mientras el cliente todavía está en la página (no después, cuando ya se fue).</li>
+</ul>
+<p style="margin-top:.9rem"><b>Por qué tiene un mensual y la página no:</b> la página es código, sube y se queda. El asistente piensa en cada conversación, eso usa inteligencia artificial cada vez, y eso tiene costo cada mes. Por eso vive dentro del <b>Plan de ventas ($150.000/mes)</b>, no se vende como pago único.</p>
+<p style="margin:0"><b>Es el plan que recomendamos</b> y el que nos da ingreso recurrente. Si el cliente lo quiere, decláralo <b>antes</b> de cerrar la página, nunca después.</p>
+</div>
+<div class="card pb-en">
+<p>The <b>24/7 assistant</b> is a chatbot that learns the client's business and guides every interested visitor <b>straight to their phone or calendar</b>. It works while the owner is asleep, helping another customer, or simply unable to reply.</p>
+<p><b>What it does:</b></p>
+<ul class="feat">
+  <li>Answers frequent questions in the business's voice.</li>
+  <li>Hands the client off to the owner's WhatsApp with one click.</li>
+  <li>Books calls on the owner's calendar automatically.</li>
+  <li>Works 24/7, no breaks, no holidays, no lunch pauses.</li>
+  <li>Captures intent while the client is still on the page, not after they've already left.</li>
+</ul>
+<p style="margin-top:.9rem"><b>Why it has a monthly fee and the page doesn't:</b> the page is code, it ships and stays. The assistant thinks about every conversation, which uses AI every time, which has a real cost every month. That's why it lives inside the <b>Sales plan ($150,000/month)</b>, not as a one-time purchase.</p>
+<p style="margin:0"><b>This is the plan we recommend</b> and the one that gives us recurring revenue. If the client wants it, declare it <b>before</b> closing the page, never after.</p>
+</div>
+
+<h2 id="s4"><span class="n">4</span> <span class="pb-es">La Ficha de Google · incluida en la página, mantenida en los planes</span><span class="pb-en">The Google Business Profile · included in the page, maintained in the plans</span></h2>
+<p class="lead pb-es">La mayoría de la gente revisa Google antes de decidir. La Ficha es lo que ve primero: foto, reseñas, horarios, botones de llamar y mensaje. Por eso la incluimos en la página y la mantenemos completa y actualizada cada mes en los planes.</p>
+<p class="lead pb-en">Most people check Google before deciding. The profile is what they see first: photo, reviews, hours, call and message buttons. That's why we include it in the page and keep it complete and up to date every month in the plans.</p>
+<div class="card pb-es">
+<p style="margin:0 0 .5rem"><b>Incluido en la página ($400.000), una sola vez:</b></p>
+<ul class="feat" style="margin-bottom:.9rem">
+  <li>Aparece en el mapa cuando la gente busca cerca.</li>
+  <li>Sus reseñas al frente, que es lo que genera confianza.</li>
+  <li>Botones para llamar, pedir dirección, o escribir por WhatsApp.</li>
+  <li>Foto, horarios, categorías y servicios bien configurados.</li>
+</ul>
+<p style="margin:0 0 .5rem"><b>Mantenido cada mes (dentro de los planes):</b></p>
+<ul class="feat" style="margin-bottom:0">
+  <li>Horarios actualizados (festivos, cambios de temporada).</li>
+  <li>Fotos nuevas para mostrar movimiento.</li>
+  <li>Publicaciones cortas con novedades.</li>
+  <li>La Ficha no parece abandonada, que es lo peor que puede pasar.</li>
+</ul>
+</div>
+<div class="card pb-en">
+<p style="margin:0 0 .5rem"><b>Included in the page ($400,000), one-time:</b></p>
+<ul class="feat" style="margin-bottom:.9rem">
+  <li>Shows up on the map when people search nearby.</li>
+  <li>Their reviews up front, which is what builds trust.</li>
+  <li>Buttons to call, get directions, or message on WhatsApp.</li>
+  <li>Photo, hours, categories and services properly configured.</li>
+</ul>
+<p style="margin:0 0 .5rem"><b>Maintained every month (inside the plans):</b></p>
+<ul class="feat" style="margin-bottom:0">
+  <li>Hours kept current (holidays, seasonal changes).</li>
+  <li>New photos to show activity.</li>
+  <li>Short posts with news.</li>
+  <li>The profile doesn't look abandoned, which is the worst thing that can happen.</li>
+</ul>
+</div>
+<div class="callout pb-es"><b>Ángulo de venta:</b> "Si tu Ficha está fresca, con reseñas a la vista, transmite que el negocio está vivo. Si lleva 6 meses sin tocarse, transmite lo contrario. Es la primera impresión antes de que vean tu página."</div>
+<div class="callout pb-en"><b>Sales angle:</b> "If your profile is fresh, with reviews visible, it signals the business is alive. If it hasn't been touched in 6 months, it signals the opposite. It's the first impression, before they ever see your page."</div>
+
+<h2 id="s5"><span class="n">5</span> <span class="pb-es">Guías de tráfico · cómo les enseñamos a traer gente</span><span class="pb-en">Traffic guides · how we teach them to bring people in</span></h2>
+<p class="lead pb-es">El tráfico es del cliente, pero no está solo. Tenemos guías gratuitas en Google Ads, Meta Ads, SEO local y más. Cuando esté listo para invertir, lo ayudamos para que sus anuncios traigan clientes, no solo clics.</p>
+<p class="lead pb-en">The traffic is the client's, but they're not on their own. We have free guides on Google Ads, Meta Ads, local SEO and more. When they're ready to invest, we help them so their ads bring customers, not just clicks.</p>
+<div class="card pb-es">
+<p style="margin:0 0 .5rem"><b>Las guías están en pymewebpro.com. Compártelas siempre que pregunten "¿y cómo traigo gente?":</b></p>
+<ul class="feat" style="margin-bottom:0">
+  <li><b>Google Ads</b> · cómo hacer que aparezca arriba cuando alguien busca.</li>
+  <li><b>Meta Ads</b> · Facebook e Instagram, sin quemar plata.</li>
+  <li><b>SEO local</b> · cómo aparecer en el mapa de Google sin pagar.</li>
+  <li><b>WhatsApp Business</b> · sacarle el jugo a la herramienta que ya usa.</li>
+  <li><b>Voz a voz, ferias, prensa local, afiliados, email, búsqueda con IA</b> · todas tienen guía.</li>
+</ul>
+</div>
+<div class="card pb-en">
+<p style="margin:0 0 .5rem"><b>The guides live at pymewebpro.com. Share them anytime they ask "and how do I bring people in?":</b></p>
+<ul class="feat" style="margin-bottom:0">
+  <li><b>Google Ads</b> · how to show up at the top when someone searches.</li>
+  <li><b>Meta Ads</b> · Facebook and Instagram, without burning money.</li>
+  <li><b>Local SEO</b> · how to show up on the Google map without paying.</li>
+  <li><b>WhatsApp Business</b> · getting the most out of the tool they already use.</li>
+  <li><b>Word of mouth, trade shows, local PR, affiliates, email, AI search</b> · all have guides.</li>
+</ul>
+</div>
+<div class="callout pb-es"><b>Por qué los compartimos gratis:</b> el cliente confía más en quien le enseña que en quien le esconde el manual. Las guías son nuestro mejor argumento de que no le vendemos humo. Cuando esté listo para invertir en serio en anuncios, ya somos su recurso de confianza.</div>
+<div class="callout pb-en"><b>Why we share them free:</b> clients trust the people who teach them more than the ones who hide the manual. The guides are our best proof we're not selling smoke. When they're ready to invest seriously in ads, we're already their trusted resource.</div>
+
+<h2 id="s6"><span class="n">6</span> <span class="pb-es">Planes mensuales (opcionales, sin contrato)</span><span class="pb-en">Monthly plans (optional, no contract)</span></h2>
+<p class="lead pb-es">La página es pago único e incluye 1 mes de hosting. Después de ese mes, todo sitio necesita seguir hospedado para funcionar. Nuestros dos planes mensuales incluyen el hosting, junto con mantenimiento y soporte por WhatsApp. Si el cliente no quiere ninguno, puede mover la página a otro proveedor por su cuenta. Ninguno de los planes tiene contrato.</p>
+<p class="lead pb-en">The page is a one-time payment and includes 1 month of hosting. After that month, every site needs to stay hosted somewhere to keep working. Our two monthly plans include the hosting, alongside maintenance and WhatsApp support. If the client doesn't want either, they can move the page to another provider on their own. Neither plan has a contract.</p>
+
+<div class="plan pb-es">
   <div class="pt">Plan de presencia</div>
-  <div class="pp">$50.000/mes</div>
-  <p>Hosting + Ficha de Google activa y actualizada + versión bilingüe ES/EN + soporte por WhatsApp + hasta 2 cambios al mes.</p>
+  <div class="pp">$50.000 / mes</div>
+  <p>Hosting de nivel empresarial (ultrarrápido y ultraseguro, con SSL, respaldos y protección incluidos) + Ficha de Google activa y actualizada cada mes + versión bilingüe ES/EN + soporte por WhatsApp + hasta 2 cambios al mes. Es el "mantén la luz prendida": el cliente no se preocupa por nada.</p>
 </div>
-<div class="plan feature">
-  <span class="badge">El que da ingreso recurrente</span>
+<div class="plan pb-en">
+  <div class="pt">Presence plan</div>
+  <div class="pp">$50,000 / month</div>
+  <p>Enterprise-grade hosting (ultrafast and ultra-secure, SSL, backups, and attack protection included) + active Google Business listing updated monthly + bilingual ES/EN version + WhatsApp support + up to 2 changes per month. The "keep the lights on" plan: the client doesn't worry about anything.</p>
+</div>
+
+<div class="plan feature pb-es">
+  <span class="badge">El que recomendamos</span>
   <div class="pt">Plan de ventas</div>
-  <div class="pp">$150.000/mes</div>
-  <p>Todo lo del Plan de presencia + un asistente de ventas 24/7 (un chatbot en la página que conoce el negocio, responde las preguntas de los clientes, los pasa al WhatsApp con un clic y agenda llamadas) + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual con cuánta gente vio la página y escribió. Sin costo de instalación.</p>
+  <div class="pp">$150.000 / mes</div>
+  <p>Todo lo del Plan de presencia + el <b>asistente 24/7</b> de la sección 3 + vitrina de hasta 30 productos (foto, nombre, precio, descripción corta) + catálogo o menú descargable en PDF + reporte mensual con cuánta gente vio la página y escribió. Sin costo de instalación.</p>
 </div>
-<div class="callout">El <b>chatbot va dentro del Plan de ventas</b>, no se vende como pago único. Si el cliente lo quiere, declara el mensual <b>antes</b> de cerrar, nunca después.</div>
+<div class="plan feature pb-en">
+  <span class="badge">The one we recommend</span>
+  <div class="pt">Sales plan</div>
+  <div class="pp">$150,000 / month</div>
+  <p>Everything in the Presence plan + the <b>24/7 assistant</b> from section 3 + a storefront of up to 30 products (photo, name, price, short description) + downloadable PDF catalog or menu + monthly report showing how many people viewed the page and wrote in. No setup fee.</p>
+</div>
 
-<h2 id="s5"><span class="n">5</span> El pago (30 / 70)</h2>
-<ul class="feat">
-  <li><b>30% para arrancar: $120.000.</b> No empezamos diseño ni desarrollo hasta que entre el depósito.</li>
-  <li><b>70% al lanzar: $280.000.</b> La página queda en una URL de prueba hasta que se pague el saldo; el dominio del cliente se conecta cuando se paga.</li>
-  <li>Todo por <b>Wompi</b> (tarjetas, PSE, transferencia), en COP.</li>
-  <li><b>Garantía de devolución a 30 días:</b> si no queda contento, bajamos la página y le devolvemos el dinero.</li>
+<div class="callout pb-es"><b>Qué hace diferentes a nuestros planes:</b>
+<ul class="rules" style="margin:.5rem 0 0">
+  <li><b>Hosting empresarial.</b> Ultrarrápido y ultraseguro, con respaldos, SSL y protección contra ataques. No es un servidor barato compartido.</li>
+  <li><b>Soporte de los dueños.</b> Escribes por WhatsApp y respondemos en minutos. No abres un ticket ni esperas correos.</li>
+  <li><b>Equipo pequeño y ágil.</b> Sin oficinas costosas ni gerentes intermedios, así que tu mensual va al producto, no al overhead.</li>
 </ul>
-<p class="section-sub">El precio de la página es fijo: depósito $120.000 (30%) y saldo $280.000 (70%) al lanzar. Los planes mensuales se cobran aparte, mes a mes, y no entran en el depósito.</p>
-<div class="callout"><b>Cómo se cobra:</b> no cobramos en la página web. El enlace de pago de Wompi lo genera Mike y tú se lo pasas al cliente por WhatsApp cuando ya dijo que sí.</div>
-
-<h2 id="s6"><span class="n">6</span> Cómo lo explicas (llamada o en persona)</h2>
-<p class="section-sub">Primero <b>toma sus datos</b>: nombre, WhatsApp y correo. Sin eso no hay seguimiento. Luego: resultado, diferencia, recomendación. No leas una lista de funciones.</p>
-<div class="card">
-<p style="margin:0 0 .4rem"><span class="tag">Pitch corto</span> (adáptalo, no lo leas como robot):</p>
-<p style="margin:0;font-style:italic">"Lo que te vendemos es la confianza de que cuando alguien vea tu marca, te llame o te escriba en vez de seguir buscando otra opción. Le ponemos una cara profesional a lo que ya tienes: una página enfocada en que te escriban, llamen o reserven, conectada con tu Ficha de Google, WhatsApp, llamadas y reservas. Lista en 48 horas, precio fijo $400.000, pago único. Para arrancar es el 30% ($120.000) y el resto al lanzar. ¿Te armo un ejemplo gratis con tu negocio para que veas cómo quedaría?"</p>
 </div>
-<p class="section-sub">Cuatro preguntas para entender al cliente:</p>
-<ol class="steps">
+<div class="callout pb-en"><b>What makes our plans different:</b>
+<ul class="rules" style="margin:.5rem 0 0">
+  <li><b>Enterprise hosting.</b> Ultrafast and ultra-secure, with backups, SSL, and attack protection. Not a cheap shared server.</li>
+  <li><b>Support from the owners.</b> You message on WhatsApp and we reply in minutes. No tickets, no waiting for emails.</li>
+  <li><b>Small, lean team.</b> No expensive offices or middle managers, so your monthly goes to the product, not overhead.</li>
+</ul>
+</div>
+
+<h2 id="s7"><span class="n">7</span> <span class="pb-es">Pagos · 30% / 70%</span><span class="pb-en">Payment · 30% / 70%</span></h2>
+<ul class="feat pb-es">
+  <li><b>30% para arrancar: $120.000.</b> No empezamos diseño ni desarrollo hasta que entre el depósito.</li>
+  <li><b>70% al lanzar: $280.000.</b> La página queda en una URL de prueba hasta que se pague el saldo. El dominio del cliente se conecta cuando se paga.</li>
+  <li>Todo por <b>Wompi</b>: tarjetas, PSE, transferencia. Siempre en COP.</li>
+  <li><b>Garantía de devolución a 30 días.</b> Si no queda contento, bajamos la página y le devolvemos el dinero.</li>
+  <li>Los planes mensuales se cobran aparte, mes a mes. No entran en el depósito.</li>
+</ul>
+<ul class="feat pb-en">
+  <li><b>30% to start: $120,000.</b> We don't begin design or development until the deposit arrives.</li>
+  <li><b>70% at launch: $280,000.</b> The page sits on a test URL until the balance is paid. The client's domain is connected when paid.</li>
+  <li>All through <b>Wompi</b>: cards, PSE, bank transfer. Always in COP.</li>
+  <li><b>30-day money-back guarantee.</b> If they're not happy, we take the page down and refund.</li>
+  <li>Monthly plans are billed separately, month by month. They aren't part of the deposit.</li>
+</ul>
+<div class="callout pb-es"><b>Quién cobra:</b> Mike genera el enlace de pago de Wompi y tú se lo pasas al cliente por WhatsApp cuando ya dijo que sí. No cobramos en la página web.</div>
+<div class="callout pb-en"><b>Who collects:</b> Mike generates the Wompi payment link and you forward it to the client via WhatsApp once they've said yes. We don't take payments on the website.</div>
+
+<h2 id="s8"><span class="n">8</span> <span class="pb-es">Cómo lo pitcheas</span><span class="pb-en">How you pitch it</span></h2>
+<p class="sub-line pb-es">Primero <b>toma sus datos</b>: nombre, WhatsApp, correo. Sin eso no hay seguimiento. Después, nunca leas una lista de funciones. Habla del resultado.</p>
+<p class="sub-line pb-en">First, <b>get their details</b>: name, WhatsApp, email. Without those there's no follow-up. After that, never read a feature list. Talk about the outcome.</p>
+
+<div class="card pb-es">
+<p style="margin:0 0 .5rem"><span class="tag">Pitch corto</span> · siempre <b>empieza por el dolor</b>, después la solución, después el precio. Adáptalo a su negocio.</p>
+<p style="margin:0 0 .5rem;font-style:italic"><b>(El dolor)</b> "Mira, te pasa esto: estás con otro cliente, durmiendo, o simplemente ocupado. Alguien te escribe por Instagram o te llama, no alcanzas a contestar rápido, y se va al siguiente negocio que sí le contestó. Te pasa cada semana, ¿cierto?"</p>
+<p style="margin:0 0 .5rem;font-style:italic"><b>(La solución)</b> "Eso es exactamente lo que arreglamos. Hacemos una página donde cuando alguien llegue, o vea tu Ficha de Google, le respondemos al instante. Le contestamos las dudas, lo enganchamos, y te lo agendamos para que tú lo llames cuando puedas. Los leads ya no se te van a la competencia."</p>
+<p style="margin:0;font-style:italic"><b>(El precio + cierre)</b> "La página queda lista en 48 horas a $400.000 (pago único, 30% para arrancar). Y si quieres que responda 24/7 sin que tú tengas que estar pendiente, hay un plan mensual de $150.000 con el asistente. ¿Te armo un ejemplo gratis con tu negocio para que veas cómo quedaría?"</p>
+</div>
+<div class="card pb-en">
+<p style="margin:0 0 .5rem"><span class="tag">Short pitch</span> · always <b>start with the pain</b>, then the solution, then the price. Adapt to their business.</p>
+<p style="margin:0 0 .5rem;font-style:italic"><b>(The pain)</b> "Picture this: you're with another customer, asleep, or just busy. Someone messages your Instagram or calls, you can't reply fast enough, and they go to the next business that does answer. This happens every week, right?"</p>
+<p style="margin:0 0 .5rem;font-style:italic"><b>(The solution)</b> "That's exactly what we fix. We build you a page where when someone lands, or sees your Google listing, we reply instantly. We answer their questions, keep them engaged, and book them in so you call back when you have time. Leads stop going to the competition."</p>
+<p style="margin:0;font-style:italic"><b>(The price + close)</b> "The page is ready in 48 hours for $400,000 (one-time, 30% to start). And if you want it to reply 24/7 without you having to be on top of it, there's a $150,000 monthly plan with the assistant. Want me to build you a free example with your business so you can see how it'd look?"</p>
+</div>
+<div class="callout pb-es"><b>Importante:</b> el dolor concreto cambia según el negocio. Un dentista no pierde un cliente igual que un electricista. Antes de pitchear, identifica el dolor específico de su vertical (ver Manual de dolores por vertical, en construcción).</div>
+<div class="callout pb-en"><b>Important:</b> the specific pain changes by vertical. A dentist doesn't lose customers the same way an electrician does. Before you pitch, identify the specific pain for their vertical (see Pain Manual by vertical, work in progress).</div>
+
+<p class="sub-line pb-es" style="margin-top:1.3rem">Cuatro preguntas para entender al cliente:</p>
+<p class="sub-line pb-en" style="margin-top:1.3rem">Four questions to understand the client:</p>
+<ol class="steps pb-es">
   <li><b>La oferta:</b> ¿cuál es el servicio o producto principal que quieres que la página venda?</li>
-  <li><b>El objetivo:</b> ¿qué quieres que haga el visitante: escribirte, dejar sus datos, reservar o pedir?</li>
-  <li><b>El contenido:</b> ¿tienes fotos y algo de texto, o prefieres que nosotros lo redactemos a partir de lo que tengas?</li>
-  <li><b>El seguimiento:</b> ¿quieres que la página atienda y agende sola 24/7? (ahí entra el Plan de ventas).</li>
+  <li><b>El objetivo:</b> ¿qué quieres que haga el visitante: escribirte, dejar sus datos, reservar, o pedir?</li>
+  <li><b>El contenido:</b> ¿tienes fotos y algo de texto, o prefieres que nosotros lo redactemos?</li>
+  <li><b>El seguimiento:</b> ¿quieres que la página atienda y agende sola 24/7? Ahí entra el Plan de ventas.</li>
+</ol>
+<ol class="steps pb-en">
+  <li><b>The offer:</b> what's the main service or product you want the page to sell?</li>
+  <li><b>The goal:</b> what do you want the visitor to do: message you, leave their info, book, or order?</li>
+  <li><b>The content:</b> do you have photos and some text, or would you rather we write it?</li>
+  <li><b>The follow-up:</b> do you want the page to answer and book on its own 24/7? That's the Sales plan.</li>
 </ol>
 
-<h2 id="s7"><span class="n">7</span> Manejo de objeciones</h2>
-<p class="section-sub">La regla: primero dale la razón, luego reencuadra. Nunca discutas.</p>
+<h2 id="s9"><span class="n">9</span> <span class="pb-es">Objeciones · qué decir cuando dudan</span><span class="pb-en">Objections · what to say when they hesitate</span></h2>
+<p class="sub-line pb-es">La regla, sin excepciones: <b>primero dale la razón, luego reencuadra</b>. Nunca discutas.</p>
+<p class="sub-line pb-en">The rule, no exceptions: <b>agree with them first, then reframe</b>. Never argue.</p>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Está caro / lo consigo más barato."</p><p><b>Respondé:</b> Entiendo. Más barato siempre hay: una plantilla lenta o un conocido que no termina. Esto es una página propia, hecha a tu medida, que carga en menos de 1 segundo, lista en 48 horas y a precio fijo. Por lo que entrega, es de lo más rentable.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "Está caro. Lo consigo más barato."</p><p><b>Respondé:</b> Tienes razón, más barato siempre hay: una plantilla lenta o alguien que no termina. Lo nuestro es una página propia, hecha a tu medida, que carga en menos de 1 segundo, lista en 48 horas, a precio fijo. Y a este precio podemos llegar porque somos un equipo pequeño y ágil: <b>sin oficinas costosas ni gerentes intermedios</b>, todo el valor va a tu producto, no al overhead. Por lo que entrega, es de lo más rentable.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "It's expensive. I can get it cheaper."</p><p><b>Reply:</b> You're right, cheaper always exists: a slow template or someone who never finishes. Ours is your own page, custom-built, loads in under 1 second, ready in 48 hours, fixed price. And we can hit this price because we're a small, lean team: <b>no expensive offices or middle managers</b>, all the value goes to your product, not overhead. For what it delivers, it's about as good a return as you'll find.</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Déjame pensarlo."</p><p><b>Respondé:</b> Claro. Solo para ayudarte: ¿qué te genera duda, el precio, el tiempo, o si va a funcionar para tu caso? Así resolvemos la duda real ahí mismo.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "Déjame pensarlo."</p><p><b>Respondé:</b> Claro. Solo para ayudarte: ¿qué te genera duda, el precio, el tiempo, o si va a funcionar para tu caso? Así resolvemos la duda real ahí mismo.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "Let me think about it."</p><p><b>Reply:</b> Of course. Just to help: what's the doubt, the price, the timeline, or whether it'll work for your case? That way we solve the real question right here.</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "¿Me haces un descuento?"</p><p><b>Respondé:</b> El precio es fijo justamente para mantenerlo bajo y entregar rápido. El alcance es la página ($400.000); si más adelante quieres que atienda y agende sola, o vender más, ahí está el plan mensual. (Nunca prometas descuento sin que Mike o yo lo aprobemos.)</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "¿Me haces un descuento?"</p><p><b>Respondé:</b> El precio es fijo justamente para mantenerlo bajo y entregar rápido. El alcance es la página ($400.000). Si más adelante quieres que atienda y agende sola, ahí está el plan mensual.<br><em>(Nunca prometas descuento sin que Mike o yo lo aprobemos.)</em></p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "Can you give me a discount?"</p><p><b>Reply:</b> The price is fixed precisely to keep it low and deliver fast. The scope is the page ($400,000). If later you want it to answer and book on its own, that's the monthly plan.<br><em>(Never promise a discount without Mike or me approving.)</em></p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Ya nadie usa páginas web."</p><p><b>Respondé:</b> Tienes razón, los sitios viejos llenos de pestañas ya no sirven. Por eso no hacemos eso. Hacemos una página de ventas: una sola página enfocada en que te escriban. Hoy es más necesario que nunca, porque la gente te busca desde el celular y decide en segundos.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "Ya nadie usa páginas web."</p><p><b>Respondé:</b> Tienes razón, los sitios viejos con muchas pestañas ya no sirven. Por eso no hacemos eso. Hacemos una página de ventas: una sola página enfocada en que te escriban o reserven. Más necesaria que nunca: la gente te busca desde el celular y decide en segundos.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "Nobody uses websites anymore."</p><p><b>Reply:</b> You're right, the old kind of site with lots of tabs doesn't work. That's why we don't build that. We build a sales page: one page focused on getting them to message you or book. More needed than ever: people search you on their phone and decide in seconds.</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Con Instagram me basta."</p><p><b>Respondé:</b> Instagram es buenísimo para que te descubran, sigue con eso. Pero ahí no controlas el algoritmo, no hay un botón claro para reservar y los mensajes se pierden. La página es donde cierras: trabaja 24/7, aparece en Google y todo lleva a una sola acción. Se complementan.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "Con Instagram me basta."</p><p><b>Respondé:</b> Instagram es buenísimo para que te descubran, sigue con eso. Pero ahí no controlas el algoritmo, no hay un botón claro de "reservar", y los mensajes se pierden. La página es donde cierras: trabaja 24/7, aparece en Google, y todo lleva a una sola acción. Se complementan.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "Instagram is enough for me."</p><p><b>Reply:</b> Instagram is great for getting discovered, keep doing that. But you don't control the algorithm there, there's no clear "book" button, and messages get lost. The page is where you close: works 24/7, shows up in Google, everything points to one action. They complement each other.</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Tengo un familiar que sabe de eso."</p><p><b>Respondé:</b> Buenísimo que tengas a alguien de confianza. La diferencia es la entrega: lista en 48 horas, precio fijo, soporte y garantía. Un favor muchas veces se queda a medias por falta de tiempo. Si quieres, te muestro un ejemplo y comparas.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "Tengo un familiar que sabe de eso."</p><p><b>Respondé:</b> Buenísimo que tengas a alguien de confianza. La diferencia es la entrega: lista en 48 horas, precio fijo, soporte y garantía. Un favor muchas veces se queda a medias por falta de tiempo. Si quieres, te muestro un ejemplo y comparas.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "I have a relative who does that."</p><p><b>Reply:</b> Great that you have someone you trust. The difference is delivery: ready in 48 hours, fixed price, support, and a guarantee. A favor often gets stuck halfway through for lack of time. If you want, I'll show you an example and you compare.</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "Mándame la info y la reviso."</p><p><b>Respondé:</b> Te paso el detalle con gusto. Pero lo más útil es que veas cómo quedaría TU página: te armo un ejemplo gratis con tu negocio, sin compromiso. ¿Te lo preparo?</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "Mándame la info y la reviso."</p><p><b>Respondé:</b> Te paso el detalle con gusto. Pero lo más útil es que veas cómo quedaría TU página: te armo un ejemplo gratis con tu negocio, sin compromiso. ¿Te lo preparo?</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "Send me the info and I'll review it."</p><p><b>Reply:</b> Happy to share the details. But the most useful thing is for you to see how YOUR page would look: I'll build you a free example with your business, no commitment. Want me to prepare it?</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "¿Y si no me trae clientes?"</p><p><b>Respondé:</b> No te prometo clientes mágicos, sería mentira. Lo que sí: una página rápida, profesional y hecha para convertir, más 30 días de garantía. Si no quedas contento, te devolvemos el dinero. El riesgo lo asumimos nosotros.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "¿Y si no me trae clientes?"</p><p><b>Respondé:</b> No te prometo clientes mágicos, sería mentira. Lo que sí: una página rápida, profesional y hecha para convertir, más 30 días de garantía. Si no quedas contento, devolución. El riesgo lo asumimos nosotros.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "What if it doesn't bring me clients?"</p><p><b>Reply:</b> I won't promise you magic clients, that would be a lie. What I will promise: a fast, professional page built to convert, plus a 30-day guarantee. If you're not happy, refund. We take the risk.</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "No tengo los textos / las fotos."</p><p><b>Respondé:</b> Tranquilo. Nosotros pulimos y ordenamos tus textos como parte de la página; tú nos das lo que tengas, aunque sea en notas de voz. Para las fotos te digo qué necesito. El reloj de las 48 horas arranca cuando tenemos el contenido.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "No tengo textos ni fotos buenas."</p><p><b>Respondé:</b> Tranquilo. Pulimos y ordenamos tus textos como parte de la página, tú nos das lo que tengas, aunque sea en notas de voz. Para las fotos te digo qué necesito. El reloj de 48 horas arranca cuando tenemos el contenido.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "I don't have text or good photos."</p><p><b>Reply:</b> Don't worry. We polish and organize your text as part of the page, you give us what you have, even in voice notes. For the photos I'll tell you what I need. The 48-hour clock starts when we have the content.</p></div>
 
-<div class="card obj"><p class="q"><span class="tag">Te dicen</span> "¿Por qué el Plan de ventas tiene un mensual?"</p><p><b>Respondé:</b> Porque el asistente responde con inteligencia artificial en cada conversación, y eso tiene un costo real cada mes. Por eso el Plan de ventas es $150.000/mes e incluye el chatbot que capta, responde y pasa al cliente a tu WhatsApp, además del hosting, la Ficha activa y los cambios. La página en sí es pago único; el plan mensual es opcional.</p></div>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "¿Por qué el Plan de ventas tiene un mensual?"</p><p><b>Respondé:</b> Porque el asistente usa inteligencia artificial en cada conversación, y eso tiene un costo real cada mes. Por $150.000/mes recibes el chatbot que capta, responde y manda el cliente a tu WhatsApp o agenda llamadas, más el hosting, la Ficha activa y los cambios. La página en sí es pago único; el mensual es opcional.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "Why does the Sales plan have a monthly fee?"</p><p><b>Reply:</b> Because the assistant uses AI in every conversation, and that has a real cost every month. For $150,000/month you get the chatbot that captures, replies, and sends the client to your WhatsApp or books calls, plus hosting, active listing, and changes. The page itself is one-time; the monthly is optional.</p></div>
 
-<h2 id="s8"><span class="n">8</span> Lo que NO vendemos</h2>
-<p class="section-sub">Si la necesidad central del cliente es esto, no es nuestro cliente para la página. Se puede cotizar aparte, pero nunca lo prometas tú: "déjame confirmarte".</p>
-<ul class="feat">
-  <li>Tienda en línea real (carrito, inventario, pagos, variantes, envíos). La vitrina de productos del Plan de ventas es hasta donde llegamos.</li>
+<div class="card obj pb-es"><p class="q"><span class="tag">Te dicen</span> "Mi última agencia nunca me contestaba." / "¿Y si tengo un problema después de lanzar?"</p><p><b>Respondé:</b> Esa es la diferencia más grande con nosotros. Muchas agencias te hacen abrir un ticket o mandar un correo y esperar días. Aquí escribes por WhatsApp y respondemos rápido, porque <b>estás hablando con los dueños</b>, no con una cola de soporte. Tu página y tu Ficha de Google viven en nuestra infraestructura, las cuidamos como si fueran nuestras.</p></div>
+<div class="card obj pb-en"><p class="q"><span class="tag">They say</span> "My last agency never replied." / "What if I have a problem after launch?"</p><p><b>Reply:</b> That's the biggest difference with us. Many agencies make you open a ticket or send an email and wait days. Here you message on WhatsApp and we reply fast, because <b>you're talking to the owners</b>, not a support queue. Your page and your Google profile live on our infrastructure, and we look after them like they're our own.</p></div>
+
+<h2 id="s10"><span class="n">10</span> <span class="pb-es">Lo que no vendemos · cuándo escalar</span><span class="pb-en">What we don't sell · when to escalate</span></h2>
+<p class="sub-line pb-es">Si la necesidad central del cliente es una de estas, no es nuestro cliente para la página. Nunca lo prometas tú: "déjame confirmarte".</p>
+<p class="sub-line pb-en">If the client's main need is one of these, they're not our client for the page. Never promise it: "let me confirm".</p>
+<ul class="feat pb-es">
+  <li>Tienda en línea real (carrito, inventario, pagos, variantes, envíos). Nuestra vitrina del Plan de ventas es hasta donde llegamos.</li>
   <li>Blog real (CMS, artículos, publicación continua).</li>
   <li>Páginas extra, más de un idioma extra, o "cambios ilimitados".</li>
   <li>Apps, portales con login, membresías, automatizaciones complejas.</li>
 </ul>
-
-<h2 id="s9"><span class="n">9</span> Cuándo escalar (a Mike o a mí)</h2>
-<ul class="rules">
-  <li>El cliente pide algo fuera de la lista de arriba.</li>
-  <li>Pide un descuento o condiciones de pago distintas al 30/70.</li>
-  <li>Tiene una fecha urgente que no estás seguro de poder cumplir.</li>
-  <li>Cualquier cosa que no estés 100% seguro de que está incluida. Cuando dudes: "déjame confirmarte", no "sí".</li>
+<ul class="feat pb-en">
+  <li>A real online store (cart, inventory, payments, variants, shipping). Our Sales-plan storefront is as far as we go.</li>
+  <li>A real blog (CMS, articles, ongoing publishing).</li>
+  <li>Extra pages, more than one extra language, or "unlimited changes".</li>
+  <li>Apps, portals with login, memberships, complex automations.</li>
 </ul>
 
-<h2 id="s10"><span class="n">10</span> Mi día · el tablero</h2>
-<p class="section-sub">Mi día es tu tablero de ventas. Vive en <b>ventas.pymewebpro.com</b>. Entras con tu cuenta de Google (la misma del portal). Cada prospecto es una tarjeta que mueves de izquierda a derecha según avanza.</p>
-<p class="section-sub"><b>El tablero tiene 6 columnas:</b></p>
-<div class="cols3" style="grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1rem 0;display:grid">
-  <div class="plan"><div class="pt">Para contactar</div><p>Prospectos nuevos con WhatsApp. Aquí empiezas.</p></div>
-  <div class="plan"><div class="pt">Seguimiento</div><p>Ya les escribiste y esperas respuesta.</p></div>
-  <div class="plan"><div class="pt">Mockup</div><p>Les vas a enviar un ejemplo de su página.</p></div>
-  <div class="plan"><div class="pt">Propuesta</div><p>Quieren cotización. Aquí armas la propuesta.</p></div>
+<p class="sub-line pb-es" style="margin-top:1.3rem"><b>Escálame a mí o a Mike</b> cuando:</p>
+<p class="sub-line pb-en" style="margin-top:1.3rem"><b>Escalate to me or Mike</b> when:</p>
+<ul class="rules pb-es">
+  <li>El cliente pide algo fuera de la lista anterior.</li>
+  <li>Pide descuento o condiciones de pago distintas al 30/70.</li>
+  <li>Tiene una fecha urgente que no estás seguro de cumplir.</li>
+  <li>Cualquier cosa de la que no estés 100% seguro. Cuando dudes: "déjame confirmarte", no "sí".</li>
+</ul>
+<ul class="rules pb-en">
+  <li>The client asks for something not on the list above.</li>
+  <li>They ask for a discount or different payment terms than 30/70.</li>
+  <li>They have an urgent date you're not sure you can hit.</li>
+  <li>Anything you're not 100% sure about. When in doubt: "let me confirm", not "yes".</li>
+</ul>
+
+<h2 id="s11"><span class="n">11</span> <span class="pb-es">Mi día · el tablero</span><span class="pb-en">Mi día · the board</span></h2>
+<p class="pb-es">Mi día es tu tablero de ventas. Vive en <b>ventas.pymewebpro.com</b>. Entras con tu cuenta de Google. Cada prospecto es una tarjeta que se mueve de izquierda a derecha por 6 columnas.</p>
+<p class="pb-en">Mi día is your sales board. It lives at <b>ventas.pymewebpro.com</b>. You sign in with your Google account. Each prospect is a card that moves left to right through 6 columns.</p>
+<div class="cols3 pb-es">
+  <div class="plan"><div class="pt">Para contactar</div><p>Nuevos con WhatsApp. Aquí empiezas.</p></div>
+  <div class="plan"><div class="pt">Seguimiento</div><p>Ya les escribiste, esperas respuesta.</p></div>
+  <div class="plan"><div class="pt">Mockup</div><p>Les vas a enviar un ejemplo.</p></div>
+  <div class="plan"><div class="pt">Propuesta</div><p>Quieren cotización. Aquí la armas.</p></div>
   <div class="plan"><div class="pt">Por cerrar</div><p>Propuesta enviada. Cierras el trato.</p></div>
   <div class="plan"><div class="pt">Cerrados</div><p>Ganados y perdidos.</p></div>
 </div>
-<p class="section-sub">Abajo del tablero hay una lista aparte, <b>Por conseguir número</b>: prospectos sin WhatsApp. Consigue el número (Instagram, Google) y agrégalo para poder escribirles. Arriba tienes un buscador para encontrar cualquier lead por nombre.</p>
+<div class="cols3 pb-en">
+  <div class="plan"><div class="pt">To contact</div><p>New prospects with WhatsApp. Start here.</p></div>
+  <div class="plan"><div class="pt">Follow up</div><p>You've written, waiting for a reply.</p></div>
+  <div class="plan"><div class="pt">Mockup</div><p>You're going to send them an example.</p></div>
+  <div class="plan"><div class="pt">Proposal</div><p>They want a quote. Build it here.</p></div>
+  <div class="plan"><div class="pt">Closing</div><p>Proposal sent. Close the deal.</p></div>
+  <div class="plan"><div class="pt">Closed</div><p>Won and lost.</p></div>
+</div>
+<p class="pb-es">Abajo del tablero hay una lista aparte, <b>Por conseguir número</b>, para prospectos sin WhatsApp. Consigues el número (Instagram, Google), lo agregas, y la tarjeta vuelve al tablero.</p>
+<p class="pb-en">Below the board there's a separate list, <b>Need their number</b>, for prospects without WhatsApp. You find the number (Instagram, Google), add it, and the card moves back onto the board.</p>
 
-<p class="section-sub" style="margin-top:1.2rem"><b>Los colores te dicen qué hacer:</b></p>
-<ul class="rules">
-  <li><b>⚠ Roja:</b> te toca actuar ya. Hay que insistir, enviar algo que está listo, o el trato se enfrió.</li>
-  <li><b>Azul:</b> el prospecto abrió el mockup. Está caliente. Escríbele de una.</li>
-  <li><b>Normal:</b> ya hiciste lo tuyo, estás esperando respuesta. No hace falta nada todavía.</li>
-</ul>
-<div class="callout"><b>Para abrir una tarjeta, haz clic en ella.</b> Ahí ves el contacto, el historial, y los botones para actuar.</div>
+<h3 class="sub"><span class="pb-es">Los colores te dicen qué hacer</span><span class="pb-en">The colors tell you what to do</span></h3>
+<div class="colorbar pb-es">
+  <span class="dot red"></span><span><b>⚠ Roja:</b> te toca actuar ya. Hay que insistir, enviar algo que está listo, o el trato se enfrió.</span>
+  <span class="dot blue"></span><span><b>Azul:</b> el prospecto está viendo el mockup en este momento. <b>Llámalo, no escribas.</b> Está caliente y la voz cierra; el WhatsApp solo lo enfría.</span>
+  <span class="dot norm"></span><span><b>Normal:</b> ya hiciste lo tuyo, estás esperando respuesta. No hace falta nada todavía.</span>
+</div>
+<div class="colorbar pb-en">
+  <span class="dot red"></span><span><b>⚠ Red:</b> act now. Time to nudge, send something that's ready, or the deal has cooled.</span>
+  <span class="dot blue"></span><span><b>Blue:</b> the prospect is looking at the mockup right now. <b>Call them, don't write.</b> They're hot and the voice closes; another WhatsApp just cools them down.</span>
+  <span class="dot norm"></span><span><b>Normal:</b> you've done your part, waiting for a reply. Nothing needed yet.</span>
+</div>
+<div class="callout pb-es"><b>Filosofía:</b> WhatsApp es para desarrollar el lead. La llamada es para cerrar la venta. En cuanto la tarjeta se ponga azul, el botón de "Llamar" reemplaza al de "Generar mensaje".</div>
+<div class="callout pb-en"><b>Philosophy:</b> WhatsApp is for developing the lead. The call is for closing the sale. The moment a card turns blue, the "Call" button replaces the "Generate message" one.</div>
 
-<h2 id="s11"><span class="n">11</span> Workflow paso a paso</h2>
-<p class="section-sub">El flujo completo: del primer mensaje al depósito cobrado.</p>
+<h2 id="s12"><span class="n">12</span> <span class="pb-es">El flujo en 5 pasos</span><span class="pb-en">The workflow in 5 steps</span></h2>
+<p class="sub-line pb-es">Cada paso corresponde a una columna. Para avanzar, arrastra la tarjeta a la siguiente columna (o ábrela y usa "Mover a").</p>
+<p class="sub-line pb-en">Each step corresponds to a column. To advance, drag the card to the next column (or open it and use "Move to").</p>
 
-<h3 style="font-family:Georgia,serif;margin:1.5rem 0 .3rem">Contactar (primer mensaje)</h3>
-<ol class="steps">
-  <li>Haz clic en una tarjeta de <b>Para contactar</b>. Lee el nombre y la nota de <b>por qué</b> es buen prospecto (ej: "su sitio no tiene botón de WhatsApp").</li>
-  <li>Toca <span class="tag">Generar mensaje</span>. La IA escribe un primer WhatsApp en tu estilo paisa, mencionando ese problema concreto.</li>
+<h3 class="sub"><span class="pb-es">1. Contactar</span><span class="pb-en">1. Contact</span></h3>
+<ol class="steps pb-es">
+  <li>Abre una tarjeta de <b>Para contactar</b>. Lee el nombre y la nota de por qué es buen prospecto.</li>
+  <li>Toca <span class="tag">Generar mensaje</span>. La IA escribe un primer WhatsApp mencionando el problema concreto.</li>
   <li>Léelo, edítalo si quieres. Es tu mensaje.</li>
   <li>Toca <span class="tag">Abrir WhatsApp y registrar</span>. Se abre WhatsApp con el mensaje listo y el sistema anota el contacto.</li>
   <li>En WhatsApp solo dale enviar. La tarjeta pasa sola a <b>Seguimiento</b>.</li>
 </ol>
-<div class="callout">La IA escribe el borrador, pero <b>tú envías</b>. Nunca se manda nada solo.</div>
-
-<h3 style="font-family:Georgia,serif;margin:1.5rem 0 .3rem">Seguimiento</h3>
-<p>Casi nadie compra al primer mensaje. Cuando un prospecto lleva días sin responder, su tarjeta se pone <b>⚠ roja</b> ("Sigue ahora") y sube al tope. Ábrela, toca <span class="tag">Generar mensaje</span> y la IA escribe un seguimiento corto y amable. Cuando responda con interés y quiera ver un ejemplo, <b>arrastra su tarjeta a Mockup</b>.</p>
-
-<h3 style="font-family:Georgia,serif;margin:1.5rem 0 .3rem">Mockup (el ejemplo de su página)</h3>
-<p>Tu mejor anzuelo: le muestras cómo se vería SU página, gratis.</p>
-<ol class="steps">
-  <li><b>Arrastra la tarjeta a Mockup.</b> Se abre una ventanita que pregunta el <b>idioma del ejemplo</b>: Local (español) o Inglés (si le vende a extranjeros). Eliges y tocas <span class="tag">Generar mockup</span>.</li>
-  <li>El sistema arma el ejemplo con el nombre del negocio y escribe el mensaje de WhatsApp para acompañarlo. La tarjeta se pone <b>⚠ roja</b> "Listo para enviar".</li>
-  <li>Abre la tarjeta, toca <span class="tag">Enviar mockup</span>, revisa el mensaje (ya trae el link del ejemplo) y envíalo.</li>
-  <li>Cuando el prospecto <b>abre el ejemplo</b>, su tarjeta se pone <b>azul</b>. Eso es oro: está mirando su página justo ahora. Escríbele de una.</li>
+<ol class="steps pb-en">
+  <li>Open a card in <b>To contact</b>. Read the name and the note about why they're a good prospect.</li>
+  <li>Tap <span class="tag">Generate message</span>. The AI writes a first WhatsApp mentioning the specific problem.</li>
+  <li>Read it, edit if you want. It's your message.</li>
+  <li>Tap <span class="tag">Open WhatsApp and log it</span>. WhatsApp opens with the message ready and the system logs the contact.</li>
+  <li>In WhatsApp you just hit send. The card moves to <b>Follow up</b> automatically.</li>
 </ol>
-<div class="callout">Para verlo tú mismo antes de enviarlo, usa "Ver mockup" dentro de la tarjeta (ese no cuenta como visita del prospecto).</div>
+<div class="callout pb-es">La IA escribe el borrador, <b>tú envías</b>. Nunca se manda nada solo.</div>
+<div class="callout pb-en">The AI writes the draft, <b>you send it</b>. Nothing ever goes out automatically.</div>
 
-<h3 style="font-family:Georgia,serif;margin:1.5rem 0 .3rem">Propuesta</h3>
-<p>Cuando ya vio el ejemplo y le gustó, le armas la propuesta formal.</p>
-<ol class="steps">
-  <li><b>Arrastra la tarjeta a Propuesta.</b> Se abre una ventanita: escribe lo que pidió el cliente. La propuesta es la página de ventas ($400.000). La Ficha de Google va incluida; las capacidades extra viven en los planes mensuales.</li>
-  <li>Toca <span class="tag">Generar propuesta</span>. El sistema arma una propuesta limpia con precios en pesos y el pago 30% / 70%.</li>
-  <li>La tarjeta queda "Listo para enviar". Ábrela y usa <span class="tag">Ver propuesta</span> para compartir el documento con el prospecto.</li>
+<h3 class="sub"><span class="pb-es">2. Seguir</span><span class="pb-en">2. Follow up</span></h3>
+<p class="pb-es">Casi nadie compra al primer mensaje. Cuando un prospecto lleva días sin responder, su tarjeta se pone <b>⚠ roja</b> y sube al tope. Ábrela, <span class="tag">Generar mensaje</span>, y la IA escribe un seguimiento corto y amable. Cuando muestre interés, arrástrala a <b>Mockup</b>.</p>
+<p class="pb-en">Almost nobody buys on the first message. When a prospect goes a few days without replying, their card turns <b>⚠ red</b> and rises to the top. Open it, <span class="tag">Generate message</span>, and the AI writes a short friendly follow-up. When they show interest, drag the card to <b>Mockup</b>.</p>
+
+<h3 class="sub"><span class="pb-es">3. Mockup · el anzuelo</span><span class="pb-en">3. Mockup · the hook</span></h3>
+<p class="pb-es">Tu mejor anzuelo: les muestras cómo se vería SU página, gratis.</p>
+<p class="pb-en">Your best hook: you show them what THEIR page would look like, free.</p>
+<ol class="steps pb-es">
+  <li><b>Arrastra a Mockup.</b> Te pregunta el idioma del ejemplo (Local o Inglés) y tocas <span class="tag">Generar mockup</span>.</li>
+  <li>El sistema arma el ejemplo y escribe el WhatsApp para acompañarlo. La tarjeta se pone <b>⚠ roja</b> "Listo para enviar".</li>
+  <li>Abre la tarjeta, <span class="tag">Enviar mockup</span>, y mándalo (ya viene con el link incluido).</li>
+  <li>Cuando el prospecto <b>abre el ejemplo</b>, la tarjeta se pone <b>azul</b>. <b>Llámalo, no escribas.</b> Está viendo su página en este momento, y una llamada en caliente cierra mejor que un WhatsApp. Toca <span class="tag">Llamar</span> y dale.</li>
+</ol>
+<ol class="steps pb-en">
+  <li><b>Drag to Mockup.</b> It asks the sample language (Local or English) and you tap <span class="tag">Generate mockup</span>.</li>
+  <li>The system builds the sample and writes the WhatsApp to go with it. The card turns <b>⚠ red</b> "Ready to send".</li>
+  <li>Open the card, <span class="tag">Send mockup</span>, and send it (the link is already in the message).</li>
+  <li>When the prospect <b>opens the sample</b>, the card turns <b>blue</b>. <b>Call them, don't write.</b> They're looking at their page right now, and a hot call closes better than another WhatsApp. Tap <span class="tag">Call</span> and go.</li>
 </ol>
 
-<h3 style="font-family:Georgia,serif;margin:1.5rem 0 .3rem">Cerrar</h3>
-<p>Propuesta enviada: la tarjeta está en "Por cerrar".</p>
-<ol class="steps">
-  <li><b>Generar mensaje:</b> la IA escribe un cierre para avanzar, proponiendo arrancar con el depósito del 30%.</li>
-  <li><b>Agendar llamada:</b> arma un WhatsApp con tu link de calendario para que el prospecto elija la hora. Úsalo cuando prefiere hablar antes de decidir.</li>
+<h3 class="sub"><span class="pb-es">4. Propuesta</span><span class="pb-en">4. Proposal</span></h3>
+<ol class="steps pb-es">
+  <li><b>Arrastra a Propuesta</b> y anota lo que pidió el cliente. Toca <span class="tag">Generar propuesta</span>.</li>
+  <li>El sistema arma una propuesta limpia con precios en pesos y el pago 30/70.</li>
+  <li>Ábrela y usa <span class="tag">Ver propuesta</span> para compartirla con el prospecto.</li>
+</ol>
+<ol class="steps pb-en">
+  <li><b>Drag to Proposal</b> and note what the client asked for. Tap <span class="tag">Generate proposal</span>.</li>
+  <li>The system builds a clean proposal with prices in pesos and the 30/70 split.</li>
+  <li>Open it and use <span class="tag">View proposal</span> to share with the prospect.</li>
+</ol>
+
+<h3 class="sub"><span class="pb-es">5. Cerrar</span><span class="pb-en">5. Close</span></h3>
+<ol class="steps pb-es">
+  <li><b>Generar mensaje</b>: cierre que pide el depósito del 30%.</li>
+  <li><b>Agendar llamada</b>: si prefiere hablar antes, manda tu link de calendario.</li>
   <li>Si lleva días sin moverse, la tarjeta se pone <b>⚠ roja</b> para que insistas.</li>
-  <li><b>Cobrar depósito:</b> cuando dice que sí, toca este botón. Arma un WhatsApp con el link de pago de Wompi por el <b>30% ($120.000)</b>. Apenas el cliente paga, la tarjeta pasa <b>sola a Ganado</b>.</li>
-  <li><b>Ganado:</b> se marca solo cuando entra el depósito. También puedes marcarlo a mano si cerraste por otro medio.</li>
-  <li><b>Perdido:</b> si dice que no o se enfría, <b>arrástralo a Cerrados</b>. Mejor enfocar tu energía en los que sí.</li>
+  <li><b>Cobrar depósito</b>: cuando dice que sí, este botón arma el WhatsApp con el link de pago de Wompi por $120.000. Cuando paga, la tarjeta pasa sola a <b>Ganado</b>.</li>
+  <li><b>Perdido</b>: si dice que no o se enfría, arrástralo a <b>Cerrados</b>. Mejor enfocar la energía en los que sí.</li>
 </ol>
-<div class="callout"><b>Después de ganar: ofrécele un plan mensual.</b> La página incluye la Ficha de Google y 1 mes de hosting. Pasado eso, Plan de presencia ($50.000/mes) o Plan de ventas ($150.000/mes, con el chatbot 24/7). El plan mensual es el ingreso recurrente. Ofrécelo siempre al cerrar.</div>
-
-<h2 id="s12"><span class="n">12</span> Agregar un prospecto a mano</h2>
-<div class="card">
-¿Conociste a alguien que necesita página? Toca <span class="tag">+ Agregar prospecto</span> arriba. Pon el nombre del negocio, el tipo, y si tienes el WhatsApp o el sitio, agrégalos. Aparece de una al tope de "Para contactar" (o en "Por conseguir número" si no pusiste WhatsApp). El sistema te dice a cuál fue.
-</div>
-
-<h2 id="s13"><span class="n">13</span> Tu rutina diaria sugerida</h2>
-<div class="card">
-<p style="margin:0">Cada mañana, en orden:</p>
-<ol class="steps" style="margin-top:.6rem">
-  <li>Abre <b>Mi día</b> con un café.</li>
-  <li>Primero las tarjetas <b>azules</b>: vieron su mockup, están calientes. Escríbeles ya.</li>
-  <li>Luego las <b>⚠ rojas</b>: seguimientos que tocan, mockups listos para enviar, cierres pendientes.</li>
-  <li>Contacta <b>5 a 10 prospectos nuevos</b> de "Para contactar".</li>
-  <li>Si alguien respondió por WhatsApp, contéstale y arrastra su tarjeta a la columna que toca.</li>
+<ol class="steps pb-en">
+  <li><b>Generate message</b>: closer that asks for the 30% deposit.</li>
+  <li><b>Schedule call</b>: if they want to talk first, send your calendar link.</li>
+  <li>If they've gone quiet for days, the card turns <b>⚠ red</b> so you nudge them.</li>
+  <li><b>Collect deposit</b>: when they say yes, this button builds the WhatsApp with the Wompi payment link for $120,000. When they pay, the card moves to <b>Won</b> automatically.</li>
+  <li><b>Lost</b>: if they say no or go cold, drag the card to <b>Closed</b>. Better to focus your energy on the ones who'll say yes.</li>
 </ol>
-<p style="margin:.6rem 0 0">15 a 30 minutos al día, constante, vale más que una hora una vez por semana.</p>
-</div>
+<div class="callout pb-es"><b>Después de ganar:</b> ofrécele el <b>Plan de ventas ($150.000/mes)</b>. El asistente 24/7 es el siguiente paso natural, y es nuestro ingreso recurrente. Si no quiere el Plan de ventas, ofrece al menos el Plan de presencia ($50.000/mes).</div>
+<div class="callout pb-en"><b>After winning:</b> offer the <b>Sales plan ($150,000/month)</b>. The 24/7 assistant is the natural next step, and it's our recurring revenue. If they don't want the Sales plan, offer at least the Presence plan ($50,000/month).</div>
 
-<h2 id="s14"><span class="n">14</span> Reglas de oro</h2>
-<ul class="rules">
-  <li>El producto es <b>la página de ventas: $400.000 COP</b>, pago único, IVA incluido. Incluye la Ficha de Google. Las capacidades extra (vitrina, catálogo, bilingüe, asistente 24/7) van <b>dentro de los planes mensuales</b>, no sueltas.</li>
-  <li>Pago <b>30% para arrancar ($120.000)</b> y <b>70% al lanzar ($280.000)</b>. Siempre por Wompi, siempre en COP. El <b>enlace de pago lo genera Mike</b> y tú se lo pasas al cliente; no se cobra en la web.</li>
+<h2 id="s13"><span class="n">13</span> <span class="pb-es">Reglas de oro</span><span class="pb-en">Golden rules</span></h2>
+<ul class="rules pb-es">
+  <li>El producto base es <b>la página de ventas: $400.000 COP</b>, pago único, IVA incluido. Incluye la Ficha de Google. Las capacidades extra (vitrina, catálogo, bilingüe, asistente 24/7) van <b>dentro de los planes mensuales</b>, no sueltas.</li>
+  <li>Pago: <b>30% para arrancar ($120.000)</b> y <b>70% al lanzar ($280.000)</b>. Siempre Wompi, siempre COP. <b>Mike genera el enlace</b>, tú se lo pasas al cliente.</li>
   <li>Entrega en <b>~48 horas</b> desde que llega el contenido y el depósito.</li>
-  <li>Habla de <b>resultados</b> (más clientes, más reservas), no de "páginas web".</li>
-  <li><b>Nunca prometas resultados garantizados</b> (número de clientes, quedar #1 en Google). Sí: la página está hecha para convertir, más la garantía de 30 días.</li>
+  <li><b>Habla del asistente 24/7 en cada conversación.</b> Es lo que nos diferencia y el ingreso recurrente que nos sostiene.</li>
+  <li><b>WhatsApp desarrolla, la llamada cierra.</b> Cuando una tarjeta se ponga azul (vio el mockup), siempre llama, no escribas. La voz cierra ventas que el texto no.</li>
+  <li>Habla de <b>resultados</b> (más clientes, más reservas), nunca de "páginas web".</li>
+  <li><b>Nunca prometas resultados garantizados</b> (número de clientes, quedar #1 en Google). Sí: la página está hecha para convertir + 30 días de garantía.</li>
   <li>Toma siempre <b>nombre, WhatsApp y correo</b> antes de avanzar.</li>
   <li>Mejor preguntar que prometer algo que no podemos cumplir.</li>
 </ul>
+<ul class="rules pb-en">
+  <li>The base product is <b>the sales page: $400,000 COP</b>, one-time, VAT included. Includes the Google Business listing. Extras (storefront, catalog, bilingual, 24/7 assistant) live <b>inside the monthly plans</b>, not standalone.</li>
+  <li>Payment: <b>30% to start ($120,000)</b> and <b>70% at launch ($280,000)</b>. Always Wompi, always COP. <b>Mike generates the link</b>, you pass it to the client.</li>
+  <li>Delivery in <b>~48 hours</b> from when the content and the deposit arrive.</li>
+  <li><b>Talk about the 24/7 assistant in every conversation.</b> It's what differentiates us and the recurring revenue that sustains us.</li>
+  <li><b>WhatsApp develops, the call closes.</b> When a card turns blue (they viewed the mockup), always call, don't write. The voice closes sales the text can't.</li>
+  <li>Talk about <b>results</b> (more clients, more bookings), never about "websites".</li>
+  <li><b>Never promise guaranteed results</b> (number of clients, ranking #1 on Google). What you can promise: a page built to convert + 30-day guarantee.</li>
+  <li>Always get <b>name, WhatsApp, and email</b> before moving forward.</li>
+  <li>Better to ask than to promise something we can't deliver.</li>
+</ul>
 
-<p class="foot">PymeWebPro · Norte Sur Consulting S.A.S. · Manual interno de ventas. Vive en ventas.pymewebpro.com/recursos.</p>
+<p class="foot"><span class="pb-es">PymeWebPro · Norte Sur Consulting S.A.S. · Manual interno de ventas. Vive en ventas.pymewebpro.com/recursos.</span><span class="pb-en">PymeWebPro · Norte Sur Consulting S.A.S. · Internal sales manual. Lives at ventas.pymewebpro.com/recursos.</span></p>
 
 </div>
+<script>
+(function(){
+  var html=document.documentElement;
+  var picked=null;
+  try{picked=localStorage.getItem('pwp_manual_lang');}catch(e){}
+  if(!picked){
+    var nav=(navigator.language||'es').toLowerCase();
+    picked=nav.indexOf('en')===0?'en':'es';
+  }
+  if(picked!=='en')picked='es';
+  apply(picked);
+  function apply(l){
+    html.classList.remove('lang-en','lang-es');
+    html.classList.add('lang-'+l);
+    html.setAttribute('lang',l);
+    try{localStorage.setItem('pwp_manual_lang',l);}catch(e){}
+  }
+  document.querySelectorAll('.langtog a').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      apply(a.getAttribute('data-l'));
+    });
+  });
+})();
+</script>
 </body>
 </html>

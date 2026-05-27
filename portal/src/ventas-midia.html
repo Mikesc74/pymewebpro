@@ -144,10 +144,8 @@ button.act.ghost{background:transparent;color:var(--mute)}
   <span class="brand">Pyme<em>WebPro</em><b>Mi día</b></span>
   <input id="search" class="search" type="search" placeholder="Buscar lead..." autocomplete="off">
   <span class="sp"></span>
+  <a href="/recursos" target="_blank" rel="noopener" style="text-transform:uppercase;letter-spacing:.04em;font-weight:600">Manual de ventas</a>
   <button class="add" id="btn-add">+ Agregar prospecto</button>
-  <button class="link" id="btn-imgs">Imágenes</button>
-  <a href="/recursos" target="_blank" rel="noopener">Manual</a>
-  <a href="/crm">CRM completo</a>
 </div>
 <div class="wrap">
   <p class="intro">Arrastra cada tarjeta de izquierda a derecha según avanza el prospecto. <b>Rojo + ⚠</b> significa que te toca actuar ya. La IA escribe los mensajes, tú revisas y envías.</p>
@@ -339,7 +337,7 @@ function contactRow(l){
     bits.push('<a class="ci call" href="tel:+'+wa+'">Llamar '+esc(disp)+'</a>');
     bits.push('<a class="ci" href="https://wa.me/'+wa+'" target="_blank" rel="noopener">WhatsApp</a>');
   } else {
-    bits.push('<span class="ci none">Sin numero todavia (agregalo en CRM completo)</span>');
+    bits.push('<span class="ci none">Sin numero todavia (agregalo abriendo la tarjeta)</span>');
   }
   if(l.current_site){ var u = /^https?:\/\//i.test(l.current_site) ? l.current_site : 'https://'+l.current_site; bits.push('<a class="ci" href="'+esc(u)+'" target="_blank" rel="noopener">Sitio</a>'); }
   if(l.instagram){ var ig = String(l.instagram).replace(/^@+/, ''); bits.push('<a class="ci" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">IG</a>'); }
@@ -743,7 +741,6 @@ function showProposalPanel(lead){
 
 // ---- search ----
 document.getElementById('search').addEventListener('input', function(e){ SEARCH = (e.target.value||'').trim(); render(); });
-document.getElementById('btn-imgs').addEventListener('click', openImagesPanel);
 
 // ---- add prospect ----
 document.getElementById('btn-add').addEventListener('click', function(){
