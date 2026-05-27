@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es" class="lang-es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dolores por vertical · Pain by vertical | PymeWebPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--paper:#F2E9D5;--paper2:#E8DFC8;--card:#FBF7EC;--ink:#1A1612;--ink2:#3A2F26;--mute:rgba(26,22,18,.55);--line:rgba(26,22,18,.14);--accent:#D24A1D;--accent2:#A8381A;--red:#991B1B;--green:#166534;--blue:#1f4e79}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.65;background-image:radial-gradient(rgba(26,22,18,.05) 1px,transparent 1px);background-size:3px 3px}
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:1rem;padding:.7rem 1.4rem;border-bottom:3px double rgba(242,233,213,.2)}
+.topbar .brand{font-weight:800;font-size:1.05rem}
+.topbar .brand em{font-style:italic;font-weight:500;color:var(--accent)}
+.topbar .sp{flex:1}
+.topbar a{color:rgba(242,233,213,.78);text-decoration:none;font-size:.82rem}
+.topbar a:hover{color:#F2896A}
+.topbar a.cta{background:var(--accent);color:#fff;padding:.45rem .9rem;border-radius:7px;font-weight:600}
+.topbar a.ghost{border:1px solid rgba(242,233,213,.4);padding:.4rem .8rem;border-radius:7px;font-weight:500}
+.langtog{display:inline-flex;align-items:center;border:1px solid rgba(242,233,213,.4);border-radius:999px;padding:2px;font-size:11px;letter-spacing:.1em;font-weight:700;text-transform:uppercase}
+.langtog a{padding:3px 9px;border-radius:999px;color:rgba(242,233,213,.78);cursor:pointer;transition:all .15s ease}
+.langtog a:hover{color:#fff}
+html.lang-en .langtog a[data-l="en"],html.lang-es .langtog a[data-l="es"]{background:var(--accent);color:#fff}
+html.lang-en .pb-es,html.lang-es .pb-en{display:none!important}
+.wrap{max-width:820px;margin:0 auto;padding:2.4rem 1.4rem 5rem}
+h1{font-family:Georgia,serif;font-size:2.1rem;line-height:1.15;margin:0 0 .4rem}
+h1 em{color:var(--accent);font-style:italic}
+.lede{font-size:1rem;color:var(--ink2);margin:0 0 1.4rem}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.95rem 1.15rem;margin:0 0 1rem}
+.toc b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:0 0 .5rem}
+.toc ol{margin:0;padding-left:1.2rem;font-size:.92rem;line-height:1.7}
+.toc a{color:var(--accent2);text-decoration:none}
+.toc a:hover{text-decoration:underline}
+h2{font-family:Georgia,serif;font-size:1.4rem;margin:2.8rem 0 .4rem;display:flex;align-items:baseline;gap:.6rem;scroll-margin-top:4rem}
+h2 .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.9rem;color:#fff;background:var(--accent);width:1.75rem;height:1.75rem;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+h3.vert{font-family:Georgia,serif;margin:1.6rem 0 .4rem;font-size:1.08rem;color:var(--ink);scroll-margin-top:4rem;border-bottom:1px solid var(--line);padding-bottom:.25rem}
+h3.vert .vsub{display:inline-block;margin-left:.4rem;font-size:.78rem;font-weight:500;color:var(--mute);font-family:'Inter Tight',sans-serif;font-style:italic}
+.lead{font-size:1.05rem;color:var(--ink);margin:.6rem 0 1rem}
+.sub-line{color:var(--mute);margin:.2rem 0 1rem;font-size:.95rem}
+p{margin:0 0 .9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.3rem;margin:1rem 0}
+.card.tight{padding:.85rem 1.1rem}
+.pain{margin:.3rem 0 .55rem;line-height:1.55}
+.pain .tag{display:inline-block;background:var(--ink);color:var(--paper);font-size:.66rem;font-weight:700;padding:.12rem .5rem;border-radius:6px;margin-right:.35rem;letter-spacing:.04em;text-transform:uppercase;vertical-align:middle}
+.pain.dolor .tag{background:var(--accent)}
+.pain.valid .tag{background:var(--blue);color:#fff}
+.pain.puente .tag{background:var(--green);color:#fff}
+.pain.valid{font-style:italic;color:var(--ink2)}
+.pain.puente{color:var(--ink)}
+.callout{border-left:4px solid var(--accent);background:rgba(210,74,29,.07);padding:.85rem 1.1rem;border-radius:6px;margin:1.2rem 0;font-size:.95rem}
+.callout b{color:var(--accent2)}
+.foot{margin-top:3rem;color:var(--mute);font-size:.82rem;border-top:1px solid var(--line);padding-top:1rem}
+b{color:var(--ink)}
+em{font-style:italic;color:var(--ink2)}
+.section-intro{color:var(--mute);font-size:.92rem;margin:.4rem 0 1.4rem;font-style:italic}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Pyme<em>WebPro</em></span>
+  <span class="sp"></span>
+  <div class="langtog" role="group" aria-label="Idioma / Language">
+    <a data-l="es" hreflang="es" aria-label="Español">ES</a>
+    <a data-l="en" hreflang="en" aria-label="English">EN</a>
+  </div>
+  <a class="ghost" href="/recursos"><span class="pb-es">Manual</span><span class="pb-en">Manual</span></a>
+  <a class="cta" href="/"><span class="pb-es">Mi día</span><span class="pb-en">Mi día</span></a>
+</div>
+<div class="wrap">
+
+<h1><span class="pb-es">Dolores por <em>vertical</em></span><span class="pb-en">Pain by <em>vertical</em></span></h1>
+<p class="lede pb-es">Cada vertical pierde clientes de una forma distinta. Un plomero los pierde estando bajo un lavaplatos. Un dentista los pierde en medio de una resina. Un cerrajero los pierde a las once de la noche. Esta es la referencia para abrir la conversación con el dolor correcto antes de mostrar la solución.</p>
+<p class="lede pb-en">Every vertical loses customers in its own way. A plumber loses them while under a sink. A dentist loses them mid-procedure. A locksmith loses them at 11pm. This is the reference for opening the conversation with the right pain before showing the solution.</p>
+
+<div class="callout pb-es"><b>Cómo usar este manual:</b> antes de pitchear a un negocio, busca aquí su vertical. Cada uno tiene un dolor diferente. Empieza por ese dolor, valida ("te pasa cada semana, ¿cierto?"), y conecta con la solución. Tres líneas, en ese orden: dolor, validación, puente.</div>
+<div class="callout pb-en"><b>How to use this manual:</b> before pitching a business, look up its vertical here. Each one has a different pain. Start with that pain, validate ("this happens every week, right?"), and bridge to the solution. Three lines, in that order: pain, validation, bridge.</div>
+
+<div class="toc pb-es">
+  <b>Índice</b>
+  <ol>
+    <li><a href="#trades">Oficios (los que van a domicilio)</a></li>
+    <li><a href="#supply">Tiendas y proveedores de oficios</a></li>
+    <li><a href="#salud">Salud, estética y veterinaria</a></li>
+    <li><a href="#servicios">Servicios profesionales y al consumidor</a></li>
+  </ol>
+</div>
+<div class="toc pb-en">
+  <b>Contents</b>
+  <ol>
+    <li><a href="#trades">Trades (the on-site folks)</a></li>
+    <li><a href="#supply">Supply stores for the trades</a></li>
+    <li><a href="#salud">Health, aesthetics, and vet</a></li>
+    <li><a href="#servicios">Professional and consumer services</a></li>
+  </ol>
+</div>
+
+<h2 id="trades"><span class="n">1</span> <span class="pb-es">Oficios</span><span class="pb-en">Trades</span></h2>
+<p class="section-intro pb-es">Característica común: el técnico está con las manos ocupadas, el celular suena, y el cliente que llama no espera.</p>
+<p class="section-intro pb-en">Common pattern: the technician's hands are full, the phone rings, and the calling customer won't wait.</p>
+
+<h3 class="vert" id="electricista">Electricista <span class="vsub pb-en">· electrician</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Te toca un servicio urgente: un breaker que tumba la luz de toda la casa, un cableado a punto de fallar. Estás arriba de una escalera con la pinza en la mano cuando entra otra llamada. No vas a soltar la herramienta, y esa persona ya está marcando al siguiente electricista de Google.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Cada semana se te van dos o tres llamadas que no alcanzas a contestar, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>Nuestro asistente contesta al instante en WhatsApp y en tu página, califica si es urgencia o instalación, le agenda la visita en tu calendario, y tú llegas cuando bajas de la escalera con todo listo.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>You're on an urgent job: a tripped breaker that took out the house, wiring about to fail. You're up on a ladder with pliers in hand when another call comes in. You can't drop the tool, and that caller is already dialing the next electrician on Google.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Every week two or three calls slip past you, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>Our assistant replies instantly on WhatsApp and on your page, sorts urgency from install work, books the visit on your calendar, and you come down off the ladder with it all set.</p>
+</div>
+
+<h3 class="vert" id="plomero">Plomero <span class="vsub pb-en">· plumber</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Estás bajo un lavaplatos con las manos llenas de teflón y el sifón a medio armar. Suena el celular: una fuga en otra casa. Si no contestas en los próximos cinco minutos, llama al siguiente plomero y mañana el del lavaplatos es el único cliente que te queda del día.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Te toca elegir entre el cliente que tienes enfrente y el que está llamando, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página y el asistente contestan por ti, agendan la visita y te avisan por WhatsApp con la dirección, el problema y la hora. Cierras el de hoy sin perder el de mañana.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>You're under a sink with your hands covered in plumber's tape and the trap half-assembled. Phone rings: a leak at another house. If you don't answer in the next five minutes, they call the next plumber, and tomorrow the sink job is the only client you'll have left.</p>
+<p class="pain valid"><span class="tag">Validate</span>"You're choosing between the client in front of you and the one calling, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page and the assistant reply for you, book the visit, and ping you on WhatsApp with the address, problem, and time. You close today's without losing tomorrow's.</p>
+</div>
+
+<h3 class="vert" id="cerrajeria">Cerrajería <span class="vsub pb-en">· locksmith</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Una persona quedó por fuera de su carro o de su apartamento a las once de la noche. Cada minuto que no le contestes, está marcando al siguiente cerrajero. No es un cliente que pueda esperar al otro día.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El que te necesita te necesita ya, no mañana, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>Asistente 24/7 que contesta de inmediato en la madrugada, confirma cobertura y tiempo estimado, y solo te llama cuando ya tiene el servicio agendado.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>Someone's locked out of their car or apartment at 11pm. Every minute you don't reply, they're dialing the next locksmith. This is not a client who can wait until morning.</p>
+<p class="pain valid"><span class="tag">Validate</span>"The person who needs you needs you now, not tomorrow, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>A 24/7 assistant that answers instantly in the middle of the night, confirms coverage and ETA, and only calls you once the job's booked.</p>
+</div>
+
+<h3 class="vert" id="vidrieria">Vidriería <span class="vsub pb-en">· glass shop</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Le rompieron un vidrio panorámico al cliente y necesita medidas y cotización rápido. Si tu Instagram no responde antes del almuerzo, ya pidió cotización en tres vidrierías más y se queda con quien le mandó el primer número.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El que cotiza primero suele ser el que vende, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página recibe medidas y foto, el asistente confirma el tipo de vidrio, da un rango de precio y te pasa el lead caliente a WhatsApp en segundos.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client broke a big window and needs measurements and a quote fast. If your Instagram doesn't reply before lunch, they've already asked three other glass shops and they go with whoever sent the first number.</p>
+<p class="pain valid"><span class="tag">Validate</span>"The first one to quote tends to win, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page captures measurements and a photo, the assistant confirms glass type, gives a price range, and pushes the hot lead to WhatsApp in seconds.</p>
+</div>
+
+<h3 class="vert" id="carpinteria">Carpintería <span class="vsub pb-en">· carpentry</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente quiere un closet a la medida o una puerta y ya consultó en otras dos carpinterías. Mientras tú estás cortando MDF con la sierra encendida, su mensaje queda en visto. Se va al que le respondió con foto del trabajo y un rango de precio.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los proyectos buenos los pierdes por no contestar a tiempo, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente conversa, califica si es closet, cocina, puerta o mueble, muestra trabajos similares de tu galería y te lo agenda para la visita o la cotización.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client wants a custom closet or a door and has already asked two other carpenters. While you're cutting MDF with the saw running, their message sits unread. They go with whoever replied with a job photo and a price range.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Good projects slip because you can't reply in time, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant chats, sorts whether it's a closet, kitchen, door, or piece of furniture, shows similar work from your gallery, and books the visit or the estimate.</p>
+</div>
+
+<h3 class="vert" id="pintor">Pintor <span class="vsub pb-en">· painter</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Te llaman para pintar tres cuartos el fin de semana. Estás en un andamio con el rodillo, no puedes contestar. Cuando bajas dos horas después, ya contrataron al pintor que sí respondió y te perdiste el presupuesto.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Subiendo y bajando del andamio se te van los presupuestos del día, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>Tu página recibe el área en metros, el tipo de pintura y la fecha; el asistente da un cálculo aproximado y te pasa la visita técnica al calendario.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>They call to paint three rooms over the weekend. You're up on scaffolding with a roller, can't pick up. When you come down two hours later, they've already hired the painter who did reply.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Going up and down the scaffold, the day's estimates slip past you, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>Your page captures square meters, paint type, and the date; the assistant gives a ballpark and books the site visit on your calendar.</p>
+</div>
+
+<h3 class="vert" id="enchapador">Enchapador <span class="vsub pb-en">· tile installer</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente está remodelando baño o cocina y necesita saber si haces ese trabajo y cuánto cobras por metro. Está hablando contigo y con otros dos enchapadores a la vez. Quien responda con un número claro y un par de fotos en menos de una hora, gana.</p>
+<p class="pain valid"><span class="tag">Validar</span>"La gente cotiza con tres y se queda con el que mandó primero foto y precio, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra tus trabajos terminados, el asistente captura metros, tipo de cerámica y fecha, y te envía el lead a WhatsApp con todo listo para cotizar.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client is redoing a bathroom or kitchen and needs to know if you do that work and your price per meter. They're talking to you and two other installers at the same time. Whoever replies with a clear number and a couple of photos in under an hour wins.</p>
+<p class="pain valid"><span class="tag">Validate</span>"People ask three installers and go with the one who sent a photo and a number first, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows your finished work, the assistant captures meters, tile type, and date, and hands you the lead on WhatsApp ready to quote.</p>
+</div>
+
+<h3 class="vert" id="jardineria">Jardinería <span class="vsub pb-en">· gardening</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente quiere mantenimiento mensual del antejardín, o cortar un árbol que estorba. Te escribe por Instagram un sábado. Si no contestas ese mismo día, el lunes ya llamó al que vio en un cartel del barrio.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los mantenimientos mensuales son plata fija y se te van por no contestar a tiempo, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página y el asistente capturan dirección, tamaño del jardín y la frecuencia que quiere, y te agendan la visita inicial sin que tengas que mover el celular.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client wants monthly upkeep of their front yard, or to take down a tree that's in the way. They message you on Instagram on a Saturday. If you don't reply that same day, by Monday they've called the one whose flyer they saw in the neighborhood.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Monthly maintenance is recurring money and slips past when you can't reply in time, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page and the assistant capture address, garden size, and the cadence they want, and book the first visit without you touching the phone.</p>
+</div>
+
+<h3 class="vert" id="fumigacion">Fumigación <span class="vsub pb-en">· pest control</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>En la casa del cliente apareció una plaga (cucarachas, ratones, comején) y la quieren resolver ya. Si no respondes el mismo día, llaman a una empresa con publicidad en Google que sí va mañana.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Cuando aparece una plaga, el cliente quiere que vayas hoy o mañana, no la semana entrante, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente clasifica el tipo de plaga, el tamaño del espacio y la urgencia, te lo agenda en tu calendario con la dirección, y te lo pasa a WhatsApp.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>An infestation showed up at the client's home (roaches, rats, termites) and they want it gone now. If you don't reply that day, they call a Google-ad company that can come tomorrow.</p>
+<p class="pain valid"><span class="tag">Validate</span>"When a pest shows up, the client wants you today or tomorrow, not next week, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant sorts the pest type, the size of the space, and urgency, books it on your calendar with the address, and passes it to WhatsApp.</p>
+</div>
+
+<h3 class="vert" id="aire-acondicionado">Aire acondicionado <span class="vsub pb-en">· HVAC</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El equipo dejó de enfriar en plena ola de calor. El cliente busca técnico desesperado y manda mensaje a tres negocios. Si tu Instagram tarda en contestar, ya tiene cita con otro para mañana.</p>
+<p class="pain valid"><span class="tag">Validar</span>"En temporada de calor se te triplican los mensajes y se te triplican los que pierdes, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página explica si haces residencial, comercial o automotriz, el asistente confirma marca y problema y te pasa la cita con todos los datos.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A unit stops cooling in the middle of a heat wave. The client is hunting for a tech and messages three businesses. If your Instagram takes a while to reply, they already have an appointment with someone else for tomorrow.</p>
+<p class="pain valid"><span class="tag">Validate</span>"In hot season the messages triple and so do the ones you lose, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page tells them whether you do residential, commercial, or auto, the assistant confirms brand and problem, and books the appointment with all the details.</p>
+</div>
+
+<h3 class="vert" id="mudanzas">Mudanzas <span class="vsub pb-en">· moving company</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente se muda en dos semanas y necesita cotización con metros cúbicos, piso, camión y embalaje. Pide cotización a tres empresas el mismo día. Quien responda primero con un número claro, contrata.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las cotizaciones se ganan o se pierden el mismo día en que las piden, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente recoge fecha, origen, destino, pisos y cantidad de muebles, te calcula el rango y te lo entrega listo para confirmar precio.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client is moving in two weeks and needs a quote with cubic meters, floor, truck, and packing. They ask three companies in the same day. Whoever replies first with a clear number, gets hired.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Quotes are won or lost the same day they're asked, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant collects date, origin, destination, floors, and furniture volume, calculates the range, and hands it to you ready to confirm the price.</p>
+</div>
+
+<h3 class="vert" id="impermeabilizacion">Impermeabilización <span class="vsub pb-en">· waterproofing</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Le entró agua al cliente en la última lluvia y está mirando techos manchados o paredes mojadas. Quiere visita técnica rápido. Si no respondes el mismo día, la siguiente empresa ya está midiendo el techo el viernes.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las goteras se resuelven con el que respondió antes de la siguiente lluvia, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página captura tipo de techo, área aproximada y zona, y el asistente agenda la visita técnica antes de que la urgencia se enfríe.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>Water came in during the last rain and the client is looking at stained ceilings or wet walls. They want a site visit fast. If you don't reply that same day, the next company is already measuring the roof by Friday.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Leaks get solved by whoever replied before the next rain, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page captures roof type, approximate area, and zone, and the assistant books the site visit before the urgency cools off.</p>
+</div>
+
+<h2 id="supply"><span class="n">2</span> <span class="pb-es">Tiendas y proveedores de oficios</span><span class="pb-en">Supply stores for the trades</span></h2>
+<p class="section-intro pb-es">Característica común: el cliente está en otra tienda con el celular en la mano, comparando precios. El que responda primero con foto, stock y precio, vende.</p>
+<p class="section-intro pb-en">Common pattern: the client is in another store with their phone in hand, comparing prices. Whoever replies first with a photo, stock, and a price, sells.</p>
+
+<h3 class="vert" id="pisos-enchapes-tienda">Tienda de pisos y enchapes <span class="vsub pb-en">· flooring &amp; tile store</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente está parado en tu competencia, con foto en la mano, comparando muestras y precios. Te manda WhatsApp preguntando si tienes un porcelanato similar y a cuánto. Si tardas 20 minutos en contestar, ya pagó allá.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El cliente decide en la tienda con el celular en la mano, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra tus referencias con foto y precio por m², el asistente confirma stock y formato, y te agenda la visita o el separado del material.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client is standing in your competitor's store, phone in hand, comparing samples and prices. They WhatsApp you asking if you have a similar porcelain tile and the price. If you take 20 minutes to answer, they've already paid over there.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Clients decide inside the store with their phone in hand, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows your references with photo and price per m², the assistant confirms stock and format, and books the visit or holds the material.</p>
+</div>
+
+<h3 class="vert" id="materiales-construccion">Depósito de materiales de construcción <span class="vsub pb-en">· construction materials depot</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un maestro de obra pide cotización por bulto de cemento, varilla y arena para el lunes. Está chateando con tu depósito y con otros dos al mismo tiempo. El que cotiza primero, vende.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los maestros le piden cotización a tres depósitos al mismo tiempo, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente recibe la lista, te confirma stock con un toque y te manda el pedido armado para que solo apruebes el precio.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A foreman asks for a quote on bags of cement, rebar, and sand for Monday. He's chatting with your depot and two others at the same time. Whoever quotes first, sells.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Foremen ask three depots at the same time, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant takes the list, confirms stock with a tap, and hands you the order assembled so all you do is approve the price.</p>
+</div>
+
+<h3 class="vert" id="tienda-pintura">Tienda de pintura <span class="vsub pb-en">· paint store</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente quiere medio galón de un color específico, o necesita asesoría de cuántos galones lleva un cuarto. Tu encargado está atendiendo presencial; el mensaje queda en visto media hora. El cliente termina yendo a otra tienda.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las preguntas técnicas de pintura llegan por WhatsApp todo el día, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente calcula rendimiento según los metros, sugiere el tipo (estuco, vinilo, esmalte) y le dice si está disponible en tienda antes de que se vaya a comprar a otro lado.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client wants a half-gallon in a specific color, or needs advice on how many gallons a room takes. Your floor staff is helping someone in person; the message sits unread for half an hour. The client ends up walking into another shop.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Paint-tech questions come in by WhatsApp all day, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant calculates coverage from the meters, suggests the type (stucco, vinyl, enamel), and tells them if it's in stock before they go shop somewhere else.</p>
+</div>
+
+<h3 class="vert" id="iluminacion-tienda">Tienda de iluminación <span class="vsub pb-en">· lighting store</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente está armando su apartamento y mirando lámparas en Mercado Libre, en Homecenter y en tu Instagram al mismo tiempo. Si no respondes con foto y precio en una hora, compra donde sí le respondieron.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El que tiene la lámpara con foto y precio claro es el que vende, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra las referencias por estilo (moderno, clásico, exterior), el asistente confirma stock y tiempo de entrega y te pasa el lead con la referencia exacta.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client is setting up their apartment and looking at lamps on Mercado Libre, Homecenter, and your Instagram at the same time. If you don't reply with a photo and a price in an hour, they buy where someone did reply.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Whoever has the lamp with a clear photo and price wins the sale, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows references by style (modern, classic, outdoor), the assistant confirms stock and delivery time, and passes the lead with the exact reference.</p>
+</div>
+
+<h3 class="vert" id="ceramica-tienda">Almacén de cerámica <span class="vsub pb-en">· ceramic store</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Igual que el de pisos: el cliente recorre dos o tres almacenes con fotos en el celular, comparando formatos y precio por caja. Si tu mensaje tarda, la decisión se cierra en el siguiente almacén.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El cliente decide la cerámica en menos de un día, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra catálogo con precio por m² y formato; el asistente reserva las cajas y te agenda el retiro o la entrega.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>Same as the floor store: the client walks two or three stores with photos on their phone, comparing formats and price per box. If your message lags, the decision closes at the next store.</p>
+<p class="pain valid"><span class="tag">Validate</span>"The client decides on ceramic in less than a day, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows a catalog with price per m² and format; the assistant reserves the boxes and books pickup or delivery.</p>
+</div>
+
+<h3 class="vert" id="suministros-electricos">Suministros eléctricos <span class="vsub pb-en">· electrical supplies</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un electricista te pide cotización urgente de cable, breaker o tomas para una obra que está abierta hoy. Está marcando a varios proveedores. Si tu respuesta llega después del almuerzo, ya compró.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los electricistas necesitan el material para hoy, no para mañana, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente atiende cotizaciones por referencia, confirma stock al instante y te pasa la orden lista para despachar o reservar.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>An electrician asks you for an urgent quote on cable, breakers, or outlets for a job that's open today. He's dialing several suppliers. If your reply comes after lunch, he's already bought.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Electricians need the material today, not tomorrow, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant handles quotes by reference, confirms stock instantly, and hands you the order ready to ship or hold.</p>
+</div>
+
+<h3 class="vert" id="herrajes-tienda">Herrajes y herramientas <span class="vsub pb-en">· hardware &amp; fittings</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Carpinteros y constructores te piden bisagras, rieles, manijas y tornillería específica. Si no contestas rápido, compran en el siguiente almacén que sí tenga la referencia exacta o un equivalente.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los clientes profesionales no esperan, compran donde encuentren la referencia ya, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página tiene catálogo con código y precio; el asistente verifica equivalencias y te confirma despacho o recogida.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>Carpenters and builders ask you for specific hinges, slides, handles, and screws. If you don't reply fast, they buy at the next store that has the exact reference or a working equivalent.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Trade clients don't wait, they buy where they find the part now, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page has a catalog with code and price; the assistant checks equivalents and confirms shipping or pickup.</p>
+</div>
+
+<h3 class="vert" id="griferias-tienda">Almacén de griferías <span class="vsub pb-en">· faucets &amp; fixtures store</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente está remodelando baño o cocina, ya escogió la cerámica y ahora compara griferías. Te pregunta por una marca y un modelo. Si demoras, compra el mismo modelo en la siguiente tienda que se lo despache mañana.</p>
+<p class="pain valid"><span class="tag">Validar</span>"La grifería es la última decisión de la remodelación y se compra con quien tenga stock, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra marcas y rangos de precio; el asistente confirma disponibilidad de la referencia exacta y te pasa el pedido para despacho.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client is redoing a bathroom or kitchen, picked the tile already, and now compares faucets. They ask you for a brand and a model. If you delay, they buy the same model at the next store that can ship it tomorrow.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Faucets are the last call of the remodel and get bought from whoever has stock, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows brands and price ranges; the assistant confirms availability of the exact reference and hands you the order for shipping.</p>
+</div>
+
+<h2 id="salud"><span class="n">3</span> <span class="pb-es">Salud, estética y veterinaria</span><span class="pb-en">Health, aesthetics, and vet</span></h2>
+<p class="section-intro pb-es">Característica común: alto valor por paciente, decisión investigada, paciente comparando con varios centros. La primera respuesta personalizada y cálida define quién gana.</p>
+<p class="section-intro pb-en">Common pattern: high lifetime value per patient, researched decision, patient comparing several clinics. The first warm, personalized reply decides who wins.</p>
+
+<h3 class="vert" id="dental">Clínica dental general <span class="vsub pb-en">· general dentistry</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Estás en la mitad de una limpieza o una resina con un paciente. Entran tres mensajes nuevos al WhatsApp de la clínica preguntando precios y horarios. Tu auxiliar está esterilizando o cobrando. Esos pacientes nuevos cotizan en tres clínicas más y se quedan con la que les respondió personalizado en menos de una hora.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Tus auxiliares apenas alcanzan a contestar mensajes entre paciente y paciente, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente responde al instante con precios, horarios y dirección, agenda la primera consulta en tu calendario, y te entrega el paciente listo para confirmar.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>You're in the middle of a cleaning or a filling with a patient. Three new messages hit the clinic's WhatsApp asking prices and hours. Your assistant is sterilizing or billing. Those new patients shop three other clinics and go with whoever replied personally in under an hour.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Your assistants barely manage to reply between patients, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant replies instantly with prices, hours, and address, books the first consult on your calendar, and hands you the patient ready to confirm.</p>
+</div>
+
+<h3 class="vert" id="implantes">Implantes y ortodoncia <span class="vsub pb-en">· specialty dental</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un paciente de alto valor (implante, ortodoncia invisible, blanqueamiento) está cotizando con tres especialistas a la vez. Lee tu Instagram, mira las reseñas, manda mensaje. Si recibe respuesta genérica o tardía, agenda con quien le habló desde el inicio como un caso individual.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El paciente de implantes o de ortodoncia compara muy en serio antes de elegir, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra casos antes/después y tu equipo, el asistente recoge la condición específica, y agenda la valoración con el especialista correcto.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A high-value patient (implant, invisible orthodontics, whitening) is shopping three specialists at once. They read your Instagram, check reviews, send a message. If they get a generic or late reply, they book with whoever spoke to them from the start as an individual case.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Implant and orthodontics patients compare carefully before deciding, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows before/after cases and your team, the assistant gathers the specific condition, and books the evaluation with the right specialist.</p>
+</div>
+
+<h3 class="vert" id="cirugia-plastica">Cirugía plástica <span class="vsub pb-en">· plastic surgery</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El paciente lleva semanas o meses pensando en una rinoplastia, una mamoplastia o una abdominoplastia. Cuando finalmente escribe a tu Instagram, está hablando también con otras cuatro clínicas en Medellín, Cali y Bogotá. Si tu primera respuesta es un formato copiado, te descarta.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El paciente de cirugía plástica compara varias clínicas antes de decidir, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra al cirujano titulado, casos reales y certificación, el asistente recoge el procedimiento de interés, y agenda la valoración personalizada con el doctor.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The patient has been thinking about a rhinoplasty, breast surgery, or abdominoplasty for weeks or months. When they finally message your Instagram, they're also talking to four other clinics across Medellín, Cali, and Bogotá. If your first reply is a template, they cross you off.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Plastic-surgery patients compare several clinics before deciding, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows the board-certified surgeon, real cases, and credentials; the assistant captures the procedure of interest and books the personalized evaluation with the doctor.</p>
+</div>
+
+<h3 class="vert" id="dermatologia">Dermatología estética <span class="vsub pb-en">· aesthetic dermatology</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El paciente vio un reel y quiere precio de bótox, ácido o láser. Te escribe a las once de la noche desde el sofá. Si tu respuesta llega dos días después, ya agendó con la clínica que respondió en cinco minutos.</p>
+<p class="pain valid"><span class="tag">Validar</span>"La mayoría de tus consultas llegan en la noche y en fines de semana, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente atiende 24/7, da rangos de precio por procedimiento y agenda la valoración o el procedimiento directo en tu calendario.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The patient saw a reel and wants a price on botox, fillers, or laser. They message you at 11pm from the couch. If your reply lands two days later, they've already booked with the clinic that replied in five minutes.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Most of your inquiries come in at night and on weekends, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant answers 24/7, shares price ranges per procedure, and books the evaluation or the procedure directly on your calendar.</p>
+</div>
+
+<h3 class="vert" id="cirugia-bariatrica">Cirugía bariátrica <span class="vsub pb-en">· bariatric surgery</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El paciente investiga por meses si operarse, y consulta con tres o cuatro centros antes de decidir. Cuando manda mensaje quiere saber requisitos, IMC mínimo, costo total, financiación. Si recibe una respuesta breve y comercial, descarta el centro.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El paciente de bariátrica investiga mucho antes de decidir, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página explica el proceso, el equipo y el postoperatorio; el asistente recoge IMC, edad y antecedentes, y agenda la valoración con el cirujano sin presión de venta.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The patient researches for months before deciding to operate, and consults three or four centers before choosing. When they message they want requirements, minimum BMI, total cost, financing. If they get a brief, salesy reply, they drop the center.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Bariatric patients research a lot before deciding, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page explains the process, the team, and post-op care; the assistant collects BMI, age, and history, and books the evaluation with the surgeon without sales pressure.</p>
+</div>
+
+<h3 class="vert" id="hair-transplant">Trasplante capilar <span class="vsub pb-en">· hair transplant</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Pacientes (en su mayoría hombres) llegan a una decisión de varios miles de dólares. Investigan en Turquía, Bogotá y Medellín. Cuando escriben, quieren saber técnica (FUE o DHI), costo y resultados reales. Si la respuesta es genérica, siguen con la siguiente clínica.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los pacientes te comparan con clínicas de afuera y de otras ciudades, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra técnica, casos reales y al especialista; el asistente clasifica el grado de calvicie y agenda la valoración (virtual o presencial) con el médico.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>Patients (mostly men) are weighing a several-thousand-dollar decision. They shop Turkey, Bogotá, and Medellín. When they message, they want the technique (FUE or DHI), cost, and real results. If the reply is generic, they move to the next clinic.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Patients are comparing you with clinics abroad and in other cities, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows the technique, real cases, and the specialist; the assistant grades the hair-loss stage and books the evaluation (virtual or in-person) with the doctor.</p>
+</div>
+
+<h3 class="vert" id="fertilidad">Fertilidad / FIV <span class="vsub pb-en">· fertility / IVF</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>La pareja lleva meses o años intentando, y la consulta es emocionalmente cargada. Compara dos o tres centros con cuidado. Si la primera respuesta de tu clínica es un formulario seco o tardío, no escriben de vuelta.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las parejas comparan centros con calma y descartan al que se siente frío, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente atiende con tono cálido y privado, explica primeros pasos y costos generales, y agenda la valoración inicial con el especialista.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The couple has been trying for months or years, and the inquiry is emotionally loaded. They carefully compare two or three centers. If your clinic's first reply is dry or late, they don't write back.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Couples compare centers calmly and drop the one that feels cold, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant replies warmly and privately, explains first steps and ballpark costs, and books the initial evaluation with the specialist.</p>
+</div>
+
+<h3 class="vert" id="veterinaria">Veterinaria <span class="vsub pb-en">· vet clinic</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Una mascota está enferma o accidentada y el dueño está angustiado a las nueve de la noche. Marca a varias clínicas. La primera que conteste con calma, dé instrucciones básicas y diga "puedes traerlo ya", se gana el paciente.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las urgencias llegan en la noche y los fines de semana, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente atiende 24/7, clasifica si es urgencia o consulta de rutina, da indicaciones básicas y agenda la cita o avisa al veterinario de turno.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A pet is sick or hurt and the owner is anxious at 9pm. They dial several clinics. The first one that answers calmly, gives basic instructions, and says "bring them in now" wins the patient.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Emergencies show up at night and on weekends, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant answers 24/7, sorts emergency from routine, gives basic guidance, and books the appointment or alerts the on-call vet.</p>
+</div>
+
+<h2 id="servicios"><span class="n">4</span> <span class="pb-es">Servicios profesionales y al consumidor</span><span class="pb-en">Professional and consumer services</span></h2>
+<p class="section-intro pb-es">Característica común: el cliente cotiza con dos o tres negocios al mismo tiempo. El que responda primero, claro y con la información que pidieron, cierra.</p>
+<p class="section-intro pb-en">Common pattern: the client shops two or three businesses at the same time. Whoever replies first, clearly, with the info they asked for, closes.</p>
+
+<h3 class="vert" id="academia-idiomas">Academia de idiomas / tutores <span class="vsub pb-en">· language academy / tutors</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El estudiante (a menudo expat) está comparando tres o cuatro tutores o academias al mismo tiempo. Pide horario, precio por hora, modalidad. Quien responda primero, con horario claro y una clase de prueba, suele cerrar la matrícula.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El estudiante manda el mismo mensaje a cinco academias y se queda con la que respondió rápido y claro, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra modalidades y precios, el asistente recoge nivel, objetivo (viaje, trabajo, examen) y disponibilidad horaria, y agenda el primer encuentro de prueba.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The student (often an expat) is comparing three or four tutors or academies at once. They ask for schedule, hourly rate, format. Whoever replies first, with a clear schedule and a trial, usually closes the sign-up.</p>
+<p class="pain valid"><span class="tag">Validate</span>"The student sends the same message to five academies and goes with the one that replied fast and clearly, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows formats and prices, the assistant collects level, goal (travel, work, exam), and time availability, and books the first trial session.</p>
+</div>
+
+<h3 class="vert" id="abogados-migracion">Abogados de migración <span class="vsub pb-en">· immigration lawyers</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El cliente está estresado por una visa, una renovación o un cambio de categoría. Consulta con dos o tres abogados. Quien responda primero, dé claridad sobre proceso y costos sin asustar, gana el caso.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los clientes llegan con la visa a punto de vencerse y comparan rápido, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente atiende en español o inglés, clasifica el tipo de visa (Migrante, Residente, Visitante) y agenda la consulta paga o la valoración inicial con el abogado.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The client is stressed about a visa, a renewal, or a category change. They consult two or three lawyers. Whoever replies first, gives clarity on process and cost without scaring them, wins the case.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Clients arrive with the visa about to expire and compare quickly, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant answers in Spanish or English, sorts the visa type (Migrant, Resident, Visitor), and books the paid consult or the initial evaluation with the lawyer.</p>
+</div>
+
+<h3 class="vert" id="inmobiliarias">Inmobiliarias y agentes <span class="vsub pb-en">· real estate</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un comprador o arrendatario está visitando apartamentos este fin de semana. Pregunta por una unidad específica vista en Metrocuadrado o en tu Instagram. El agente que responda en cinco minutos hace la visita; los demás se enteran el lunes que ya cerró con otro.</p>
+<p class="pain valid"><span class="tag">Validar</span>"El que responde en cinco minutos hace la visita y cierra; los demás llegan tarde, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra el inventario con fotos y precios, el asistente confirma disponibilidad real y agenda la visita en tu calendario con datos del prospecto.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A buyer or renter is touring apartments this weekend. They ask about a specific unit seen on Metrocuadrado or on your Instagram. The agent who replies in five minutes does the showing; the rest find out on Monday that it already closed with someone else.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Whoever replies in five minutes does the showing and closes; the rest are late, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows the inventory with photos and prices, the assistant confirms real availability and books the showing on your calendar with prospect details.</p>
+</div>
+
+<h3 class="vert" id="restaurantes">Restaurantes <span class="vsub pb-en">· restaurants</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un grupo de seis quiere reservar para esta noche o este sábado. Te escriben por Instagram y no contestas en una hora porque estás en servicio. Reservan en el restaurante de al lado. La reserva del sábado fueron seis tragos y dos botellas menos.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las reservas que pierdes en hora de servicio son el ticket más alto del fin de semana, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente confirma disponibilidad, recoge tamaño del grupo y hora, agenda la reserva y le envía recordatorio para que sí lleguen.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A party of six wants a table for tonight or Saturday. They message you on Instagram and you don't reply for an hour because you're in service. They book the place next door. Saturday's lost reservation was six drinks and two bottles short.</p>
+<p class="pain valid"><span class="tag">Validate</span>"The reservations you lose during service are the highest ticket of the weekend, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant confirms availability, captures party size and time, books the reservation, and sends a reminder so they actually show up.</p>
+</div>
+
+<h3 class="vert" id="hoteles-boutique">Hoteles boutique y familiares <span class="vsub pb-en">· boutique / family hotels</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un huésped pide tarifa y disponibilidad para un fin de semana. Está mirando Booking, Airbnb y dos hoteles más en simultáneo. Si tardas en contestar, reserva donde le confirmaron primero y a buen precio.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las cotizaciones se ganan o se pierden en la misma hora en que las piden, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página y el asistente atienden 24/7, confirman disponibilidad por fechas, ofrecen el precio directo (sin comisión de OTA) y agendan la reserva.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A guest asks for rates and availability for a weekend. They're looking at Booking, Airbnb, and two other hotels at the same time. If you take a while to reply, they book where it got confirmed first at a good price.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Quotes get won or lost in the same hour they're asked, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page and the assistant answer 24/7, confirm availability by dates, offer the direct rate (no OTA commission), and book the stay.</p>
+</div>
+
+<h3 class="vert" id="tour-operators">Operadores turísticos <span class="vsub pb-en">· tour operators</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un turista llega al destino mañana y quiere reservar tour a las Islas, a Comuna 13, de café o de salsa. Pregunta por horario, precio, recogida en hotel. Si tu respuesta tarda, ya pagó el tour del competidor que respondió en diez minutos.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Tus reservas pasan por WhatsApp y los turistas no esperan, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra los tours con horarios y precio, el asistente recoge fecha, número de personas y hotel, y agenda la reserva con pago o seña.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A tourist lands tomorrow and wants to book a tour: the Islands, Comuna 13, coffee, salsa. They ask for schedule, price, hotel pickup. If your reply lags, they've already paid for the competitor's tour that replied in ten minutes.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Your bookings come through WhatsApp and tourists don't wait, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows the tours with times and prices, the assistant captures date, party size, and hotel, and books with deposit or full payment.</p>
+</div>
+
+<h3 class="vert" id="gimnasios">Gimnasios <span class="vsub pb-en">· fitness studios</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un prospecto vio tu Instagram, quiere probar una clase o saber la mensualidad. Si no respondes ese mismo día, ya entró al gimnasio del otro barrio que sí respondió y se inscribió.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los prospectos preguntan precio y se inscriben donde respondieron primero, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente envía mensualidades, horarios y promociones vigentes, agenda la clase de prueba y le manda recordatorio antes.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A prospect saw your Instagram, wants to try a class or know the monthly fee. If you don't reply that same day, they've walked into the gym across town that did reply and signed up.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Prospects ask price and sign up wherever they got the first reply, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant sends monthly fees, schedule, and current promos, books the trial class, and pings them with a reminder.</p>
+</div>
+
+<h3 class="vert" id="yoga-pilates">Yoga y pilates <span class="vsub pb-en">· yoga &amp; pilates studios</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Una persona quiere probar una clase introductoria. Suele comparar entre tres estudios cercanos al trabajo o a la casa. La inscripción se queda con el estudio que respondió primero con horario y precio claros.</p>
+<p class="pain valid"><span class="tag">Validar</span>"La gente compara dos o tres estudios cerca y se queda con el que respondió rápido, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>La página muestra horarios por instructor y nivel, el asistente recoge día preferido y le agenda la clase de prueba.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>Someone wants to try an intro class. They usually compare three studios near work or home. The sign-up stays with the studio that replied first with a clear schedule and price.</p>
+<p class="pain valid"><span class="tag">Validate</span>"People compare two or three nearby studios and pick the one that replied fast, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The page shows schedule by instructor and level, the assistant captures preferred day, and books the trial class.</p>
+</div>
+
+<h3 class="vert" id="talleres-mecanicos">Talleres mecánicos <span class="vsub pb-en">· auto repair shops</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un carro se varó o necesita revisión. El dueño llama o escribe a dos o tres talleres pidiendo cita y rango de precio. Si tu mecánico está debajo de un carro y nadie contesta en oficina, el carro va al taller que respondió.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las citas se pierden porque el equipo está debajo de los carros y nadie contesta, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente recibe marca, modelo, año y síntoma, da un rango de precio aproximado y agenda la cita en tu calendario con espacio confirmado.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A car broke down or needs service. The owner calls or messages two or three shops asking for a slot and a price range. If your mechanic is under a car and nobody's at the office phone, the car goes to whoever replied.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Appointments get lost because the team is under cars and nobody picks up, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant captures make, model, year, and symptom, gives a ballpark range, and books the appointment on your calendar with a confirmed slot.</p>
+</div>
+
+<h3 class="vert" id="lavaderos">Lavaderos de carros y detailers <span class="vsub pb-en">· car wash &amp; detailing</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>El dueño del carro quiere lavado completo o detallado para el sábado. Pregunta a dos o tres por precio y duración. El que responda con horario disponible y precio cerrado, gana.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los detallados se reservan con un día de antelación y el que responde primero los toma todos, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente confirma el tipo de servicio (lavado, polichado, cerámico, interior), agenda la hora exacta y le envía recordatorio.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>The car owner wants a full wash or detail for Saturday. They ask two or three places for price and duration. Whoever replies with an open slot and a firm price, wins.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Details get booked a day ahead and whoever replies first takes them all, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant confirms the service type (wash, polish, ceramic, interior), books the exact time, and sends a reminder.</p>
+</div>
+
+<h3 class="vert" id="guarderias">Guarderías y jardines infantiles <span class="vsub pb-en">· daycare</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Padres buscando jardín visitan dos o tres y piden info en cinco. Si no respondes el mismo día con disponibilidad, horarios y tarifa, la decisión queda en el jardín que sí los atendió personalmente.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Los papás visitan dos o tres jardines y se quedan con el que atendió mejor desde el primer mensaje, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente atiende cálidamente, da horarios, tarifas y proyecto pedagógico, y agenda la visita guiada con la directora.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>Parents looking for daycare visit two or three and ask info from five. If you don't reply that same day with availability, hours, and fee, the decision sticks with the one that did greet them personally.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Parents visit two or three centers and pick the one that handled them best from the first message, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant replies warmly, shares hours, fees, and the pedagogical approach, and books the guided tour with the director.</p>
+</div>
+
+<h3 class="vert" id="peluquerias">Peluquerías y barberías <span class="vsub pb-en">· hair salons &amp; barbershops</span></h3>
+<div class="card tight pb-es">
+<p class="pain dolor"><span class="tag">Dolor</span>Un cliente quiere agendar corte o color para hoy o mañana. Si no contestas mientras estás con tijera en la mano, se va al de la cuadra de al lado que sí confirmó hora.</p>
+<p class="pain valid"><span class="tag">Validar</span>"Las citas se pierden mientras estás cortando, ¿cierto?"</p>
+<p class="pain puente"><span class="tag">Puente</span>El asistente recoge servicio, día y hora preferida, agenda en tu calendario y le manda recordatorio dos horas antes.</p>
+</div>
+<div class="card tight pb-en">
+<p class="pain dolor"><span class="tag">Pain</span>A client wants to book a cut or color for today or tomorrow. If you don't reply while you're holding scissors, they go to the place down the block that did confirm a time.</p>
+<p class="pain valid"><span class="tag">Validate</span>"Appointments slip while you're mid-cut, right?"</p>
+<p class="pain puente"><span class="tag">Bridge</span>The assistant captures service, preferred day and time, books it on your calendar, and pings a reminder two hours before.</p>
+</div>
+
+<div class="callout pb-es" style="margin-top:2rem"><b>Recuerda:</b> el dolor es la entrada, no el final. Después del dolor + validación + puente, sigues con el flujo del Manual (§7): precio claro ($400.000 + 30% para arrancar), Plan de ventas opcional ($150.000/mes con el asistente), y un ejemplo gratis si el cliente quiere ver cómo se vería.</div>
+<div class="callout pb-en" style="margin-top:2rem"><b>Remember:</b> pain is the opener, not the close. After pain + validation + bridge, you continue with the Manual flow (§7): clear price ($400,000 + 30% to start), optional Sales plan ($150,000/month with the assistant), and a free example if the client wants to see how it'd look.</div>
+
+<p class="foot"><span class="pb-es">PymeWebPro · Norte Sur Consulting S.A.S. · Manual de dolores por vertical. Vive en ventas.pymewebpro.com/dolores.</span><span class="pb-en">PymeWebPro · Norte Sur Consulting S.A.S. · Pain manual by vertical. Lives at ventas.pymewebpro.com/dolores.</span></p>
+
+</div>
+<script>
+(function(){
+  var html=document.documentElement;
+  var picked=null;
+  try{picked=localStorage.getItem('pwp_manual_lang');}catch(e){}
+  if(!picked){
+    var nav=(navigator.language||'es').toLowerCase();
+    picked=nav.indexOf('en')===0?'en':'es';
+  }
+  if(picked!=='en')picked='es';
+  apply(picked);
+  function apply(l){
+    html.classList.remove('lang-en','lang-es');
+    html.classList.add('lang-'+l);
+    html.setAttribute('lang',l);
+    try{localStorage.setItem('pwp_manual_lang',l);}catch(e){}
+  }
+  document.querySelectorAll('.langtog a').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      apply(a.getAttribute('data-l'));
+    });
+  });
+})();
+</script>
+</body>
+</html>

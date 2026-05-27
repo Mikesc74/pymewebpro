@@ -44,6 +44,21 @@
 {"@type":"ListItem","position":3,"name":"Google Ads para pymes","item":"https://pymewebpro.com/guides/google-ads/"}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
+{"@type":"Question","name":"¿Cuándo es Google Ads el canal correcto para una pyme colombiana?","acceptedAnswer":{"@type":"Answer","text":"Google Ads tiene sentido cuando vende un servicio o producto que la gente ya está buscando, su ticket promedio es de $200.000 COP o más y puede comprometer al menos $2,5 millones COP en las primeras 3 semanas. Si está creando demanda nueva o vende productos baratos con margen flaco, otro canal le va a salir mejor."}},
+{"@type":"Question","name":"¿Qué tipo de campaña de Google Ads debe usar una pyme que recién empieza?","acceptedAnswer":{"@type":"Answer","text":"Empiece con campañas de Búsqueda (Search) de palabras clave manuales. Performance Max, Display y YouTube se ven atractivas pero, sin datos de conversión, reparten el presupuesto en tráfico de baja intención. Pase a Performance Max solo después de tener 30 a 50 conversiones registradas."}},
+{"@type":"Question","name":"¿Cómo se estructura una cuenta de Google Ads que sí funciona para una pyme?","acceptedAnswer":{"@type":"Answer","text":"Una cuenta, una campaña por objetivo más ciudad, un grupo de anuncios por tema de intención, 5 a 15 palabras clave por grupo y 2 a 3 anuncios responsivos por grupo. Esa jerarquía permite ver qué tema convierte y mover presupuesto sin matar lo bueno por error."}},
+{"@type":"Question","name":"¿Qué palabras clave debe elegir y cómo se ordenan por intención de compra?","acceptedAnswer":{"@type":"Answer","text":"Empiece por palabras clave transaccionales y comerciales como 'implante dental Medellín precio' o 'mejor clínica dental Medellín': convierten 5 a 15 veces mejor que las informacionales. Use concordancia de frase para empezar, no amplia. Entre 5 y 15 keywords por grupo de anuncios, todas variaciones de la misma intención."}},
+{"@type":"Question","name":"¿Qué palabras clave negativas debe agregar antes del primer clic en Google Ads?","acceptedAnswer":{"@type":"Answer","text":"Bloquee de entrada palabras de curiosidad sin intención de compra (gratis, pdf, tutorial, curso, cómo, qué es, diy), búsquedas de empleo (empleo, trabajo, salario, vacante), educación (universidad, carrera, estudiar) y quejas (demanda, queja, estafa). Cada lunes revise el reporte de términos de búsqueda y agregue las negativas específicas que aparezcan. Una buena lista de negativas ahorra el 30 al 50% del presupuesto en las primeras dos semanas."}},
+{"@type":"Question","name":"¿Cuál es el presupuesto mínimo viable de Google Ads para una pyme en Colombia?","acceptedAnswer":{"@type":"Answer","text":"Para una validación mínima, calcule $2,5 millones COP repartidos en 21 días, alrededor de $120.000 COP por día. Para una validación cómoda, $4 a $6 millones COP en 30 días. Con menos de eso no llega a las 30 conversiones que se necesitan para tomar una decisión informada."}},
+{"@type":"Question","name":"¿Cómo se escriben anuncios de Google Ads que conviertan?","acceptedAnswer":{"@type":"Answer","text":"Use anuncios responsivos con 15 títulos repartidos así: 3 con la palabra clave principal, 3 con beneficio, 3 con prueba social, 3 con CTA o urgencia y 3 con su diferenciador único. Active todas las extensiones (sitelinks, llamada, ubicación, descripciones estructuradas, promoción): suben el CTR entre 40 y 80%."}},
+{"@type":"Question","name":"¿Cómo se miden bien las conversiones en Google Ads?","acceptedAnswer":{"@type":"Answer","text":"Defina conversiones primarias reales (formulario enviado, llamada de 60 segundos o más, compra completada) y secundarias que aportan señal (clic a WhatsApp, descarga de PDF). Instale Google Tag en todo el sitio, conecte Google Analytics 4 como fuente, active conversiones mejoradas y use el número de Google Ads forwarding para medir llamadas. Sin medición no se sabe qué keyword, anuncio ni hora genera leads."}},
+{"@type":"Question","name":"¿Cuáles son los errores que matan a la mayoría de cuentas nuevas de Google Ads?","acceptedAnswer":{"@type":"Answer","text":"Los 8 errores más comunes son: concordancia amplia sin negativas, no medir conversiones reales, mandar todo a la home, lanzar Performance Max sin datos, activar Smart Bidding con menos de 30 conversiones, apagar y prender campañas, no revisar términos de búsqueda y no ajustar por dispositivo u hora. Cada uno solo puede quemar el 40% del presupuesto mensual."}},
+{"@type":"Question","name":"¿Qué scripts de Google Ads vale la pena instalar en una cuenta de pyme?","acceptedAnswer":{"@type":"Answer","text":"Tres scripts pre-hechos resuelven el 80% de lo que necesita una pyme: Account Anomaly Detector (le manda email si el gasto, los clics o el CPC se mueven más de un porcentaje definido), Search Query Mining (detecta términos de búsqueda con gasto pero cero conversiones para volverlos negativas) y Bid by Weather si su producto depende del clima. Pegarlos toma 5 minutos por script."}},
+{"@type":"Question","name":"¿Cuándo se debe apagar o escalar una campaña de Google Ads?","acceptedAnswer":{"@type":"Answer","text":"Escale 20% por semana cuando el CPA está por debajo de su techo de rentabilidad y el volumen sube. Mantenga si el CPA está estable pero el volumen plano. Pause campañas individuales si el CPA queda 30% sobre el techo después de 4 semanas. Si llega a 1.000 clics con cero conversiones, el problema es la página o la oferta, no Google Ads."}}
+]}
+</script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box}
@@ -133,6 +148,10 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .prose a:hover{border-bottom-color:#FF5C2E}
 .prose hr{border:0;border-top:1px solid rgba(27,20,16,.1);margin:3rem 0}
 .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid #FF5C2E;background:rgba(255,92,46,.05);font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.55;color:#3a2a1f;border-radius:0 10px 10px 0}
+.qa{margin:3rem 0 0}
+.qa h2{margin-top:0}
+.qa+*{margin-top:0}
+.direct-answer{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:18px;line-height:1.55;color:#1B1410;background:#FFF1EC;border-left:4px solid #FF5C2E;padding:14px 18px 14px 20px;border-radius:0 12px 12px 0;margin:.6rem 0 1.5rem}
 .prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:rgba(27,20,16,.06);padding:.1em .4em;border-radius:5px;color:#1B1410}
 
 .callout{margin:1.5rem 0;background:#F4ECDF;border:1px solid rgba(27,20,16,.08);border-radius:14px;padding:22px 26px}
@@ -316,7 +335,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
   <div class="row"><span class="k">LTV</span><span class="v">Valor de vida del cliente. Total que un cliente genera en toda la relación.</span></div>
 </div>
 
-<h2 id="cuando-usar"><span class="num">01</span> Cuándo Google Ads es el canal correcto</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuándo es Google Ads el canal correcto para una pyme colombiana?">
+<h2 id="cuando-usar"><span class="num">01</span> ¿Cuándo es Google Ads el canal correcto para una pyme colombiana?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Google Ads tiene sentido cuando vende un servicio o producto que la gente ya está buscando, su ticket promedio es de $200.000 COP o más y puede comprometer al menos $2,5 millones COP en las primeras 3 semanas. Si está creando demanda nueva o vende productos baratos con margen flaco, otro canal le va a salir mejor.</p>
+</div>
+</div>
 
 <p>No para todos. Tres criterios deciden si vale la pena prender la cuenta:</p>
 
@@ -345,7 +370,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="tipos-campana"><span class="num">02</span> Los 5 tipos de campaña, traducidos</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué tipo de campaña de Google Ads debe usar una pyme que recién empieza?">
+<h2 id="tipos-campana"><span class="num">02</span> ¿Qué tipo de campaña de Google Ads debe usar una pyme que recién empieza?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Empiece con campañas de Búsqueda (Search) de palabras clave manuales. Performance Max, Display y YouTube se ven atractivas pero, sin datos de conversión, reparten el presupuesto en tráfico de baja intención. Pase a Performance Max solo después de tener 30 a 50 conversiones registradas.</p>
+</div>
+</div>
 
 <p>Google le ofrece cinco tipos de campaña en la pantalla de creación. La mayoría de fundadores eligen mal en este paso. Aquí va la traducción honesta:</p>
 
@@ -369,7 +400,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="estructura"><span class="num">03</span> Estructura de cuenta que funciona</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se estructura una cuenta de Google Ads que sí funciona para una pyme?">
+<h2 id="estructura"><span class="num">03</span> ¿Cómo se estructura una cuenta de Google Ads que sí funciona para una pyme?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Una cuenta, una campaña por objetivo más ciudad, un grupo de anuncios por tema de intención, 5 a 15 palabras clave por grupo y 2 a 3 anuncios responsivos por grupo. Esa jerarquía permite ver qué tema convierte y mover presupuesto sin matar lo bueno por error.</p>
+</div>
+</div>
 
 <p>La estructura típica de cuenta nueva de pyme es: una sola campaña, un solo grupo de anuncios, 200 palabras clave revueltas. Resultado: Google promedia todo, los buenos keywords subsidian a los malos, y usted no puede ver qué funciona.</p>
 
@@ -387,7 +424,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="palabras-clave"><span class="num">04</span> Palabras clave: la jerarquía de intención</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué palabras clave debe elegir y cómo se ordenan por intención de compra?">
+<h2 id="palabras-clave"><span class="num">04</span> ¿Qué palabras clave debe elegir y cómo se ordenan por intención de compra?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Empiece por palabras clave transaccionales y comerciales como "implante dental Medellín precio" o "mejor clínica dental Medellín": convierten 5 a 15 veces mejor que las informacionales. Use concordancia de frase para empezar, no amplia. Entre 5 y 15 keywords por grupo de anuncios, todas variaciones de la misma intención.</p>
+</div>
+</div>
 
 <p>No todas las búsquedas valen lo mismo. Una persona que escribe "qué es un implante dental" está aprendiendo, no comprando. Una que escribe "implante dental Medellín precio" está a un clic de pagar.</p>
 
@@ -421,7 +464,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="negativas"><span class="num">05</span> Las negativas que le salvan la plata</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué palabras clave negativas debe agregar antes del primer clic en Google Ads?">
+<h2 id="negativas"><span class="num">05</span> ¿Qué palabras clave negativas debe agregar antes del primer clic en Google Ads?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Bloquee de entrada palabras de curiosidad sin intención de compra (gratis, pdf, tutorial, curso, cómo, qué es, diy), búsquedas de empleo (empleo, trabajo, salario, vacante), educación (universidad, carrera, estudiar) y quejas (demanda, queja, estafa). Cada lunes revise el reporte de términos de búsqueda y agregue las negativas específicas que aparezcan. Una buena lista de negativas ahorra el 30 al 50% del presupuesto en las primeras dos semanas.</p>
+</div>
+</div>
 
 <p>Si solo lee una sección de esta guía, lea esta. Las <strong>palabras clave negativas</strong> le dicen a Google qué búsquedas <em>no</em> deben activar sus anuncios. En las primeras 2 semanas, una buena lista de negativas puede ahorrarle el 30 al 50% de su presupuesto.</p>
 
@@ -473,7 +522,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="presupuesto"><span class="num">06</span> Presupuesto mínimo viable</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuál es el presupuesto mínimo viable de Google Ads para una pyme en Colombia?">
+<h2 id="presupuesto"><span class="num">06</span> ¿Cuál es el presupuesto mínimo viable de Google Ads para una pyme en Colombia?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Para una validación mínima, calcule $2,5 millones COP repartidos en 21 días, alrededor de $120.000 COP por día. Para una validación cómoda, $4 a $6 millones COP en 30 días. Con menos de eso no llega a las 30 conversiones que se necesitan para tomar una decisión informada.</p>
+</div>
+</div>
 
 <p>La pregunta más común: "¿con $300.000 COP puedo probar Google Ads?". La respuesta honesta es no. Necesita suficiente volumen de clics para llegar a conclusiones estadísticamente útiles.</p>
 
@@ -499,7 +554,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="anuncios"><span class="num">07</span> Cómo escribir anuncios que conviertan</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se escriben anuncios de Google Ads que conviertan?">
+<h2 id="anuncios"><span class="num">07</span> ¿Cómo se escriben anuncios de Google Ads que conviertan?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Use anuncios responsivos con 15 títulos repartidos así: 3 con la palabra clave principal, 3 con beneficio, 3 con prueba social, 3 con CTA o urgencia y 3 con su diferenciador único. Active todas las extensiones (sitelinks, llamada, ubicación, descripciones estructuradas, promoción): suben el CTR entre 40 y 80%.</p>
+</div>
+</div>
 
 <p>Google Ads usa <strong>anuncios responsivos de búsqueda</strong>. Usted entrega hasta 15 títulos (30 caracteres cada uno) y 4 descripciones (90 caracteres cada una), Google los combina dinámicamente y muestra las combinaciones que mejor funcionan.</p>
 
@@ -529,7 +590,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="conversiones"><span class="num">08</span> Medición de conversiones (sin esto, todo lo demás es ciego)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se miden bien las conversiones en Google Ads?">
+<h2 id="conversiones"><span class="num">08</span> ¿Cómo se miden bien las conversiones en Google Ads?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Defina conversiones primarias reales (formulario enviado, llamada de 60 segundos o más, compra completada) y secundarias que aportan señal (clic a WhatsApp, descarga de PDF). Instale Google Tag en todo el sitio, conecte Google Analytics 4 como fuente, active conversiones mejoradas y use el número de Google Ads forwarding para medir llamadas. Sin medición no se sabe qué keyword, anuncio ni hora genera leads.</p>
+</div>
+</div>
 
 <p>Si no está midiendo conversiones correctamente, no está haciendo Google Ads. Está haciendo donaciones a Google.</p>
 
@@ -565,7 +632,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="errores"><span class="num">09</span> Los 8 errores que matan el 70% de las cuentas</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuáles son los errores que matan a la mayoría de cuentas nuevas de Google Ads?">
+<h2 id="errores"><span class="num">09</span> ¿Cuáles son los errores que matan a la mayoría de cuentas nuevas de Google Ads?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Los 8 errores más comunes son: concordancia amplia sin negativas, no medir conversiones reales, mandar todo a la home, lanzar Performance Max sin datos, activar Smart Bidding con menos de 30 conversiones, apagar y prender campañas, no revisar términos de búsqueda y no ajustar por dispositivo u hora. Cada uno solo puede quemar el 40% del presupuesto mensual.</p>
+</div>
+</div>
 
 <p>Hemos visto los mismos 8 errores en docenas de cuentas de pyme. Cualquiera de los 8 puede quemar el 40% del presupuesto mensual. Combinados, hacen quebrar la cuenta completa.</p>
 
@@ -582,7 +655,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="scripts"><span class="num">10</span> Scripts y automatización para pymes</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué scripts de Google Ads vale la pena instalar en una cuenta de pyme?">
+<h2 id="scripts"><span class="num">10</span> ¿Qué scripts de Google Ads vale la pena instalar en una cuenta de pyme?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Tres scripts pre-hechos resuelven el 80% de lo que necesita una pyme: Account Anomaly Detector (le manda email si el gasto, los clics o el CPC se mueven más de un porcentaje definido), Search Query Mining (detecta términos de búsqueda con gasto pero cero conversiones para volverlos negativas) y Bid by Weather si su producto depende del clima. Pegarlos toma 5 minutos por script.</p>
+</div>
+</div>
 
 <p>Google Ads permite scripts (JavaScript) que automatizan tareas repetitivas. No necesita ser programador, hay scripts pre-hechos disponibles.</p>
 
@@ -598,7 +677,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="cuando-apagar"><span class="num">11</span> Cuándo apagar y cuándo escalar</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuándo se debe apagar o escalar una campaña de Google Ads?">
+<h2 id="cuando-apagar"><span class="num">11</span> ¿Cuándo se debe apagar o escalar una campaña de Google Ads?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Escale 20% por semana cuando el CPA está por debajo de su techo de rentabilidad y el volumen sube. Mantenga si el CPA está estable pero el volumen plano. Pause campañas individuales si el CPA queda 30% sobre el techo después de 4 semanas. Si llega a 1.000 clics con cero conversiones, el problema es la página o la oferta, no Google Ads.</p>
+</div>
+</div>
 
 <p>La parte más difícil. Después de las primeras 3 a 4 semanas, tiene datos. Estos son los puntos de decisión:</p>
 

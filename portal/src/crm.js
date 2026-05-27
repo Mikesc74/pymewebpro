@@ -164,6 +164,21 @@ function searchColumns(table) {
   }
 }
 
+// Resolve the human-readable owner ("mike" / "santi") from the Cloudflare
+// Access header that fronts every admin request. Used to stamp the owner on
+// activities (notes, manual tasks, AI drafts) so the timeline can show who did
+// what. Falls back to whatever the client sent if no auth header is present
+// (background/system inserts still pass owner='system').
+function ownerFromAccess(request) {
+  const email = (request.headers.get("Cf-Access-Authenticated-User-Email") || "").toLowerCase().trim();
+  if (!email) return null;
+  if (email === "mike@colguides.com" || email === "mike@mikec.pro") return "mike";
+  if (email === "santiago@colguides.com" || email === "santi@colguides.com") return "santi";
+  // Unknown admin: use the local-part of the email as the owner label.
+  const at = email.indexOf("@");
+  return at > 0 ? email.slice(0, at) : email;
+}
+
 async function createRow(env, table, request, json, uuid) {
   let body;
   try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400); }
@@ -174,6 +189,14 @@ async function createRow(env, table, request, json, uuid) {
     if (!body[f] || String(body[f]).trim() === "") {
       return json({ error: `Missing required field: ${f}` }, 400);
     }
+  }
+
+  // For activities, always stamp the owner from the authenticated user so the
+  // timeline shows which of us added the note / message / task. The client's
+  // `owner` value is only used as a fallback for non-interactive inserts.
+  if (table === "activities") {
+    const who = ownerFromAccess(request);
+    if (who) body.owner = who;
   }
 
   const cols = EDITABLE_COLUMNS[table];

@@ -19,6 +19,7 @@ import { handleMockups } from "./mockups.js";
 // Page: /admin/crm  (standalone HTML, not part of the React SPA)
 import { handleAdminCRM, crmPageHTML } from "./crm.js";
 import VENTAS_RECURSOS_HTML from "./ventas-recursos.html";
+import VENTAS_DOLORES_HTML from "./ventas-dolores.html";
 import VENTAS_MIDIA_HTML from "./ventas-midia.html";
 import DEMO_DENTAL_HTML from "./demo-dental.html";
 import DEMO_DENTAL_ES_HTML from "./demo-dental-es.html";
@@ -1833,6 +1834,18 @@ const src_default = {
           },
         }));
       }
+      // Pain-by-vertical reference (linked from the Manual's §7 callout).
+      if (path === "/dolores" || path === "/dolores/") {
+        return withSecurityHeaders(new Response(VENTAS_DOLORES_HTML, {
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Security-Policy": ventasCSP,
+          },
+        }));
+      }
       // Legacy: /guia now lives inside the unified Manual at /recursos.
       if (path === "/guia" || path === "/guia/") {
         return new Response(null, {
@@ -2097,37 +2110,21 @@ async function runNightlyCadenceSweep(env, event) {
     const candidates = rows.results || [];
     counts.scanned = candidates.length;
 
+    // The cron used to INSERT a 'task' activity for every D+1/D+3/D+7/D+14
+    // bucket hit. That cluttered the Historial timeline with a "por Santi"
+    // note for every stale lead. Removed 2026-05-27 (x96) · the kanban already
+    // pulls the same buckets from /api/admin/outreach/cadence on every render
+    // and turns followup-column cards red with a "Sigue ahora" label, so the
+    // task rows were pure duplication. We still walk the candidates and tally
+    // counts so the summary row at the bottom of this sweep stays useful for
+    // verifying the cron actually ran.
     for (const lead of candidates) {
-      if (counts.scheduled >= HARD_CAP) { counts.skipped_capped += 1; continue; }
       const touchIdx = bogotaDayIndex(lead.last_touched_at);
       const ageDays = todayIdx - touchIdx;
       if (!TARGET_DAYS.includes(ageDays)) continue;
-
-      // De-dupe: skip if a follow-up task for this bucket already exists.
-      const dupSubject = "Follow-up D+" + ageDays + ": " + (lead.business_name || "(no name)");
-      const existing = await env.DB.prepare(
-        "SELECT id FROM activities WHERE lead_id = ? AND kind = 'task' AND subject = ? LIMIT 1"
-      ).bind(lead.id, dupSubject).first();
-      if (existing) continue;
-
-      const now = Date.now();
-      const dueAt = now + 2 * 60 * 60 * 1000; // due in 2 hours
-      try {
-        await env.DB.prepare(
-          "INSERT INTO activities (id, kind, subject, body, lead_id, owner, occurred_at, due_at, created_at, updated_at, done) " +
-          "VALUES (?, 'task', ?, ?, ?, 'santi', ?, ?, ?, ?, 0)"
-        ).bind(
-          crypto.randomUUID(),
-          dupSubject,
-          "Bucket: D+" + ageDays + ". Score=" + (lead.score == null ? "?" : lead.score) + ". Suggest WA/email follow-up.",
-          lead.id,
-          now, dueAt, now, now,
-        ).run();
-        counts.scheduled += 1;
-        counts.by_bucket[ageDays] = (counts.by_bucket[ageDays] || 0) + 1;
-      } catch (e) {
-        console.warn("scheduled: insert failed for lead " + lead.id + ": " + (e && e.message || e));
-      }
+      counts.by_bucket[ageDays] = (counts.by_bucket[ageDays] || 0) + 1;
+      counts.scheduled += 1; // kept name for back-compat in the summary row
+      if (counts.scheduled >= HARD_CAP) { counts.skipped_capped += 1; }
     }
 
     // Final summary row so we can verify the cron actually ran.

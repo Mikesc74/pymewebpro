@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mi día | PymeWebPro Ventas</title>
+<title>Today | PymeWebPro Sales</title>
 <style>
 *{box-sizing:border-box}
 :root{--paper:#F2E9D5;--paper2:#E8DFC8;--card:#FBF7EC;--ink:#1A1612;--ink2:#3A2F26;--mute:rgba(26,22,18,.5);--line:rgba(26,22,18,.14);--accent:#D24A1D;--accent2:#A8381A;--green:#166534;--amber:#92400E;--red:#991B1B}
@@ -44,11 +44,12 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 .card .biz{font-weight:700;font-size:.88rem;margin:0;line-height:1.3}
 .card .meta{color:var(--mute);font-size:.73rem;margin:.12rem 0 0}
 .card .why{font-size:.85rem;color:var(--ink2);background:rgba(210,74,29,.06);border-left:3px solid var(--accent);padding:.4rem .6rem;border-radius:4px;margin:0 0 .7rem}
-.card .contact{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:0 0 .6rem}
-.card .ci{font-size:.8rem;color:var(--accent2);text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:.22rem .55rem;background:#fff;white-space:nowrap}
-.card .ci:hover{border-color:var(--accent)}
-.card .ci.call{font-weight:700}
-.card .ci.none{color:var(--mute);border-style:dashed;cursor:default;background:transparent}
+.contact{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:0 0 .8rem}
+.ci{display:inline-flex;align-items:center;gap:.32rem;font-size:.82rem;color:var(--accent2);text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:.35rem .65rem;background:#fff;white-space:nowrap;line-height:1}
+.ci .ci-ic{font-size:.95rem;line-height:1}
+.ci:hover{border-color:var(--accent)}
+.ci.call{font-weight:700}
+.ci.none{color:var(--mute);border-style:dashed;cursor:default;background:transparent}
 .pill{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.04em;padding:.12rem .45rem;border-radius:999px;margin-left:.4rem;vertical-align:middle}
 .pill.HOT{background:rgba(153,27,27,.14);color:var(--red)}
 .pill.WARM{background:rgba(146,64,14,.14);color:var(--amber)}
@@ -59,6 +60,8 @@ button.act:hover{border-color:var(--accent);color:var(--accent2)}
 button.act.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 button.act.primary:hover{background:var(--accent2);color:#fff}
 button.act.ghost{background:transparent;color:var(--mute)}
+button.act.danger{color:#c0392b;border-color:#e8c5be}
+button.act.danger:hover{background:#c0392b;color:#fff;border-color:#c0392b}
 .empty{color:var(--mute);font-size:.85rem;text-align:center;padding:1.6rem .5rem;border:1px dashed var(--line);border-radius:10px}
 .nn-wrap{margin:1.6rem 0 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem}
 .nn-wrap h2{font-family:Georgia,serif;font-size:1.1rem;margin:0 0 .2rem;display:flex;align-items:center;gap:.5rem}
@@ -75,14 +78,34 @@ button.act.ghost{background:transparent;color:var(--mute)}
 .funnel .fl{font-size:.7rem;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;margin-top:.25rem}
 .funnel .farr{align-self:center;color:var(--line);font-size:1.3rem;flex:none}
 .card .track{font-size:.76rem;color:var(--mute);margin:0 0 .6rem}
-.d-sub{font-size:.85rem;color:var(--ink2);margin:0 0 .6rem}
-.d-next{font-size:.9rem;margin:.7rem 0;background:var(--paper2);border-radius:8px;padding:.5rem .7rem}
+/* lead detail · chip row + section labels */
+.d-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .6rem}
+.d-chip{display:inline-flex;align-items:center;gap:.28rem;font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:.22rem .55rem;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink2)}
+.d-chip .d-ic{font-size:.85rem;line-height:1}
+.d-chip.stage-contact{background:#fff;color:var(--ink2)}
+.d-chip.stage-follow{background:#FFF4E5;color:#92400E;border-color:#F2D2A5}
+.d-chip.stage-mockup{background:#E6F0FA;color:#1F4E79;border-color:#BDD5EC}
+.d-chip.stage-proposal{background:#EAF3E6;color:#1F5B2A;border-color:#BFD9B0}
+.d-chip.stage-close{background:#FFE9DF;color:#A8381A;border-color:#F2BFA9}
+.d-chip.stage-won{background:#DDEFD6;color:#1F5B2A;border-color:#A6D49A}
+.d-chip.stage-lost{background:#EEE;color:var(--mute);border-color:var(--line)}
+.d-chip.heat-HOT{background:rgba(153,27,27,.1);color:var(--red);border-color:rgba(153,27,27,.3)}
+.d-chip.heat-WARM{background:rgba(146,64,14,.1);color:var(--amber);border-color:rgba(146,64,14,.3)}
+.d-chip.heat-COOL,.d-chip.heat-COLD,.d-chip.heat-DEAD{color:var(--mute)}
+.d-chip.alert{background:rgba(153,27,27,.08);color:var(--red);border-color:rgba(153,27,27,.4)}
+.d-meta{font-size:.82rem;color:var(--mute);margin:0 0 .8rem}
+.d-next{font-size:.92rem;margin:.4rem 0 .8rem;background:var(--paper2);border-radius:8px;padding:.55rem .75rem;display:flex;align-items:center;gap:.4rem}
+.d-next .d-nx-lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:700}
+.d-next b{color:var(--ink)}
 .d-mock{font-size:.84rem;margin:.6rem 0;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
 .d-mock .d-mlbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}
 .d-mock a{color:var(--accent2);word-break:break-all;flex:1;min-width:0}
 .d-mock button.act{flex:none;padding:.25rem .6rem}
 .d-lang{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.2rem 0 .4rem}
 .d-lang button.act{flex:none;padding:.3rem .7rem}
+.d-pitch-toggle{font-size:.78rem;color:var(--mute);background:none;border:none;padding:.2rem 0;cursor:pointer;text-decoration:underline;font-family:inherit}
+.d-pitch-toggle:hover{color:var(--accent)}
+.d-pitch{font-size:.85rem;color:var(--ink2);background:rgba(210,74,29,.06);border-left:3px solid var(--accent);padding:.5rem .7rem;border-radius:4px;margin:.3rem 0 .8rem}
 .img-row{display:flex;align-items:center;gap:.8rem;padding:.55rem 0;border-bottom:1px solid var(--line)}
 .img-row:last-child{border-bottom:none}
 .img-prev{width:92px;height:60px;object-fit:cover;border-radius:6px;background:var(--paper2);border:1px solid var(--line);flex:none}
@@ -93,10 +116,12 @@ button.act.ghost{background:transparent;color:var(--mute)}
 .np-opts{display:flex;flex-direction:column;gap:.35rem;margin:.5rem 0 .8rem}
 .np-opt{display:flex;align-items:center;gap:.5rem;font-size:.9rem}
 .np-px{margin-left:auto;color:var(--mute)}
-.tl-title{margin:1.1rem 0 .5rem;font-size:.95rem}
+.tl-head-row{display:flex;align-items:center;gap:.5rem;margin:1rem 0 .4rem}
+.tl-title{margin:0;font-size:.95rem;flex:1;font-weight:700}
 .tl-item{border-left:2px solid var(--line);padding:.1rem 0 .7rem .8rem}
 .tl-head{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}
 .tl-kind{font-weight:600;font-size:.82rem}
+.tl-by{margin-left:.4rem;color:var(--mute);font-size:.78rem;font-weight:400}
 .tl-when{font-size:.74rem;color:var(--mute)}
 .tl-del{background:none;border:none;color:var(--mute);cursor:pointer;font-size:1rem;line-height:1;margin-left:.4rem;padding:0}
 .tl-del:hover{color:var(--red)}
@@ -135,40 +160,53 @@ button.act.ghost{background:transparent;color:var(--mute)}
 .chip.wait{color:var(--mute);background:rgba(26,22,18,.05);border-style:dashed}
 .chip.won{color:var(--green);background:rgba(22,101,52,.1)}
 .chip.lost{color:var(--mute);background:rgba(26,22,18,.07)}
-.movebar{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 0}
-.movebar .mlbl{font-size:.72rem;color:var(--mute);width:100%}
+.movebar{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 0;align-items:center}
+.movebar .mlbl{font-size:.72rem;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-right:.2rem}
+.movebar .msep{flex:1}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <span class="brand">Pyme<em>WebPro</em><b>Mi día</b></span>
-  <input id="search" class="search" type="search" placeholder="Buscar lead..." autocomplete="off">
+  <span class="brand">Pyme<em>WebPro</em><b>Today</b></span>
+  <input id="search" class="search" type="search" placeholder="Search leads..." autocomplete="off">
   <span class="sp"></span>
-  <a href="/recursos" target="_blank" rel="noopener" style="text-transform:uppercase;letter-spacing:.04em;font-weight:600">Manual de ventas</a>
-  <button class="add" id="btn-add">+ Agregar prospecto</button>
+  <a href="/recursos" target="_blank" rel="noopener" style="text-transform:uppercase;letter-spacing:.04em;font-weight:600">Sales manual</a>
+  <button class="add" id="btn-add">+ Add prospect</button>
 </div>
 <div class="wrap">
-  <p class="intro">Arrastra cada tarjeta de izquierda a derecha según avanza el prospecto. <b>Rojo + ⚠</b> significa que te toca actuar ya. La IA escribe los mensajes, tú revisas y envías.</p>
-  <div id="app"><div class="loading">Cargando tu día...</div></div>
+  <p class="intro">Drag each card left to right as the prospect advances. <b>Red + ⚠</b> means you need to act now. AI drafts the messages (in Spanish), you review and send.</p>
+  <div id="app"><div class="loading">Loading your day...</div></div>
 </div>
 <div id="modal-root"></div>
 <div id="toast"></div>
 <script>
 "use strict";
-var CAL_LINK = "https://cal.com/medellinguide/intro"; // TODO: cambiar al Cal de Santi cuando lo tenga
+var CAL_LINK = "https://cal.com/medellinguide/intro"; // TODO: switch to Santi's Cal when he has one
 var DEPOSITO = "$120.000 COP (30%)";
 var DEMO_BASE = "https://mockups.pymewebpro.com";
 var LEADS = [], CADENCE = [], BY_ID = {}, ACTS_BY_LEAD = {}, SEARCH = '', DEALS_BY_LEAD = {};
 // No à la carte add-ons anymore (2026-05-25). The page is one fixed price
-// ($400.000) and the extras (vitrina, catálogo, bilingüe, asistente 24/7) live
+// ($400.000) and the extras (showcase, catalog, bilingual, 24/7 assistant) live
 // inside the monthly plans, not in the one-time proposal. Kept as an empty
 // array so the proposal builder still works (base-only quote).
 var ADDONS = [];
+// Stale prices that may appear in older suggested_pitch / AI-drafted notes.
+// Used to hide pitches that quote the wrong price (was $390k / $117k / $273k
+// before 2026-05; now $400k flat plus monthly plans).
+var STALE_PRICE_RE = /\$\s*3(?:90|9\.000|90\.000|9)k?|\$\s*117(?:\.000)?k?|\$\s*273(?:\.000)?k?/i;
 
 function el(html){ var d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstElementChild; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 function digits(s){ s=String(s||''); var o=''; for(var i=0;i<s.length;i++){var c=s[i]; if(c>='0'&&c<='9')o+=c;} return o; }
 function formatCop(n){ n=Math.round(Number(n)||0); var s=String(n),o='',c=0; for(var i=s.length-1;i>=0;i--){o=s[i]+o; if(++c%3===0&&i>0)o='.'+o;} return o; }
+function formatPhone(s){
+  // Display a +57 3XX XXX XXXX style for Colombian mobile numbers; otherwise
+  // group in 3s. Improves readability of the Call button.
+  var d = digits(s); if(!d) return '';
+  if(d.length===12 && d.indexOf('57')===0){ d=d.slice(2); return '+57 '+d.slice(0,3)+' '+d.slice(3,6)+' '+d.slice(6); }
+  if(d.length===10){ return d.slice(0,3)+' '+d.slice(3,6)+' '+d.slice(6); }
+  return '+'+d;
+}
 function waNum(l){ return digits(l.whatsapp||l.phone||''); }
 // Always surface SOME identifier: business name, contact name, IG handle,
 // email, or site domain. Many legacy form/checkout leads have no business_name.
@@ -178,7 +216,7 @@ function leadName(l){
   if(l.instagram) return '@'+String(l.instagram).replace(/^@+/,'');
   if(l.email) return l.email;
   if(l.current_site) return String(l.current_site).replace(/^https?:\/\//,'').replace(/\/.*$/,'');
-  return 'Sin nombre';
+  return 'Unnamed';
 }
 function toast(m,err){ var t=document.getElementById('toast'); t.textContent=m; t.className=err?'show err':'show'; clearTimeout(toast._t); toast._t=setTimeout(function(){t.className='';},2600); }
 
@@ -198,7 +236,7 @@ async function loadAll(){
     grid = await api('/api/admin/crm/grid');
     LEADS = (grid && grid.leads) || [];
   } catch(e){
-    document.getElementById('app').innerHTML = '<div class="empty">No se pudo cargar la informacion. Recarga la pagina. ('+esc(e.message)+')</div>';
+    document.getElementById('app').innerHTML = '<div class="empty">Could not load data. Reload the page. ('+esc(e.message)+')</div>';
     return;
   }
   try { var c = await api('/api/admin/outreach/cadence'); CADENCE = (c && c.buckets) || []; } catch(e){ CADENCE = []; }
@@ -254,10 +292,10 @@ function daysSince(l){ return l.last_touched_at ? Math.floor((Date.now()-l.last_
 
 // attention signal per column: returns a short label or null (red + label)
 function alertFor(l, col){
-  if(col==='followup') return DUE[l.id] ? 'Sigue ahora' : null;
-  if(col==='mockup')   return mockupReady(l) ? 'Listo para enviar' : null;
-  if(col==='proposal') return proposalReady(l) ? 'Listo para enviar' : null;
-  if(col==='close')    return daysSince(l)>=3 ? 'Sin respuesta, insiste' : null;
+  if(col==='followup') return DUE[l.id] ? 'Follow up now' : null;
+  if(col==='mockup')   return mockupReady(l) ? 'Ready to send' : null;
+  if(col==='proposal') return proposalReady(l) ? 'Ready to send' : null;
+  if(col==='close')    return daysSince(l)>=3 ? 'No reply, push' : null;
   return null;
 }
 
@@ -270,7 +308,7 @@ function stageForDrop(col){
   if(col==='closed')   return {lead_stage:'disqualified'};
   return null; // contact / nonum are not drop targets
 }
-var COL_TITLE = {contact:'Para contactar', nonum:'Por conseguir número', followup:'Seguimiento', mockup:'Mockup', proposal:'Propuesta', close:'Por cerrar', closed:'Cerrados'};
+var COL_TITLE = {contact:'To contact', nonum:'Need phone', followup:'Follow-up', mockup:'Mockup', proposal:'Proposal', close:'Closing', closed:'Closed'};
 async function moveTo(id, col){
   var lead = BY_ID[id]; if(!lead) return;
   if(colOf(lead)===col) return;
@@ -278,13 +316,24 @@ async function moveTo(id, col){
   try{
     await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify(patch)});
     lead.lead_stage = patch.lead_stage;
-    toast('Movido a '+(COL_TITLE[col]||col));
+    toast('Moved to '+(COL_TITLE[col]||col));
     render();
-    // Moving into Mockup or Propuesta opens a setup popup that asks Santi for
+    // Moving into Mockup or Proposal opens a setup popup that asks for
     // details, then generates. Nothing generates just by sitting in a stage.
     if(col==='mockup') openMockupSetup(lead);
     else if(col==='proposal') showProposalPanel(lead);
   }catch(err){ toast('Error: '+err.message, true); }
+}
+
+// Helper: only close a modal on backdrop click if the mousedown ALSO started
+// on the backdrop. Prevents accidental closes when the user starts a click
+// inside the modal (selecting text in an input, etc.) and mouseup lands on
+// the backdrop. Symptom this fixes: "I was typing and the text disappeared"
+// because the modal closed mid-edit.
+function wireBgClose(bg, onClose){
+  var down = false;
+  bg.addEventListener('mousedown', function(e){ down = (e.target === bg); });
+  bg.addEventListener('click', function(e){ if(e.target === bg && down && typeof onClose === 'function') onClose(); down = false; });
 }
 
 // Setup popup shown when a card enters the Mockup stage: pick the language
@@ -293,79 +342,102 @@ function openMockupSetup(lead){
   closePanel();
   var isDental = /odonto|dental|dentist/i.test(String(lead.category||''));
   var pick = lead.demo_lang==='en' ? 'en' : 'es';
-  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Preparar mockup · '+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
+  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Prepare mockup · '+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
     + '<div class="mb">'
-    + '<p class="note">Tipo detectado: <b>'+(isDental?'Odontología / dental':'Negocio general')+'</b> (la plantilla se elige por el sector del lead).</p>'
-    + '<div class="field"><label>Idioma del mockup</label><div class="d-lang" style="margin:.2rem 0 0">'
-      + '<button type="button" class="act'+(pick==='en'?'':' primary')+'" data-pick="es">Local · español</button>'
-      + '<button type="button" class="act'+(pick==='en'?' primary':'')+'" data-pick="en">Inglés (para extranjeros)</button>'
+    + '<p class="note">Detected type: <b>'+(isDental?'Dental / odontology':'General business')+'</b> (the template is picked from the lead\'s sector).</p>'
+    + '<div class="field"><label>Mockup language</label><div class="d-lang" style="margin:.2rem 0 0">'
+      + '<button type="button" class="act'+(pick==='en'?'':' primary')+'" data-pick="es">Local · Spanish</button>'
+      + '<button type="button" class="act'+(pick==='en'?' primary':'')+'" data-pick="en">English (for expats)</button>'
     + '</div></div>'
-    + '<p class="note">El sistema arma el mensaje de WhatsApp para enviar el ejemplo. Lo revisas antes de enviar.</p>'
+    + '<p class="note">The system drafts the WhatsApp message to send the example. Review before sending.</p>'
     + '</div>'
-    + '<div class="mf"><button class="act ghost" data-x="close">Cancelar</button><button class="act primary" data-x="gen">Generar mockup</button></div>'
+    + '<div class="mf"><button class="act ghost" data-x="close">Cancel</button><button class="act primary" data-x="gen">Generate mockup</button></div>'
     + '</div></div>');
-  bg.addEventListener('click', function(e){ if(e.target===bg) closePanel(); });
+  wireBgClose(bg, closePanel);
   document.getElementById('modal-root').appendChild(bg);
   bg.querySelectorAll('[data-pick]').forEach(function(b){ b.onclick=function(){ pick=b.getAttribute('data-pick'); bg.querySelectorAll('[data-pick]').forEach(function(x){ x.className='act'+(x.getAttribute('data-pick')===pick?' primary':''); }); }; });
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
   bg.querySelector('[data-x="gen"]').onclick = async function(){
-    this.disabled=true; this.textContent='Generando...';
+    this.disabled=true; this.textContent='Generating...';
     try{
       if((lead.demo_lang||'es')!==pick){ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({demo_lang:pick})}); lead.demo_lang=pick; }
       closePanel();
       await prepareMockup(lead);
-    }catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Generar mockup'; }
+    }catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Generate mockup'; }
   };
 }
 
 async function prepareMockup(lead){
-  toast('Preparando mockup...');
+  toast('Preparing mockup...');
   try{
     await api('/api/admin/cockpit/mockup-msg', {method:'POST', body: JSON.stringify({lead_id:lead.id})});
     await loadAll();
-    toast('Mockup listo para enviar');
-  }catch(err){ toast('No se pudo preparar el mockup: '+err.message, true); }
+    toast('Mockup ready to send');
+  }catch(err){ toast('Could not prepare mockup: '+err.message, true); }
 }
 
 function heatPill(h){ return h ? '<span class="pill '+esc(h)+'">'+esc(h)+'</span>' : ''; }
 
+// Contact row · three discrete buttons with spacing (call, WhatsApp, IG, site).
+// Phone number is shown on its own line under the buttons so the Call button
+// stays compact and tappable.
 function contactRow(l){
   var wa = waNum(l);
-  var disp = (l.whatsapp || l.phone || '').toString();
   var bits = [];
   if(wa){
-    bits.push('<a class="ci call" href="tel:+'+wa+'">Llamar '+esc(disp)+'</a>');
-    bits.push('<a class="ci" href="https://wa.me/'+wa+'" target="_blank" rel="noopener">WhatsApp</a>');
+    bits.push('<a class="ci call" href="tel:+'+wa+'" title="'+esc(formatPhone(wa))+'"><span class="ci-ic">📞</span>Call</a>');
+    bits.push('<a class="ci" href="https://wa.me/'+wa+'" target="_blank" rel="noopener"><span class="ci-ic">💬</span>WhatsApp</a>');
   } else {
-    bits.push('<span class="ci none">Sin numero todavia (agregalo abriendo la tarjeta)</span>');
+    bits.push('<span class="ci none">No phone yet · use "Add WhatsApp" below</span>');
   }
-  if(l.current_site){ var u = /^https?:\/\//i.test(l.current_site) ? l.current_site : 'https://'+l.current_site; bits.push('<a class="ci" href="'+esc(u)+'" target="_blank" rel="noopener">Sitio</a>'); }
-  if(l.instagram){ var ig = String(l.instagram).replace(/^@+/, ''); bits.push('<a class="ci" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">IG</a>'); }
-  return '<div class="contact">'+bits.join('')+'</div>';
+  if(l.instagram){ var ig = String(l.instagram).replace(/^@+/, ''); bits.push('<a class="ci" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener"><span class="ci-ic">📷</span>Instagram</a>'); }
+  if(l.current_site){ var u = /^https?:\/\//i.test(l.current_site) ? l.current_site : 'https://'+l.current_site; bits.push('<a class="ci" href="'+esc(u)+'" target="_blank" rel="noopener"><span class="ci-ic">🌐</span>Site</a>'); }
+  var phoneLine = wa ? '<div style="font-size:.75rem;color:var(--mute);margin:.1rem 0 .5rem">'+esc(formatPhone(wa))+'</div>' : '';
+  return '<div class="contact">'+bits.join('')+'</div>'+phoneLine;
 }
 
 function touchLine(l){
   var t = l.touches_count||0;
-  if(!t && !l.last_touched_at) return 'Sin contactar';
-  var s = t+' toque'+(t===1?'':'s');
-  if(l.last_touched_at){ var d=Math.floor((Date.now()-l.last_touched_at)/86400000); s += ' · último '+(d<=0?'hoy':'hace '+d+'d'); }
+  if(!t && !l.last_touched_at) return 'Not contacted';
+  var s = t+' touch'+(t===1?'':'es');
+  if(l.last_touched_at){ var d=Math.floor((Date.now()-l.last_touched_at)/86400000); s += ' · last '+(d<=0?'today':d+'d ago'); }
   return s;
 }
 function nextStep(l){
-  if(isWon(l)) return 'Ganado';
-  if(isLost(l)) return 'Perdido';
-  if(l.lead_stage==='sales_qualified') return daysSince(l)>=3 ? 'Insistir / cerrar' : 'Cerrar o agendar';
-  if(l.lead_stage==='proposal') return proposalReady(l) ? 'Propuesta lista para enviar' : 'Armar propuesta';
-  if(l.lead_stage==='mockup') return mockupReady(l) ? 'Listo para enviar' : (mockOpened(l) ? 'Vio el mockup' : (l.last_touched_at ? 'Enviado, esperando' : 'Preparando mockup'));
-  if(!l.last_touched_at) return waNum(l) ? 'Contactar' : 'Conseguir número';
-  return DUE[l.id] ? 'Seguimiento' : 'Esperar respuesta';
+  if(isWon(l)) return 'Won';
+  if(isLost(l)) return 'Lost';
+  if(l.lead_stage==='sales_qualified') return daysSince(l)>=3 ? 'Push to close' : 'Close or schedule';
+  if(l.lead_stage==='proposal') return proposalReady(l) ? 'Proposal ready to send' : 'Build proposal';
+  if(l.lead_stage==='mockup') return mockupReady(l) ? 'Ready to send' : (mockOpened(l) ? 'Viewed mockup' : (l.last_touched_at ? 'Sent, awaiting reply' : 'Preparing mockup'));
+  if(!l.last_touched_at) return waNum(l) ? 'Contact' : 'Get phone';
+  return DUE[l.id] ? 'Follow up' : 'Awaiting reply';
+}
+// Stage key used to drive the chip color in the detail modal.
+function stageKey(l){
+  if(isWon(l)) return 'won';
+  if(isLost(l)) return 'lost';
+  var s = l.lead_stage;
+  if(s==='sales_qualified') return 'close';
+  if(s==='proposal') return 'proposal';
+  if(s==='mockup') return 'mockup';
+  if(s==='contacted' || s==='marketing_qualified') return 'follow';
+  if(l.last_touched_at) return 'follow';
+  return 'contact';
 }
 function stageLabel(l){
-  if(l.status==='converted') return 'Ganado';
-  return {'new':'Sin contactar','raw':'Sin contactar','contacted':'En seguimiento','marketing_qualified':'En seguimiento','mockup':'Mockup','proposal':'Propuesta','sales_qualified':'Por cerrar','disqualified':'Perdido'}[l.lead_stage] || (l.last_touched_at?'En seguimiento':'Sin contactar');
+  if(isWon(l)) return 'Won';
+  if(isLost(l)) return 'Lost';
+  var s = l.lead_stage;
+  if(s==='sales_qualified') return 'Closing';
+  if(s==='proposal') return 'Proposal';
+  if(s==='mockup') return 'Mockup';
+  if(s==='contacted' || s==='marketing_qualified') return 'In follow-up';
+  if(l.last_touched_at) return 'In follow-up';
+  return 'Not contacted';
 }
-function kindLabel(k){ return {'note':'Borrador / nota','whatsapp':'WhatsApp','email':'Email','call':'Llamada','meeting':'Reunión','task':'Tarea'}[k] || k || 'Actividad'; }
-function fmtWhen(ms){ if(!ms) return ''; var d=Math.floor((Date.now()-ms)/86400000); if(d<=0) return 'hoy'; if(d===1) return 'ayer'; if(d<30) return 'hace '+d+'d'; return new Date(ms).toISOString().slice(0,10); }
+function kindLabel(k){ return {'note':'Note / draft','whatsapp':'WhatsApp','email':'Email','call':'Call','meeting':'Meeting','task':'Task'}[k] || k || 'Activity'; }
+function ownerLabel(o){ if(!o) return ''; var s=String(o).toLowerCase(); if(s==='mike') return 'Mike'; if(s==='santi'||s==='santiago') return 'Santi'; if(s==='system'||s==='ai') return ''; return s.charAt(0).toUpperCase()+s.slice(1); }
+function fmtWhen(ms){ if(!ms) return ''; var d=Math.floor((Date.now()-ms)/86400000); if(d<=0) return 'today'; if(d===1) return 'yesterday'; if(d<30) return d+'d ago'; return new Date(ms).toISOString().slice(0,10); }
 function hasDemo(l){ return true; } // every business type has at least the generic template
 function mockOpened(l){ var acts=ACTS_BY_LEAD[l.id]||[]; for(var i=0;i<acts.length;i++){ if(acts[i].subject==='Mockup abierto') return acts[i].occurred_at||acts[i].created_at||1; } return 0; }
 // The auto-generated mockup message (subject 'Listo: mockup'). Ready = generated
@@ -374,59 +446,128 @@ function mockupDraft(l){ var acts=ACTS_BY_LEAD[l.id]||[], best=0, body=''; for(v
 function mockupReady(l){ var d=mockupDraft(l); return !!d && d.at > (l.last_touched_at||0); }
 
 function funnelStripHTML(){
-  var c={contacto:0,seg:0,mockup:0,prop:0,cierre:0,ganado:0};
+  var c={contact:0,follow:0,mockup:0,prop:0,close:0,won:0};
   LEADS.forEach(function(l){
-    if(isWon(l)){c.ganado++;return;}
+    if(isWon(l)){c.won++;return;}
     if(isLost(l))return;
     if(inMockup(l)){c.mockup++;return;}
     if(inProposal(l)){c.prop++;return;}
-    if(inClose(l)){c.cierre++;return;}
-    if(inFollow(l)){c.seg++;return;}
-    c.contacto++;
+    if(inClose(l)){c.close++;return;}
+    if(inFollow(l)){c.follow++;return;}
+    c.contact++;
   });
   function step(lbl,n){return '<div class="fstep"><div class="fn">'+n+'</div><div class="fl">'+lbl+'</div></div>';}
-  return '<div class="funnel">'+step('Por contactar',c.contacto)+'<div class="farr">&rsaquo;</div>'+step('Seguimiento',c.seg)+'<div class="farr">&rsaquo;</div>'+step('Mockup',c.mockup)+'<div class="farr">&rsaquo;</div>'+step('Propuesta',c.prop)+'<div class="farr">&rsaquo;</div>'+step('Por cerrar',c.cierre)+'<div class="farr">&rsaquo;</div>'+step('Ganados',c.ganado)+'</div>';
+  return '<div class="funnel">'+step('To contact',c.contact)+'<div class="farr">&rsaquo;</div>'+step('Follow-up',c.follow)+'<div class="farr">&rsaquo;</div>'+step('Mockup',c.mockup)+'<div class="farr">&rsaquo;</div>'+step('Proposal',c.prop)+'<div class="farr">&rsaquo;</div>'+step('Closing',c.close)+'<div class="farr">&rsaquo;</div>'+step('Won',c.won)+'</div>';
+}
+
+// Build the chip row for the lead-detail header. Stage chip is always shown.
+// Heat, score, city and category chips appear when the field exists.
+function detailChips(lead){
+  var chips = [];
+  var sk = stageKey(lead);
+  chips.push('<span class="d-chip stage-'+sk+'">'+esc(stageLabel(lead))+'</span>');
+  if(lead.heat){ chips.push('<span class="d-chip heat-'+esc(lead.heat)+'"><span class="d-ic">🌡</span>'+esc(lead.heat)+'</span>'); }
+  if(lead.score != null){ chips.push('<span class="d-chip"><span class="d-ic">⭐</span>'+esc(lead.score)+'</span>'); }
+  if(lead.city){ chips.push('<span class="d-chip">'+esc(lead.city)+'</span>'); }
+  if(lead.category){ chips.push('<span class="d-chip">'+esc(lead.category)+'</span>'); }
+  var col = colOf(lead);
+  var al = alertFor(lead, col);
+  if(al){ chips.push('<span class="d-chip alert"><span class="d-ic">⚠</span>'+esc(al)+'</span>'); }
+  return '<div class="d-chips">'+chips.join('')+'</div>';
 }
 
 function openDetail(lead){
   closePanel();
   var cur = colOf(lead);
   var murl = DEMO_BASE + '/demo/' + lead.id;
-  var mvBtns = [['followup','Seguimiento'],['mockup','Mockup'],['proposal','Propuesta'],['close','Por cerrar']]
+  // Forward-move buttons (skip the current column). Won + Lost are rendered
+  // separately on the right side of the move bar.
+  var fwdMoves = [['followup','Follow-up'],['mockup','Mockup'],['proposal','Proposal'],['close','Closing']]
     .filter(function(m){return m[0]!==cur;})
     .map(function(m){return '<button class="act" data-mv="'+m[0]+'">→ '+m[1]+'</button>';}).join('');
+  // Terminal-state buttons: only show the ones the lead isn't already in.
+  var termBtns = '';
+  if(!isWon(lead))  termBtns += '<button class="act" data-d="won">Won ✓</button>';
+  if(!isLost(lead)) termBtns += '<button class="act danger" data-mv="closed">Lost ✕</button>';
+
   var acts=(ACTS_BY_LEAD[lead.id]||[]).slice().sort(function(a,b){return (b.occurred_at||b.created_at||0)-(a.occurred_at||a.created_at||0);});
   var tl = acts.length ? acts.map(function(a){
     var when=a.occurred_at||a.created_at||0;
     var body=(a.body||'').toString(); if(body.length>240) body=body.slice(0,240)+'...';
-    return '<div class="tl-item"><div class="tl-head"><span class="tl-kind">'+esc(kindLabel(a.kind))+'</span><span class="tl-when">'+esc(fmtWhen(when))+(a.id?' <button class="tl-del" data-actdel="'+esc(a.id)+'" title="Eliminar">&times;</button>':'')+'</span></div>'+(body?'<div class="tl-body">'+esc(body)+'</div>':'')+'</div>';
-  }).join('') : '<div class="empty">Todavía no hay actividad.</div>';
+    var who=ownerLabel(a.owner);
+    var byBit=who?'<span class="tl-by">by '+esc(who)+'</span>':'';
+    return '<div class="tl-item"><div class="tl-head"><span class="tl-kind">'+esc(kindLabel(a.kind))+'</span>'+byBit+'<span class="tl-when">'+esc(fmtWhen(when))+(a.id?' <button class="tl-del" data-actdel="'+esc(a.id)+'" title="Remove">&times;</button>':'')+'</span></div>'+(body?'<div class="tl-body">'+esc(body)+'</div>':'')+'</div>';
+  }).join('') : '<div class="empty">No activity yet.</div>';
+
   var atMock = inMockup(lead), atProp = inProposal(lead), atClose = inClose(lead);
   var showMock = atMock || atProp || atClose || mockupReady(lead);
   var mockBlock = showMock
-    ? '<div class="d-mock"><span class="d-mlbl">Mockup</span><a href="'+esc(murl)+'?preview=1" target="_blank" rel="noopener">'+esc(murl)+'</a><button class="act ghost" data-d="copymock">Copiar link</button></div>'
-      + '<div class="d-lang"><span class="d-mlbl">Versión</span><button class="act'+(lead.demo_lang==='en'?'':' primary')+'" data-lang="es">Local · español</button><button class="act'+(lead.demo_lang==='en'?' primary':'')+'" data-lang="en">Inglés (para extranjeros)</button></div>'
+    ? '<div class="d-mock"><span class="d-mlbl">Mockup</span><a href="'+esc(murl)+'?preview=1" target="_blank" rel="noopener">'+esc(murl)+'</a><button class="act ghost" data-d="copymock">Copy link</button></div>'
+      + '<div class="d-lang"><span class="d-mlbl">Version</span><button class="act'+(lead.demo_lang==='en'?'':' primary')+'" data-lang="es">Local · Spanish</button><button class="act'+(lead.demo_lang==='en'?' primary':'')+'" data-lang="en">English (for expats)</button></div>'
     : '';
-  var verProp = proposalReady(lead) ? '<a class="act" href="/admin/proposal/'+esc(proposalDeal(lead).id)+'" target="_blank" rel="noopener" style="text-decoration:none">Ver propuesta</a>' : '';
-  var propRow = atProp ? '<div class="row"><button class="act" data-d="editprop">Editar propuesta</button>'+verProp+'</div>' : (verProp ? '<div class="row">'+verProp+'</div>' : '');
+
+  // Pitch · hide entirely if it contains stale pricing ($390k/$117k/$273k from
+  // before the 2026-05 single-product pricing change). Otherwise show behind a
+  // toggle so the modal isn't dominated by AI-drafted prose.
+  var pitchBlock = '';
+  if(lead.suggested_pitch && !STALE_PRICE_RE.test(lead.suggested_pitch)){
+    pitchBlock = '<button class="d-pitch-toggle" data-d="togglepitch">Show suggested pitch</button>'
+      + '<div class="d-pitch" data-d="pitchbody" style="display:none">'+esc(lead.suggested_pitch)+'</div>';
+  }
+
+  var verProp = proposalReady(lead) ? '<a class="act" href="/admin/proposal/'+esc(proposalDeal(lead).id)+'" target="_blank" rel="noopener" style="text-decoration:none">View proposal</a>' : '';
+  var propRow = atProp ? '<div class="row"><button class="act" data-d="editprop">Edit proposal</button>'+verProp+'</div>' : (verProp ? '<div class="row">'+verProp+'</div>' : '');
+
+  var primaryBtn = waNum(lead)
+    ? '<button class="act primary" data-d="msg">Draft message</button>'
+    : '<button class="act primary" data-d="addnum">Add WhatsApp</button>';
+  var ctaRow = '<div class="row">'+primaryBtn
+    + (atMock?'<button class="act" data-d="mockup">Send mockup</button>':'')
+    + (atClose?'<button class="act" data-d="deposit">Charge deposit</button>':'')
+    + '<button class="act" data-d="call">Book call</button></div>';
+
   var bg=el('<div class="modal-bg"><div class="modal" style="max-width:600px"><div class="mh"><h3>'+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
     + '<div class="mb">'
-    + '<div class="d-sub">'+esc(stageLabel(lead)+' · '+touchLine(lead))+'</div>'
-    + (lead.suggested_pitch?'<div class="why">'+esc(lead.suggested_pitch)+'</div>':'')
+    + detailChips(lead)
+    + '<div class="d-meta">'+esc(touchLine(lead))+'</div>'
     + contactRow(lead)
     + mockBlock
-    + '<div class="d-next">Próximo paso: <b>'+esc(nextStep(lead))+'</b></div>'
-    + '<h4 class="tl-title">Historial</h4>'+tl
+    + '<div class="d-next"><span class="d-nx-lbl">Next step</span><b>'+esc(nextStep(lead))+'</b></div>'
+    + pitchBlock
+    + '<div class="tl-head-row"><h4 class="tl-title">History</h4><button class="act ghost" data-d="addnote">+ Note</button></div>'
+    + '<div data-d="noteform" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.7rem;margin:0 0 .8rem"><textarea data-d="notetext" placeholder="Write a note about this lead..." style="width:100%;min-height:80px;padding:.5rem;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:.93rem;background:white;color:var(--ink);resize:vertical"></textarea><div class="row" style="margin-top:.5rem;gap:.4rem"><button class="act primary" data-d="notesave">Save</button><button class="act ghost" data-d="notecancel">Cancel</button></div></div>'
+    + tl
     + '</div>'
     + '<div class="mf" style="flex-direction:column;align-items:stretch;gap:.6rem">'
-    + '<div class="row"><button class="act primary" data-d="msg">Generar mensaje</button>'+(atMock?'<button class="act" data-d="mockup">Enviar mockup</button>':'')+(atClose?'<button class="act" data-d="deposit">Cobrar depósito</button>':'')+'<button class="act" data-d="call">Agendar llamada</button></div>'
+    + ctaRow
     + propRow
-    + '<div class="movebar"><span class="mlbl">Mover a:</span>'+mvBtns+'<button class="act" data-d="won">Ganado ✓</button><button class="act ghost" data-mv="closed">Perdido ✕</button></div>'
+    + '<div class="movebar"><span class="mlbl">Move to:</span>'+fwdMoves+'<span class="msep"></span>'+termBtns+'</div>'
     + '</div></div></div>');
-  bg.addEventListener('click',function(e){if(e.target===bg) bg.remove();});
+  wireBgClose(bg, function(){ bg.remove(); });
   document.getElementById('modal-root').appendChild(bg);
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){b.onclick=function(){bg.remove();};});
-  bg.querySelector('[data-d="msg"]').onclick=function(){bg.remove();aiDraft(lead, (lead.lead_stage==='sales_qualified'||lead.lead_stage==='proposal')?'close':(lead.last_touched_at?'follow':'first'));};
+  var msgB=bg.querySelector('[data-d="msg"]'); if(msgB) msgB.onclick=function(){bg.remove();aiDraft(lead, (lead.lead_stage==='sales_qualified'||lead.lead_stage==='proposal')?'close':(lead.last_touched_at?'follow':'first'));};
+  var anB=bg.querySelector('[data-d="addnum"]'); if(anB) anB.onclick=function(){bg.remove();addNumber(lead);};
+  var pToggle=bg.querySelector('[data-d="togglepitch"]'); var pBody=bg.querySelector('[data-d="pitchbody"]');
+  if(pToggle && pBody){ pToggle.onclick=function(){ var open=pBody.style.display!=='none'; pBody.style.display=open?'none':'block'; pToggle.textContent=open?'Show suggested pitch':'Hide suggested pitch'; }; }
+  var noteToggle=bg.querySelector('[data-d="addnote"]'); var noteForm=bg.querySelector('[data-d="noteform"]'); var noteText=bg.querySelector('[data-d="notetext"]');
+  if(noteToggle && noteForm && noteText){
+    noteToggle.onclick=function(){ noteForm.style.display='block'; noteToggle.style.display='none'; noteText.focus(); };
+    bg.querySelector('[data-d="notecancel"]').onclick=function(){ noteForm.style.display='none'; noteToggle.style.display=''; noteText.value=''; };
+    bg.querySelector('[data-d="notesave"]').onclick=async function(){
+      var txt=(noteText.value||'').trim();
+      if(!txt){ toast('Write something in the note', true); return; }
+      this.disabled=true; this.textContent='Saving...';
+      try{
+        // owner is stamped server-side from the Cf-Access user, so we don't send it.
+        var r=await api('/api/admin/crm/activities', {method:'POST', body: JSON.stringify({lead_id:lead.id, kind:'note', subject:'Note', body:txt, occurred_at:Date.now()})});
+        if(!ACTS_BY_LEAD[lead.id]) ACTS_BY_LEAD[lead.id]=[];
+        ACTS_BY_LEAD[lead.id].unshift(r.row || {id:r.id, kind:'note', subject:'Note', body:txt, occurred_at:Date.now(), created_at:Date.now()});
+        toast('Note saved');
+        bg.remove(); openDetail(lead);
+      }catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Save'; }
+    };
+  }
   bg.querySelector('[data-d="call"]').onclick=function(){bg.remove();bookCall(lead);};
   var mkB=bg.querySelector('[data-d="mockup"]'); if(mkB) mkB.onclick=function(){bg.remove();sendMockup(lead);};
   var epB=bg.querySelector('[data-d="editprop"]'); if(epB) epB.onclick=function(){bg.remove();showProposalPanel(lead);};
@@ -437,16 +578,16 @@ function openDetail(lead){
       await api('/api/admin/crm/activities/'+aid, {method:'DELETE'});
       if(ACTS_BY_LEAD[lead.id]) ACTS_BY_LEAD[lead.id]=ACTS_BY_LEAD[lead.id].filter(function(x){return x.id!==aid;});
       var item=b.closest('.tl-item'); if(item) item.remove();
-      toast('Borrador eliminado');
+      toast('Removed');
     }catch(err){ toast('Error: '+err.message, true); }
   }; });
-  var cmB=bg.querySelector('[data-d="copymock"]'); if(cmB) cmB.onclick=function(){ try{ navigator.clipboard.writeText(murl); toast('Link copiado'); }catch(e){ toast('Copia manual', true); } };
+  var cmB=bg.querySelector('[data-d="copymock"]'); if(cmB) cmB.onclick=function(){ try{ navigator.clipboard.writeText(murl); toast('Link copied'); }catch(e){ toast('Copy manually', true); } };
   bg.querySelectorAll('[data-lang]').forEach(function(b){ b.onclick=async function(){
     var v=b.getAttribute('data-lang'); if((lead.demo_lang||'es')===v) return;
-    try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({demo_lang:v})}); lead.demo_lang=v; toast('Versión del mockup: '+(v==='en'?'Inglés':'Local')); bg.remove(); openDetail(lead); }
+    try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({demo_lang:v})}); lead.demo_lang=v; toast('Mockup version: '+(v==='en'?'English':'Local')); bg.remove(); openDetail(lead); }
     catch(err){ toast('Error: '+err.message, true); }
   }; });
-  var wonB=bg.querySelector('[data-d="won"]'); if(wonB) wonB.onclick=function(){bg.remove();setStage(lead,'sales_qualified','Marcado ganado','won');};
+  var wonB=bg.querySelector('[data-d="won"]'); if(wonB) wonB.onclick=function(){bg.remove();setStage(lead,'sales_qualified','Marked as won','won');};
   bg.querySelectorAll('[data-mv]').forEach(function(b){ b.onclick=function(){ bg.remove(); moveTo(lead.id, b.getAttribute('data-mv')); }; });
 }
 
@@ -456,14 +597,14 @@ function cardHTML(l, col){
   var al = alertFor(l, col);
   var viewed = col!=='closed' && viewedMockup(l);
   var chip = '';
-  if(col==='closed'){ chip = isWon(l) ? '<span class="chip won">✓ Ganado</span>' : '<span class="chip lost">✕ Perdido</span>'; }
-  else if(viewed){ chip = '<span class="chip view">Vio el mockup</span>'; }
+  if(col==='closed'){ chip = isWon(l) ? '<span class="chip won">✓ Won</span>' : '<span class="chip lost">✕ Lost</span>'; }
+  else if(viewed){ chip = '<span class="chip view">Viewed mockup</span>'; }
   var cls = viewed ? ' viewed' : (al ? ' alert' : '');
   var mark = viewed ? '' : (al ? '<span class="wmark">⚠</span> ' : '');
   var t = l.touches_count||0;
-  var mini = (col==='closed') ? esc(touchLine(l)) : esc(nextStep(l))+(t?' · '+t+' toque'+(t===1?'':'s'):'');
+  var mini = (col==='closed') ? esc(touchLine(l)) : esc(nextStep(l))+(t?' · '+t+' touch'+(t===1?'':'es'):'');
   return '<div class="card'+cls+'" draggable="true" data-id="'+esc(l.id)+'">'
-    + '<button class="card-del" title="Borrar definitivamente" data-del="'+esc(l.id)+'" aria-label="Borrar">×</button>'
+    + '<button class="card-del" title="Delete permanently" data-del="'+esc(l.id)+'" aria-label="Delete">×</button>'
     + (chip?'<div class="cardchip">'+chip+'</div>':'')
     + '<div class="biz">'+mark+esc(leadName(l))+heatPill(l.heat)+'</div>'
     + (meta?'<div class="meta">'+meta+'</div>':'')
@@ -472,7 +613,7 @@ function cardHTML(l, col){
 }
 
 function colHTML(title, sub, items, col){
-  var body = items.length ? items.map(function(l){return cardHTML(l,col);}).join('') : '<div class="empty">Nada por ahora.</div>';
+  var body = items.length ? items.map(function(l){return cardHTML(l,col);}).join('') : '<div class="empty">Nothing yet.</div>';
   var drop = (col==='contact'||col==='nonum') ? '' : ' data-drop="'+col+'"';
   return '<div class="col"'+drop+'><h2>'+esc(title)+' <span class="count">'+items.length+'</span></h2><div class="sub">'+esc(sub)+'</div>'+body+'</div>';
 }
@@ -492,15 +633,15 @@ function render(){
   var closed   = L.filter(function(l){return isWon(l)||isLost(l);}).sort(function(a,b){return (b.last_touched_at||0)-(a.last_touched_at||0);});
   var openedN  = LEADS.filter(function(l){return mockOpened(l) && isActive(l);}).length;
   var html = '';
-  if(openedN) html += '<div class="alert"><span><b>'+openedN+'</b> '+(openedN===1?'prospecto vio':'prospectos vieron')+' tu mockup. Escríbeles ahora, están calientes.</span></div>';
+  if(openedN) html += '<div class="alert"><span><b>'+openedN+'</b> '+(openedN===1?'prospect viewed':'prospects viewed')+' your mockup. Message them now, they\'re warm.</span></div>';
   html += funnelStripHTML()
     + '<div class="cols">'
-    + colHTML('Para contactar', 'Con WhatsApp, listos para escribir.', contact, 'contact')
-    + colHTML('Seguimiento', 'Ya les escribiste. Rojo = toca insistir.', follow, 'followup')
-    + colHTML('Mockup', 'Mándales el ejemplo con su nombre.', mockup, 'mockup')
-    + colHTML('Propuesta', 'Arma y envía la propuesta.', proposal, 'proposal')
-    + colHTML('Por cerrar', 'Propuesta enviada. Cierra el trato.', close, 'close')
-    + colHTML('Cerrados', 'Ganados y perdidos.', closed, 'closed')
+    + colHTML('To contact', 'Have WhatsApp. Ready to message.', contact, 'contact')
+    + colHTML('Follow-up', 'You already messaged. Red = time to push.', follow, 'followup')
+    + colHTML('Mockup', 'Send them the personalized example.', mockup, 'mockup')
+    + colHTML('Proposal', 'Build and send the proposal.', proposal, 'proposal')
+    + colHTML('Closing', 'Proposal sent. Close the deal.', close, 'close')
+    + colHTML('Closed', 'Won and lost.', closed, 'closed')
     + '</div>';
   if(sinNum.length) html += noNumSectionHTML(sinNum);
   document.getElementById('app').innerHTML = html;
@@ -526,11 +667,11 @@ function wireDrag(){
       e.preventDefault();
       var id = btn.getAttribute('data-del');
       var lead = BY_ID[id];
-      var name = lead ? leadName(lead) : 'este prospecto';
-      if(!confirm('¿Borrar definitivamente a "' + name + '"?\n\nEsto elimina la tarjeta, sus actividades y su propuesta. Si el cliente ya pagó, se conservan los pagos. No se puede deshacer.')) return;
+      var name = lead ? leadName(lead) : 'this prospect';
+      if(!confirm('Permanently delete "' + name + '"?\n\nThis removes the card, its activities, and its proposal. If the client already paid, payments are preserved. Cannot be undone.')) return;
       btn.disabled = true;
       api('/api/admin/crm/leads/' + id, { method: 'DELETE' })
-        .then(function(){ toast('Borrado'); loadAll(); })
+        .then(function(){ toast('Deleted'); loadAll(); })
         .catch(function(err){ toast('Error: ' + (err && err.message || err), true); btn.disabled = false; });
     });
   });
@@ -539,17 +680,17 @@ function wireDrag(){
 function noNumSectionHTML(items){
   var rows = items.map(function(l){
     var links = [];
-    if(l.instagram){ var ig = String(l.instagram).replace(/^@+/, ''); links.push('<a class="ci" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">IG</a>'); }
-    if(l.current_site){ var u = /^https?:\/\//i.test(l.current_site) ? l.current_site : 'https://'+l.current_site; links.push('<a class="ci" href="'+esc(u)+'" target="_blank" rel="noopener">Sitio</a>'); }
+    if(l.instagram){ var ig = String(l.instagram).replace(/^@+/, ''); links.push('<a class="ci" href="https://instagram.com/'+esc(ig)+'" target="_blank" rel="noopener">Instagram</a>'); }
+    if(l.current_site){ var u = /^https?:\/\//i.test(l.current_site) ? l.current_site : 'https://'+l.current_site; links.push('<a class="ci" href="'+esc(u)+'" target="_blank" rel="noopener">Site</a>'); }
     var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
     return '<div class="nn-row" data-id="'+esc(l.id)+'">'
       + '<div class="nn-biz">'+esc(leadName(l))+(meta?'<span class="nn-meta"> · '+meta+'</span>':'')+'</div>'
-      + '<div class="nn-act">'+links.join('')+'<button class="act" data-a="addnum">Agregar número</button>'
-      + '<button class="act act-del" data-del="'+esc(l.id)+'" title="Borrar definitivamente" aria-label="Borrar">×</button></div>'
+      + '<div class="nn-act">'+links.join('')+'<button class="act" data-a="addnum">Add number</button>'
+      + '<button class="act act-del" data-del="'+esc(l.id)+'" title="Delete permanently" aria-label="Delete">×</button></div>'
       + '</div>';
   }).join('');
-  return '<div class="nn-wrap"><h2>Por conseguir número <span class="count">'+items.length+'</span></h2>'
-    + '<div class="sub">No tienen WhatsApp todavía. Mira su Instagram o Google, consigue el número y agrégalo para poder contactarlos. Tu motor de prospección también los va llenando.</div>'
+  return '<div class="nn-wrap"><h2>Need phone <span class="count">'+items.length+'</span></h2>'
+    + '<div class="sub">No WhatsApp yet. Check Instagram or Google, get the number and add it so you can reach them. The prospecting engine also fills these in over time.</div>'
     + rows + '</div>';
 }
 
@@ -561,9 +702,9 @@ document.getElementById('app').addEventListener('click', function(e){
     var bl = BY_ID[bid]; if(!bl) return;
     var a = btn.getAttribute('data-a');
     if(a==='msg') aiDraft(bl, btn.getAttribute('data-mode'));
-    else if(a==='warm') setStage(bl, 'sales_qualified', 'Marcado como interesado');
-    else if(a==='drop') setStage(bl, 'disqualified', 'Descartado');
-    else if(a==='won') setStage(bl, 'sales_qualified', 'Marcado ganado', 'won');
+    else if(a==='warm') setStage(bl, 'sales_qualified', 'Marked as interested');
+    else if(a==='drop') setStage(bl, 'disqualified', 'Discarded');
+    else if(a==='won') setStage(bl, 'sales_qualified', 'Marked as won', 'won');
     else if(a==='call') bookCall(bl);
     else if(a==='mockup') sendMockup(bl);
     else if(a==='addnum') addNumber(bl);
@@ -588,17 +729,18 @@ async function setStage(lead, stage, msg, special){
 function bookCall(lead){
   // Send the prospect the booking link so THEY pick a time. Opens the WhatsApp
   // compose panel (review, then send + log), same flow as the other messages.
+  // The body STAYS in Spanish because it goes to the Colombian prospect.
   var text = 'Para avanzar más rápido, agendemos una llamada corta cuando te quede bien. Aquí eliges el horario que prefieras: ' + CAL_LINK;
   showPanel(lead, null, text);
 }
 
-// Cobrar el depósito del 30%: genera el link de Wompi para el deal de la propuesta
-// y arma un mensaje de WhatsApp con el link. Al pagar, el webhook mueve la
-// tarjeta a Ganado automáticamente.
+// Charge the 30% deposit: generate the Wompi link for the proposal deal
+// and build a WhatsApp message with the link. On payment, the webhook moves
+// the card to Won automatically. Body stays Spanish, prospect-facing.
 async function chargeDeposit(lead){
   var deal = proposalDeal(lead);
-  if(!deal){ toast('Primero arma la propuesta (la necesito para cobrar).', true); return; }
-  toast('Generando link de pago...');
+  if(!deal){ toast('Build the proposal first (needed to charge).', true); return; }
+  toast('Generating payment link...');
   try{
     var r = await api('/api/admin/deals/'+deal.id+'/deposit-link', {method:'POST', body: JSON.stringify({})});
     var amount = (r && r.amount_cop) ? ('$'+formatCop(r.amount_cop)+' COP') : 'el 30%';
@@ -608,11 +750,11 @@ async function chargeDeposit(lead){
 }
 
 async function addNumber(lead){
-  var num = prompt('WhatsApp del prospecto, con indicativo (ej: 573001234567):', '');
+  var num = prompt('Prospect WhatsApp, with country code (e.g. 573001234567):', '');
   if(num===null) return;
   var d = digits(num);
-  if(!d){ toast('Número inválido', true); return; }
-  try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({whatsapp: d})}); toast('Número agregado'); loadAll(); }
+  if(!d){ toast('Invalid number', true); return; }
+  try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({whatsapp: d})}); toast('Number added'); loadAll(); }
   catch(err){ toast('Error: '+err.message, true); }
 }
 
@@ -622,6 +764,7 @@ function sendMockup(lead){
   var text;
   if(d && d.body){ text = d.body; } // use the AI-drafted message the system prepared
   else {
+    // Fallback message body · stays in Spanish (goes to the prospect).
     var biz = leadName(lead);
     text = 'Acá te dejo el ejemplo que te comenté de cómo se vería la página de ' + biz + ':\n' + url + '\n\nEs una muestra del estilo, el tuyo iría a la medida con tu marca y tus fotos. ¿Lo abres y me dices qué te parece?';
   }
@@ -629,10 +772,14 @@ function sendMockup(lead){
 }
 
 async function aiDraft(lead, mode){
+  // Instructions to the AI. The system prompt in outreach.js already forces
+  // Spanish output (Santi's voice), so these UI-side hints can be in English
+  // without flipping the AI's language · but we keep them in Spanish so the
+  // model stays anchored to Spanish drafting.
   var instruct = '';
   if(mode==='follow') instruct = 'Este es un mensaje de SEGUIMIENTO, ya le escribiste antes y no ha respondido. Se breve, amable y sin presion, dale una razon concreta para responder.';
   if(mode==='close') instruct = 'Este prospecto esta interesado. Escribe un mensaje corto y calido para avanzar al cierre: propone el siguiente paso, empezar con el deposito del 30% ('+DEPOSITO+') o agendar una llamada rapida. Sin presion.';
-  showPanel(lead, '<div class="loading">Generando mensaje con IA...</div>', null);
+  showPanel(lead, '<div class="loading">Drafting message with AI...</div>', null);
   try{
     var r = await api('/api/admin/outreach/draft', {method:'POST', body: JSON.stringify({lead_id:lead.id, channel:'whatsapp', tone:'santi', instruct:instruct})});
     var text = (typeof r.draft==='string') ? r.draft : ((r.draft&&r.draft.body)||'');
@@ -644,31 +791,31 @@ function showPanel(lead, loadingHtml, text){
   closePanel();
   var wa = waNum(lead);
   var bodyInner = loadingHtml!=null ? loadingHtml :
-    '<textarea id="ai-text"></textarea><p class="note">'+(wa?'Revisa y edita. Al enviar se abre WhatsApp con el mensaje y se registra el toque.':'Este lead no tiene número de WhatsApp. Copia el mensaje, o agrégale el número en el CRM para enviarlo directo.')+'</p>';
+    '<textarea id="ai-text"></textarea><p class="note">'+(wa?'Review and edit. Send opens WhatsApp with the message and logs the touch.':'This lead has no WhatsApp number. Copy the message, or add the number in the CRM to send directly.')+'</p>';
   var foot = loadingHtml!=null ? '' :
-    '<button class="act ghost" data-x="copy">Copiar</button><span style="flex:1"></span>'
-    + '<button class="act" data-x="close">Cerrar</button>'
-    + '<button class="act primary" data-x="send">'+(wa?'Abrir WhatsApp y registrar':'Copiar mensaje')+'</button>';
-  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>'+esc(lead.business_name||'Mensaje')+'</h3><button data-x="close">&times;</button></div><div class="mb">'+bodyInner+'</div><div class="mf">'+foot+'</div></div></div>');
-  bg.addEventListener('click', function(e){ if(e.target===bg) closePanel(); });
+    '<button class="act ghost" data-x="copy">Copy</button><span style="flex:1"></span>'
+    + '<button class="act" data-x="close">Close</button>'
+    + '<button class="act primary" data-x="send">'+(wa?'Open WhatsApp + log':'Copy message')+'</button>';
+  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>'+esc(lead.business_name||'Message')+'</h3><button data-x="close">&times;</button></div><div class="mb">'+bodyInner+'</div><div class="mf">'+foot+'</div></div></div>');
+  wireBgClose(bg, closePanel);
   document.getElementById('modal-root').appendChild(bg);
   var ta = bg.querySelector('#ai-text'); if(ta && text!=null) ta.value = text;
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
-  var copyB = bg.querySelector('[data-x="copy"]'); if(copyB) copyB.onclick=function(){ ta.select(); try{navigator.clipboard.writeText(ta.value);toast('Copiado');}catch(e){toast('Selecciona y copia',true);} };
+  var copyB = bg.querySelector('[data-x="copy"]'); if(copyB) copyB.onclick=function(){ ta.select(); try{navigator.clipboard.writeText(ta.value);toast('Copied');}catch(e){toast('Select and copy',true);} };
   var sendB = bg.querySelector('[data-x="send"]');
   if(sendB){ sendB.onclick = async function(){
-    var msg = (ta.value||'').trim(); if(!msg){toast('Mensaje vacio',true);return;}
-    if(!wa){ try{ await navigator.clipboard.writeText(msg); toast('Copiado, pegalo donde lo envies'); }catch(e){ ta.select(); toast('Selecciona y copia', true); } return; }
+    var msg = (ta.value||'').trim(); if(!msg){toast('Empty message',true);return;}
+    if(!wa){ try{ await navigator.clipboard.writeText(msg); toast('Copied, paste where you send it'); }catch(e){ ta.select(); toast('Select and copy', true); } return; }
     window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg), '_blank', 'noopener');
     try{
       await api('/api/admin/outreach/log-send', {method:'POST', body: JSON.stringify({lead_id:lead.id, channel:'whatsapp', body:msg})});
-      // First message on a fresh lead advances it To contact -> Seguimiento.
+      // First message on a fresh lead advances it To contact -> Follow-up.
       if(!lead.last_touched_at && (!lead.lead_stage || lead.lead_stage==='new' || lead.lead_stage==='raw')){
         try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({lead_stage:'contacted'})}); }catch(_){}
       }
-      toast('Enviado y registrado');
+      toast('Sent and logged');
     }
-    catch(err){ toast('Abierto, pero no se registro: '+err.message, true); }
+    catch(err){ toast('Opened, but did not log: '+err.message, true); }
     closePanel(); loadAll();
   }; }
 }
@@ -676,11 +823,11 @@ function closePanel(){ var m=document.querySelector('#modal-root .modal-bg'); if
 
 // ---- shared mockup images (generate / review / regenerate) ----
 var IMGKEYS = [
-  {k:'dental-hero', l:'Dental · clínica'},
-  {k:'dental-smile', l:'Dental · sonrisa'},
-  {k:'dental-braces', l:'Dental · brackets'},
-  {k:'generic-hero', l:'General · local'},
-  {k:'generic-team', l:'General · atención'}
+  {k:'dental-hero', l:'Dental · clinic'},
+  {k:'dental-smile', l:'Dental · smile'},
+  {k:'dental-braces', l:'Dental · braces'},
+  {k:'generic-hero', l:'General · storefront'},
+  {k:'generic-team', l:'General · service'}
 ];
 function openImagesPanel(){
   closePanel();
@@ -688,24 +835,24 @@ function openImagesPanel(){
     return '<div class="img-row" data-k="'+it.k+'">'
       + '<img class="img-prev" src="'+DEMO_BASE+'/demo-img/'+it.k+'?t='+Date.now()+'" alt="">'
       + '<div class="img-meta"><b>'+esc(it.l)+'</b><span>'+esc(it.k)+'</span><span class="img-err"></span></div>'
-      + '<button class="act primary" data-gen="'+it.k+'">Generar</button>'
+      + '<button class="act primary" data-gen="'+it.k+'">Generate</button>'
       + '</div>';
   }).join('');
-  var bg = el('<div class="modal-bg"><div class="modal" style="max-width:660px"><div class="mh"><h3>Imágenes del mockup</h3><button data-x="close">&times;</button></div>'
-    + '<div class="mb"><p class="note">Estas imágenes se comparten en todos los mockups. Se generan una vez y quedan guardadas (no se vuelven a cobrar). Genera, revisa, y si alguna no sirve, regenérala.</p>'
+  var bg = el('<div class="modal-bg"><div class="modal" style="max-width:660px"><div class="mh"><h3>Mockup images</h3><button data-x="close">&times;</button></div>'
+    + '<div class="mb"><p class="note">These images are shared across all mockups. Generate once and they stay saved (no double-charging). Generate, review, regenerate any that don\'t work.</p>'
     + rows + '</div>'
-    + '<div class="mf"><button class="act" data-x="close">Cerrar</button></div></div></div>');
-  bg.addEventListener('click', function(e){ if(e.target===bg) closePanel(); });
+    + '<div class="mf"><button class="act" data-x="close">Close</button></div></div></div>');
+  wireBgClose(bg, closePanel);
   document.getElementById('modal-root').appendChild(bg);
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
   bg.querySelectorAll('[data-gen]').forEach(function(b){ b.onclick=async function(){
-    var k=b.getAttribute('data-gen'); b.disabled=true; b.textContent='Generando...';
+    var k=b.getAttribute('data-gen'); b.disabled=true; b.textContent='Generating...';
     var row=bg.querySelector('.img-row[data-k="'+k+'"]'); var errEl=row&&row.querySelector('.img-err'); if(errEl) errEl.textContent='';
     try{
       await api('/api/admin/cockpit/gen-img', {method:'POST', body: JSON.stringify({key:k})});
       var img=row&&row.querySelector('.img-prev'); if(img) img.src=DEMO_BASE+'/demo-img/'+k+'?t='+Date.now();
-      toast('Imagen lista'); b.textContent='Regenerar';
-    }catch(err){ toast('Error al generar', true); if(errEl) errEl.textContent=err.message; b.textContent='Reintentar'; }
+      toast('Image ready'); b.textContent='Regenerate';
+    }catch(err){ toast('Error generating', true); if(errEl) errEl.textContent=err.message; b.textContent='Retry'; }
     b.disabled=false;
   }; });
 }
@@ -718,24 +865,24 @@ function showProposalPanel(lead){
   var d = proposalDeal(lead);
   var pre = {}; try{ if(d&&d.addons){ JSON.parse(d.addons).forEach(function(k){pre[k]=1;}); } }catch(e){}
   var rows = ADDONS.map(function(a){ return '<label class="np-opt"><input type="checkbox" data-ak="'+a.k+'"'+(pre[a.k]?' checked':'')+'> '+esc(a.l)+' <span class="np-px">'+a.p+'</span></label>'; }).join('');
-  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Armar propuesta · '+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
+  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Build proposal · '+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
     + '<div class="mb">'
-    + '<p class="note">La página de ventas: $400.000 (pago 30/70). Precio fijo. Los extras (vitrina, catálogo descargable, bilingüe, asistente 24/7) van en los planes mensuales, no en la propuesta. Escribe en la nota lo que pidió el cliente.</p>'
+    + '<p class="note">The sales page: $400.000 (30/70 payment). Fixed price. The extras (showcase, downloadable catalog, bilingual, 24/7 assistant) live in the monthly plans, not in this proposal. Write what the client asked for in the note.</p>'
     + (rows ? '<div class="np-opts">'+rows+'</div>' : '')
-    + '<div class="field"><label>Lo que pidió el cliente (opcional)</label><textarea id="pp-notes" placeholder="Ej: quiere reservas y que se vea serio en el celular..."></textarea></div>'
+    + '<div class="field"><label>What the client asked for (optional)</label><textarea id="pp-notes" placeholder="E.g.: wants bookings and to look serious on mobile..."></textarea></div>'
     + '</div>'
-    + '<div class="mf"><button class="act ghost" data-x="close">Cancelar</button><button class="act primary" data-x="gen">Generar propuesta</button></div>'
+    + '<div class="mf"><button class="act ghost" data-x="close">Cancel</button><button class="act primary" data-x="gen">Generate proposal</button></div>'
     + '</div></div>');
-  bg.addEventListener('click', function(e){ if(e.target===bg) closePanel(); });
+  wireBgClose(bg, closePanel);
   document.getElementById('modal-root').appendChild(bg);
   if(d&&d.notes){ var ta=bg.querySelector('#pp-notes'); if(ta) ta.value=d.notes; }
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
   bg.querySelector('[data-x="gen"]').onclick = async function(){
     var addons=[]; bg.querySelectorAll('[data-ak]').forEach(function(c){ if(c.checked) addons.push(c.getAttribute('data-ak')); });
     var notes=(bg.querySelector('#pp-notes').value||'').trim();
-    this.disabled=true; this.textContent='Generando propuesta...';
-    try{ await api('/api/admin/cockpit/proposal', {method:'POST', body: JSON.stringify({lead_id:lead.id, addons:addons, notes:notes})}); toast('Propuesta lista'); closePanel(); loadAll(); }
-    catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Generar propuesta'; }
+    this.disabled=true; this.textContent='Generating proposal...';
+    try{ await api('/api/admin/cockpit/proposal', {method:'POST', body: JSON.stringify({lead_id:lead.id, addons:addons, notes:notes})}); toast('Proposal ready'); closePanel(); loadAll(); }
+    catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Generate proposal'; }
   };
 }
 
@@ -745,23 +892,23 @@ document.getElementById('search').addEventListener('input', function(e){ SEARCH 
 // ---- add prospect ----
 document.getElementById('btn-add').addEventListener('click', function(){
   closePanel();
-  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Agregar prospecto</h3><button data-x="close">&times;</button></div>'
+  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Add prospect</h3><button data-x="close">&times;</button></div>'
     + '<div class="mb">'
-    + '<div class="field"><label>Nombre del negocio</label><input id="np-biz" placeholder="Clinica Sonrisa"></div>'
-    + '<div class="field"><label>Tipo / sector</label><input id="np-cat" placeholder="odontologia, estetica, restaurante..."></div>'
-    + '<div class="field"><label>Ciudad</label><input id="np-city" placeholder="Medellin" value="Medellin"></div>'
-    + '<div class="field"><label>WhatsApp (opcional)</label><input id="np-wa" placeholder="573001234567"></div>'
-    + '<div class="field"><label>Sitio actual (opcional)</label><input id="np-site" placeholder="https://..."></div>'
-    + '<div class="field"><label>Que arreglar / por que (opcional)</label><input id="np-why" placeholder="No tiene sitio, solo Instagram"></div>'
+    + '<div class="field"><label>Business name</label><input id="np-biz" placeholder="ABC Business"></div>'
+    + '<div class="field"><label>Type / sector</label><input id="np-cat" placeholder="dental, beauty, restaurant..."></div>'
+    + '<div class="field"><label>City</label><input id="np-city" placeholder="Medellín" value="Medellín"></div>'
+    + '<div class="field"><label>WhatsApp (optional)</label><input id="np-wa" placeholder="573001234567"></div>'
+    + '<div class="field"><label>Current site (optional)</label><input id="np-site" placeholder="https://..."></div>'
+    + '<div class="field"><label>What to fix / why (optional)</label><input id="np-why" placeholder="No site, just Instagram"></div>'
     + '</div>'
-    + '<div class="mf"><button class="act ghost" data-x="close">Cancelar</button><button class="act primary" data-x="save">Agregar</button></div>'
+    + '<div class="mf"><button class="act ghost" data-x="close">Cancel</button><button class="act primary" data-x="save">Add</button></div>'
     + '</div></div>');
-  bg.addEventListener('click', function(e){ if(e.target===bg) closePanel(); });
+  wireBgClose(bg, closePanel);
   document.getElementById('modal-root').appendChild(bg);
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
   bg.querySelector('[data-x="save"]').onclick = async function(){
     var biz = (bg.querySelector('#np-biz').value||'').trim();
-    if(!biz){ toast('Escribe el nombre del negocio', true); return; }
+    if(!biz){ toast('Write the business name', true); return; }
     var payload = {
       business_name: biz,
       category: (bg.querySelector('#np-cat').value||'').trim() || null,
@@ -773,7 +920,7 @@ document.getElementById('btn-add').addEventListener('click', function(){
     };
     try{
       await api('/api/admin/crm/leads', {method:'POST', body: JSON.stringify(payload)});
-      toast('Agregado a ' + (payload.whatsapp ? 'Para contactar' : 'Por conseguir número')); closePanel(); loadAll();
+      toast('Added to ' + (payload.whatsapp ? 'To contact' : 'Need phone')); closePanel(); loadAll();
     }catch(err){ toast('Error: '+err.message, true); }
   };
 });

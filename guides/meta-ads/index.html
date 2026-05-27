@@ -44,6 +44,21 @@
 {"@type":"ListItem","position":3,"name":"Meta Ads para pymes","item":"https://pymewebpro.com/guides/meta-ads/"}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
+{"@type":"Question","name":"¿Cuándo conviene Meta Ads y cuándo Google Ads para una pyme colombiana?","acceptedAnswer":{"@type":"Answer","text":"Empiece con Google Ads si su cliente ya busca lo que usted vende (servicios locales, B2B con keywords claros). Empiece con Meta si su cliente no sabe que lo necesita hasta que lo ve (e-commerce visual, restaurantes, marcas personales, eventos). Después de validar uno, agregue el otro."}},
+{"@type":"Question","name":"¿Qué configuración técnica necesita tener lista antes del primer peso en Meta Ads?","acceptedAnswer":{"@type":"Answer","text":"Cree un Business Manager separado de su Facebook personal, instale el Meta Pixel en el sitio, configure los eventos PageView, ViewContent y Lead o Purchase, active la Conversions API (CAPI) para recuperar la señal que iOS 14.5 tumba y elija como evento de optimización el que ya genere 50 o más eventos por semana. Sin esto, Meta no puede optimizar."}},
+{"@type":"Question","name":"¿Cómo se estructura una cuenta de Meta Ads en 2026 para que el algoritmo aprenda?","acceptedAnswer":{"@type":"Answer","text":"Use el modelo 1-1-6: 1 sola campaña con CBO, 1 ad set con Advantage+ Audience activado y 6 creativos distintos. Mínimo $80.000 COP por día por ad set, déjelo correr 5 a 7 días sin tocar nada y refresque creativos cada 10 a 14 días. Más ad sets repartidos quitan datos al algoritmo y nunca salen de la fase de aprendizaje."}},
+{"@type":"Question","name":"¿Qué audiencias de Meta Ads funcionan mejor para una pyme en Colombia?","acceptedAnswer":{"@type":"Answer","text":"Use Advantage+ Audience como audiencia principal en 8 de cada 10 pymes y agregue audiencias personalizadas (visitantes 30 días, lista de clientes, viewers 75% de video) para retargeting. Los Lookalike 1-3% sirven de respaldo. Las audiencias guardadas con intereses manuales hoy solo aportan en nichos muy específicos."}},
+{"@type":"Question","name":"¿Cómo se hace un creativo de Meta Ads que sí venda?","acceptedAnswer":{"@type":"Answer","text":"El 70% del rendimiento de una campaña de Meta es el creativo. La estructura ganadora es: hook visual en 1 segundo, hook verbal entre el segundo 1 y el 3, problema y agitación de 3 a 15 segundos, solución con prueba de 15 a 30 y un solo CTA claro al final. Diseñe vertical 9:16, con subtítulos siempre y entre 15 y 45 segundos de duración."}},
+{"@type":"Question","name":"¿Qué hooks paran el scroll en Meta Ads para audiencias colombianas?","acceptedAnswer":{"@type":"Answer","text":"Nueve formatos probados funcionan bien con pymes colombianas: 'esto no se lo van a decir', 'llevo X años haciendo Y', '3 errores que está cometiendo', antes/después en split, 'POV: eres dueño de X', 'pagué $X y aprendí', testimonio de cliente real sin script, 'si vives en [ciudad] y haces [actividad]' y demostración del producto haciendo algo inesperado. Use uno por creativo, no los mezcle."}},
+{"@type":"Question","name":"¿Qué especificaciones técnicas debe cumplir un video de Meta Ads en 2026?","acceptedAnswer":{"@type":"Answer","text":"Vertical 1080x1920 (9:16), H.264 en MP4 o MOV, 30 o 60 fps, audio AAC mínimo 128 kbps, archivo bajo 4 GB. Mantenga todo el texto importante en el centro del frame, ya que el 18% superior y el 14% inferior quedan tapados por la UI."}},
+{"@type":"Question","name":"¿Cómo se escribe el copy de un anuncio de Meta encima y debajo del fold?","acceptedAnswer":{"@type":"Answer","text":"El 'fold' aparece a los 125 caracteres aproximadamente. La primera línea debe ser un hook bajo 80 caracteres, la segunda debe identificar al público. Use 100 a 250 palabras para servicios B2B, 30 a 80 para e-commerce y 50 a 150 para generación de leads. Cierre con una sola CTA explícita."}},
+{"@type":"Question","name":"¿Cuánto presupuesto y qué estrategia de puja necesita Meta Ads para empezar?","acceptedAnswer":{"@type":"Answer","text":"Para validar, $1,6 millones COP en 20 días, alrededor de $80.000 por día por ad set. Para correr cómoda, $3 a $6 millones COP en 30 días. Empiece con Highest Volume como estrategia de puja; cuando ya tenga su CPA, pase a Cost per Result Goal con cap 20% por encima. Bid Cap solo en escalas grandes con ROAS estricto."}},
+{"@type":"Question","name":"¿Cuáles son los errores que matan cuentas de pyme en Meta Ads?","acceptedAnswer":{"@type":"Answer","text":"Los 7 errores más comunes son: boostear posts desde la página, correr sin Pixel ni CAPI, usar un solo creativo, cambiar audiencia, creativo y presupuesto al mismo tiempo, apagar antes del día 5, subir presupuesto más del 20% por día e ignorar la frecuencia cuando pasa de 4. Cualquiera bloquea el aprendizaje del algoritmo."}},
+{"@type":"Question","name":"¿Con qué ritmo se debe iterar una cuenta de Meta Ads?","acceptedAnswer":{"@type":"Answer","text":"Cada lunes revise rendimiento por ad set y por creativo y agregue notas. Cada 10 a 14 días refresque al menos 2 de los 6 creativos del ad set. Cada 30 días audite el embudo completo (CPM, CTR, CPC, CVR de la landing, CPA). No toque la cuenta a diario: cada cambio le quita datos al algoritmo."}}
+]}
+</script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box}
@@ -133,6 +148,10 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .prose a:hover{border-bottom-color:#FF5C2E}
 .prose hr{border:0;border-top:1px solid rgba(27,20,16,.1);margin:3rem 0}
 .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid #FF5C2E;background:rgba(255,92,46,.05);font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.55;color:#3a2a1f;border-radius:0 10px 10px 0}
+.qa{margin:3rem 0 0}
+.qa h2{margin-top:0}
+.qa+*{margin-top:0}
+.direct-answer{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:18px;line-height:1.55;color:#1B1410;background:#FFF1EC;border-left:4px solid #FF5C2E;padding:14px 18px 14px 20px;border-radius:0 12px 12px 0;margin:.6rem 0 1.5rem}
 .prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:rgba(27,20,16,.06);padding:.1em .4em;border-radius:5px;color:#1B1410}
 
 .callout{margin:1.5rem 0;background:#F4ECDF;border:1px solid rgba(27,20,16,.08);border-radius:14px;padding:22px 26px}
@@ -323,7 +342,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
   <div class="row"><span class="k">LAL</span><span class="v">Lookalike audience. Audiencia "parecida" a sus mejores compradores.</span></div>
 </div>
 
-<h2 id="cuando-meta"><span class="num">01</span> Meta vs Google: cuándo elegir cuál</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuándo conviene Meta Ads y cuándo Google Ads para una pyme colombiana?">
+<h2 id="cuando-meta"><span class="num">01</span> ¿Cuándo conviene Meta Ads y cuándo Google Ads para una pyme colombiana?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Empiece con Google Ads si su cliente ya busca lo que usted vende (servicios locales, B2B con keywords claros). Empiece con Meta si su cliente no sabe que lo necesita hasta que lo ve (e-commerce visual, restaurantes, marcas personales, eventos). Después de validar uno, agregue el otro.</p>
+</div>
+</div>
 
 <p>Esto evita el error más caro: gastar 3 meses peleando con el canal equivocado.</p>
 
@@ -348,7 +373,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="configuracion"><span class="num">02</span> Configuración técnica antes del primer peso</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué configuración técnica necesita tener lista antes del primer peso en Meta Ads?">
+<h2 id="configuracion"><span class="num">02</span> ¿Qué configuración técnica necesita tener lista antes del primer peso en Meta Ads?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Cree un Business Manager separado de su Facebook personal, instale el Meta Pixel en el sitio, configure los eventos PageView, ViewContent y Lead o Purchase, active la Conversions API (CAPI) para recuperar la señal que iOS 14.5 tumba y elija como evento de optimización el que ya genere 50 o más eventos por semana. Sin esto, Meta no puede optimizar.</p>
+</div>
+</div>
 
 <p>Sin esto, Meta es donaciones. El algoritmo no puede optimizar para algo que no puede medir.</p>
 
@@ -362,7 +393,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="estructura"><span class="num">03</span> Estructura de cuenta que funciona en 2026</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se estructura una cuenta de Meta Ads en 2026 para que el algoritmo aprenda?">
+<h2 id="estructura"><span class="num">03</span> ¿Cómo se estructura una cuenta de Meta Ads en 2026 para que el algoritmo aprenda?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Use el modelo 1-1-6: 1 sola campaña con CBO, 1 ad set con Advantage+ Audience activado y 6 creativos distintos. Mínimo $80.000 COP por día por ad set, déjelo correr 5 a 7 días sin tocar nada y refresque creativos cada 10 a 14 días. Más ad sets repartidos quitan datos al algoritmo y nunca salen de la fase de aprendizaje.</p>
+</div>
+</div>
 
 <p>La cuenta de Meta cambió fundamentalmente desde 2022. Hoy, menos es más. El algoritmo aprende mejor con presupuestos consolidados.</p>
 
@@ -410,7 +447,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="audiencias"><span class="num">04</span> Audiencias que funcionan en Colombia</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué audiencias de Meta Ads funcionan mejor para una pyme en Colombia?">
+<h2 id="audiencias"><span class="num">04</span> ¿Qué audiencias de Meta Ads funcionan mejor para una pyme en Colombia?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Use Advantage+ Audience como audiencia principal en 8 de cada 10 pymes y agregue audiencias personalizadas (visitantes 30 días, lista de clientes, viewers 75% de video) para retargeting. Los Lookalike 1-3% sirven de respaldo. Las audiencias guardadas con intereses manuales hoy solo aportan en nichos muy específicos.</p>
+</div>
+</div>
 
 <p>Meta tiene 4 tipos de audiencias. En 2026, debe usarlas en este orden:</p>
 
@@ -446,7 +489,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="creatividad"><span class="num">05</span> La fórmula creativa que vende</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se hace un creativo de Meta Ads que sí venda?">
+<h2 id="creatividad"><span class="num">05</span> ¿Cómo se hace un creativo de Meta Ads que sí venda?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">El 70% del rendimiento de una campaña de Meta es el creativo. La estructura ganadora es: hook visual en 1 segundo, hook verbal entre el segundo 1 y el 3, problema y agitación de 3 a 15 segundos, solución con prueba de 15 a 30 y un solo CTA claro al final. Diseñe vertical 9:16, con subtítulos siempre y entre 15 y 45 segundos de duración.</p>
+</div>
+</div>
 
 <p>El 70% del rendimiento de una campaña de Meta es el creativo. El 20% es la oferta. El 10% es la audiencia y la puja. Si su creativo no vende, ningún truco de configuración lo va a salvar.</p>
 
@@ -473,7 +522,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="hooks"><span class="num">06</span> Los 9 hooks que paran el scroll en Colombia</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué hooks paran el scroll en Meta Ads para audiencias colombianas?">
+<h2 id="hooks"><span class="num">06</span> ¿Qué hooks paran el scroll en Meta Ads para audiencias colombianas?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Nueve formatos probados funcionan bien con pymes colombianas: "esto no se lo van a decir", "llevo X años haciendo Y", "3 errores que está cometiendo", antes/después en split, "POV: eres dueño de X", "pagué $X y aprendí", testimonio de cliente real sin script, "si vives en [ciudad] y haces [actividad]" y demostración del producto haciendo algo inesperado. Use uno por creativo, no los mezcle.</p>
+</div>
+</div>
 
 <p>Estos formatos probados funcionan especialmente bien para pymes colombianas. Use uno por creativo, no los mezcle.</p>
 
@@ -532,7 +587,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="video"><span class="num">07</span> Especificaciones técnicas de video</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué especificaciones técnicas debe cumplir un video de Meta Ads en 2026?">
+<h2 id="video"><span class="num">07</span> ¿Qué especificaciones técnicas debe cumplir un video de Meta Ads en 2026?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Vertical 1080x1920 (9:16), H.264 en MP4 o MOV, 30 o 60 fps, audio AAC mínimo 128 kbps, archivo bajo 4 GB. Mantenga todo el texto importante en el centro del frame, ya que el 18% superior y el 14% inferior quedan tapados por la UI.</p>
+</div>
+</div>
 
 <p>Las specs que Meta favorece en 2026:</p>
 
@@ -551,7 +612,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="copy"><span class="num">08</span> Copy del post: encima y debajo del fold</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se escribe el copy de un anuncio de Meta encima y debajo del fold?">
+<h2 id="copy"><span class="num">08</span> ¿Cómo se escribe el copy de un anuncio de Meta encima y debajo del fold?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">El "fold" aparece a los 125 caracteres aproximadamente. La primera línea debe ser un hook bajo 80 caracteres, la segunda debe identificar al público. Use 100 a 250 palabras para servicios B2B, 30 a 80 para e-commerce y 50 a 150 para generación de leads. Cierre con una sola CTA explícita.</p>
+</div>
+</div>
 
 <p>El "fold" en Meta es el "...ver más" después de aproximadamente 125 caracteres. Las primeras dos líneas son <em>todo</em>. Si no engancha ahí, el resto no se lee.</p>
 
@@ -577,7 +644,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="presupuesto"><span class="num">09</span> Presupuesto y estrategia de puja</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuánto presupuesto y qué estrategia de puja necesita Meta Ads para empezar?">
+<h2 id="presupuesto"><span class="num">09</span> ¿Cuánto presupuesto y qué estrategia de puja necesita Meta Ads para empezar?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Para validar, $1,6 millones COP en 20 días, alrededor de $80.000 por día por ad set. Para correr cómoda, $3 a $6 millones COP en 30 días. Empiece con Highest Volume como estrategia de puja; cuando ya tenga su CPA, pase a Cost per Result Goal con cap 20% por encima. Bid Cap solo en escalas grandes con ROAS estricto.</p>
+</div>
+</div>
 
 <h3>Cuánto necesita para empezar</h3>
 
@@ -610,7 +683,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="errores"><span class="num">10</span> Los 7 errores que matan cuentas de pyme</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuáles son los errores que matan cuentas de pyme en Meta Ads?">
+<h2 id="errores"><span class="num">10</span> ¿Cuáles son los errores que matan cuentas de pyme en Meta Ads?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Los 7 errores más comunes son: boostear posts desde la página, correr sin Pixel ni CAPI, usar un solo creativo, cambiar audiencia, creativo y presupuesto al mismo tiempo, apagar antes del día 5, subir presupuesto más del 20% por día e ignorar la frecuencia cuando pasa de 4. Cualquiera bloquea el aprendizaje del algoritmo.</p>
+</div>
+</div>
 
 <div class="steps">
   <div class="step"><span class="n">1</span><h4>Boostear posts desde la página</h4><p>El "Boost Post" es la versión de Meta para principiantes. Usa el objetivo "Engagement", no "Conversions". Termina con likes pero cero ventas. SIEMPRE use Ads Manager.</p></div>
@@ -624,7 +703,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="iteracion"><span class="num">11</span> Ritmo de iteración que funciona</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Con qué ritmo se debe iterar una cuenta de Meta Ads?">
+<h2 id="iteracion"><span class="num">11</span> ¿Con qué ritmo se debe iterar una cuenta de Meta Ads?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Cada lunes revise rendimiento por ad set y por creativo y agregue notas. Cada 10 a 14 días refresque al menos 2 de los 6 creativos del ad set. Cada 30 días audite el embudo completo (CPM, CTR, CPC, CVR de la landing, CPA). No toque la cuenta a diario: cada cambio le quita datos al algoritmo.</p>
+</div>
+</div>
 
 <p>Meta Ads no es "set and forget". Es un ciclo de aprendizaje semanal.</p>
 
