@@ -1,0 +1,207 @@
+{
+  "n_total": 5305,
+  "n_no_site": 3434,
+  "pct_no_site": 64.7,
+  "n_dead_site": 633,
+  "pct_dead_site_of_sites": 33.8,
+  "n_no_functional_presence": 4067,
+  "pct_no_functional_presence": 76.7,
+  "by_city": {
+    "Bogotá": {
+      "n": 1390,
+      "no_site_pct": 54.1,
+      "dead_site_pct": 15.8
+    },
+    "Medellín área": {
+      "n": 822,
+      "no_site_pct": 60.1,
+      "dead_site_pct": 11.3
+    },
+    "Eje Cafetero": {
+      "n": 797,
+      "no_site_pct": 82.8,
+      "dead_site_pct": 5.6
+    },
+    "Yopal": {
+      "n": 320,
+      "no_site_pct": 100.0,
+      "dead_site_pct": 0.0
+    },
+    "Cali": {
+      "n": 309,
+      "no_site_pct": 56.6,
+      "dead_site_pct": 17.5
+    },
+    "Cartagena": {
+      "n": 181,
+      "no_site_pct": 37.0,
+      "dead_site_pct": 16.0
+    },
+    "Armenia": {
+      "n": 144,
+      "no_site_pct": 63.9,
+      "dead_site_pct": 16.7
+    },
+    "Bucaramanga": {
+      "n": 126,
+      "no_site_pct": 61.1,
+      "dead_site_pct": 10.3
+    },
+    "Barranquilla": {
+      "n": 120,
+      "no_site_pct": 63.3,
+      "dead_site_pct": 8.3
+    },
+    "Santa Marta": {
+      "n": 119,
+      "no_site_pct": 58.8,
+      "dead_site_pct": 16.0
+    },
+    "Riohacha": {
+      "n": 97,
+      "no_site_pct": 100.0,
+      "dead_site_pct": 0.0
+    },
+    "Cúcuta": {
+      "n": 88,
+      "no_site_pct": 77.3,
+      "dead_site_pct": 8.0
+    },
+    "Popayán": {
+      "n": 88,
+      "no_site_pct": 73.9,
+      "dead_site_pct": 8.0
+    },
+    "Manizales": {
+      "n": 75,
+      "no_site_pct": 28.0,
+      "dead_site_pct": 44.0
+    }
+  },
+  "by_category": {
+    "Restaurante": {
+      "n": 842,
+      "no_site_pct": 69.1,
+      "dead_site_pct": 11.5
+    },
+    "Hotel": {
+      "n": 498,
+      "no_site_pct": 62.9,
+      "dead_site_pct": 13.9
+    },
+    "Droguería": {
+      "n": 260,
+      "no_site_pct": 94.2,
+      "dead_site_pct": 1.5
+    },
+    "Comida rápida": {
+      "n": 212,
+      "no_site_pct": 73.1,
+      "dead_site_pct": 5.7
+    },
+    "Hostal": {
+      "n": 172,
+      "no_site_pct": 52.3,
+      "dead_site_pct": 26.7
+    },
+    "Café": {
+      "n": 170,
+      "no_site_pct": 54.1,
+      "dead_site_pct": 16.5
+    },
+    "Veterinaria": {
+      "n": 122,
+      "no_site_pct": 89.3,
+      "dead_site_pct": 2.5
+    },
+    "Company": {
+      "n": 100,
+      "no_site_pct": 0.0,
+      "dead_site_pct": 22.0
+    },
+    "Mecánica": {
+      "n": 90,
+      "no_site_pct": 76.7,
+      "dead_site_pct": 14.4
+    },
+    "Ropa": {
+      "n": 89,
+      "no_site_pct": 65.2,
+      "dead_site_pct": 3.4
+    },
+    "Tienda": {
+      "n": 84,
+      "no_site_pct": 100.0,
+      "dead_site_pct": 0.0
+    },
+    "Ferretería": {
+      "n": 81,
+      "no_site_pct": 79.0,
+      "dead_site_pct": 7.4
+    },
+    "Panadería": {
+      "n": 80,
+      "no_site_pct": 75.0,
+      "dead_site_pct": 6.2
+    },
+    "Clínica": {
+      "n": 76,
+      "no_site_pct": 55.3,
+      "dead_site_pct": 9.2
+    },
+    "Peluquería": {
+      "n": 71,
+      "no_site_pct": 81.7,
+      "dead_site_pct": 5.6
+    },
+    "Supermercado": {
+      "n": 67,
+      "no_site_pct": 100.0,
+      "dead_site_pct": 0.0
+    },
+    "Casa de huéspedes": {
+      "n": 62,
+      "no_site_pct": 67.7,
+      "dead_site_pct": 17.7
+    },
+    "Government": {
+      "n": 60,
+      "no_site_pct": 28.3,
+      "dead_site_pct": 13.3
+    }
+  },
+  "cms_breakdown_of_sites_with_url": {
+    "site_unreachable": 25,
+    "site_dead": 485,
+    "fetch_error": 4,
+    "webnode": 2,
+    "server_error": 22,
+    "404_not_found": 101,
+    "custom_or_other": 506,
+    "wordpress": 514,
+    "http_403": 20,
+    "http_415": 1,
+    "http_422": 1,
+    "http_429": 1,
+    "http_402": 1,
+    "http_410": 1,
+    "godaddy": 12,
+    "wix": 59,
+    "joomla": 15,
+    "drupal": 31,
+    "squarespace": 10,
+    "shopify": 59,
+    "jimdo": 1
+  },
+  "heat_distribution": {
+    "DEAD": 514,
+    "HOT": 192,
+    "WARM": 197,
+    "COOL": 1203,
+    "COLD": 3199
+  },
+  "motion": {
+    "upgrade": 1871,
+    "new_build": 3434
+  }
+}

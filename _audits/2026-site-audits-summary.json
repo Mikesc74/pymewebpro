@@ -1,0 +1,14 @@
+{
+  "n_attempted": 65,
+  "n_succeeded": 60,
+  "n_failed": 5,
+  "no_https_pct": 1.7,
+  "no_viewport_pct": 5.0,
+  "no_favicon_pct": 10.0,
+  "no_og_image_pct": 46.7,
+  "no_og_title_pct": 33.3,
+  "empty_title_pct": 5.0,
+  "slow_3s_pct": 15.0,
+  "page_bytes_median": 181505,
+  "page_bytes_p90": 199958
+}
