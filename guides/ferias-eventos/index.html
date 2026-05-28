@@ -36,6 +36,21 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://pymewebpro.com/"},{"@type":"ListItem","position":2,"name":"Guías","item":"https://pymewebpro.com/guides/traffic/"},{"@type":"ListItem","position":3,"name":"Ferias y eventos locales en Colombia: el canal offline subestimado","item":"https://pymewebpro.com/guides/ferias-eventos/"}]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
+{"@type":"Question","name":"¿Cuándo le conviene a una pyme invertir en ferias y eventos?","acceptedAnswer":{"@type":"Answer","text":"Cuando su producto necesita demostración física, ticket sobre $2 millones COP, o el comprador decide con varias reuniones. No vale para consumo masivo de impulso o cuando su CAC ya está bajo $50.000 COP."}},
+{"@type":"Question","name":"¿Qué tipos de evento hay en Colombia y cuál le sirve a una pyme?","acceptedAnswer":{"@type":"Answer","text":"Ferias internacionales (costosas, alto impacto premium), nacionales sectoriales (sweet spot B2B), meetups o conferencias de nicho (baratas, audiencias específicas), eventos locales o de barrio (servicios locales). Empiece por nicho."}},
+{"@type":"Question","name":"¿Cuáles son las ferias y eventos recurrentes más importantes por ciudad en Colombia?","acceptedAnswer":{"@type":"Answer","text":"Medellín: Colombiamoda (julio), Colombiatex (enero), Feria de las Flores. Bogotá: Andina-Pack, Andigráfica, ExpoConstrucción, Agroexpo. Barranquilla: Carnaval (febrero), logística portuaria. Cali: feria del azúcar, CES. Cartagena: congresos B2B."}},
+{"@type":"Question","name":"¿Conviene poner stand, ser sponsor, hablar en panel o solo asistir a un evento?","acceptedAnswer":{"@type":"Answer","text":"Solo asistir si explora o presupuesto bajo. Panel da autoridad por menos plata. Sponsor si branding pesa más que leads. Stand solo con 2 personas todo el evento."}},
+{"@type":"Question","name":"¿Cómo se prepara una pyme para un evento las 4 semanas antes?","acceptedAnswer":{"@type":"Answer","text":"Semana 4: lista de 20 a 50 prospectos. Semana 3: 5 a 10 reuniones de 15 min agendadas. Semana 2: imprimir material y ensayar pitch. Semana 1: confirmar reuniones, QR único de captura."}},
+{"@type":"Question","name":"¿Cómo se capturan leads en vivo durante un evento de forma efectiva?","acceptedAnswer":{"@type":"Answer","text":"QR único con formulario corto (nombre, empresa, WhatsApp, qué busca) y tag automático. Email de confirmación automático en menos de 5 minutos. No recolecte tarjetas físicas."}},
+{"@type":"Question","name":"¿Cómo se hace follow-up después de un evento para que los leads no se enfríen?","acceptedAnswer":{"@type":"Answer","text":"En menos de 48 horas, mensaje personal por WhatsApp con próximo paso concreto. Después de 48 horas la conversión cae 60 a 80%. Bloquee los 2 días siguientes al evento solo para follow-up."}},
+{"@type":"Question","name":"¿Cuánto cuesta realmente participar en una feria sectorial en Colombia?","acceptedAnswer":{"@type":"Answer","text":"Solo asistencia: $0 a $400.000 COP/día. Stand pequeño (9 m²) feria nacional: $6 a $12 millones COP completo. Stand mediano premium internacional: $20 a $60 millones COP. Sume 30% buffer."}},
+{"@type":"Question","name":"¿Qué errores desperdician la inversión cuando se va a una feria o evento?","acceptedAnswer":{"@type":"Answer","text":"Ir sin lista de prospectos, esperar pasivamente en el stand, no llevar QR, demorar el follow-up, llevar material genérico, ir solo, no medir ROI por evento."}},
+{"@type":"Question","name":"¿Cuál es un plan de 90 días para preparar y aprovechar bien una feria?","acceptedAnswer":{"@type":"Answer","text":"Día 90 a 60: elegir, objetivo, presupuesto con buffer 30%. Día 60 a 30: reservar espacio, demo, anuncio. Día 30 a 0: agendar reuniones, ensayar, montar QR. Post: follow-up 100% en 48 horas, ROI a los 30 días."}}
+]}
+</script>
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;overflow-x:clip}
@@ -106,6 +121,10 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .prose a{color:#FF5C2E;font-weight:600;border-bottom:1.5px solid rgba(255,92,46,.3)}
 .prose hr{border:0;border-top:1px solid rgba(27,20,16,.1);margin:3rem 0}
 .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid #FF5C2E;background:rgba(255,92,46,.05);font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.55;color:#3a2a1f;border-radius:0 10px 10px 0}
+.qa{margin:3rem 0 0}
+.qa h2{margin-top:0}
+.qa+*{margin-top:0}
+.direct-answer{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:18px;line-height:1.55;color:#1B1410;background:#FFF1EC;border-left:4px solid #FF5C2E;padding:14px 18px 14px 20px;border-radius:0 12px 12px 0;margin:.6rem 0 1.5rem}
 .prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:rgba(27,20,16,.06);padding:.1em .4em;border-radius:5px;color:#1B1410}
 .callout{margin:1.5rem 0;background:#F4ECDF;border:1px solid rgba(27,20,16,.08);border-radius:14px;padding:22px 26px}
 .callout .label{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#FF5C2E;margin:0 0 .5rem}
@@ -208,7 +227,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <blockquote>El online está tan ruidoso que un apretón de manos en una feria vale más que 50 impresiones de un anuncio. Pero solo si ese apretón se convierte en email, llamada de seguimiento, y propuesta enviada antes del lunes siguiente.</blockquote>
 
-<h2 id="cuando"><span class="num">01</span> Cuándo los eventos valen la pena</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuándo le conviene a una pyme invertir en ferias y eventos?">
+<h2 id="cuando"><span class="num">01</span> ¿Cuándo le conviene a una pyme invertir en ferias y eventos?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Las ferias valen la pena cuando su producto necesita demostración física, su ticket es alto (sobre $2 millones COP), o su comprador típico decide con varias reuniones y un evento le condensa 20 prospectos en un día. No valen la pena cuando su producto es consumo masivo de impulso o cuando su CAC actual ya está bajo $50.000 COP por otros canales.</p>
+</div>
+</div>
 <div class="dodont">
 <div class="col do"><h4>Sí valen si</h4><ul>
 <li>Su ticket es <strong>$2 millones COP o más</strong>.</li>
@@ -228,7 +253,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="tipos"><span class="num">02</span> Tipos de evento por nivel</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué tipos de evento hay en Colombia y cuál le sirve a una pyme?">
+<h2 id="tipos"><span class="num">02</span> ¿Qué tipos de evento hay en Colombia y cuál le sirve a una pyme?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Cuatro niveles: ferias internacionales tipo Colombiamoda o Andina-Pack (costosas, alto impacto si su producto es premium), ferias nacionales sectoriales (Construcción, Cosmoprof, Andiplast: el sweet spot para B2B), meetups o conferencias de nicho (más baratas, audiencias muy específicas) y eventos locales o de barrio (excelentes para servicios locales). Empiece con uno de nicho antes de pagar un stand en una feria grande.</p>
+</div>
+</div>
 <div class="compare"><table>
 <thead><tr><th>Nivel</th><th>Ejemplos</th><th>Costo total típico</th></tr></thead>
 <tbody>
@@ -242,7 +273,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="calendario"><span class="num">03</span> Calendario clave por ciudad (eventos recurrentes)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuáles son las ferias y eventos recurrentes más importantes por ciudad en Colombia?">
+<h2 id="calendario"><span class="num">03</span> ¿Cuáles son las ferias y eventos recurrentes más importantes por ciudad en Colombia?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Medellín concentra Colombiamoda (julio), Colombiatex (enero) y Feria de las Flores. Bogotá tiene Corferias casi todo el año: Andina-Pack, Andigráfica, ExpoConstrucción, Agroexpo. Barranquilla brilla en Carnaval (febrero) y eventos de logística portuaria. Cali es fuerte en feria del azúcar y eventos de salud (CES). Cartagena hace congresos B2B en Centro de Convenciones todo el año.</p>
+</div>
+</div>
 <h3>Medellín</h3>
 <ul>
 <li><strong>Colombiamoda</strong> (julio): moda, textiles, retail. Inexpoteca + Plaza Mayor.</li>
@@ -273,7 +310,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="formato"><span class="num">04</span> Stand vs sponsor vs panel vs solo asistir</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Conviene poner stand, ser sponsor, hablar en panel o solo asistir a un evento?">
+<h2 id="formato"><span class="num">04</span> ¿Conviene poner stand, ser sponsor, hablar en panel o solo asistir a un evento?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Solo asistir cuando recién explora el evento o su presupuesto es bajo (under $2 millones COP). Hablar en panel da más autoridad por menos plata que un stand. Sponsor está bien si el branding pesa más que los leads. Stand solo si puede atenderlo con 2 personas todo el evento. La regla: gane primero asistiendo, después ponga stand sabiendo qué prospectos quiere.</p>
+</div>
+</div>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Asistir solo (gratis a $400.000 COP entrada)</h4><p>Mejor para hacer networking, conocer competencia, evaluar si vale la pena un stand el próximo año. NO espere generar leads sin un material físico claro.</p></div>
 <div class="step"><span class="n">2</span><h4>Stand pequeño ($5 a $25M COP)</h4><p>Espacio de 9 a 18m². Para 2 a 3 personas. Funciona si tiene producto demostrable.</p></div>
@@ -284,7 +327,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="preparacion"><span class="num">05</span> Preparación pre-evento</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se prepara una pyme para un evento las 4 semanas antes?">
+<h2 id="preparacion"><span class="num">05</span> ¿Cómo se prepara una pyme para un evento las 4 semanas antes?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Semana 4 antes: revise la lista de expositores y arme una lista de 20 a 50 prospectos a quienes va a buscar. Semana 3: agende 5 a 10 reuniones de 15 minutos por adelantado por LinkedIn o email. Semana 2: imprima material, prepare un demo claro, ensaye el pitch. Semana 1: confirme reuniones, prepare un QR único de captura de leads.</p>
+</div>
+</div>
 <h3>4 semanas antes</h3>
 <ul>
 <li>Defina objetivos: # leads, # demos agendadas, # reuniones cerradas, # contactos C-level.</li>
@@ -302,7 +351,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="captura"><span class="num">06</span> Captura de leads en vivo</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se capturan leads en vivo durante un evento de forma efectiva?">
+<h2 id="captura"><span class="num">06</span> ¿Cómo se capturan leads en vivo durante un evento de forma efectiva?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Use un QR único que abra un formulario corto (nombre, empresa, WhatsApp, qué busca) y tag automático "evento-X". Combine con un incentivo (sorteo de algo útil, descuento, demo personalizada). NO recolecte tarjetas físicas: terminan perdidas. Cada lead que entra al formulario debería recibir un email de confirmación automático en menos de 5 minutos.</p>
+</div>
+</div>
 <h3>Métodos efectivos</h3>
 <div class="channel-meta">
 <div class="row"><span class="k">QR a formulario web</span><span class="v">El estándar 2026. Conecte a Brevo, ConvertKit, etc. Captura nombre + email + teléfono.</span></div>
@@ -322,7 +377,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="followup"><span class="num">07</span> Follow-up en 48 horas (donde se gana o se pierde)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se hace follow-up después de un evento para que los leads no se enfríen?">
+<h2 id="followup"><span class="num">07</span> ¿Cómo se hace follow-up después de un evento para que los leads no se enfríen?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Dentro de 48 horas mande mensaje personal por el canal que el lead prefirió (casi siempre WhatsApp), refresque qué conversaron y pregunte cuál es el siguiente paso concreto. Después de 48 horas el lead ya olvidó la conversación y la conversión cae 60 a 80%. Bloquee 2 días después del evento solo para follow-up.</p>
+</div>
+</div>
 <p>El 80% del valor de la feria se cosecha en las 48 horas posteriores. El equipo top hace esto:</p>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Mismo día o siguiente: WhatsApp a cada lead</h4><p>Mensaje personalizado, mencionando algo de la conversación. "Hola Andrés, fue un gusto conversar hoy sobre tu reto de [X]. Aquí va la propuesta que mencionamos."</p></div>
@@ -334,7 +395,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="costos"><span class="num">08</span> Costos reales en COP (sin sorpresas)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuánto cuesta realmente participar en una feria sectorial en Colombia?">
+<h2 id="costos"><span class="num">08</span> ¿Cuánto cuesta realmente participar en una feria sectorial en Colombia?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Solo asistencia: $0 a $400.000 COP en boleta y viáticos por día. Stand pequeño (9 m²) en feria nacional: $6 a $12 millones COP por todo concepto (espacio, montaje, banner, viáticos, personal). Stand mediano premium en evento internacional: $20 a $60 millones COP. Sume siempre 30% adicional para gastos no previstos (impresiones de último minuto, parqueadero, comidas).</p>
+</div>
+</div>
 <p>Lista de partidas que la gente olvida:</p>
 <div class="channel-meta">
 <div class="row"><span class="k">Stand (espacio)</span><span class="v">$3 a $40M COP según tamaño + ciudad</span></div>
@@ -349,7 +416,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="errores"><span class="num">09</span> Errores que desperdician la inversión</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué errores desperdician la inversión cuando se va a una feria o evento?">
+<h2 id="errores"><span class="num">09</span> ¿Qué errores desperdician la inversión cuando se va a una feria o evento?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Los errores típicos: ir sin lista de prospectos predefinida, montar stand y esperar pasivamente, no llevar QR de captura, demorar el follow-up más de 48 horas, llevar material genérico en lugar de demo, ir solo (no se puede atender stand y hacer reuniones simultáneamente) y no medir el ROI específico de cada evento al cierre.</p>
+</div>
+</div>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Ir sin objetivo claro</h4><p>"Vamos a ver qué pasa". Resultado: $10M COP gastados, 5 tarjetas en el bolsillo.</p></div>
 <div class="step"><span class="n">2</span><h4>No pre-agendar</h4><p>30 minutos antes del evento no se consiguen reuniones con C-levels.</p></div>
@@ -362,7 +435,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="plan-90"><span class="num">10</span> Plan de evento, 90 días</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuál es un plan de 90 días para preparar y aprovechar bien una feria?">
+<h2 id="plan-90"><span class="num">10</span> ¿Cuál es un plan de 90 días para preparar y aprovechar bien una feria?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Día 90 a 60 antes: elija evento, defina objetivo (leads, branding, alianzas), arme presupuesto en COP con buffer 30%. Día 60 a 30: reserve espacio si va con stand, contrate diseño, prepare demo y material, anuncie asistencia en redes. Día 30 a 0: agende reuniones, ensaye pitch, monte QR de captura. Días 1 a 3 después del evento: follow-up 100% de leads en 48 horas, cierre reporte de ROI a los 30 días.</p>
+</div>
+</div>
 <h3>Día -90 a -60</h3>
 <ul>
 <li>Selección de evento y reserva de stand.</li>

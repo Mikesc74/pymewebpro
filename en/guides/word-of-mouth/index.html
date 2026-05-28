@@ -36,6 +36,22 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pymewebpro.com/en/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://pymewebpro.com/en/guides/traffic/"},{"@type":"ListItem","position":3,"name":"Word-of-mouth and formal referrals: the highest-ROI channel","item":"https://pymewebpro.com/en/guides/word-of-mouth/"}]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[
+{"@type":"Question","name":"Why does a referral beat any customer from a paid channel?","acceptedAnswer":{"@type":"Answer","text":"A referral arrives pre-qualified and with borrowed trust, converts 4 to 7 times better than a cold lead and spends 25 to 50% more on the first purchase. CAC is close to zero and retention is higher."}},
+{"@type":"Question","name":"What are the 4 types of referral and why aren't they the same?","acceptedAnswer":{"@type":"Answer","text":"Spontaneous organic, bilateral incentivized, B2B partnership and public review. Each needs its own mechanic: outstanding service, formal program, simple contract, and systematic ask respectively."}},
+{"@type":"Question","name":"What are the 5 steps of a referral system that actually works?","acceptedAnswer":{"@type":"Answer","text":"Deliver a service worth recommending, ask at the moment of peak happiness, make forwarding easy with a pre-written WhatsApp template, offer a bilateral incentive with a clear number, and pay the incentive within 48 hours."}},
+{"@type":"Question","name":"How do you ask for a referral without it being awkward?","acceptedAnswer":{"@type":"Answer","text":"Ask for a specific name, not generic. Use a short line like 'Do you know someone who has the same problem?' right after the service. Hand the customer a ready-to-forward WhatsApp template."}},
+{"@type":"Question","name":"Which referral incentives work in Colombia and which don't?","acceptedAnswer":{"@type":"Answer","text":"Two-sided cash or store credit works best: $30.000 to $80.000 COP for the referrer + 10 to 15% off for the new customer. What doesn't work: generic gifts, unclear points, or one-sided incentives."}},
+{"@type":"Question","name":"How do you track referrals without spending money on software?","acceptedAnswer":{"@type":"Answer","text":"A spreadsheet with referrer, referred, date, closed yes/no and incentive paid is enough. Ask every new customer who told them about you and record the answer immediately."}},
+{"@type":"Question","name":"How does a B2B referral program differ from a consumer one?","acceptedAnswer":{"@type":"Answer","text":"In consumer, small fast incentives work. In B2B, referrals come from conversations; 5 to 10% commission on the first contract plus a personal thank-you note pays more than a points program."}},
+{"@type":"Question","name":"How do you set up formal business-to-business referral partnerships?","acceptedAnswer":{"@type":"Answer","text":"Identify 5 to 10 complementary businesses, propose a written agreement with a clear commission (10 to 25%), a unique tracking link per partner and payout within 30 days."}},
+{"@type":"Question","name":"How do online reviews fit into a referral strategy?","acceptedAnswer":{"@type":"Answer","text":"A review on Google, Facebook or a vertical site is a public referral that keeps working. Ask at the end of the service with a short link and respond to every review within 48 hours."}},
+{"@type":"Question","name":"Which common mistakes leave money on the table in a referral program?","acceptedAnswer":{"@type":"Answer","text":"Never asking, only asking when there's a problem, offering one-sided incentives, having no tracking, taking too long to pay the incentive and not asking the new customer where they came from."}},
+{"@type":"Question","name":"What does a 90-day plan look like to launch a referral program in an SMB?","acceptedAnswer":{"@type":"Answer","text":"Month 1: define incentive, build template, start asking. Month 2: ask every active customer one by one. Month 3: build 2 to 3 partnerships and measure CAC vs paid channels."}}
+]}
+</script>
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;overflow-x:clip}
@@ -106,6 +122,10 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .prose a{color:#FF5C2E;font-weight:600;border-bottom:1.5px solid rgba(255,92,46,.3)}
 .prose hr{border:0;border-top:1px solid rgba(27,20,16,.1);margin:3rem 0}
 .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid #FF5C2E;background:rgba(255,92,46,.05);font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.55;color:#3a2a1f;border-radius:0 10px 10px 0}
+.qa{margin:3rem 0 0}
+.qa h2{margin-top:0}
+.qa+*{margin-top:0}
+.direct-answer{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:18px;line-height:1.55;color:#1B1410;background:#FFF1EC;border-left:4px solid #FF5C2E;padding:14px 18px 14px 20px;border-radius:0 12px 12px 0;margin:.6rem 0 1.5rem}
 .prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:rgba(27,20,16,.06);padding:.1em .4em;border-radius:5px;color:#1B1410}
 .callout{margin:1.5rem 0;background:#F4ECDF;border:1px solid rgba(27,20,16,.08);border-radius:14px;padding:22px 26px}
 .callout .label{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#FF5C2E;margin:0 0 .5rem}
@@ -210,7 +230,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <blockquote>Referrals aren't magic or luck. They're a system with 5 steps. If you do them, they come. If you don't, they don't.</blockquote>
 
-<h2 id="why"><span class="num">01</span> Why referrals beat any paid channel</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="Why does a referral beat any customer from a paid channel?">
+<h2 id="why"><span class="num">01</span> Why does a referral beat any customer from a paid channel?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">A referral arrives pre-qualified and with borrowed trust, so it converts 4 to 7 times better than a cold lead and spends 25 to 50% more on the first purchase. CAC is close to zero and retention is higher. Any SMB with active customers is leaving money on the table without an explicit referral system.</p>
+</div>
+</div>
 <p>Three structural advantages:</p>
 <ol>
 <li><strong>They convert 3 to 5 times more.</strong> A referred customer arrives with pre-built trust. They've already made the decision, they just need the final nudge.</li>
@@ -221,7 +247,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="types"><span class="num">02</span> The 4 types of referral (not the same)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="What are the 4 types of referral and why aren't they the same?">
+<h2 id="types"><span class="num">02</span> What are the 4 types of referral and why aren't they the same?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">There are four: spontaneous organic (the customer talks unprompted), bilateral incentivized (both sides get something), B2B partnership (another business sends you customers) and public review (Google, Facebook, vertical sites). Each needs its own mechanic: organic from outstanding service, incentivized from a formal program, B2B from a simple contract, reviews from a systematic ask.</p>
+</div>
+</div>
 <div class="compare"><table>
 <thead><tr><th>Type</th><th>Who refers</th><th>How to activate</th></tr></thead>
 <tbody>
@@ -235,7 +267,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="system"><span class="num">03</span> The 5-step system</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="What are the 5 steps of a referral system that actually works?">
+<h2 id="system"><span class="num">03</span> What are the 5 steps of a referral system that actually works?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Five steps: (1) deliver a service worth recommending, (2) ask for the referral at the moment of peak happiness (right after delivering value), (3) make forwarding easy with a pre-written WhatsApp template, (4) offer a bilateral incentive with a clear number and (5) close the loop by thanking and paying the incentive within 48 hours.</p>
+</div>
+</div>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Identify the moment of maximum satisfaction</h4><p>When is the customer happiest with your work? For a clinic: seeing the result. For a lawyer: winning the case. For a restaurant: end of a good meal. That's the moment to ask.</p></div>
 <div class="step"><span class="n">2</span><h4>Build the script</h4><p>One short, natural line your team can say without feeling salesy. "If you know anyone who needs [your service], I'd really appreciate it if you'd pass them my WhatsApp."</p></div>
@@ -246,7 +284,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="ask"><span class="num">04</span> How to ask without awkwardness</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How do you ask for a referral without it being awkward for you or the customer?">
+<h2 id="ask"><span class="num">04</span> How do you ask for a referral without it being awkward for you or the customer?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Ask for a specific name, not "anyone who comes to mind." Use a short line like "Do you know someone who has the same problem?" right after the service. Hand the customer a ready-to-forward WhatsApp template. Awkwardness almost always comes from asking generically, at the wrong moment, or without giving the referred person something useful.</p>
+</div>
+</div>
 <p>The #1 emotional block: "I feel bad asking the customer". Three framings that unblock it:</p>
 <h3>Framing 1: the small favor</h3>
 <p>"If you know anyone with a similar problem, I'd appreciate you mentioning my WhatsApp. You don't have to say anything about me, just tell them I exist." Low ask, no commitment.</p>
@@ -258,7 +302,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="incentives"><span class="num">05</span> Incentives that work in Colombia</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="Which referral incentives work in Colombia and which don't?">
+<h2 id="incentives"><span class="num">05</span> Which referral incentives work in Colombia and which don't?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Two-sided incentives in cash or store credit work best: $30.000 to $80.000 COP for the referrer + 10 to 15% off for the new customer. For premium services, a free month or upgrade. What doesn't work: generic physical gifts, point systems with unclear redemption, or one-sided incentives. Pay fast (under 48 hours) to reinforce the behavior.</p>
+</div>
+</div>
 <p>Not every incentive motivates. In the Colombian market these work:</p>
 <div class="channel-meta">
 <div class="row"><span class="k">Discount to referee</span><span class="v">10 to 20% off their next purchase. Low risk, high effect.</span></div>
@@ -272,7 +322,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="tracking"><span class="num">06</span> Tracking without software (and with software)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How do you track referrals without spending money on software?">
+<h2 id="tracking"><span class="num">06</span> How do you track referrals without spending money on software?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">For a small SMB, a spreadsheet with columns "referrer / referred / date / closed yes or no / incentive paid" is enough. The key is to ask every new customer "who told you about us?" and record the answer immediately. Once you hit 10+ referrals per month, tools like Friendbuy, ReferralCandy or a simple script in your CRM save time.</p>
+</div>
+</div>
 <h3>No-software version (to start)</h3>
 <p>A Google Sheets sheet with these columns:</p>
 <div class="codeblk">
@@ -290,7 +346,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="b2b-consumer"><span class="num">07</span> B2B vs consumer: two different games</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How does a B2B referral program differ from a consumer one?">
+<h2 id="b2b-consumer"><span class="num">07</span> How does a B2B referral program differ from a consumer one?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">In consumer, small fast incentives drive action: $30.000 COP off triggers the share. In B2B, where tickets are higher, referrals almost always come from a conversation, not a formal program; offering 5 to 10% commission on the first contract plus a personal thank-you note tends to pay more than a points program.</p>
+</div>
+</div>
 <div class="dodont">
 <div class="col do"><h4>B2B (services, consulting, SaaS)</h4><ul>
 <li>Direct ask, in-person meeting or call.</li>
@@ -308,7 +370,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="partners"><span class="num">08</span> Business-to-business referrals (partnerships)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How do you set up formal business-to-business referral partnerships?">
+<h2 id="partners"><span class="num">08</span> How do you set up formal business-to-business referral partnerships?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Identify 5 to 10 complementary businesses that share your ideal customer, propose a written agreement with a clear commission (10 to 25% on the first payment), a unique tracking link or code per partner and payout within 30 days. Start with one or two, build trust and scale.</p>
+</div>
+</div>
 <p>The most underrated move. Find businesses that serve your same customer for a different problem. Agree to refer each other.</p>
 <h3>Natural alliance examples</h3>
 <ul>
@@ -327,7 +395,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="reviews"><span class="num">09</span> Online reviews: the public referral</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How do online reviews fit into a referral strategy?">
+<h2 id="reviews"><span class="num">09</span> How do online reviews fit into a referral strategy?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">A review on Google, Facebook or a vertical site (Doctoralia, TripAdvisor) is a public referral that keeps working long after your customer is gone. Ask at the end of the service with a short link and respond to every review (positive or negative) within 48 hours. A page with 80 reviews at 4.8 stars converts more visitors than any ad.</p>
+</div>
+</div>
 <p>A Google review is a permanent referral. Works 24/7, reaches strangers, adds local SEO.</p>
 <p>For the full reviews system, see the <a href="/en/guides/seo-local/">local SEO and Google Business Profile guide</a>. Word-of-mouth-applied summary:</p>
 <ul>
@@ -338,7 +412,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="mistakes"><span class="num">10</span> Mistakes that leave money on the table</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="Which common mistakes leave money on the table in a referral program?">
+<h2 id="mistakes"><span class="num">10</span> Which common mistakes leave money on the table in a referral program?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">The common mistakes: never asking, only asking when there's a problem, offering one-sided incentives, having no tracking, taking too long to pay the incentive and not asking the new customer where they came from. Each one shuts off the loop.</p>
+</div>
+</div>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Not asking</h4><p>The #1. Spontaneous referrals are 30% of the potential. The other 70% requires an ask.</p></div>
 <div class="step"><span class="n">2</span><h4>Asking the wrong customer</h4><p>An upset customer, mid-complaint, or who just paid their first invoice. Bad timing.</p></div>
@@ -350,7 +430,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="plan-90"><span class="num">11</span> 90-day plan</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="What does a 90-day plan look like to launch a referral program in an SMB?">
+<h2 id="plan-90"><span class="num">11</span> What does a 90-day plan look like to launch a referral program in an SMB?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Month 1: define the bilateral incentive, build the WhatsApp template, and start asking every new customer "who told you about us?". Month 2: ask every active customer one by one and personally thank each one. Month 3: build 2 to 3 partnerships with complementary businesses and measure CAC versus paid channels to know how high the incentive can go and still be profitable.</p>
+</div>
+</div>
 <h3>Month 1: Basic system</h3>
 <ul>
 <li>Create tracking sheet (Google Sheets).</li>

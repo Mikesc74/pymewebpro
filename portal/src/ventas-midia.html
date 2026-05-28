@@ -23,8 +23,13 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 @media(max-width:680px){.topbar .search{min-width:130px;margin-left:.5rem}}
 .wrap{max-width:1680px;margin:0 auto;padding:1.5rem 1.4rem 5rem}
 .intro{color:var(--ink2);margin:.2rem 0 1.4rem;font-size:.95rem}
-.cols{display:flex;gap:.6rem;padding-bottom:.6rem;align-items:flex-start}
-.col{flex:1 1 0;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.7rem .55rem}
+/* `align-items: stretch` (the flex default) makes every column the same
+   height as the tallest one, so short columns still receive drops where the
+   user's cursor lands · without it a column with 2 cards stopped 1000px
+   above where a 20-card column's bottom was. min-height also guarantees a
+   sensible drop zone when ALL columns are short. */
+.cols{display:flex;gap:.6rem;padding-bottom:.6rem;align-items:stretch}
+.col{flex:1 1 0;min-width:0;min-height:60vh;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.7rem .55rem}
 .col.drop-hot{border-color:var(--accent);box-shadow:0 0 0 2px rgba(210,74,29,.28)}
 .col h2{font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;margin:0 0 .2rem;display:flex;align-items:center;gap:.5rem}
 .col .sub{color:var(--mute);font-size:.8rem;margin:0 0 .9rem}
@@ -130,15 +135,15 @@ button.act.danger:hover{background:#c0392b;color:#fff;border-color:#c0392b}
 .alert{background:var(--ink);color:var(--paper);border-radius:12px;padding:.75rem 1.1rem;margin:0 0 1rem;font-weight:600;display:flex;gap:.5rem;align-items:center}
 .alert b{color:#F2896A}
 .loading{text-align:center;color:var(--mute);padding:4rem}
-.modal-bg{position:fixed;inset:0;background:rgba(26,22,18,.45);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
-.modal{background:var(--paper);border-radius:14px;max-width:540px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
-.modal .mh{background:var(--ink);color:var(--paper);padding:.8rem 1.1rem;display:flex;align-items:center;justify-content:space-between}
+.modal-bg{position:fixed;inset:0;background:rgba(26,22,18,.45);display:flex;align-items:flex-start;justify-content:center;z-index:100;padding:1rem;overflow-y:auto}
+.modal{background:var(--paper);border-radius:14px;max-width:540px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column;max-height:calc(100vh - 2rem);margin:auto 0}
+.modal .mh{background:var(--ink);color:var(--paper);padding:.8rem 1.1rem;display:flex;align-items:center;justify-content:space-between;flex:none}
 .modal .mh h3{margin:0;font-size:1rem}
 .modal .mh button{background:none;border:none;color:rgba(242,233,213,.7);font-size:1.3rem;cursor:pointer;line-height:1}
-.modal .mb{padding:1.1rem}
+.modal .mb{padding:1.1rem;overflow-y:auto;flex:1 1 auto;min-height:0}
 .modal textarea{width:100%;min-height:170px;font:inherit;font-size:.92rem;padding:.7rem;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);resize:vertical}
 .modal .note{font-size:.78rem;color:var(--mute);margin:.5rem 0 0}
-.modal .mf{display:flex;gap:.5rem;justify-content:flex-end;padding:.9rem 1.1rem;border-top:1px solid var(--line);flex-wrap:wrap}
+.modal .mf{display:flex;gap:.5rem;justify-content:flex-end;padding:.9rem 1.1rem;border-top:1px solid var(--line);flex-wrap:wrap;flex:none;background:var(--paper)}
 .modal .field{margin:0 0 .7rem}
 .modal label{display:block;font-size:.78rem;color:var(--mute);margin:0 0 .25rem;text-transform:uppercase;letter-spacing:.04em}
 .modal input,.modal select{width:100%;font:inherit;padding:.5rem .6rem;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
@@ -154,12 +159,32 @@ button.act.danger:hover{background:#c0392b;color:#fff;border-color:#c0392b}
 .card.viewed{border:1px solid #1f4e79;border-left:4px solid #1f4e79;background:#cfe0f5}
 .card.viewed .biz,.card.viewed .meta,.card.viewed .cmini{color:var(--ink)}
 .chip.view{color:#1f4e79;background:rgba(31,78,121,.14)}
+/* Mockup v2 card states · colour + shape + label for colour-blind safety. */
+.card.mock-generating{border:1px solid var(--accent);border-left:4px solid var(--accent);background:#FFE9DF;animation:mockPulse 1.6s ease-in-out infinite}
+.card.mock-generating .biz,.card.mock-generating .meta,.card.mock-generating .cmini{color:var(--ink)}
+.card.mock-ready{border:1px solid #1F5B2A;border-left:4px solid #1F5B2A;background:#DDEFD6}
+.card.mock-ready .biz,.card.mock-ready .meta,.card.mock-ready .cmini{color:var(--ink)}
+.card.mock-review{border:1px solid #92400E;border-left:4px solid #92400E;background:#FFF4E5}
+.card.mock-review .biz,.card.mock-review .meta,.card.mock-review .cmini{color:var(--ink)}
+.chip.mock-ready{color:#1F5B2A;background:rgba(31,91,42,.14)}
+.chip.mock-review{color:#92400E;background:rgba(146,64,14,.14)}
+.chip.mock-generating{color:var(--accent2);background:rgba(210,74,29,.14)}
+@keyframes mockPulse{0%,100%{box-shadow:0 0 0 0 rgba(210,74,29,.45)}50%{box-shadow:0 0 0 6px rgba(210,74,29,.05)}}
 .card.wait{opacity:.82}
 .chip{display:inline-flex;align-items:center;gap:.22rem;font-size:.64rem;font-weight:800;letter-spacing:.03em;padding:.12rem .45rem;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
 .chip.alert{color:var(--red);background:rgba(153,27,27,.08)}
 .chip.wait{color:var(--mute);background:rgba(26,22,18,.05);border-style:dashed}
 .chip.won{color:var(--green);background:rgba(22,101,52,.1)}
 .chip.lost{color:var(--mute);background:rgba(26,22,18,.07)}
+/* Multi-select pain-reason picker · two-column checkbox grid that lives
+   inline in the lead-detail modal so it's always visible and 1-click. */
+.pain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.32rem .8rem;padding:.6rem .8rem;background:rgba(210,74,29,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin:0 0 .8rem}
+.pain-grid .pain-hdr{grid-column:1 / -1;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:700;margin:0 0 .15rem;display:flex;align-items:center;justify-content:space-between}
+.pain-grid .pain-hdr .pain-cnt{font-size:.7rem;color:var(--accent2);font-weight:700;letter-spacing:0;text-transform:none}
+.pain-grid label{display:flex;align-items:center;gap:.42rem;font-size:.85rem;color:var(--ink2);cursor:pointer;margin:0;padding:.15rem 0}
+.pain-grid label:hover{color:var(--ink)}
+.pain-grid input[type=checkbox]{width:auto;margin:0;flex:none}
+@media(max-width:480px){.pain-grid{grid-template-columns:1fr}}
 .movebar{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 0;align-items:center}
 .movebar .mlbl{font-size:.72rem;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-right:.2rem}
 .movebar .msep{flex:1}
@@ -190,6 +215,28 @@ var LEADS = [], CADENCE = [], BY_ID = {}, ACTS_BY_LEAD = {}, SEARCH = '', DEALS_
 // inside the monthly plans, not in the one-time proposal. Kept as an empty
 // array so the proposal builder still works (base-only quote).
 var ADDONS = [];
+// Pain reasons · the "why this prospect needs PymeWebPro" set. Codes here
+// MUST match the keys in PAIN_HINTS inside portal/src/outreach.js so the
+// front-end selection drives the AI's draft.
+var PAIN_REASONS = [
+  {k:'no_site',        l:'No website'},
+  {k:'old_site',       l:'Outdated website'},
+  {k:'broken_site',    l:'Broken / errors on site'},
+  {k:'not_mobile',     l:'Not mobile-friendly'},
+  {k:'slow_site',      l:'Very slow site'},
+  {k:'no_whatsapp',    l:'No WhatsApp button on site'},
+  {k:'no_products',    l:'Site doesn\'t show products / menu'},
+  {k:'no_seo',         l:'Invisible on Google'},
+  {k:'social_only',    l:'Only on social (IG / FB)'},
+  {k:'competitor_has', l:'Competitors have a real site'},
+];
+function painLabel(k){ for(var i=0;i<PAIN_REASONS.length;i++){ if(PAIN_REASONS[i].k===k) return PAIN_REASONS[i].l; } return ''; }
+// pain_reason is stored as a comma-joined list of codes (backwards-compat
+// with the original single-code values · "no_site" parses as ["no_site"]).
+// Use these two helpers as the source of truth on the front-end.
+function getPainList(lead){ var s=lead && lead.pain_reason; return s ? String(s).split(',').map(function(x){return x.trim();}).filter(Boolean) : []; }
+function joinPainList(arr){ var seen={}, out=[]; (arr||[]).forEach(function(c){ if(c && !seen[c]){ seen[c]=1; out.push(c); } }); return out.length ? out.join(',') : null; }
+
 // Stale prices that may appear in older suggested_pitch / AI-drafted notes.
 // Used to hide pitches that quote the wrong price (was $390k / $117k / $273k
 // before 2026-05; now $400k flat plus monthly plans).
@@ -460,14 +507,37 @@ function funnelStripHTML(){
   return '<div class="funnel">'+step('To contact',c.contact)+'<div class="farr">&rsaquo;</div>'+step('Follow-up',c.follow)+'<div class="farr">&rsaquo;</div>'+step('Mockup',c.mockup)+'<div class="farr">&rsaquo;</div>'+step('Proposal',c.prop)+'<div class="farr">&rsaquo;</div>'+step('Closing',c.close)+'<div class="farr">&rsaquo;</div>'+step('Won',c.won)+'</div>';
 }
 
+// Build a Google Maps / search URL for a lead. Prefers the place_id (most
+// accurate), falls back to a "business name + city" Google search so we
+// always have a way to verify the listing.
+function googleUrl(lead){
+  if(lead.place_id){ return 'https://www.google.com/maps/place/?q=place_id:'+encodeURIComponent(lead.place_id); }
+  var q = [lead.business_name, lead.city].filter(Boolean).join(' ').trim();
+  if(!q) return null;
+  return 'https://www.google.com/search?q='+encodeURIComponent(q);
+}
+
 // Build the chip row for the lead-detail header. Stage chip is always shown.
-// Heat, score, city and category chips appear when the field exists.
+// Heat, score, Google rating, city and category chips appear when the field
+// exists. The Google chip is a real <a> linking to Maps / search so Mike and
+// Santi can verify what the AI is pulling about the business.
 function detailChips(lead){
   var chips = [];
   var sk = stageKey(lead);
   chips.push('<span class="d-chip stage-'+sk+'">'+esc(stageLabel(lead))+'</span>');
   if(lead.heat){ chips.push('<span class="d-chip heat-'+esc(lead.heat)+'"><span class="d-ic">🌡</span>'+esc(lead.heat)+'</span>'); }
-  if(lead.score != null){ chips.push('<span class="d-chip"><span class="d-ic">⭐</span>'+esc(lead.score)+'</span>'); }
+  if(lead.score != null){ chips.push('<span class="d-chip"><span class="d-ic">⭐</span>Score '+esc(lead.score)+'</span>'); }
+  if(lead.rating != null){
+    var gurl = googleUrl(lead);
+    var reviewBit = (lead.review_count != null) ? ' ('+esc(lead.review_count)+')' : '';
+    var inner = '<span class="d-ic">⭐</span>'+esc(lead.rating)+reviewBit+' Google';
+    chips.push(gurl
+      ? '<a class="d-chip" href="'+esc(gurl)+'" target="_blank" rel="noopener" title="Open Google listing">'+inner+'</a>'
+      : '<span class="d-chip">'+inner+'</span>');
+  } else if(googleUrl(lead)){
+    // No rating on file but we can still link to Google for verification.
+    chips.push('<a class="d-chip" href="'+esc(googleUrl(lead))+'" target="_blank" rel="noopener" title="Search on Google"><span class="d-ic">🔎</span>Google</a>');
+  }
   if(lead.city){ chips.push('<span class="d-chip">'+esc(lead.city)+'</span>'); }
   if(lead.category){ chips.push('<span class="d-chip">'+esc(lead.category)+'</span>'); }
   var col = colOf(lead);
@@ -478,33 +548,38 @@ function detailChips(lead){
 
 function openDetail(lead){
   closePanel();
-  var cur = colOf(lead);
   var murl = DEMO_BASE + '/demo/' + lead.id;
-  // Forward-move buttons (skip the current column). Won + Lost are rendered
-  // separately on the right side of the move bar.
-  var fwdMoves = [['followup','Follow-up'],['mockup','Mockup'],['proposal','Proposal'],['close','Closing']]
-    .filter(function(m){return m[0]!==cur;})
-    .map(function(m){return '<button class="act" data-mv="'+m[0]+'">→ '+m[1]+'</button>';}).join('');
-  // Terminal-state buttons: only show the ones the lead isn't already in.
-  var termBtns = '';
-  if(!isWon(lead))  termBtns += '<button class="act" data-d="won">Won ✓</button>';
-  if(!isLost(lead)) termBtns += '<button class="act danger" data-mv="closed">Lost ✕</button>';
+  // Stage changes happen in the kanban (drag-and-drop). The detail modal is
+  // for context + actions on the current state only · no Move/Won/Lost
+  // buttons here.
 
   var acts=(ACTS_BY_LEAD[lead.id]||[]).slice().sort(function(a,b){return (b.occurred_at||b.created_at||0)-(a.occurred_at||a.created_at||0);});
+  // Full body shown · the modal body scrolls via `.mb { overflow-y:auto }`,
+  // so long notes/messages don't need to be truncated. House style: pre-wrap
+  // preserves line breaks the user typed.
   var tl = acts.length ? acts.map(function(a){
     var when=a.occurred_at||a.created_at||0;
-    var body=(a.body||'').toString(); if(body.length>240) body=body.slice(0,240)+'...';
+    var body=(a.body||'').toString();
     var who=ownerLabel(a.owner);
     var byBit=who?'<span class="tl-by">by '+esc(who)+'</span>':'';
     return '<div class="tl-item"><div class="tl-head"><span class="tl-kind">'+esc(kindLabel(a.kind))+'</span>'+byBit+'<span class="tl-when">'+esc(fmtWhen(when))+(a.id?' <button class="tl-del" data-actdel="'+esc(a.id)+'" title="Remove">&times;</button>':'')+'</span></div>'+(body?'<div class="tl-body">'+esc(body)+'</div>':'')+'</div>';
   }).join('') : '<div class="empty">No activity yet.</div>';
 
   var atMock = inMockup(lead), atProp = inProposal(lead), atClose = inClose(lead);
-  var showMock = atMock || atProp || atClose || mockupReady(lead);
+  var showMock = atMock || atProp || atClose || mockupReady(lead) || lead.mockup_status === 'ready' || lead.mockup_status === 'needs_review';
+  // Mockup v2 generation row · always visible. Status drives the label.
+  var mockGenLabel = 'Generate full mockup';
+  var mockGenSub = 'Scrapes Google + Instagram + their site, AI-writes the page, pulls real photos. Takes 1-3 minutes.';
+  if(lead.mockup_status === 'generating'){ mockGenLabel = 'Building... (1-3 min)'; mockGenSub = 'You can close this and come back. The card flashes orange while building.'; }
+  else if(lead.mockup_status === 'ready'){ mockGenLabel = 'Regenerate mockup'; mockGenSub = 'Mockup ready below. Regenerate if data changed.'; }
+  else if(lead.mockup_status === 'needs_review'){ mockGenLabel = 'Regenerate (thin data)'; mockGenSub = 'Built with limited scrape data. Add IG/site to the lead first for better results.'; }
+  var mockGenBlock = '<div style="background:var(--paper2);border-radius:8px;padding:.6rem .8rem;margin:0 0 .8rem"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><button class="act primary" data-d="mockbuild"'+(lead.mockup_status==='generating'?' disabled':'')+'>'+mockGenLabel+'</button><span style="flex:1;font-size:.78rem;color:var(--mute)">'+mockGenSub+'</span></div></div>';
   var mockBlock = showMock
     ? '<div class="d-mock"><span class="d-mlbl">Mockup</span><a href="'+esc(murl)+'?preview=1" target="_blank" rel="noopener">'+esc(murl)+'</a><button class="act ghost" data-d="copymock">Copy link</button></div>'
       + '<div class="d-lang"><span class="d-mlbl">Version</span><button class="act'+(lead.demo_lang==='en'?'':' primary')+'" data-lang="es">Local · Spanish</button><button class="act'+(lead.demo_lang==='en'?' primary':'')+'" data-lang="en">English (for expats)</button></div>'
     : '';
+  // Splice the generation row in front of the link row.
+  mockBlock = mockGenBlock + mockBlock;
 
   // Pitch · hide entirely if it contains stale pricing ($390k/$117k/$273k from
   // before the 2026-05 single-product pricing change). Otherwise show behind a
@@ -526,30 +601,93 @@ function openDetail(lead){
     + (atClose?'<button class="act" data-d="deposit">Charge deposit</button>':'')
     + '<button class="act" data-d="call">Book call</button></div>';
 
-  var bg=el('<div class="modal-bg"><div class="modal" style="max-width:600px"><div class="mh"><h3>'+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
+  var bg=el('<div class="modal-bg"><div class="modal" style="max-width:600px"><div class="mh"><h3>'+esc(leadName(lead))+'</h3><div style="display:flex;gap:.4rem;align-items:center"><button data-d="editlead" title="Edit lead info" style="background:none;border:1px solid rgba(242,233,213,.3);color:rgba(242,233,213,.85);padding:.25rem .6rem;border-radius:6px;font-size:.78rem;cursor:pointer;font-family:inherit">✎ Edit</button><button data-x="close">&times;</button></div></div>'
     + '<div class="mb">'
     + detailChips(lead)
     + '<div class="d-meta">'+esc(touchLine(lead))+'</div>'
     + contactRow(lead)
     + mockBlock
     + '<div class="d-next"><span class="d-nx-lbl">Next step</span><b>'+esc(nextStep(lead))+'</b></div>'
+    + (function(){
+        var picked = getPainList(lead);
+        var pickedSet = {}; picked.forEach(function(c){ pickedSet[c]=1; });
+        var boxes = PAIN_REASONS.map(function(p){
+          return '<label><input type="checkbox" data-pain="'+esc(p.k)+'"'+(pickedSet[p.k]?' checked':'')+'> '+esc(p.l)+'</label>';
+        }).join('');
+        var cnt = picked.length;
+        var hdr = '<div class="pain-hdr"><span>Why they need us</span><span class="pain-cnt" data-d="paincnt">'+(cnt?cnt+' selected':'pick one or more')+'</span></div>';
+        return '<div class="pain-grid">'+hdr+boxes+'</div>';
+      })()
     + pitchBlock
-    + '<div class="tl-head-row"><h4 class="tl-title">History</h4><button class="act ghost" data-d="addnote">+ Note</button></div>'
+    + '<div class="tl-head-row"><h4 class="tl-title">History</h4><button class="act ghost" data-d="logtouch">Log touch</button><button class="act ghost" data-d="addnote">+ Note</button></div>'
+    + '<div data-d="touchform" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.7rem;margin:0 0 .8rem">'
+      + '<div style="display:flex;gap:.4rem;margin-bottom:.5rem;align-items:center"><label style="margin:0;font-size:.72rem;color:var(--mute);text-transform:uppercase;letter-spacing:.04em">Channel</label><select data-d="touchchan" style="font:inherit;padding:.32rem .5rem;border:1px solid var(--line);border-radius:6px;background:#fff"><option value="whatsapp">WhatsApp</option><option value="email">Email</option><option value="call">Call</option><option value="meeting">Meeting</option></select></div>'
+      + '<textarea data-d="touchbody" placeholder="What you sent / said. Use this to record a touch you made outside the kanban..." style="width:100%;min-height:70px;padding:.5rem;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:.93rem;background:white;color:var(--ink);resize:vertical"></textarea>'
+      + '<div class="row" style="margin-top:.5rem;gap:.4rem"><button class="act primary" data-d="touchsave">Save touch</button><button class="act ghost" data-d="touchcancel">Cancel</button></div>'
+    + '</div>'
     + '<div data-d="noteform" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.7rem;margin:0 0 .8rem"><textarea data-d="notetext" placeholder="Write a note about this lead..." style="width:100%;min-height:80px;padding:.5rem;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:.93rem;background:white;color:var(--ink);resize:vertical"></textarea><div class="row" style="margin-top:.5rem;gap:.4rem"><button class="act primary" data-d="notesave">Save</button><button class="act ghost" data-d="notecancel">Cancel</button></div></div>'
     + tl
     + '</div>'
     + '<div class="mf" style="flex-direction:column;align-items:stretch;gap:.6rem">'
     + ctaRow
     + propRow
-    + '<div class="movebar"><span class="mlbl">Move to:</span>'+fwdMoves+'<span class="msep"></span>'+termBtns+'</div>'
     + '</div></div></div>');
   wireBgClose(bg, function(){ bg.remove(); });
   document.getElementById('modal-root').appendChild(bg);
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){b.onclick=function(){bg.remove();};});
+  var editB=bg.querySelector('[data-d="editlead"]'); if(editB) editB.onclick=function(){ bg.remove(); editLead(lead); };
+  // Multi-select pain picker · each checkbox PATCHes the lead with the new
+  // comma-joined list so the next AI draft pulls every selected pain from
+  // PAIN_HINTS in outreach.js. Debounced lightly so rapid clicks coalesce.
+  var painBoxes = bg.querySelectorAll('[data-pain]');
+  var painCnt = bg.querySelector('[data-d="paincnt"]');
+  var painSaveTimer = null;
+  function savePains(){
+    var codes = [];
+    painBoxes.forEach(function(b){ if(b.checked) codes.push(b.getAttribute('data-pain')); });
+    var joined = joinPainList(codes);
+    if(painCnt) painCnt.textContent = codes.length ? codes.length+' selected' : 'pick one or more';
+    clearTimeout(painSaveTimer);
+    painSaveTimer = setTimeout(function(){
+      api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({pain_reason:joined})})
+        .then(function(){ lead.pain_reason = joined; toast(codes.length ? 'Pains saved ('+codes.length+')' : 'Pains cleared'); })
+        .catch(function(err){ toast('Error: '+err.message, true); });
+    }, 250);
+  }
+  painBoxes.forEach(function(b){ b.addEventListener('change', savePains); });
   var msgB=bg.querySelector('[data-d="msg"]'); if(msgB) msgB.onclick=function(){bg.remove();aiDraft(lead, (lead.lead_stage==='sales_qualified'||lead.lead_stage==='proposal')?'close':(lead.last_touched_at?'follow':'first'));};
   var anB=bg.querySelector('[data-d="addnum"]'); if(anB) anB.onclick=function(){bg.remove();addNumber(lead);};
   var pToggle=bg.querySelector('[data-d="togglepitch"]'); var pBody=bg.querySelector('[data-d="pitchbody"]');
   if(pToggle && pBody){ pToggle.onclick=function(){ var open=pBody.style.display!=='none'; pBody.style.display=open?'none':'block'; pToggle.textContent=open?'Show suggested pitch':'Hide suggested pitch'; }; }
+  // "Log touch" · record a WhatsApp/Email/Call/Meeting that happened outside
+  // the kanban. POSTs to /api/admin/outreach/log-send which inserts the
+  // activity AND bumps the lead's last_touched_at + touches_count, so the
+  // card moves correctly through the cadence buckets.
+  var touchToggle=bg.querySelector('[data-d="logtouch"]'); var touchForm=bg.querySelector('[data-d="touchform"]');
+  var touchChan=bg.querySelector('[data-d="touchchan"]'); var touchBody=bg.querySelector('[data-d="touchbody"]');
+  if(touchToggle && touchForm && touchChan && touchBody){
+    touchToggle.onclick=function(){ touchForm.style.display='block'; touchToggle.style.display='none'; touchBody.focus(); };
+    bg.querySelector('[data-d="touchcancel"]').onclick=function(){ touchForm.style.display='none'; touchToggle.style.display=''; touchBody.value=''; };
+    bg.querySelector('[data-d="touchsave"]').onclick=async function(){
+      var chan=touchChan.value || 'whatsapp';
+      var txt=(touchBody.value||'').trim();
+      if(!txt){ toast('Add a short summary of what you sent / said', true); return; }
+      this.disabled=true; this.textContent='Saving...';
+      try{
+        // log-send is for whatsapp/email; for call/meeting we use the
+        // activities endpoint directly (still bumps last_touched_at via the
+        // backend's PATCH on the lead below).
+        if(chan==='whatsapp' || chan==='email'){
+          await api('/api/admin/outreach/log-send', {method:'POST', body: JSON.stringify({lead_id:lead.id, channel:chan, body:txt})});
+        } else {
+          await api('/api/admin/crm/activities', {method:'POST', body: JSON.stringify({lead_id:lead.id, kind:chan, subject:(chan==='call'?'Call':'Meeting'), body:txt, occurred_at:Date.now()})});
+          await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({last_touched_at:Date.now(), last_touched_kind:chan, touches_count:(lead.touches_count||0)+1})});
+        }
+        toast('Touch logged');
+        bg.remove(); loadAll();
+      }catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Save touch'; }
+    };
+  }
   var noteToggle=bg.querySelector('[data-d="addnote"]'); var noteForm=bg.querySelector('[data-d="noteform"]'); var noteText=bg.querySelector('[data-d="notetext"]');
   if(noteToggle && noteForm && noteText){
     noteToggle.onclick=function(){ noteForm.style.display='block'; noteToggle.style.display='none'; noteText.focus(); };
@@ -581,26 +719,59 @@ function openDetail(lead){
       toast('Removed');
     }catch(err){ toast('Error: '+err.message, true); }
   }; });
+  // Mockup v2 · long-running build (scrape + Claude + image bank).
+  // Fires the build, flips the card to `generating` state immediately, and
+  // re-loads the grid when the endpoint returns (1-3 minutes typical).
+  var mbB = bg.querySelector('[data-d="mockbuild"]');
+  if(mbB) mbB.onclick = async function(){
+    this.disabled = true; this.textContent = 'Building... (1-3 min)';
+    lead.mockup_status = 'generating'; render(); // flip the card visual right away
+    var regen = lead.mockup_status === 'ready' || lead.mockup_status === 'needs_review';
+    try{
+      var r = await api('/api/admin/cockpit/mockup-build/'+lead.id, {method:'POST', body: JSON.stringify({regenerate: regen})});
+      if(r && r.status === 'ready')        toast('Mockup ready');
+      else if(r && r.status === 'needs_review') toast('Built · needs review (thin data)', true);
+      else if(r && r.status === 'error')   toast('Build error: '+(r.diagnostics && r.diagnostics.copy_error || 'unknown'), true);
+      else                                  toast('Build returned: '+(r && r.status || 'unknown'));
+    }catch(err){ toast('Error: '+err.message, true); }
+    bg.remove(); loadAll();
+  };
   var cmB=bg.querySelector('[data-d="copymock"]'); if(cmB) cmB.onclick=function(){ try{ navigator.clipboard.writeText(murl); toast('Link copied'); }catch(e){ toast('Copy manually', true); } };
   bg.querySelectorAll('[data-lang]').forEach(function(b){ b.onclick=async function(){
     var v=b.getAttribute('data-lang'); if((lead.demo_lang||'es')===v) return;
     try{ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({demo_lang:v})}); lead.demo_lang=v; toast('Mockup version: '+(v==='en'?'English':'Local')); bg.remove(); openDetail(lead); }
     catch(err){ toast('Error: '+err.message, true); }
   }; });
-  var wonB=bg.querySelector('[data-d="won"]'); if(wonB) wonB.onclick=function(){bg.remove();setStage(lead,'sales_qualified','Marked as won','won');};
-  bg.querySelectorAll('[data-mv]').forEach(function(b){ b.onclick=function(){ bg.remove(); moveTo(lead.id, b.getAttribute('data-mv')); }; });
+  // Stage / Won / Lost buttons intentionally removed from the modal (2026-05-27).
+  // Stage changes happen via kanban drag-and-drop only.
 }
 
 function viewedMockup(l){ return isActive(l) && !!mockOpened(l); }
+function mockClass(l){
+  if(l.mockup_status==='generating') return 'mock-generating';
+  if(l.mockup_status==='ready') return 'mock-ready';
+  if(l.mockup_status==='needs_review') return 'mock-review';
+  return '';
+}
+function mockChip(l){
+  if(l.mockup_status==='generating') return '<span class="chip mock-generating">⏳ Building mockup</span>';
+  if(l.mockup_status==='ready')      return '<span class="chip mock-ready">✓ Mockup ready</span>';
+  if(l.mockup_status==='needs_review') return '<span class="chip mock-review">⚠ Review mockup</span>';
+  return '';
+}
 function cardHTML(l, col){
   var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
   var al = alertFor(l, col);
   var viewed = col!=='closed' && viewedMockup(l);
+  var mockCls = mockClass(l);
+  var mockC = mockChip(l);
   var chip = '';
   if(col==='closed'){ chip = isWon(l) ? '<span class="chip won">✓ Won</span>' : '<span class="chip lost">✕ Lost</span>'; }
+  else if(mockC){ chip = mockC; }
   else if(viewed){ chip = '<span class="chip view">Viewed mockup</span>'; }
-  var cls = viewed ? ' viewed' : (al ? ' alert' : '');
-  var mark = viewed ? '' : (al ? '<span class="wmark">⚠</span> ' : '');
+  // Priority: mockup state > viewed mockup > generic alert.
+  var cls = mockCls ? (' ' + mockCls) : (viewed ? ' viewed' : (al ? ' alert' : ''));
+  var mark = (mockCls || viewed) ? '' : (al ? '<span class="wmark">⚠</span> ' : '');
   var t = l.touches_count||0;
   var mini = (col==='closed') ? esc(touchLine(l)) : esc(nextStep(l))+(t?' · '+t+' touch'+(t===1?'':'es'):'');
   return '<div class="card'+cls+'" draggable="true" data-id="'+esc(l.id)+'">'
@@ -648,11 +819,35 @@ function render(){
   wireDrag();
 }
 
+// HTML5 drag-and-drop does NOT auto-scroll the window when the cursor nears
+// the edge of the viewport · this leaves you stuck if the target column is
+// scrolled offscreen. Listen for dragover at window level and scroll up /
+// down at a speed proportional to how close to the edge the cursor is.
+var __autoScrollDelta = 0, __autoScrollRaf = null;
+function __autoScrollTick(){
+  if(!__autoScrollDelta){ __autoScrollRaf = null; return; }
+  window.scrollBy(0, __autoScrollDelta);
+  __autoScrollRaf = requestAnimationFrame(__autoScrollTick);
+}
+function __onDragOverWindow(e){
+  var y = e.clientY, h = window.innerHeight, ZONE = 90, MAX_SPEED = 20;
+  if(y < ZONE)              __autoScrollDelta = -Math.round(MAX_SPEED * (1 - y / ZONE));
+  else if(y > h - ZONE)     __autoScrollDelta =  Math.round(MAX_SPEED * (1 - (h - y) / ZONE));
+  else                      __autoScrollDelta = 0;
+  if(__autoScrollDelta && !__autoScrollRaf){ __autoScrollRaf = requestAnimationFrame(__autoScrollTick); }
+}
+function __startAutoScroll(){ window.addEventListener('dragover', __onDragOverWindow); }
+function __stopAutoScroll(){
+  window.removeEventListener('dragover', __onDragOverWindow);
+  __autoScrollDelta = 0;
+  if(__autoScrollRaf){ cancelAnimationFrame(__autoScrollRaf); __autoScrollRaf = null; }
+}
+
 function wireDrag(){
   var app = document.getElementById('app');
   app.querySelectorAll('.card[draggable=true]').forEach(function(card){
-    card.addEventListener('dragstart', function(e){ window.__drag = card.getAttribute('data-id'); card.classList.add('dragging'); try{ e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain', window.__drag); }catch(_){} });
-    card.addEventListener('dragend', function(){ card.classList.remove('dragging'); window.__drag=null; });
+    card.addEventListener('dragstart', function(e){ window.__drag = card.getAttribute('data-id'); card.classList.add('dragging'); __startAutoScroll(); try{ e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain', window.__drag); }catch(_){} });
+    card.addEventListener('dragend', function(){ card.classList.remove('dragging'); window.__drag=null; __stopAutoScroll(); });
   });
   app.querySelectorAll('.col[data-drop]').forEach(function(col){
     col.addEventListener('dragover', function(e){ e.preventDefault(); col.classList.add('drop-hot'); try{ e.dataTransfer.dropEffect='move'; }catch(_){} });
@@ -819,6 +1014,63 @@ function showPanel(lead, loadingHtml, text){
     closePanel(); loadAll();
   }; }
 }
+// Edit the core lead fields · business name, contact name, whatsapp/phone,
+// email, instagram, current site, category, city, address. PATCHes via the
+// CRM endpoint and reloads on save. Open from the ✎ Edit button in the
+// detail modal header.
+function editLead(lead){
+  closePanel();
+  function fld(id, label, val, ph){
+    return '<div class="field"><label>'+esc(label)+'</label><input id="'+id+'" value="'+esc(val||'')+'" placeholder="'+esc(ph||'')+'"></div>';
+  }
+  var bg = el('<div class="modal-bg"><div class="modal"><div class="mh"><h3>Edit · '+esc(leadName(lead))+'</h3><button data-x="close">&times;</button></div>'
+    + '<div class="mb">'
+    + fld('ed-biz',     'Business name',  lead.business_name, 'Grupo Aristi')
+    + fld('ed-name',    'Contact name',   lead.name,          'Juan Pérez')
+    + fld('ed-wa',      'WhatsApp',       lead.whatsapp,      '573001234567')
+    + fld('ed-phone',   'Phone',          lead.phone,         '6041234567')
+    + fld('ed-email',   'Email',          lead.email,         'contacto@negocio.com')
+    + fld('ed-ig',      'Instagram',      lead.instagram,     '@negocio')
+    + fld('ed-site',    'Current site',   lead.current_site,  'https://...')
+    + fld('ed-cat',     'Category',       lead.category,      'dental, beauty, restaurant...')
+    + fld('ed-city',    'City',           lead.city,          'Medellín')
+    + fld('ed-addr',    'Address',        lead.address,       'Calle 10 #20-30')
+    + '<p class="note">Stage and Won/Lost happen in the kanban, not here. Use this for contact info, business name, and category.</p>'
+    + '</div>'
+    + '<div class="mf"><button class="act ghost" data-x="close">Cancel</button><button class="act primary" data-x="save">Save changes</button></div>'
+    + '</div></div>');
+  wireBgClose(bg, closePanel);
+  document.getElementById('modal-root').appendChild(bg);
+  bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
+  bg.querySelector('[data-x="save"]').onclick = async function(){
+    function val(id){ var v=(bg.querySelector('#'+id).value||'').trim(); return v===''?null:v; }
+    // Strip the @ prefix on instagram if the user typed it; the rest of the
+    // app normalizes by stripping too, but keeping it clean in the DB helps.
+    var ig = val('ed-ig'); if(ig) ig = ig.replace(/^@+/, '');
+    var patch = {
+      business_name: val('ed-biz'),
+      name:          val('ed-name'),
+      whatsapp:      digits(val('ed-wa') || '') || null,
+      phone:         digits(val('ed-phone') || '') || null,
+      email:         val('ed-email'),
+      instagram:     ig,
+      current_site:  val('ed-site'),
+      category:      val('ed-cat'),
+      city:          val('ed-city'),
+      address:       val('ed-addr'),
+    };
+    this.disabled = true; this.textContent = 'Saving...';
+    try{
+      var r = await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify(patch)});
+      // Merge the server's canonical row back into local state so the next
+      // openDetail sees the fresh values without a full reload roundtrip.
+      if(r && r.row){ Object.keys(r.row).forEach(function(k){ lead[k]=r.row[k]; }); BY_ID[lead.id]=lead; }
+      toast('Lead updated');
+      closePanel(); render(); openDetail(lead);
+    }catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Save changes'; }
+  };
+}
+
 function closePanel(){ var m=document.querySelector('#modal-root .modal-bg'); if(m) m.remove(); }
 
 // ---- shared mockup images (generate / review / regenerate) ----

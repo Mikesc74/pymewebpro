@@ -36,6 +36,20 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pymewebpro.com/en/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://pymewebpro.com/en/guides/traffic/"},{"@type":"ListItem","position":3,"name":"AI search visibility: how to get cited by ChatGPT, Claude, and Perplexity in 2026","item":"https://pymewebpro.com/en/guides/ai-search/"}]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[
+{"@type":"Question","name":"How did search change in 2026 with ChatGPT, Perplexity and Gemini?","acceptedAnswer":{"@type":"Answer","text":"Between 20% and 40% of high-value queries no longer happen on Google but on ChatGPT, Perplexity, Gemini and Google's own AI Overviews. The user asks a question, the model answers in prose and cites 3 to 8 sources. If your SMB is not one of those sources, you stay invisible even if you rank #1 on Google."}},
+{"@type":"Question","name":"How do AI models decide which sources to cite?","acceptedAnswer":{"@type":"Answer","text":"Models combine three signals: domain authority, answer clarity (explicit questions with short direct answers on the page) and freshness (lastmod, visible date, real changes). Pages with FAQPage schema, an llms.txt and structured prose carry more weight than long-paragraph blogs."}},
+{"@type":"Question","name":"Do you have to abandon traditional SEO to optimize for AI search?","acceptedAnswer":{"@type":"Answer","text":"No. Traditional SEO is the foundation of AEO. If your page does not rank on Google, the models almost never find it. Keep everything from SEO: technical, useful content, backlinks, schema. On top of that, add direct-answer structure for AI."}},
+{"@type":"Question","name":"Which kinds of sites do AI models pull most of their citations from?","acceptedAnswer":{"@type":"Answer","text":"Wikipedia, Reddit, Stack Exchange, institutional sites (gov, edu) and a rotating set of high-authority media outlets lead the citations. For niches, models also pull specialist blogs with proprietary data, long-form guides with clear structure, and verifiable reviews."}},
+{"@type":"Question","name":"How do you structure a page so an AI model will cite it?","acceptedAnswer":{"@type":"Answer","text":"Use every H2 as an explicit question, put a 1 to 3 sentence answer right below in clean declarative prose (the part the model lifts verbatim), and develop the long-form content under that extract. Mark each Q+A with Question/Answer microdata and mirror the list in a FAQPage JSON-LD block that matches the on-page wording exactly."}},
+{"@type":"Question","name":"What schema markup should a page carry to show up in AI search?","acceptedAnswer":{"@type":"Answer","text":"At minimum: Organization or Organization + ProfessionalService on the home, Article + BreadcrumbList + FAQPage on every guide, LocalBusiness if you serve a physical location and Product or Offer if you sell online. Use inline JSON-LD in the head, not microdata alone, and make sure the FAQPage schema text matches the on-page text exactly."}},
+{"@type":"Question","name":"What is E-E-A-T in 2026 and how do you prove it for Google and AI models?","acceptedAnswer":{"@type":"Answer","text":"E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) weighs more every year in how Google and AI models judge a source. For an SMB: sign articles with a real author, show experience (years, credentials, cases), link to primary sources, and expose verifiable contact and legal information."}},
+{"@type":"Question","name":"Which tools measure a site's visibility in AI search?","acceptedAnswer":{"@type":"Answer","text":"AthenaHQ, Profound and Otterly track when and how brands appear in ChatGPT, Perplexity and Gemini answers. Data is still limited and expensive. For an SMB, a weekly manual check is enough: ask 5 to 10 real questions about your niche in ChatGPT and Perplexity, note whether you are cited and which sentence does the citing."}},
+{"@type":"Question","name":"Which mistakes leave a site invisible to AI search engines?","acceptedAnswer":{"@type":"Answer","text":"The most common mistakes: stuffing pages with keywords instead of real answers, accidentally blocking AI crawlers in robots.txt, hiding answers behind JavaScript-rendered accordions, not signing articles, not publishing llms.txt, skipping FAQPage schema and leaving pages with no visible date."}},
+{"@type":"Question","name":"What does a 90-day plan look like to start appearing in AI search?","acceptedAnswer":{"@type":"Answer","text":"Month 1: publish llms.txt at the root, add Organization/ProfessionalService schema on the home and Article + BreadcrumbList on every guide. Month 2: restructure your 3 to 5 highest-traffic pages with each H2 as a question + 1 to 3 sentence answer + Question/Answer microdata + matching FAQPage JSON-LD. Month 3: run weekly manual visibility checks, sign every article with a real author, and earn 2 to 4 fresh mentions from citable sources."}}
+]}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;overflow-x:clip}
@@ -106,6 +120,10 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .prose a{color:#FF5C2E;font-weight:600;border-bottom:1.5px solid rgba(255,92,46,.3)}
 .prose hr{border:0;border-top:1px solid rgba(27,20,16,.1);margin:3rem 0}
 .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid #FF5C2E;background:rgba(255,92,46,.05);font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.55;color:#3a2a1f;border-radius:0 10px 10px 0}
+.qa{margin:3rem 0 0}
+.qa h2{margin-top:0}
+.qa+*{margin-top:0}
+.direct-answer{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:18px;line-height:1.55;color:#1B1410;background:#FFF1EC;border-left:4px solid #FF5C2E;padding:14px 18px 14px 20px;border-radius:0 12px 12px 0;margin:.6rem 0 1.5rem}
 .prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:rgba(27,20,16,.06);padding:.1em .4em;border-radius:5px;color:#1B1410}
 .callout{margin:1.5rem 0;background:#F4ECDF;border:1px solid rgba(27,20,16,.08);border-radius:14px;padding:22px 26px}
 .callout .label{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#FF5C2E;margin:0 0 .5rem}
@@ -209,7 +227,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <blockquote>SEO didn't die. AI search is SEO with extra rules. The difference: the "click" is no longer the end goal. Being <strong>cited</strong> inside the answer is.</blockquote>
 
-<h2 id="reality"><span class="num">01</span> The new search reality in 2026</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How did search change in 2026 with ChatGPT, Perplexity and Gemini?">
+<h2 id="reality"><span class="num">01</span> How did search change in 2026 with ChatGPT, Perplexity and Gemini?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Between 20% and 40% of high-value queries no longer happen on Google but on ChatGPT, Perplexity, Gemini and Google's own AI Overviews. The user asks a question, the model answers in prose and cites 3 to 8 sources. If your SMB is not one of those sources, you stay invisible even if you rank #1 on Google.</p>
+</div>
+</div>
 <ul>
 <li><strong>Google AI Overviews</strong> appear on 30 to 50% of informational searches. User reads the answer without clicking.</li>
 <li><strong>ChatGPT</strong> has 200M+ weekly active users. Many use it instead of Google.</li>
@@ -220,7 +244,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="how"><span class="num">02</span> How models decide what to cite</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How do AI models decide which sources to cite?">
+<h2 id="how"><span class="num">02</span> How do AI models decide which sources to cite?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Models combine three signals: domain authority (how often the site is cited in the training corpus and the open web), answer clarity (explicit questions with short direct answers on the page) and freshness (lastmod, visible date, real changes). Pages with FAQPage schema, an llms.txt and structured prose carry more weight than long-paragraph blogs.</p>
+</div>
+</div>
 <p>There's no public algorithm. But citation patterns over 18 months are clear:</p>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Solid traditional SEO</h4><p>If Google ranks you well, AI Overviews cite you. Derived from the same index.</p></div>
@@ -233,7 +263,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="foundation"><span class="num">03</span> Traditional SEO is still the foundation</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="Do you have to abandon traditional SEO to optimize for AI search?">
+<h2 id="foundation"><span class="num">03</span> Do you have to abandon traditional SEO to optimize for AI search?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">No. Traditional SEO is the foundation of AEO (Answer Engine Optimization). If your page does not rank on Google, the models almost never find it. Keep everything from SEO: technical, useful content, backlinks, schema. On top of that, add direct-answer structure for AI.</p>
+</div>
+</div>
 <p>Don't reinvent. Solid SEO basics still work, and are a <em>prerequisite</em> to being cited by AI.</p>
 <ul>
 <li>Pages loading under 1 second.</li>
@@ -246,7 +282,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="key-sources"><span class="num">04</span> The sources models pull most</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="Which kinds of sites do AI models pull most of their citations from?">
+<h2 id="key-sources"><span class="num">04</span> Which kinds of sites do AI models pull most of their citations from?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Wikipedia, Reddit, Stack Exchange, institutional sites (gov, edu) and a rotating set of high-authority media outlets lead the citations. For niches, models also pull specialist blogs with proprietary data, long-form guides with clear structure, and verifiable reviews. Earning a mention with a backlink from one of those citable sources sharply raises your odds of being cited directly.</p>
+</div>
+</div>
 <div class="channel-meta">
 <div class="row"><span class="k">Wikipedia</span><span class="v">The #1 cited by all models. If your business has a Wikipedia entry, master move.</span></div>
 <div class="row"><span class="k">Reddit</span><span class="v">Especially niche subreddits. Recommendations in r/Emprender, r/Bogota etc. get cited a lot.</span></div>
@@ -259,7 +301,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="content"><span class="num">05</span> Content structure optimized for AI</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="How do you structure a page so an AI model will cite it?">
+<h2 id="content"><span class="num">05</span> How do you structure a page so an AI model will cite it?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Use every H2 as an explicit question ("How does Google Ads work for electricians in Medellín?"), put a 1 to 3 sentence answer right below in clean declarative prose (the part the model lifts verbatim), and develop the long-form content under that extract. Mark each Q+A with Question/Answer microdata and mirror the list in a FAQPage JSON-LD block that matches the on-page wording exactly.</p>
+</div>
+</div>
 <h3>The pattern that gets cited most</h3>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Question as header (H2 or H3)</h4><p>"How much does a website cost in Colombia?" instead of "Website prices".</p></div>
@@ -272,7 +320,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="schema"><span class="num">06</span> Advanced schema markup</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="What schema markup should a page carry to show up in AI search?">
+<h2 id="schema"><span class="num">06</span> What schema markup should a page carry to show up in AI search?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">At minimum: Organization or Organization + ProfessionalService on the home, Article + BreadcrumbList + FAQPage on every guide, LocalBusiness if you serve a physical location and Product or Offer if you sell online. Use inline JSON-LD in the head, not microdata alone, and make sure the FAQPage schema text matches the on-page text exactly (Google penalizes mismatches).</p>
+</div>
+</div>
 <p>AI parses JSON-LD very well. Use relevant types:</p>
 <div class="codeblk">
 <span class="c">// Schema types to consider</span>
@@ -290,7 +344,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="eeat"><span class="num">07</span> E-E-A-T in 2026</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="What is E-E-A-T in 2026 and how do you prove it for Google and AI models?">
+<h2 id="eeat"><span class="num">07</span> What is E-E-A-T in 2026 and how do you prove it for Google and AI models?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) weighs more every year in how Google and AI models judge a source. For an SMB, that means signing articles with a real author, showing experience (years, credentials, cases), linking to primary sources, and exposing verifiable contact and legal information.</p>
+</div>
+</div>
 <p>Google formalized E-E-A-T (<strong>E</strong>xperience, <strong>E</strong>xpertise, <strong>A</strong>uthority, <strong>T</strong>rust) in 2022. Today it's practically the only deciding factor in sensitive categories (health, finance, legal).</p>
 <h3>How an SMB builds it</h3>
 <ul>
@@ -304,7 +364,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="tools"><span class="num">08</span> Tools to measure AI visibility</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="Which tools measure a site's visibility in AI search?">
+<h2 id="tools"><span class="num">08</span> Which tools measure a site's visibility in AI search?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">AthenaHQ, Profound and Otterly track when and how brands appear in ChatGPT, Perplexity and Gemini answers. Data is still limited and expensive. For an SMB, a weekly manual check is enough: ask 5 to 10 real questions about your niche in ChatGPT and Perplexity, note whether you are cited and which sentence does the citing.</p>
+</div>
+</div>
 <p>Young category, few mature players, but useful:</p>
 <div class="channel-meta">
 <div class="row"><span class="k">AthenaHQ</span><span class="v">Tracks mentions in ChatGPT, Perplexity, Gemini. From $400.000 COP/month.</span></div>
@@ -315,7 +381,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="mistakes"><span class="num">09</span> Mistakes that leave you invisible</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="Which mistakes leave a site invisible to AI search engines?">
+<h2 id="mistakes"><span class="num">09</span> Which mistakes leave a site invisible to AI search engines?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">The most common mistakes: stuffing pages with keywords instead of real answers, accidentally blocking AI crawlers in robots.txt, hiding answers behind JavaScript-rendered accordions, not signing articles, not publishing llms.txt, skipping FAQPage schema and leaving pages with no visible date.</p>
+</div>
+</div>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Vague content without data</h4><p>"We offer high quality services" is not citable. "Implants from $1.200.000 COP, 10-year warranty" is.</p></div>
 <div class="step"><span class="n">2</span><h4>No schema markup</h4><p>Models parse schema. Without it, your content is harder to process.</p></div>
@@ -327,7 +399,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="plan-90"><span class="num">10</span> 90-day plan</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="What does a 90-day plan look like to start appearing in AI search?">
+<h2 id="plan-90"><span class="num">10</span> What does a 90-day plan look like to start appearing in AI search?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Month 1: publish llms.txt at the root, add Organization/ProfessionalService schema on the home and Article + BreadcrumbList on every guide. Month 2: restructure your 3 to 5 highest-traffic pages with each H2 as a question + 1 to 3 sentence answer + Question/Answer microdata + matching FAQPage JSON-LD. Month 3: run weekly manual visibility checks, sign every article with a real author, and earn 2 to 4 fresh mentions from citable sources.</p>
+</div>
+</div>
 <h3>Month 1: Audit and basics</h3>
 <ul>
 <li>Audit your site: complete schema? Author bios? FAQs with schema?</li>

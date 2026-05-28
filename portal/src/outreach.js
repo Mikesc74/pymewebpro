@@ -127,7 +127,7 @@ async function draft(request, env, json) {
 
   const lead = await env.DB.prepare(
     "SELECT id, name, business_name, category, city, current_site, cms, motion, " +
-    "       suggested_pitch, rating, review_count, language " +
+    "       suggested_pitch, rating, review_count, language, pain_reason " +
     "  FROM leads WHERE id = ?"
   ).bind(leadId).first();
   if (!lead) return json({ ok: false, error: "Lead not found" }, 404);
@@ -199,6 +199,24 @@ async function draft(request, env, json) {
   });
 }
 
+// Maps the pain_reason code stored on a lead to a concrete Spanish hint the
+// AI can hang the pitch on. Keep these terse · the model gets the full lead
+// block plus the system prompt, this is just the "lead with THIS pain".
+// Keys MUST match the values exposed by the ventas-midia.html PAIN_REASONS
+// list so the front-end and the prompt stay in lockstep.
+const PAIN_HINTS = {
+  no_site:       "El prospecto no tiene sitio web (solo Instagram/Facebook/Google). Abre con: pierden clientes que buscan en Google y no encuentran nada, o tienen que ir a Instagram donde se distraen. Propón una página de ventas en celular como la solución concreta.",
+  old_site:      "El prospecto tiene un sitio viejo / con cara de 2010 que no transmite seriedad ni vende. Abre con: la primera impresión hoy se decide en el celular en 5 segundos, y un sitio desactualizado les está costando ventas que no ven. Propón un rediseño moderno enfocado en convertir.",
+  broken_site:   "El sitio del prospecto está roto / con errores / con links muertos / no carga bien. Abre con: cada visitante que llega y ve algo roto se va y no vuelve (y casi nunca avisa). Eso son ventas que ya están perdiendo hoy. Propón rehacer la página enfocada en convertir.",
+  not_mobile:    "El sitio del prospecto no se ve bien en celular (>70% del tráfico colombiano es mobile). Abre con: la mayoría de sus clientes potenciales abren el sitio en el celular y si no se ve bien, se devuelven. Propón una página optimizada para celular.",
+  slow_site:     "El sitio del prospecto es muy lento. Abre con: si tarda más de 3 segundos en cargar, más de la mitad de los visitantes se va antes de ver nada. Propón una página rápida y liviana.",
+  no_whatsapp:   "El sitio del prospecto no tiene botón de WhatsApp visible. Abre con: en Colombia los clientes quieren hablar por WhatsApp, no llenar formularios. Propón una página con WhatsApp directo (un toque y ya están escribiendo).",
+  no_products:   "El sitio del prospecto no muestra sus productos / servicios / menú con claridad. Abre con: si el cliente no ve qué venden en los primeros 10 segundos, se va. Propón una página con catálogo / vitrina / menú claro y bien presentado.",
+  no_seo:        "El prospecto no aparece en Google cuando se buscan sus servicios en su ciudad. Abre con: cada día clientes están buscando lo que él vende y eligiendo a la competencia que sí aparece. Propón una página optimizada + Ficha de Google bien armada.",
+  social_only:   "El prospecto solo tiene Instagram/Facebook, sin sitio propio. Abre con: depender 100% de Instagram es riesgoso (algoritmo cambia, cuenta se cae, no se puede buscar en Google). Propón una base propia (la página) que complemente las redes.",
+  competitor_has:"El prospecto compite con negocios similares que SÍ tienen una página seria, y eso le quita credibilidad cuando alguien los compara lado a lado. Abre con esa comparación. Propón emparejar el nivel con su propio sitio profesional.",
+};
+
 function buildUserPrompt(lead, channel, instruct) {
   const lines = [];
   lines.push("Genera un " + (channel === "email" ? "correo" : "WhatsApp") + " de primer contacto para este prospecto:");
@@ -216,6 +234,22 @@ function buildUserPrompt(lead, channel, instruct) {
   }
   if (lead.suggested_pitch) {
     lines.push("- Pitch sugerido previo: " + lead.suggested_pitch);
+  }
+  // The pain_reason field is a comma-joined list of codes (e.g. "no_site,
+  // old_site,broken_site") so Mike + Santi can pick multiple pains per lead.
+  // We render every recognized code as a numbered hint and tell the model to
+  // weave them into ONE natural message · not enumerate them mechanically.
+  if (lead.pain_reason) {
+    const codes = String(lead.pain_reason).split(",").map((s) => s.trim()).filter(Boolean);
+    const hints = codes.map((c) => PAIN_HINTS[c]).filter(Boolean);
+    if (hints.length === 1) {
+      lines.push("");
+      lines.push("El dolor a atacar (anclar el mensaje aquí): " + hints[0]);
+    } else if (hints.length > 1) {
+      lines.push("");
+      lines.push("Los dolores a atacar (orden de prioridad · integralos en UN solo mensaje natural, no los enumeres):");
+      hints.forEach((h, i) => lines.push("  " + (i + 1) + ". " + h));
+    }
   }
   if (instruct) {
     lines.push("");
@@ -275,7 +309,14 @@ async function logSend(request, env, json) {
   const lead = await env.DB.prepare("SELECT id FROM leads WHERE id = ?").bind(leadId).first();
   if (!lead) return json({ ok: false, error: "Lead not found" }, 404);
 
-  const owner = "santi"; // TODO: derive from authenticated user once admin sessions exist.
+  // Stamp the activity owner from the Cloudflare Access user so the timeline
+  // shows "by Mike" / "by Santi" correctly. Falls back to "santi" only if the
+  // request has no Access header (background callers).
+  const email = (request.headers.get("Cf-Access-Authenticated-User-Email") || "").toLowerCase().trim();
+  let owner = "santi";
+  if (email === "mike@colguides.com" || email === "mike@mikec.pro") owner = "mike";
+  else if (email === "santiago@colguides.com" || email === "santi@colguides.com") owner = "santi";
+  else if (email) { const at = email.indexOf("@"); owner = at > 0 ? email.slice(0, at) : email; }
   const actId = crypto.randomUUID();
   const now = Date.now();
 

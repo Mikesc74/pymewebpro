@@ -36,6 +36,23 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://pymewebpro.com/"},{"@type":"ListItem","position":2,"name":"Guías","item":"https://pymewebpro.com/guides/traffic/"},{"@type":"ListItem","position":3,"name":"Email marketing para pymes colombianas: la guía completa","item":"https://pymewebpro.com/guides/email-marketing/"}]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
+{"@type":"Question","name":"¿Por qué el email marketing todavía vale la pena para una pyme en 2026?","acceptedAnswer":{"@type":"Answer","text":"El email sigue siendo el canal más rentable para retención y reactivación: usted es dueño de la lista, no le paga renta a una plataforma. El ROI promedio reportado en la industria es de $36 a $42 por cada $1 invertido."}},
+{"@type":"Question","name":"¿Qué exige Habeas Data en Colombia antes de mandar un email comercial?","acceptedAnswer":{"@type":"Answer","text":"La Ley 1581 de 2012 exige consentimiento previo, expreso e informado. Doble opt-in, política de tratamiento visible, link de baja en cada email y registro auditable del consentimiento. Sin esto, una queja a la SIC puede costar multas hasta 2.000 SMMLV."}},
+{"@type":"Question","name":"¿Cómo se construye una lista de email para una pyme sin comprar bases de datos?","acceptedAnswer":{"@type":"Answer","text":"Capture emails en cada punto de contacto: formulario web con lead magnet, casilla en cada compra, POS, check-in en eventos. Nunca compre listas: matan deliverability y violan Habeas Data."}},
+{"@type":"Question","name":"¿Qué tipo de lead magnet funciona para captar emails en pymes colombianas?","acceptedAnswer":{"@type":"Answer","text":"Funcionan los útiles, específicos y entregables al instante: guía PDF de 5 a 10 páginas, checklist accionable, calculadora simple, cupón de descuento. El lead magnet debería resolverse en 10 minutos o menos."}},
+{"@type":"Question","name":"¿Qué herramienta de email marketing le sirve a una pyme colombiana?","acceptedAnswer":{"@type":"Answer","text":"Lista bajo 1.000: Resend o MailerLite. De 1.000 a 10.000: Beehiiv, Brevo o MailerLite Pro. Sobre 10.000 o e-commerce con automatización compleja: Klaviyo."}},
+{"@type":"Question","name":"¿Cómo se arma la secuencia de emails de bienvenida y por qué es la más importante?","acceptedAnswer":{"@type":"Answer","text":"3 a 5 emails automáticos al suscribirse: entrega del lead magnet, historia, prueba social y oferta suave. Tasa de apertura 40 a 70%, la más alta de toda la lista."}},
+{"@type":"Question","name":"¿Cada cuánto debe mandar newsletter una pyme y qué formato funciona?","acceptedAnswer":{"@type":"Answer","text":"Una vez al mes para empezar, semanal o quincenal con ritmo. Texto plano gana a diseño elaborado. Asunto corto, primera línea que enganche, un solo tema, un CTA al final."}},
+{"@type":"Question","name":"¿Cómo se segmenta una lista de email de pyme de forma práctica?","acceptedAnswer":{"@type":"Answer","text":"Tres segmentos: clientes activos (últimos 12 meses), leads (suscriptores que no han comprado) e inactivos. Cada uno recibe contenido distinto."}},
+{"@type":"Question","name":"¿Qué son SPF, DKIM y DMARC y por qué importan para mandar email comercial?","acceptedAnswer":{"@type":"Answer","text":"Tres registros DNS que prueban a Gmail, Outlook y Yahoo que su dominio autoriza esos envíos. Sin los tres, sus emails caen en spam. Configurarlos toma 10 minutos en Cloudflare DNS y mejora la entrega 30 a 50%."}},
+{"@type":"Question","name":"¿Qué métricas de email marketing debería seguir una pyme?","acceptedAnswer":{"@type":"Answer","text":"Apertura (25 a 45%), clic (3 a 8%), baja (menor a 0,5%) e ingresos atribuidos por envío (UTM + reporte del CRM o ESP)."}},
+{"@type":"Question","name":"¿Qué errores hacen que los emails de una pyme terminen en la carpeta de spam?","acceptedAnswer":{"@type":"Answer","text":"SPF/DKIM/DMARC sin configurar, comprar listas, 'no-reply' como remitente, MAYÚSCULA en asuntos, primer envío masivo sin calentar, contactos viejos sin engagement, plantillas todo-imagen, link de baja escondido y no limpiar rebotes."}},
+{"@type":"Question","name":"¿Cuál es un plan de 90 días para arrancar bien con email marketing en una pyme?","acceptedAnswer":{"@type":"Answer","text":"Mes 1: política, ESP, SPF/DKIM/DMARC, formulario con lead magnet, import de clientes. Mes 2: secuencia de bienvenida y primer newsletter. Mes 3: segmentar, campaña de reactivación, medir y ajustar."}}
+]}
+</script>
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;overflow-x:clip}
@@ -106,6 +123,10 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .prose a{color:#FF5C2E;font-weight:600;border-bottom:1.5px solid rgba(255,92,46,.3)}
 .prose hr{border:0;border-top:1px solid rgba(27,20,16,.1);margin:3rem 0}
 .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid #FF5C2E;background:rgba(255,92,46,.05);font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.55;color:#3a2a1f;border-radius:0 10px 10px 0}
+.qa{margin:3rem 0 0}
+.qa h2{margin-top:0}
+.qa+*{margin-top:0}
+.direct-answer{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:18px;line-height:1.55;color:#1B1410;background:#FFF1EC;border-left:4px solid #FF5C2E;padding:14px 18px 14px 20px;border-radius:0 12px 12px 0;margin:.6rem 0 1.5rem}
 .prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:rgba(27,20,16,.06);padding:.1em .4em;border-radius:5px;color:#1B1410}
 .callout{margin:1.5rem 0;background:#F4ECDF;border:1px solid rgba(27,20,16,.08);border-radius:14px;padding:22px 26px}
 .callout .label{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#FF5C2E;margin:0 0 .5rem}
@@ -210,7 +231,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <blockquote>El email no es sexy. No tiene algoritmo viral. No tiene "engagement" en el sentido moderno. Pero es el único canal de marketing digital donde usted es dueño de la audiencia. Meta o Google pueden bajarle el alcance mañana. Su lista de email sigue ahí.</blockquote>
 
-<h2 id="por-que"><span class="num">01</span> Por qué el email todavía gana</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Por qué el email marketing todavía vale la pena para una pyme en 2026?">
+<h2 id="por-que"><span class="num">01</span> ¿Por qué el email marketing todavía vale la pena para una pyme en 2026?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">El email sigue siendo el canal más rentable para retención y reactivación: usted es dueño de la lista, no le paga renta a una plataforma cada vez que quiere hablarle a sus clientes, y el ROI promedio reportado en la industria es de $36 a $42 por cada $1 invertido. Para pymes con base de clientes, una lista bien cuidada le suma 10 a 25% de ingresos sin gastar en ads.</p>
+</div>
+</div>
 <ul>
 <li><strong>ROI imbatible.</strong> $36 a $42 retornados por cada $1 invertido (ratio Litmus/DMA, sostenido por 5+ años).</li>
 <li><strong>Usted es dueño del canal.</strong> Su lista no depende de un algoritmo. Si Meta cambia las reglas mañana, su lista sigue intacta.</li>
@@ -220,7 +247,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="habeas-data"><span class="num">02</span> Habeas Data: lo primero antes de cualquier email</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué exige Habeas Data en Colombia antes de mandar un email comercial?">
+<h2 id="habeas-data"><span class="num">02</span> ¿Qué exige Habeas Data en Colombia antes de mandar un email comercial?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">La Ley 1581 de 2012 exige consentimiento previo, expreso e informado para tratar datos personales con fines comerciales. En la práctica: doble opt-in con casilla NO pre-marcada, política de tratamiento de datos visible, finalidad explícita, link de baja en cada email y registro auditable del consentimiento. Sin esto, una queja a la SIC puede costarle multas de hasta 2.000 SMMLV.</p>
+</div>
+</div>
 <p>Colombia tiene <strong>Ley 1581 de 2012</strong> (Habeas Data) y reglamentos asociados. Mandar emails comerciales sin cumplir esto puede generar sanciones de la SIC (Superintendencia de Industria y Comercio) que arrancan en $50 millones COP.</p>
 <h3>Los 4 requisitos mínimos</h3>
 <div class="steps">
@@ -233,7 +266,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="construir-lista"><span class="num">03</span> Cómo construir la lista (sin comprarla)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se construye una lista de email para una pyme sin comprar bases de datos?">
+<h2 id="construir-lista"><span class="num">03</span> ¿Cómo se construye una lista de email para una pyme sin comprar bases de datos?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Capture emails en cada punto de contacto: formulario web con un lead magnet relevante, casilla de email en cada compra, formulario en el POS para clientes presenciales y check-in en eventos. Empiece por sus clientes pasados (con permiso) y agregue 5 a 20 contactos nuevos por semana. Nunca compre listas: matan deliverability y violan Habeas Data.</p>
+</div>
+</div>
 <p>La lista grande nunca compra. La lista pequeña pero genuina convierte 5 a 20%.</p>
 <h3>Fuentes legítimas</h3>
 <ul>
@@ -247,7 +286,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="lead-magnets"><span class="num">04</span> Lead magnets que funcionan</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué tipo de lead magnet funciona para captar emails en pymes colombianas?">
+<h2 id="lead-magnets"><span class="num">04</span> ¿Qué tipo de lead magnet funciona para captar emails en pymes colombianas?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Funcionan los lead magnets útiles, específicos y entregables al instante: una guía PDF de 5 a 10 páginas, una checklist accionable, una calculadora simple, un cupón de descuento de primera compra. NO funcionan los "ebooks gratis de 100 páginas" ni los webinars de 60 minutos. Regla práctica: el lead magnet debería resolverse en 10 minutos o menos.</p>
+</div>
+</div>
 <div class="channel-meta">
 <div class="row"><span class="k">Guía PDF descargable</span><span class="v">10 a 30 páginas, ultra-específica al nicho. Funciona en B2B y consumo.</span></div>
 <div class="row"><span class="k">Plantilla / checklist</span><span class="v">Excel, Google Sheets, Notion template. Alta conversión.</span></div>
@@ -259,7 +304,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="herramientas"><span class="num">05</span> Herramientas para pymes en Colombia</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué herramienta de email marketing le sirve a una pyme colombiana?">
+<h2 id="herramientas"><span class="num">05</span> ¿Qué herramienta de email marketing le sirve a una pyme colombiana?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Para pymes pequeñas con lista bajo 1.000: Resend o MailerLite cuestan poco y entregan bien. Para 1.000 a 10.000: Beehiiv (especialmente si va a hacer newsletter), Brevo (antes Sendinblue) o MailerLite Pro. Sobre 10.000 o e-commerce con automatizaciones complejas: Klaviyo. Evite Mailchimp si recién empieza, el free tier dejó de ser competitivo.</p>
+</div>
+</div>
 <div class="compare"><table>
 <thead><tr><th>Herramienta</th><th>Mejor para</th><th>Costo desde</th></tr></thead>
 <tbody>
@@ -275,7 +326,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="bienvenida"><span class="num">06</span> Secuencia de bienvenida (la más importante)</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se arma la secuencia de emails de bienvenida y por qué es la más importante?">
+<h2 id="bienvenida"><span class="num">06</span> ¿Cómo se arma la secuencia de emails de bienvenida y por qué es la más importante?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">La secuencia de bienvenida son 3 a 5 emails automáticos que se disparan cuando alguien se suscribe; son los emails con la tasa de apertura más alta de toda su lista (40 a 70%), porque el suscriptor recién pidió saber de usted. Email 1 entrega el lead magnet, email 2 cuenta su historia, email 3 muestra prueba social, email 4 hace una oferta suave de primera compra.</p>
+</div>
+</div>
 <p>La secuencia de bienvenida tiene 4 a 10 veces más open rate que cualquier email regular. No la desperdicie con "gracias por suscribirse" y silencio.</p>
 <h3>La secuencia de 5 emails</h3>
 <div class="steps">
@@ -288,7 +345,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="newsletter"><span class="num">07</span> Cadencia y formato de newsletter</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cada cuánto debe mandar newsletter una pyme y qué formato funciona?">
+<h2 id="newsletter"><span class="num">07</span> ¿Cada cuánto debe mandar newsletter una pyme y qué formato funciona?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Una vez al mes para empezar, semanal o quincenal cuando ya tenga ritmo. Texto plano (o casi) bate diseño elaborado en aperturas y respuestas. Estructura: asunto corto que prometa algo concreto, primera línea que enganche, un solo tema por envío, un CTA claro al final. Email largos (800 a 1.500 palabras) funcionan bien si el contenido es útil.</p>
+</div>
+</div>
 <h3>Frecuencia</h3>
 <p>Mejor 1 email semanal consistente que 1 mensual irregular. La consistencia construye expectativa.</p>
 <h3>Días y horas que funcionan en Colombia</h3>
@@ -309,7 +372,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="segmentacion"><span class="num">08</span> Segmentación práctica</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se segmenta una lista de email de pyme de forma práctica?">
+<h2 id="segmentacion"><span class="num">08</span> ¿Cómo se segmenta una lista de email de pyme de forma práctica?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Empiece con 3 segmentos: clientes activos (compraron en los últimos 12 meses), leads (suscriptores que no han comprado) e inactivos (más de 12 meses sin abrir nada). Cada uno recibe contenido distinto: a clientes activos, novedades y upsells; a leads, educación y prueba social; a inactivos, una campaña de reactivación. Después puede segmentar por categoría de interés o ciudad.</p>
+</div>
+</div>
 <p>Mandar el mismo email a 5.000 personas distintas es desperdicio. Segmente por:</p>
 <div class="channel-meta">
 <div class="row"><span class="k">Por interés</span><span class="v">Tag al suscribirse según lead magnet (industria, problema).</span></div>
@@ -322,7 +391,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="entregabilidad"><span class="num">09</span> Entregabilidad: SPF, DKIM, DMARC</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué son SPF, DKIM y DMARC y por qué importan para mandar email comercial?">
+<h2 id="entregabilidad"><span class="num">09</span> ¿Qué son SPF, DKIM y DMARC y por qué importan para mandar email comercial?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">SPF, DKIM y DMARC son tres registros DNS que prueban a Gmail, Outlook y Yahoo que su dominio realmente autoriza esos envíos. Sin los tres, sus emails caen en spam o se rechazan. Su ESP (Resend, MailerLite, Beehiiv) le da las instrucciones exactas; configurarlos en Cloudflare DNS toma 10 minutos y mejora la entrega 30 a 50%.</p>
+</div>
+</div>
 <p>Si su email cae en spam, todo lo demás importa cero. Tres registros DNS son obligatorios:</p>
 <h3>SPF (Sender Policy Framework)</h3>
 <p>Registro TXT que dice "estos servidores pueden enviar email en mi nombre". Sin SPF, su email es 70% más probable de caer en spam.</p>
@@ -338,7 +413,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="metricas"><span class="num">10</span> Métricas que importan</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué métricas de email marketing debería seguir una pyme?">
+<h2 id="metricas"><span class="num">10</span> ¿Qué métricas de email marketing debería seguir una pyme?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Las cuatro que mueven la aguja: tasa de apertura (meta 25 a 45%), tasa de clic (3 a 8%), tasa de baja (menor a 0,5%) e ingresos atribuidos por envío (link UTM + reporte del CRM o ESP). Ignore "impresiones" o "visualizaciones únicas": no le dicen nada de ventas.</p>
+</div>
+</div>
 <div class="channel-meta">
 <div class="row"><span class="k">Open rate</span><span class="v">Benchmark: 22 al 28% en LATAM. Bajo 18%: revisar asuntos.</span></div>
 <div class="row"><span class="k">Click-through rate</span><span class="v">Benchmark: 2 al 4%. Bajo 1%: revisar contenido y CTA.</span></div>
@@ -350,7 +431,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="errores"><span class="num">11</span> Los 9 errores que lo mandan a spam</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué errores hacen que los emails de una pyme terminen en la carpeta de spam?">
+<h2 id="errores"><span class="num">11</span> ¿Qué errores hacen que los emails de una pyme terminen en la carpeta de spam?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Los 9 errores más comunes: SPF/DKIM/DMARC sin configurar, comprar listas, dirección de "no-reply", asuntos en MAYÚSCULA o con muchos signos de exclamación, primer envío masivo sin calentar el dominio, mandar a contactos viejos que ya no abren, plantillas con todo en imagen sin texto, link de baja escondido y no limpiar contactos rebotados.</p>
+</div>
+</div>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Comprar listas</h4><p>Sanción SIC + bloqueo por proveedores. Nunca.</p></div>
 <div class="step"><span class="n">2</span><h4>No tener SPF/DKIM/DMARC</h4><p>Gmail empieza a marcar todo como spam en cuestión de días.</p></div>
@@ -365,7 +452,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="plan-90"><span class="num">12</span> Plan de 90 días</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuál es un plan de 90 días para arrancar bien con email marketing en una pyme?">
+<h2 id="plan-90"><span class="num">12</span> ¿Cuál es un plan de 90 días para arrancar bien con email marketing en una pyme?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Mes 1: política de tratamiento de datos publicada, ESP elegido, SPF/DKIM/DMARC configurados, formulario de captura con lead magnet en el sitio, importar clientes existentes (con permiso). Mes 2: secuencia de bienvenida de 4 emails, primer newsletter mensual, capturar emails en cada punto de venta. Mes 3: segmentar en 3 grupos, primera campaña de reactivación, medir aperturas y clics y ajustar.</p>
+</div>
+</div>
 <h3>Mes 1: Fundamento legal y técnico</h3>
 <ul>
 <li>Registre base de datos ante SIC si va a superar 100 contactos.</li>

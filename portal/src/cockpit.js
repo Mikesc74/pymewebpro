@@ -11,6 +11,7 @@
 
 import { generateProposal } from "./proposal-generator.js";
 import { genDemoImg, DEMO_IMG_KEYS } from "./demo-img.js";
+import { buildMockup } from "./mockup-generator.js";
 
 const MODEL = "claude-haiku-4-5-20251001";
 const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
@@ -24,6 +25,18 @@ export async function handleCockpitRoutes(request, env, helpers) {
   if (path === "/api/admin/cockpit/mockup-msg" && request.method === "POST") {
     if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
     return await mockupMsg(request, env, json);
+  }
+  // Mockup v2 · personalized scrape + Claude + image bank. Long-running
+  // (~1-3 min). Returns once mockup_data is persisted to the lead row.
+  // Body: {lead_id, regenerate?: boolean}
+  {
+    const m = path.match(/^\/api\/admin\/cockpit\/mockup-build\/([\w-]+)$/);
+    if (m && request.method === "POST") {
+      if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+      let body = {}; try { body = await request.json(); } catch {}
+      const result = await buildMockup(env, m[1], { regenerate: !!body.regenerate });
+      return json(result, result.ok ? 200 : 502);
+    }
   }
   if (path === "/api/admin/cockpit/proposal" && request.method === "POST") {
     if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);

@@ -36,6 +36,20 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://pymewebpro.com/"},{"@type":"ListItem","position":2,"name":"Guías","item":"https://pymewebpro.com/guides/traffic/"},{"@type":"ListItem","position":3,"name":"Visibilidad en búsqueda con IA: cómo ser citado por ChatGPT, Claude y Perplexity en 2026","item":"https://pymewebpro.com/guides/busqueda-ia/"}]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
+{"@type":"Question","name":"¿Cómo cambió la búsqueda en 2026 con ChatGPT, Perplexity y Gemini?","acceptedAnswer":{"@type":"Answer","text":"Entre 20% y 40% de las búsquedas de alto valor ya no se hacen en Google sino en ChatGPT, Perplexity, Gemini y los AI Overviews del propio Google. El usuario hace una pregunta, el modelo responde con prosa y cita 3 a 8 fuentes. Si su pyme no es una de esas fuentes, queda invisible aunque clasifique #1 en Google."}},
+{"@type":"Question","name":"¿Cómo deciden los modelos de IA qué fuentes citar?","acceptedAnswer":{"@type":"Answer","text":"Los modelos combinan tres señales: autoridad del dominio, claridad de la respuesta (preguntas explícitas con respuestas cortas y directas en la página) y frescura (lastmod, fecha visible, cambios reales). Páginas con schema FAQPage, llms.txt y prosa estructurada pesan más que blogs con párrafos largos."}},
+{"@type":"Question","name":"¿Hay que dejar el SEO tradicional para optimizar para búsqueda con IA?","acceptedAnswer":{"@type":"Answer","text":"No. El SEO tradicional es el fundamento del AEO. Si su página no rankea en Google, los modelos casi nunca la encuentran. Mantenga todo lo de SEO: técnico, contenido útil, backlinks, schema. Y encima de eso, agregue estructura de respuesta directa para IA."}},
+{"@type":"Question","name":"¿De qué tipo de sitios sacan los modelos de IA la mayoría de sus citas?","acceptedAnswer":{"@type":"Answer","text":"Wikipedia, Reddit, Stack Exchange, sitios de instituciones (gov, edu) y un grupo cambiante de medios con autoridad encabezan las citas. Para nichos, los modelos también jalan blogs especializados con datos propios, guías largas con estructura clara y reviews verificables."}},
+{"@type":"Question","name":"¿Cómo se estructura una página para que un modelo de IA la cite?","acceptedAnswer":{"@type":"Answer","text":"Use cada H2 como una pregunta explícita, debajo escriba un extracto de 1 a 3 oraciones que responda en lenguaje declarativo y limpio (lo que el modelo lifta), y debajo de ese extracto desarrolle el contenido largo. Marque el par pregunta/respuesta con Question/Answer microdata y replique la lista en un bloque FAQPage JSON-LD coincidente palabra por palabra."}},
+{"@type":"Question","name":"¿Qué schema markup debería tener una página para aparecer en búsqueda con IA?","acceptedAnswer":{"@type":"Answer","text":"Mínimo: Organization u Organization + ProfessionalService en la home, Article + BreadcrumbList + FAQPage en cada guía, LocalBusiness si atiende público físico y Product u Offer si vende online. Use JSON-LD inline en el head, no microdata sola, y asegúrese de que el texto del schema FAQPage coincida con el texto visible en la página."}},
+{"@type":"Question","name":"¿Qué es E-E-A-T en 2026 y cómo se prueba para Google y para los modelos de IA?","acceptedAnswer":{"@type":"Answer","text":"E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) pesa cada vez más en cómo Google y los modelos de IA evalúan una fuente. Para una pyme: firmar artículos con autor real, mostrar su experiencia (años, credenciales, casos), enlazar a fuentes primarias y exponer información de contacto y legal verificable."}},
+{"@type":"Question","name":"¿Con qué herramientas se mide la visibilidad de un sitio en búsqueda con IA?","acceptedAnswer":{"@type":"Answer","text":"AthenaHQ, Profound y Otterly trackean cuándo y cómo aparecen las marcas en respuestas de ChatGPT, Perplexity y Gemini. Los datos todavía son limitados y caros. Para una pyme, basta con una prueba manual semanal: hacer 5 a 10 preguntas reales sobre su nicho en ChatGPT y Perplexity, anotar si sale citada y qué frase la cita."}},
+{"@type":"Question","name":"¿Qué errores dejan a un sitio invisible para los buscadores con IA?","acceptedAnswer":{"@type":"Answer","text":"Los errores más comunes: rellenar la página de palabras clave en lugar de respuestas reales, bloquear a los crawlers de IA en robots.txt sin querer, esconder respuestas detrás de acordeones que cargan por JavaScript, no firmar artículos, no publicar llms.txt, no agregar schema FAQPage y dejar páginas sin fecha visible."}},
+{"@type":"Question","name":"¿Cuál es un plan de 90 días para empezar a aparecer en búsqueda con IA?","acceptedAnswer":{"@type":"Answer","text":"Mes 1: publique llms.txt en la raíz, agregue schema Organization/ProfessionalService en la home y Article + BreadcrumbList en cada guía. Mes 2: restructure las 3 a 5 páginas con más tráfico con cada H2 como pregunta + extracto de 1 a 3 oraciones + microdata Question/Answer + FAQPage JSON-LD coincidente. Mes 3: mida visibilidad manual semanal, firme cada artículo con autor real y agregue 2 a 4 menciones nuevas desde sitios citables."}}
+]}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;overflow-x:clip}
@@ -106,6 +120,10 @@ header.site .right{display:flex;align-items:center;gap:.5rem}
 .prose a{color:#FF5C2E;font-weight:600;border-bottom:1.5px solid rgba(255,92,46,.3)}
 .prose hr{border:0;border-top:1px solid rgba(27,20,16,.1);margin:3rem 0}
 .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid #FF5C2E;background:rgba(255,92,46,.05);font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.55;color:#3a2a1f;border-radius:0 10px 10px 0}
+.qa{margin:3rem 0 0}
+.qa h2{margin-top:0}
+.qa+*{margin-top:0}
+.direct-answer{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:18px;line-height:1.55;color:#1B1410;background:#FFF1EC;border-left:4px solid #FF5C2E;padding:14px 18px 14px 20px;border-radius:0 12px 12px 0;margin:.6rem 0 1.5rem}
 .prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:rgba(27,20,16,.06);padding:.1em .4em;border-radius:5px;color:#1B1410}
 .callout{margin:1.5rem 0;background:#F4ECDF;border:1px solid rgba(27,20,16,.08);border-radius:14px;padding:22px 26px}
 .callout .label{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#FF5C2E;margin:0 0 .5rem}
@@ -208,7 +226,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <blockquote>El SEO no murió. La búsqueda con IA es SEO con reglas adicionales. La diferencia: el "click" ya no es el objetivo final. Ser <strong>citado</strong> dentro de la respuesta sí lo es.</blockquote>
 
-<h2 id="realidad"><span class="num">01</span> La nueva realidad de búsqueda en 2026</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo cambió la búsqueda en 2026 con ChatGPT, Perplexity y Gemini?">
+<h2 id="realidad"><span class="num">01</span> ¿Cómo cambió la búsqueda en 2026 con ChatGPT, Perplexity y Gemini?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Entre 20% y 40% de las búsquedas de alto valor ya no se hacen en Google sino en ChatGPT, Perplexity, Gemini y los AI Overviews del propio Google. El usuario hace una pregunta, el modelo responde con prosa y cita 3 a 8 fuentes. Si su pyme no es una de esas fuentes, queda invisible aunque clasifique #1 en Google.</p>
+</div>
+</div>
 <ul>
 <li><strong>Google AI Overviews</strong> aparecen en 30 al 50% de búsquedas informacionales. El usuario lee la respuesta sin hacer clic.</li>
 <li><strong>ChatGPT</strong> tiene 200M+ usuarios activos semanales. Muchos lo usan en vez de Google.</li>
@@ -219,7 +243,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="como"><span class="num">02</span> Cómo deciden los modelos qué citar</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo deciden los modelos de IA qué fuentes citar?">
+<h2 id="como"><span class="num">02</span> ¿Cómo deciden los modelos de IA qué fuentes citar?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Los modelos combinan tres señales: autoridad del dominio (qué tan citado es el sitio en el corpus de entrenamiento y en la web abierta), claridad de la respuesta (preguntas explícitas con respuestas cortas y directas en la página) y frescura (lastmod, fecha visible, cambios reales). Páginas con schema FAQPage, llms.txt y prosa estructurada pesan más que blogs con párrafos largos.</p>
+</div>
+</div>
 <p>No hay un algoritmo público. Pero los patrones de citación de los últimos 18 meses son claros:</p>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>SEO tradicional sólido</h4><p>Si Google ya lo rankea bien, las AI Overviews lo citan. Es derivado del mismo índice.</p></div>
@@ -232,7 +262,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="fundamento"><span class="num">03</span> El SEO tradicional sigue siendo el fundamento</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Hay que dejar el SEO tradicional para optimizar para búsqueda con IA?">
+<h2 id="fundamento"><span class="num">03</span> ¿Hay que dejar el SEO tradicional para optimizar para búsqueda con IA?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">No. El SEO tradicional es el fundamento del AEO (Answer Engine Optimization). Si su página no rankea en Google, los modelos casi nunca la encuentran. Mantenga todo lo de SEO: técnico, contenido útil, backlinks, schema. Y encima de eso, agregue estructura de respuesta directa para IA.</p>
+</div>
+</div>
 <p>No reinvente. Las bases sólidas de SEO siguen funcionando, y son <em>requisito previo</em> para ser citado por IA.</p>
 <ul>
 <li>Páginas que carguen sub-1 segundo.</li>
@@ -245,7 +281,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="fuentes-clave"><span class="num">04</span> Las fuentes que más jalan los modelos</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿De qué tipo de sitios sacan los modelos de IA la mayoría de sus citas?">
+<h2 id="fuentes-clave"><span class="num">04</span> ¿De qué tipo de sitios sacan los modelos de IA la mayoría de sus citas?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Wikipedia, Reddit, Stack Exchange, sitios de instituciones (gov, edu) y un grupo cambiante de medios con autoridad encabezan las citas. Para nichos, los modelos también jalan blogs especializados con datos propios, guías largas con estructura clara y reviews verificables. Aparecer en un par de esas fuentes citables (con su URL referenciada) refuerza mucho la probabilidad de ser citado directamente.</p>
+</div>
+</div>
 <div class="channel-meta">
 <div class="row"><span class="k">Wikipedia</span><span class="v">El #1 citado por todos los modelos. Si su negocio tiene entrada en Wikipedia, jugada maestra.</span></div>
 <div class="row"><span class="k">Reddit</span><span class="v">Especialmente subreddits de su nicho. Las recomendaciones en r/Emprender, r/Bogota etc. son citadas mucho.</span></div>
@@ -258,7 +300,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="contenido"><span class="num">05</span> Estructura de contenido optimizada para IA</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cómo se estructura una página para que un modelo de IA la cite?">
+<h2 id="contenido"><span class="num">05</span> ¿Cómo se estructura una página para que un modelo de IA la cite?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Use cada H2 como una pregunta explícita ("¿Cómo funciona Google Ads para electricistas en Medellín?"), debajo escriba un extracto de 1 a 3 oraciones que responda en lenguaje declarativo y limpio (lo que el modelo lifta), y debajo de ese extracto desarrolle el contenido largo. Marque el par pregunta/respuesta con Question/Answer microdata y replique la lista en un bloque FAQPage JSON-LD coincidente palabra por palabra.</p>
+</div>
+</div>
 <h3>El patrón que más se cita</h3>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Pregunta como encabezado (H2 o H3)</h4><p>"¿Cuánto cuesta un sitio web en Colombia?" en vez de "Precios de sitios web".</p></div>
@@ -271,7 +319,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="schema"><span class="num">06</span> Schema markup avanzado</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué schema markup debería tener una página para aparecer en búsqueda con IA?">
+<h2 id="schema"><span class="num">06</span> ¿Qué schema markup debería tener una página para aparecer en búsqueda con IA?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Mínimo: Organization u Organization + ProfessionalService en la home, Article + BreadcrumbList + FAQPage en cada guía, LocalBusiness si atiende público físico y Product u Offer si vende online. Use JSON-LD inline en el head, no microdata sola, y asegúrese de que el texto del schema FAQPage coincida con el texto visible en la página (Google penaliza el mismatch).</p>
+</div>
+</div>
 <p>Las AI parsean JSON-LD muy bien. Use los tipos relevantes:</p>
 <div class="codeblk">
 <span class="c">// Tipos de schema a considerar</span>
@@ -289,7 +343,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="eeat"><span class="num">07</span> E-E-A-T en 2026</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué es E-E-A-T en 2026 y cómo se prueba para Google y para los modelos de IA?">
+<h2 id="eeat"><span class="num">07</span> ¿Qué es E-E-A-T en 2026 y cómo se prueba para Google y para los modelos de IA?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) pesa cada vez más en cómo Google y los modelos de IA evalúan una fuente. Para una pyme, eso significa firmar artículos con autor real, mostrar su experiencia (años, credenciales, casos), enlazar a fuentes primarias y exponer información de contacto y legal verificable.</p>
+</div>
+</div>
 <p>Google formalizó E-E-A-T (<strong>E</strong>xperience, <strong>E</strong>xpertise, <strong>A</strong>uthority, <strong>T</strong>rust) en 2022. Hoy es prácticamente lo único que decide en categorías sensibles (salud, finanzas, legal).</p>
 <h3>Cómo lo construye una pyme</h3>
 <ul>
@@ -303,7 +363,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="herramientas"><span class="num">08</span> Herramientas para medir visibilidad IA</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Con qué herramientas se mide la visibilidad de un sitio en búsqueda con IA?">
+<h2 id="herramientas"><span class="num">08</span> ¿Con qué herramientas se mide la visibilidad de un sitio en búsqueda con IA?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">AthenaHQ, Profound y Otterly trackean cuándo y cómo aparecen las marcas en respuestas de ChatGPT, Perplexity y Gemini. Los datos todavía son limitados y caros. Para una pyme, basta con una prueba manual semanal: hacer 5 a 10 preguntas reales sobre su nicho en ChatGPT y Perplexity, anotar si sale citada y qué frase la cita.</p>
+</div>
+</div>
 <p>Categoría joven, pocos players maduros, pero útiles:</p>
 <div class="channel-meta">
 <div class="row"><span class="k">AthenaHQ</span><span class="v">Trackea menciones en ChatGPT, Perplexity, Gemini. Desde $400.000 COP/mes.</span></div>
@@ -314,7 +380,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="errores"><span class="num">09</span> Errores que lo dejan invisible</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Qué errores dejan a un sitio invisible para los buscadores con IA?">
+<h2 id="errores"><span class="num">09</span> ¿Qué errores dejan a un sitio invisible para los buscadores con IA?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Los errores más comunes: rellenar la página de palabras clave en lugar de respuestas reales, bloquear a los crawlers de IA en robots.txt sin querer, esconder respuestas detrás de acordeones que cargan por JavaScript, no firmar artículos, no publicar llms.txt, no agregar schema FAQPage y dejar páginas sin fecha visible.</p>
+</div>
+</div>
 <div class="steps">
 <div class="step"><span class="n">1</span><h4>Contenido vago sin datos</h4><p>"Ofrecemos servicios de alta calidad" no es citable. "Implantes desde $1.200.000 COP, garantía 10 años" sí.</p></div>
 <div class="step"><span class="n">2</span><h4>Sin schema markup</h4><p>Los modelos parsean schema. Sin él, su contenido es más difícil de procesar.</p></div>
@@ -326,7 +398,13 @@ footer.site .copy .made{color:#FF5C2E;font-weight:700;font-family:'Fraunces',ser
 
 <hr>
 
-<h2 id="plan-90"><span class="num">10</span> Plan de 90 días</h2>
+<div class="qa" itemscope itemtype="https://schema.org/Question">
+<meta itemprop="name" content="¿Cuál es un plan de 90 días para empezar a aparecer en búsqueda con IA?">
+<h2 id="plan-90"><span class="num">10</span> ¿Cuál es un plan de 90 días para empezar a aparecer en búsqueda con IA?</h2>
+<div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+<p class="direct-answer" itemprop="text">Mes 1: publique llms.txt en la raíz, agregue schema Organization/ProfessionalService en la home y Article + BreadcrumbList en cada guía. Mes 2: restructure las 3 a 5 páginas con más tráfico con cada H2 como pregunta + extracto de 1 a 3 oraciones + microdata Question/Answer + FAQPage JSON-LD coincidente. Mes 3: mida visibilidad manual semanal, firme cada artículo con autor real y agregue 2 a 4 menciones nuevas desde sitios citables.</p>
+</div>
+</div>
 <h3>Mes 1: Auditoría y bases</h3>
 <ul>
 <li>Audite su sitio: ¿tiene schema completo? ¿bios de autor? ¿FAQ con schema?</li>

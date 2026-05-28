@@ -193,8 +193,54 @@ function pickDemoTemplate(cat, lang){
 }
 async function serveDemo(env, leadId){
   let lead = null;
-  try { lead = await env.DB.prepare("SELECT id, business_name, name, city, category, demo_lang FROM leads WHERE id = ?").bind(leadId).first(); } catch (e) {}
+  try {
+    lead = await env.DB.prepare(
+      "SELECT id, business_name, name, city, category, demo_lang, whatsapp, phone, " +
+      "       mockup_data, mockup_status " +
+      "  FROM leads WHERE id = ?"
+    ).bind(leadId).first();
+  } catch (e) {}
   if (!lead) return new Response("Ejemplo no encontrado.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+
+  // Mockup v2 · if we have a persisted personalized blob, render the dynamic
+  // template. Falls back to the legacy static template if no blob OR the
+  // dynamic render throws (defense-in-depth so a bug doesn't break demos).
+  let parsed = null;
+  if (lead.mockup_data) {
+    try { parsed = JSON.parse(lead.mockup_data); } catch {}
+  }
+  if (parsed && parsed.copy && parsed.copy.hero) {
+    try {
+      const { renderMockupV2 } = await import("./mockup-template.js");
+      const html = renderMockupV2(lead, parsed);
+      const cspV2 = [
+        "default-src 'self'",
+        "img-src * data: blob:",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+        "font-src 'self' https://fonts.gstatic.com data:",
+        "script-src 'self' 'unsafe-inline'",
+        "connect-src 'self'",
+        "base-uri 'self'",
+        "object-src 'none'",
+        "frame-ancestors 'none'",
+      ].join("; ");
+      return new Response(html, {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-store",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Security-Policy": cspV2,
+          "X-Mockup-Version": "v2",
+        },
+      });
+    } catch (e) {
+      console.warn("mockup v2 render failed for lead " + leadId + ": " + (e && e.message || e));
+      // fall through to legacy template
+    }
+  }
+
+  // Legacy static template (pre-mockup-v2). Kept so existing demo URLs don't
+  // 404 when a lead hasn't been put through the v2 pipeline yet.
   const tpl = pickDemoTemplate(lead.category, lead.demo_lang);
   if (!tpl) return new Response("Plantilla en construccion para esta categoria.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
   const negocio = demoEsc(lead.business_name || lead.name || "Tu negocio");
@@ -1890,6 +1936,13 @@ const src_default = {
       if (__demoSeen && request.method === "POST") return await logDemoView(env, __demoSeen[1]);
       const __demoImg = path.match(/^\/demo-img\/([a-z0-9-]+)$/);
       if (__demoImg && request.method === "GET") return await serveDemoImg(env, __demoImg[1]);
+      // Per-lead AI-generated mockup images (mockup v2). Stored in R2 by
+      // mockup-generator.js, served publicly with long cache headers.
+      const __perLeadImg = path.match(/^\/mockup-img\/([a-zA-Z0-9-]+)\/([a-zA-Z0-9_-]+)$/);
+      if (__perLeadImg && request.method === "GET") {
+        const { servePerLeadImage } = await import("./mockup-generator.js");
+        return await servePerLeadImage(env, __perLeadImg[1], __perLeadImg[2]);
+      }
       // ─── Public Chief of Staff loader script ─────────────────────────
       // Served at /cos-widget.js (and the master-portal-prefixed equivalent).
       // No auth needed for the script itself; the chat endpoint it calls

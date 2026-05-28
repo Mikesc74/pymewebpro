@@ -34,6 +34,9 @@ const EDITABLE_COLUMNS = {
     "facebook_url", "x_url", "tiktok_url",
     // Mockup variant language (added by 0010_demo_lang.sql).
     "demo_lang",
+    // Why this prospect needs PymeWebPro · drives AI pitch tailoring
+    // (added by 0013_pain_reason.sql).
+    "pain_reason",
   ],
   clients: [
     "email", "business_name", "status", "language", "plan", "site_url",
@@ -102,6 +105,8 @@ async function loadGrid(env, json) {
               current_site, cms, motion, address, suggested_pitch,
               followers, on_today_list,
               facebook_url, x_url, tiktok_url, demo_lang,
+              rating, review_count, place_id, pain_reason,
+              mockup_status, mockup_generated_at,
               created_at, updated_at
          FROM leads ORDER BY COALESCE(updated_at, created_at) DESC LIMIT 8000`
     ).all(),
