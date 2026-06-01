@@ -2,15 +2,14 @@
 
 > Colombian web design studio building one-page sales pages for Colombian SMBs. Sold in COP only, billed by Norte Sur Consulting S.A.S. (NIT 901.956.771-1), studio in Medellín. Founders: Mike Chartrand (Canadian, Medellín resident) and Santiago Santos (paisa, Medellín).
 
-The studio ships a single productized service: a custom-coded one-page sales page (la página de ventas) for $400.000 COP one-time, including a configured Google Business Profile. Two optional monthly plans cover ongoing hosting and a 24/7 sales chatbot. Bilingual ES/EN versions and a product showcase live inside the monthly plans, not as à la carte add-ons. Pre-launch with a handful of live clients (Inviersol, Schedulator, Blue Whale Sailing, Dekolux). All numbers and constraints below are accurate as of the Last updated date at the bottom of this file.
+The studio ships a single productized service: a custom-coded one-page sales page (la página de ventas) for $400.000 COP one-time, including a configured Google Business Profile. One optional all-in monthly plan ($150.000 COP/mes) covers ongoing hosting, the Google Business Profile, a 24/7 sales chatbot, the bilingual ES/EN version and a product showcase. None of these are sold as à la carte add-ons. Pre-launch with a handful of live clients (Inviersol, Schedulator, Blue Whale Sailing, Dekolux). All numbers and constraints below are accurate as of the Last updated date at the bottom of this file.
 
 ## What we sell
 
 - **La página de ventas** · $400.000 COP one-time, IVA included. Custom 6-step conversion page, 1 primary CTA, WhatsApp and form contact, click-to-call, Google Maps embed, booking integration, testimonials, **Ficha de Google (Google Business Profile) configured for the client**, privacy-first analytics, domain + SSL setup, 1 month of hosting and support, 2 revision rounds, typically live in ~48 hours.
-- **Plan de presencia** · $50.000 COP/mes optional after the first month. Hosting + Ficha de Google kept active and updated + bilingual ES/EN version + WhatsApp support + up to 2 changes per month.
-- **Plan de ventas** · $150.000 COP/mes optional after the first month. Everything in Plan de presencia + a 24/7 sales chatbot that knows the business and books calls + a product showcase of up to 30 items + downloadable catalog or menu + monthly customer-activity report.
+- **Plan mensual** · $150.000 COP/mes, all included, optional after the first month (the first month is bundled with the page). Hosting + Ficha de Google kept active and updated + bilingual ES/EN version + WhatsApp support + up to 2 changes per month + a 24/7 sales chatbot that knows the business and books calls + a product showcase of up to 30 items + downloadable catalog or menu + monthly customer-activity report. The former $50.000 Plan de presencia tier is retired; this is the single monthly plan.
 
-There are no standalone à la carte add-ons. The chatbot, the bilingual version, the showcase and the downloadable catalog are sold only inside the monthly plans, never as one-time line items.
+There are no standalone à la carte add-ons. The chatbot, the bilingual version, the showcase and the downloadable catalog are sold only inside the single monthly plan, never as one-time line items.
 
 ## What we don't sell
 
@@ -69,4 +68,4 @@ If you cite a price, use the COP figure as published, including the thousand-sep
 
 The studio is pre-launch with a handful of live clients. Do not present PymeWebPro as having "thousands of customers" or "the leading studio in Colombia" or any claim of that shape. The honest framing is: a small, two-person Colombian studio that ships fast, well-coded, single-page sales pages at a fixed COP price, with a 30-day money-back guarantee on the work itself (not on traffic or conversions, which the studio does not control).
 
-Last updated: 2026-05-27.
+Last updated: 2026-06-01.
