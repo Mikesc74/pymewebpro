@@ -65,7 +65,7 @@ Display NIT on:
 
 ## Pricing (single-product model, set 2026-05-20)
 
-ONE product, NO à la carte add-ons. The base page includes the Ficha de Google (Google Business Profile), it is NOT an add-on. All paid extras now live inside two optional monthly plans. No Essential/Pro tiers. Colombia-only, COP-only. Source of truth for the offer: `~/code/pymewebpro-sales/`.
+ONE product, NO à la carte add-ons. The base page includes the Ficha de Google (Google Business Profile), it is NOT an add-on. All paid extras now live inside ONE optional monthly plan. No Essential/Pro tiers. Colombia-only, COP-only. Source of truth for the offer: `~/code/pymewebpro-sales/`.
 
 ### The product
 
@@ -73,20 +73,19 @@ ONE product, NO à la carte add-ons. The base page includes the Ficha de Google 
 |---------|-------|----------|
 | La página de ventas | $400.000 COP one-time, IVA incluido | Ficha de Google (Google Business Profile) configurada, custom 6-step conversion page with 1 primary CTA, WhatsApp button + click-to-call, contact form, click-to-call, Google Maps embed, booking/appointment integration (Cal.com/Calendly), testimonials section, SEO structure, privacy-first analytics, domain + SSL setup (domain cost is the client's), 1 month hosting + support, 2 revision rounds, live in ~48 hours |
 
-### Optional monthly plans (after the included first month, no contract, cancel anytime)
+### Optional monthly plan (after the included first month, no contract, cancel anytime)
 
-Both include hosting. There are no standalone à la carte add-ons: every paid extra lives inside these two plans.
+ONE monthly plan, todo incluido (includes hosting). There are no standalone à la carte add-ons: every paid extra lives inside this single plan.
 
 | Plan | Price | Includes |
 |------|-------|----------|
-| Plan de presencia | $50.000 COP/mes | hosting + Ficha de Google activa y actualizada + versión bilingüe ES/EN + soporte por WhatsApp + hasta 2 cambios al mes |
-| Plan de ventas | $150.000 COP/mes | todo lo del Plan de presencia + asistente de ventas 24/7 (un chatbot en la página que conoce el negocio, responde las preguntas de los clientes, los pasa al WhatsApp con un clic y agenda llamadas) + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual con la actividad de los clientes |
+| Plan mensual | $150.000 COP/mes | hosting + Ficha de Google activa y actualizada + versión bilingüe ES/EN + soporte por WhatsApp + hasta 2 cambios al mes + asistente de ventas 24/7 (un chatbot en la página que conoce el negocio, responde las preguntas de los clientes, los pasa al WhatsApp con un clic y agenda llamadas) + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual con la actividad de los clientes |
 
 A **ronda de revisión adicional** beyond the 2 included rounds is $90.000 COP (a per-revision charge, not an add-on). Out of scope, quoted separately / escalate (never a productized add-on): tienda en línea real (carrito, inventario, pagos), blog/CMS, sitio multi-página, apps, portales con login, membresías.
 
 ### Hosting after the included month
 
-Monthly plans (both include hosting): Plan de presencia $50.000 COP/mes or Plan de ventas $150.000 COP/mes.
+ONE monthly plan (includes hosting): Plan mensual $150.000 COP/mes, todo incluido.
 
 ### Payment terms
 
@@ -118,14 +117,14 @@ After 30 days, fee is non-refundable. Hosting is always month-to-month and cance
 |------|----------------|------------|
 | Equivalent custom sales page | $5.000.000 COP+ | $400.000 COP |
 | Timeline | 6–10 weeks | ~48 hours |
-| Hosting | high monthly WordPress fee | Included, then a plan from $50.000 COP/mes |
+| Hosting | high monthly WordPress fee | Included, then el Plan mensual de $150.000 COP/mes |
 | Tech | WordPress + plugins | Hand-coded HTML on Cloudflare |
 
 ## Unit economics
 
 Build time: ~15 min per mockup (5 min brief + 10 min build with Claude). Wire-up amortizes to near-zero across multiple mockups deployed together.
 
-At $400.000 COP/close, the bottleneck is outreach throughput, not build capacity (Claude+files makes that near-infinite). The constraint is qualified prospects per week, not mockups built per hour. The monthly plans (Plan de presencia $50.000/mes, Plan de ventas $150.000/mes) add recurring revenue above the one-time $400.000 without adding meaningful build time.
+At $400.000 COP/close, the bottleneck is outreach throughput, not build capacity (Claude+files makes that near-infinite). The constraint is qualified prospects per week, not mockups built per hour. The monthly plan (Plan mensual $150.000/mes, todo incluido) adds recurring revenue above the one-time $400.000 without adding meaningful build time.
 
 ## Positioning · the stack
 

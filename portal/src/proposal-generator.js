@@ -176,7 +176,7 @@ function pickPricing(market, tier) {
 // monthly plans, so a one-time proposal/deposit is base-only. Kept as an empty
 // object so computePricing / dealTotalCop still resolve (any legacy stored
 // addon key is simply ignored -> base price). Do NOT re-add priced one-time
-// add-ons here; recurring extras belong to Plan de presencia / Plan de ventas.
+// add-ons here; recurring extras belong to the single Plan mensual.
 const BASE_PRICE = 400000;
 const ADDON_CATALOG = {};
 // Format an integer as Colombian pesos: 400000 -> "$400.000 COP".
@@ -670,13 +670,13 @@ const PROPOSAL_TEXT_ES = {
   revisionsValue: "2 rondas de revisión incluidas",
   includesHeading: "Qué recibes",
   hostingHeading: "Hosting y soporte",
-  hosting1: "El precio incluye tu Ficha de Google y 1 mes de hosting + soporte. Después, eliges un plan mensual opcional, sin contrato (ambos incluyen hosting): Plan de presencia $50.000 COP/mes (hosting + Ficha de Google activa + soporte por WhatsApp + hasta 2 cambios + te decimos cuánta gente vio tu página y te escribió), o Plan de ventas $150.000 COP/mes (todo lo anterior + tu asistente de ventas 24/7: un chatbot en tu página que responde preguntas y pasa al cliente a tu WhatsApp con un clic).",
+  hosting1: "El precio incluye tu Ficha de Google y 1 mes de hosting + soporte. Después, eliges el Plan mensual opcional, sin contrato (incluye hosting): Plan mensual $150.000 COP/mes, todo incluido (hosting + Ficha de Google activa y actualizada + versión bilingüe ES/EN + soporte por WhatsApp + hasta 2 cambios al mes + tu asistente de ventas 24/7: un chatbot en tu página que responde preguntas y pasa al cliente a tu WhatsApp con un clic + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual con la actividad de tus clientes).",
   host1: "Cloudflare Pages, 330+ ubicaciones edge, sub-1s LCP en cualquier país",
   host2: "Certificado SSL gestionado, renovación automática, sin tarifas extra",
   host3: "Backups automáticos, redundancia geográfica",
   host4: "Soporte por WhatsApp y email durante el período de cobertura",
   maintenanceLabel: "Hosting después del mes incluido",
-  maintenanceValue: "Plan de presencia $50.000 COP/mes o Plan de ventas $150.000 COP/mes (incluyen hosting)",
+  maintenanceValue: "Plan mensual $150.000 COP/mes, todo incluido (incluye hosting)",
   hourlyLabel: "Cambios fuera de alcance",
   hourlyValue: "ronda de revisión adicional $90.000 COP",
   guaranteeHeading: "Garantía",
@@ -714,13 +714,13 @@ const PROPOSAL_TEXT_EN = {
   revisionsValue: "2 revision rounds included",
   includesHeading: "What you receive",
   hostingHeading: "Hosting + support",
-  hosting1: "The price includes your Google Business Profile and 1 month of hosting + support. After that, you pick an optional monthly plan, no contract (both include hosting): Plan de presencia $50.000 COP/mo (hosting + active Google Business Profile + WhatsApp support + up to 2 changes + a note on how many people saw your page and messaged you), or Plan de ventas $150.000 COP/mo (everything above + your 24/7 sales assistant: a chatbot on your page that answers questions and sends the customer to your WhatsApp with one tap).",
+  hosting1: "The price includes your Google Business Profile and 1 month of hosting + support. After that, you pick the optional Plan mensual, no contract (includes hosting): Plan mensual $150.000 COP/mo, all included (hosting + active, updated Google Business Profile + bilingual ES/EN version + WhatsApp support + up to 2 changes a month + your 24/7 sales assistant: a chatbot on your page that answers questions and sends the customer to your WhatsApp with one tap + showcase of up to 30 products + downloadable catalog or menu + monthly report on your customer activity).",
   host1: "Cloudflare Pages, 330+ edge locations, sub-1s LCP worldwide",
   host2: "Managed SSL cert, automatic renewal, no extra fees",
   host3: "Automatic backups, geo redundancy",
   host4: "WhatsApp + email support throughout the coverage period",
   maintenanceLabel: "Hosting after the included month",
-  maintenanceValue: "Plan de presencia $50.000 COP/mo or Plan de ventas $150.000 COP/mo (hosting included)",
+  maintenanceValue: "Plan mensual $150.000 COP/mo, all included (hosting included)",
   hourlyLabel: "Out-of-scope changes",
   hourlyValue: "additional revision round $90.000 COP",
   guaranteeHeading: "Guarantee",
@@ -747,7 +747,7 @@ const FEATURES_ES_LIST = [
   "Dominio + SSL configurados (el costo del dominio es del cliente)",
   "1 mes de hosting + soporte incluido",
   "2 rondas de revisión, en vivo en ~48 horas",
-  "Planes mensuales opcionales: Plan de presencia $50.000/mes (hosting + Ficha de Google activa y actualizada + versión bilingüe + soporte WhatsApp + hasta 2 cambios al mes) y Plan de ventas $150.000/mes (todo lo anterior + asistente 24/7 + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual de clientes)",
+  "Plan mensual opcional: Plan mensual $150.000/mes, todo incluido (hosting + Ficha de Google activa y actualizada + versión bilingüe + soporte WhatsApp + hasta 2 cambios al mes + asistente 24/7 + vitrina de hasta 30 productos + catálogo o menú descargable + reporte mensual de clientes)",
 ];
 const FEATURES_ES = { esencial: FEATURES_ES_LIST, pro: FEATURES_ES_LIST };
 const FEATURES_EN_LIST = [
@@ -761,7 +761,7 @@ const FEATURES_EN_LIST = [
   "Domain + SSL setup (domain cost is the client's)",
   "1 month hosting + support included",
   "2 revision rounds, live in ~48 hours",
-  "Optional monthly plans: Plan de presencia $50.000/mo (hosting + active, updated Google Business Profile + bilingual version + WhatsApp support + up to 2 changes/month) and Plan de ventas $150.000/mo (everything above + 24/7 assistant + showcase of up to 30 products + downloadable catalog or menu + monthly customer report)",
+  "Optional monthly plan: Plan mensual $150.000/mo, all included (hosting + active, updated Google Business Profile + bilingual version + WhatsApp support + up to 2 changes/month + 24/7 assistant + showcase of up to 30 products + downloadable catalog or menu + monthly customer report)",
 ];
 const FEATURES_EN = { esencial: FEATURES_EN_LIST, pro: FEATURES_EN_LIST };
 

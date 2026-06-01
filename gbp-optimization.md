@@ -57,7 +57,7 @@ Skip: Software company, Graphic designer, Computer support. They pull irrelevant
 
 ## 3. Services
 
-Matches the live pymewebpro.com offer (single product + two monthly plans, no à la carte add-ons). Each entry: a name and a short description (GBP allows about 300 chars per service description). Prices in COP are fine in the text.
+Matches the live pymewebpro.com offer (single product + one monthly plan, no à la carte add-ons). Each entry: a name and a short description (GBP allows about 300 chars per service description). Prices in COP are fine in the text.
 
 **Producto base**
 
@@ -66,16 +66,11 @@ Matches the live pymewebpro.com offer (single product + two monthly plans, no à
 Página de conversión de una sola página, hecha a la medida. Incluye tu Ficha de Google, botón de WhatsApp, formulario al correo, click para llamar, mapa, testimonios, SEO y analítica. Dominio y SSL configurados, 1 mes de hosting. En vivo en 48 horas, con 2 rondas de revisión y garantía de 30 días.
 ```
 
-**Planes mensuales (opcionales, después del primer mes)**
+**Plan mensual (opcional, después del primer mes)**
 
-**Plan de presencia ($50.000 COP/mes)**
+**Plan mensual ($150.000 COP/mes, todo incluido)**
 ```
-Hosting, tu Ficha de Google activa y al día, versión bilingüe ES/EN, soporte por WhatsApp y hasta 2 cambios al mes. Sin contrato, cancela cuando quieras.
-```
-
-**Plan de ventas ($150.000 COP/mes)**
-```
-Todo lo del Plan de presencia más tu asistente de ventas 24/7 (un chatbot que responde a tus clientes y los pasa a tu WhatsApp con un clic), vitrina de hasta 30 productos, catálogo o menú descargable y un reporte mensual con tus números.
+Hosting, tu Ficha de Google activa y al día, versión bilingüe ES/EN, soporte por WhatsApp, hasta 2 cambios al mes, asistente de ventas 24/7 (un chatbot que responde a tus clientes y los pasa a tu WhatsApp con un clic), vitrina de hasta 30 productos, catálogo o menú descargable y un reporte mensual con tus números. Sin contrato, cancela cuando quieras.
 ```
 
 ---
@@ -127,7 +122,7 @@ Somos un estudio pequeño, no una agencia con call center. Hablas directo con qu
 ```
 Tu asistente de ventas, trabajando 24/7.
 
-Con el Plan de ventas ($150.000/mes) sumamos un chatbot a tu página que responde las preguntas de tus clientes y los pasa a tu WhatsApp con un clic, de día y de noche. Sin costo de instalación. Así no pierdes al cliente que llega a medianoche.
+Con el Plan mensual ($150.000/mes, todo incluido) sumamos un chatbot a tu página que responde las preguntas de tus clientes y los pasa a tu WhatsApp con un clic, de día y de noche. Sin costo de instalación. Así no pierdes al cliente que llega a medianoche.
 ```
 
 ---
@@ -138,7 +133,7 @@ Owners can ask and answer their own questions. Seed the obvious buyer questions 
 
 **P: ¿Cuánto cuesta una página?**
 ```
-La página de ventas cuesta $400.000 COP, una sola vez, IVA incluido, e incluye tu Ficha de Google. Si quieres, hay planes mensuales opcionales: Plan de presencia $50.000/mes (Ficha de Google al día, versión bilingüe, soporte WhatsApp, hasta 2 cambios al mes) y Plan de ventas $150.000/mes (todo lo anterior más chatbot 24/7, vitrina de hasta 30 productos y catálogo descargable).
+La página de ventas cuesta $400.000 COP, una sola vez, IVA incluido, e incluye tu Ficha de Google y el primer mes de plan. Si quieres seguir, hay un plan mensual opcional: Plan mensual $150.000/mes, todo incluido (Ficha de Google al día, versión bilingüe, soporte WhatsApp, hasta 2 cambios al mes, chatbot 24/7, vitrina de hasta 30 productos y catálogo descargable).
 ```
 
 **P: ¿En cuánto tiempo está lista?**
@@ -168,12 +163,12 @@ Sí. Trabajamos con pymes de toda Colombia de forma remota. El estudio está en 
 
 **P: ¿Hacen tiendas en línea?**
 ```
-Nuestro producto principal es la página de ventas. Con el Plan de ventas puedes sumar una vitrina de hasta 30 productos y un catálogo descargable. Una tienda completa (carrito, inventario y pagos) la cotizamos aparte.
+Nuestro producto principal es la página de ventas. Con el Plan mensual puedes sumar una vitrina de hasta 30 productos y un catálogo descargable. Una tienda completa (carrito, inventario y pagos) la cotizamos aparte.
 ```
 
 **P: ¿Trabajan en inglés?**
 ```
-Sí. Con el Plan de presencia (o el Plan de ventas) entregamos tu página en español e inglés, útil si tu cliente es expatriado en Colombia.
+Sí. Con el Plan mensual entregamos tu página en español e inglés, útil si tu cliente es expatriado en Colombia.
 ```
 
 ---
@@ -199,7 +194,7 @@ Tips: shoot landscape, good light, no heavy text baked into the photo (Google ca
 
 ## 7. Before you start: fixes + flags
 
-1. **Status: applied, pending verification.** The description, the 5 categories, and the 6 services above are entered on the live profile (from the owner account, avatar "P"). They go public only after the **video verification** clears. Posts and Q&A are blocked until verified, apply sections 4 and 5 once the video is approved.
+1. **Status: applied, pending verification.** The description, the 5 categories, and the services above are entered on the live profile (from the owner account, avatar "P"). They go public only after the **video verification** clears. Posts and Q&A are blocked until verified, apply sections 4 and 5 once the video is approved.
 
 2. **Set up as a service-area business.** The listed address (Cl. 15 #37A-18, El Poblado) is the home office. Since you work remotely and travel to clients for meetings, the right GBP model is a service-area business: hide the street address and set your service area (Medellín, plus other Colombian cities you cover). Going to clients in person also confirms eligibility (Google wants in-person customer contact), so the listing is on solid ground, no walk-in storefront or exterior photos needed.
 

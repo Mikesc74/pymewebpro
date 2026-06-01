@@ -8,7 +8,7 @@ Status: planning · 2026-05-10
 
 ## Goal
 
-Generate qualified, mockup-in-hand sales conversations with 30 to 50 Colombian SMBs per week. The agent's job is to qualify and book; the human's job (Santi for ES, Mike for EN) is to close. Success metric: 1 to 2 closed Essential or Pro sales per week from outbound, with under 10 minutes of human handling per closed deal.
+Generate qualified, mockup-in-hand sales conversations with 30 to 50 Colombian SMBs per week. The agent's job is to qualify and book; the human's job (Santi for ES, Mike for EN) is to close. Success metric: 1 to 2 closed página de ventas sales per week from outbound, with under 10 minutes of human handling per closed deal.
 
 We don't try to close in WhatsApp. We get to "yes, send me the proposal" and hand off.
 
@@ -167,7 +167,7 @@ Tool set:
 | `send_message` | Reply via WhatsApp |
 | `update_prospect` | Set name, email, language, notes (capped 240 chars) |
 | `book_consult` | Cal.com slot listing + booking, hands off to Santi by default |
-| `send_wompi_link` | Direct payment link for the chosen tier (390k or 690k COP) |
+| `send_wompi_link` | Direct payment link for the página de ventas (400k COP, 30% deposit = 120k) |
 | `mark_status` | Move prospect through pipeline (replied, qualified, won, lost) |
 | `mark_dnc` | Honor STOP / NO MAS / PARAR / "no me interesa" |
 | `escalate` | Hand off to Mike or Santi when conversation gets technical or large-deal |
@@ -177,7 +177,7 @@ Same anti-repetition + URL-formatting + notes-discipline rules from Catalina. Re
 
 Hand-off triggers (escalate to Santi automatically):
 - Prospect asks a technical question the agent isn't 100% on
-- Prospect mentions a custom feature outside Essential/Pro scope
+- Prospect mentions a custom feature outside the página de ventas + Plan mensual scope
 - Prospect names a competitor or asks for a custom quote
 - Prospect goes silent after explicit interest (Sandra's not great at re-engagement)
 
@@ -241,7 +241,7 @@ If Phase 4 metrics miss (reply rate under 5%, or quality rating goes yellow), we
 | Dedicated WA Business number (one-time setup, then carrier fee) | ~$5 |
 | **Total** | **~$100/mo** |
 
-Conservative revenue math: 200 sends → 30 replies (15%) → 5 closes (16% of replies) → 5 × 390k COP = ~1.95M COP/mo gross. 5x ROI at the floor; closer to 10x if we hit the optimistic end.
+Conservative revenue math: 200 sends → 30 replies (15%) → 5 closes (16% of replies) → 5 × 400k COP = ~2M COP/mo gross. 5x ROI at the floor; closer to 10x if we hit the optimistic end.
 
 ---
 

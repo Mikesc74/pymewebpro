@@ -5,12 +5,13 @@
 // PRICING (single-product model as of 2026-05-20; add-ons folded into plans 2026-05-25):
 //   ONE product, "La página de ventas": 400.000 COP (IVA incluido), portal key
 //   `esencial`. NO à la carte add-ons anymore; the extras (bilingual, showcase,
-//   downloadable catalog, 24/7 assistant) live inside the optional monthly plans
-//   (Plan de presencia 50.000/mes, Plan de ventas 150.000/mes), billed separately.
+//   downloadable catalog, 24/7 assistant) live inside the optional monthly plan
+//   (Plan mensual 150.000/mes, todo incluido), billed separately.
 //   There are no Essential/Pro tiers anymore. COP only.
 //   The legacy `pro` key (690.000 COP) is retained ONLY to price old stored
 //   leads/deals correctly · it is not offered to new buyers.
-// Hosting after the included month: 30.000 COP/mes or 300.000 COP/año.
+// Hosting after the included month is part of the single Plan mensual (150.000/mes,
+//   todo incluido), billed separately, not on Wompi.
 // 24-hour $100k discount DISABLED · the launch-offer pricing IS the discount.
 // Setting WINDOW=0 means `now < deadline` is always false → discount_active = false
 // → countdown banner and discount row are conditionally hidden in confirmationHtml.

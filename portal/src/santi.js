@@ -4,9 +4,9 @@
 // language toggle in the header. House style: no em dashes, no marketing-speak,
 // real numbers. Single-product model: one product "La página de ventas"
 // COP $400.000 (IVA incl.). No à la carte add-ons; the extras (bilingual,
-// showcase, downloadable catalog, 24/7 assistant) live inside the two optional
-// monthly plans (Presencia $50.000/mes, Ventas $150.000/mes, both include
-// hosting). Standalone hosting after the included month COP $30.000/mes.
+// showcase, downloadable catalog, 24/7 assistant) live inside the single optional
+// Plan mensual (COP $150.000/mes, todo incluido, includes hosting), billed after
+// the included first month.
 
 export function santiPageHTML() {
   return `<!DOCTYPE html>
@@ -659,9 +659,9 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <h3 data-lang="es">Hosting incluido</h3>
         <h3 data-lang="en">Hosting included</h3>
         <p data-lang="es">1 mes de hosting, SSL y soporte por WhatsApp
-          incluido. Despues, un plan mensual: Plan de presencia $50.000/mes o Plan de ventas $150.000/mes (ambos incluyen hosting).</p>
+          incluido. Despues, el Plan mensual $150.000/mes, todo incluido (incluye hosting).</p>
         <p data-lang="en">1 month of hosting, SSL, and WhatsApp support
-          included. After that, a monthly plan: Plan de presencia $50.000/mo or Plan de ventas $150.000/mo (both include hosting).</p>
+          included. After that, the Plan mensual $150.000/mo, all included (includes hosting).</p>
       </div>
     </div>
   </div>
@@ -720,15 +720,13 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
       </div>
 
       <div class="plan">
-        <h3 data-lang="es">Planes mensuales (opcionales)</h3>
-        <h3 data-lang="en">Monthly plans (optional)</h3>
-        <p class="meta" data-lang="es">Despues del mes incluido. Sin contrato, cancela cuando quieras. Ambos incluyen hosting.</p>
-        <p class="meta" data-lang="en">After the included month. No contract, cancel anytime. Both include hosting.</p>
+        <h3 data-lang="es">Plan mensual (opcional)</h3>
+        <h3 data-lang="en">Monthly plan (optional)</h3>
+        <p class="meta" data-lang="es">Despues del mes incluido. Sin contrato, cancela cuando quieras. Incluye hosting.</p>
+        <p class="meta" data-lang="en">After the included month. No contract, cancel anytime. Includes hosting.</p>
         <ul>
-          <li data-lang="es"><b>Plan de presencia $50.000/mes:</b> hosting + Ficha de Google activa y actualizada + version bilingue ES/EN + soporte por WhatsApp + hasta 2 cambios al mes</li>
-          <li data-lang="en"><b>Plan de presencia $50.000/mo:</b> hosting + active, updated Google Business Profile + bilingual ES/EN version + WhatsApp support + up to 2 changes a month</li>
-          <li data-lang="es"><b>Plan de ventas $150.000/mes:</b> todo lo de Presencia + asistente de ventas 24/7 (un chatbot que conoce tu negocio, responde y agenda llamadas) + vitrina de hasta 30 productos + catalogo o menu descargable + reporte mensual</li>
-          <li data-lang="en"><b>Plan de ventas $150.000/mo:</b> everything in Presencia + a 24/7 sales assistant (a chatbot that knows your business, answers and books calls) + showcase of up to 30 products + downloadable catalog or menu + monthly report</li>
+          <li data-lang="es"><b>Plan mensual $150.000/mes, todo incluido:</b> hosting + Ficha de Google activa y actualizada + version bilingue ES/EN + soporte por WhatsApp + hasta 2 cambios al mes + asistente de ventas 24/7 (un chatbot que conoce tu negocio, responde y agenda llamadas) + vitrina de hasta 30 productos + catalogo o menu descargable + reporte mensual</li>
+          <li data-lang="en"><b>Plan mensual $150.000/mo, all included:</b> hosting + active, updated Google Business Profile + bilingual ES/EN version + WhatsApp support + up to 2 changes a month + 24/7 sales assistant (a chatbot that knows your business, answers and books calls) + showcase of up to 30 products + downloadable catalog or menu + monthly report</li>
           <li class="meta" data-lang="es">La Ficha de Google ya va incluida en la pagina base. Ningun plan mensual es obligatorio.</li>
           <li class="meta" data-lang="en">The Google Business Profile is included in the base page. No monthly plan is required.</li>
         </ul>
@@ -845,8 +843,8 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
         <div class="when" data-lang="es">Despues</div>
         <div class="when" data-lang="en">After</div>
         <div class="what">
-          <span data-lang="es"><b>1 mes</b> de hosting y soporte ya incluido. Despues, un plan mensual: Plan de presencia $50.000/mes o Plan de ventas $150.000/mes (ambos incluyen hosting). Cambios menores y monitoreo por WhatsApp.</span>
-          <span data-lang="en"><b>1 month</b> of hosting and support already included. After that, a monthly plan: Plan de presencia $50.000/mo or Plan de ventas $150.000/mo (both include hosting). Small changes and monitoring via WhatsApp.</span>
+          <span data-lang="es"><b>1 mes</b> de hosting y soporte ya incluido. Despues, el Plan mensual $150.000/mes, todo incluido (incluye hosting). Cambios menores y monitoreo por WhatsApp.</span>
+          <span data-lang="en"><b>1 month</b> of hosting and support already included. After that, the Plan mensual $150.000/mo, all included (includes hosting). Small changes and monitoring via WhatsApp.</span>
         </div>
         <div class="who" data-lang="es">Equipo PymeWebPro</div>
         <div class="who" data-lang="en">PymeWebPro team</div>
@@ -1076,7 +1074,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
       <details class="faq" data-lang="es">
         <summary>¿Que pasa despues del periodo de hosting incluido?</summary>
         <div class="answer">
-          Despues del mes incluido eliges un plan (Plan de presencia $50.000/mes o Plan de ventas $150.000/mes), ambos incluyen hosting Cloudflare, SSL renovado, copias de
+          Despues del mes incluido eliges el Plan mensual ($150.000/mes, todo incluido), que incluye hosting Cloudflare, SSL renovado, copias de
           seguridad, monitoreo 24/7, cambios menores de contenido, y
           soporte tecnico por WhatsApp. Si prefieres no renovar, te
           entregamos el codigo y puedes llevar el sitio a otro hosting.
@@ -1085,7 +1083,7 @@ body.lang-en details.faq[data-lang="en"] { display: block; }
       <details class="faq" data-lang="en">
         <summary>What happens after the included hosting period ends?</summary>
         <div class="answer">
-          After the included month you pick a plan (Plan de presencia $50.000/mo or Plan de ventas $150.000/mo), both include Cloudflare
+          After the included month you pick the Plan mensual ($150.000/mo, all included), which includes Cloudflare
           hosting, SSL renewal, automatic backups, 24/7 uptime
           monitoring, small content changes, and WhatsApp support. If
           you'd rather not renew, we hand over the code and you can
