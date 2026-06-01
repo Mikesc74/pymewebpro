@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programa de Socios PymeWebPro · Vende páginas, quédate con el 50%</title>
+<meta name="description" content="Vende páginas con inteligencia artificial y asistentes de chat 24/7 para negocios locales. Te quedas con el 50% de cada venta: de la página y de cada mes durante un año. Nosotros montamos, alojamos y damos soporte.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#FF5C2E; --accent-soft:#FFE7DE; --ink:#0A0A0B; --ink-soft:#33333a;
+    --paper:#FAF9F6; --card:#ffffff; --grey:#8B8B92; --line:#E8E8EA;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);
+    background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,.big{font-family:'Inter Tight','Inter',sans-serif}
+  #lang{position:absolute;opacity:0;pointer-events:none}
+  .sec{display:none}
+  #lang:checked ~ .wrap .pri{display:none}
+  #lang:checked ~ .wrap .sec{display:revert}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:rgba(250,249,246,.92);backdrop-filter:blur(8px);z-index:10}
+  .logo{font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--ink)}
+  .logo b{color:var(--accent)}
+  .toggle{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 16px;
+    font-weight:700;font-size:13px;color:var(--accent);cursor:pointer;user-select:none;background:#fff}
+  .toggle:hover{background:#fff}
+  .hero{padding:62px 0 36px}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent);text-transform:uppercase;margin:0 0 16px}
+  h1{font-size:clamp(30px,5vw,46px);line-height:1.08;letter-spacing:-.02em;margin:0 0 18px;font-weight:800}
+  h1 .hl{color:var(--accent)}
+  .lede{font-size:18px;color:var(--ink-soft);max-width:700px;margin:0 0 28px}
+  .badges{display:flex;flex-wrap:wrap;gap:12px}
+  .badge{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:11px 15px;font-size:13.5px;font-weight:600;color:var(--ink-soft)}
+  section{padding:40px 0;border-top:1px solid var(--line)}
+  .kicker{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin:0 0 22px}
+  h2{font-size:24px;letter-spacing:-.01em;margin:0 0 6px;font-weight:800}
+  .steps{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .step{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .step .n{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;
+    font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .step p{margin:3px 0 0;font-size:15px}
+  .earn{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center}
+  .earn-card{background:linear-gradient(150deg,#0A0A0B,#FF5C2E);color:#fff;border-radius:18px;padding:28px 26px}
+  .earn-card .big{font-size:42px;font-weight:800;letter-spacing:-.02em;line-height:1;color:#fff}
+  .earn-card .big .cur{font-size:24px;vertical-align:6px;margin-right:2px;color:#ffd8c9}
+  .earn-card .cap{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#ffd0c2;margin:0 0 14px;font-weight:700}
+  .earn-card p{margin:14px 0 0;font-size:14.5px;color:#ffe8e0}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  thead th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);font-weight:800}
+  td.amt{text-align:right;font-weight:800;color:var(--accent)}
+  td.cl{font-weight:700}
+  .tnote{font-size:12.5px;color:var(--grey);margin:10px 2px 0}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .col{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--card)}
+  .col.you{background:var(--accent-soft);border-color:#f6cdbf}
+  .col h3{margin:0 0 14px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+  .col ul{margin:0;padding:0;list-style:none}
+  .col li{position:relative;padding:0 0 11px 26px;font-size:15px}
+  .col li:last-child{padding-bottom:0}
+  .col li::before{content:"";position:absolute;left:0;top:8px;width:13px;height:13px;border-radius:50%;background:var(--ink)}
+  .col.you li::before{background:var(--accent)}
+  .who p{font-size:17px;max-width:760px;color:var(--ink-soft)}
+  .who .honest{font-weight:700;color:var(--ink)}
+  .cta{text-align:center;background:var(--card);border-radius:20px;margin:8px 0 56px;padding:46px 24px;border:1px solid var(--line)}
+  .cta h2{font-size:26px}
+  .cta p{color:var(--ink-soft);max-width:520px;margin:8px auto 24px}
+  .wa{display:inline-flex;align-items:center;gap:11px;background:#25D366;color:#06351a;font-weight:800;
+    font-size:16px;text-decoration:none;padding:15px 28px;border-radius:14px}
+  .wa:hover{filter:brightness(.96)}
+  .foot{border-top:1px solid var(--line);padding:26px 0 50px;font-size:13px;color:var(--grey);display:flex;
+    justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .foot a{color:var(--accent)}
+  @media(max-width:720px){.steps,.earn,.split{grid-template-columns:1fr}.earn-card .big{font-size:36px}}
+</style>
+</head>
+<body>
+<input id="lang" type="checkbox" aria-label="Cambiar idioma">
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo">Pyme<b>WebPro</b></div>
+    <label class="toggle" for="lang"><span class="pri">English</span><span class="sec">Español</span></label>
+  </div>
+
+  <div class="hero">
+    <p class="eyebrow pri">Programa de Socios</p>
+    <p class="eyebrow sec">Partner Program</p>
+    <h1 class="pri">Vende páginas que venden. <span class="hl">Quédate con el 50%.</span></h1>
+    <h1 class="sec">Sell pages that sell. <span class="hl">Keep 50%.</span></h1>
+    <p class="lede pri">Creamos y operamos páginas con inteligencia artificial y asistentes de chat 24/7 para negocios locales. Tú las vendes. Te quedas con el 50% de todo: de la página y de cada mes durante un año. Nosotros hacemos el montaje, el hosting y el soporte.</p>
+    <p class="lede sec">We build and run AI-powered pages and 24/7 chat assistants for local businesses. You sell them. You keep 50% of everything: the page and every month for a year. We handle the build, the hosting and the support.</p>
+
+    <div class="badges">
+      <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 2" stroke="#FF5C2E" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#FF5C2E" stroke-width="2"/></svg><span class="pri">Montaje en 48 horas</span><span class="sec">48-hour build</span></span>
+      <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#FF5C2E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="pri">Garantía de 30 días</span><span class="sec">30-day guarantee</span></span>
+      <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="#FF5C2E" stroke-width="2" stroke-linejoin="round"/></svg><span class="pri">Construcción, rendimiento y seguridad de nivel empresarial</span><span class="sec">Enterprise-grade build, performance and security</span></span>
+    </div>
+  </div>
+
+  <section>
+    <p class="kicker pri">Cómo funciona</p>
+    <p class="kicker sec">How it works</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><p class="pri">Encuentras y cierras negocios locales: talleres, clínicas, consultorios, restaurantes, profesionales independientes.</p><p class="sec">You find and close local businesses: workshops, clinics, offices, restaurants, independent professionals.</p></div>
+      <div class="step"><div class="n">2</div><p class="pri">El cliente paga el anticipo y pasa a nuestro estudio.</p><p class="sec">The client pays a deposit and is handed to our studio.</p></div>
+      <div class="step"><div class="n">3</div><p class="pri">Creamos la página y el asistente de IA 24/7, y lo ajustamos con el cliente hasta que encaje.</p><p class="sec">We build the page and the 24/7 AI assistant, then refine it with the client until it fits.</p></div>
+      <div class="step"><div class="n">4</div><p class="pri">El cliente sale en línea y paga cada mes. Ganas en la página y cada mes, durante 12 meses.</p><p class="sec">The client launches and pays monthly. You earn on the page and every month, for 12 months.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker pri">Lo que ganas</p>
+    <p class="kicker sec">What you earn</p>
+    <div class="earn">
+      <div class="earn-card">
+        <p class="cap pri">Tu 50%, por cliente</p>
+        <p class="cap sec">Your 50%, per client</p>
+        <div class="big"><span class="cur">$</span>1.100.000<span style="font-size:18px;color:#ffd8c9"> COP</span></div>
+        <p class="pri">En los primeros 12 meses. Ejemplo: página $400.000 + $150.000/mes. Te quedas con $200.000 de la página y $75.000 cada mes.</p>
+        <p class="sec">Over the first 12 months. Example: $400.000 page + $150.000/month. You keep $200.000 of the page and $75.000 each month.</p>
+      </div>
+      <div>
+        <table>
+          <thead><tr>
+            <th><span class="pri">Clientes</span><span class="sec">Clients</span></th>
+            <th style="text-align:right"><span class="pri">Tu ganancia a 12 meses (COP)</span><span class="sec">Your 12-month earnings (COP)</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="cl">10</td><td class="amt">$11.000.000</td></tr>
+            <tr><td class="cl">25</td><td class="amt">$27.500.000</td></tr>
+            <tr><td class="cl">50</td><td class="amt">$55.000.000</td></tr>
+            <tr><td class="cl">100</td><td class="amt">$110.000.000</td></tr>
+          </tbody>
+        </table>
+        <p class="tnote pri">La parte mensual corre durante 12 meses desde cada venta. Cifras antes de lo que decidas gastar en conseguir clientes.</p>
+        <p class="tnote sec">The monthly share runs for 12 months from each sale. Figures before anything you choose to spend on finding clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker pri">El reparto</p>
+    <p class="kicker sec">The split</p>
+    <div class="split">
+      <div class="col">
+        <h3 class="pri">Nosotros ponemos</h3><h3 class="sec">We provide</h3>
+        <ul>
+          <li class="pri">El producto: una página que convierte y un asistente de IA 24/7.</li><li class="sec">The product: a high-conversion page and a 24/7 AI assistant.</li>
+          <li class="pri">El montaje, los ajustes, el hosting y el soporte continuo.</li><li class="sec">The full build, revisions, hosting and ongoing support.</li>
+          <li class="pri">Los pagos, los precios y el material de ventas listo.</li><li class="sec">Payments, pricing and ready-made sales material.</li>
+          <li class="pri">Una configuración lista para tu mercado.</li><li class="sec">A setup ready for your market.</li>
+        </ul>
+      </div>
+      <div class="col you">
+        <h3 class="pri">Tú pones</h3><h3 class="sec">You bring</h3>
+        <ul>
+          <li class="pri">El conocimiento real de tu mercado local.</li><li class="sec">Real knowledge of your local market.</li>
+          <li class="pri">La venta.</li><li class="sec">The selling.</li>
+          <li class="pri">Una relación honesta con los clientes que cierras.</li><li class="sec">An honest relationship with the clients you close.</li>
+          <li class="pri">Las ganas de hacer crecer tu zona.</li><li class="sec">The drive to grow your territory.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="who">
+    <p class="kicker pri">Para quién es</p>
+    <p class="kicker sec">Who this is for</p>
+    <p class="pri">Vendedores con experiencia que quieren ingresos recurrentes propios, no un sueldo. No hay nada que montar ni nada que pagar para empezar: sin cuota de entrada, sin comisiones de arranque, nada. <span class="honest">Ganas cuando una venta pasa los 30 días: te pagan por los clientes que se quedan.</span></p>
+    <p class="sec">Experienced salespeople who want recurring income they own, not a salary. There is nothing to set up and nothing to pay to start: no buy-in, no startup fees, nothing. <span class="honest">You earn when a sale clears 30 days, so you get paid for clients who stay.</span></p>
+  </section>
+
+  <div class="cta">
+    <h2 class="pri">¿Quieres un mercado?</h2><h2 class="sec">Want a market?</h2>
+    <p class="pri">Cuéntanos tu ciudad y tu experiencia en ventas. Aceptamos un número limitado de socios por mercado.</p>
+    <p class="sec">Tell us your city and your sales background. We onboard a limited number of partners per market.</p>
+    <a class="wa pri" href="https://wa.me/573168013810?text=Hola%2C%20me%20interesa%20el%20programa%20de%20socios%20de%20PymeWebPro." target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#06351a"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-2.8.7.8-2.7-.2-.3A8 8 0 1112 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 01-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 00-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6 1.8 2.8 4.4 3.9c1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1s.2-1 .1-1.1z"/></svg>
+      Escríbenos por WhatsApp
+    </a>
+    <a class="wa sec" href="https://wa.me/573168013810?text=Hi%2C%20I%27m%20interested%20in%20the%20PymeWebPro%20partner%20program." target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#06351a"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-2.8.7.8-2.7-.2-.3A8 8 0 1112 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 01-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 00-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6 1.8 2.8 4.4 3.9c1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1s.2-1 .1-1.1z"/></svg>
+      Message us on WhatsApp
+    </a>
+  </div>
+
+  <div class="foot">
+    <span>PymeWebPro · Norte Sur Consulting S.A.S. · NIT 901.956.771-1 · Medellín</span>
+    <span><a href="/">pymewebpro.com</a></span>
+  </div>
+
+</div>
+</body>
+</html>
