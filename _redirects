@@ -23,6 +23,12 @@ http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
 /privacy        /politica-de-datos   301!
 /privacy.html   /politica-de-datos   301!
 
+# /hosting (legacy $30.000/mes hosting-renewal page) retired 2026-06-01 · hosting is
+# now bundled into the $150.000/mes Plan mensual. Forced 301 to home (301! keeps the
+# old hosting.html file unreachable without editing it, so no CSP hash churn).
+/hosting        /   301!
+/hosting.html   /   301!
+
 # Note: Cloudflare Pages automatically serves *.html files at the extension-less
 # URL and 308-redirects /name.html → /name. So /hosting.html, /terminos.html,
 # /politica-de-datos.html, /privacy.html all resolve at the extension-less path.
