@@ -37,6 +37,8 @@ def deployed_html_files():
         if "node_modules" not in f
         and "manual-mockups" not in f
         and not f.startswith("portal/")
+        and not f.startswith("pymewebpro-sales/")
+        and not f.startswith("pymewebpro-agent/")
     ]
 
 def hashes_for(tag, files):

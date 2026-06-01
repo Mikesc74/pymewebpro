@@ -232,6 +232,18 @@
     h2 { font-size: clamp(26px, 7vw, 36px) !important; }
     .nav-right a:not(.btn):not(.lang) { display: none; }
   }
+
+  /* Ticker-tape banners · angled, sliding, decorative (CSS-only) */
+  .ticker-wrap { overflow: hidden; position: relative; padding: 40px 0 32px; background: var(--paper-soft); border-top: 1px solid var(--line); }
+  .ticker-band { display: flex; white-space: nowrap; padding: 14px 0; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; width: 116vw; margin-left: -8vw; }
+  .ticker-band-1 { background: var(--accent); color: #fff; transform: rotate(-3deg); margin-bottom: -10px; position: relative; z-index: 2; }
+  .ticker-band-2 { background: var(--ink); color: #F3EDE4; transform: rotate(2deg); position: relative; z-index: 1; }
+  .ticker-content { display: inline-block; animation: ticker-scroll 40s linear infinite; will-change: transform; }
+  .ticker-band-2 .ticker-content { animation-direction: reverse; animation-duration: 52s; }
+  @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .ticker-content span { display: inline-block; padding: 0 26px; }
+  @media (max-width: 800px) { .ticker-band { font-size: 16px; } }
+  @media (prefers-reduced-motion: reduce) { .ticker-content { animation: none; } }
 </style>
 </head>
 <body>
@@ -492,6 +504,21 @@
     </div>
   </div>
 </section>
+
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-band ticker-band-1">
+    <div class="ticker-content">
+      <span>$400.000 COP one-time · Live in 48 hours · $150.000/mo all included · No contract · 24/7 assistant · Google profile included · </span>
+      <span>$400.000 COP one-time · Live in 48 hours · $150.000/mo all included · No contract · 24/7 assistant · Google profile included · </span>
+    </div>
+  </div>
+  <div class="ticker-band ticker-band-2">
+    <div class="ticker-content">
+      <span>Built in Medellín · For Colombian small businesses · Fixed price, no surprises · 30-day guarantee · Your page, your domain · </span>
+      <span>Built in Medellín · For Colombian small businesses · Fixed price, no surprises · 30-day guarantee · Your page, your domain · </span>
+    </div>
+  </div>
+</div>
 
 <section id="precio" class="buy">
   <div class="wrap" style="text-align: center;">
