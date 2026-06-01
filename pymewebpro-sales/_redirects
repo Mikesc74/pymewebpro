@@ -1,0 +1,3 @@
+# When the host is comisiones.pymewebpro.com, root goes straight to the tracker.
+# Other hosts (e.g. *.pages.dev for testing) keep working at /comisiones/.
+https://comisiones.pymewebpro.com/  /comisiones/  302

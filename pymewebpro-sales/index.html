@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>PymeWebPro · Centro de ventas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --accent:#FF5C2E; --ink:#14110F; --soft:#5b534d; --surface:#FBF8F4; --card:#fff; --line:#e7e0d8; --line-strong:#d8cfc4; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; color:var(--ink); background:var(--surface); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:'JetBrains Mono',ui-monospace,Menlo,monospace; }
+  .wrap{ max-width:920px; margin:0 auto; padding:0 22px; }
+  a{ color:inherit; text-decoration:none; }
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--accent); font-weight:500; }
+
+  header{ border-bottom:1px solid var(--line); background:var(--card); }
+  .head{ display:flex; align-items:center; justify-content:space-between; padding:18px 22px; max-width:920px; margin:0 auto; }
+  .brand{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:16px; }
+  .brand .b{ color:var(--accent); }
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--soft); border:1px solid var(--line-strong); padding:5px 10px; border-radius:999px; }
+
+  .intro{ padding:34px 0 6px; }
+  h1{ font-size:30px; letter-spacing:-.02em; font-weight:600; margin-top:8px; }
+  .intro p{ color:var(--soft); margin-top:10px; max-width:62ch; }
+
+  section{ padding:22px 0; }
+  h2{ font-size:13px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.1em; color:var(--soft); font-weight:500; margin-bottom:14px; }
+
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .card{ display:block; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; transition:border-color .12s, transform .12s; }
+  .card:hover{ border-color:var(--ink); transform:translateY(-1px); }
+  .card .ct{ font-size:17px; font-weight:600; }
+  .card .cd{ font-size:13.5px; color:var(--soft); margin-top:6px; }
+  .card .arw{ color:var(--accent); font-weight:600; font-size:14px; margin-top:12px; display:inline-block; }
+
+  .hero-card{ background:var(--ink); color:#f4eee7; border-color:var(--ink); }
+  .hero-card .cd{ color:#bdb3a8; }
+  .hero-card .arw{ color:var(--accent); }
+
+  .pdf{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .pdf .info .ct{ font-size:17px; font-weight:600; }
+  .pdf .info .cd{ font-size:13.5px; color:var(--soft); margin-top:5px; max-width:52ch; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; font-weight:600; font-size:14px; padding:11px 18px; border-radius:999px; white-space:nowrap; }
+  .btn:hover{ opacity:.93; }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line-strong); }
+
+  .docs{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .doc{ display:block; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .doc:hover{ border-color:var(--ink); }
+  .doc .dt{ font-weight:600; font-size:15px; }
+  .doc .dd{ font-size:12.5px; color:var(--soft); margin-top:4px; }
+
+  footer{ border-top:1px solid var(--line); margin-top:20px; padding:24px 0 40px; font-size:12.5px; color:var(--soft); }
+
+  @media (max-width:680px){ .grid,.docs{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head">
+    <div class="brand">&lt;pymewebpro<span class="b">/</span>&gt;</div>
+    <div class="tag">Centro de ventas · uso interno</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <div class="eyebrow">Equipo de ventas</div>
+    <h1>Centro de ventas</h1>
+    <p>Todo lo que necesitas para cotizar y cerrar: el resumen de la oferta, el material para el cliente, y el manual del vendedor. Cotiza siempre desde el resumen de la oferta, nunca un número de tu cabeza.</p>
+  </div>
+
+  <section>
+    <h2>Herramientas</h2>
+    <div class="grid">
+      <a class="card hero-card" href="./configurador.html">
+        <div class="ct">Resumen de la oferta</div>
+        <div class="cd">La página de ventas $400.000 (pago único, IVA incl.), el split 30/70 y el Plan mensual $150.000/mes opcional. Copia la cotización lista para WhatsApp.</div>
+        <span class="arw">Abrir resumen &rarr;</span>
+      </a>
+      <a class="card" href="./comisiones/">
+        <div class="ct">Comisiones y prospectos</div>
+        <div class="cd">Registra tus prospectos, tus ventas cerradas y los cargos mensuales. Mira en tiempo real tus comisiones (20% inicial + 10% mensual por 12 meses).</div>
+        <span class="arw">Abrir panel &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Material para el cliente</h2>
+    <div class="pdf">
+      <div class="info">
+        <div class="ct">One-pager en PDF</div>
+        <div class="cd">Para enviar por WhatsApp o correo. La página de ventas y el Plan mensual, qué incluye y qué no, precios IVA incluido.</div>
+      </div>
+      <a class="btn" href="./PymeWebPro-Funnels.pdf" download>Descargar PDF</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Manual del vendedor</h2>
+    <div class="docs">
+      <a class="doc" href="./docs/sales-rulebook.html"><div class="dt">Reglas de venta</div><div class="dd">Qué puedes y qué no puedes prometer, qué requiere aprobación, cómo posicionar.</div></a>
+      <a class="doc" href="./docs/client-qualification.html"><div class="dt">Calificación de clientes</div><div class="dd">Cliente ideal, banderas rojas, proyectos que descartamos, señales de cliente costoso.</div></a>
+      <a class="doc" href="./docs/scope-boundaries.html"><div class="dt">Límites de alcance</div><div class="dd">Qué incluye, qué no, qué cubre el Plan mensual, qué está fuera del modelo. El test de los 3 pasos.</div></a>
+      <a class="doc" href="./docs/guion-ventas.html"><div class="dt">Guion de WhatsApp</div><div class="dd">Apertura, descubrimiento, posicionamiento, objeciones, cierre.</div></a>
+    </div>
+  </section>
+</div>
+
+<footer class="wrap">
+  <span class="mono">&lt;pymewebpro/&gt;</span> · Centro de ventas interno · Norte Sur Consulting S.A.S. · NIT 901.956.771-1 · Acceso restringido (Cloudflare Access).
+</footer>
+
+</body>
+</html>

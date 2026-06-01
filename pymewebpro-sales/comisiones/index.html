@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>PymeWebPro · Comisiones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#FF5C2E; --ink:#14110F; --soft:#5b534d; --surface:#FBF8F4;
+    --card:#fff; --line:#e7e0d8; --line-strong:#d8cfc4;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Inter Tight',system-ui,sans-serif; color:var(--ink); background:var(--surface); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:'JetBrains Mono',ui-monospace,Menlo,monospace; }
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 22px; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; }
+  input,select,textarea{ font-family:inherit; font-size:14px; }
+
+  header{ border-bottom:1px solid var(--line); background:var(--card); }
+  .head{ display:flex; align-items:center; justify-content:space-between; padding:14px 22px; max-width:1100px; margin:0 auto; gap:16px; flex-wrap:wrap; }
+  .brand{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:16px; }
+  .brand .b{ color:var(--accent); }
+  .who{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--soft); display:flex; align-items:center; gap:8px; }
+  .role-pill{ border:1px solid var(--line-strong); padding:3px 9px; border-radius:999px; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; }
+  .role-pill.admin{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .back{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--soft); }
+
+  .lang{ display:flex; gap:1px; background:var(--line); border-radius:999px; padding:2px; }
+  .lang button{ background:transparent; border:none; padding:4px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.08em; color:var(--soft); border-radius:999px; }
+  .lang button.active{ background:var(--ink); color:#fff; }
+
+  nav.tabs{ background:var(--card); border-bottom:1px solid var(--line); }
+  .tabs-inner{ max-width:1100px; margin:0 auto; padding:0 22px; display:flex; gap:2px; overflow-x:auto; }
+  .tab{ background:transparent; border:none; padding:14px 16px; font-size:13.5px; font-weight:500; color:var(--soft); border-bottom:2px solid transparent; white-space:nowrap; }
+  .tab:hover{ color:var(--ink); }
+  .tab.active{ color:var(--ink); border-bottom-color:var(--accent); }
+  .tab.admin-only{ display:none; }
+  body.is-admin .tab.admin-only{ display:inline-block; }
+
+  .intro{ padding:30px 0 4px; }
+  h1{ font-size:28px; letter-spacing:-.02em; font-weight:600; }
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--accent); font-weight:500; }
+  .sub{ color:var(--soft); margin-top:8px; max-width:62ch; font-size:14.5px; }
+
+  section.view{ padding:24px 0 60px; display:none; }
+  section.view.active{ display:block; }
+  h2{ font-size:13px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.1em; color:var(--soft); font-weight:500; margin:18px 0 12px; }
+
+  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:8px; }
+  @media (max-width:720px){ .stats{ grid-template-columns:1fr 1fr; } }
+  .stat{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+  .stat .label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--soft); display:flex; align-items:center; gap:6px; }
+  .stat .label .ico{ display:inline-block; width:10px; height:10px; border-radius:50%; }
+  .stat .val{ font-size:24px; font-weight:600; margin-top:6px; letter-spacing:-.01em; }
+  .stat .sub{ font-size:12px; color:var(--soft); margin-top:4px; }
+  .stat.paid     .ico{ background:var(--ink); }
+  .stat.eligible .ico{ background:var(--accent); }
+  .stat.held     .ico{ background:transparent; border:1.5px solid var(--soft); }
+
+  table{ width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  th{ text-align:left; font-family:'JetBrains Mono',monospace; font-weight:500; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--soft); padding:11px 14px; background:#f6f1ea; border-bottom:1px solid var(--line); }
+  td{ padding:12px 14px; font-size:13.5px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tr:last-child td{ border-bottom:none; }
+  td .mono{ font-size:12.5px; }
+  td.right, th.right{ text-align:right; }
+  .empty{ padding:30px; text-align:center; color:var(--soft); font-size:14px; }
+
+  .pill{ display:inline-flex; align-items:center; gap:5px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.06em; padding:3px 8px; border-radius:999px; border:1px solid var(--line-strong); text-transform:uppercase; white-space:nowrap; }
+  .pill.paid{      background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pill.eligible{  background:#fff; color:var(--accent); border-color:var(--accent); }
+  .pill.held{      background:#fff; color:var(--soft); border-color:var(--line-strong); }
+  .pill.refunded{  background:repeating-linear-gradient(45deg,#fff,#fff 4px,#f0e8de 4px,#f0e8de 8px); color:var(--ink); border-color:var(--line-strong); }
+  .pill.voided{    background:#f0e8de; color:var(--soft); border-color:var(--line-strong); text-decoration:line-through; }
+
+  .stage{ display:inline-flex; align-items:center; gap:5px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.06em; padding:3px 8px; border-radius:999px; border:1px solid var(--line-strong); text-transform:uppercase; }
+  .stage.nuevo{      background:#fff; }
+  .stage.contactado{ background:#f6f1ea; }
+  .stage.calificado{ background:#fff; border-style:dashed; }
+  .stage.propuesta{  background:#fff; border-color:var(--accent); color:var(--accent); }
+  .stage.ganado{     background:var(--ink); color:#fff; border-color:var(--ink); }
+  .stage.perdido{    background:#fff; color:var(--soft); border-color:var(--line-strong); text-decoration:line-through; }
+
+  .row-actions{ display:flex; gap:6px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:6px; background:var(--accent); color:#fff; font-weight:600; font-size:13px; padding:8px 14px; border-radius:999px; border:none; white-space:nowrap; }
+  .btn:hover{ opacity:.93; }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line-strong); }
+  .btn.sm{ font-size:12px; padding:6px 10px; }
+  .btn.danger{ background:transparent; color:#7a1f1f; border:1px solid var(--line-strong); }
+
+  .toolbar{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .toolbar .grow{ flex:1; }
+  .toolbar select, .toolbar input{ padding:8px 12px; border:1px solid var(--line-strong); border-radius:999px; background:#fff; }
+
+  .modal-bg{ position:fixed; inset:0; background:rgba(20,17,15,.45); display:none; align-items:flex-start; justify-content:center; padding:60px 16px; z-index:50; overflow-y:auto; }
+  .modal-bg.open{ display:flex; }
+  .modal{ background:var(--card); border-radius:14px; max-width:520px; width:100%; padding:24px; }
+  .modal h3{ font-size:17px; margin-bottom:14px; }
+  .field{ margin-bottom:12px; }
+  .field label{ display:block; font-size:12px; color:var(--soft); margin-bottom:5px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.06em; }
+  .field input, .field select, .field textarea{ width:100%; padding:10px 12px; border:1px solid var(--line-strong); border-radius:8px; }
+  .field textarea{ min-height:60px; resize:vertical; }
+  .field .hint{ font-size:11.5px; color:var(--soft); margin-top:4px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .modal-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:16px; }
+
+  .seller-rank{ display:grid; gap:8px; }
+  .rank-row{ display:grid; grid-template-columns:1fr auto auto auto; gap:10px; align-items:center; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 16px; }
+  .rank-row .nm{ font-weight:600; }
+  .rank-row .em{ font-size:11.5px; color:var(--soft); font-family:'JetBrains Mono',monospace; }
+  .rank-row .col{ font-family:'JetBrains Mono',monospace; font-size:12.5px; text-align:right; }
+  .rank-row .col small{ display:block; font-size:9.5px; color:var(--soft); letter-spacing:.08em; text-transform:uppercase; }
+
+  .alert{ background:#fff; border:1px solid var(--line-strong); border-left:3px solid var(--accent); padding:12px 14px; border-radius:8px; margin-bottom:14px; font-size:13.5px; }
+  .alert b{ font-weight:600; }
+  .hide{ display:none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head">
+    <div>
+      <div class="brand"><span class="b">·</span> PymeWebPro <span class="b">/</span> <span data-i18n="title">Comisiones</span></div>
+    </div>
+    <div class="who">
+      <div class="lang">
+        <button data-lang="es">ES</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <span id="who-name" data-i18n="loading">cargando…</span>
+      <span id="who-role" class="role-pill">·</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" data-tab="dashboard" data-i18n="tabs.dashboard">Panel</button>
+    <button class="tab" data-tab="ventas" data-i18n="tabs.sales">Ventas y comisiones</button>
+    <button class="tab" data-tab="prospectos" data-i18n="tabs.prospects">Prospectos</button>
+    <button class="tab admin-only" data-tab="equipo" data-i18n="tabs.team">Equipo</button>
+    <button class="tab admin-only" data-tab="ranking" data-i18n="tabs.ranking">Ranking</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="view active" id="view-dashboard">
+    <div class="intro">
+      <span class="eyebrow" data-i18n="dashboard.eyebrow">Panel</span>
+      <h1 data-i18n="dashboard.title">Mis comisiones</h1>
+      <p class="sub" data-i18n="dashboard.sub">20% sobre la venta inicial (retención 31 días por la garantía de 30 días). 10% de los planes mensuales del cliente durante 12 meses, desde la fecha de la venta.</p>
+    </div>
+
+    <h2 data-i18n="dashboard.totalH">Total</h2>
+    <div class="stats">
+      <div class="stat paid">
+        <div class="label"><span class="ico"></span> <span data-i18n="dashboard.paid">Ya pagado</span> · <span class="mono">✓ PAID</span></div>
+        <div class="val mono" id="t-paid">$0</div>
+        <div class="sub" data-i18n="dashboard.paidSub">Comisiones liquidadas</div>
+      </div>
+      <div class="stat eligible">
+        <div class="label"><span class="ico"></span> <span data-i18n="dashboard.eligible">Listo para pagar</span> · <span class="mono">▶ READY</span></div>
+        <div class="val mono" id="t-eligible">$0</div>
+        <div class="sub" data-i18n="dashboard.eligibleSub">Ya superó el día 31</div>
+      </div>
+      <div class="stat held">
+        <div class="label"><span class="ico"></span> <span data-i18n="dashboard.held">En retención</span> · <span class="mono">○ HOLD</span></div>
+        <div class="val mono" id="t-held">$0</div>
+        <div class="sub" data-i18n="dashboard.heldSub">Dentro de la ventana de garantía</div>
+      </div>
+    </div>
+
+    <h2 data-i18n="dashboard.breakdownH">Desglose</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="label" data-i18n="dashboard.initial">Inicial (20%)</div>
+        <div class="val mono" id="t-init-paid">$0</div>
+        <div class="sub"><span id="t-init-elig">$0</span> <span data-i18n="dashboard.ready">listo</span> · <span id="t-init-held">$0</span> <span data-i18n="dashboard.onHold">en hold</span></div>
+      </div>
+      <div class="stat">
+        <div class="label" data-i18n="dashboard.recurring">Recurrente (10% × 12 meses)</div>
+        <div class="val mono" id="t-rec-paid">$0</div>
+        <div class="sub"><span id="t-rec-elig">$0</span> <span data-i18n="dashboard.ready">listo</span> · <span id="t-rec-held">$0</span> <span data-i18n="dashboard.onHold">en hold</span></div>
+      </div>
+      <div class="stat">
+        <div class="label" data-i18n="dashboard.closedSales">Ventas cerradas / cargos mensuales</div>
+        <div class="val mono"><span id="t-sales-count">0</span> / <span id="t-rec-count">0</span></div>
+        <div class="sub" data-i18n="dashboard.historical">Históricos en la base</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-ventas">
+    <div class="intro">
+      <span class="eyebrow" data-i18n="sales.eyebrow">Ventas y comisiones</span>
+      <h1 data-i18n="sales.title">Ventas registradas</h1>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn" id="btn-new-sale" data-i18n="sales.newSale">+ Registrar venta</button>
+      <label class="admin-only hide" style="display:flex;gap:6px;align-items:center;font-size:13px;color:var(--soft);">
+        <input type="checkbox" id="scope-all-sales"> <span data-i18n="sales.seeAll">Ver todas (admin)</span>
+      </label>
+      <div class="grow"></div>
+    </div>
+
+    <div id="sales-table-wrap"></div>
+
+    <h2 style="margin-top:30px;" data-i18n="sales.recurringH">Cargos mensuales recurrentes</h2>
+    <div class="toolbar">
+      <button class="btn ghost" id="btn-new-recurring" data-i18n="sales.newRecurring">+ Registrar cargo mensual</button>
+      <div class="grow"></div>
+    </div>
+    <div id="recurring-table-wrap"></div>
+  </section>
+
+  <section class="view" id="view-prospectos">
+    <div class="intro">
+      <span class="eyebrow" data-i18n="prospects.eyebrow">Prospectos</span>
+      <h1 data-i18n="prospects.title">Mis prospectos</h1>
+      <p class="sub" data-i18n="prospects.sub">Cada prospecto tiene un dueño. Cuando se cierra la venta, la comisión va al dueño del prospecto en ese momento.</p>
+    </div>
+    <div class="toolbar">
+      <button class="btn" id="btn-new-prospect" data-i18n="prospects.newProspect">+ Nuevo prospecto</button>
+      <label class="admin-only hide" style="display:flex;gap:6px;align-items:center;font-size:13px;color:var(--soft);">
+        <input type="checkbox" id="scope-all-prospects"> <span data-i18n="prospects.seeAll">Ver todos (admin)</span>
+      </label>
+      <div class="grow"></div>
+    </div>
+    <div id="prospects-table-wrap"></div>
+  </section>
+
+  <section class="view" id="view-equipo">
+    <div class="intro">
+      <span class="eyebrow" data-i18n="team.eyebrow">Admin</span>
+      <h1 data-i18n="team.title">Equipo de ventas</h1>
+      <p class="sub" data-i18n="team.sub">El email debe coincidir con el que tienen autorizado en Cloudflare Access. Si no, no podrán entrar.</p>
+    </div>
+    <div class="toolbar">
+      <button class="btn" id="btn-new-seller" data-i18n="team.newSeller">+ Agregar vendedor</button>
+      <div class="grow"></div>
+    </div>
+    <div id="sellers-table-wrap"></div>
+  </section>
+
+  <section class="view" id="view-ranking">
+    <div class="intro">
+      <span class="eyebrow" data-i18n="ranking.eyebrow">Admin</span>
+      <h1 data-i18n="ranking.title">Ranking por vendedor</h1>
+      <p class="sub" data-i18n="ranking.sub">Totales acumulados (inicial + recurrente).</p>
+    </div>
+    <div class="seller-rank" id="rank-wrap"></div>
+  </section>
+
+</main>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">·</h3>
+    <div id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn ghost sm" id="modal-cancel" data-i18n="modal.cancel">Cancelar</button>
+      <button class="btn sm" id="modal-save" data-i18n="modal.save">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- i18n ----------
+const T = {
+  es: {
+    title: "Comisiones",
+    backToHub: "← Centro de ventas",
+    loading: "cargando…",
+    docTitle: "PymeWebPro · Comisiones",
+    tabs: { dashboard:"Panel", sales:"Ventas y comisiones", prospects:"Prospectos", team:"Equipo", ranking:"Ranking" },
+    dashboard: {
+      eyebrow:"Panel", title:"Mis comisiones",
+      sub:"20% sobre la venta inicial (retención 31 días por la garantía de 30 días). 10% de los planes mensuales del cliente durante 12 meses, desde la fecha de la venta.",
+      totalH:"Total", paid:"Ya pagado", paidSub:"Comisiones liquidadas",
+      eligible:"Listo para pagar", eligibleSub:"Ya superó el día 31",
+      held:"En retención", heldSub:"Dentro de la ventana de garantía",
+      breakdownH:"Desglose", initial:"Inicial (20%)",
+      recurring:"Recurrente (10% × 12 meses)",
+      closedSales:"Ventas cerradas / cargos mensuales", historical:"Históricos en la base",
+      ready:"listo", onHold:"en hold",
+    },
+    sales: {
+      eyebrow:"Ventas y comisiones", title:"Ventas registradas",
+      newSale:"+ Registrar venta", seeAll:"Ver todas (admin)",
+      empty:"No hay ventas todavía.",
+      recurringH:"Cargos mensuales recurrentes", newRecurring:"+ Registrar cargo mensual",
+      recurringEmpty:"Aún no hay cargos mensuales registrados.",
+      h: { date:"Fecha", prospect:"Prospecto", seller:"Vendedor", base:"Base",
+           commission20:"Comisión 20%", payDate:"Pago día", status:"Estado",
+           charge:"Cargo", client:"Cliente", plan:"Plan", amount:"Monto", commission10:"Comisión 10%" },
+      markPaid:"Marcar pagado", refund:"Devolver",
+    },
+    prospects: {
+      eyebrow:"Prospectos", title:"Mis prospectos",
+      sub:"Cada prospecto tiene un dueño. Cuando se cierra la venta, la comisión va al dueño del prospecto en ese momento.",
+      newProspect:"+ Nuevo prospecto", seeAll:"Ver todos (admin)",
+      empty:"Aún no hay prospectos. Agrega el primero.",
+      h: { contact:"Contacto", company:"Empresa", owner:"Dueño", stage:"Etapa", whatsapp:"WhatsApp" },
+      edit:"Editar", recordSale:"Registrar venta",
+    },
+    team: {
+      eyebrow:"Admin", title:"Equipo de ventas",
+      sub:"El email debe coincidir con el que tienen autorizado en Cloudflare Access. Si no, no podrán entrar.",
+      newSeller:"+ Agregar vendedor",
+      h: { name:"Nombre", email:"Email", whatsapp:"WhatsApp", role:"Rol", active:"Activo", payoutMethod:"Método de pago" },
+      yes:"Sí", inactive:"Inactivo",
+    },
+    ranking: {
+      eyebrow:"Admin", title:"Ranking por vendedor",
+      sub:"Totales acumulados (inicial + recurrente).",
+      empty:"No hay datos aún.",
+      paid:"Pagado", ready:"Listo", hold:"Hold",
+    },
+    pills: { paid:"Pagado", eligible:"Listo", held:"En hold", refunded:"Devuelto", voided:"Anulado" },
+    stages: { nuevo:"nuevo", contactado:"contactado", calificado:"calificado",
+              propuesta:"propuesta", ganado:"ganado", perdido:"perdido" },
+    plans: { hosting:"Hosting $30k (histórico)", presencia:"Presencia $50k (histórico)", ventas:"Plan mensual · $150.000" },
+    modal: {
+      cancel:"Cancelar", save:"Guardar",
+      newProspect:"Nuevo prospecto", editProspect:"Editar prospecto",
+      pickProspect:"Selecciona el prospecto",
+      newSale:"Registrar venta",
+      saleAlert:"La comisión será del <b>20% sobre el monto base</b>. El pago al vendedor se libera el día 31 después de la fecha de venta.",
+      saleDate:"Fecha de venta", baseAmount:"Monto base (COP)",
+      notes:"Notas", notesSale:"Wompi ref, plan inicial contratado, …",
+      newRecurring:"Registrar cargo mensual",
+      recurringAlert:"10% de comisión por cargo. Válido durante <b>12 meses</b> desde la fecha de la venta.",
+      associatedSale:"Venta asociada", noSales:"No hay ventas registradas",
+      plan:"Plan", chargeDate:"Fecha del cargo",
+      addSeller:"Agregar vendedor", editSeller:"Editar vendedor",
+      fullName:"Nombre", contactName:"Nombre del contacto", company:"Empresa",
+      whatsapp:"WhatsApp", email:"Email", city:"Ciudad", stage:"Etapa",
+      source:"Fuente", sourceHint:"Valentina, referido, WhatsApp, …",
+      owner:"Dueño",
+      sellerEmail:"Email (Cloudflare Access)",
+      sellerEmailHint:"Acuérdate de agregar este email al grupo de Access para ventas.pymewebpro.com.",
+      role:"Rol", roleSeller:"Vendedor", roleAdmin:"Admin",
+      payoutMethod:"Método de pago",
+      payoutHint:"Bancolombia ahorros …, Nequi 300xxx",
+      active:"Activo", activeYes:"Sí", activeNo:"No",
+      prospect:"Prospecto",
+    },
+    confirm: {
+      markPaid:"¿Marcar esta comisión como pagada?",
+      refund:"¿Confirmar devolución de esta venta? Esto anula las comisiones recurrentes pendientes.",
+      clawback:"La comisión ya estaba pagada. Hay que recuperarla manualmente del vendedor.",
+      markPaidRecurring:"¿Marcar este cargo como pagado al vendedor?",
+    },
+    msgs: {
+      saleRecorded: (a, d) => `Venta registrada. Comisión: ${a}. Se libera el ${d}.`,
+      chargeRecorded: (a) => `Cargo registrado. Comisión: ${a}.`,
+      pickProspectFirst:"Primero agrega un prospecto.",
+      pickOneSale:"Selecciona una venta",
+      cantLoad:"No se pudo cargar",
+      cantLoadSub:"Si recién te agregaron, asegúrate de estar en el grupo de Cloudflare Access para ventas.pymewebpro.com.",
+      error:"Error: ",
+    },
+  },
+  en: {
+    title: "Commissions",
+    backToHub: "← Sales hub",
+    loading: "loading…",
+    docTitle: "PymeWebPro · Commissions",
+    tabs: { dashboard:"Dashboard", sales:"Sales & commissions", prospects:"Prospects", team:"Team", ranking:"Ranking" },
+    dashboard: {
+      eyebrow:"Dashboard", title:"My commissions",
+      sub:"20% on the initial sale (held 31 days for the money-back guarantee). 10% on the client's monthly plan payments for 12 months from the sale date.",
+      totalH:"Total", paid:"Already paid", paidSub:"Commissions paid out",
+      eligible:"Ready to pay", eligibleSub:"Past day 31",
+      held:"On hold", heldSub:"Within the guarantee window",
+      breakdownH:"Breakdown", initial:"Initial (20%)",
+      recurring:"Recurring (10% × 12 months)",
+      closedSales:"Closed sales / monthly charges", historical:"Historical totals",
+      ready:"ready", onHold:"on hold",
+    },
+    sales: {
+      eyebrow:"Sales & commissions", title:"Registered sales",
+      newSale:"+ Record sale", seeAll:"See all (admin)",
+      empty:"No sales yet.",
+      recurringH:"Monthly recurring charges", newRecurring:"+ Record monthly charge",
+      recurringEmpty:"No monthly charges yet.",
+      h: { date:"Date", prospect:"Prospect", seller:"Salesperson", base:"Base",
+           commission20:"Commission 20%", payDate:"Pay date", status:"Status",
+           charge:"Charge", client:"Client", plan:"Plan", amount:"Amount", commission10:"Commission 10%" },
+      markPaid:"Mark paid", refund:"Refund",
+    },
+    prospects: {
+      eyebrow:"Prospects", title:"My prospects",
+      sub:"Every prospect has an owner. When the sale closes, the commission goes to whoever owns the prospect at that moment.",
+      newProspect:"+ New prospect", seeAll:"See all (admin)",
+      empty:"No prospects yet. Add the first one.",
+      h: { contact:"Contact", company:"Company", owner:"Owner", stage:"Stage", whatsapp:"WhatsApp" },
+      edit:"Edit", recordSale:"Record sale",
+    },
+    team: {
+      eyebrow:"Admin", title:"Sales team",
+      sub:"The email has to match the one in Cloudflare Access. Otherwise they can't log in.",
+      newSeller:"+ Add salesperson",
+      h: { name:"Name", email:"Email", whatsapp:"WhatsApp", role:"Role", active:"Active", payoutMethod:"Payout method" },
+      yes:"Yes", inactive:"Inactive",
+    },
+    ranking: {
+      eyebrow:"Admin", title:"Ranking by salesperson",
+      sub:"Cumulative totals (initial + recurring).",
+      empty:"No data yet.",
+      paid:"Paid", ready:"Ready", hold:"Hold",
+    },
+    pills: { paid:"Paid", eligible:"Ready", held:"On hold", refunded:"Refunded", voided:"Voided" },
+    stages: { nuevo:"new", contactado:"contacted", calificado:"qualified",
+              propuesta:"proposal", ganado:"won", perdido:"lost" },
+    plans: { hosting:"Hosting $30k (legacy)", presencia:"Presence $50k (legacy)", ventas:"Monthly plan · $150,000" },
+    modal: {
+      cancel:"Cancel", save:"Save",
+      newProspect:"New prospect", editProspect:"Edit prospect",
+      pickProspect:"Pick the prospect",
+      newSale:"Record sale",
+      saleAlert:"Commission is <b>20% of the base amount</b>. Payout to the salesperson is released on day 31 after the sale date.",
+      saleDate:"Sale date", baseAmount:"Base amount (COP)",
+      notes:"Notes", notesSale:"Wompi ref, initial plan, …",
+      newRecurring:"Record monthly charge",
+      recurringAlert:"10% commission per charge. Valid for <b>12 months</b> from the sale date.",
+      associatedSale:"Linked sale", noSales:"No sales registered",
+      plan:"Plan", chargeDate:"Charge date",
+      addSeller:"Add salesperson", editSeller:"Edit salesperson",
+      fullName:"Name", contactName:"Contact name", company:"Company",
+      whatsapp:"WhatsApp", email:"Email", city:"City", stage:"Stage",
+      source:"Source", sourceHint:"Valentina, referral, WhatsApp, …",
+      owner:"Owner",
+      sellerEmail:"Email (Cloudflare Access)",
+      sellerEmailHint:"Remember to add this email to the Access group for ventas.pymewebpro.com.",
+      role:"Role", roleSeller:"Salesperson", roleAdmin:"Admin",
+      payoutMethod:"Payout method",
+      payoutHint:"Bancolombia savings …, Nequi 300xxx",
+      active:"Active", activeYes:"Yes", activeNo:"No",
+      prospect:"Prospect",
+    },
+    confirm: {
+      markPaid:"Mark this commission as paid?",
+      refund:"Confirm refund of this sale? This voids any pending recurring commissions.",
+      clawback:"The commission was already paid. You'll need to recover it from the salesperson manually.",
+      markPaidRecurring:"Mark this charge as paid to the salesperson?",
+    },
+    msgs: {
+      saleRecorded: (a, d) => `Sale recorded. Commission: ${a}. Released on ${d}.`,
+      chargeRecorded: (a) => `Charge recorded. Commission: ${a}.`,
+      pickProspectFirst:"Add a prospect first.",
+      pickOneSale:"Pick a sale",
+      cantLoad:"Couldn't load",
+      cantLoadSub:"If you were just added, make sure you're in the Cloudflare Access group for ventas.pymewebpro.com.",
+      error:"Error: ",
+    },
+  },
+};
+
+const LANG_KEY = "comisiones.lang";
+let LANG = localStorage.getItem(LANG_KEY) || "es";
+
+function t(path) {
+  return path.split(".").reduce((o, k) => (o && o[k] != null) ? o[k] : null, T[LANG]);
+}
+
+function applyI18n() {
+  document.documentElement.lang = LANG;
+  document.title = t("docTitle");
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const v = t(el.getAttribute("data-i18n"));
+    if (typeof v === "string") el.innerHTML = v;
+  });
+  document.querySelectorAll(".lang button").forEach(b => {
+    b.classList.toggle("active", b.dataset.lang === LANG);
+  });
+}
+
+function setLang(l) {
+  if (!T[l]) return;
+  LANG = l;
+  localStorage.setItem(LANG_KEY, l);
+  applyI18n();
+  // Re-render any view-dependent content currently shown.
+  const active = document.querySelector(".tab.active");
+  if (active) tab(active.dataset.tab);
+}
+
+document.querySelectorAll(".lang button").forEach(b => {
+  b.addEventListener("click", () => setLang(b.dataset.lang));
+});
+
+// ---------- helpers ----------
+const COP = n => "$" + (Number(n) || 0).toLocaleString(LANG === "es" ? "es-CO" : "en-US");
+const fmtDate = s => s ? s.slice(0,10) : "";
+const PLAN_AMT = { hosting:30000, presencia:50000, ventas:150000 };
+const planLabel = p => (t("plans." + p) || p);
+const esc = s => String(s||"").replace(/[<>&"]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));
+
+let ME = null, SELLERS = [], PROSPECTS = [], SALES = [], RECURRING = [];
+
+async function api(path, opts={}) {
+  const r = await fetch("/api" + path, {
+    method: opts.method || "GET",
+    headers: { "content-type":"application/json" },
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  if (!r.ok) {
+    const tt = await r.text();
+    throw new Error(`${r.status}: ${tt}`);
+  }
+  return r.status === 204 ? null : r.json();
+}
+
+function tab(name) {
+  document.querySelectorAll(".tab").forEach(tt => tt.classList.toggle("active", tt.dataset.tab === name));
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + name));
+  if (name === "ventas")     loadSales();
+  if (name === "prospectos") loadProspects();
+  if (name === "equipo")     loadSellers();
+  if (name === "ranking")    loadRanking();
+  if (name === "dashboard")  loadSummary();
+}
+
+document.querySelectorAll(".tab").forEach(tt => tt.addEventListener("click", () => tab(tt.dataset.tab)));
+
+function statusPill(row) {
+  if (row.status === "paid")     return `<span class="pill paid">✓ ${t("pills.paid")}</span>`;
+  if (row.status === "refunded") return `<span class="pill refunded">⊘ ${t("pills.refunded")}</span>`;
+  if (row.status === "voided")   return `<span class="pill voided">⊘ ${t("pills.voided")}</span>`;
+  if (row.payout_eligible)       return `<span class="pill eligible">▶ ${t("pills.eligible")}</span>`;
+  return `<span class="pill held">○ ${t("pills.held")}</span>`;
+}
+
+// ---------- DASHBOARD ----------
+async function loadSummary() {
+  const allEl = document.getElementById("scope-all-sales");
+  const scope = ME && ME.role === "admin" && allEl && allEl.checked ? "?all=1" : "";
+  const s = await api("/payouts/summary" + scope);
+  document.getElementById("t-paid").textContent     = COP(s.total.paid_cop);
+  document.getElementById("t-eligible").textContent = COP(s.total.eligible_cop);
+  document.getElementById("t-held").textContent     = COP(s.total.held_cop);
+
+  document.getElementById("t-init-paid").textContent = COP(s.initial.paid_cop);
+  document.getElementById("t-init-elig").textContent = COP(s.initial.eligible_cop);
+  document.getElementById("t-init-held").textContent = COP(s.initial.held_cop);
+  document.getElementById("t-rec-paid").textContent  = COP(s.recurring.paid_cop);
+  document.getElementById("t-rec-elig").textContent  = COP(s.recurring.eligible_cop);
+  document.getElementById("t-rec-held").textContent  = COP(s.recurring.held_cop);
+  document.getElementById("t-sales-count").textContent = s.initial.sales_count;
+  document.getElementById("t-rec-count").textContent   = s.recurring.charges_count;
+}
+
+// ---------- SALES ----------
+async function loadSales() {
+  const all = ME && ME.role === "admin" && document.getElementById("scope-all-sales").checked;
+  const r1 = await api("/sales" + (all ? "?all=1" : ""));
+  SALES = r1.sales;
+  const r2 = await api("/recurring" + (all ? "?all=1" : ""));
+  RECURRING = r2.recurring;
+  renderSales();
+  renderRecurring();
+}
+
+function renderSales() {
+  const wrap = document.getElementById("sales-table-wrap");
+  if (!SALES.length) { wrap.innerHTML = `<div class="empty">${t("sales.empty")}</div>`; return; }
+  const isAdmin = ME && ME.role === "admin";
+  const adminCol = isAdmin ? `<th>${t("sales.h.seller")}</th>` : "";
+  wrap.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>${t("sales.h.date")}</th><th>${t("sales.h.prospect")}</th>${adminCol}
+        <th class="right">${t("sales.h.base")}</th><th class="right">${t("sales.h.commission20")}</th>
+        <th>${t("sales.h.payDate")}</th><th>${t("sales.h.status")}</th><th></th>
+      </tr></thead>
+      <tbody>
+        ${SALES.map(s => {
+          const adminCell = isAdmin ? `<td>${esc(s.owner_name)}</td>` : "";
+          const actions = isAdmin ? `
+            <div class="row-actions">
+              ${s.status==="pending" && s.payout_eligible ? `<button class="btn sm" data-act="pay-sale" data-id="${s.id}">${t("sales.markPaid")}</button>` : ""}
+              ${s.status!=="refunded" ? `<button class="btn sm danger" data-act="refund-sale" data-id="${s.id}">${t("sales.refund")}</button>` : ""}
+            </div>` : "";
+          return `<tr>
+            <td class="mono">${fmtDate(s.sale_date)}</td>
+            <td><b>${esc(s.prospect_name)}</b><br><span class="mono" style="font-size:11px;color:var(--soft);">${esc(s.prospect_company||"")}</span></td>
+            ${adminCell}
+            <td class="right mono">${COP(s.base_amount_cop)}</td>
+            <td class="right mono"><b>${COP(s.commission_amount_cop)}</b></td>
+            <td class="mono">${fmtDate(s.payout_due_date)}</td>
+            <td>${statusPill(s)}</td>
+            <td>${actions}</td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table>`;
+}
+
+function renderRecurring() {
+  const wrap = document.getElementById("recurring-table-wrap");
+  if (!RECURRING.length) { wrap.innerHTML = `<div class="empty">${t("sales.recurringEmpty")}</div>`; return; }
+  const isAdmin = ME && ME.role === "admin";
+  const adminCol = isAdmin ? `<th>${t("sales.h.seller")}</th>` : "";
+  wrap.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>${t("sales.h.charge")}</th><th>${t("sales.h.client")}</th>${adminCol}<th>${t("sales.h.plan")}</th>
+        <th class="right">${t("sales.h.amount")}</th><th class="right">${t("sales.h.commission10")}</th>
+        <th>${t("sales.h.payDate")}</th><th>${t("sales.h.status")}</th><th></th>
+      </tr></thead>
+      <tbody>
+        ${RECURRING.map(r => {
+          const adminCell = isAdmin ? `<td>${esc(r.owner_name)}</td>` : "";
+          const actions = isAdmin && r.status==="pending" && r.payout_eligible
+            ? `<button class="btn sm" data-act="pay-recurring" data-id="${r.id}">${t("sales.markPaid")}</button>` : "";
+          return `<tr>
+            <td class="mono">${fmtDate(r.charge_date)}</td>
+            <td><b>${esc(r.prospect_name)}</b></td>
+            ${adminCell}
+            <td><span class="pill held">${planLabel(r.plan)}</span></td>
+            <td class="right mono">${COP(r.amount_cop)}</td>
+            <td class="right mono"><b>${COP(r.commission_amount_cop)}</b></td>
+            <td class="mono">${fmtDate(r.payout_due_date)}</td>
+            <td>${statusPill(r)}</td>
+            <td>${actions}</td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table>`;
+}
+
+// ---------- PROSPECTS ----------
+async function loadProspects() {
+  const all = ME && ME.role === "admin" && document.getElementById("scope-all-prospects").checked;
+  const r = await api("/prospects" + (all ? "?all=1" : ""));
+  PROSPECTS = r.prospects;
+  renderProspects();
+}
+
+function renderProspects() {
+  const wrap = document.getElementById("prospects-table-wrap");
+  if (!PROSPECTS.length) { wrap.innerHTML = `<div class="empty">${t("prospects.empty")}</div>`; return; }
+  const isAdmin = ME && ME.role === "admin";
+  const adminCol = isAdmin ? `<th>${t("prospects.h.owner")}</th>` : "";
+  wrap.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>${t("prospects.h.contact")}</th><th>${t("prospects.h.company")}</th>${adminCol}<th>${t("prospects.h.stage")}</th><th>${t("prospects.h.whatsapp")}</th><th></th>
+      </tr></thead>
+      <tbody>
+        ${PROSPECTS.map(p => `<tr>
+          <td><b>${esc(p.name)}</b></td>
+          <td>${esc(p.company||"")}</td>
+          ${isAdmin ? `<td>${esc(p.owner_name)}</td>` : ""}
+          <td><span class="stage ${p.stage}">${t("stages." + p.stage) || p.stage}</span></td>
+          <td class="mono">${esc(p.whatsapp||"")}</td>
+          <td>
+            <div class="row-actions">
+              <button class="btn ghost sm" data-act="edit-prospect" data-id="${p.id}">${t("prospects.edit")}</button>
+              <button class="btn sm" data-act="record-sale" data-id="${p.id}">${t("prospects.recordSale")}</button>
+            </div>
+          </td>
+        </tr>`).join("")}
+      </tbody>
+    </table>`;
+}
+
+// ---------- SELLERS ----------
+async function loadSellers() {
+  const r = await api("/admin/sellers");
+  SELLERS = r.sellers;
+  const wrap = document.getElementById("sellers-table-wrap");
+  wrap.innerHTML = `
+    <table>
+      <thead><tr><th>${t("team.h.name")}</th><th>${t("team.h.email")}</th><th>${t("team.h.whatsapp")}</th><th>${t("team.h.role")}</th><th>${t("team.h.active")}</th><th>${t("team.h.payoutMethod")}</th><th></th></tr></thead>
+      <tbody>${SELLERS.map(s => `
+        <tr>
+          <td><b>${esc(s.name)}</b></td>
+          <td class="mono">${esc(s.email)}</td>
+          <td class="mono">${esc(s.whatsapp||"")}</td>
+          <td><span class="pill ${s.role==='admin'?'paid':'held'}">${s.role}</span></td>
+          <td>${s.active ? t("team.yes") : `<span class="pill voided">${t("team.inactive")}</span>`}</td>
+          <td>${esc(s.payout_method||"")}</td>
+          <td><button class="btn ghost sm" data-act="edit-seller" data-id="${s.id}">${t("prospects.edit")}</button></td>
+        </tr>`).join("")}
+      </tbody>
+    </table>`;
+}
+
+// ---------- RANKING ----------
+async function loadRanking() {
+  const s = await api("/payouts/summary?all=1");
+  const wrap = document.getElementById("rank-wrap");
+  if (!s.per_seller || !s.per_seller.length) { wrap.innerHTML = `<div class="empty">${t("ranking.empty")}</div>`; return; }
+  wrap.innerHTML = s.per_seller.map(r => `
+    <div class="rank-row">
+      <div>
+        <div class="nm">${esc(r.name)}</div>
+        <div class="em">${esc(r.email)}</div>
+      </div>
+      <div class="col"><small>${t("ranking.paid")}</small>${COP(r.paid_cop)}</div>
+      <div class="col"><small>${t("ranking.ready")}</small>${COP(r.eligible_cop)}</div>
+      <div class="col"><small>${t("ranking.hold")}</small>${COP(r.held_cop)}</div>
+    </div>`).join("");
+}
+
+// ---------- MODAL ----------
+const modal = document.getElementById("modal");
+function openModal(title, bodyHtml, onSave) {
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-body").innerHTML = bodyHtml;
+  modal.classList.add("open");
+  document.getElementById("modal-save").onclick = async () => {
+    try { await onSave(); modal.classList.remove("open"); }
+    catch (e) { alert(t("msgs.error") + e.message); }
+  };
+}
+document.getElementById("modal-cancel").onclick = () => modal.classList.remove("open");
+modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("open"); });
+
+function val(id) { return document.getElementById(id).value.trim(); }
+function num(id) { const v = val(id); return v ? Number(v) : null; }
+
+document.body.addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const act = b.dataset.act, id = b.dataset.id;
+  try {
+    if (act === "pay-sale") {
+      if (!confirm(t("confirm.markPaid"))) return;
+      await api(`/sales/${id}/mark-paid`, { method:"POST" });
+      await loadSales(); await loadSummary();
+    } else if (act === "refund-sale") {
+      if (!confirm(t("confirm.refund"))) return;
+      const r = await api(`/sales/${id}/refund`, { method:"POST" });
+      if (r.clawback_needed) alert(t("confirm.clawback"));
+      await loadSales(); await loadSummary();
+    } else if (act === "pay-recurring") {
+      if (!confirm(t("confirm.markPaidRecurring"))) return;
+      await api(`/recurring/${id}/mark-paid`, { method:"POST" });
+      await loadSales(); await loadSummary();
+    } else if (act === "edit-prospect") {
+      openProspectModal(PROSPECTS.find(p => p.id == id));
+    } else if (act === "record-sale") {
+      openSaleModal(PROSPECTS.find(p => p.id == id));
+    } else if (act === "edit-seller") {
+      openSellerModal(SELLERS.find(s => s.id == id));
+    }
+  } catch (err) { alert(t("msgs.error") + err.message); }
+});
+
+function openProspectModal(p) {
+  const isAdmin = ME && ME.role === "admin";
+  const ownerOpts = isAdmin && SELLERS.length
+    ? `<div class="field"><label>${t("modal.owner")}</label><select id="f-owner">${SELLERS.filter(s=>s.active).map(s=>`<option value="${s.id}" ${p&&p.owner_seller_id==s.id?"selected":""}>${esc(s.name)}</option>`).join("")}</select></div>` : "";
+  openModal(p ? t("modal.editProspect") : t("modal.newProspect"), `
+    <div class="field"><label>${t("modal.contactName")}</label><input id="f-name" value="${esc(p?.name||"")}"></div>
+    <div class="field"><label>${t("modal.company")}</label><input id="f-company" value="${esc(p?.company||"")}"></div>
+    <div class="field-row">
+      <div class="field"><label>${t("modal.whatsapp")}</label><input id="f-whatsapp" value="${esc(p?.whatsapp||"")}"></div>
+      <div class="field"><label>${t("modal.email")}</label><input id="f-email" value="${esc(p?.email||"")}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>${t("modal.city")}</label><input id="f-city" value="${esc(p?.city||"")}"></div>
+      <div class="field"><label>${t("modal.stage")}</label><select id="f-stage">${["nuevo","contactado","calificado","propuesta","ganado","perdido"].map(x=>`<option value="${x}" ${p?.stage===x?"selected":""}>${t("stages."+x)}</option>`).join("")}</select></div>
+    </div>
+    <div class="field"><label>${t("modal.source")}</label><input id="f-source" placeholder="${t("modal.sourceHint")}" value="${esc(p?.source||"")}"></div>
+    ${ownerOpts}
+    <div class="field"><label>${t("modal.notes")}</label><textarea id="f-notes">${esc(p?.notes||"")}</textarea></div>
+  `, async () => {
+    const body = {
+      name: val("f-name"), company: val("f-company"),
+      whatsapp: val("f-whatsapp"), email: val("f-email"),
+      city: val("f-city"), stage: val("f-stage"),
+      source: val("f-source"), notes: val("f-notes"),
+    };
+    if (isAdmin && document.getElementById("f-owner")) body.owner_seller_id = Number(val("f-owner"));
+    if (p) await api(`/prospects/${p.id}`, { method:"PUT", body });
+    else   await api(`/prospects`, { method:"POST", body });
+    await loadProspects();
+  });
+}
+
+function openSaleModal(prospect) {
+  openModal(`${t("modal.newSale")} · ${prospect.name}`, `
+    <div class="alert">${t("modal.saleAlert")}</div>
+    <div class="field-row">
+      <div class="field"><label>${t("modal.saleDate")}</label><input id="f-date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="field"><label>${t("modal.baseAmount")}</label><input id="f-base" type="number" value="400000"></div>
+    </div>
+    <div class="field"><label>${t("modal.notes")}</label><textarea id="f-notes" placeholder="${t("modal.notesSale")}"></textarea></div>
+  `, async () => {
+    const r = await api("/sales", { method:"POST", body:{
+      prospect_id: prospect.id,
+      sale_date: val("f-date"),
+      base_amount_cop: num("f-base"),
+      notes: val("f-notes"),
+    }});
+    alert(t("msgs.saleRecorded")(COP(r.commission_amount_cop), r.payout_due_date));
+    tab("ventas");
+  });
+}
+
+function openRecurringModal() {
+  const salesOpts = SALES.length
+    ? SALES.map(s => `<option value="${s.id}">#${s.id} · ${esc(s.prospect_name)} · ${fmtDate(s.sale_date)}</option>`).join("")
+    : `<option value="">${t("modal.noSales")}</option>`;
+  openModal(t("modal.newRecurring"), `
+    <div class="alert">${t("modal.recurringAlert")}</div>
+    <div class="field"><label>${t("modal.associatedSale")}</label><select id="f-sale">${salesOpts}</select></div>
+    <div class="field-row">
+      <div class="field"><label>${t("modal.plan")}</label>
+        <select id="f-plan">
+          <option value="ventas">${t("plans.ventas")}</option>
+        </select>
+      </div>
+      <div class="field"><label>${t("modal.chargeDate")}</label><input id="f-cdate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+    </div>
+    <div class="field"><label>${t("modal.notes")}</label><textarea id="f-notes"></textarea></div>
+  `, async () => {
+    if (!val("f-sale")) throw new Error(t("msgs.pickOneSale"));
+    const r = await api("/recurring", { method:"POST", body:{
+      sale_id: Number(val("f-sale")),
+      plan: val("f-plan"),
+      charge_date: val("f-cdate"),
+      notes: val("f-notes"),
+    }});
+    alert(t("msgs.chargeRecorded")(COP(r.commission_amount_cop)));
+    await loadSales(); await loadSummary();
+  });
+}
+
+function openSellerModal(s) {
+  openModal(s ? `${t("modal.editSeller")} · ${s.name}` : t("modal.addSeller"), `
+    <div class="field"><label>${t("modal.fullName")}</label><input id="f-name" value="${esc(s?.name||"")}"></div>
+    ${s ? "" : `<div class="field"><label>${t("modal.sellerEmail")}</label><input id="f-email" type="email" placeholder="vendedor@dominio.com">
+      <div class="hint">${t("modal.sellerEmailHint")}</div></div>`}
+    <div class="field-row">
+      <div class="field"><label>${t("modal.whatsapp")}</label><input id="f-wa" value="${esc(s?.whatsapp||"")}"></div>
+      <div class="field"><label>${t("modal.role")}</label>
+        <select id="f-role">
+          <option value="seller" ${s?.role==='seller'?'selected':''}>${t("modal.roleSeller")}</option>
+          <option value="admin"  ${s?.role==='admin' ?'selected':''}>${t("modal.roleAdmin")}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>${t("modal.payoutMethod")}</label><input id="f-pay" placeholder="${t("modal.payoutHint")}" value="${esc(s?.payout_method||"")}"></div>
+    ${s ? `<div class="field"><label>${t("modal.active")}</label><select id="f-active"><option value="1" ${s.active?'selected':''}>${t("modal.activeYes")}</option><option value="0" ${!s.active?'selected':''}>${t("modal.activeNo")}</option></select></div>` : ""}
+    <div class="field"><label>${t("modal.notes")}</label><textarea id="f-notes">${esc(s?.notes||"")}</textarea></div>
+  `, async () => {
+    if (s) {
+      await api(`/admin/sellers/${s.id}`, { method:"PUT", body:{
+        name: val("f-name"), whatsapp: val("f-wa"), role: val("f-role"),
+        payout_method: val("f-pay"), notes: val("f-notes"),
+        active: Number(val("f-active")),
+      }});
+    } else {
+      await api(`/admin/sellers`, { method:"POST", body:{
+        name: val("f-name"), email: val("f-email"), whatsapp: val("f-wa"),
+        role: val("f-role"), payout_method: val("f-pay"), notes: val("f-notes"),
+      }});
+    }
+    await loadSellers();
+  });
+}
+
+document.getElementById("btn-new-prospect").onclick = () => openProspectModal(null);
+document.getElementById("btn-new-sale").onclick = () => {
+  if (!PROSPECTS.length) loadProspects().then(() => {
+    if (!PROSPECTS.length) { alert(t("msgs.pickProspectFirst")); return; }
+    pickProspect();
+  });
+  else pickProspect();
+};
+function pickProspect() {
+  openModal(t("modal.pickProspect"), `
+    <div class="field"><label>${t("modal.prospect")}</label>
+      <select id="f-pid">${PROSPECTS.map(p => `<option value="${p.id}">${esc(p.name)} · ${esc(p.company||"")}</option>`).join("")}</select>
+    </div>`, async () => {
+      const p = PROSPECTS.find(x => x.id == val("f-pid"));
+      modal.classList.remove("open");
+      openSaleModal(p);
+    });
+}
+document.getElementById("btn-new-recurring").onclick = openRecurringModal;
+document.getElementById("btn-new-seller").onclick = () => openSellerModal(null);
+
+document.getElementById("scope-all-sales").addEventListener("change", () => { loadSales(); loadSummary(); });
+document.getElementById("scope-all-prospects").addEventListener("change", loadProspects);
+
+// init
+(async () => {
+  applyI18n();
+  try {
+    ME = await api("/me");
+    document.getElementById("who-name").textContent = ME.name;
+    document.getElementById("who-role").textContent = ME.role;
+    document.getElementById("who-role").classList.toggle("admin", ME.role === "admin");
+    if (ME.role === "admin") {
+      document.body.classList.add("is-admin");
+      document.querySelectorAll(".admin-only.hide").forEach(el => el.classList.remove("hide"));
+      try { const r = await api("/admin/sellers"); SELLERS = r.sellers; } catch (e) {}
+    }
+    await loadSummary();
+  } catch (e) {
+    document.querySelector("main.wrap").innerHTML = `
+      <div class="intro">
+        <h1>${t("msgs.cantLoad")}</h1>
+        <p class="sub">${esc(e.message)}</p>
+        <p class="sub">${t("msgs.cantLoadSub")}</p>
+      </div>`;
+  }
+})();
+</script>
+</body>
+</html>

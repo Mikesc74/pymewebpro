@@ -1,0 +1,15 @@
+name = "pymewebpro-ventas"
+compatibility_date = "2025-09-30"
+pages_build_output_dir = "dist"
+
+# D1 binding for the commissions/prospects tracker.
+# Functions read env.DB.
+[[d1_databases]]
+binding = "DB"
+database_name = "pymewebpro-commissions-db"
+database_id = "2c74be5e-ccdc-4e6d-910c-d19168ec682f"
+
+# Default admin emails (auto-promoted to admin on first login).
+# Add more sellers via the admin UI or directly in the sellers table.
+[vars]
+ADMIN_EMAILS = "mike@colguides.com,santiago@colguides.com,mike@mikec.pro"

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>PymeWebPro · Funnels de conversión</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  @page { size: A4; margin: 13mm 14mm; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{ --accent:#FF5C2E; --ink:#14110F; --soft:#5b534d; --line:#e2dbd2; }
+  body{ font-family:'Inter Tight','Helvetica Neue',Arial,sans-serif; color:var(--ink); font-size:10.5px; line-height:1.45; }
+  .mono{ font-family:'JetBrains Mono','Courier New',monospace; }
+  .accent{ color:var(--accent); }
+  h1{ font-size:25px; line-height:1.06; letter-spacing:-.02em; font-weight:600; margin-top:6px; }
+  h2{ font-size:15px; letter-spacing:-.01em; font-weight:600; }
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:500; }
+
+  .top{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:1.5px solid var(--ink); padding-bottom:7px; margin-bottom:14px; }
+  .brand{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px; }
+  .brand .b{ color:var(--accent); }
+  .top .meta{ font-family:'JetBrains Mono',monospace; font-size:8.5px; color:var(--soft); }
+
+  .lead{ color:var(--soft); font-size:11.5px; margin-top:10px; max-width:95%; }
+
+  .stats{ width:100%; border-collapse:collapse; margin:14px 0 4px; }
+  .stats td{ border:1px solid var(--line); padding:9px 11px; width:33.33%; vertical-align:top; }
+  .stats .n{ font-family:'JetBrains Mono',monospace; font-size:17px; font-weight:700; letter-spacing:-.02em; }
+  .stats .l{ font-size:9px; color:var(--soft); margin-top:3px; }
+
+  .sec{ margin-top:16px; }
+  .sec > .eyebrow{ display:block; margin-bottom:3px; }
+  .sec h2{ margin-bottom:9px; }
+
+  .model td{ width:33.33%; vertical-align:top; padding-right:14px; }
+  .model .num{ font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:9px; font-weight:700; }
+  .model .mh{ font-weight:600; font-size:12px; margin:4px 0 3px; }
+  .model p{ color:var(--soft); font-size:9.5px; }
+
+  .plans{ width:100%; border-collapse:separate; border-spacing:0; margin-top:4px; }
+  .plans td{ width:50%; vertical-align:top; border:1px solid var(--line); padding:13px 14px; }
+  .plans td.pro{ border-color:var(--ink); border-width:1.5px; }
+  .pname{ font-size:15px; font-weight:600; }
+  .ptag{ font-family:'JetBrains Mono',monospace; font-size:8px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); font-weight:700; float:right; }
+  .pwho{ color:var(--soft); font-size:9.5px; margin:5px 0 9px; min-height:26px; }
+  .price{ font-family:'JetBrains Mono',monospace; font-size:21px; font-weight:700; letter-spacing:-.02em; }
+  .price small{ font-size:8.5px; color:var(--soft); font-weight:400; }
+  ul{ list-style:none; margin-top:9px; }
+  li{ font-size:9.7px; padding-left:14px; position:relative; margin-bottom:4px; color:#2b2620; }
+  li .ck{ position:absolute; left:0; top:0; color:var(--accent); font-weight:700; }
+  li.plus{ font-weight:600; color:var(--ink); }
+  ul.cols2{ column-count:2; column-gap:24px; }
+  ul.cols2 li{ break-inside:avoid; }
+
+  .nope{ background:var(--ink); color:#efe8df; padding:13px 15px; }
+  .nope .eyebrow{ color:var(--accent); }
+  .nope h2{ color:#fff; margin:3px 0 8px; }
+  .nope .g{ width:100%; }
+  .nope .g td{ font-size:9.3px; color:#e2d9ce; padding:2px 10px 2px 12px; position:relative; width:33.33%; vertical-align:top; }
+  .nope .g td .d{ position:absolute; left:0; top:7px; width:7px; height:1.5px; background:var(--accent); }
+
+  .aud td{ width:25%; border:1px solid var(--line); padding:8px 9px; vertical-align:top; font-size:9.3px; font-weight:500; }
+  .aud .k{ font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:8px; display:block; margin-bottom:4px; }
+
+  .steps td{ width:25%; vertical-align:top; padding:7px 10px 0 0; border-top:1.5px solid var(--ink); }
+  .steps .num{ font-family:'JetBrains Mono',monospace; color:var(--accent); font-weight:700; font-size:8.5px; }
+  .steps .sh{ font-weight:600; font-size:11px; margin:3px 0; }
+  .steps p{ font-size:9px; color:var(--soft); }
+
+  .addons{ border:1px solid var(--line); padding:12px 14px; margin-top:6px; }
+  .chips span{ display:inline-block; border:1px solid var(--line); border-radius:20px; padding:4px 9px; font-size:8.8px; margin:3px 4px 0 0; }
+  .chips b{ font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:8.5px; }
+
+  .cta{ border:1.5px solid var(--ink); padding:15px; text-align:center; margin-top:14px; }
+  .cta h2{ font-size:18px; }
+  .cta p{ color:var(--soft); font-size:10.5px; margin:6px 0 9px; }
+  .cta .wa{ font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent); font-size:12px; }
+
+  .foot{ border-top:1px solid var(--line); margin-top:14px; padding-top:9px; font-size:8.5px; color:var(--soft); line-height:1.6; }
+  .pb{ page-break-before:always; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">&lt;pymewebpro<span class="b">/</span>&gt;</div>
+  <div class="meta">Funnels de conversión · Colombia</div>
+</div>
+
+<div class="eyebrow">Páginas que convierten visitantes en clientes</div>
+<h1>Una página hecha para <span class="accent">conseguir clientes</span>, no para adornar.</h1>
+<p class="lead">El problema no es que falten visitantes. Es que no se convierten en clientes. Diseñamos funnels que convierten ese tráfico en mensajes, reservas y ventas. Alcance fijo, precio claro, en línea en aproximadamente 48 horas.</p>
+
+<table class="stats">
+  <tr>
+    <td><div class="n">~48 h</div><div class="l">de la firma al lanzamiento</div></td>
+    <td><div class="n">&lt;1 s</div><div class="l">de carga en celular</div></td>
+    <td><div class="n">Precio fijo</div><div class="l">alcance definido, sin sorpresas</div></td>
+  </tr>
+</table>
+
+<div class="sec">
+  <span class="eyebrow">El modelo</span>
+  <h2>No somos una agencia. Somos un producto.</h2>
+  <table class="model"><tr>
+    <td><div class="num">01</div><div class="mh">Rápido</div><p>En línea en ~48 horas desde que tenemos tu contenido. Sin esperas de semanas.</p></td>
+    <td><div class="num">02</div><div class="mh">Claro</div><p>Precio fijo y alcance definido por escrito. Sabes qué recibes antes de pagar.</p></td>
+    <td><div class="num">03</div><div class="mh">Hecho para convertir</div><p>Cada funnel apunta a una sola acción: que el visitante te contacte.</p></td>
+  </tr></table>
+</div>
+
+<div class="sec">
+  <span class="eyebrow">El producto</span>
+  <h2>Un producto, un precio claro.</h2>
+  <table class="plans"><tr>
+    <td class="pro" style="width:100%">
+      <span class="ptag">Pago único</span>
+      <span class="pname">La página de ventas</span>
+      <div class="pwho">Un funnel de alta conversión hecho a la medida, para volver tus visitantes en clientes. Incluye la Ficha de Google configurada y el primer mes del Plan mensual.</div>
+      <div class="price">$400.000 <small>COP · pago único · IVA incluido</small></div>
+      <ul class="cols2">
+        <li><span class="ck">+</span>Página de ventas custom enfocada en conversión</li>
+        <li><span class="ck">+</span>Estructura orientada a una sola acción (CTA)</li>
+        <li><span class="ck">+</span>100% responsive (celular, tablet, computador)</li>
+        <li><span class="ck">+</span>Botón de WhatsApp o formulario de contacto</li>
+        <li><span class="ck">+</span>Botón click-para-llamar</li>
+        <li><span class="ck">+</span>Mapa de Google embebido</li>
+        <li><span class="ck">+</span>Integración de reservas/citas (Cal.com, Calendly)</li>
+        <li><span class="ck">+</span>Sección de testimonios</li>
+        <li><span class="ck">+</span>Estructura SEO (schema, meta, sitemap)</li>
+        <li><span class="ck">+</span>Analítica privacy-first</li>
+        <li><span class="ck">+</span>Conexión de dominio + SSL (el dominio va por tu cuenta)</li>
+        <li><span class="ck">+</span>Ficha de Google (Google Business Profile) configurada</li>
+        <li><span class="ck">+</span>Primer mes del Plan mensual incluido</li>
+        <li><span class="ck">+</span>2 rondas de ajustes</li>
+        <li><span class="ck">+</span>En línea en ~48 horas</li>
+      </ul>
+    </td>
+  </tr></table>
+  <p style="font-size:8.8px;color:var(--soft);margin-top:6px">Pago: 30% para arrancar ($120.000), 70% al lanzar ($280.000). Wompi (tarjetas, PSE, transferencia), en pesos.</p>
+</div>
+
+<div class="sec">
+  <span class="eyebrow">La mensualidad · opcional</span>
+  <h2>Plan mensual, todo incluido.</h2>
+  <table class="plans"><tr>
+    <td style="width:100%">
+      <span class="ptag">Opcional</span>
+      <span class="pname">Plan mensual</span>
+      <div class="pwho">Después del primer mes incluido. Mantiene la página activa, bilingüe y con el asistente 24/7. Sin contrato, se cancela cuando quieras. Todo está dentro del plan, no se cobra por separado.</div>
+      <div class="price">$150.000 <small>COP/mes · IVA incluido</small></div>
+      <ul class="cols2">
+        <li><span class="ck">+</span>Hosting + soporte</li>
+        <li><span class="ck">+</span>Ficha de Google activa y actualizada</li>
+        <li><span class="ck">+</span>Versión bilingüe ES/EN</li>
+        <li><span class="ck">+</span>Soporte por WhatsApp</li>
+        <li><span class="ck">+</span>Hasta 2 cambios al mes</li>
+        <li><span class="ck">+</span>Asistente de ventas 24/7 que conoce el negocio</li>
+        <li><span class="ck">+</span>Vitrina de hasta 30 productos</li>
+        <li><span class="ck">+</span>Catálogo o menú descargable</li>
+        <li><span class="ck">+</span>Reporte mensual de actividad de clientes</li>
+      </ul>
+    </td>
+  </tr></table>
+</div>
+
+<div class="pb"></div>
+
+<div class="sec nope">
+  <span class="eyebrow">Honestidad de alcance</span>
+  <h2>Qué no incluye un funnel</h2>
+  <table class="g"><tr>
+    <td><span class="d"></span>Ecommerce / carrito</td>
+    <td><span class="d"></span>Portales de cliente</td>
+    <td><span class="d"></span>Sistemas de membresía</td>
+  </tr><tr>
+    <td><span class="d"></span>Automatizaciones avanzadas</td>
+    <td><span class="d"></span>Sistemas de inventario</td>
+    <td><span class="d"></span>Edición continua</td>
+  </tr><tr>
+    <td><span class="d"></span>Branding / rebranding</td>
+    <td><span class="d"></span>Software a la medida</td>
+    <td><span class="d"></span>SEO avanzado</td>
+  </tr></table>
+  <p style="font-size:8.8px;color:#bdb3a8;margin-top:8px">Vendemos funnels, no proyectos a la medida sin fin. Estas cosas simplemente no son lo nuestro.</p>
+</div>
+
+<div class="sec">
+  <span class="eyebrow">Para quién es</span>
+  <h2>Para cualquier pyme que necesita convertir leads en clientes.</h2>
+  <p style="color:var(--soft);font-size:9.5px;margin:-4px 0 9px">Tienes visitantes, anuncios o seguidores, pero pocos se vuelven clientes. Eso es lo que resolvemos. El sector no importa.</p>
+  <table class="aud"><tr>
+    <td><span class="k">Generar leads</span>Captura contactos por formulario o WhatsApp</td>
+    <td><span class="k">Vender un servicio</span>Una llamada a la acción enfocada en cerrar</td>
+    <td><span class="k">Lanzar campaña</span>Una página enfocada para una promo o lanzamiento</td>
+    <td><span class="k">Reservas o pedidos</span>Agenda de citas o pedido directo</td>
+  </tr></table>
+</div>
+
+<div class="sec">
+  <span class="eyebrow">Cómo funciona</span>
+  <h2>De la firma al lanzamiento en cuatro pasos.</h2>
+  <table class="steps"><tr>
+    <td><div class="num">01</div><div class="sh">Eliges</div><p>La página y, si quieres, el Plan mensual con tu asesor. Precio y alcance fijos por escrito.</p></td>
+    <td><div class="num">02</div><div class="sh">Arrancas</div><p>Pagas el 30% por Wompi y nos entregas el contenido.</p></td>
+    <td><div class="num">03</div><div class="sh">Construimos</div><p>Diseñamos tu funnel. 2 rondas de ajustes incluidas.</p></td>
+    <td><div class="num">04</div><div class="sh">Lanzas</div><p>Pagas el 70%, conectamos el dominio y queda en línea.</p></td>
+  </tr></table>
+</div>
+
+<div class="sec">
+  <span class="eyebrow">Sin add-ons sueltos</span>
+  <h2 style="margin-bottom:4px">Todo vive dentro de la mensualidad.</h2>
+  <div class="addons">
+    <p style="font-size:9.5px;color:var(--soft)">No hay add-ons à la carte. El asistente 24/7, la versión bilingüe, la vitrina de productos y el catálogo descargable están dentro del Plan mensual de $150.000 COP/mes. Una página de $400.000 COP (pago único, incluye la Ficha de Google y el primer mes), y una mensualidad opcional que lo mantiene todo activo. Precios IVA incluido.</p>
+  </div>
+</div>
+
+<div class="cta">
+  <div class="eyebrow">Listo para arrancar</div>
+  <h2>Tu funnel en línea esta semana.</h2>
+  <p>Precio fijo, alcance claro, y en aproximadamente 48 horas captando clientes.</p>
+  <div class="wa">WhatsApp +57 301 404 7722 · pymewebpro.com</div>
+</div>
+
+<div class="foot">
+  Estudio de diseño web en Medellín. Funnels de conversión para negocios en Colombia.<br>
+  Norte Sur Consulting S.A.S. · NIT 901.956.771-1 · Medellín, Antioquia, Colombia. · Pagos en pesos colombianos (COP) vía Wompi.
+</div>
+
+</body>
+</html>
