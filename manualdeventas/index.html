@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<title>PymeWebPro · Manual de Ventas</title>
+<script>document.documentElement.className+=' js';</script>
+<style>
+:root{--navy:#0A0A0B;--navy2:#1F1F22;--teal:#FF5C2E;--blue:#FF5C2E;--gold:#FF5C2E;--ink:#0A0A0B;--grey:#8B8B92;--line:#E8E8EA;--paper:#FAF9F6;--card:#ffffff;--accent:#FF5C2E;--gray:#8B8B92;--green:#00B779;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html[data-lang="en"] .l-es{display:none!important}
+html[data-lang="es"] .l-en{display:none!important}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.bar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 22px}
+.bar img{height:32px}
+.bar .bt{font-weight:700;color:var(--navy);font-size:15px}
+.langtoggle{margin-left:auto;display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.langbtn{border:0;background:#fff;color:var(--grey);font-weight:700;font-size:12px;letter-spacing:.04em;padding:6px 14px;cursor:pointer}
+.langbtn.on{background:var(--navy);color:#fff}
+.conf{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;border:1px solid var(--gold);border-radius:999px;padding:4px 12px}
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;text-align:center;padding:64px 22px 58px}
+.hero img{height:60px;width:auto;margin-bottom:20px;background:#fff;padding:14px 24px;border-radius:18px;box-shadow:0 12px 32px rgba(0,0,0,.30)}
+.hero h1{font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-.01em}
+.hero .ed{color:#FF8A5C;font-weight:700;margin-top:10px}
+.hero .tag{color:#B0B0B8;margin-top:8px;font-size:17px}
+.toc{margin:6px auto 48px;max-width:900px;padding:0 22px}
+.toc-card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px rgba(10,10,11,.08);padding:24px 26px}
+.toc-card h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:16px}
+.toc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 26px}
+.toc-grid a{display:flex;align-items:center;gap:12px;padding:7px 8px;border-radius:8px;font-size:15px}
+.toc-grid a:hover{background:#F4F2ED;color:var(--navy)}
+.toc-grid .tn{flex:0 0 26px;height:26px;border-radius:7px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.sec{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--acc);border-radius:16px;box-shadow:0 8px 24px rgba(10,10,11,.06);padding:28px 34px 30px;margin:96px auto 26px;max-width:900px;position:relative;scroll-margin-top:72px}
+.sec-title{display:flex;align-items:center;gap:16px;font-size:clamp(21px,3.2vw,26px);color:var(--navy);font-weight:800;letter-spacing:-.01em;padding-bottom:14px;border-bottom:3px solid var(--acc);margin-bottom:18px}
+.sec-title .num{flex:0 0 42px;height:42px;border-radius:12px;background:var(--acc);color:#fff;font-size:19px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(10,10,11,.18)}
+.sec h3{color:var(--navy);font-size:18px;font-weight:700;margin:22px 0 8px}
+.sec h4{color:var(--gold);font-size:15px;font-weight:700;margin:16px 0 4px}
+.sec p{margin:0 0 12px;color:#3A3A40}
+ul.list{list-style:none;margin:4px 0 14px}
+ul.list li{position:relative;padding:4px 0 4px 26px;color:#3A3A40}
+ul.list li::before{content:"";position:absolute;left:4px;top:13px;width:8px;height:8px;border-radius:2px;background:var(--gold)}
+.callout{background:#FFF3EE;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:14px 18px;color:#6E2A14;font-weight:500}
+.offer{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;font-size:19px;font-weight:600;line-height:1.5;border-radius:14px;padding:22px 24px;margin:6px 0 16px}
+.journey{margin:18px 0 8px}
+.j-head{text-align:center;margin-bottom:18px}
+.j-title{font-size:24px;font-weight:800;color:var(--navy)}
+.j-sub{font-size:14px;color:var(--grey)}
+.j-step{display:flex;align-items:center;gap:18px;background:#FAF9F6;border:1px solid var(--line);border-left:7px solid var(--navy);border-radius:14px;padding:18px 22px}
+.j-step.s2{border-left-color:var(--teal)}.j-step.s3{border-left-color:var(--blue)}.j-step.s4{border-left-color:#FF5C2E}
+.j-num{flex:0 0 52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.s2 .j-num{background:var(--teal)}.s3 .j-num{background:var(--blue)}.s4 .j-num{background:#FF5C2E}
+.j-icon{flex:0 0 30px;color:var(--navy)}.j-icon svg{width:30px;height:30px;display:block}
+.s2 .j-icon{color:var(--teal)}.s3 .j-icon{color:var(--blue)}.s4 .j-icon{color:#FF5C2E}
+.j-st{font-size:18px;font-weight:700;color:var(--navy)}
+.j-sd{font-size:14.5px;color:var(--grey)}
+.j-arrow{text-align:center;color:var(--navy);font-size:24px;line-height:1;margin:7px 0}
+.j-conv{background:var(--navy);border-color:var(--gold);border-left:7px solid var(--gold)}
+.j-conv .j-num{background:var(--gold);color:#fff}.j-conv .j-num svg{width:30px;height:30px}
+.j-conv .j-icon{color:var(--gold)}.j-conv .j-st{color:#fff}.j-conv .j-sd{color:#C9C9CF}
+.obj-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:14px 0;box-shadow:0 4px 14px rgba(10,10,11,.05)}
+.obj-q{background:var(--navy);color:#fff;font-size:17px;font-weight:700;padding:14px 20px;display:flex;align-items:center;gap:12px}
+.obj-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);background:var(--gold);border-radius:5px;padding:3px 8px;font-weight:800}
+.obj-a{padding:16px 20px 6px}
+.obj-you{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:8px}
+.obj-a p{color:#3A3A40}
+.quote-card{border-left:4px solid var(--gold);background:#FAF9F6;border-radius:0 12px 12px 0;padding:14px 20px;margin:12px 0}
+.q-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:5px}
+.q-text{font-size:18px;font-style:italic;color:var(--navy);font-weight:500}
+.quote-inline{font-style:italic;color:var(--navy)}
+.gloss-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:6px}
+.gloss-item{background:#FAF9F6;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.gloss-term{font-weight:700;color:var(--navy);margin-bottom:3px}
+.gloss-def{font-size:14px;color:var(--grey)}
+footer{text-align:center;color:var(--grey);font-size:13px;padding:34px 22px 50px}
+.totop{display:inline-block;margin-top:8px;color:var(--navy);font-weight:600}
+@media(max-width:680px){.toc-grid,.gloss-grid{grid-template-columns:1fr}.sec{padding:24px 20px}.j-step{padding:14px 16px;gap:12px}.j-num{flex-basis:44px;height:44px;font-size:20px}}
+/* ---- motion + flourish ---- */
+.progress{position:fixed;top:0;left:0;height:4px;width:0;z-index:60;background:linear-gradient(90deg,var(--gold),var(--teal),var(--blue));box-shadow:0 0 10px rgba(255,92,46,.5);transition:width .12s linear}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes popIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes grad{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+html.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease}
+html.js .reveal.in{opacity:1;transform:none}
+.hero{background:linear-gradient(120deg,#0A0A0B,#0A0A0B,#1F1F22,#2A2A2E);background-size:220% 220%;animation:grad 14s ease-in-out infinite alternate;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 380px at 50% -12%,rgba(255,138,92,.20),transparent 70%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero img{animation:fadeUp .8s both}
+.hero h1{animation:fadeUp .8s .12s both}
+.hero .ed{animation:fadeUp .8s .24s both}
+.hero .tag{animation:fadeUp .8s .36s both}
+.sec .lead{font-size:19px;line-height:1.55;color:var(--navy);font-weight:500;border-left:3px solid var(--acc);padding-left:16px;margin:2px 0 16px}
+html.js .sec.in .sec-title .num{animation:pop .55s .05s both}
+html.js .sec .journey .j-step,html.js .sec .obj-card,html.js .sec .quote-card,html.js .sec .gloss-item{opacity:0}
+html.js .sec.in .journey .j-step,html.js .sec.in .obj-card,html.js .sec.in .quote-card,html.js .sec.in .gloss-item{animation:popIn .5s both}
+html.js .sec.in .gloss-item:nth-child(2){animation-delay:.05s}html.js .sec.in .gloss-item:nth-child(3){animation-delay:.1s}html.js .sec.in .gloss-item:nth-child(4){animation-delay:.15s}html.js .sec.in .gloss-item:nth-child(5){animation-delay:.2s}html.js .sec.in .gloss-item:nth-child(6){animation-delay:.25s}html.js .sec.in .gloss-item:nth-child(7){animation-delay:.3s}html.js .sec.in .gloss-item:nth-child(8){animation-delay:.35s}html.js .sec.in .gloss-item:nth-child(9){animation-delay:.4s}html.js .sec.in .gloss-item:nth-child(10){animation-delay:.45s}
+html.js .sec.in .journey .j-step:nth-child(4){animation-delay:.08s}html.js .sec.in .journey .j-step:nth-child(6){animation-delay:.16s}html.js .sec.in .journey .j-step:nth-child(8){animation-delay:.24s}html.js .sec.in .journey .j-step:nth-child(10){animation-delay:.32s}
+.gloss-item,.obj-card,.quote-card,.j-step{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.gloss-item:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(10,10,11,.12);border-color:var(--acc)}
+.obj-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,10,11,.14)}
+.quote-card:hover{transform:translateX(4px)}
+.j-step:not(.j-conv):hover{transform:translateX(5px);box-shadow:0 8px 20px rgba(10,10,11,.10)}
+.sec:hover{box-shadow:0 16px 40px rgba(10,10,11,.10)}
+.toc-grid a{transition:background .2s,transform .2s}
+.toc-grid a:hover{transform:translateX(3px)}
+.sec-title .num{transition:transform .25s}
+.sec:hover .sec-title .num{transform:rotate(-6deg) scale(1.06)}
+.langbtn{transition:background .2s,color .2s}
+.offer{box-shadow:0 14px 34px rgba(10,10,11,.22)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html.js .reveal,html.js .sec .journey .j-step,html.js .sec .obj-card,html.js .sec .quote-card,html.js .sec .gloss-item{opacity:1!important;transform:none!important}}
+/* ---- alternating dark sections ---- */
+.sec.dark{background:linear-gradient(165deg,#0A0A0B,#1F1F22);border-color:rgba(255,255,255,.10);color:#C9C9CF}
+.sec.dark .sec-title{color:#fff;border-bottom-color:var(--acc)}
+.sec.dark h3{color:#fff}
+.sec.dark h4{color:#FF8A5C}
+.sec.dark p{color:#C9C9CF}
+.sec.dark .lead{color:#fff;border-left-color:var(--acc)}
+.sec.dark ul.list li{color:#C9C9CF}
+.sec.dark ul.list li::before{background:var(--gold)}
+.sec.dark .callout{background:rgba(255,138,92,.12);border-left-color:var(--gold);color:#FFD9C9}
+.sec.dark .offer{background:linear-gradient(135deg,#2A2A2E,#FF5C2E);box-shadow:0 14px 34px rgba(0,0,0,.30)}
+.sec.dark .obj-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+.sec.dark .obj-q{background:#1F1F22}
+.sec.dark .obj-a p{color:#C9C9CF}
+.sec.dark .quote-card{background:rgba(255,255,255,.05);border-left-color:var(--gold)}
+.sec.dark .quote-card .q-text{color:#FAF9F6}
+.sec.dark .gloss-item{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+.sec.dark .gloss-item:hover{border-color:var(--gold)}
+.sec.dark .gloss-term{color:#fff}
+.sec.dark .gloss-def{color:#B0B0B8}
+.sec.dark .j-step{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.sec.dark .j-st{color:#fff}.sec.dark .j-sd{color:#B0B0B8}.sec.dark .j-title{color:#fff}.sec.dark .j-sub{color:#8B8B92}.sec.dark .j-arrow{color:#8B8B92}
+.sec.dark:hover{box-shadow:0 18px 44px rgba(0,0,0,.28)}
+
+/* ---- v2 enhancements: field card, hooks, math, demo, discovery, say/not, self-check, copy ---- */
+.fieldcard{max-width:900px;margin:0 auto 26px;background:linear-gradient(165deg,#1F1F22,#0A0A0B);border:1px solid var(--gold);border-radius:16px;box-shadow:0 14px 34px rgba(10,10,11,.22);padding:24px 26px 26px;color:#ECECEE;scroll-margin-top:64px}
+.fieldcard .fc-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:14px;margin-bottom:16px}
+.fieldcard .fc-badge{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:#0A0A0B;background:var(--gold);border-radius:999px;padding:5px 12px}
+.fieldcard h2{font-size:21px;color:#fff;font-weight:800;letter-spacing:-.01em}
+.fieldcard .fc-sub{font-size:13px;color:#8B8B92;margin-left:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fc-block{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:14px 16px}
+.fc-block.full{grid-column:1/-1}
+.fc-h{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-bottom:8px}
+.fc-block p{color:#D5D5DB;margin:0 0 6px;font-size:14.5px;line-height:1.5}
+.fc-block p:last-child{margin-bottom:0}
+.fc-block .big{font-size:16px;font-weight:600;color:#fff;font-style:italic}
+.fc-line{display:flex;gap:12px;align-items:flex-start;padding:6px 0;border-top:1px solid rgba(255,255,255,.08)}
+.fc-line:first-of-type{border-top:0;padding-top:0}
+.fc-k{flex:0 0 130px;font-weight:700;color:#FF8A5C;font-size:13.5px}
+.fc-v{color:#D5D5DB;font-size:13.5px}
+.fc-demos{display:flex;gap:10px;flex-wrap:wrap}
+.fc-demos a{background:var(--gold);color:#0A0A0B;font-weight:700;font-size:13px;padding:8px 14px;border-radius:9px;transition:filter .2s,transform .15s}
+.fc-demos a:hover{filter:brightness(1.08);transform:translateY(-1px)}
+@media(max-width:680px){.fc-grid{grid-template-columns:1fr}.fc-k{flex-basis:104px}}
+/* memory hook */
+.hook{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--gold),#E84A1E);color:#2A0E03;border-radius:14px;padding:13px 18px;margin:10px 0 14px;box-shadow:0 8px 22px rgba(255,92,46,.28)}
+.hook-tag{flex:0 0 auto;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;background:rgba(0,0,0,.20);color:#fff;padding:5px 11px;border-radius:999px}
+.hook-text{font-size:16px;font-weight:800;letter-spacing:.01em}.hook-text b{font-size:18px}
+/* worked math */
+.mathbox{background:#0A0A0B;border:1px solid var(--teal);border-left:5px solid var(--teal);border-radius:0 12px 12px 0;padding:15px 20px;margin:14px 0;color:#D5D5DB}
+.sec.dark .mathbox{background:rgba(255,92,46,.16)}
+.mathbox .mb-h{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:#FF8A5C;margin-bottom:8px}
+.mathbox table{border-collapse:collapse;width:100%;margin:2px 0}
+.mathbox td{padding:6px 4px;font-size:14.5px;border-bottom:1px solid rgba(255,255,255,.10);color:#D5D5DB}
+.mathbox tr:last-child td{border-bottom:0}
+.mathbox td:last-child{text-align:right;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:14px}
+.mathbox .mb-punch{margin:10px 0 0;font-weight:700;color:#fff;font-size:15px}
+/* discovery */
+.disc-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:8px 0 6px}
+.disc-card{background:#FAF9F6;border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:12px;padding:13px 18px}
+.sec.dark .disc-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10);border-left-color:var(--gold)}
+.disc-card .dc-h{font-weight:800;color:var(--navy);font-size:15px;margin-bottom:4px}
+.sec.dark .disc-card .dc-h{color:#fff}
+.disc-card .dc-h span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-left:8px}
+.disc-card ul{list-style:none;margin:0}
+.disc-card li{position:relative;padding:4px 0 4px 22px;color:#3A3A40;font-size:15px}
+.sec.dark .disc-card li{color:#C9C9CF}
+.disc-card li::before{content:"";position:absolute;left:2px;top:12px;width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.sec.dark .disc-card li::before{background:var(--gold)}
+/* say this / not that */
+.svn{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.svn-card{border-radius:12px;padding:13px 16px}
+.svn-no{background:#fbecec;border:1px solid #e0b4b4}
+.svn-yes{background:#eaf6ee;border:1px solid #a9d6b9}
+.sec.dark .svn-no{background:rgba(183,71,47,.16);border-color:rgba(183,71,47,.45)}
+.sec.dark .svn-yes{background:rgba(255,92,46,.16);border-color:rgba(255,92,46,.45)}
+.svn-h{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;margin-bottom:6px}
+.svn-no .svn-h{color:#B42318}.svn-yes .svn-h{color:#FF5C2E}
+.sec.dark .svn-no .svn-h{color:#ec9d8b}.sec.dark .svn-yes .svn-h{color:#FF8A5C}
+.svn-card p{margin:0;color:#3A3A40;font-size:14.5px}.sec.dark .svn-card p{color:#D5D5DB}
+@media(max-width:680px){.svn{grid-template-columns:1fr}}
+/* demo showcase */
+.demo-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+.demo-step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;text-align:center}
+.demo-step .ds-n{width:38px;height:38px;border-radius:50%;background:var(--gold);color:#2A0E03;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.demo-step .ds-t{font-weight:800;color:#fff;font-size:15px;margin-bottom:5px}
+.demo-step .ds-d{font-size:13.5px;color:#C9C9CF;line-height:1.45}
+@media(max-width:680px){.demo-steps{grid-template-columns:1fr}}
+/* copy button */
+.copywrap{position:relative}
+.copybtn{position:absolute;top:10px;right:10px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:800;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 10px;cursor:pointer;opacity:.55;transition:opacity .2s,transform .15s,background .2s,color .2s;z-index:2}
+.copywrap:hover .copybtn{opacity:1}
+.copybtn:hover{transform:translateY(-1px)}
+.copybtn.done{background:var(--teal);color:#fff;border-color:var(--teal);opacity:1}
+.obj-card .obj-a{padding-bottom:40px}
+.obj-card .copybtn{top:auto;bottom:12px}
+/* self-check flip cards */
+.flip-intro{font-size:14.5px;color:var(--grey);margin-bottom:14px}
+.sec.dark .flip-intro{color:#9A9AA2}
+.flip-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.flip{perspective:1200px;min-height:172px;cursor:pointer}
+.flip-in{position:relative;width:100%;min-height:172px;transition:transform .55s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.flip-f,.flip-b{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:13px;padding:18px;display:flex;flex-direction:column;justify-content:center}
+.flip-f{background:linear-gradient(165deg,#1F1F22,#0A0A0B);border:1px solid rgba(255,255,255,.14);color:#fff}
+.flip-b{background:#fff;border:1px solid var(--gold);color:#1F1F22;transform:rotateY(180deg)}
+.flip-q{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:8px}
+.flip-f .flip-t{font-size:16px;font-weight:700;line-height:1.4}
+.flip-a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:800;margin-bottom:8px}
+.flip-b .flip-t{font-size:13.5px;line-height:1.46;font-weight:500}
+.flip-hint{font-size:10.5px;color:#8B8B92;margin-top:auto;padding-top:10px;letter-spacing:.04em}
+.flip-b .flip-hint{color:#8B8B92}
+@media(max-width:680px){.flip-grid{grid-template-columns:1fr}}
+/* ==== PymeWebPro rebrand: fonts + wordmark ==== */
+h1,h2,h3,h4,.sec-title,.j-title,.toc-card h2,.hero h1{font-family:'Inter Tight','Inter',system-ui,sans-serif}
+.num,.tn,.j-num,.q-label,.obj-tag,.obj-you,.hook-tag,.mb-h,.svn-h,.flip-q,.flip-a,.conf,.fc-h,.bt{font-family:'JetBrains Mono',ui-monospace,monospace}
+.wm{font-family:'Inter Tight','Inter',sans-serif;font-weight:700;letter-spacing:-.024em;color:var(--ink);white-space:nowrap}
+.wm-br{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;color:var(--grey)}
+.wm:hover .wm-br{color:var(--accent)}
+.bar .wm{font-size:18px}
+.heromark{display:inline-block;background:#fff;padding:13px 26px;border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.28);margin-bottom:20px}
+.heromark .wm{font-size:clamp(26px,4vw,34px)}
+</style>
+</head>
+<body id="top">
+<div class="progress" id="prog"></div>
+<div class="bar">
+  <span class="wm"><span class="wm-br">&lt;</span>pymewebpro<span class="wm-br">/&gt;</span></span>
+  <span class="bt l-en">Sales Manual</span><span class="bt l-es">Manual de Ventas</span>
+  <div class="langtoggle"><button class="langbtn" data-l="en">EN</button><button class="langbtn on" data-l="es">ES</button></div>
+  <span class="conf l-en">Confidential</span><span class="conf l-es">Confidencial</span>
+</div>
+<header class="hero">
+  <div class="heromark"><span class="wm"><span class="wm-br">&lt;</span>pymewebpro<span class="wm-br">/&gt;</span></span></div>
+  <h1 class="l-en">PymeWebPro Sales Manual</h1><h1 class="l-es">Manual de Ventas de PymeWebPro</h1>
+  <div class="ed l-en">Internal edition &middot; for the sales team</div><div class="ed l-es">Edici&oacute;n interna &middot; para el equipo de ventas</div>
+  <div class="tag l-en">Everything you need to confidently sell PymeWebPro.</div><div class="tag l-es">Todo lo que necesitas para vender PymeWebPro con confianza.</div>
+</header>
+<div class="toc"><div class="toc-card">
+  <h2 class="l-en">Contents</h2><h2 class="l-es">Contenido</h2>
+  <div class="toc-grid l-en"><a href="#sec1"><span class="tn">1</span>WHAT PYMEWEBPRO ACTUALLY SELLS</a>
+<a href="#sec2"><span class="tn">2</span>THE CORE OFFER</a>
+<a href="#sec3"><span class="tn">3</span>UNDERSTANDING THE BUYER JOURNEY</a>
+<a href="#sec4"><span class="tn">4</span>THE SALES PAGE SYSTEM</a>
+<a href="#sec5"><span class="tn">5</span>THE 24/7 SALES ASSISTANT</a>
+<a href="#sec6"><span class="tn">6</span>WHY THE SYSTEM WORKS</a>
+<a href="#sec7"><span class="tn">7</span>INDUSTRIES WE TARGET</a>
+<a href="#sec8"><span class="tn">8</span>HOW TO SELL PYMEWEBPRO</a>
+<a href="#sec9"><span class="tn">9</span>DISCOVERY QUESTIONS</a>
+<a href="#sec10"><span class="tn">10</span>RUNNING THE DEMO</a>
+<a href="#sec11"><span class="tn">11</span>HIGH-IMPACT SALES LINES</a>
+<a href="#sec12"><span class="tn">12</span>OBJECTIONS AND REBUTTALS</a>
+<a href="#sec13"><span class="tn">13</span>WHAT EVERY AMBASSADOR MUST KNOW</a>
+<a href="#sec14"><span class="tn">14</span>GLOSSARY</a>
+<a href="#selfcheck"><span class="tn" style="background:var(--teal)">?</span>TEST YOURSELF</a></div><div class="toc-grid l-es"><a href="#sec1"><span class="tn">1</span>QUÉ VENDE PYMEWEBPRO EN REALIDAD</a>
+<a href="#sec2"><span class="tn">2</span>LA OFERTA PRINCIPAL</a>
+<a href="#sec3"><span class="tn">3</span>CÓMO ENTENDER EL RECORRIDO DEL COMPRADOR</a>
+<a href="#sec4"><span class="tn">4</span>EL SISTEMA DE PÁGINA DE VENTAS</a>
+<a href="#sec5"><span class="tn">5</span>EL ASISTENTE DE VENTAS 24/7</a>
+<a href="#sec6"><span class="tn">6</span>POR QUÉ FUNCIONA EL SISTEMA</a>
+<a href="#sec7"><span class="tn">7</span>INDUSTRIAS A LAS QUE APUNTAMOS</a>
+<a href="#sec8"><span class="tn">8</span>CÓMO VENDER PYMEWEBPRO</a>
+<a href="#sec9"><span class="tn">9</span>PREGUNTAS DE DESCUBRIMIENTO</a>
+<a href="#sec10"><span class="tn">10</span>CÓMO HACER LA DEMOSTRACIÓN</a>
+<a href="#sec11"><span class="tn">11</span>FRASES DE ALTO IMPACTO</a>
+<a href="#sec12"><span class="tn">12</span>OBJECIONES Y RESPUESTAS</a>
+<a href="#sec13"><span class="tn">13</span>LO QUE TODO EMBAJADOR DEBE SABER</a>
+<a href="#sec14"><span class="tn">14</span>GLOSARIO</a>
+<a href="#selfcheck"><span class="tn" style="background:var(--teal)">?</span>PONTE A PRUEBA</a></div>
+</div></div>
+<main class="l-en">
+<section class="sec reveal" id="sec1" style="--acc:#0A0A0B"><h2 class="sec-title"><span class="num">1</span><span>WHAT PYMEWEBPRO ACTUALLY SELLS</span></h2>
+<p class="lead">PymeWebPro doesn't sell websites.</p>
+<p>PymeWebPro sells:</p>
+<ul class="list">
+<li>More booked customers</li>
+<li>Faster response times</li>
+<li>Better lead conversion</li>
+<li>Fewer missed opportunities</li>
+<li>A business that stays responsive 24/7</li>
+</ul>
+<p>Most small businesses lose leads for one simple reason: they don't respond fast enough. Someone visits the website at night, nobody answers, and the customer moves on to the competitor. That's the problem PymeWebPro solves.</p>
+<p>The sales page attracts and guides the visitor. The 24/7 sales assistant answers questions, qualifies prospects, captures leads, and books appointments automatically. Together, they create a complete conversion system.</p>
+</section>
+<section class="sec reveal dark" id="sec2" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">2</span><span>THE CORE OFFER</span></h2>
+<p class="offer">PymeWebPro is one package. A $400.000 COP setup builds the sales page and the 24/7 chatbot. Then $150.000 COP a month keeps it all running.</p>
+<h3>$400.000 COP setup, one-time</h3>
+<p>This builds and launches everything:</p>
+<ul class="list">
+<li>A custom-coded sales page (la p&aacute;gina de ventas) on Cloudflare</li>
+<li>A 24/7 chatbot trained on the business: it answers, qualifies, passes the client to WhatsApp, and books calls</li>
+<li>Ficha de Google configured (the free Google and Maps listing)</li>
+<li>WhatsApp and form, click-to-call, Google Maps, booking, testimonials, SEO</li>
+<li>Domain and SSL setup, IVA included</li>
+</ul>
+<h3>$150.000 COP a month, month-to-month</h3>
+<p>Keeps it all running:</p>
+<ul class="list">
+<li>Hosting and an always-updated Ficha de Google</li>
+<li>The 24/7 chatbot live and maintained</li>
+<li>Bilingual ES/EN version, WhatsApp support, up to 2 changes per month</li>
+<li>Product showcase up to 30 items, downloadable catalog or menu</li>
+<li>Monthly report of client activity</li>
+</ul>
+<h3>Terms</h3>
+<ul class="list">
+<li>Payment: 30% deposit, 70% on launch</li>
+<li>Live in about 48 hours, 2 revision rounds</li>
+<li>First month included with the setup</li>
+<li>30-day money-back guarantee, cancel the monthly anytime</li>
+</ul>
+<p class="callout">Simple explanation:</p>
+<p>One package: $400.000 to build the page and the chatbot, $150.000 a month to keep them working for you 24/7.</p>
+</section>
+<section class="sec reveal" id="sec3" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">3</span><span>UNDERSTANDING THE BUYER JOURNEY</span></h2>
+<p class="lead">Every customer follows the same predictable path before they become a paying client, from a stranger with a problem to a booked customer. The page and the assistant are built to move them along it.</p>
+<div class="journey">
+<div class="j-head"><div class="j-title">The Buyer Journey</div><div class="j-sub">How a stranger becomes a booked customer</div></div>
+<div class="j-step s1"><div class="j-num">1</div><div class="j-icon"><svg viewBox="0 0 48 48"><path d="M24 8 L42 40 L6 40 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><line x1="24" y1="20" x2="24" y2="30" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="35" r="2.4" fill="currentColor"/></svg></div><div class="j-body"><div class="j-st">The customer has a problem</div><div class="j-sd">A pipe bursts. The AC stops working. They need help now, so they start looking for a business that can solve it.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step s2"><div class="j-num">2</div><div class="j-icon"><svg viewBox="0 0 48 48"><circle cx="21" cy="21" r="13" fill="none" stroke="currentColor" stroke-width="4"/><line x1="31" y1="31" x2="41" y2="41" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div><div class="j-body"><div class="j-st">They search online</div><div class="j-sd">Google, your website, your Ficha de Google, an ad. You have seconds to earn their trust.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step s3"><div class="j-num">3</div><div class="j-icon"><svg viewBox="0 0 48 48"><rect x="12" y="7" width="24" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="4"/><line x1="18" y1="17" x2="30" y2="17" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="18" y1="24" x2="30" y2="24" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="18" y1="31" x2="26" y2="31" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg></div><div class="j-body"><div class="j-st">Your sales page guides them</div><div class="j-sd">One focused page, one clear action. It builds trust fast and removes every distraction.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step s4"><div class="j-num">4</div><div class="j-icon"><svg viewBox="0 0 48 48"><rect x="7" y="11" width="34" height="24" rx="7" fill="none" stroke="currentColor" stroke-width="4"/><path d="M17 35 L17 43 L26 35 Z" fill="currentColor"/><circle cx="17" cy="23" r="2.6" fill="currentColor"/><circle cx="24" cy="23" r="2.6" fill="currentColor"/><circle cx="31" cy="23" r="2.6" fill="currentColor"/></svg></div><div class="j-body"><div class="j-st">The assistant removes hesitation</div><div class="j-sd">It answers instantly, qualifies the lead, captures their info, and books the call. 24/7.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step j-conv"><div class="j-num"><svg viewBox="0 0 48 48"><path d="M10 25 L20 35 L40 13" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="j-icon"><svg viewBox="0 0 48 48"><path d="M10 25 L20 35 L40 13" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="j-body"><div class="j-st">Conversion</div><div class="j-sd">A booked call, a form, a message, a qualified lead. A real business opportunity, not just a website visit.</div></div></div></div>
+<p class="callout">The takeaway: most websites just sit online and hope. PymeWebPro is engineered to walk a visitor through this journey to a real outcome, whether that's a booked call, a form, a message, or a qualified lead.</p>
+</section>
+<section class="sec reveal dark" id="sec4" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">4</span><span>THE SALES PAGE SYSTEM</span></h2>
+<h3>What a Sales Page Is</h3>
+<p>A sales page is a focused web page built around one objective: get the visitor to take action.</p>
+<p>Unlike traditional websites, sales pages eliminate distractions and guide visitors toward:</p>
+<ul class="list">
+<li>Calling</li>
+<li>Booking</li>
+<li>Messaging</li>
+<li>Becoming a lead</li>
+</ul>
+<p>One page. One purpose. One conversion path.</p>
+<h3>Why Sales Pages Convert Better</h3>
+<h4>Focused Design</h4>
+<p>No unnecessary pages, menus, or distractions.</p>
+<h4>Clear Messaging</h4>
+<p>The visitor immediately understands:</p>
+<ul class="list">
+<li>What the business does</li>
+<li>Why it matters</li>
+<li>What to do next</li>
+</ul>
+<h4>Mobile-First Experience</h4>
+<p>Most local searches happen on phones.</p>
+<h4>Fast Performance</h4>
+<p>Slow websites lose customers quickly.</p>
+<h4>Trust Building</h4>
+<p>Professional design, testimonials, and structure create confidence.</p>
+<h3>Why We Hand-Code Everything</h3>
+<p>Every PymeWebPro page is custom-built.</p>
+<p>No:</p>
+<ul class="list">
+<li>WordPress</li>
+<li>Wix</li>
+<li>Squarespace</li>
+<li>Generic templates</li>
+</ul>
+<p>Benefits:</p>
+<ul class="list">
+<li>Faster load speeds</li>
+<li>Better security</li>
+<li>Cleaner code</li>
+<li>Better flexibility</li>
+<li>Stronger branding</li>
+<li>Fewer technical issues</li>
+</ul>
+<p>This creates a premium experience that stands out immediately.</p>
+<h3>Infrastructure and Security</h3>
+<p>Every site runs on Cloudflare's enterprise-grade infrastructure.</p>
+<p>Benefits include:</p>
+<ul class="list">
+<li>HTTPS encryption</li>
+<li>DDoS protection</li>
+<li>Global CDN delivery</li>
+<li>High uptime reliability</li>
+<li>Fast worldwide performance</li>
+</ul>
+<p class="callout">Simple explanation:</p>
+<p>Fast. Secure. Reliable.</p>
+</section>
+<section class="sec reveal" id="sec5" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">5</span><span>THE 24/7 SALES ASSISTANT</span></h2>
+<h3>What It Is</h3>
+<p>The PymeWebPro chatbot is built in the $400.000 COP setup, and the $150.000 COP monthly keeps it running. It lives on the website and talks to visitors automatically 24/7, powered by Claude from Anthropic and trained specifically on the business.</p>
+<p>The AI understands:</p>
+<ul class="list">
+<li>Services</li>
+<li>Pricing</li>
+<li>Policies</li>
+<li>Hours</li>
+<li>FAQs</li>
+<li>Booking workflows</li>
+</ul>
+<p>It speaks as the business itself.</p>
+<h3>Why It's Different From Old Chatbots</h3>
+<p>Most people imagine outdated scripted bots.</p>
+<p>Those systems:</p>
+<ul class="list">
+<li>Follow rigid decision trees</li>
+<li>Fail off-script</li>
+<li>Frustrate users</li>
+<li>Feel robotic</li>
+</ul>
+<p>The PymeWebPro system is a 24/7 sales assistant.</p>
+<p>It:</p>
+<ul class="list">
+<li>Understands natural language</li>
+<li>Holds real conversations</li>
+<li>Learns business context</li>
+<li>Responds intelligently</li>
+<li>Qualifies leads automatically</li>
+</ul>
+<p>It behaves more like a trained receptionist than software.</p>
+<h3>The Assistant's Four Core Functions</h3>
+<div class="hook"><span class="hook-tag">Remember</span><span class="hook-text">The <b>4 R's</b>: Reply &middot; Record &middot; Rank &middot; Route</span></div>
+<h4>1. Reply &middot; answer questions</h4>
+<p>Instant responses at any hour.</p>
+<h4>2. Record &middot; capture leads</h4>
+<p>Collects names, contact information, and inquiries.</p>
+<h4>3. Rank &middot; qualify prospects</h4>
+<p>Determines urgency, fit, and intent.</p>
+<h4>4. Route &middot; hand off leads</h4>
+<p>Transfers qualified leads through:</p>
+<ul class="list">
+<li>WhatsApp</li>
+<li>Email</li>
+<li>Form notifications</li>
+<li>Calendar bookings</li>
+</ul>
+</section>
+<section class="sec reveal dark" id="sec6" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">6</span><span>WHY THE SYSTEM WORKS</span></h2>
+<p class="lead">The sales page and assistant solve the same problem together.</p>
+<p>The sales page:</p>
+<ul class="list">
+<li>Captures attention</li>
+<li>Builds trust</li>
+<li>Encourages action</li>
+</ul>
+<p>The assistant:</p>
+<ul class="list">
+<li>Removes hesitation</li>
+<li>Answers questions</li>
+<li>Captures leads</li>
+<li>Books appointments</li>
+</ul>
+<p>The simplest explanation: the sales page is the storefront, and the assistant is the salesperson who never goes home.</p>
+<p>A sales page without follow-up leaks leads. An assistant without traffic has nobody to talk to. The system works because both pieces support each other.</p>
+</section>
+<section class="sec reveal" id="sec7" style="--acc:#0A0A0B"><h2 class="sec-title"><span class="num">7</span><span>INDUSTRIES WE TARGET</span></h2>
+<p class="lead">The best prospects are Colombian small businesses where a missed message or call directly equals lost revenue.</p>
+<h3>Local services and trades</h3>
+<p>Salons, barbershops, workshops, home repair, contractors. The owner is busy with one client and misses the next.</p>
+<h3>Health and dental</h3>
+<p>Clinics and dental offices. After-hours questions and appointment requests are valuable and easy to lose.</p>
+<h3>Restaurants and shops</h3>
+<p>Restaurants, cafes, and small shops that take orders, reservations, and questions over WhatsApp.</p>
+<h3>Independent professionals</h3>
+<p>Lawyers, accountants, real-estate agents, consultants. Prospects want a fast, professional reply.</p>
+<h3>Ideal prospect checklist</h3>
+<p>Strong prospects usually:</p>
+<ul class="list">
+<li>Have a weak site, or only an Instagram</li>
+<li>Sell mostly through WhatsApp</li>
+<li>Miss messages after hours and on weekends</li>
+<li>Depend on inbound leads</li>
+<li>Need appointments, quotes, or reservations</li>
+</ul>
+<p class="callout">Simple rule:</p>
+<p>If missing a message costs them money, they're a strong prospect.</p>
+</section>
+<section class="sec reveal dark" id="sec8" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">8</span><span>HOW TO SELL PYMEWEBPRO</span></h2>
+<h3>The Correct Mindset</h3>
+<p>Don't sell technology.</p>
+<p>Sell outcomes:</p>
+<ul class="list">
+<li>More customers</li>
+<li>Faster response</li>
+<li>Better conversion</li>
+<li>Fewer missed leads</li>
+</ul>
+<h3>The Sales Flow</h3>
+<div class="hook"><span class="hook-tag">Remember</span><span class="hook-text">The <b>5 P's</b>: Pain &middot; Picture &middot; Proof &middot; Price &middot; Push</span></div>
+<h4>1. Pain &middot; identify it</h4>
+<p>Missed calls. Slow response. Weak websites.</p>
+<h4>2. Picture &middot; explain the system</h4>
+<p>Sales page plus 24/7 sales assistant.</p>
+<h4>3. Proof &middot; run the demo</h4>
+<p>Always show the product live.</p>
+<h4>4. Price &middot; explain it</h4>
+<p>Use the value-vs-agency comparison.</p>
+<h4>5. Push &middot; close with low risk</h4>
+<p>30-day money-back guarantee. Month-to-month, no lock-in. Live in 48 hours.</p>
+</section>
+<section class="sec reveal" id="sec9" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">9</span><span>DISCOVERY QUESTIONS</span></h2>
+<p class="lead">Sell less, ask more. The prospect should describe the problem before you describe the fix.</p>
+<p>Lead with questions, then stay quiet and let them talk. Their own words become your pitch.</p>
+<div class="disc-grid">
+<div class="disc-card"><div class="dc-h">Situation <span>where they are now</span></div><ul>
+<li>How do customers usually find you?</li>
+<li>What does your website actually do for you today?</li>
+<li>Who answers when a customer calls or messages?</li></ul></div>
+<div class="disc-card"><div class="dc-h">Pain <span>what's leaking</span></div><ul>
+<li>What happens when a call goes unanswered?</li>
+<li>How many enquiries come in after hours or on weekends?</li>
+<li>When you're out on a job, who's catching the next lead?</li></ul></div>
+<div class="disc-card"><div class="dc-h">Impact <span>what it costs them</span></div><ul>
+<li>What's one new customer worth to you?</li>
+<li>If you booked a few more jobs a month, what would that change?</li>
+<li>How much time do you lose answering the same questions?</li></ul></div>
+</div>
+<div class="callout">Listen for the number. The moment they tell you what a customer is worth, you've found the line you'll close on later.</div>
+<p>Once they've named the problem, bridge straight to the demo: <span class="quote-inline">"Let me show you exactly how we'd fix that."</span></p>
+</section>
+<section class="sec reveal dark" id="sec10" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">10</span><span>RUNNING THE DEMO</span></h2>
+<p class="lead">The demo is your strongest closer. Nothing you say beats them watching it work.</p>
+<div class="demo-steps">
+<div class="demo-step"><div class="ds-n">1</div><div class="ds-t">Set it up</div><div class="ds-d">"Most chatbots are useless. This one's different. Ask it anything a real customer would."</div></div>
+<div class="demo-step"><div class="ds-n">2</div><div class="ds-t">Hand them the phone</div><div class="ds-d">Let them type their own questions. It has to be their hands, not yours.</div></div>
+<div class="demo-step"><div class="ds-n">3</div><div class="ds-t">Stay quiet</div><div class="ds-d">Let the surprise land. The silence after the AI answers is doing the selling.</div></div>
+</div>
+<p>Use the chatbot that is live on our own site. Hand them the phone and let them test it right there:</p>
+<div class="fc-demos"><a href="https://pymewebpro.com" target="_blank" rel="noopener">Test the chatbot on pymewebpro.com</a></div>
+<div class="svn">
+<div class="svn-card svn-no"><div class="svn-h">✕ Don't say</div><p>"It uses advanced natural-language processing and a large language model."</p></div>
+<div class="svn-card svn-yes"><div class="svn-h">✓ Do say</div><p>"Ask it when you're open on a holiday. Go ahead, try to trip it up."</p></div>
+</div>
+<p>Most people expect it to fail because they're picturing old chatbots. It won't, and that moment changes the conversation.</p>
+</section>
+<section class="sec reveal" id="sec11" style="--acc:#0A0A0B"><h2 class="sec-title"><span class="num">11</span><span>HIGH-IMPACT SALES LINES</span></h2>
+<div class="quote-card"><div class="q-label">Cold Opener</div><div class="q-text">"When someone visits your website tonight with a question, who answers them?"</div></div>
+<div class="quote-card"><div class="q-label">One-Line Pitch</div><div class="q-text">"Every unanswered message is a lost customer. We fix that with a sales page and a 24/7 assistant that answers, qualifies, and books, even after hours."</div></div>
+<div class="quote-card"><div class="q-label">On the AI</div><div class="q-text">"This isn't an old chatbot. It's a modern AI assistant trained specifically on your business."</div></div>
+<div class="quote-card"><div class="q-label">On Infrastructure</div><div class="q-text">"Your site runs on enterprise-grade infrastructure used by some of the largest companies in the world."</div></div>
+<div class="quote-card"><div class="q-label">On price</div><div class="q-text">"A custom sales page that pays for itself with a few new clients, not an agency retainer."</div></div>
+</section>
+<section class="sec reveal dark" id="sec12" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">12</span><span>OBJECTIONS AND REBUTTALS</span></h2>
+<p class="lead">An objection is usually not rejection.</p>
+<p>It's the prospect asking for more certainty before making a decision.</p>
+<p>Never argue. Stay calm. Agree first. Then reframe.</p>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"It's too expensive."</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>Let me ask you a question: what's one new customer worth to you? Now what about four or five?</p>
+<p>Most businesses lose far more money from missed leads than they ever spend on marketing. One missed job, one missed consultation, or one missed patient can easily pay for months of this service.</p>
+<p>And remember, this isn't just a website. It's a system designed to capture and convert leads automatically, including after hours when most businesses stop responding.</p>
+<div class="mathbox"><div class="mb-h">Do the math out loud</div>
+<table><tr><td>The sales page, one-time</td><td>$400.000 COP</td></tr>
+<tr><td>One new client is worth, say</td><td>$200.000 COP</td></tr>
+<tr><td>So it pays for itself with about</td><td>2 clients</td></tr></table>
+<p class="mb-punch">Two or three new clients and the page has paid for itself. Everything after that is profit.</p></div>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"I already have a website."</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>Sure, but that isn't really what this is. Most websites are basically digital brochures. They give information, maybe show some photos, maybe list services, but they don't actively convert visitors into leads.</p>
+<p>What we build is different. This is a high-converting sales page paired with a 24/7 sales assistant that engages visitors, answers questions, qualifies prospects, and pushes them toward action.</p>
+<p>The goal isn't just to have a website. It's to generate more customers from the traffic you already get.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"I don't need a chatbot."</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>You're probably thinking about the old bots everybody hates. Those systems were scripted, robotic, and frustrating. Press 1. Type a keyword. Get a canned answer.</p>
+<p>This is completely different. It's a modern conversational AI trained specifically on your business. It understands natural language, responds intelligently, and talks more like a real receptionist than software. Most people don't realize how advanced these systems have become until they try one themselves.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"AI feels impersonal."</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>Actually, it solves the most impersonal part of customer service: ignoring people. Most customers just want fast answers and responsiveness.</p>
+<p>The AI handles:</p>
+<ul class="list">
+<li>Initial questions</li>
+<li>Lead capture</li>
+<li>Qualification</li>
+<li>Booking</li>
+</ul>
+<p>Then it hands the lead directly to you when the person is ready. It does the repetitive front-end work so you can spend your time talking to serious buyers instead of chasing cold leads.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"Why not just hire a receptionist?"</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>A receptionist works business hours. This works 24/7. A receptionist handles one conversation at a time. The AI handles unlimited conversations simultaneously.</p>
+<p>And unlike a receptionist, the AI never:</p>
+<ul class="list">
+<li>Misses a message</li>
+<li>Takes a sick day</li>
+<li>Goes home</li>
+<li>Forgets information</li>
+<li>Leaves the company</li>
+</ul>
+<p>This isn't replacing people. It's making sure opportunities never get missed.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"What if it doesn't work?"</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>That's exactly why there's a 30-day money-back guarantee. If the system doesn't perform the way we promised, the risk is on us, not you.</p>
+<p>Most agencies don't offer that because they can't confidently stand behind the product. We can.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"I want to think about it."</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>Absolutely. Usually when someone says that, there's one specific thing they're uncertain about. What would you need to feel confident moving forward?</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">They say</span>"I don't have time to deal with this."</div><div class="obj-a"><span class="obj-you">You say</span>
+<p>That's actually the reason most businesses need it. You give us the business information once, and we handle the build, setup, and launch. After that, the AI starts handling inquiries automatically so you spend less time chasing leads and less time responding to repetitive questions.</p>
+</div></div>
+</section>
+<section class="sec reveal" id="sec13" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">13</span><span>WHAT EVERY AMBASSADOR MUST KNOW</span></h2>
+<p class="lead">You must know:</p>
+<ul class="list">
+<li>The offer</li>
+<li>The pricing</li>
+<li>The buyer journey</li>
+<li>The purpose of the sales page</li>
+<li>The role of the assistant</li>
+<li>The sales flow</li>
+<li>The objections</li>
+<li>The live demo</li>
+</ul>
+<p>Confidence comes from repetition.</p>
+<p>Learn the material until it feels automatic.</p>
+</section>
+<section class="sec reveal dark" id="sec14" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">14</span><span>GLOSSARY</span></h2>
+<div class="gloss-grid">
+<div class="gloss-item"><div class="gloss-term">Sales Page</div><div class="gloss-def">A focused web page designed to convert visitors into leads.</div></div>
+<div class="gloss-item"><div class="gloss-term">Conversion</div><div class="gloss-def">When a visitor takes action and becomes a business opportunity.</div></div>
+<div class="gloss-item"><div class="gloss-term">CTA</div><div class="gloss-def">A call-to-action guiding the visitor toward the next step.</div></div>
+<div class="gloss-item"><div class="gloss-term">Lead</div><div class="gloss-def">A potential customer who has shown interest.</div></div>
+<div class="gloss-item"><div class="gloss-term">Qualification</div><div class="gloss-def">Determining whether a lead is a strong fit.</div></div>
+<div class="gloss-item"><div class="gloss-term">Sales Assistant (AI)</div><div class="gloss-def">A modern conversational AI capable of intelligent natural-language interaction.</div></div>
+<div class="gloss-item"><div class="gloss-term">CDN</div><div class="gloss-def">A global content delivery network improving speed and performance.</div></div>
+<div class="gloss-item"><div class="gloss-term">Uptime</div><div class="gloss-def">The percentage of time a website remains online and accessible.</div></div>
+<div class="gloss-item"><div class="gloss-term">DDoS Protection</div><div class="gloss-def">Security systems designed to prevent malicious traffic attacks.</div></div>
+<div class="gloss-item"><div class="gloss-term">Handoff</div><div class="gloss-def">Transferring a qualified lead from AI to a human.</div></div>
+<div class="gloss-item"><div class="gloss-term">Escalation</div><div class="gloss-def">Routing urgent or complex situations to a real person immediately.</div></div>
+<div class="gloss-item"><div class="gloss-term">Wompi</div><div class="gloss-def">The Colombian payment gateway (cards, PSE, bank transfer) used to charge the deposit in COP.</div></div>
+<div class="gloss-item"><div class="gloss-term">Ficha de Google</div><div class="gloss-def">The free Google and Maps listing we set up and keep updated.</div></div>
+</div>
+</section>
+<section class="sec reveal" id="selfcheck" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">?</span><span>TEST YOURSELF</span></h2>
+<p class="flip-intro">Tap a card to flip it. If you can answer before flipping, you know it. Run through these until every one is automatic.</p>
+<div class="flip-grid">
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">What does PymeWebPro actually sell?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">Not websites. More booked customers: faster response, better conversion, fewer missed leads. A sales page plus a 24/7 assistant.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">What's the price and terms?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">$400.000 COP setup (the page and the chatbot), then $150.000 COP a month to keep it running. 30% deposit, 70% on launch. Live in about 48 hours. 30-day money-back guarantee.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">The 5 P's of the sales flow?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">Pain, Picture, Proof, Price, Push.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">The 4 R's the AI does?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">Reply, Record, Rank, Route. It answers, captures, qualifies, and hands off.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">"It's too expensive." Your move?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">Ask what one customer is worth and let them do the math. It's a system, not just a website, and it keeps working after hours when most businesses go quiet.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">"I already have a website." Your move?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">Most sites are brochures, they inform. This converts: it engages, qualifies, and books. The goal is more customers from the traffic you already have.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">Why a sales page and not a big website?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">A big site informs. A sales page converts. One page, one action, built to turn visitors into clients.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Question</div><div class="flip-t">Strongest tool in the whole sale?</div><div class="flip-hint">tap to flip</div></div><div class="flip-b"><div class="flip-a">Answer</div><div class="flip-t">The live demo. Hand them the phone, let them test the AI, then stay quiet.</div></div></div></div>
+</div>
+</section>
+</main>
+<main class="l-es">
+<section class="sec reveal" id="sec1" style="--acc:#0A0A0B"><h2 class="sec-title"><span class="num">1</span><span>QUÉ VENDE PYMEWEBPRO EN REALIDAD</span></h2>
+<p class="lead">PymeWebPro no vende sitios web.</p>
+<p>PymeWebPro vende:</p>
+<ul class="list">
+<li>Más clientes agendados</li>
+<li>Tiempos de respuesta más rápidos</li>
+<li>Mejor conversión de prospectos</li>
+<li>Menos oportunidades perdidas</li>
+<li>Un negocio que sigue respondiendo 24/7</li>
+</ul>
+<p>La mayoría de los pequeños negocios pierden prospectos por una razón simple: no responden lo suficientemente rápido. Alguien visita el sitio web de noche, nadie responde y el cliente se va con la competencia. Ese es el problema que PymeWebPro resuelve.</p>
+<p>La página de ventas atrae y guía al visitante. El asistente de ventas 24/7 responde preguntas, califica prospectos, captura datos y agenda citas automáticamente. Juntos, crean un sistema de conversión completo.</p>
+</section>
+<section class="sec reveal dark" id="sec2" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">2</span><span>LA OFERTA PRINCIPAL</span></h2>
+<p class="offer">PymeWebPro es un solo paquete. Una inversión inicial de $400.000 COP construye la página de ventas y el chatbot 24/7. Luego $150.000 COP al mes lo mantienen todo funcionando.</p>
+<h3>Inversión inicial $400.000 COP, pago único</h3>
+<p>Esto construye y lanza todo:</p>
+<ul class="list">
+<li>Una página de ventas a la medida (la p&aacute;gina de ventas) sobre Cloudflare</li>
+<li>Un chatbot 24/7 entrenado sobre el negocio: responde, califica, pasa al cliente a su WhatsApp y agenda llamadas</li>
+<li>Ficha de Google configurada (la ficha gratis de Google y Maps)</li>
+<li>WhatsApp y formulario, clic para llamar, Google Maps, agendamiento, testimonios, SEO</li>
+<li>Configuración de dominio y SSL, IVA incluido</li>
+</ul>
+<h3>$150.000 COP al mes, mes a mes</h3>
+<p>Mantiene todo funcionando:</p>
+<ul class="list">
+<li>Hosting y una Ficha de Google siempre actualizada</li>
+<li>El chatbot 24/7 activo y con mantenimiento</li>
+<li>Versión bilingüe ES/EN, soporte por WhatsApp, hasta 2 cambios al mes</li>
+<li>Vitrina de hasta 30 productos, catálogo o menú descargable</li>
+<li>Reporte mensual con la actividad de los clientes</li>
+</ul>
+<h3>Condiciones</h3>
+<ul class="list">
+<li>Pago: 30% de anticipo, 70% al lanzar</li>
+<li>En línea en unas 48 horas, 2 rondas de ajustes</li>
+<li>Primer mes incluido con la inversión inicial</li>
+<li>Garantía de devolución de 30 días, cancela el plan mensual cuando quieras</li>
+</ul>
+<p class="callout">Explicación simple:</p>
+<p>Un solo paquete: $400.000 para construir la página y el chatbot, $150.000 al mes para mantenerlos trabajando por ti 24/7.</p>
+</section>
+<section class="sec reveal" id="sec3" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">3</span><span>CÓMO ENTENDER EL RECORRIDO DEL COMPRADOR</span></h2>
+<p class="lead">Cada cliente sigue el mismo camino predecible antes de convertirse en cliente que paga, desde un desconocido con un problema hasta un cliente agendado. La página y el asistente están hechos para llevarlo por ese camino.</p>
+<div class="journey">
+<div class="j-head"><div class="j-title">El Recorrido del Comprador</div><div class="j-sub">C&oacute;mo un desconocido se vuelve cliente agendado</div></div>
+<div class="j-step s1"><div class="j-num">1</div><div class="j-icon"><svg viewBox="0 0 48 48"><path d="M24 8 L42 40 L6 40 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><line x1="24" y1="20" x2="24" y2="30" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="35" r="2.4" fill="currentColor"/></svg></div><div class="j-body"><div class="j-st">El cliente tiene un problema</div><div class="j-sd">Se revienta un tubo. Se daña el aire acondicionado. Necesitan ayuda ya, así que empiezan a buscar un negocio que lo resuelva.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step s2"><div class="j-num">2</div><div class="j-icon"><svg viewBox="0 0 48 48"><circle cx="21" cy="21" r="13" fill="none" stroke="currentColor" stroke-width="4"/><line x1="31" y1="31" x2="41" y2="41" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div><div class="j-body"><div class="j-st">Buscan en línea</div><div class="j-sd">Google, tu sitio web, tu Ficha de Google, un anuncio. Tienes segundos para ganarte su confianza.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step s3"><div class="j-num">3</div><div class="j-icon"><svg viewBox="0 0 48 48"><rect x="12" y="7" width="24" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="4"/><line x1="18" y1="17" x2="30" y2="17" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="18" y1="24" x2="30" y2="24" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="18" y1="31" x2="26" y2="31" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg></div><div class="j-body"><div class="j-st">Tu página de ventas los guía</div><div class="j-sd">Una página enfocada, una acción clara. Genera confianza rápido y elimina toda distracción.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step s4"><div class="j-num">4</div><div class="j-icon"><svg viewBox="0 0 48 48"><rect x="7" y="11" width="34" height="24" rx="7" fill="none" stroke="currentColor" stroke-width="4"/><path d="M17 35 L17 43 L26 35 Z" fill="currentColor"/><circle cx="17" cy="23" r="2.6" fill="currentColor"/><circle cx="24" cy="23" r="2.6" fill="currentColor"/><circle cx="31" cy="23" r="2.6" fill="currentColor"/></svg></div><div class="j-body"><div class="j-st">El asistente elimina las dudas</div><div class="j-sd">Responde al instante, califica al prospecto, captura sus datos y agenda la llamada. 24/7.</div></div></div>
+<div class="j-arrow">&#x2193;</div>
+<div class="j-step j-conv"><div class="j-num"><svg viewBox="0 0 48 48"><path d="M10 25 L20 35 L40 13" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="j-icon"><svg viewBox="0 0 48 48"><path d="M10 25 L20 35 L40 13" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="j-body"><div class="j-st">Conversi&oacute;n</div><div class="j-sd">Una llamada agendada, un formulario, un mensaje, un prospecto calificado. Una oportunidad de negocio real, no solo una visita al sitio.</div></div></div></div>
+<p class="callout">La conclusión: la mayoría de los sitios web solo existen en línea y esperan. PymeWebPro está diseñado para acompañar al visitante por este recorrido hasta un resultado real, ya sea una llamada agendada, un formulario, un mensaje o un prospecto calificado.</p>
+</section>
+<section class="sec reveal dark" id="sec4" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">4</span><span>EL SISTEMA DE PÁGINA DE VENTAS</span></h2>
+<h3>Qué es una página de ventas</h3>
+<p>Una página de ventas es una página web enfocada, construida alrededor de un solo objetivo: lograr que el visitante actúe.</p>
+<p>A diferencia de los sitios web tradicionales, las páginas de ventas eliminan distracciones y guían al visitante hacia:</p>
+<ul class="list">
+<li>Llamar</li>
+<li>Agendar</li>
+<li>Escribir</li>
+<li>Convertirse en prospecto</li>
+</ul>
+<p>Una página. Un propósito. Un solo camino a la conversión.</p>
+<h3>Por qué convierten mejor las páginas de ventas</h3>
+<h4>Diseño enfocado</h4>
+<p>Sin páginas, menús ni distracciones innecesarias.</p>
+<h4>Mensaje claro</h4>
+<p>El visitante entiende de inmediato:</p>
+<ul class="list">
+<li>Qué hace el negocio</li>
+<li>Por qué importa</li>
+<li>Qué hacer a continuación</li>
+</ul>
+<h4>Experiencia móvil primero</h4>
+<p>La mayoría de las búsquedas locales ocurren en el teléfono.</p>
+<h4>Rendimiento rápido</h4>
+<p>Los sitios lentos pierden clientes rápido.</p>
+<h4>Generación de confianza</h4>
+<p>Un diseño profesional, los testimonios y la estructura generan confianza.</p>
+<h3>Por qué lo programamos todo a la medida</h3>
+<p>Cada página de PymeWebPro se construye a la medida.</p>
+<p>Nada de:</p>
+<ul class="list">
+<li>WordPress</li>
+<li>Wix</li>
+<li>Squarespace</li>
+<li>Plantillas genéricas</li>
+</ul>
+<p>Beneficios:</p>
+<ul class="list">
+<li>Carga más rápida</li>
+<li>Mejor seguridad</li>
+<li>Código más limpio</li>
+<li>Más flexibilidad</li>
+<li>Marca más fuerte</li>
+<li>Menos problemas técnicos</li>
+</ul>
+<p>Esto crea una experiencia premium que destaca de inmediato.</p>
+<h3>Infraestructura y seguridad</h3>
+<p>Cada sitio corre sobre la infraestructura de nivel empresarial de Cloudflare.</p>
+<p>Los beneficios incluyen:</p>
+<ul class="list">
+<li>Cifrado HTTPS</li>
+<li>Protección contra DDoS</li>
+<li>Entrega global por CDN</li>
+<li>Alta disponibilidad</li>
+<li>Rendimiento rápido en todo el mundo</li>
+</ul>
+<p class="callout">Explicación simple:</p>
+<p>Rápido. Seguro. Confiable.</p>
+</section>
+<section class="sec reveal" id="sec5" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">5</span><span>EL ASISTENTE DE VENTAS 24/7</span></h2>
+<h3>Qué es</h3>
+<p>El chatbot de PymeWebPro se construye en la inversión inicial de $400.000 COP, y el mensual de $150.000 COP lo mantiene funcionando. Vive en el sitio web y habla con los visitantes de forma automática 24/7, funciona con Claude de Anthropic y está entrenado específicamente sobre el negocio.</p>
+<p>La IA entiende:</p>
+<ul class="list">
+<li>Servicios</li>
+<li>Precios</li>
+<li>Políticas</li>
+<li>Horarios</li>
+<li>Preguntas frecuentes</li>
+<li>Flujos de agendamiento</li>
+</ul>
+<p>Habla como si fuera el negocio mismo.</p>
+<h3>En qué se diferencia de los chatbots antiguos</h3>
+<p>La mayoría de la gente imagina los viejos bots con guion.</p>
+<p>Esos sistemas:</p>
+<ul class="list">
+<li>Siguen árboles de decisión rígidos</li>
+<li>Fallan cuando se salen del guion</li>
+<li>Frustran a los usuarios</li>
+<li>Se sienten robóticos</li>
+</ul>
+<p>El sistema de PymeWebPro es un asistente de ventas 24/7.</p>
+<p>Este:</p>
+<ul class="list">
+<li>Entiende lenguaje natural</li>
+<li>Mantiene conversaciones reales</li>
+<li>Aprende el contexto del negocio</li>
+<li>Responde de forma inteligente</li>
+<li>Califica prospectos automáticamente</li>
+</ul>
+<p>Se comporta más como un recepcionista capacitado que como un software.</p>
+<h3>Las cuatro funciones principales del asistente</h3>
+<div class="hook"><span class="hook-tag">Recuerda</span><span class="hook-text">Las <b>4 R</b>: Responder &middot; Registrar &middot; Reconocer &middot; Remitir</span></div>
+<h4>1. Responder &middot; contestar preguntas</h4>
+<p>Respuestas instantáneas a cualquier hora.</p>
+<h4>2. Registrar &middot; capturar prospectos</h4>
+<p>Recopila nombres, datos de contacto y consultas.</p>
+<h4>3. Reconocer &middot; calificar prospectos</h4>
+<p>Determina la urgencia, el encaje y la intención.</p>
+<h4>4. Remitir &middot; derivar prospectos</h4>
+<p>Transfiere los prospectos calificados por:</p>
+<ul class="list">
+<li>WhatsApp</li>
+<li>Correo electrónico</li>
+<li>Notificaciones de formulario</li>
+<li>Reservas en el calendario</li>
+</ul>
+</section>
+<section class="sec reveal dark" id="sec6" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">6</span><span>POR QUÉ FUNCIONA EL SISTEMA</span></h2>
+<p class="lead">La página de ventas y el asistente resuelven juntos el mismo problema.</p>
+<p>La página de ventas:</p>
+<ul class="list">
+<li>Capta la atención</li>
+<li>Genera confianza</li>
+<li>Impulsa a la acción</li>
+</ul>
+<p>El asistente:</p>
+<ul class="list">
+<li>Elimina las dudas</li>
+<li>Responde preguntas</li>
+<li>Captura prospectos</li>
+<li>Agenda citas</li>
+</ul>
+<p>La explicación más simple: la página de ventas es la vitrina, y el asistente es el vendedor que nunca se va a casa.</p>
+<p>Una página de ventas sin seguimiento deja escapar prospectos. Un asistente sin tráfico no tiene con quién hablar. El sistema funciona porque las dos piezas se complementan.</p>
+</section>
+<section class="sec reveal" id="sec7" style="--acc:#0A0A0B"><h2 class="sec-title"><span class="num">7</span><span>INDUSTRIAS A LAS QUE APUNTAMOS</span></h2>
+<p class="lead">Los mejores prospectos son pequeños negocios colombianos donde un mensaje o una llamada perdida equivale directamente a ingresos perdidos.</p>
+<h3>Servicios locales y oficios</h3>
+<p>Peluquerías, barberías, talleres, reparaciones a domicilio, contratistas. El dueño está ocupado con un cliente y pierde al siguiente.</p>
+<h3>Salud y odontología</h3>
+<p>Consultorios y clínicas odontológicas. Las preguntas y solicitudes de cita fuera de horario son valiosas y fáciles de perder.</p>
+<h3>Restaurantes y tiendas</h3>
+<p>Restaurantes, cafés y tiendas pequeñas que reciben pedidos, reservas y preguntas por WhatsApp.</p>
+<h3>Profesionales independientes</h3>
+<p>Abogados, contadores, agentes inmobiliarios, consultores. El prospecto quiere una respuesta rápida y profesional.</p>
+<h3>Lista del prospecto ideal</h3>
+<p>Los prospectos fuertes suelen:</p>
+<ul class="list">
+<li>Tener un sitio débil, o solo un Instagram</li>
+<li>Vender sobre todo por WhatsApp</li>
+<li>Perder mensajes fuera de horario y los fines de semana</li>
+<li>Depender de prospectos entrantes</li>
+<li>Necesitar citas, cotizaciones o reservas</li>
+</ul>
+<p class="callout">Regla simple:</p>
+<p>Si perder un mensaje les cuesta dinero, son un prospecto fuerte.</p>
+</section>
+<section class="sec reveal dark" id="sec8" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">8</span><span>CÓMO VENDER PYMEWEBPRO</span></h2>
+<h3>La mentalidad correcta</h3>
+<p>No vendas tecnología.</p>
+<p>Vende resultados:</p>
+<ul class="list">
+<li>Más clientes</li>
+<li>Respuesta más rápida</li>
+<li>Mejor conversión</li>
+<li>Menos prospectos perdidos</li>
+</ul>
+<h3>El flujo de venta</h3>
+<div class="hook"><span class="hook-tag">Recuerda</span><span class="hook-text">Las <b>5 P</b>: Problema &middot; Panorama &middot; Prueba &middot; Precio &middot; Presión</span></div>
+<h4>1. Problema &middot; identifícalo</h4>
+<p>Llamadas perdidas. Respuesta lenta. Sitios web débiles.</p>
+<h4>2. Panorama &middot; explica el sistema</h4>
+<p>Página de ventas más asistente de ventas 24/7.</p>
+<h4>3. Prueba &middot; haz la demostración</h4>
+<p>Siempre muestra el producto en vivo.</p>
+<h4>4. Precio &middot; explícalo</h4>
+<p>Usa la comparación de valor frente a las agencias.</p>
+<h4>5. Presión &middot; cierra con bajo riesgo</h4>
+<p>Garantía de 30 días con devolución de dinero. Mes a mes, sin permanencia. En línea en 48 horas.</p>
+</section>
+<section class="sec reveal" id="sec9" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">9</span><span>PREGUNTAS DE DESCUBRIMIENTO</span></h2>
+<p class="lead">Vende menos, pregunta más. El prospecto debe describir el problema antes de que tú describas la solución.</p>
+<p>Empieza con preguntas, luego quédate callado y déjalo hablar. Sus propias palabras se vuelven tu argumento.</p>
+<div class="disc-grid">
+<div class="disc-card"><div class="dc-h">Situación <span>dónde está hoy</span></div><ul>
+<li>¿Cómo te encuentran normalmente los clientes?</li>
+<li>¿Qué hace tu sitio web por ti hoy?</li>
+<li>¿Quién responde cuando un cliente llama o escribe?</li></ul></div>
+<div class="disc-card"><div class="dc-h">Dolor <span>qué se está fugando</span></div><ul>
+<li>¿Qué pasa cuando una llamada queda sin responder?</li>
+<li>¿Cuántas consultas llegan fuera de horario o el fin de semana?</li>
+<li>Cuando estás en un trabajo, ¿quién atiende el siguiente prospecto?</li></ul></div>
+<div class="disc-card"><div class="dc-h">Impacto <span>cuánto le cuesta</span></div><ul>
+<li>¿Cuánto vale un cliente nuevo para ti?</li>
+<li>Si agendaras unos cuantos trabajos más al mes, ¿qué cambiaría?</li>
+<li>¿Cuánto tiempo pierdes respondiendo las mismas preguntas?</li></ul></div>
+</div>
+<div class="callout">Escucha el número. En el momento en que te dicen cuánto vale un cliente, ya tienes la frase con la que vas a cerrar después.</div>
+<p>Cuando ya nombraron el problema, pasa directo a la demostración: <span class="quote-inline">"Déjame mostrarte exactamente cómo lo resolveríamos."</span></p>
+</section>
+<section class="sec reveal dark" id="sec10" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">10</span><span>CÓMO HACER LA DEMOSTRACIÓN</span></h2>
+<p class="lead">La demostración es tu mejor cierre. Nada de lo que digas supera verla funcionar.</p>
+<div class="demo-steps">
+<div class="demo-step"><div class="ds-n">1</div><div class="ds-t">Prepáralo</div><div class="ds-d">"La mayoría de los chatbots son inútiles. Este es distinto. Pregúntale lo que preguntaría un cliente real."</div></div>
+<div class="demo-step"><div class="ds-n">2</div><div class="ds-t">Pásale el teléfono</div><div class="ds-d">Deja que escriba sus propias preguntas. Tiene que ser con sus manos, no las tuyas.</div></div>
+<div class="demo-step"><div class="ds-n">3</div><div class="ds-t">Quédate callado</div><div class="ds-d">Deja que la sorpresa aterrice. El silencio después de la respuesta está vendiendo por ti.</div></div>
+</div>
+<p>Usa el chatbot que está en vivo en nuestro propio sitio. Pásale el teléfono y deja que lo pruebe ahí mismo:</p>
+<div class="fc-demos"><a href="https://pymewebpro.com" target="_blank" rel="noopener">Prueba el chatbot en pymewebpro.com</a></div>
+<div class="svn">
+<div class="svn-card svn-no"><div class="svn-h">✕ No digas</div><p>"Usa procesamiento de lenguaje natural avanzado y un modelo de lenguaje grande."</p></div>
+<div class="svn-card svn-yes"><div class="svn-h">✓ Mejor di</div><p>"Pregúntale si abren un día festivo. Dale, trata de hacerlo fallar."</p></div>
+</div>
+<p>La mayoría espera que falle porque piensa en los chatbots antiguos. No va a fallar, y ese momento cambia la conversación.</p>
+</section>
+<section class="sec reveal" id="sec11" style="--acc:#0A0A0B"><h2 class="sec-title"><span class="num">11</span><span>FRASES DE ALTO IMPACTO</span></h2>
+<div class="quote-card"><div class="q-label">Apertura en frío</div><div class="q-text">"Cuando alguien visita tu sitio web esta noche con una pregunta, ¿quién le responde?"</div></div>
+<div class="quote-card"><div class="q-label">Frase de una línea</div><div class="q-text">"Cada mensaje sin responder es un cliente perdido. Lo resolvemos con una página de ventas y un asistente 24/7 que responde, califica y agenda, incluso fuera de horario."</div></div>
+<div class="quote-card"><div class="q-label">Sobre la IA</div><div class="q-text">"Esto no es un chatbot antiguo. Es un sistema de IA entrenado específicamente sobre tu negocio."</div></div>
+<div class="quote-card"><div class="q-label">Sobre la infraestructura</div><div class="q-text">"Tu sitio corre sobre infraestructura de nivel empresarial que usan algunas de las empresas más grandes del mundo."</div></div>
+<div class="quote-card"><div class="q-label">Sobre el precio</div><div class="q-text">"Una página de ventas a la medida que se paga con unos pocos clientes nuevos, no un contrato de agencia."</div></div>
+</section>
+<section class="sec reveal dark" id="sec12" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">12</span><span>OBJECIONES Y RESPUESTAS</span></h2>
+<p class="lead">Una objeción casi nunca es un rechazo.</p>
+<p>Es el prospecto pidiendo más certeza antes de decidir.</p>
+<p>Nunca discutas. Mantén la calma. Primero dale la razón. Luego replantea.</p>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"Es muy caro."</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>Déjame hacerte una pregunta: ¿cuánto vale un cliente nuevo para ti? ¿Y cuánto valen cuatro o cinco?</p>
+<p>La mayoría de los negocios pierden mucho más dinero por prospectos perdidos del que gastan en marketing. Un trabajo perdido, una consulta perdida o un paciente perdido pueden pagar fácilmente varios meses de este servicio.</p>
+<p>Y recuerda, esto no es solo un sitio web. Es un sistema diseñado para capturar y convertir prospectos automáticamente, incluso fuera de horario, cuando la mayoría de los negocios dejan de responder.</p>
+<div class="mathbox"><div class="mb-h">Haz la cuenta en voz alta</div>
+<table><tr><td>La página de ventas, pago único</td><td>$400.000 COP</td></tr>
+<tr><td>Un cliente nuevo vale, digamos</td><td>$200.000 COP</td></tr>
+<tr><td>Se paga sola con cerca de</td><td>2 clientes</td></tr></table>
+<p class="mb-punch">Dos o tres clientes nuevos y la página ya se pagó. Todo lo demás es ganancia.</p></div>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"Ya tengo un sitio web."</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>Claro, pero esto no es realmente eso. La mayoría de los sitios web son básicamente folletos digitales. Dan información, quizá muestran algunas fotos, quizá listan servicios, pero no convierten activamente a los visitantes en prospectos.</p>
+<p>Lo que construimos es diferente. Es una página de ventas de alta conversión junto con un asistente de ventas 24/7 que interactúa con los visitantes, responde preguntas, califica prospectos y los impulsa a actuar.</p>
+<p>La meta no es solo tener un sitio web. Es generar más clientes del tráfico que ya recibes.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"No necesito un chatbot."</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>Seguramente estás pensando en los viejos bots que todos odian. Los sistemas antiguos eran con guion, robóticos y frustrantes. Marca 1. Escribe una palabra clave. Recibe una respuesta enlatada.</p>
+<p>Esto es completamente diferente. Es una IA conversacional moderna entrenada específicamente sobre tu negocio. Entiende lenguaje natural, responde de forma inteligente y habla más como un recepcionista real que como un software. La mayoría no se da cuenta de lo avanzados que se han vuelto estos sistemas hasta que prueban uno.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"La IA se siente impersonal."</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>En realidad, resuelve la parte más impersonal del servicio al cliente: ignorar a la gente. La mayoría de los clientes solo quiere respuestas rápidas y atención.</p>
+<p>La IA se encarga de:</p>
+<ul class="list">
+<li>Las preguntas iniciales</li>
+<li>La captura del prospecto</li>
+<li>La calificación</li>
+<li>El agendamiento</li>
+</ul>
+<p>Luego te entrega el prospecto directamente cuando la persona está lista. Hace el trabajo repetitivo del inicio para que dediques tu tiempo a hablar con compradores serios en lugar de perseguir prospectos fríos.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"¿Por qué no contratar un recepcionista?"</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>Un recepcionista trabaja en horario de oficina. Esto funciona 24/7. Un recepcionista atiende una conversación a la vez. La IA atiende conversaciones ilimitadas al mismo tiempo.</p>
+<p>Y a diferencia de un recepcionista, la IA nunca:</p>
+<ul class="list">
+<li>Pierde un mensaje</li>
+<li>Toma un día por enfermedad</li>
+<li>Se va a casa</li>
+<li>Olvida información</li>
+<li>Renuncia</li>
+</ul>
+<p>Esto no reemplaza a las personas. Es asegurarse de que nunca se pierda una oportunidad.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"¿Y si no funciona?"</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>Justo por eso hay una garantía de devolución de dinero de 30 días. Si el sistema no rinde como prometimos, el riesgo es nuestro, no tuyo.</p>
+<p>La mayoría de las agencias no ofrece eso porque no puede respaldar su producto con confianza. Nosotros sí.</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"Quiero pensarlo."</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>Por supuesto. Normalmente, cuando alguien dice eso, hay algo específico que no tiene claro. ¿Qué necesitarías para sentirte seguro de avanzar?</p>
+</div></div>
+<div class="obj-card"><div class="obj-q"><span class="obj-tag">Dicen</span>"No tengo tiempo para esto."</div><div class="obj-a"><span class="obj-you">Respondes</span>
+<p>Esa es justamente la razón por la que la mayoría de los negocios lo necesita. Nos das la información del negocio una vez y nosotros nos encargamos de la construcción, la configuración y el lanzamiento. Después, la IA empieza a atender las consultas automáticamente, así dedicas menos tiempo a perseguir prospectos y a responder preguntas repetitivas.</p>
+</div></div>
+</section>
+<section class="sec reveal" id="sec13" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">13</span><span>LO QUE TODO EMBAJADOR DEBE SABER</span></h2>
+<p class="lead">Debes saber:</p>
+<ul class="list">
+<li>La oferta</li>
+<li>El precio</li>
+<li>El recorrido del comprador</li>
+<li>El propósito de la página de ventas</li>
+<li>El papel del asistente</li>
+<li>El flujo de venta</li>
+<li>Las objeciones</li>
+<li>La demostración en vivo</li>
+</ul>
+<p>La confianza viene de la repetición.</p>
+<p>Aprende el material hasta que te salga automático.</p>
+</section>
+<section class="sec reveal dark" id="sec14" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">14</span><span>GLOSARIO</span></h2>
+<div class="gloss-grid">
+<div class="gloss-item"><div class="gloss-term">Página de ventas</div><div class="gloss-def">Una página web enfocada, diseñada para convertir visitantes en prospectos.</div></div>
+<div class="gloss-item"><div class="gloss-term">Conversión</div><div class="gloss-def">Cuando un visitante actúa y se convierte en una oportunidad de negocio.</div></div>
+<div class="gloss-item"><div class="gloss-term">CTA</div><div class="gloss-def">Una llamada a la acción que guía al visitante al siguiente paso.</div></div>
+<div class="gloss-item"><div class="gloss-term">Prospecto</div><div class="gloss-def">Un cliente potencial que ha mostrado interés.</div></div>
+<div class="gloss-item"><div class="gloss-term">Calificación</div><div class="gloss-def">Determinar si un prospecto encaja bien.</div></div>
+<div class="gloss-item"><div class="gloss-term">Asistente de ventas (IA)</div><div class="gloss-def">Una IA conversacional moderna capaz de interactuar con lenguaje natural de forma inteligente.</div></div>
+<div class="gloss-item"><div class="gloss-term">CDN</div><div class="gloss-def">Una red de entrega de contenido global que mejora la velocidad y el rendimiento.</div></div>
+<div class="gloss-item"><div class="gloss-term">Disponibilidad (uptime)</div><div class="gloss-def">El porcentaje de tiempo que un sitio permanece en línea y accesible.</div></div>
+<div class="gloss-item"><div class="gloss-term">Protección DDoS</div><div class="gloss-def">Sistemas de seguridad diseñados para prevenir ataques de tráfico malicioso.</div></div>
+<div class="gloss-item"><div class="gloss-term">Derivación</div><div class="gloss-def">Transferir un prospecto calificado de la IA a una persona.</div></div>
+<div class="gloss-item"><div class="gloss-term">Escalamiento</div><div class="gloss-def">Enviar situaciones urgentes o complejas a una persona real de inmediato.</div></div>
+<div class="gloss-item"><div class="gloss-term">Wompi</div><div class="gloss-def">La pasarela de pago colombiana (tarjetas, PSE, transferencia) con la que se cobra el anticipo en COP.</div></div>
+<div class="gloss-item"><div class="gloss-term">Ficha de Google</div><div class="gloss-def">La ficha gratuita de Google y Maps que configuramos y mantenemos actualizada.</div></div>
+</div>
+</section>
+<section class="sec reveal" id="selfcheck" style="--acc:#FF5C2E"><h2 class="sec-title"><span class="num">?</span><span>PONTE A PRUEBA</span></h2>
+<p class="flip-intro">Toca una tarjeta para girarla. Si puedes responder antes de girarla, ya lo sabes. Repásalas hasta que cada una te salga automática.</p>
+<div class="flip-grid">
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">¿Qué vende PymeWebPro en realidad?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">Sitios web no. Más clientes agendados: respuesta más rápida, mejor conversión, menos prospectos perdidos. Una página de ventas más un asistente 24/7.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">¿Precio y condiciones?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">$400.000 COP de inversión inicial (la página y el chatbot), luego $150.000 COP al mes para mantenerlo. 30% de anticipo, 70% al lanzar. En línea en unas 48 horas. Garantía de 30 días.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">¿Las 5 P del flujo de venta?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">Problema, Panorama, Prueba, Precio, Presión.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">¿Las 4 R que hace la IA?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">Responder, Registrar, Reconocer, Remitir. Contesta, captura, califica y deriva.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">"Es muy caro." ¿Qué haces?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">Pregunta cuánto vale un cliente y deja que haga la cuenta. Es un sistema, no solo un sitio web, y sigue trabajando fuera de horario, cuando la mayoría deja de responder.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">"Ya tengo un sitio web." ¿Qué haces?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">La mayoría son folletos, informan. Esto convierte: interactúa, califica y agenda. La meta es más clientes del tráfico que ya tienes.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">¿Por qué una página de ventas y no un sitio grande?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">Un sitio grande informa. Una página de ventas convierte. Una página, una acción, hecha para volver clientes a los visitantes.</div></div></div></div>
+<div class="flip"><div class="flip-in"><div class="flip-f"><div class="flip-q">Pregunta</div><div class="flip-t">¿La herramienta más fuerte de toda la venta?</div><div class="flip-hint">toca para girar</div></div><div class="flip-b"><div class="flip-a">Respuesta</div><div class="flip-t">La demostración en vivo. Pásale el teléfono, deja que pruebe la IA y quédate callado.</div></div></div></div>
+</div>
+</section>
+</main>
+<footer>
+  <span class="l-en">PymeWebPro Sales Manual &middot; Confidential, Internal Use Only</span><span class="l-es">Manual de Ventas de PymeWebPro &middot; Confidencial, Solo para Uso Interno</span><br>
+  <a class="totop l-en" href="#top">Back to top &#x2191;</a><a class="totop l-es" href="#top">Volver arriba &#x2191;</a>
+</footer>
+<script>
+(function(){
+  var root=document.documentElement;
+  function set(l){root.setAttribute('data-lang',l);
+    document.querySelectorAll('.langbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l);});
+    document.querySelectorAll('main.l-'+l+' .reveal').forEach(function(el){el.classList.add('in');});}
+  document.querySelectorAll('.langbtn').forEach(function(b){b.addEventListener('click',function(){set(b.getAttribute('data-l'));});});
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+  } else { document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); }
+  var prog=document.getElementById('prog');
+  function upd(){var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;prog.style.width=(m>0?(h.scrollTop/m*100):0)+'%';}
+  window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();
+})();
+</script>
+<script>
+(function(){
+  function lang(){return document.documentElement.getAttribute('data-lang')||'en';}
+  function label(){return lang()==='es'?'Copiar':'Copy';}
+  function copy(t,btn){
+    var doneTxt=lang()==='es'?'Copiado':'Copied';
+    function ok(){btn.textContent=doneTxt;btn.classList.add('done');setTimeout(function(){btn.textContent=label();btn.classList.remove('done');},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,function(){fallback(t);ok();});}
+    else{fallback(t);ok();}
+  }
+  function fallback(t){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
+  function strip(s){return s.replace(/^[\s"“”]+|[\s"“”]+$/g,'');}
+  document.querySelectorAll('.quote-card').forEach(function(card){
+    card.classList.add('copywrap');
+    var b=document.createElement('button');b.className='copybtn';b.type='button';b.textContent=label();
+    b.addEventListener('click',function(e){e.stopPropagation();var q=card.querySelector('.q-text');copy(strip(q?q.textContent:card.textContent),b);});
+    card.appendChild(b);
+  });
+  document.querySelectorAll('.obj-card .obj-a').forEach(function(a){
+    a.classList.add('copywrap');
+    var b=document.createElement('button');b.className='copybtn';b.type='button';b.textContent=label();
+    b.addEventListener('click',function(e){e.stopPropagation();var t=[];a.querySelectorAll('p').forEach(function(p){t.push(p.textContent.trim());});copy(t.join('\n\n'),b);});
+    a.appendChild(b);
+  });
+  function relabel(){document.querySelectorAll('.copybtn').forEach(function(b){if(!b.classList.contains('done'))b.textContent=label();});}
+  document.querySelectorAll('.langbtn').forEach(function(x){x.addEventListener('click',function(){setTimeout(relabel,0);});});
+  document.querySelectorAll('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('flipped');});});
+})();
+</script>
+</body>
+</html>
