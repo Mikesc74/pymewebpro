@@ -20,6 +20,9 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 .topbar .search{background:rgba(242,233,213,.12);border:1px solid rgba(242,233,213,.28);color:var(--paper);border-radius:7px;padding:.42rem .7rem;font:inherit;font-size:.85rem;min-width:220px;margin-left:1rem}
 .topbar .search::placeholder{color:rgba(242,233,213,.55)}
 .topbar .search:focus{outline:none;border-color:var(--accent)}
+.topbar .owner-filter{background:rgba(242,233,213,.12);border:1px solid rgba(242,233,213,.28);color:var(--paper);border-radius:7px;padding:.42rem .6rem;font:inherit;font-size:.82rem;cursor:pointer}
+.topbar .owner-filter:focus{outline:none;border-color:var(--accent)}
+.topbar .owner-filter option{color:var(--ink)}
 @media(max-width:680px){.topbar .search{min-width:130px;margin-left:.5rem}}
 .wrap{max-width:1680px;margin:0 auto;padding:1.5rem 1.4rem 5rem}
 .intro{color:var(--ink2);margin:.2rem 0 1.4rem;font-size:.95rem}
@@ -35,7 +38,16 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 .col .sub{color:var(--mute);font-size:.8rem;margin:0 0 .9rem}
 .col .count{background:var(--accent);color:#fff;border-radius:999px;font-size:.72rem;padding:.1rem .5rem;font-weight:700}
 .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.5rem .6rem;margin:0 0 .5rem;box-shadow:0 1px 0 rgba(26,22,18,.03);overflow:hidden;overflow-wrap:break-word;cursor:pointer}
-.card .card-del{position:absolute;top:.18rem;right:.22rem;width:1.15rem;height:1.15rem;line-height:1;padding:0;border:0;border-radius:50%;background:transparent;color:var(--mute);font-size:1rem;font-weight:700;cursor:pointer;opacity:0;transition:opacity .12s,background .12s,color .12s}
+.card .card-del{position:absolute;top:.18rem;left:.22rem;width:1.15rem;height:1.15rem;line-height:1;padding:0;border:0;border-radius:50%;background:transparent;color:var(--mute);font-size:1rem;font-weight:700;cursor:pointer;opacity:0;transition:opacity .12s,background .12s,color .12s;z-index:3}
+/* Owner badge · always visible, top-right. Identity is carried by the TEXT
+   (first name + initials), never by colour alone. The colour tint is decorative
+   only, so this stays readable for red-green colour blindness. */
+.card .owner-badge{position:absolute;top:.28rem;right:.34rem;display:inline-flex;align-items:center;gap:.28rem;max-width:62%;padding:.12rem .42rem .12rem .14rem;border-radius:999px;background:rgba(210,74,29,.12);border:1px solid rgba(210,74,29,.28);font-size:.66rem;font-weight:700;line-height:1;color:var(--ink);z-index:2}
+.card .owner-badge .ob-ini{display:inline-flex;align-items:center;justify-content:center;min-width:1.05rem;height:1.05rem;padding:0 .15rem;border-radius:50%;background:var(--accent);color:#fff;font-size:.6rem;font-weight:800}
+.card .owner-badge .ob-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .owner-badge.unassigned{background:rgba(26,22,18,.05);border-color:rgba(26,22,18,.18);border-style:dashed;color:var(--mute);font-weight:600}
+.card .owner-badge.unassigned .ob-ini{background:rgba(26,22,18,.28)}
+.card .biz{padding-right:4.4rem}
 .card:hover .card-del{opacity:.7}
 .card .card-del:hover{opacity:1;background:#c0392b;color:#fff}
 .card .card-del:focus-visible{opacity:1;outline:2px solid #c0392b;outline-offset:1px}
@@ -102,6 +114,11 @@ button.act.danger:hover{background:#c0392b;color:#fff;border-color:#c0392b}
 .d-next{font-size:.92rem;margin:.4rem 0 .8rem;background:var(--paper2);border-radius:8px;padding:.55rem .75rem;display:flex;align-items:center;gap:.4rem}
 .d-next .d-nx-lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:700}
 .d-next b{color:var(--ink)}
+.d-owner{font-size:.9rem;margin:0 0 .8rem;background:var(--paper2);border-radius:8px;padding:.5rem .75rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.d-owner .d-ow-lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:700}
+.d-owner b{color:var(--ink)}
+.d-owner .d-ow-unassigned{color:var(--mute);font-style:italic}
+.d-owner select{font:inherit;padding:.32rem .5rem;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
 .d-mock{font-size:.84rem;margin:.6rem 0;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
 .d-mock .d-mlbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}
 .d-mock a{color:var(--accent2);word-break:break-all;flex:1;min-width:0}
@@ -185,17 +202,77 @@ button.act.danger:hover{background:#c0392b;color:#fff;border-color:#c0392b}
 .pain-grid label:hover{color:var(--ink)}
 .pain-grid input[type=checkbox]{width:auto;margin:0;flex:none}
 @media(max-width:480px){.pain-grid{grid-template-columns:1fr}}
+/* Manual image upload zone for the lead-detail modal · drag-and-drop +
+   click-to-browse. Pairs with the carousel; lets Mike/Santi paste IG
+   screenshots when the scraper fails. */
+.upbox{background:var(--paper2);border-radius:8px;padding:.6rem .8rem;margin:0 0 .8rem}
+.upbox-hdr{display:flex;align-items:center;gap:.5rem;margin:0 0 .4rem}
+.upbox-hdr .upbox-lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:700;flex:1}
+.upbox-hdr .upbox-count{font-size:.7rem;color:var(--accent2);font-weight:700}
+.updrop{border:2px dashed var(--line);border-radius:8px;padding:.7rem;background:#fff;text-align:center;color:var(--mute);font-size:.85rem;cursor:pointer;transition:border-color .15s,background .15s}
+.updrop:hover,.updrop.dragover{border-color:var(--accent);background:#FFE9DF;color:var(--accent2)}
+.upgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:.4rem;margin-top:.5rem}
+.upgrid .upthumb{position:relative;padding-top:100%;border-radius:6px;background:#E8DFC8 center/cover no-repeat;border:1px solid var(--line)}
+.upgrid .upthumb .upx{position:absolute;top:.15rem;right:.15rem;width:18px;height:18px;border-radius:50%;border:0;background:rgba(26,22,18,.7);color:#fff;font-size:.7rem;line-height:1;padding:0;cursor:pointer;opacity:0;transition:opacity .15s}
+.upgrid .upthumb:hover .upx{opacity:1}
+.upgrid .upthumb .upx:hover{background:var(--red)}
 .movebar{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 0;align-items:center}
 .movebar .mlbl{font-size:.72rem;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-right:.2rem}
 .movebar .msep{flex:1}
+/* Team stats view · full-width overlay over the board */
+#team-overlay{position:fixed;inset:0;z-index:40;background:var(--paper);overflow-y:auto;padding:1.2rem 1.4rem 3rem}
+.team-head{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin:0 0 1rem}
+.team-head h2{margin:0;font-size:1.25rem;font-weight:700}
+.team-head .team-back{background:var(--ink);color:var(--paper);border:none;border-radius:7px;padding:.45rem .9rem;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit}
+.team-head .team-back .tb-ic{font-weight:800;margin-right:.35rem}
+.team-sub{color:var(--ink2);font-size:.9rem;margin:0 0 1rem}
+.team-wrap{max-width:1040px}
+.team-tbl{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.9rem}
+.team-tbl th,.team-tbl td{padding:.6rem .8rem;text-align:right;border-bottom:1px solid var(--line)}
+.team-tbl th:first-child,.team-tbl td:first-child{text-align:left}
+.team-tbl thead th{background:var(--paper2);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);border-bottom:2px solid var(--line)}
+.team-tbl tbody tr:last-child td{border-bottom:none}
+.team-tbl tbody tr.team-unassigned td:first-child{color:var(--mute);font-style:italic}
+.team-tbl td .team-num{font-variant-numeric:tabular-nums;font-weight:600}
+.team-tbl td .team-pct{color:var(--ink2);font-size:.78rem;margin-left:.3rem}
+.team-foot{color:var(--mute);font-size:.78rem;margin:.7rem 0 0;max-width:1040px}
+.team-head-spacer{flex:1}
+.team-add{background:var(--accent,#D24A1D);color:#fff;border:none;border-radius:7px;padding:.45rem .9rem;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit}
+.team-add:hover{filter:brightness(.94)}
+.team-edit-cell{text-align:right}
+.team-edit-btn{background:var(--card,#fff);color:var(--ink,#1A1612);border:1px solid var(--line,rgba(26,22,18,.16));border-radius:6px;padding:.25rem .65rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit}
+.team-edit-btn:hover{background:var(--paper2,#E8DFC8)}
+.team-form{max-width:1040px;margin:0 0 1.1rem;background:var(--card,#fff);border:1px solid var(--line,rgba(26,22,18,.16));border-radius:12px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.7rem}
+.team-form .tf-head{font-weight:700;font-size:1rem;margin:0 0 .2rem}
+.team-form .tf-field{display:flex;flex-direction:column;gap:.25rem}
+.team-form .tf-field label{font-size:.78rem;font-weight:600;color:var(--ink2,#3A2F26)}
+.team-form .tf-req{font-weight:600;color:var(--accent,#D24A1D);text-transform:uppercase;letter-spacing:.04em;font-size:.7rem;margin-left:.3rem}
+.team-form input[type=text],.team-form select{padding:.5rem .6rem;border:1px solid var(--line,rgba(26,22,18,.16));border-radius:7px;font-family:inherit;font-size:.9rem;background:var(--paper,#F2E9D5);color:var(--ink,#1A1612)}
+.team-form input[disabled]{opacity:.6;cursor:not-allowed}
+.team-form .tf-active label{display:flex;align-items:center;gap:.4rem;font-weight:600}
+.team-form .tf-note{margin:.2rem 0 0;font-size:.78rem;color:var(--ink2,#3A2F26)}
+.team-form .tf-actions{display:flex;gap:.55rem;margin-top:.3rem}
+.team-form .tf-save{background:var(--accent,#D24A1D);color:#fff;border:none;border-radius:7px;padding:.5rem 1rem;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit}
+.team-form .tf-save:disabled{opacity:.6;cursor:not-allowed}
+.team-form .tf-cancel{background:transparent;color:var(--ink2,#3A2F26);border:1px solid var(--line,rgba(26,22,18,.16));border-radius:7px;padding:.5rem 1rem;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit}
+.team-form .tf-cancel:hover{background:var(--paper2,#E8DFC8)}
 </style>
 </head>
 <body>
 <div class="topbar">
   <span class="brand">Pyme<em>WebPro</em><b>Today</b></span>
   <input id="search" class="search" type="search" placeholder="Search leads..." autocomplete="off">
+  <select id="owner-filter" class="owner-filter" aria-label="Filter by owner">
+    <option value="">All owners</option>
+    <option value="santi">Santiago</option>
+    <option value="cristian">Cristian</option>
+    <option value="camila">Camila</option>
+    <option value="mike">Mike</option>
+    <option value="__none__">Unassigned</option>
+  </select>
   <span class="sp"></span>
   <a href="/recursos" target="_blank" rel="noopener" style="text-transform:uppercase;letter-spacing:.04em;font-weight:600">Sales manual</a>
+  <a href="#" id="btn-team" style="text-transform:uppercase;letter-spacing:.04em;font-weight:600">Team</a>
   <button class="add" id="btn-add">+ Add prospect</button>
 </div>
 <div class="wrap">
@@ -203,6 +280,7 @@ button.act.danger:hover{background:#c0392b;color:#fff;border-color:#c0392b}
   <div id="app"><div class="loading">Loading your day...</div></div>
 </div>
 <div id="modal-root"></div>
+<div id="team-overlay" hidden></div>
 <div id="toast"></div>
 <script>
 "use strict";
@@ -210,6 +288,25 @@ var CAL_LINK = "https://cal.com/medellinguide/intro"; // TODO: switch to Santi's
 var DEPOSITO = "$120.000 COP (30%)";
 var DEMO_BASE = "https://mockups.pymewebpro.com";
 var LEADS = [], CADENCE = [], BY_ID = {}, ACTS_BY_LEAD = {}, SEARCH = '', DEALS_BY_LEAD = {};
+var OWNER_FILTER = '';   // '' = all, '__none__' = unassigned, else a handle
+var IS_ADMIN = false, ME_HANDLE = '';   // set once from /api/admin/crm/whoami
+// Sales roster · DB-driven from the salespeople table (GET /api/admin/crm/
+// salespeople). ROSTER is the raw array of rows; ROSTER_BY is a handle -> row
+// map. Only admins may reassign owners or edit the roster. Loaded once on
+// startup by loadRoster(). The legacy 'santiago' alias maps to 'santi'.
+var ROSTER = [], ROSTER_BY = {};
+function _ownerKey(o){ var s=String(o==null?'':o).toLowerCase().trim(); if(s==='santiago') return 'santi'; return s; }
+async function loadRoster(){
+  try {
+    var r = await api('/api/admin/crm/salespeople');
+    ROSTER = (r && r.rows) || [];
+  } catch(e){ ROSTER = []; }
+  ROSTER_BY = {};
+  ROSTER.forEach(function(row){ if(row && row.handle) ROSTER_BY[row.handle] = row; });
+}
+function salesName(o){ var k=_ownerKey(o); if(!k||k==='system'||k==='ai') return ''; if(ROSTER_BY[k] && ROSTER_BY[k].full_name) return ROSTER_BY[k].full_name; return k.charAt(0).toUpperCase()+k.slice(1); }
+function salesFirst(o){ var k=_ownerKey(o); if(!k||k==='system'||k==='ai') return ''; if(ROSTER_BY[k] && (ROSTER_BY[k].first_name || ROSTER_BY[k].full_name)) return ROSTER_BY[k].first_name || String(ROSTER_BY[k].full_name).split(/\s+/)[0]; return k.charAt(0).toUpperCase()+k.slice(1); }
+function salesInitials(o){ var n=salesName(o); if(!n) return ''; var parts=n.split(/\s+/).filter(Boolean); if(parts.length>=2) return (parts[0].charAt(0)+parts[1].charAt(0)).toUpperCase(); return n.slice(0,2).toUpperCase(); }
 // No à la carte add-ons anymore (2026-05-25). The page is one fixed price
 // ($400.000) and the extras (showcase, catalog, bilingual, 24/7 assistant) live
 // inside the monthly plans, not in the one-time proposal. Kept as an empty
@@ -277,7 +374,17 @@ async function api(path, opts){
   return data;
 }
 
+var _whoamiDone = false;
+async function loadWhoami(){
+  if(_whoamiDone) return;
+  _whoamiDone = true;
+  try { var w = await api('/api/admin/crm/whoami'); IS_ADMIN = !!(w && w.is_admin); ME_HANDLE = (w && w.handle) || ''; }
+  catch(e){ IS_ADMIN = false; ME_HANDLE = ''; }
+}
+
 async function loadAll(){
+  await loadWhoami();
+  await loadRoster();
   var grid;
   try {
     grid = await api('/api/admin/crm/grid');
@@ -318,8 +425,14 @@ function inFollow(l){
 function matchSearch(l){
   if(!SEARCH) return true;
   var q = SEARCH.toLowerCase();
-  var hay = [l.business_name,l.name,l.category,l.city,l.email,l.instagram,l.whatsapp,l.phone,l.current_site].filter(Boolean).join(' ').toLowerCase();
+  var hay = [l.business_name,l.name,l.category,l.city,l.email,l.instagram,l.whatsapp,l.phone,l.current_site,l.owner,salesName(l.owner)].filter(Boolean).join(' ').toLowerCase();
   return hay.indexOf(q) !== -1;
+}
+function matchOwner(l){
+  if(!OWNER_FILTER) return true;
+  var o = _ownerKey(l.owner);
+  if(OWNER_FILTER === '__none__') return !o || o==='system' || o==='ai';
+  return o === OWNER_FILTER;
 }
 function colOf(l){
   if(isClosed(l)) return 'closed';
@@ -574,12 +687,21 @@ function openDetail(lead){
   else if(lead.mockup_status === 'ready'){ mockGenLabel = 'Regenerate mockup'; mockGenSub = 'Mockup ready below. Regenerate if data changed.'; }
   else if(lead.mockup_status === 'needs_review'){ mockGenLabel = 'Regenerate (thin data)'; mockGenSub = 'Built with limited scrape data. Add IG/site to the lead first for better results.'; }
   var mockGenBlock = '<div style="background:var(--paper2);border-radius:8px;padding:.6rem .8rem;margin:0 0 .8rem"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><button class="act primary" data-d="mockbuild"'+(lead.mockup_status==='generating'?' disabled':'')+'>'+mockGenLabel+'</button><span style="flex:1;font-size:.78rem;color:var(--mute)">'+mockGenSub+'</span></div></div>';
+  // Manual image upload zone · drag-and-drop or click-to-browse. Existing
+  // uploads load via a separate fetch after the modal mounts.
+  var upBox = '<div class="upbox" data-d="upbox">'
+    + '<div class="upbox-hdr"><span class="upbox-lbl">Mockup images · manual upload</span><span class="upbox-count" data-d="upcount"></span></div>'
+    + '<label class="updrop" data-d="updrop"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple style="display:none" data-d="upinput">'
+    + 'Drop Instagram screenshots here, or click to choose files. PNG / JPG / WEBP up to 8MB each.'
+    + '</label>'
+    + '<div class="upgrid" data-d="upgrid"></div>'
+    + '</div>';
   var mockBlock = showMock
     ? '<div class="d-mock"><span class="d-mlbl">Mockup</span><a href="'+esc(murl)+'?preview=1" target="_blank" rel="noopener">'+esc(murl)+'</a><button class="act ghost" data-d="copymock">Copy link</button></div>'
       + '<div class="d-lang"><span class="d-mlbl">Version</span><button class="act'+(lead.demo_lang==='en'?'':' primary')+'" data-lang="es">Local · Spanish</button><button class="act'+(lead.demo_lang==='en'?' primary':'')+'" data-lang="en">English (for expats)</button></div>'
     : '';
-  // Splice the generation row in front of the link row.
-  mockBlock = mockGenBlock + mockBlock;
+  // Splice the generation + upload rows in front of the link row.
+  mockBlock = mockGenBlock + upBox + mockBlock;
 
   // Pitch · hide entirely if it contains stale pricing ($390k/$117k/$273k from
   // before the 2026-05 single-product pricing change). Otherwise show behind a
@@ -605,6 +727,7 @@ function openDetail(lead){
     + '<div class="mb">'
     + detailChips(lead)
     + '<div class="d-meta">'+esc(touchLine(lead))+'</div>'
+    + ownerRowHTML(lead)
     + contactRow(lead)
     + mockBlock
     + '<div class="d-next"><span class="d-nx-lbl">Next step</span><b>'+esc(nextStep(lead))+'</b></div>'
@@ -655,6 +778,17 @@ function openDetail(lead){
     }, 250);
   }
   painBoxes.forEach(function(b){ b.addEventListener('change', savePains); });
+  // Owner reassignment · admin only. PATCHes the lead, updates local state and
+  // re-renders so the kanban badge + filter reflect the change immediately.
+  var ownerSel=bg.querySelector('[data-d="ownersel"]');
+  if(ownerSel){
+    ownerSel.addEventListener('change', function(){
+      var val = ownerSel.value || '';
+      api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({owner: val})})
+        .then(function(){ lead.owner = val || null; if(BY_ID[lead.id]) BY_ID[lead.id].owner = lead.owner; toast(val ? 'Owner: '+salesName(val) : 'Owner cleared'); render(); })
+        .catch(function(err){ toast('Error: '+(err && err.message || err), true); });
+    });
+  }
   var msgB=bg.querySelector('[data-d="msg"]'); if(msgB) msgB.onclick=function(){bg.remove();aiDraft(lead, (lead.lead_stage==='sales_qualified'||lead.lead_stage==='proposal')?'close':(lead.last_touched_at?'follow':'first'));};
   var anB=bg.querySelector('[data-d="addnum"]'); if(anB) anB.onclick=function(){bg.remove();addNumber(lead);};
   var pToggle=bg.querySelector('[data-d="togglepitch"]'); var pBody=bg.querySelector('[data-d="pitchbody"]');
@@ -719,6 +853,75 @@ function openDetail(lead){
       toast('Removed');
     }catch(err){ toast('Error: '+err.message, true); }
   }; });
+  // Manual image upload zone · drag-drop or click-to-browse. Each file is
+  // POSTed as raw bytes with the appropriate Content-Type. The backend
+  // patches mockup_data.images.gallery so the carousel + future regenerations
+  // pick it up automatically.
+  (function(){
+    var box  = bg.querySelector('[data-d="upbox"]');
+    if(!box) return;
+    var drop = box.querySelector('[data-d="updrop"]');
+    var inp  = box.querySelector('[data-d="upinput"]');
+    var grid = box.querySelector('[data-d="upgrid"]');
+    var cnt  = box.querySelector('[data-d="upcount"]');
+    function setCount(n){ cnt.textContent = n ? n+' uploaded' : ''; }
+
+    function thumbHTML(u){
+      // u.src looks like '/mockup-img/<lead>/<slot>?v=...'; pull out the slot.
+      var src = u.src || '';
+      var m = src.match(/\/mockup-img\/[\w-]+\/([\w-]+)/);
+      var slot = m ? m[1] : '';
+      return '<div class="upthumb" style="background-image:url(\''+esc(src)+'\')" data-slot="'+esc(slot)+'">'
+        + (slot ? '<button class="upx" data-slot="'+esc(slot)+'" title="Remove">×</button>' : '')
+        + '</div>';
+    }
+    function renderThumbs(arr){
+      grid.innerHTML = (arr || []).map(thumbHTML).join('');
+      setCount((arr || []).length);
+      grid.querySelectorAll('.upx').forEach(function(b){
+        b.onclick = async function(e){
+          e.preventDefault(); e.stopPropagation();
+          var slot = b.getAttribute('data-slot'); if(!slot) return;
+          if(!confirm('Remove this image?')) return;
+          try{ await api('/api/admin/cockpit/mockup-upload/'+lead.id+'/'+slot, {method:'DELETE'}); toast('Image removed'); await refresh(); }
+          catch(err){ toast('Error: '+err.message, true); }
+        };
+      });
+    }
+    async function refresh(){
+      try{ var r = await api('/api/admin/cockpit/mockup-uploads/'+lead.id); renderThumbs(r && r.uploads || []); }
+      catch(err){ /* leave grid empty */ }
+    }
+    async function uploadOne(file){
+      if(!file || !file.type || file.type.indexOf('image/') !== 0){ toast('Not an image', true); return; }
+      if(file.size > 8 * 1024 * 1024){ toast('Too large (max 8MB)', true); return; }
+      toast('Uploading '+file.name+'...');
+      try{
+        var r = await fetch('/api/admin/cockpit/mockup-upload/'+lead.id, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {'Content-Type': file.type},
+          body: await file.arrayBuffer(),
+        });
+        var data = {}; try{ data = await r.json(); }catch(e){}
+        if(!r.ok || !data.ok){ throw new Error(data.error || 'HTTP '+r.status); }
+        toast('Uploaded');
+      }catch(err){ toast('Upload failed: '+err.message, true); }
+    }
+    async function uploadMany(files){
+      for(var i=0; i<files.length; i++) await uploadOne(files[i]);
+      await refresh();
+    }
+    drop.addEventListener('click', function(e){ if(e.target.tagName !== 'INPUT'){ inp.click(); } });
+    inp.addEventListener('change', function(){ if(inp.files && inp.files.length) uploadMany(inp.files); inp.value = ''; });
+    drop.addEventListener('dragover', function(e){ e.preventDefault(); drop.classList.add('dragover'); });
+    drop.addEventListener('dragleave', function(e){ if(e.target === drop) drop.classList.remove('dragover'); });
+    drop.addEventListener('drop', function(e){
+      e.preventDefault(); drop.classList.remove('dragover');
+      var f = e.dataTransfer && e.dataTransfer.files; if(f && f.length) uploadMany(f);
+    });
+    refresh();
+  })();
   // Mockup v2 · long-running build (scrape + Claude + image bank).
   // Fires the build, flips the card to `generating` state immediately, and
   // re-loads the grid when the endpoint returns (1-3 minutes typical).
@@ -759,6 +962,38 @@ function mockChip(l){
   if(l.mockup_status==='needs_review') return '<span class="chip mock-review">⚠ Review mockup</span>';
   return '';
 }
+// Prominent owner badge for a kanban card. Identity is the TEXT (first name +
+// initials), so it reads correctly for red-green colour blindness; the tint is
+// decorative only. Unassigned leads get a muted dashed "Unassigned" badge.
+function ownerBadge(l){
+  var first = salesFirst(l.owner);
+  if(!first){
+    return '<span class="owner-badge unassigned" title="Unassigned"><span class="ob-ini">?</span><span class="ob-name">Unassigned</span></span>';
+  }
+  var ini = salesInitials(l.owner) || first.slice(0,2).toUpperCase();
+  return '<span class="owner-badge" title="Owner: '+esc(salesName(l.owner))+'"><span class="ob-ini">'+esc(ini)+'</span><span class="ob-name">'+esc(first)+'</span></span>';
+}
+
+// Owner row inside the lead detail modal. Admins (Mike) get a <select> to
+// reassign across the roster; everyone else sees read-only text.
+function ownerRowHTML(lead){
+  var cur = _ownerKey(lead.owner);
+  if(IS_ADMIN){
+    var opts = '<option value=""'+(!cur||cur==='system'||cur==='ai'?' selected':'')+'>Unassigned</option>';
+    ROSTER.filter(function(r){ return r.active; }).forEach(function(r){
+      opts += '<option value="'+esc(r.handle)+'"'+(cur===r.handle?' selected':'')+'>'+esc(r.full_name||r.handle)+'</option>';
+    });
+    // If the current owner is a legacy handle not in the active roster, still
+    // show it as a selected option so it is not silently dropped.
+    if(cur && cur!=='system' && cur!=='ai' && !ROSTER_BY[cur]){
+      opts += '<option value="'+esc(cur)+'" selected>'+esc(salesName(cur))+'</option>';
+    }
+    return '<div class="d-owner"><span class="d-ow-lbl">Owner</span><select data-d="ownersel" aria-label="Assign owner">'+opts+'</select></div>';
+  }
+  var nm = salesName(lead.owner);
+  return '<div class="d-owner"><span class="d-ow-lbl">Owner</span>'+(nm?'<b>'+esc(nm)+'</b>':'<span class="d-ow-unassigned">Unassigned</span>')+'</div>';
+}
+
 function cardHTML(l, col){
   var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
   var al = alertFor(l, col);
@@ -766,16 +1001,20 @@ function cardHTML(l, col){
   var mockCls = mockClass(l);
   var mockC = mockChip(l);
   var chip = '';
+  // Priority: closed terminal state > viewed-mockup (most actionable signal,
+  // matches the "N prospects viewed your mockup" banner count) > mockup build
+  // state > generic alert. Previously mockup_status outranked viewed which
+  // caused a green card AND a "4 viewed" banner to disagree on the same lead.
   if(col==='closed'){ chip = isWon(l) ? '<span class="chip won">✓ Won</span>' : '<span class="chip lost">✕ Lost</span>'; }
-  else if(mockC){ chip = mockC; }
   else if(viewed){ chip = '<span class="chip view">Viewed mockup</span>'; }
-  // Priority: mockup state > viewed mockup > generic alert.
-  var cls = mockCls ? (' ' + mockCls) : (viewed ? ' viewed' : (al ? ' alert' : ''));
-  var mark = (mockCls || viewed) ? '' : (al ? '<span class="wmark">⚠</span> ' : '');
+  else if(mockC){ chip = mockC; }
+  var cls = viewed ? ' viewed' : (mockCls ? (' ' + mockCls) : (al ? ' alert' : ''));
+  var mark = (viewed || mockCls) ? '' : (al ? '<span class="wmark">⚠</span> ' : '');
   var t = l.touches_count||0;
   var mini = (col==='closed') ? esc(touchLine(l)) : esc(nextStep(l))+(t?' · '+t+' touch'+(t===1?'':'es'):'');
   return '<div class="card'+cls+'" draggable="true" data-id="'+esc(l.id)+'">'
     + '<button class="card-del" title="Delete permanently" data-del="'+esc(l.id)+'" aria-label="Delete">×</button>'
+    + ownerBadge(l)
     + (chip?'<div class="cardchip">'+chip+'</div>':'')
     + '<div class="biz">'+mark+esc(leadName(l))+heatPill(l.heat)+'</div>'
     + (meta?'<div class="meta">'+meta+'</div>':'')
@@ -794,7 +1033,7 @@ function render(){
   var byScore = function(a,b){return (b.score||0)-(a.score||0);};
   var byNew = function(a,b){ var d=(b.created_at||0)-(a.created_at||0); return d || (b.score||0)-(a.score||0); };
   var byHot = function(col){ return function(a,b){ var av=viewedMockup(a)?1:0, bv=viewedMockup(b)?1:0; if(av!==bv) return bv-av; var aa=alertFor(a,col)?1:0, ba=alertFor(b,col)?1:0; if(aa!==ba) return ba-aa; return (b.score||0)-(a.score||0); }; };
-  var L = SEARCH ? LEADS.filter(matchSearch) : LEADS;
+  var L = (SEARCH || OWNER_FILTER) ? LEADS.filter(function(l){ return matchSearch(l) && matchOwner(l); }) : LEADS;
   var contact  = L.filter(inContact).sort(byNew);
   var sinNum   = L.filter(inNoNum).sort(byNew);
   var follow   = L.filter(inFollow).sort(byHot('followup'));
@@ -1140,6 +1379,7 @@ function showProposalPanel(lead){
 
 // ---- search ----
 document.getElementById('search').addEventListener('input', function(e){ SEARCH = (e.target.value||'').trim(); render(); });
+document.getElementById('owner-filter').addEventListener('change', function(e){ OWNER_FILTER = e.target.value || ''; render(); });
 
 // ---- add prospect ----
 document.getElementById('btn-add').addEventListener('click', function(){
@@ -1176,6 +1416,201 @@ document.getElementById('btn-add').addEventListener('click', function(){
     }catch(err){ toast('Error: '+err.message, true); }
   };
 });
+
+// ---- Team stats view ----
+// "Responded" proxy: the client-side activity rows on this page carry only
+// kind/subject/body/owner/timestamps · there is no per-activity `outcome` or
+// `direction` field to read, so the preferred outcome-based signal is not
+// available here. We use the most accurate signal we DO have: a prospect is
+// counted as "responded" when their lead has advanced past the contacted
+// phase (lead_stage is mockup, proposal, or sales_qualified / won) OR their
+// heat is HOT or WARM. Both states only happen once a prospect engages back.
+function teamResponded(l){
+  var s = l.lead_stage;
+  if(s==='mockup' || s==='proposal' || s==='sales_qualified') return true;
+  if(isWon(l)) return true;
+  var h = String(l.heat||'').toUpperCase();
+  return h==='HOT' || h==='WARM';
+}
+function _teamOwnerKey(l){ var k=_ownerKey(l.owner); return (k && k!=='system' && k!=='ai') ? k : ''; }
+function teamRows(){
+  // Seed with the full active roster so nobody is hidden, then add any other
+  // handle that actually owns a lead, plus a final null-owner "Unassigned"
+  // bucket.
+  var stat = {};
+  function ensure(k){ if(!stat[k]){ stat[k] = {key:k, owned:0, touch:0, responded:0, mockup:0, sold:0}; } return stat[k]; }
+  ROSTER.filter(function(r){ return r.active; }).forEach(function(r){ ensure(r.handle); });
+  var unassigned = {key:'__none__', owned:0, touch:0, responded:0, mockup:0, sold:0};
+  LEADS.forEach(function(l){
+    var k = _teamOwnerKey(l);
+    var row = k ? ensure(k) : unassigned;
+    row.owned++;
+    row.touch += (l.touches_count||0);
+    if(teamResponded(l)) row.responded++;
+    if(inMockup(l)) row.mockup++;
+    if(isWon(l)) row.sold++;
+  });
+  var rows = Object.keys(stat).map(function(k){ return stat[k]; });
+  // Sort: Sold desc, then Leads actioned desc, then name for stability.
+  rows.sort(function(a,b){
+    if(b.sold!==a.sold) return b.sold-a.sold;
+    if(b.owned!==a.owned) return b.owned-a.owned;
+    return salesName(a.key).localeCompare(salesName(b.key));
+  });
+  if(unassigned.owned) rows.push(unassigned);
+  return rows;
+}
+function teamTableHTML(){
+  var rows = teamRows();
+  var adminCol = IS_ADMIN;
+  var body = rows.map(function(r){
+    var isNone = r.key==='__none__';
+    var name = isNone ? 'Unassigned' : salesName(r.key);
+    var avg = r.owned ? (r.touch / r.owned).toFixed(1) : '0.0';
+    var pct = r.owned ? Math.round(r.responded / r.owned * 100) : 0;
+    var editCell = '';
+    if(adminCol){
+      // Only roster rows (not the Unassigned bucket, not legacy handles missing
+      // from the roster) get an Edit button.
+      editCell = (!isNone && ROSTER_BY[r.key])
+        ? '<td class="team-edit-cell"><button class="team-edit-btn" data-edit="'+esc(r.key)+'">Edit</button></td>'
+        : '<td class="team-edit-cell"></td>';
+    }
+    return '<tr'+(isNone?' class="team-unassigned"':'')+'>'
+      + '<td>'+esc(name)+'</td>'
+      + '<td><span class="team-num">'+r.owned+'</span></td>'
+      + '<td><span class="team-num">'+avg+'</span></td>'
+      + '<td><span class="team-num">'+r.responded+'</span><span class="team-pct">'+pct+'% of actioned</span></td>'
+      + '<td><span class="team-num">'+r.mockup+'</span></td>'
+      + '<td><span class="team-num">'+r.sold+'</span></td>'
+      + editCell
+      + '</tr>';
+  }).join('');
+  var addBtn = adminCol
+    ? '<button class="team-add" id="team-add">+ Add salesperson</button>'
+    : '';
+  return '<div class="team-head">'
+    + '<button class="team-back" id="team-back"><span class="tb-ic">&larr;</span>Back to board</button>'
+    + '<h2>Team stats</h2>'
+    + '<span class="team-head-spacer"></span>'
+    + addBtn
+    + '</div>'
+    + '<p class="team-sub">One row per salesperson. Computed from the leads currently loaded on this board.</p>'
+    + '<div id="team-form-slot"></div>'
+    + '<div class="team-wrap"><table class="team-tbl">'
+    + '<thead><tr>'
+    + '<th>Salesperson</th><th>Leads actioned</th><th>Avg actions / lead</th>'
+    + '<th>Responded</th><th>At mockup stage</th><th>Sold</th>'
+    + (adminCol ? '<th></th>' : '')
+    + '</tr></thead>'
+    + '<tbody>'+body+'</tbody></table>'
+    + '<p class="team-foot">Sorted by Sold, then Leads actioned. <b>Responded</b> counts a prospect once their lead has advanced past the contacted phase (mockup, proposal, or closing / won stage) or their heat is HOT or WARM, since the activity log on this page does not expose a per-message reply flag.</p>'
+    + '</div>';
+}
+
+// Admin form: add a new salesperson, or edit an existing one (handle present).
+// Rendered into #team-form-slot above the table.
+function salespersonFormHTML(handle){
+  var editing = handle && ROSTER_BY[handle];
+  var row = editing ? ROSTER_BY[handle] : null;
+  var title = editing ? ('Edit '+esc(row.full_name||handle)) : 'Add salesperson';
+  var nameVal = editing ? esc(row.full_name||'') : '';
+  var emailsVal = editing ? esc(row.emails||'') : '';
+  var roleVal = editing ? (row.role||'seller') : 'seller';
+  var activeChecked = editing ? (row.active ? ' checked' : '') : ' checked';
+  var nameField = editing
+    // handle is the stable key on leads.owner, so the name stays editable but
+    // the handle is shown read-only for context.
+    ? '<div class="tf-field"><label>Full name</label><input type="text" id="tf-name" value="'+nameVal+'"></div>'
+      + '<div class="tf-field"><label>Handle (fixed)</label><input type="text" value="'+esc(handle)+'" disabled></div>'
+    : '<div class="tf-field"><label>Full name <span class="tf-req">required</span></label><input type="text" id="tf-name" value="'+nameVal+'" placeholder="e.g. Cristian Ariza"></div>';
+  return '<div class="team-form" role="group" aria-label="'+(editing?'Edit salesperson':'Add salesperson')+'">'
+    + '<div class="tf-head">'+title+'</div>'
+    + nameField
+    + '<div class="tf-field"><label>Login email(s), comma-separated</label><input type="text" id="tf-emails" value="'+emailsVal+'" placeholder="name@example.com, alt@example.com"></div>'
+    + '<div class="tf-field"><label>Role</label><select id="tf-role">'
+    + '<option value="seller"'+(roleVal==='seller'?' selected':'')+'>Seller</option>'
+    + '<option value="admin"'+(roleVal==='admin'?' selected':'')+'>Admin</option>'
+    + '</select></div>'
+    + (editing ? '<div class="tf-field tf-active"><label><input type="checkbox" id="tf-active"'+activeChecked+'> Active</label></div>' : '')
+    + '<p class="tf-note">Also add each login email to the Cloudflare Access policy for ventas.pymewebpro.com, or they cannot log in.</p>'
+    + '<div class="tf-actions">'
+    + '<button class="tf-save" id="tf-save">'+(editing?'Save changes':'Add')+'</button>'
+    + '<button class="tf-cancel" id="tf-cancel">Cancel</button>'
+    + '</div>'
+    + '</div>';
+}
+
+function openSalespersonForm(handle){
+  var slot = document.getElementById('team-form-slot');
+  if(!slot) return;
+  slot.innerHTML = salespersonFormHTML(handle);
+  var nameEl = document.getElementById('tf-name');
+  if(nameEl) nameEl.focus();
+  var saveBtn = document.getElementById('tf-save');
+  var cancelBtn = document.getElementById('tf-cancel');
+  if(cancelBtn) cancelBtn.addEventListener('click', function(){ slot.innerHTML=''; });
+  if(saveBtn) saveBtn.addEventListener('click', function(){ submitSalesperson(handle); });
+}
+
+async function submitSalesperson(handle){
+  var editing = !!(handle && ROSTER_BY[handle]);
+  var nameEl = document.getElementById('tf-name');
+  var emailsEl = document.getElementById('tf-emails');
+  var roleEl = document.getElementById('tf-role');
+  var activeEl = document.getElementById('tf-active');
+  var fullName = nameEl ? nameEl.value.trim() : '';
+  if(!editing && !fullName){ toast('Full name is required', true); return; }
+  var payload = { emails: emailsEl ? emailsEl.value : '', role: roleEl ? roleEl.value : 'seller' };
+  if(fullName) payload.full_name = fullName;
+  if(editing && activeEl) payload.active = activeEl.checked;
+  var saveBtn = document.getElementById('tf-save');
+  if(saveBtn){ saveBtn.disabled = true; saveBtn.textContent = 'Saving...'; }
+  try {
+    if(editing){
+      await api('/api/admin/crm/salespeople/'+encodeURIComponent(handle), {method:'PATCH', body: JSON.stringify(payload)});
+      toast('Salesperson updated');
+    } else {
+      await api('/api/admin/crm/salespeople', {method:'POST', body: JSON.stringify(payload)});
+      toast('Salesperson added');
+    }
+    await loadRoster();
+    var ov = document.getElementById('team-overlay');
+    ov.innerHTML = teamTableHTML();
+    wireTeamControls();
+  } catch(e){
+    toast('Error: '+(e && e.message || e), true);
+    if(saveBtn){ saveBtn.disabled = false; saveBtn.textContent = editing ? 'Save changes' : 'Add'; }
+  }
+}
+
+function wireTeamControls(){
+  var back = document.getElementById('team-back');
+  if(back) back.addEventListener('click', hideTeam);
+  var add = document.getElementById('team-add');
+  if(add) add.addEventListener('click', function(){ openSalespersonForm(null); });
+  var ov = document.getElementById('team-overlay');
+  if(ov){
+    ov.querySelectorAll('[data-edit]').forEach(function(btn){
+      btn.addEventListener('click', function(){ openSalespersonForm(btn.getAttribute('data-edit')); });
+    });
+  }
+}
+function showTeam(){
+  var ov = document.getElementById('team-overlay');
+  ov.innerHTML = teamTableHTML();
+  ov.hidden = false;
+  document.body.style.overflow = 'hidden';
+  wireTeamControls();
+}
+function hideTeam(){
+  var ov = document.getElementById('team-overlay');
+  ov.hidden = true;
+  ov.innerHTML = '';
+  document.body.style.overflow = '';
+}
+document.getElementById('btn-team').addEventListener('click', function(e){ e.preventDefault(); showTeam(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var ov=document.getElementById('team-overlay'); if(ov && !ov.hidden) hideTeam(); } });
 
 loadAll();
 </script>

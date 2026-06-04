@@ -310,13 +310,23 @@ async function logSend(request, env, json) {
   if (!lead) return json({ ok: false, error: "Lead not found" }, 404);
 
   // Stamp the activity owner from the Cloudflare Access user so the timeline
-  // shows "by Mike" / "by Santi" correctly. Falls back to "santi" only if the
-  // request has no Access header (background callers).
+  // shows "by Mike" / "by Santi" correctly. The roster is DB-driven: look up
+  // the salespeople row whose comma-list of emails contains this login. Falls
+  // back to "santi" only if the request has no Access header (background
+  // callers), or to the email local-part for an unknown login.
   const email = (request.headers.get("Cf-Access-Authenticated-User-Email") || "").toLowerCase().trim();
   let owner = "santi";
-  if (email === "mike@colguides.com" || email === "mike@mikec.pro") owner = "mike";
-  else if (email === "santiago@colguides.com" || email === "santi@colguides.com") owner = "santi";
-  else if (email) { const at = email.indexOf("@"); owner = at > 0 ? email.slice(0, at) : email; }
+  if (email) {
+    let row = null;
+    try {
+      row = await env.DB.prepare(
+        "SELECT handle FROM salespeople " +
+        "WHERE active = 1 AND (',' || REPLACE(LOWER(COALESCE(emails,'')), ' ', '') || ',') LIKE ?"
+      ).bind("%," + email + ",%").first();
+    } catch { row = null; }
+    if (row && row.handle) owner = row.handle;
+    else { const at = email.indexOf("@"); owner = at > 0 ? email.slice(0, at) : email; }
+  }
   const actId = crypto.randomUUID();
   const now = Date.now();
 
@@ -338,6 +348,15 @@ async function logSend(request, env, json) {
     "       touches_count = COALESCE(touches_count, 0) + 1, updated_at = ? " +
     " WHERE id = ?"
   ).bind(now, channel, now, leadId).run();
+
+  // Sending an outbound touch is a mutating action: claim the lead for the
+  // actor if it is still unowned. Only when a real Access user is present
+  // (background callers carry no Access header, so they never claim).
+  if (email && owner && owner !== "system" && owner !== "ai") {
+    await env.DB.prepare(
+      "UPDATE leads SET owner = ? WHERE id = ? AND (owner IS NULL OR owner = '')"
+    ).bind(owner, leadId).run();
+  }
 
   return json({ ok: true, activity_id: actId });
 }

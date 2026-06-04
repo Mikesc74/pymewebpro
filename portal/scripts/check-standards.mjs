@@ -78,18 +78,25 @@ const checks = [
     },
   },
   {
-    name: "Footer brand legible on dark footer (no '< web />' regression)",
+    name: "Footer brand legible (no '< web />' regression)",
     severity: "FAIL",
-    // The brand mark <pymewebpro/> inherits the default dark .brand color
-    // (#1B1410). On the dark footer that is invisible, so "pyme" and "pro"
-    // vanish and only the orange "web" survives -> "< web />". It MUST be
-    // overridden to a light color via `footer.site .brand`. This has regressed
-    // 3+ times because the brand CSS is inline-duplicated per language file and
-    // a fix to one file never reaches the other. This guard fails the build if
-    // either production page is missing the override.
+    // The footer brand wordmark (<pyme<web>web</web>pro/>) must stay legible
+    // against the footer background, so "pyme" and "pro" do not vanish leaving
+    // only the orange "web" -> "< web />". This has regressed 3+ times because
+    // the brand CSS is inline-duplicated per language file. The footer was
+    // redesigned to a LIGHT background (footer { background: var(--paper-soft) })
+    // with the default dark .logo wordmark (.logo { color: var(--ink) }), which
+    // is legible. This guard passes when that legible setup is present, OR when
+    // an explicit light override exists (the legacy dark-footer fix via
+    // `footer.site .brand`/`.logo`). It fails if a future change makes the footer
+    // dark without giving the brand a light color.
     test: (html, slug) => {
       if (slug !== "pymewebpro.com (ES)" && slug !== "pymewebpro.com (EN)") return true;
-      return /footer\.site\s+\.brand\s*\{[^}]*color:\s*#(?:FBF7F0|F4ECDF|FFF|FFFFFF)\b/i.test(html);
+      const lightOverride = /footer(?:\.site)?\s+\.(?:brand|logo)\s*\{[^}]*color:\s*#(?:FBF7F0|F4ECDF|FFF|FFFFFF)\b/i.test(html);
+      const lightFooter =
+        /footer\s*\{[^}]*background:\s*var\(--paper-soft\)/i.test(html) &&
+        /\.logo\s*\{[^}]*color:\s*var\(--ink\)/i.test(html);
+      return lightOverride || lightFooter;
     },
   },
   {

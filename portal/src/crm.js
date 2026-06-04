@@ -22,7 +22,7 @@ const TABLES = ["leads", "clients", "deals", "activities"];
 const EDITABLE_COLUMNS = {
   leads: [
     "source", "name", "email", "phone", "business_name", "message", "language",
-    "status", "plan", "hosting", "notes",
+    "status", "plan", "hosting", "notes", "owner",
     // Lead funnel columns (added by 0002_lead_funnel.sql).
     "lead_stage", "last_touched_at", "last_touched_kind", "touches_count",
     "next_action", "next_action_due",
@@ -70,6 +70,30 @@ export async function handleAdminCRM(request, env, helpers) {
   const path = url.pathname;
   const method = request.method;
 
+  // GET /api/admin/crm/whoami -> the caller's sales handle + admin flag, so the
+  // SPA can gate the owner-reassignment control to Mike. Mounted under the crm
+  // prefix so it reaches this handler via the existing index.js route.
+  if (path === "/api/admin/crm/whoami" && method === "GET") {
+    const actor = await resolveActor(env, request);
+    return json({ handle: actor.handle || null, is_admin: actor.is_admin });
+  }
+
+  // Salespeople roster endpoints (mounted under the crm prefix). The GET is
+  // NOT admin-gated: the Team view + owner-reassign dropdown need the roster
+  // for every logged-in user. POST/PATCH are admin-only (checked inside).
+  if (path === "/api/admin/crm/salespeople" && method === "GET") {
+    return await listSalespeople(env, json);
+  }
+  if (path === "/api/admin/crm/salespeople" && method === "POST") {
+    return await createSalesperson(env, request, json);
+  }
+  {
+    const sm = path.match(/^\/api\/admin\/crm\/salespeople\/([^/]+)$/);
+    if (sm && method === "PATCH") {
+      return await updateSalesperson(env, request, json, decodeURIComponent(sm[1]));
+    }
+  }
+
   // GET /api/admin/crm/grid -> all four tables in one response, for first paint.
   if (path === "/api/admin/crm/grid" && method === "GET") {
     return await loadGrid(env, json);
@@ -106,7 +130,7 @@ async function loadGrid(env, json) {
               followers, on_today_list,
               facebook_url, x_url, tiktok_url, demo_lang,
               rating, review_count, place_id, pain_reason,
-              mockup_status, mockup_generated_at,
+              mockup_status, mockup_generated_at, owner,
               created_at, updated_at
          FROM leads ORDER BY COALESCE(updated_at, created_at) DESC LIMIT 8000`
     ).all(),
@@ -169,19 +193,182 @@ function searchColumns(table) {
   }
 }
 
-// Resolve the human-readable owner ("mike" / "santi") from the Cloudflare
-// Access header that fronts every admin request. Used to stamp the owner on
-// activities (notes, manual tasks, AI drafts) so the timeline can show who did
-// what. Falls back to whatever the client sent if no auth header is present
-// (background/system inserts still pass owner='system').
-function ownerFromAccess(request) {
+// Resolve the acting salesperson from the Cloudflare Access header that fronts
+// every admin request. The roster lives in the `salespeople` D1 table (source
+// of truth): each row carries a comma-separated `emails` list of lowercase
+// Access login emails, plus a `role` ('seller' / 'admin'). Used to stamp the
+// owner on leads + activities (notes, manual tasks, AI drafts) so the timeline
+// can show who did what, and to gate admin-only owner reassignment.
+//
+// Returns { handle, role, is_admin }:
+//   - handle:   the matching row's handle, or the email local-part if no row
+//               matches (so unknown Access users still get a stable label).
+//   - role:     the matching row's role, else 'seller'.
+//   - is_admin: role === 'admin'.
+// Background/system callers carry no Access header; they return a null handle.
+//
+// Mike's two emails are kept as a hardcoded admin safety net in case the row is
+// ever missing, but the DB is the authoritative roster.
+const ADMIN_FALLBACK_EMAILS = new Set(["mike@colguides.com", "mike@mikec.pro"]);
+
+async function resolveActor(env, request) {
   const email = (request.headers.get("Cf-Access-Authenticated-User-Email") || "").toLowerCase().trim();
-  if (!email) return null;
-  if (email === "mike@colguides.com" || email === "mike@mikec.pro") return "mike";
-  if (email === "santiago@colguides.com" || email === "santi@colguides.com") return "santi";
-  // Unknown admin: use the local-part of the email as the owner label.
+  if (!email) return { handle: null, role: null, is_admin: false };
+
+  // Match the email against any active salespeople row whose comma-list
+  // contains it. We pad both sides with commas (and strip spaces) so a@x does
+  // not falsely match ba@x.
+  let row = null;
+  try {
+    row = await env.DB.prepare(
+      "SELECT handle, role FROM salespeople " +
+      "WHERE active = 1 AND (',' || REPLACE(LOWER(COALESCE(emails,'')), ' ', '') || ',') LIKE ?"
+    ).bind("%," + email + ",%").first();
+  } catch { row = null; }
+
+  if (row && row.handle) {
+    const role = row.role || "seller";
+    return { handle: row.handle, role, is_admin: role === "admin" };
+  }
+
+  // No row: fall back to the email local-part as the handle. Mike's known
+  // emails stay admin even if the row is missing.
   const at = email.indexOf("@");
-  return at > 0 ? email.slice(0, at) : email;
+  const handle = at > 0 ? email.slice(0, at) : email;
+  const is_admin = ADMIN_FALLBACK_EMAILS.has(email);
+  return { handle, role: is_admin ? "admin" : "seller", is_admin };
+}
+
+// Claim an unowned lead for the given handle. No-ops for system/ai/empty
+// actors and for leads that already have an owner.
+async function claimLeadIfUnowned(env, leadId, handle) {
+  if (!leadId) return;
+  const h = String(handle || "").toLowerCase();
+  if (!h || h === "system" || h === "ai") return;
+  await env.DB.prepare(
+    "UPDATE leads SET owner = ? WHERE id = ? AND (owner IS NULL OR owner = '')"
+  ).bind(handle, leadId).run();
+}
+
+// ---- Salespeople roster ----------------------------------------------------
+// The `salespeople` table is the source of truth for the sales roster. handle
+// is the stable PRIMARY KEY stored on leads.owner, so it is NEVER changed after
+// creation. `emails` is a comma-separated list of lowercase Access login emails.
+
+async function listSalespeople(env, json) {
+  let rows = { results: [] };
+  try {
+    rows = await env.DB.prepare(
+      "SELECT handle, full_name, first_name, emails, role, active " +
+      "FROM salespeople ORDER BY active DESC, full_name ASC"
+    ).all();
+  } catch { rows = { results: [] }; }
+  return json({ rows: rows.results || [] });
+}
+
+// Lowercase + trim each email in a comma list; drop blanks; rejoin. Returns
+// null for an empty result so the column stays NULL.
+function normalizeEmails(raw) {
+  if (raw == null) return null;
+  const list = String(raw)
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  return list.length ? list.join(",") : null;
+}
+
+// Derive a handle from a name: lowercase, strip accents to ASCII, drop
+// non-alphanumerics. Empty input falls back to "seller".
+function deriveHandle(name) {
+  const base = String(name || "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+  return base || "seller";
+}
+
+function firstNameFrom(fullName) {
+  const parts = String(fullName || "").trim().split(/\s+/).filter(Boolean);
+  return parts.length ? parts[0] : "";
+}
+
+async function createSalesperson(env, request, json) {
+  const actor = await resolveActor(env, request);
+  if (!actor.is_admin) return json({ error: "Admin only" }, 403);
+
+  let body;
+  try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400); }
+  if (!body || typeof body !== "object") return json({ error: "Invalid payload" }, 400);
+
+  const fullName = String(body.full_name || "").trim();
+  if (!fullName) return json({ error: "full_name is required" }, 400);
+
+  const firstName = firstNameFrom(fullName);
+  const emails = normalizeEmails(body.emails);
+  const role = body.role === "admin" ? "admin" : "seller";
+
+  // Handle: explicit value if supplied (normalized), else derived from the
+  // first name. Suffix 2,3,... on collision.
+  let baseHandle = body.handle ? deriveHandle(body.handle) : deriveHandle(firstName || fullName);
+  let handle = baseHandle;
+  let n = 1;
+  // Find a free handle.
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const dup = await env.DB.prepare("SELECT handle FROM salespeople WHERE handle = ?").bind(handle).first();
+    if (!dup) break;
+    n += 1;
+    handle = baseHandle + n;
+  }
+
+  await env.DB.prepare(
+    "INSERT INTO salespeople (handle, full_name, first_name, emails, role, active, created_at) " +
+    "VALUES (?, ?, ?, ?, ?, 1, ?)"
+  ).bind(handle, fullName, firstName, emails, role, Date.now()).run();
+
+  const row = await env.DB.prepare(
+    "SELECT handle, full_name, first_name, emails, role, active FROM salespeople WHERE handle = ?"
+  ).bind(handle).first();
+  return json({ row });
+}
+
+async function updateSalesperson(env, request, json, handle) {
+  const actor = await resolveActor(env, request);
+  if (!actor.is_admin) return json({ error: "Admin only" }, 403);
+
+  let body;
+  try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400); }
+  if (!body || typeof body !== "object") return json({ error: "Invalid payload" }, 400);
+
+  const sets = [];
+  const binds = [];
+  if (body.full_name !== undefined) {
+    const fn = String(body.full_name || "").trim();
+    if (!fn) return json({ error: "full_name cannot be empty" }, 400);
+    sets.push("full_name = ?"); binds.push(fn);
+    // Keep first_name in step unless the caller set it explicitly.
+    if (body.first_name === undefined) { sets.push("first_name = ?"); binds.push(firstNameFrom(fn)); }
+  }
+  if (body.first_name !== undefined) { sets.push("first_name = ?"); binds.push(String(body.first_name || "").trim() || null); }
+  if (body.emails !== undefined) { sets.push("emails = ?"); binds.push(normalizeEmails(body.emails)); }
+  if (body.role !== undefined) { sets.push("role = ?"); binds.push(body.role === "admin" ? "admin" : "seller"); }
+  if (body.active !== undefined) { sets.push("active = ?"); binds.push(body.active ? 1 : 0); }
+
+  if (!sets.length) return json({ error: "No editable fields supplied" }, 400);
+
+  binds.push(handle);
+  const res = await env.DB.prepare(
+    `UPDATE salespeople SET ${sets.join(", ")} WHERE handle = ?`
+  ).bind(...binds).run();
+  if (!res.meta || res.meta.changes === 0) {
+    const exists = await env.DB.prepare("SELECT handle FROM salespeople WHERE handle = ?").bind(handle).first();
+    if (!exists) return json({ error: "Salesperson not found" }, 404);
+  }
+  const row = await env.DB.prepare(
+    "SELECT handle, full_name, first_name, emails, role, active FROM salespeople WHERE handle = ?"
+  ).bind(handle).first();
+  return json({ row });
 }
 
 async function createRow(env, table, request, json, uuid) {
@@ -199,9 +386,10 @@ async function createRow(env, table, request, json, uuid) {
   // For activities, always stamp the owner from the authenticated user so the
   // timeline shows which of us added the note / message / task. The client's
   // `owner` value is only used as a fallback for non-interactive inserts.
+  let actor = null;
   if (table === "activities") {
-    const who = ownerFromAccess(request);
-    if (who) body.owner = who;
+    actor = await resolveActor(env, request);
+    if (actor.handle) body.owner = actor.handle;
   }
 
   const cols = EDITABLE_COLUMNS[table];
@@ -225,6 +413,13 @@ async function createRow(env, table, request, json, uuid) {
   const sql = `INSERT INTO ${table} (${keys.join(", ")}) VALUES (${placeholders})`;
   await env.DB.prepare(sql).bind(...keys.map((k) => payload[k])).run();
 
+  // Logging an activity against a lead is a mutating action: claim the parent
+  // lead for the actor if it is still unowned.
+  if (table === "activities" && payload.lead_id) {
+    const who = actor ? actor.handle : (await resolveActor(env, request)).handle;
+    await claimLeadIfUnowned(env, payload.lead_id, who);
+  }
+
   const row = await env.DB.prepare(`SELECT * FROM ${table} WHERE id = ?`).bind(payload.id).first();
   return json({ row });
 }
@@ -233,6 +428,24 @@ async function updateRow(env, table, id, request, json) {
   let body;
   try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400); }
   if (!body || typeof body !== "object") return json({ error: "Invalid payload" }, 400);
+
+  // Owner rules (leads only):
+  //  - A deliberate reassignment (body.owner present) is honored only for an
+  //    admin (Mike). For everyone else, strip it.
+  //  - Auto-claim: if the lead is currently unowned and the actor is a real
+  //    user (not system/ai/empty), stamp the actor as the owner.
+  if (table === "leads") {
+    const actor = await resolveActor(env, request);
+    const handle = actor.handle;
+    if (body.owner !== undefined && !actor.is_admin) {
+      delete body.owner;
+    }
+    if (body.owner === undefined && handle && handle !== "system" && handle !== "ai") {
+      const existing = await env.DB.prepare("SELECT owner FROM leads WHERE id = ?").bind(id).first();
+      const cur = existing && existing.owner ? String(existing.owner) : "";
+      if (!cur) body.owner = handle;
+    }
+  }
 
   const cols = EDITABLE_COLUMNS[table];
   const sets = [];
