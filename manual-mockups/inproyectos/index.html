@@ -148,19 +148,21 @@
   .enf h3{font-size:1.35rem;color:var(--navy);margin:.5rem 0 .7rem}
   .enf p{color:var(--mute);font-size:.98rem}
 
-  /* experiencia placeholder */
+  /* experiencia */
   .note{display:flex;gap:.7rem;align-items:flex-start;background:var(--cream);border:1px solid var(--accent-soft);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:2rem;font-size:.9rem;color:var(--accent-dk)}
   .note svg{flex:0 0 auto;width:18px;height:18px;stroke:var(--accent-dk);margin-top:2px}
   .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-  .proj{border:1px dashed var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}
-  .proj .ph{height:170px;background:
-      repeating-linear-gradient(45deg,var(--paper-2),var(--paper-2) 12px,#eef2f6 12px,#eef2f6 24px);
-      display:flex;align-items:center;justify-content:center;color:var(--mute);border-bottom:1px dashed var(--line)}
-  .proj .ph span{font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:#fff;border:1px solid var(--line);padding:.3rem .65rem;border-radius:50px}
-  .proj .body{padding:1.3rem}
-  .proj .pill{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
-  .proj h4{font-size:1.06rem;color:var(--navy);margin:.4rem 0 .5rem}
-  .proj p{font-size:.88rem;color:var(--mute)}
+  .proj{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s,border-color .2s}
+  .proj:hover{box-shadow:0 14px 34px rgba(14,42,71,.10);transform:translateY(-2px);border-color:var(--accent-soft)}
+  .proj .body{padding:1.5rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+  .proj .pill{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--steel);align-self:flex-start;padding:.25rem .6rem;border-radius:50px}
+  .proj .client{font-size:.76rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+  .proj h4{font-size:1rem;color:var(--navy);line-height:1.3}
+  .proj p{font-size:.86rem;color:var(--mute)}
+  .proj .meta{margin-top:auto;display:flex;justify-content:space-between;gap:.5rem;padding-top:.9rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink);font-weight:600}
+  .clients-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2.2rem;align-items:center}
+  .clients-row .lbl{font-size:.8rem;color:var(--mute);margin-right:.3rem;letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+  .clients-row .cchip{font-size:.84rem;font-weight:700;color:var(--navy);background:var(--paper);border:1px solid var(--line);padding:.45rem .85rem;border-radius:8px}
 
   /* visión callout */
   .vision{background:linear-gradient(135deg,var(--navy),#0a2138);color:#fff;border-radius:18px;padding:3.4rem;position:relative;overflow:hidden}
@@ -442,24 +444,75 @@
       <h2>Proyectos representativos</h2>
       <p>Una muestra del trabajo realizado a lo largo de cuatro décadas.</p>
     </div>
-    <!-- PLACEHOLDER · awaiting real project list, photos and clients from the client (Jorge / Mónica) -->
+    <!-- Real contracts pulled from SECOP (public procurement record, NIT 890.116.722-8). Photos still por confirmar. -->
     <div class="note">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-      <span><b>Sección por confirmar.</b> Los proyectos, fotos y clientes se completan con la información que entregue Ingeniería de Proyectos. Las tarjetas de abajo son ejemplos de maquetación, no proyectos reales.</span>
+      <span>Selección de contratos de obra pública ejecutados, verificables en el registro SECOP. Se pueden sumar proyectos del sector privado, obras anteriores y fotografías de cada proyecto.</span>
     </div>
     <div class="proj-grid">
-      <article class="proj">
-        <div class="ph"><span>Foto por confirmar</span></div>
-        <div class="body"><span class="pill">Interventoría</span><h4>Nombre del proyecto</h4><p>Entidad contratante, ubicación y año. Descripción breve del alcance.</p></div>
-      </article>
-      <article class="proj">
-        <div class="ph"><span>Foto por confirmar</span></div>
-        <div class="body"><span class="pill">Consultoría</span><h4>Nombre del proyecto</h4><p>Entidad contratante, ubicación y año. Descripción breve del alcance.</p></div>
-      </article>
-      <article class="proj">
-        <div class="ph"><span>Foto por confirmar</span></div>
-        <div class="body"><span class="pill">Gerencia de proyectos</span><h4>Nombre del proyecto</h4><p>Entidad contratante, ubicación y año. Descripción breve del alcance.</p></div>
-      </article>
+      <article class="proj"><div class="body">
+        <span class="pill">Consultoría</span><span class="client">Fondo Adaptación</span>
+        <h4>Diseño de detalle de estructuras de protección, San Marcos y Magangué</h4>
+        <p>Macroproyecto La Mojana. Diseño de detalle de obras de protección contra inundaciones.</p>
+        <div class="meta"><span>Región de La Mojana</span><span>COP 3.654 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">Alcaldía de Medellín</span>
+        <h4>Segunda calzada de la Av. 34, La Aguacatala a Loma de Los Balsos</h4>
+        <p>Interventoría de preconstrucción y construcción y obras complementarias.</p>
+        <div class="meta"><span>Medellín, Antioquia</span><span>COP 944 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">Alcaldía de Medellín</span>
+        <h4>Prolongación de la Carrera 15 (San Lucas), Medellín</h4>
+        <p>Interventoría de preconstrucción y construcción y obras complementarias.</p>
+        <div class="meta"><span>Medellín, Antioquia</span><span>COP 646 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">INVÍAS</span>
+        <h4>Mejoramiento y conservación de vías para conectividad regional, Santander</h4>
+        <p>Municipios de Valle de San José y Ocamonte. Recursos de la enajenación de ISAGEN.</p>
+        <div class="meta"><span>Santander</span><span>COP 815 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">INVÍAS</span>
+        <h4>Mejoramiento de la vía La Paz a Los Encantos, Cesar</h4>
+        <p>Implementación de los Acuerdos de Paz. Recursos OCAD-PAZ del Sistema General de Regalías.</p>
+        <div class="meta"><span>Cesar</span><span>COP 612 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">INVÍAS</span>
+        <h4>Dragado de mantenimiento del canal de acceso al Puerto de Buenaventura</h4>
+        <p>Valle del Cauca. Interventoría al dragado del canal de acceso portuario.</p>
+        <div class="meta"><span>Valle del Cauca</span><span>COP 341 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">INVÍAS</span>
+        <h4>Dragado de mantenimiento del canal de acceso al Puerto de Tumaco</h4>
+        <p>Nariño. Interventoría al dragado del canal de acceso portuario.</p>
+        <div class="meta"><span>Nariño</span><span>COP 245 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">ENTerritorio</span>
+        <h4>Centro Integrado Comunitario (CISCO) San José, Manizales</h4>
+        <p>Caldas. Interventoría técnica, administrativa y de control presupuestal, Fase I.</p>
+        <div class="meta"><span>Caldas</span><span>COP 335 millones</span></div>
+      </div></article>
+      <article class="proj"><div class="body">
+        <span class="pill">Interventoría</span><span class="client">Acueducto de Bogotá</span>
+        <h4>Redes de alcantarillado sanitario, barrio Buenavista, Usaquén</h4>
+        <p>Interventoría durante la construcción de redes en la zona 1 de la EAAB ESP.</p>
+        <div class="meta"><span>Bogotá</span><span>COP 322 millones</span></div>
+      </div></article>
+    </div>
+    <div class="clients-row">
+      <span class="lbl">Algunos de nuestros clientes</span>
+      <span class="cchip">INVÍAS</span>
+      <span class="cchip">Fondo Adaptación</span>
+      <span class="cchip">ENTerritorio</span>
+      <span class="cchip">Acueducto de Bogotá</span>
+      <span class="cchip">Alcaldía de Medellín</span>
+      <span class="cchip">Presidencia de la República</span>
     </div>
   </div>
 </section>
