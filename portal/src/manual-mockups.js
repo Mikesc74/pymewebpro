@@ -38,6 +38,8 @@ export const MOCKUP_SLUGS = new Set([
   "enchapes-cristal",
   "plomero-quilla",
   "electricista-camilo",
+  // Corporate/portfolio site · engineering consultancy, Barranquilla (added 2026-06-08).
+  "inproyectos",
 ]);
 
 // Backwards-compat shim: a few callers still read `MANUAL_MOCKUPS[slug]`

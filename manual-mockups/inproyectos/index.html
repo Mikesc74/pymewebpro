@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ingeniería de Proyectos S.A.S · Consultoría, interventoría y gerencia de proyectos · Barranquilla</title>
+<meta name="description" content="Ingeniería de Proyectos S.A.S: consultoría, interventoría y gerencia de proyectos de infraestructura para el sector público y privado. Barranquilla, Colombia, desde 1985.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ingeniería de Proyectos S.A.S">
+<meta property="og:description" content="Consultoría, interventoría y gerencia de proyectos de infraestructura desde 1985. Barranquilla, Colombia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Ingeniería de Proyectos S.A.S · corporate / portfolio site
+     Design: institutional navy + copper, blueprint motif,
+     type-and-pattern driven (no stock photos), generous whitespace.
+     ============================================================ */
+  :root{
+    --navy:#0E2A47;        /* deep institutional blue   */
+    --navy-2:#16395C;
+    --steel:#356089;       /* mid blue                  */
+    --ink:#16212C;         /* body text                 */
+    --mute:#5C6B79;        /* secondary text            */
+    --accent:#B96B36;      /* copper · pairs safely with navy for CVD */
+    --accent-dk:#9C5526;
+    --accent-soft:#EBD3BE;
+    --paper:#FFFFFF;
+    --paper-2:#F3F6F9;     /* cool light grey           */
+    --cream:#F8F5F0;
+    --line:#E0E6EC;
+    --line-dk:#284866;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--ink);background:var(--paper);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:'Archivo','Inter',sans-serif;line-height:1.1;letter-spacing:-.01em}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 1.6rem}
+  .eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow.light{color:var(--accent-soft)}
+
+  /* ---------- nav ---------- */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:.7rem}
+  .brand .mark{width:38px;height:38px;border-radius:7px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .brand .mark svg{width:22px;height:22px}
+  .brand .name{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.04rem;color:var(--navy);line-height:1.05;letter-spacing:-.01em}
+  .brand .name small{display:block;font-weight:600;font-size:.66rem;letter-spacing:.16em;color:var(--mute);text-transform:uppercase;margin-top:2px}
+  .nav-links{display:flex;align-items:center;gap:2rem}
+  .nav-links a{font-size:.9rem;font-weight:500;color:var(--ink);transition:color .15s}
+  .nav-links a:hover{color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.92rem;padding:.72rem 1.25rem;border-radius:9px;cursor:pointer;border:none;font-family:inherit;transition:transform .15s,background .15s,box-shadow .15s}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(185,107,54,.28)}
+  .btn-primary:hover{background:var(--accent-dk);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-light{background:#fff;color:var(--navy)}
+  .btn-light:hover{transform:translateY(-1px)}
+  .btn-outline-light{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+  .btn-outline-light:hover{border-color:#fff}
+  .nav-cta{display:flex;gap:.6rem;align-items:center}
+  .menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--navy)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;background:var(--navy);color:#fff;overflow:hidden}
+  .hero .grid-bg{position:absolute;inset:0;opacity:.5;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000 40%,transparent 100%);
+            mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000 40%,transparent 100%);
+  }
+  .hero .glow{position:absolute;top:-20%;right:-10%;width:560px;height:560px;border-radius:50%;
+    background:radial-gradient(circle,rgba(185,107,54,.28),transparent 65%);filter:blur(10px)}
+  .hero-in{position:relative;padding:5.5rem 0 5rem;max-width:760px}
+  .hero .chips{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.6rem}
+  .chip{font-size:.74rem;font-weight:600;letter-spacing:.04em;padding:.4rem .8rem;border-radius:50px;border:1px solid rgba(255,255,255,.22);color:#dfe7ef}
+  .chip b{color:var(--accent-soft)}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.3rem);font-weight:800;letter-spacing:-.02em}
+  .hero h1 .u{color:var(--accent-soft)}
+  .hero p.lead{font-size:1.22rem;color:#cdd8e3;margin-top:1.5rem;max-width:54ch}
+  .hero .cta-row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.3rem}
+  .hero .since{margin-top:2.6rem;display:flex;align-items:center;gap:.8rem;color:#9fb1c2;font-size:.85rem}
+  .hero .since .bar{width:42px;height:2px;background:var(--accent)}
+
+  /* ---------- stat strip ---------- */
+  .stats{background:var(--cream);border-bottom:1px solid var(--line)}
+  .stats-in{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;padding:2.4rem 0}
+  .stat{text-align:center}
+  .stat .n{font-family:'Archivo',sans-serif;font-weight:800;font-size:2.3rem;color:var(--navy);line-height:1}
+  .stat .n span{color:var(--accent)}
+  .stat .l{font-size:.82rem;color:var(--mute);margin-top:.45rem;letter-spacing:.02em}
+
+  /* ---------- generic section ---------- */
+  section.block{padding:5rem 0}
+  .sec-head{max-width:640px;margin-bottom:2.8rem}
+  .sec-head h2{font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800;color:var(--navy);margin-top:.7rem}
+  .sec-head p{color:var(--mute);font-size:1.06rem;margin-top:.9rem}
+
+  /* nosotros */
+  .about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3.5rem;align-items:start}
+  .about-grid p{color:var(--ink);font-size:1.04rem;margin-bottom:1.1rem}
+  .about-grid p.muted{color:var(--mute)}
+  .about-side{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:1.9rem;border-top:4px solid var(--accent)}
+  .about-side h3{font-size:1.1rem;color:var(--navy);margin-bottom:1rem}
+  .about-side .row{display:flex;gap:.8rem;padding:.7rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
+  .about-side .row:last-child{border-bottom:none}
+  .about-side .row .k{color:var(--mute);min-width:108px;flex:0 0 auto}
+  .about-side .row .v{color:var(--ink);font-weight:600}
+
+  /* servicios */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .svc{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:2rem 1.7rem;transition:box-shadow .2s,transform .2s,border-color .2s}
+  .svc:hover{box-shadow:0 18px 40px rgba(14,42,71,.10);transform:translateY(-3px);border-color:var(--accent-soft)}
+  .svc .ic{width:52px;height:52px;border-radius:11px;background:var(--navy);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+  .svc .ic svg{width:26px;height:26px;stroke:#fff}
+  .svc h3{font-size:1.2rem;color:var(--navy);margin-bottom:.6rem}
+  .svc p{color:var(--mute);font-size:.96rem}
+  .svc ul{list-style:none;margin-top:1rem;display:flex;flex-direction:column;gap:.45rem}
+  .svc li{font-size:.9rem;color:var(--ink);padding-left:1.3rem;position:relative}
+  .svc li::before{content:'';position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+
+  /* áreas */
+  .areas{background:var(--navy);color:#fff}
+  .areas .sec-head h2{color:#fff}
+  .areas .sec-head p{color:#bcc9d6}
+  .area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dk);border:1px solid var(--line-dk);border-radius:14px;overflow:hidden}
+  .area{background:var(--navy-2);padding:1.7rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:background .2s}
+  .area:hover{background:#1c456e}
+  .area .ic{flex:0 0 auto;width:40px;height:40px;border-radius:9px;background:rgba(185,107,54,.2);display:flex;align-items:center;justify-content:center}
+  .area .ic svg{width:21px;height:21px;stroke:var(--accent-soft)}
+  .area h4{font-size:1.02rem;color:#fff;margin-bottom:.25rem}
+  .area p{font-size:.85rem;color:#9fb1c2;line-height:1.5}
+
+  /* enfoque (sector público/privado) */
+  .enfoque-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+  .enf{border:1px solid var(--line);border-radius:14px;padding:2rem;background:var(--paper-2)}
+  .enf .tag{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .enf h3{font-size:1.35rem;color:var(--navy);margin:.5rem 0 .7rem}
+  .enf p{color:var(--mute);font-size:.98rem}
+
+  /* experiencia placeholder */
+  .note{display:flex;gap:.7rem;align-items:flex-start;background:var(--cream);border:1px solid var(--accent-soft);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:2rem;font-size:.9rem;color:var(--accent-dk)}
+  .note svg{flex:0 0 auto;width:18px;height:18px;stroke:var(--accent-dk);margin-top:2px}
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .proj{border:1px dashed var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}
+  .proj .ph{height:170px;background:
+      repeating-linear-gradient(45deg,var(--paper-2),var(--paper-2) 12px,#eef2f6 12px,#eef2f6 24px);
+      display:flex;align-items:center;justify-content:center;color:var(--mute);border-bottom:1px dashed var(--line)}
+  .proj .ph span{font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:#fff;border:1px solid var(--line);padding:.3rem .65rem;border-radius:50px}
+  .proj .body{padding:1.3rem}
+  .proj .pill{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
+  .proj h4{font-size:1.06rem;color:var(--navy);margin:.4rem 0 .5rem}
+  .proj p{font-size:.88rem;color:var(--mute)}
+
+  /* visión callout */
+  .vision{background:linear-gradient(135deg,var(--navy),#0a2138);color:#fff;border-radius:18px;padding:3.4rem;position:relative;overflow:hidden}
+  .vision .glow{position:absolute;bottom:-30%;left:-5%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(53,96,137,.4),transparent 65%)}
+  .vision .in{position:relative;max-width:720px}
+  .vision h2{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:800;margin:.8rem 0 1.1rem}
+  .vision p{font-size:1.12rem;color:#cdd8e3}
+
+  /* equipo placeholder */
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem}
+  .member{text-align:center}
+  .member .av{width:100%;aspect-ratio:1;border-radius:14px;background:
+      repeating-linear-gradient(45deg,var(--paper-2),var(--paper-2) 12px,#eef2f6 12px,#eef2f6 24px);
+      border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:.9rem}
+  .member .av svg{width:40px;height:40px;stroke:var(--mute);opacity:.6}
+  .member h4{font-size:1rem;color:var(--navy)}
+  .member p{font-size:.84rem;color:var(--mute)}
+
+  /* contacto */
+  .contact{background:var(--paper-2);border-top:1px solid var(--line)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+  .contact h2{font-size:clamp(1.9rem,3.6vw,2.6rem);font-weight:800;color:var(--navy)}
+  .contact p.sub{color:var(--mute);font-size:1.06rem;margin-top:.9rem;max-width:46ch}
+  .ci{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+  .ci:last-child{border-bottom:none}
+  .ci .ic{flex:0 0 auto;width:44px;height:44px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+  .ci .ic svg{width:21px;height:21px;stroke:#fff}
+  .ci .k{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+  .ci .v{font-size:1rem;color:var(--ink);font-weight:600}
+  .contact-card{background:var(--navy);color:#fff;border-radius:16px;padding:2.4rem}
+  .contact-card h3{font-size:1.4rem;margin-bottom:.6rem}
+  .contact-card p{color:#cdd8e3;font-size:.98rem;margin-bottom:1.6rem}
+  .contact-card .btn{width:100%;justify-content:center;margin-bottom:.7rem}
+
+  /* footer */
+  footer.ft{background:#0a2138;color:#9fb1c2;padding:3rem 0 2rem;font-size:.88rem}
+  .ft-in{display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start}
+  .ft .brand .name{color:#fff}
+  .ft .brand .name small{color:#7e92a6}
+  .ft .legal{max-width:420px;line-height:1.7}
+  .ft .legal b{color:#cdd8e3}
+  .ft-bottom{border-top:1px solid var(--line-dk);margin-top:2rem;padding-top:1.4rem;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between;font-size:.8rem;color:#7e92a6}
+  .ft-bottom a{color:var(--accent-soft)}
+
+  /* ---------- chat widget ---------- */
+  .chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(185,107,54,.45),0 4px 8px rgba(185,107,54,.25);transition:transform .2s,background .2s,opacity .2s;font-family:inherit}
+  .chat-fab:hover{background:var(--accent-dk);transform:scale(1.05)}
+  .chat-fab:focus-visible{outline:3px solid var(--accent-soft);outline-offset:3px}
+  .chat-fab svg{width:28px;height:28px}
+  .chat-fab[hidden]{display:none}
+  .chat-panel{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:380px;max-width:calc(100vw - 2rem);height:560px;max-height:calc(100vh - 3rem);background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(14,42,71,.22),0 8px 16px rgba(14,42,71,.12);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .25s,opacity .25s}
+  .chat-panel[data-open="true"]{transform:translateY(0);opacity:1;pointer-events:auto}
+  .chat-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.95rem 1.1rem;background:var(--navy);color:#fff}
+  .chat-header .who{display:flex;align-items:center;gap:.65rem}
+  .chat-header .avatar{width:38px;height:38px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-header .avatar svg{width:20px;height:20px;stroke:#fff}
+  .chat-header .title{font-weight:600;font-size:.95rem;line-height:1.15}
+  .chat-header .subtitle{font-size:.72rem;opacity:.85;display:flex;align-items:center;gap:.35rem}
+  .chat-header .subtitle::before{content:'';width:7px;height:7px;border-radius:50%;background:#7CF7C5;box-shadow:0 0 0 2px rgba(124,247,197,.25)}
+  .chat-close{background:transparent;color:rgba(255,255,255,.85);border:none;padding:.3rem;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+  .chat-close:hover{background:rgba(255,255,255,.12);color:#fff}
+  .chat-close svg{width:18px;height:18px}
+  .chat-body{flex:1;overflow-y:auto;padding:1rem 1.1rem;background:#FAFBFC;display:flex;flex-direction:column;gap:.6rem;scroll-behavior:smooth}
+  .chat-body::-webkit-scrollbar{width:6px}
+  .chat-body::-webkit-scrollbar-thumb{background:rgba(20,43,61,.14);border-radius:3px}
+  .bubble{max-width:82%;padding:.7rem .9rem;border-radius:14px;font-size:.92rem;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+  .bubble.bot{background:#fff;color:var(--ink);align-self:flex-start;border:1px solid var(--line);border-bottom-left-radius:4px}
+  .bubble.user{background:var(--navy);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .bubble.typing{display:inline-flex;gap:3px;align-items:center;padding:.85rem 1rem;color:var(--mute)}
+  .bubble.typing span{width:6px;height:6px;border-radius:50%;background:var(--mute);animation:tdot 1.2s infinite ease-in-out}
+  .bubble.typing span:nth-child(2){animation-delay:.15s}
+  .bubble.typing span:nth-child(3){animation-delay:.3s}
+  @keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-3px);opacity:1}}
+  .bubble.error{background:#FEF2F2;color:#991B1B;border:1px solid #FEE2E2;align-self:flex-start;border-bottom-left-radius:4px}
+  .wa-cta{display:inline-flex;align-items:center;gap:.5rem;align-self:flex-start;margin-top:.2rem;padding:.7rem 1rem;background:#25D366;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:.88rem;box-shadow:0 6px 14px rgba(37,211,102,.32);transition:transform .15s}
+  .wa-cta:hover{transform:translateY(-1px);color:#fff}
+  .wa-cta svg{width:16px;height:16px}
+  .chat-input-row{display:flex;gap:.5rem;padding:.75rem;background:#fff;border-top:1px solid var(--line)}
+  .chat-input{flex:1;border:1px solid var(--line);border-radius:10px;padding:.6rem .85rem;font:inherit;font-size:.92rem;color:var(--ink);outline:none;background:#FAFBFC;transition:border-color .15s,background .15s}
+  .chat-input:focus{border-color:var(--accent);background:#fff}
+  .chat-send{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0 .9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s}
+  .chat-send:hover{background:var(--accent-dk)}
+  .chat-send:disabled{background:var(--mute);cursor:not-allowed}
+  .chat-send svg{width:18px;height:18px}
+  .chat-foot{padding:.45rem .75rem;background:#fff;border-top:1px solid var(--line);font-size:.7rem;color:var(--mute);text-align:center;letter-spacing:.02em}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:880px){
+    .nav-links{display:none}
+    .about-grid,.enfoque-grid,.contact-grid{grid-template-columns:1fr;gap:2rem}
+    .svc-grid,.area-grid,.proj-grid{grid-template-columns:1fr}
+    .team-grid{grid-template-columns:1fr 1fr}
+    .stats-in{grid-template-columns:1fr 1fr;gap:2rem}
+    .vision{padding:2.2rem}
+  }
+  @media (max-width:500px){
+    .chat-panel{bottom:0;right:0;width:100vw;height:100vh;max-height:100vh;border-radius:0;border:none}
+    .chat-fab{bottom:1rem;right:1rem;width:56px;height:56px}
+    .nav-cta .btn:not(.menu-btn){display:none}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  }
+  @media print{
+    .chat-fab,.chat-panel,header.nav,.hero .cta-row,.contact-card{display:none!important}
+    body{color:#000}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#inicio" aria-label="Ingeniería de Proyectos S.A.S">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#B96B36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+      </span>
+      <span class="name">Ingeniería de Proyectos<small>S.A.S · Barranquilla</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#nosotros">Nosotros</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#areas">Áreas</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="btn btn-primary" data-action="open-chat">Hablar con nosotros</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="chips">
+      <span class="chip">Barranquilla · Colombia</span>
+      <span class="chip">Desde <b>1985</b></span>
+      <span class="chip">Miembro <b>CCI</b></span>
+      <span class="chip">Sector público y privado</span>
+    </div>
+    <h1>Ingeniería que sostiene la <span class="u">inversión</span> pública y privada.</h1>
+    <p class="lead">Consultoría, interventoría y gerencia de proyectos de infraestructura, con estándares altos de calidad e innovación. Cuatro décadas respaldando decisiones de inversión en Colombia.</p>
+    <div class="cta-row">
+      <button class="btn btn-light" data-action="open-chat">Cuéntanos tu proyecto</button>
+      <a class="btn btn-outline-light" href="#servicios">Ver servicios</a>
+    </div>
+    <div class="since"><span class="bar"></span> Fundada en 1985 · Calle 77B No. 57-103, Oficina 907</div>
+  </div>
+</section>
+
+<!-- ============ STAT STRIP ============ -->
+<div class="stats">
+  <div class="wrap stats-in">
+    <div class="stat"><div class="n"><span>40</span></div><div class="l">años de trayectoria</div></div>
+    <div class="stat"><div class="n">1985</div><div class="l">año de fundación</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">líneas de servicio</div></div>
+    <div class="stat"><div class="n">CCI</div><div class="l">Cámara Colombiana de la Infraestructura</div></div>
+  </div>
+</div>
+
+<!-- ============ NOSOTROS ============ -->
+<section class="block" id="nosotros">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <span class="eyebrow">Nosotros</span>
+        <h2 style="font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800;color:var(--navy);margin:.7rem 0 1.4rem">Cuatro décadas desarrollando proyectos de infraestructura</h2>
+        <p>Ingeniería de Proyectos S.A.S nació en 1985 con el propósito de respaldar las decisiones de inversión del sector público y privado, ofreciendo servicios de ingeniería altamente calificados.</p>
+        <p>Somos una organización especializada en el desarrollo integral de proyectos de infraestructura, bajo estándares altos de calidad e innovación. Trabajamos en consultoría, interventoría y gerencia de proyectos para entidades públicas y empresas privadas en todo el país.</p>
+        <p class="muted">Nos respalda un equipo humano profesional con amplia experiencia, comprometido con la satisfacción del cliente, la aplicación de tecnologías apropiadas, la rentabilidad de nuestros accionistas y el mejoramiento continuo en la calidad del servicio.</p>
+      </div>
+      <aside class="about-side">
+        <h3>La empresa</h3>
+        <div class="row"><span class="k">Razón social</span><span class="v">Ingeniería de Proyectos S.A.S</span></div>
+        <div class="row"><span class="k">NIT</span><span class="v">890.116.722-8</span></div>
+        <div class="row"><span class="k">Fundación</span><span class="v">1985</span></div>
+        <div class="row"><span class="k">Sector</span><span class="v">Consultor · CCI Norte</span></div>
+        <div class="row"><span class="k">Actividad</span><span class="v">Ingeniería y consultoría técnica (CIIU 7112)</span></div>
+        <div class="row"><span class="k">Sede</span><span class="v">Barranquilla, Atlántico</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="block" id="servicios" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Servicios</span>
+      <h2>Lo que hacemos</h2>
+      <p>Acompañamos el ciclo completo de un proyecto de infraestructura: desde los estudios y diseños hasta la supervisión y la dirección de la obra.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="svc">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h3>Consultoría</h3>
+        <p>Estudios, diseños y asesoría especializada para respaldar decisiones de inversión sólidas y técnicamente fundamentadas.</p>
+        <ul>
+          <li>Estudios y diseños de infraestructura</li>
+          <li>Estructuración de proyectos</li>
+          <li>Asesoría técnica especializada</li>
+        </ul>
+      </article>
+      <article class="svc">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Interventoría</h3>
+        <p>Supervisión técnica, administrativa y financiera de obras y contratos, garantizando cumplimiento, calidad y transparencia.</p>
+        <ul>
+          <li>Interventoría técnica y administrativa</li>
+          <li>Control de calidad y de obra</li>
+          <li>Seguimiento de contratos públicos y privados</li>
+        </ul>
+      </article>
+      <article class="svc">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg></div>
+        <h3>Gerencia de proyectos</h3>
+        <p>Dirección integral de proyectos: planeación, coordinación y control de alcance, tiempo, costo y calidad de principio a fin.</p>
+        <ul>
+          <li>Planeación y control de proyectos</li>
+          <li>Coordinación de equipos y contratistas</li>
+          <li>Gestión de alcance, tiempo y costo</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÁREAS DE INGENIERÍA ============ -->
+<section class="block areas" id="areas">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow light">Áreas de ingeniería</span>
+      <h2>Un equipo multidisciplinario</h2>
+      <p>Reunimos profesionales de distintas disciplinas para abordar cada proyecto de forma integral.</p>
+    </div>
+    <div class="area-grid">
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/></svg></span><div><h4>Ingeniería civil</h4><p>Infraestructura, estructuras y obras de urbanismo.</p></div></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></span><div><h4>Ingeniería industrial</h4><p>Procesos, productividad y gestión de proyectos.</p></div></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></span><div><h4>Ingeniería mecánica</h4><p>Sistemas mecánicos y equipos para infraestructura.</p></div></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><div><h4>Ingeniería eléctrica</h4><p>Diseño y supervisión de sistemas eléctricos.</p></div></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></span><div><h4>Ingeniería ambiental</h4><p>Gestión ambiental y sostenibilidad de proyectos.</p></div></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-5h6v5"/></svg></span><div><h4>Arquitectura</h4><p>Diseño arquitectónico y coordinación de proyectos.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENFOQUE ============ -->
+<section class="block" id="enfoque">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Enfoque</span>
+      <h2>Sector público y privado</h2>
+      <p>Adaptamos nuestra metodología a las exigencias de cada cliente, con el mismo estándar técnico y ético.</p>
+    </div>
+    <div class="enfoque-grid">
+      <div class="enf">
+        <span class="tag">Sector público</span>
+        <h3>Apoyo a la inversión pública</h3>
+        <p>Acompañamos a entidades estatales en la consultoría, interventoría y gerencia de proyectos de infraestructura, con rigor técnico, transparencia y cumplimiento normativo.</p>
+      </div>
+      <div class="enf">
+        <span class="tag">Sector privado</span>
+        <h3>Respaldo a la inversión privada</h3>
+        <p>Estructuramos y supervisamos proyectos para empresas privadas, protegiendo su inversión con control de calidad, costo y tiempo a lo largo de todo el proyecto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCIA (placeholder portfolio) ============ -->
+<section class="block" id="experiencia" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Experiencia</span>
+      <h2>Proyectos representativos</h2>
+      <p>Una muestra del trabajo realizado a lo largo de cuatro décadas.</p>
+    </div>
+    <!-- PLACEHOLDER · awaiting real project list, photos and clients from the client (Jorge / Mónica) -->
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <span><b>Sección por confirmar.</b> Los proyectos, fotos y clientes se completan con la información que entregue Ingeniería de Proyectos. Las tarjetas de abajo son ejemplos de maquetación, no proyectos reales.</span>
+    </div>
+    <div class="proj-grid">
+      <article class="proj">
+        <div class="ph"><span>Foto por confirmar</span></div>
+        <div class="body"><span class="pill">Interventoría</span><h4>Nombre del proyecto</h4><p>Entidad contratante, ubicación y año. Descripción breve del alcance.</p></div>
+      </article>
+      <article class="proj">
+        <div class="ph"><span>Foto por confirmar</span></div>
+        <div class="body"><span class="pill">Consultoría</span><h4>Nombre del proyecto</h4><p>Entidad contratante, ubicación y año. Descripción breve del alcance.</p></div>
+      </article>
+      <article class="proj">
+        <div class="ph"><span>Foto por confirmar</span></div>
+        <div class="body"><span class="pill">Gerencia de proyectos</span><h4>Nombre del proyecto</h4><p>Entidad contratante, ubicación y año. Descripción breve del alcance.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISIÓN ============ -->
+<section class="block">
+  <div class="wrap">
+    <div class="vision">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="in">
+        <span class="eyebrow light">Visión 2030</span>
+        <h2>Un grupo empresarial con presencia en Colombia y Latinoamérica</h2>
+        <p>Para 2030 nos proyectamos consolidados como líderes de un grupo empresarial con participación en proyectos en Colombia y Latinoamérica, reconocidos por nuestra capacidad técnica y financiera, nuestra capacidad operativa y un alto perfil ético.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EQUIPO (placeholder) ============ -->
+<section class="block" id="equipo" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Equipo</span>
+      <h2>Quiénes lideran</h2>
+      <p>Dirección y equipo profesional de Ingeniería de Proyectos.</p>
+    </div>
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <span><b>Sección por confirmar.</b> Nombres, cargos y fotos del equipo directivo pendientes de entrega por la empresa.</span>
+    </div>
+    <div class="team-grid">
+      <div class="member"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h4>Nombre y apellido</h4><p>Cargo</p></div>
+      <div class="member"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h4>Nombre y apellido</h4><p>Cargo</p></div>
+      <div class="member"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h4>Nombre y apellido</h4><p>Cargo</p></div>
+      <div class="member"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h4>Nombre y apellido</h4><p>Cargo</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="block contact" id="contacto">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        <span class="eyebrow">Contacto</span>
+        <h2>Hablemos de su proyecto</h2>
+        <p class="sub">Estamos en Barranquilla y trabajamos en proyectos en todo el país. Escríbanos y le respondemos con gusto.</p>
+        <div style="margin-top:2rem">
+          <div class="ci">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div><div class="k">Dirección</div><div class="v">Calle 77B No. 57-103, Oficina 907<br>Barranquilla, Atlántico</div></div>
+          </div>
+          <div class="ci">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><div class="k">Teléfono</div><div class="v">(605) 368 6111</div></div>
+          </div>
+          <div class="ci">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+            <div><div class="k">Contacto principal</div><div class="v">Mónica Gutiérrez</div></div>
+          </div>
+          <!-- TODO PymeWebPro: confirmar correo de contacto vigente (el anterior pedro.gutierrez@inproyectos.com queda fuera de uso) -->
+        </div>
+      </div>
+      <div class="contact-card">
+        <h3>Cuéntenos su proyecto</h3>
+        <p>Nuestro asistente le ayuda a orientar su consulta y a coordinar una conversación con el equipo.</p>
+        <button class="btn btn-primary" data-action="open-chat">Iniciar conversación</button>
+        <a class="btn btn-outline-light" href="tel:+576053686111">Llamar (605) 368 6111</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="ft">
+  <div class="wrap ft-in">
+    <div class="brand">
+      <span class="name" style="font-family:'Archivo',sans-serif;font-weight:800;font-size:1.1rem">Ingeniería de Proyectos<small style="display:block;font-weight:600;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;margin-top:3px">S.A.S</small></span>
+    </div>
+    <p class="legal">
+      <b>Ingeniería de Proyectos S.A.S</b> · NIT 890.116.722-8<br>
+      Calle 77B No. 57-103, Oficina 907, Barranquilla, Atlántico, Colombia<br>
+      Teléfono (605) 368 6111<br>
+      Miembro de la Cámara Colombiana de la Infraestructura (CCI), Seccional Norte.
+    </p>
+  </div>
+  <div class="wrap ft-bottom">
+    <span>© <span id="year">2026</span> Ingeniería de Proyectos S.A.S. Todos los derechos reservados.</span>
+    <span>Sitio web por <a href="https://pymewebpro.com" target="_blank" rel="noopener">PymeWebPro</a></span>
+  </div>
+</footer>
+
+<!-- ============ CHAT WIDGET ============ -->
+<button class="chat-fab" id="chatOpenBtn" aria-label="Hablar con el asistente" aria-expanded="false" aria-controls="chatPanel">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+<aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
+  <header class="chat-header">
+    <div class="who">
+      <div class="avatar" role="img" aria-label="Ingeniería de Proyectos"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+      <div>
+        <div class="title" id="chatTitle">Asistente · Ingeniería de Proyectos</div>
+        <div class="subtitle">en línea</div>
+      </div>
+    </div>
+    <button class="chat-close" id="chatCloseBtn" aria-label="Cerrar chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </header>
+  <div class="chat-body" id="chatBody" aria-live="polite" aria-atomic="false"></div>
+  <form class="chat-input-row" id="chatForm" autocomplete="off">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Escriba su mensaje…" aria-label="Mensaje" maxlength="500" required />
+    <button type="submit" class="chat-send" id="chatSendBtn" aria-label="Enviar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </form>
+  <div class="chat-foot">Atendido por IA · siempre puede hablar con una persona del equipo</div>
+</aside>
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"ProfessionalService",
+  "name":"Ingeniería de Proyectos S.A.S",
+  "description":"Consultoría, interventoría y gerencia de proyectos de infraestructura para el sector público y privado, desde 1985.",
+  "foundingDate":"1985",
+  "telephone":"+57-605-368-6111",
+  "areaServed":"CO",
+  "address":{
+    "@type":"PostalAddress",
+    "streetAddress":"Calle 77B No. 57-103, Oficina 907",
+    "addressLocality":"Barranquilla",
+    "addressRegion":"Atlántico",
+    "addressCountry":"CO"
+  },
+  "identifier":{"@type":"PropertyValue","propertyID":"NIT","value":"890.116.722-8"},
+  "memberOf":{"@type":"Organization","name":"Cámara Colombiana de la Infraestructura (CCI)"},
+  "knowsAbout":["Consultoría","Interventoría","Gerencia de proyectos","Ingeniería civil","Infraestructura"]
+}
+</script>
+
+<script>
+// Year stamp.
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ─── Chat widget ───
+(function(){
+  var SLUG = 'inproyectos';
+  var ENDPOINT = 'https://mockups.pymewebpro.com/api/chat/' + SLUG;
+  // TODO PymeWebPro: reemplazar 573000000000 por el WhatsApp real de Ingeniería de Proyectos.
+  var WA_FALLBACK = 'https://wa.me/573000000000?text=' + encodeURIComponent('Hola, quisiera información sobre Ingeniería de Proyectos');
+
+  var fab = document.getElementById('chatOpenBtn');
+  var panel = document.getElementById('chatPanel');
+  var closeBtn = document.getElementById('chatCloseBtn');
+  var body = document.getElementById('chatBody');
+  var form = document.getElementById('chatForm');
+  var input = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+
+  var history = [];
+  var greeted = false;
+
+  function openPanel(){
+    panel.setAttribute('data-open','true');
+    panel.setAttribute('aria-hidden','false');
+    fab.setAttribute('aria-expanded','true');
+    fab.hidden = true;
+    if (!greeted){ greet(); greeted = true; }
+    setTimeout(function(){ input.focus(); }, 280);
+  }
+  function closePanel(){
+    panel.setAttribute('data-open','false');
+    panel.setAttribute('aria-hidden','true');
+    fab.setAttribute('aria-expanded','false');
+    fab.hidden = false;
+  }
+  fab.addEventListener('click', openPanel);
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.getAttribute('data-open') === 'true') closePanel(); });
+  document.querySelectorAll('[data-action="open-chat"]').forEach(function(btn){
+    btn.addEventListener('click', function(e){ e.preventDefault(); openPanel(); });
+  });
+
+  function addBubble(role, text, opts){
+    opts = opts || {};
+    var el = document.createElement('div');
+    el.className = 'bubble ' + role + (opts.error ? ' error' : '');
+    el.textContent = text;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+  function addTyping(){
+    var el = document.createElement('div');
+    el.className = 'bubble bot typing';
+    el.setAttribute('aria-label','escribiendo');
+    el.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+  function addWaCta(url, label){
+    var a = document.createElement('a');
+    a.className = 'wa-cta';
+    a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span></span>';
+    a.querySelector('span').textContent = label;
+    body.appendChild(a);
+    body.scrollTop = body.scrollHeight;
+  }
+  function greet(){
+    addBubble('bot', 'Buen día. Soy el asistente de Ingeniería de Proyectos S.A.S. Le ayudo con información sobre consultoría, interventoría y gerencia de proyectos, o coordino una conversación con el equipo. ¿En qué le puedo ayudar?');
+  }
+
+  async function send(text){
+    history.push({ role:'user', content:text });
+    addBubble('user', text);
+    input.value = '';
+    sendBtn.disabled = true;
+    var typing = addTyping();
+    try {
+      var res = await fetch(ENDPOINT, {
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body: JSON.stringify({ messages: history }),
+      });
+      typing.remove();
+      if (!res.ok){
+        var msg = res.status === 503
+          ? 'El asistente está temporalmente fuera de línea. Puede escribirnos directamente por WhatsApp.'
+          : 'Algo no salió bien. Escríbanos por WhatsApp y le atendemos de inmediato.';
+        addBubble('bot', msg, { error:true });
+        addWaCta(WA_FALLBACK, 'Hablar por WhatsApp');
+        return;
+      }
+      var data = await res.json();
+      var reply = (data.reply || '').trim();
+      if (reply) addBubble('bot', reply);
+      if (data.wa_link){
+        var label = data.mode === 'order' ? 'Continuar por WhatsApp' : 'Continuar por WhatsApp';
+        addWaCta(data.wa_link, label);
+      }
+      history.push({ role:'assistant', content: reply });
+    } catch(err) {
+      typing.remove();
+      addBubble('bot', 'No pude enviar su mensaje. Escríbanos por WhatsApp y le atendemos.', { error:true });
+      addWaCta(WA_FALLBACK, 'Hablar por WhatsApp');
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text = (input.value || '').trim();
+    if (!text || sendBtn.disabled) return;
+    send(text);
+  });
+})();
+</script>
+
+</body>
+</html>
