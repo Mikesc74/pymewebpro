@@ -40,6 +40,7 @@ export const MOCKUP_SLUGS = new Set([
   "electricista-camilo",
   // Corporate/portfolio site · engineering consultancy, Barranquilla (added 2026-06-08).
   "inproyectos",
+  "inproyectos-v2",
 ]);
 
 // Backwards-compat shim: a few callers still read `MANUAL_MOCKUPS[slug]`
