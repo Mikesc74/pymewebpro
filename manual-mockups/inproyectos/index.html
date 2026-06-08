@@ -19,19 +19,19 @@
      type-and-pattern driven (no stock photos), generous whitespace.
      ============================================================ */
   :root{
-    --navy:#0E2A47;        /* deep institutional blue   */
-    --navy-2:#16395C;
-    --steel:#356089;       /* mid blue                  */
-    --ink:#16212C;         /* body text                 */
-    --mute:#5C6B79;        /* secondary text            */
-    --accent:#B96B36;      /* copper · pairs safely with navy for CVD */
-    --accent-dk:#9C5526;
-    --accent-soft:#EBD3BE;
+    --navy:#0F3138;        /* deep teal-charcoal (brand dark)        */
+    --navy-2:#16434C;
+    --steel:#1C8E8A;       /* brand teal (from logo)                 */
+    --ink:#243038;         /* body text                              */
+    --mute:#5E6B72;        /* secondary text                         */
+    --accent:#EA6256;      /* coral/red (from logo)                  */
+    --accent-dk:#D24A3F;
+    --accent-soft:#F6C8C3;
     --paper:#FFFFFF;
-    --paper-2:#F3F6F9;     /* cool light grey           */
-    --cream:#F8F5F0;
-    --line:#E0E6EC;
-    --line-dk:#284866;
+    --paper-2:#F2F6F6;     /* cool light grey (teal-tinted)          */
+    --cream:#F6F3EF;
+    --line:#DFE6E6;
+    --line-dk:#1E4A52;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -50,6 +50,7 @@
   header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
   .brand{display:flex;align-items:center;gap:.7rem}
+  .brand-logo{height:40px;width:auto;display:block}
   .brand .mark{width:38px;height:38px;border-radius:7px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
   .brand .mark svg{width:22px;height:22px}
   .brand .name{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.04rem;color:var(--navy);line-height:1.05;letter-spacing:-.01em}
@@ -58,7 +59,7 @@
   .nav-links a{font-size:.9rem;font-weight:500;color:var(--ink);transition:color .15s}
   .nav-links a:hover{color:var(--accent)}
   .btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.92rem;padding:.72rem 1.25rem;border-radius:9px;cursor:pointer;border:none;font-family:inherit;transition:transform .15s,background .15s,box-shadow .15s}
-  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(185,107,54,.28)}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(234,98,86,.28)}
   .btn-primary:hover{background:var(--accent-dk);transform:translateY(-1px)}
   .btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--line)}
   .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
@@ -80,7 +81,7 @@
             mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000 40%,transparent 100%);
   }
   .hero .glow{position:absolute;top:-20%;right:-10%;width:560px;height:560px;border-radius:50%;
-    background:radial-gradient(circle,rgba(185,107,54,.28),transparent 65%);filter:blur(10px)}
+    background:radial-gradient(circle,rgba(234,98,86,.28),transparent 65%);filter:blur(10px)}
   .hero-in{position:relative;padding:5.5rem 0 5rem;max-width:760px}
   .hero .chips{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.6rem}
   .chip{font-size:.74rem;font-weight:600;letter-spacing:.04em;padding:.4rem .8rem;border-radius:50px;border:1px solid rgba(255,255,255,.22);color:#dfe7ef}
@@ -136,7 +137,7 @@
   .area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dk);border:1px solid var(--line-dk);border-radius:14px;overflow:hidden}
   .area{background:var(--navy-2);padding:1.7rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:background .2s}
   .area:hover{background:#1c456e}
-  .area .ic{flex:0 0 auto;width:40px;height:40px;border-radius:9px;background:rgba(185,107,54,.2);display:flex;align-items:center;justify-content:center}
+  .area .ic{flex:0 0 auto;width:40px;height:40px;border-radius:9px;background:rgba(234,98,86,.16);display:flex;align-items:center;justify-content:center}
   .area .ic svg{width:21px;height:21px;stroke:var(--accent-soft)}
   .area h4{font-size:1.02rem;color:#fff;margin-bottom:.25rem}
   .area p{font-size:.85rem;color:#9fb1c2;line-height:1.5}
@@ -208,7 +209,7 @@
   .ft-bottom a{color:var(--accent-soft)}
 
   /* ---------- chat widget ---------- */
-  .chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(185,107,54,.45),0 4px 8px rgba(185,107,54,.25);transition:transform .2s,background .2s,opacity .2s;font-family:inherit}
+  .chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(234,98,86,.45),0 4px 8px rgba(234,98,86,.25);transition:transform .2s,background .2s,opacity .2s;font-family:inherit}
   .chat-fab:hover{background:var(--accent-dk);transform:scale(1.05)}
   .chat-fab:focus-visible{outline:3px solid var(--accent-soft);outline-offset:3px}
   .chat-fab svg{width:28px;height:28px}
@@ -278,10 +279,8 @@
 <header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#inicio" aria-label="Ingeniería de Proyectos S.A.S">
-      <span class="mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#B96B36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
-      </span>
-      <span class="name">Ingeniería de Proyectos<small>S.A.S · Barranquilla</small></span>
+      <img src="./logo.png" alt="Ingeniería de Proyectos S.A.S" class="brand-logo" onerror="this.style.display='none';document.getElementById('brandText').style.display='flex'">
+      <span class="name" id="brandText" style="display:none">Ingeniería de Proyectos<small>S.A.S · Barranquilla</small></span>
     </a>
     <nav class="nav-links" aria-label="Principal">
       <a href="#nosotros">Nosotros</a>
@@ -316,16 +315,6 @@
     <div class="since"><span class="bar"></span> Fundada en 1985 · Calle 77B No. 57-103, Oficina 907</div>
   </div>
 </section>
-
-<!-- ============ STAT STRIP ============ -->
-<div class="stats">
-  <div class="wrap stats-in">
-    <div class="stat"><div class="n"><span>40</span></div><div class="l">años de trayectoria</div></div>
-    <div class="stat"><div class="n">1985</div><div class="l">año de fundación</div></div>
-    <div class="stat"><div class="n">3</div><div class="l">líneas de servicio</div></div>
-    <div class="stat"><div class="n">CCI</div><div class="l">Cámara Colombiana de la Infraestructura</div></div>
-  </div>
-</div>
 
 <!-- ============ NOSOTROS ============ -->
 <section class="block" id="nosotros">
