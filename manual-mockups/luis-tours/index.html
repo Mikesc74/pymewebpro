@@ -316,53 +316,11 @@ footer a:hover{color:var(--amber)}
 .foot-bottom a{color:rgba(255,255,255,.72)}
 @media (max-width: 780px){.foot-grid{grid-template-columns:1fr;gap:2rem}}
 
-/* ─── Chat widget ─── */
-.chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--clay);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(194,90,46,.45),0 4px 8px rgba(194,90,46,.25);transition:transform .2s ease,background .2s ease;font-family:inherit}
-.chat-fab:hover{background:var(--clay-deep);transform:scale(1.05)}
-.chat-fab:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
-.chat-fab svg{width:28px;height:28px}
-.chat-fab[hidden]{display:none}
-.chat-panel{position:fixed;bottom:1.5rem;right:1.5rem;z-index:61;width:380px;max-width:calc(100vw - 2rem);height:560px;max-height:calc(100vh - 3rem);background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(14,61,41,.22),0 8px 16px rgba(14,61,41,.12);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .25s ease,opacity .25s ease}
-.chat-panel[data-open="true"]{transform:translateY(0);opacity:1;pointer-events:auto}
-.chat-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.95rem 1.1rem;background:var(--forest);color:#fff}
-.chat-header .who{display:flex;align-items:center;gap:.65rem}
-.chat-header .avatar{width:38px;height:38px;border-radius:50%;background-image:var(--brand-mark);background-size:cover;box-shadow:0 1px 4px rgba(0,0,0,.18)}
-.chat-header .title{font-weight:600;font-size:.95rem;line-height:1.15}
-.chat-header .subtitle{font-size:.72rem;opacity:.85;display:flex;align-items:center;gap:.35rem}
-.chat-header .subtitle::before{content:'';width:7px;height:7px;border-radius:50%;background:#7CF7C5;box-shadow:0 0 0 2px rgba(124,247,197,.25)}
-.chat-close{background:transparent;color:rgba(255,255,255,.85);border:none;padding:.3rem;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background .15s ease}
-.chat-close:hover{background:rgba(255,255,255,.12);color:#fff}
-.chat-close svg{width:18px;height:18px}
-.chat-body{flex:1;overflow-y:auto;padding:1rem 1.1rem;background:#FAFBF9;display:flex;flex-direction:column;gap:.6rem;scroll-behavior:smooth}
-.chat-body::-webkit-scrollbar{width:6px}
-.chat-body::-webkit-scrollbar-thumb{background:rgba(23,35,27,.14);border-radius:3px}
-.bubble{max-width:80%;padding:.7rem .9rem;border-radius:14px;font-size:.92rem;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
-.bubble.bot{background:#fff;color:var(--ink);align-self:flex-start;border:1px solid var(--line);border-bottom-left-radius:4px}
-.bubble.user{background:var(--forest);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.bubble.typing{display:inline-flex;gap:3px;align-items:center;padding:.85rem 1rem}
-.bubble.typing span{width:6px;height:6px;border-radius:50%;background:var(--ink-mute);animation:tdot 1.2s infinite ease-in-out}
-.bubble.typing span:nth-child(2){animation-delay:.15s}
-.bubble.typing span:nth-child(3){animation-delay:.3s}
-@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-3px);opacity:1}}
-.bubble.error{background:#FEF2F2;color:#991B1B;border:1px solid #FEE2E2;align-self:flex-start;border-bottom-left-radius:4px}
-.wa-cta{display:inline-flex;align-items:center;gap:.5rem;align-self:flex-start;margin-top:.2rem;padding:.7rem 1rem;background:#25D366;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:.88rem;box-shadow:0 6px 14px rgba(37,211,102,.32);transition:transform .15s ease}
-.wa-cta:hover{transform:translateY(-1px);color:#fff}
-.wa-cta svg{width:16px;height:16px}
-.chat-input-row{display:flex;gap:.5rem;padding:.75rem;background:#fff;border-top:1px solid var(--line)}
-.chat-input{flex:1;border:1px solid var(--line);border-radius:10px;padding:.6rem .85rem;font:inherit;font-size:.92rem;color:var(--ink);outline:none;background:#FAFBF9;transition:border-color .15s ease,background .15s ease}
-.chat-input:focus{border-color:var(--forest);background:#fff}
-.chat-send{background:var(--forest);color:#fff;border:none;border-radius:10px;padding:0 .9rem;display:flex;align-items:center;justify-content:center;transition:background .15s ease}
-.chat-send:hover{background:var(--forest-deep)}
-.chat-send:disabled{background:var(--ink-mute);cursor:not-allowed}
-.chat-send svg{width:18px;height:18px}
-.chat-foot{padding:.45rem .75rem;background:#fff;border-top:1px solid var(--line);font-size:.7rem;color:var(--ink-mute);text-align:center}
-@media (max-width: 500px){.chat-panel{bottom:0;right:0;width:100vw;height:100vh;max-height:100vh;border-radius:0;border:none}.chat-fab{bottom:1rem;right:1rem;width:56px;height:56px}}
-
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
 }
 @media print{
-  .nav,.chat-fab,.hero-art,.scrim,.drawer,footer{display:none}
+  .nav,#pwp-launcher,#pwp-box,.hero-art,.scrim,.drawer,footer{display:none}
   body{background:#fff;color:#000}
   section{padding:1rem 0;page-break-inside:avoid}
 }
@@ -764,33 +722,6 @@ footer a:hover{color:var(--amber)}
   </div>
 </footer>
 
-<!-- ─── Chat widget ─── -->
-<button class="chat-fab" id="chatOpenBtn" aria-label="Hablar con el asistente" aria-expanded="false" aria-controls="chatPanel">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-</button>
-
-<aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
-  <header class="chat-header">
-    <div class="who">
-      <div class="avatar" role="img" aria-label="Luis Tours"></div>
-      <div>
-        <div class="title" id="chatTitle">Asistente Luis Tours</div>
-        <div class="subtitle"><span data-l="es">en línea</span><span data-l="en">online</span></div>
-      </div>
-    </div>
-    <button class="chat-close" id="chatCloseBtn" aria-label="Cerrar chat">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-  </header>
-  <div class="chat-body" id="chatBody" aria-live="polite" aria-atomic="false"></div>
-  <form class="chat-input-row" id="chatForm" autocomplete="off">
-    <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu mensaje…" aria-label="Mensaje" maxlength="500" required />
-    <button type="submit" class="chat-send" id="chatSendBtn" aria-label="Enviar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-    </button>
-  </form>
-  <div class="chat-foot"><span data-l="es">Atendido por IA · siempre puedes hablar por WhatsApp</span><span data-l="en">AI assistant · you can always reach us on WhatsApp</span></div>
-</aside>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -847,123 +778,21 @@ document.getElementById('year').textContent = new Date().getFullYear();
   drawer.querySelectorAll('a.draw-link').forEach(function(a){ a.addEventListener('click', close); });
 })();
 
-// ─── Chat widget ───
+</script>
+
+<!-- El Asistente · chatbot widget (asistente.pymewebpro.com), client luis-tours -->
+<script src="https://asistente.pymewebpro.com/widget.js?c=luis-tours" async></script>
+<script>
 (function(){
-  var SLUG = 'luis-tours';
-  var ENDPOINT = 'https://mockups.pymewebpro.com/api/chat/' + SLUG;
-  var WA_FALLBACK = 'https://wa.me/573128328082?text=' + encodeURIComponent('Hola Luis, quiero coordinar un viaje');
-
-  var fab = document.getElementById('chatOpenBtn');
-  var panel = document.getElementById('chatPanel');
-  var closeBtn = document.getElementById('chatCloseBtn');
-  var body = document.getElementById('chatBody');
-  var form = document.getElementById('chatForm');
-  var input = document.getElementById('chatInput');
-  var sendBtn = document.getElementById('chatSendBtn');
-
-  var history = [];
-  var greeted = false;
-  function lang(){ return document.body.getAttribute('data-lang') || 'es'; }
-
-  function openPanel(){
-    panel.setAttribute('data-open','true');
-    panel.setAttribute('aria-hidden','false');
-    fab.setAttribute('aria-expanded','true');
-    fab.hidden = true;
-    if (!greeted){ greet(); greeted = true; }
-    setTimeout(function(){ input.focus(); }, 280);
+  function openAsistente(){
+    var n = 0;
+    var t = setInterval(function(){
+      if (typeof window.pwpAsistenteOpen === 'function'){ clearInterval(t); window.pwpAsistenteOpen(); }
+      else if (++n > 40){ clearInterval(t); }
+    }, 150);
   }
-  function closePanel(){
-    panel.setAttribute('data-open','false');
-    panel.setAttribute('aria-hidden','true');
-    fab.setAttribute('aria-expanded','false');
-    fab.hidden = false;
-  }
-  fab.addEventListener('click', openPanel);
-  closeBtn.addEventListener('click', closePanel);
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.getAttribute('data-open') === 'true') closePanel(); });
-  document.querySelectorAll('[data-action="open-chat"]').forEach(function(btn){
-    btn.addEventListener('click', function(e){ e.preventDefault(); openPanel(); });
-  });
-
-  function addBubble(role, text, opts){
-    opts = opts || {};
-    var el = document.createElement('div');
-    el.className = 'bubble ' + role + (opts.error ? ' error' : '');
-    el.textContent = text;
-    body.appendChild(el);
-    body.scrollTop = body.scrollHeight;
-    return el;
-  }
-  function addTyping(){
-    var el = document.createElement('div');
-    el.className = 'bubble bot typing';
-    el.setAttribute('aria-label','escribiendo');
-    el.innerHTML = '<span></span><span></span><span></span>';
-    body.appendChild(el);
-    body.scrollTop = body.scrollHeight;
-    return el;
-  }
-  function addWaCta(url, label){
-    var a = document.createElement('a');
-    a.className = 'wa-cta';
-    a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
-    a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span></span>';
-    a.querySelector('span').textContent = label;
-    body.appendChild(a);
-    body.scrollTop = body.scrollHeight;
-  }
-  function greet(){
-    var msg = lang() === 'en'
-      ? 'Hi! I am the Luis Tours assistant. I can help you arrange an airport transfer or a private tour around Medellín and Antioquia. Where would you like to go?'
-      : '¡Hola! Soy el asistente de Luis Tours. Te ayudo a coordinar un traslado al aeropuerto o un tour privado por Medellín y Antioquia. ¿A dónde te gustaría ir?';
-    addBubble('bot', msg);
-  }
-
-  async function send(text){
-    history.push({ role:'user', content:text });
-    addBubble('user', text);
-    input.value = '';
-    sendBtn.disabled = true;
-    var typing = addTyping();
-    var en = lang() === 'en';
-    try {
-      var res = await fetch(ENDPOINT, {
-        method:'POST',
-        headers:{'content-type':'application/json'},
-        body: JSON.stringify({ messages: history, lang: lang() }),
-      });
-      typing.remove();
-      if (!res.ok){
-        var msg = en
-          ? 'Sorry, the assistant is briefly offline. Message us directly on WhatsApp and we will reply right away.'
-          : 'El asistente está fuera de línea un momento. Escríbenos directo por WhatsApp y te respondemos de una.';
-        addBubble('bot', msg, { error:true });
-        addWaCta(WA_FALLBACK, en ? 'Message on WhatsApp' : 'Hablar por WhatsApp');
-        return;
-      }
-      var data = await res.json();
-      var reply = (data.reply || '').trim();
-      if (reply) addBubble('bot', reply);
-      if (data.wa_link){
-        addWaCta(data.wa_link, en ? 'Continue on WhatsApp' : 'Continuar por WhatsApp');
-      }
-      history.push({ role:'assistant', content: reply });
-    } catch(err) {
-      typing.remove();
-      addBubble('bot', en ? 'I could not send your message. Reach us on WhatsApp and we will help you right away.' : 'No pude enviar tu mensaje. Escríbenos por WhatsApp y te atendemos de una.', { error:true });
-      addWaCta(WA_FALLBACK, en ? 'Message on WhatsApp' : 'Hablar por WhatsApp');
-    } finally {
-      sendBtn.disabled = false;
-      input.focus();
-    }
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var text = (input.value || '').trim();
-    if (!text || sendBtn.disabled) return;
-    send(text);
+  document.querySelectorAll('[data-action="open-chat"]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openAsistente(); });
   });
 })();
 </script>
