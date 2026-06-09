@@ -135,6 +135,8 @@ async function loadGrid(env, json) {
               rating, review_count, place_id, pain_reason,
               mockup_status, mockup_generated_at, owner,
               client_replied_at,
+              wizard_token, wizard_submitted_at, intake_data,
+              pay_token, agreement_accepted_at, paid_at, launch_steps,
               created_at, updated_at
          FROM leads ORDER BY COALESCE(updated_at, created_at) DESC LIMIT 8000`
     ).all(),

@@ -43,6 +43,7 @@ import { handleOutreach } from "./outreach.js";
 //   POST /api/admin/deals/:dealId/deposit-link   · 30% deposit Wompi URL
 //   POST /api/admin/deals/:dealId/balance-link   · 70% balance Wompi URL
 import { handleDepositLinks, processDepositPayment, processBalancePayment } from "./deposit-links.js";
+import { handlePayPage, handlePayAccept, processFullPayment } from "./agreement.js";
 // Chief of Staff · agente en español, widget flotante en cada página admin.
 //   /api/admin/chief-of-staff/chat  -> backend Anthropic loop con tools CRM
 //   CHIEF_OF_STAFF_WIDGET_HTML       -> snippet HTML inyectado antes de </body>
@@ -1497,6 +1498,8 @@ async function handleWompiWebhook(request, env) {
       await processDepositPayment(env, payment);
     } else if (ref.startsWith("pwp-bal-")) {
       await processBalancePayment(env, payment);
+    } else if (ref.startsWith("pwp-full-")) {
+      await processFullPayment(env, payment);
     } else if (payment.plan === "hosting") {
       await processHostingPayment(env, payment);
     } else {
@@ -1987,6 +1990,11 @@ const src_default = {
       if (path === "/go/whatsapp") return await handleWhatsAppRedirect(request, env);
       const cMatch = path.match(/^\/c\/([a-f0-9-]{36})$/);
       if (cMatch && request.method === "GET") return await handleConfirmPage(request, env, cMatch[1]);
+      // Public agreement + full-payment page (no deposit). Token-gated.
+      const pagoMatch = path.match(/^\/pago\/([A-Za-z0-9]{8,})$/);
+      if (pagoMatch && request.method === "GET") return await handlePayPage(env, pagoMatch[1]);
+      const pagoApiMatch = path.match(/^\/api\/pago\/([A-Za-z0-9]{8,})$/);
+      if (pagoApiMatch && request.method === "POST") return await handlePayAccept(request, env, pagoApiMatch[1]);
       if (path === "/api/payments/wompi-webhook" && request.method === "POST") return cors(await handleWompiWebhook(request, env));
       const checkoutMatch = path.match(/^\/api\/leads\/([a-f0-9-]{36})\/checkout$/);
       if (checkoutMatch && request.method === "POST") return cors(await handleCreateCheckout(request, env, checkoutMatch[1]));

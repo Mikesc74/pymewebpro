@@ -471,7 +471,7 @@ function stageForDrop(col){
   if(col==='closed')   return {lead_stage:'disqualified'};
   return null; // contact / nonum are not drop targets
 }
-var COL_TITLE = {contact:'To contact', nonum:'Need phone', followup:'Follow-up', mockup:'Mockup', proposal:'Proposal', close:'Closing', closed:'Closed'};
+var COL_TITLE = {contact:'To contact', nonum:'Need phone', followup:'Follow-up', mockup:'Mockup', proposal:'Pago', close:'Closing', closed:'Closed'};
 async function moveTo(id, col){
   var lead = BY_ID[id]; if(!lead) return;
   if(colOf(lead)===col) return;
@@ -484,7 +484,7 @@ async function moveTo(id, col){
     // Moving into Mockup or Proposal opens a setup popup that asks for
     // details, then generates. Nothing generates just by sitting in a stage.
     if(col==='mockup') openMockupSetup(lead);
-    else if(col==='proposal') showProposalPanel(lead);
+    else if(col==='proposal') sendPaymentPage(lead);
   }catch(err){ toast('Error: '+err.message, true); }
 }
 
@@ -512,31 +512,36 @@ function openMockupSetup(lead){
       + '<button type="button" class="act'+(pick==='en'?'':' primary')+'" data-pick="es">Local · Spanish</button>'
       + '<button type="button" class="act'+(pick==='en'?' primary':'')+'" data-pick="en">English (for expats)</button>'
     + '</div></div>'
-    + '<p class="note">The system drafts the WhatsApp message to send the example. Review before sending.</p>'
+    + '<p class="note">Le manda al prospecto el enlace del asistente de datos (logo, fotos, visión) y arranca a generar la muestra ya. Revisa el mensaje antes de enviarlo.</p>'
     + '</div>'
-    + '<div class="mf"><button class="act ghost" data-x="close">Cancel</button><button class="act primary" data-x="gen">Generate mockup</button></div>'
+    + '<div class="mf"><button class="act ghost" data-x="close">Cancel</button><button class="act primary" data-x="gen">Iniciar muestra</button></div>'
     + '</div></div>');
   wireBgClose(bg, closePanel);
   document.getElementById('modal-root').appendChild(bg);
   bg.querySelectorAll('[data-pick]').forEach(function(b){ b.onclick=function(){ pick=b.getAttribute('data-pick'); bg.querySelectorAll('[data-pick]').forEach(function(x){ x.className='act'+(x.getAttribute('data-pick')===pick?' primary':''); }); }; });
   bg.querySelectorAll('[data-x="close"]').forEach(function(b){ b.onclick=closePanel; });
   bg.querySelector('[data-x="gen"]').onclick = async function(){
-    this.disabled=true; this.textContent='Generating...';
+    this.disabled=true; this.textContent='Iniciando...';
     try{
       if((lead.demo_lang||'es')!==pick){ await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({demo_lang:pick})}); lead.demo_lang=pick; }
       closePanel();
       await prepareMockup(lead);
-    }catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Generate mockup'; }
+    }catch(err){ toast('Error: '+err.message, true); this.disabled=false; this.textContent='Iniciar muestra'; }
   };
 }
 
+// Entrar a la columna Mockup hace lo mismo en los tres canales (chat / outbound
+// / calle): (1) le manda al prospecto el enlace del asistente de datos para
+// recoger su visión y assets, y (2) arranca a generar la muestra ya.
 async function prepareMockup(lead){
-  toast('Preparing mockup...');
+  toast('Iniciando muestra...');
   try{
-    await api('/api/admin/cockpit/mockup-msg', {method:'POST', body: JSON.stringify({lead_id:lead.id})});
+    var r = await api('/api/admin/cockpit/start-mockup', {method:'POST', body: JSON.stringify({lead_id:lead.id})});
+    api('/api/admin/cockpit/mockup-build/'+lead.id, {method:'POST', body: JSON.stringify({})}).catch(function(){});
     await loadAll();
-    toast('Mockup ready to send');
-  }catch(err){ toast('Could not prepare mockup: '+err.message, true); }
+    if(r && r.draft){ showPanel(lead, null, r.draft); }
+    toast(r && r.submitted ? 'Asistente ya completado · generación reiniciada' : 'Enlace listo para enviar · generando muestra');
+  }catch(err){ toast('No se pudo iniciar la muestra: '+err.message, true); }
 }
 
 function heatPill(h){ return h ? '<span class="pill '+esc(h)+'">'+esc(h)+'</span>' : ''; }
@@ -570,7 +575,7 @@ function nextStep(l){
   if(isWon(l)) return 'Won';
   if(isLost(l)) return 'Lost';
   if(l.lead_stage==='sales_qualified') return daysSince(l)>=3 ? 'Push to close' : 'Close or schedule';
-  if(l.lead_stage==='proposal') return proposalReady(l) ? 'Proposal ready to send' : 'Build proposal';
+  if(l.lead_stage==='proposal') return l.paid_at ? 'Pagado · publicar' : 'Enviar pago';
   if(l.lead_stage==='mockup') return mockupReady(l) ? 'Ready to send' : (mockOpened(l) ? 'Viewed mockup' : (l.last_touched_at ? 'Sent, awaiting reply' : 'Preparing mockup'));
   if(!l.last_touched_at) return waNum(l) ? 'Contact' : 'Get phone';
   return DUE[l.id] ? 'Follow up' : 'Awaiting reply';
@@ -592,7 +597,7 @@ function stageLabel(l){
   if(isLost(l)) return 'Lost';
   var s = l.lead_stage;
   if(s==='sales_qualified') return 'Closing';
-  if(s==='proposal') return 'Proposal';
+  if(s==='proposal') return 'Pago';
   if(s==='mockup') return 'Mockup';
   if(s==='contacted' || s==='marketing_qualified') return 'In follow-up';
   if(l.last_touched_at) return 'In follow-up';
@@ -703,8 +708,11 @@ function openDetail(lead){
     ? '<div class="d-mock"><span class="d-mlbl">Mockup</span><a href="'+esc(murl)+'?preview=1" target="_blank" rel="noopener">'+esc(murl)+'</a><button class="act ghost" data-d="copymock">Copy link</button></div>'
       + '<div class="d-lang"><span class="d-mlbl">Version</span><button class="act'+(lead.demo_lang==='en'?'':' primary')+'" data-lang="es">Local · Spanish</button><button class="act'+(lead.demo_lang==='en'?' primary':'')+'" data-lang="en">English (for expats)</button></div>'
     : '';
-  // Splice the generation + upload rows in front of the link row.
-  mockBlock = mockGenBlock + upBox + mockBlock;
+  // Splice the launch checklist (paid leads) + wizard status + generation +
+  // upload rows in front of the link row.
+  var launchBlock = lead.paid_at ? launchBlockHTML(lead) : '';
+  var wizBlock = showMock ? wizardBlockHTML(lead) : '';
+  mockBlock = launchBlock + wizBlock + mockGenBlock + upBox + mockBlock;
 
   // Pitch · hide entirely if it contains stale pricing ($390k/$117k/$273k from
   // before the 2026-05 single-product pricing change). Otherwise show behind a
@@ -731,7 +739,8 @@ function openDetail(lead){
     + (replied?'✓ Client replied':'Mark client replied')+'</button>';
   var ctaRow = '<div class="row">'+primaryBtn
     + (atMock?'<button class="act" data-d="mockup">Send mockup</button>':'')
-    + (atClose?'<button class="act" data-d="deposit">Charge deposit</button>':'')
+    + (atProp?'<button class="act primary" data-d="paylink">'+(lead.paid_at?'Pagado':'Enviar pago')+'</button>':'')
+    + (atClose?'<button class="act" data-d="deposit">Enviar pago</button>':'')
     + replyBtn
     + '<button class="act" data-d="call">Book call</button></div>';
 
@@ -868,9 +877,17 @@ function openDetail(lead){
       bg.remove(); render();
     }catch(err){ toast('Error: '+(err && err.message || err), true); this.disabled=false; }
   };
+  var wzB=bg.querySelector('[data-d="wizlink"]'); if(wzB) wzB.onclick=function(){bg.remove();sendWizardLink(lead);};
   var mkB=bg.querySelector('[data-d="mockup"]'); if(mkB) mkB.onclick=function(){bg.remove();sendMockup(lead);};
-  var epB=bg.querySelector('[data-d="editprop"]'); if(epB) epB.onclick=function(){bg.remove();showProposalPanel(lead);};
-  var dpB=bg.querySelector('[data-d="deposit"]'); if(dpB) dpB.onclick=function(){bg.remove();chargeDeposit(lead);};
+  var plB=bg.querySelector('[data-d="paylink"]'); if(plB) plB.onclick=function(){bg.remove();sendPaymentPage(lead);};
+  var dpB=bg.querySelector('[data-d="deposit"]'); if(dpB) dpB.onclick=function(){bg.remove();sendPaymentPage(lead);};
+  bg.querySelectorAll('[data-launch]').forEach(function(b){ b.onclick=async function(){
+    var key=b.getAttribute('data-launch'); var done=b.getAttribute('data-done')==='1';
+    b.disabled=true;
+    try{ await api('/api/admin/cockpit/launch-step', {method:'POST', body: JSON.stringify({lead_id:lead.id, key:key, done:!done})}); await loadAll(); bg.remove(); openDetail(BY_ID[lead.id]||lead); }
+    catch(err){ toast('Error: '+err.message, true); b.disabled=false; }
+  }; });
+  var lrB=bg.querySelector('[data-launchreview]'); if(lrB) lrB.onclick=function(){ bg.remove(); sendReviewRequest(lead); };
   bg.querySelectorAll('[data-actdel]').forEach(function(b){ b.onclick=async function(){
     var aid=b.getAttribute('data-actdel');
     try{
@@ -1048,6 +1065,9 @@ function cardHTML(l, col){
   if(statusChip) tags.push(statusChip);
   else { var st = stageTag(l, col); if(st) tags.push(st); }
   if(col!=='closed' && l.heat) tags.push('<span class="pill '+esc(l.heat)+'">'+esc(l.heat)+'</span>');
+  if(l.paid_at){ var lc=launchCounts(l); tags.push(lc.done<lc.total
+    ? '<span class="pill" title="Pasos de lanzamiento pendientes">⏳ Lanzar '+lc.done+'/'+lc.total+'</span>'
+    : '<span class="pill" title="Todos los pasos hechos">✔ En vivo</span>'); }
 
   var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
   var t = l.touches_count||0;
@@ -1091,7 +1111,7 @@ function render(){
     + colHTML('To contact', 'Have WhatsApp. Ready to message.', contact, 'contact')
     + colHTML('Follow-up', 'You already messaged. Red = time to push.', follow, 'followup')
     + colHTML('Mockup', 'Send them the personalized example.', mockup, 'mockup')
-    + colHTML('Proposal', 'Build and send the proposal.', proposal, 'proposal')
+    + colHTML('Pago', 'Envía el acuerdo y el pago.', proposal, 'proposal')
     + colHTML('Closing', 'Proposal sent. Close the deal.', close, 'close')
     + colHTML('Closed', 'Won and lost.', closed, 'closed')
     + '</div>';
@@ -1210,9 +1230,76 @@ function bookCall(lead){
   showPanel(lead, null, text);
 }
 
-// Charge the 30% deposit: generate the Wompi link for the proposal deal
-// and build a WhatsApp message with the link. On payment, the webhook moves
-// the card to Won automatically. Body stays Spanish, prospect-facing.
+// Enviar la página de acuerdo + pago (Wompi total, sin depósito). El cliente
+// aprobó su muestra, así que esto le manda un solo enlace donde aceptar el
+// acuerdo corto y pagar es una sola acción. Disparado al entrar a la columna Pago.
+async function sendPaymentPage(lead){
+  toast('Generando página de pago...');
+  try{
+    var r = await api('/api/admin/cockpit/payment-link', {method:'POST', body: JSON.stringify({lead_id:lead.id})});
+    await loadAll();
+    var fallback = 'Qué bueno que te gustó. Acá está el acuerdo y el pago seguro para publicar tu página:\n' + (r && r.url || '');
+    showPanel(lead, null, (r && r.draft) || fallback);
+  }catch(err){ toast('Error: '+err.message, true); }
+}
+
+// (Re)enviar el enlace del asistente de datos al prospecto.
+async function sendWizardLink(lead){
+  toast('Preparando enlace...');
+  try{
+    var r = await api('/api/admin/cockpit/start-mockup', {method:'POST', body: JSON.stringify({lead_id:lead.id})});
+    await loadAll();
+    showPanel(lead, null, (r && r.draft) || '');
+  }catch(err){ toast('Error: '+err.message, true); }
+}
+
+// Solicitud de reseña en Google de un clic: redacta el mensaje al cliente ya
+// publicado y marca el paso de reseña como hecho. Mike/Santi ponen el link real.
+async function sendReviewRequest(lead){
+  var biz = leadName(lead);
+  var text = 'Hola, qué bueno tenerte en línea con tu nueva página. Si quedaste contento, una reseña corta en Google nos ayudaría muchísimo: [tu enlace de reseña de Google]. ¡Mil gracias!';
+  try{ await api('/api/admin/cockpit/launch-step', {method:'POST', body: JSON.stringify({lead_id:lead.id, key:'review', done:true})}); }catch(e){}
+  await loadAll();
+  showPanel(lead, null, text);
+}
+
+// Checklist de lanzamiento (paga = aparecen los 5 pasos) y estado del asistente
+// de datos. Seguro para daltonismo: icono + texto, nunca solo color.
+var LAUNCH_ORDER = ['dominio','gbp','asistente','live','review'];
+var LAUNCH_LABELS = {dominio:'Conectar el dominio', gbp:'Configurar la Ficha de Google', asistente:'Activar el asistente', live:'Confirmar que la página está en vivo', review:'Enviar la solicitud de reseña en Google'};
+function launchSteps(l){ var s={}; try{ s=l.launch_steps?JSON.parse(l.launch_steps):{}; }catch(e){} return s; }
+function launchCounts(l){ var s=launchSteps(l), done=0; LAUNCH_ORDER.forEach(function(k){ if(s[k]) done++; }); return {done:done,total:LAUNCH_ORDER.length}; }
+function launchBlockHTML(lead){
+  var s=launchSteps(lead), c=launchCounts(lead);
+  var rows = LAUNCH_ORDER.map(function(k){
+    var done=!!s[k];
+    var review=(k==='review' && !done)?'<button class="act" data-launchreview="1" style="margin-left:.3rem">Enviar</button>':'';
+    var toggle='<button class="act ghost" data-launch="'+k+'" data-done="'+(done?'1':'0')+'" style="min-width:96px">'+(done?'Deshacer':'Marcar hecho')+'</button>';
+    return '<div style="display:flex;align-items:center;gap:.5rem;margin:.25rem 0"><span aria-hidden="true" style="width:1.1em;text-align:center">'+(done?'✔':'○')+'</span><span style="flex:1;font-size:.82rem'+(done?';color:var(--mute);text-decoration:line-through':'')+'">'+esc(LAUNCH_LABELS[k])+'</span>'+review+toggle+'</div>';
+  }).join('');
+  var hd = (c.done===c.total) ? '✔ Publicado · todos los pasos hechos' : '⏳ Lanzando · '+c.done+' de '+c.total+' hechos';
+  return '<div style="background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:.6rem .8rem;margin:0 0 .8rem"><div style="font-weight:700;font-size:.82rem;margin-bottom:.4rem">'+esc(hd)+'</div>'+rows+'</div>';
+}
+function wizardBlockHTML(lead){
+  var token=lead.wizard_token, submitted=lead.wizard_submitted_at, ic, st;
+  if(submitted){ ic='✔'; st='Asistente de datos completado'; }
+  else if(token){ ic='⏳'; st='Enlace listo · esperando al prospecto'; }
+  else { ic='•'; st='Aún sin enviar el enlace'; }
+  var intake='';
+  if(lead.intake_data){
+    try{ var d=JSON.parse(lead.intake_data), rows=[];
+      var add=function(kk,vv){ if(vv) rows.push('<div style="display:flex;gap:.5rem;margin:.15rem 0"><span style="min-width:120px;font-size:.72rem;color:var(--mute)">'+esc(kk)+'</span><span style="font-size:.78rem">'+esc(String(vv))+'</span></div>'); };
+      add('Servicios', d.services); add('Diferencia', d.differentiators); add('Ciudad', d.city); add('Horario', d.hours); add('Estilo', d.style); add('Visión', d.vision);
+      var files=d.files||d.uploads; if(Array.isArray(files)&&files.length) add('Archivos', files.length);
+      if(rows.length) intake='<div style="margin-top:.5rem;border-top:1px solid var(--line);padding-top:.4rem">'+rows.join('')+'</div>';
+    }catch(e){}
+  }
+  var btn='<button class="act'+(token?'':' primary')+'" data-d="wizlink" style="margin-left:auto">'+(token?'Reenviar enlace':'Enviar enlace')+'</button>';
+  return '<div style="background:var(--paper2);border-radius:8px;padding:.6rem .8rem;margin:0 0 .8rem"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><span aria-hidden="true">'+ic+'</span><span style="font-size:.8rem">'+esc(st)+'</span>'+btn+'</div>'+intake+'</div>';
+}
+
+// Legacy: el cobro de depósito 30% quedó reemplazado por sendPaymentPage. Se
+// deja definido para no romper referencias viejas; ya no se usa en botones.
 async function chargeDeposit(lead){
   var deal = proposalDeal(lead);
   if(!deal){ toast('Build the proposal first (needed to charge).', true); return; }

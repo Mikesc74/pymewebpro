@@ -12,10 +12,15 @@
 import { generateProposal } from "./proposal-generator.js";
 import { genDemoImg, DEMO_IMG_KEYS } from "./demo-img.js";
 import { buildMockup, uploadMockupImage, deleteMockupImage } from "./mockup-generator.js";
+import { toggleLaunchStep } from "./agreement.js";
 
 const MODEL = "claude-haiku-4-5-20251001";
 const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
 const DEMO_BASE = "https://mockups.pymewebpro.com";
+// The Spanish intake wizard is hosted by Valentina's worker; the agreement +
+// Wompi payment page is on the public portal host.
+const VALENTINA_BASE = "https://valentina.pymewebpro.com";
+const PAY_BASE = "https://portal.pymewebpro.com";
 
 export async function handleCockpitRoutes(request, env, helpers) {
   const { json, isAdmin } = helpers;
@@ -25,6 +30,26 @@ export async function handleCockpitRoutes(request, env, helpers) {
   if (path === "/api/admin/cockpit/mockup-msg" && request.method === "POST") {
     if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
     return await mockupMsg(request, env, json);
+  }
+
+  // Mockup-column entry (outbound + street): ensure the wizard link + draft the
+  // WhatsApp invite. Mirrors Valentina's start_mockup so all channels match.
+  if (path === "/api/admin/cockpit/start-mockup" && request.method === "POST") {
+    if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+    return await startMockup(request, env, json);
+  }
+  // Pago-column entry: ensure the pay_token + return the agreement link.
+  if (path === "/api/admin/cockpit/payment-link" && request.method === "POST") {
+    if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+    return await paymentLink(request, env, json);
+  }
+  // Toggle one post-payment launch checklist step. Body: {lead_id, key, done}.
+  if (path === "/api/admin/cockpit/launch-step" && request.method === "POST") {
+    if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+    let body; try { body = await request.json(); } catch { return json({ ok: false, error: "Invalid JSON" }, 400); }
+    if (!body || !body.lead_id || !body.key) return json({ ok: false, error: "Missing lead_id or key" }, 400);
+    const r = await toggleLaunchStep(env, body.lead_id, body.key, !!body.done);
+    return json(r, r.ok ? 200 : 404);
   }
   // Mockup v2 · personalized scrape + Claude + image bank. Long-running
   // (~1-3 min). Returns once mockup_data is persisted to the lead row.
@@ -205,4 +230,73 @@ async function mockupMsg(request, env, json) {
   ).bind(crypto.randomUUID(), message, leadId, now, now, now).run();
 
   return json({ ok: true, draft: message, url: url });
+}
+
+// ---- start-mockup (board path) --------------------------------------------
+// Ensures the lead has a wizard_token and drafts the Spanish WhatsApp invite to
+// the intake wizard (valentina.pymewebpro.com/w/<token>), so the outbound and
+// street paths behave exactly like Valentina's chat start_mockup.
+async function startMockup(request, env, json) {
+  let body;
+  try { body = await request.json(); } catch { return json({ ok: false, error: "Invalid JSON" }, 400); }
+  const leadId = body && body.lead_id;
+  if (!leadId) return json({ ok: false, error: "Missing lead_id" }, 400);
+
+  const lead = await env.DB.prepare(
+    "SELECT id, name, business_name, wizard_token, wizard_submitted_at FROM leads WHERE id = ?"
+  ).bind(leadId).first();
+  if (!lead) return json({ ok: false, error: "Lead not found" }, 404);
+
+  const now = Date.now();
+  let token = lead.wizard_token;
+  if (!token) {
+    token = crypto.randomUUID().replace(/-/g, "");
+    await env.DB.prepare("UPDATE leads SET wizard_token = ?, updated_at = ? WHERE id = ?").bind(token, now, leadId).run();
+  }
+  const link = `${VALENTINA_BASE}/w/${token}`;
+  const negocio = lead.business_name || lead.name || "tu negocio";
+  const message = "Listo, ya empecé tu muestra gratis de " + negocio + ". "
+    + "Para que quede a tu medida, abre este enlace y sube tu logo, unas fotos y cuéntanos tu visión "
+    + "(unos minutos, es opcional pero mejora mucho el resultado): \n" + link;
+
+  await env.DB.prepare(
+    "INSERT INTO activities (id, kind, subject, body, lead_id, owner, occurred_at, created_at, updated_at, done) " +
+    "VALUES (?, 'note', 'Listo: wizard', ?, ?, 'system', ?, ?, ?, 0)"
+  ).bind(crypto.randomUUID(), message, leadId, now, now, now).run();
+
+  return json({ ok: true, link, draft: message, submitted: !!lead.wizard_submitted_at });
+}
+
+// ---- payment-link (Pago column) -------------------------------------------
+// Ensures the lead has a pay_token and returns the agreement link
+// (portal.pymewebpro.com/pago/<token>) plus a drafted WhatsApp message.
+async function paymentLink(request, env, json) {
+  let body;
+  try { body = await request.json(); } catch { return json({ ok: false, error: "Invalid JSON" }, 400); }
+  const leadId = body && body.lead_id;
+  if (!leadId) return json({ ok: false, error: "Missing lead_id" }, 400);
+
+  const lead = await env.DB.prepare(
+    "SELECT id, name, business_name, pay_token, paid_at FROM leads WHERE id = ?"
+  ).bind(leadId).first();
+  if (!lead) return json({ ok: false, error: "Lead not found" }, 404);
+
+  const now = Date.now();
+  let token = lead.pay_token;
+  if (!token) {
+    token = crypto.randomUUID().replace(/-/g, "");
+    await env.DB.prepare("UPDATE leads SET pay_token = ?, updated_at = ? WHERE id = ?").bind(token, now, leadId).run();
+  }
+  const link = `${PAY_BASE}/pago/${token}`;
+  const negocio = lead.business_name || lead.name || "tu negocio";
+  const message = "Qué bueno que te gustó. El último paso para publicar la página de " + negocio
+    + " es el acuerdo y el pago seguro, todo en un solo lugar: \n" + link
+    + "\n\nApenas entre el pago, conectamos tu dominio y quedas en vivo.";
+
+  await env.DB.prepare(
+    "INSERT INTO activities (id, kind, subject, body, lead_id, owner, occurred_at, created_at, updated_at, done) " +
+    "VALUES (?, 'note', 'Listo: pago', ?, ?, 'system', ?, ?, ?, 0)"
+  ).bind(crypto.randomUUID(), message, leadId, now, now, now).run();
+
+  return json({ ok: true, url: link, draft: message, paid: !!lead.paid_at });
 }
