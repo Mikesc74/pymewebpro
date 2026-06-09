@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#15573B">
+<meta name="robots" content="noindex, nofollow">
+
+<title>Luis Tours · Tours privados y traslados en Medellín y Antioquia</title>
+<meta name="description" content="Luis Tours · tours privados y traslados al aeropuerto en Medellín y Antioquia. Luis te recoge, maneja por ti y arma el recorrido a tu ritmo. Guatapé, Comuna 13, Santa Fe de Antioquia. WhatsApp 312 832 8082.">
+
+<meta property="og:title" content="Luis Tours · Recorre Antioquia con quien la conoce de memoria">
+<meta property="og:description" content="Tours privados y traslados al aeropuerto en Medellín y Antioquia. Yo conduzco, tú disfrutas, el tiempo es tuyo.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CO">
+<meta property="og:locale:alternate" content="en_US">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700;800&display=swap">
+
+<style>
+/* ─── Tokens · Antioquia scenic palette (mountain green, golden-hour amber, terracotta road) ─── */
+:root{
+  --forest:      #15573B;
+  --forest-deep: #0E3D29;
+  --forest-50:   #EAF1EC;
+  --forest-100:  #D6E5DB;
+  --clay:        #C25A2E;   /* terracotta road · primary action */
+  --clay-deep:   #A4471F;
+  --amber:       #E0A22B;   /* golden hour sun */
+  --sky:         #3E76A6;   /* info / international accent */
+  --cream:       #FAF5EA;
+  --paper:       #FFFDF8;
+  --ink:         #17231B;
+  --ink-mute:    #586259;
+  --line:        rgba(23,35,27,.10);
+  --shadow-sm:   0 1px 2px rgba(14,61,41,.06), 0 1px 1px rgba(14,61,41,.04);
+  --shadow-md:   0 10px 28px rgba(14,61,41,.10), 0 2px 6px rgba(14,61,41,.06);
+  --radius:      16px;
+  --radius-sm:   9px;
+  --serif:       'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans:        'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --brand-mark:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='11' fill='%2315573B'/><circle cx='28.5' cy='12' r='5' fill='%23E0A22B'/><path d='M13 35 C13 27 25 24 19 16 C15 10 21.5 6 21.5 6' fill='none' stroke='%23FAF5EA' stroke-width='3.1' stroke-linecap='round'/><path d='M13 35 C13 27 25 24 19 16' fill='none' stroke='%23FAF5EA' stroke-width='1' stroke-dasharray='1.4 3' stroke-linecap='round' opacity='.65'/></svg>");
+}
+
+/* ─── Reset + base ─── */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img,svg{display:block;max-width:100%}
+a{color:var(--clay-deep);text-decoration:none}
+a:hover{color:var(--clay)}
+button{font:inherit;cursor:pointer}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-0.01em;line-height:1.08;color:var(--forest-deep);margin:0}
+h1{font-size:clamp(2.3rem,5.6vw,3.9rem);font-weight:500}
+h2{font-size:clamp(1.8rem,3.8vw,2.6rem)}
+h3{font-size:1.28rem;font-weight:600}
+em{font-style:italic}
+p{margin:0 0 1rem}
+section{padding:5rem 0}
+.wrap{max-width:1150px;margin:0 auto;padding:0 1.5rem}
+
+/* ─── Bilingual toggle · ES default, EN swapped via [data-lang] on <body> ─── */
+[data-l]{display:inline}
+body[data-lang="es"] [data-l="en"]{display:none}
+body[data-lang="en"] [data-l="es"]{display:none}
+/* block-level translatables keep their natural display */
+p[data-l],li[data-l],div[data-l]{display:block}
+body[data-lang="es"] p[data-l="en"],body[data-lang="es"] li[data-l="en"],body[data-lang="es"] div[data-l="en"]{display:none}
+body[data-lang="en"] p[data-l="es"],body[data-lang="en"] li[data-l="es"],body[data-lang="en"] div[data-l="es"]{display:none}
+
+/* ─── Components ─── */
+.eyebrow{
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--clay-deep);font-weight:700;
+  display:inline-flex;align-items:center;gap:.55rem;margin:0 0 1.1rem;
+}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--clay)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.85rem 1.45rem;border-radius:var(--radius-sm);
+  font-weight:600;font-size:.95rem;letter-spacing:-.005em;
+  border:1.5px solid transparent;cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--clay);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--clay-deep);color:#fff;transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-ghost{background:transparent;color:var(--forest-deep);border-color:var(--line)}
+.btn-ghost:hover{background:var(--forest-50);color:var(--forest);border-color:var(--forest)}
+.btn-lg{padding:1rem 1.65rem;font-size:1rem}
+.btn .ico{width:18px;height:18px;flex:0 0 18px}
+
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.75rem;box-shadow:var(--shadow-sm);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+/* ─── Nav ─── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,253,248,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:.8rem 1.5rem;max-width:1150px;margin:0 auto;
+}
+.brand{display:inline-flex;align-items:center;gap:.65rem;color:var(--forest-deep);font-weight:700}
+.brand-mark{width:42px;height:42px;flex:0 0 42px;background-image:var(--brand-mark);background-size:contain;background-position:center;background-repeat:no-repeat;filter:drop-shadow(0 1px 2px rgba(14,61,41,.18))}
+.brand-name{font-family:var(--serif);font-size:1.18rem;font-weight:600;color:var(--forest-deep)}
+.brand-sub{font-size:.68rem;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:1px}
+.brand-text{display:flex;flex-direction:column;line-height:1.12}
+
+.nav-links{display:flex;align-items:center;gap:.2rem;list-style:none;margin:0;padding:0}
+.nav-links a{
+  padding:.45rem .8rem;border-radius:6px;font-size:.86rem;color:var(--forest-deep);
+  font-weight:500;letter-spacing:-.005em;
+}
+.nav-links a:hover{background:var(--forest-50);color:var(--forest)}
+
+.nav-cta{display:flex;align-items:center;gap:.55rem}
+
+/* Language toggle */
+.lang{
+  display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:99px;
+  overflow:hidden;background:#fff;
+}
+.lang button{
+  border:none;background:transparent;padding:.35rem .7rem;font-size:.78rem;font-weight:700;
+  letter-spacing:.04em;color:var(--ink-mute);transition:background .15s ease, color .15s ease;
+}
+.lang button[aria-pressed="true"]{background:var(--forest);color:#fff}
+
+/* Hamburger + drawer */
+.hamb{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;border:1.5px solid var(--line);border-radius:9px;background:#fff}
+.hamb span{display:block;height:2.2px;width:20px;margin:0 auto;background:var(--forest-deep);border-radius:2px;transition:transform .25s ease, opacity .2s ease}
+body.drawer-open .hamb span:nth-child(1){transform:translateY(7.2px) rotate(45deg)}
+body.drawer-open .hamb span:nth-child(2){opacity:0}
+body.drawer-open .hamb span:nth-child(3){transform:translateY(-7.2px) rotate(-45deg)}
+.scrim{position:fixed;inset:0;background:rgba(14,61,41,.42);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:58}
+body.drawer-open .scrim{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(82vw,320px);z-index:59;
+  background:var(--paper);box-shadow:-12px 0 40px rgba(14,61,41,.18);
+  transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;padding:1.4rem 1.4rem 2rem;
+}
+body.drawer-open .drawer{transform:translateX(0)}
+.drawer .draw-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.drawer-close{width:40px;height:40px;border:1.5px solid var(--line);border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center}
+.drawer-close svg{width:18px;height:18px;stroke:var(--forest-deep)}
+.drawer a.draw-link{display:block;padding:.85rem .4rem;font-family:var(--serif);font-size:1.25rem;color:var(--forest-deep);border-bottom:1px solid var(--line)}
+.drawer a.draw-link:hover{color:var(--clay)}
+.drawer .btn{margin-top:1.5rem;justify-content:center}
+
+@media (max-width: 880px){
+  .nav-links{display:none}
+  .hamb{display:flex}
+  .nav-cta .btn-primary{display:none}
+}
+
+/* ─── Hero ─── */
+.hero{padding:4rem 0 3.5rem;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:3.5rem;align-items:center}
+.hero h1{margin-bottom:1.3rem}
+.hero h1 em{color:var(--clay);font-weight:500}
+.hero p.lead{font-size:1.14rem;color:var(--ink);max-width:520px;margin-bottom:2rem}
+.hero-ctas{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:2rem}
+.trust-strip{display:flex;flex-wrap:wrap;gap:.5rem .9rem;font-size:.9rem;color:var(--ink-mute)}
+.trust-strip span{display:inline-flex;align-items:center;gap:.45rem}
+.trust-strip .dot{width:14px;height:14px;flex:0 0 14px;color:var(--forest)}
+
+.hero-art{
+  position:relative;width:100%;max-width:470px;margin-left:auto;
+  border-radius:22px;overflow:hidden;
+  box-shadow:0 30px 60px -22px rgba(14,61,41,.40), 0 6px 18px rgba(14,61,41,.14);
+  background:#bfe0ec;
+}
+.hero-art svg{width:100%;height:auto;display:block}
+.hero-art .art-tag{
+  position:absolute;left:1rem;bottom:1rem;z-index:3;
+  padding:.4rem .8rem;background:rgba(14,61,41,.82);color:#fff;
+  font-size:.72rem;letter-spacing:.06em;font-weight:600;
+  border-radius:99px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+
+@media (max-width: 880px){
+  .hero{padding:2.5rem 0 1.5rem}
+  .hero-grid{grid-template-columns:1fr;gap:2.5rem}
+  .hero-art{margin:0 auto;max-width:420px}
+}
+
+/* ─── Servicios ─── */
+.services{background:var(--forest-50);position:relative}
+.services::before,.services::after{content:'';position:absolute;left:0;right:0;height:1px;background:var(--line)}
+.services::before{top:0}.services::after{bottom:0}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:2.5rem}
+.svc-card .ico-wrap{
+  width:52px;height:52px;border-radius:13px;background:var(--forest);
+  color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;
+}
+.svc-card .ico-wrap svg{width:26px;height:26px}
+.svc-card h3{margin-bottom:.5rem;color:var(--forest-deep)}
+.svc-card p{color:var(--ink-mute);font-size:.96rem;margin:0}
+@media (max-width: 780px){.svc-grid{grid-template-columns:1fr;gap:1rem}}
+
+/* ─── Tu conductor ─── */
+.driver{background:var(--paper)}
+.driver-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:3rem;align-items:center;margin-top:1rem}
+.driver-photo{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  aspect-ratio:4/5;background:linear-gradient(160deg,var(--forest-100),var(--forest-50));
+  border:1px solid var(--line);box-shadow:var(--shadow-md);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+}
+.driver-photo .ph{display:flex;flex-direction:column;align-items:center;gap:.6rem;color:var(--forest);padding:1.5rem}
+.driver-photo .ph svg{width:46px;height:46px;opacity:.65}
+.driver-photo .ph .ph-t{font-size:.82rem;font-weight:600;letter-spacing:.02em;color:var(--forest-deep)}
+.driver-photo .ph .ph-s{font-size:.72rem;color:var(--ink-mute);max-width:200px}
+.driver h2{margin-bottom:1rem}
+.driver .lead{font-size:1.08rem;color:var(--ink);max-width:560px;margin-bottom:1.5rem}
+.driver .quote{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--forest);margin:0 0 1.5rem;line-height:1.3}
+.feat-list{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
+.feat-list li{display:flex;gap:.7rem;align-items:flex-start;color:var(--ink);font-size:.98rem}
+.feat-list li svg{flex:0 0 20px;width:20px;height:20px;color:var(--clay);margin-top:2px}
+@media (max-width: 880px){.driver-grid{grid-template-columns:1fr;gap:2rem}.driver-photo{max-width:340px;margin:0 auto}}
+
+/* ─── Cómo funciona ─── */
+.how{background:var(--forest-deep);color:rgba(255,255,255,.92);position:relative;overflow:hidden}
+.how h2,.how h3{color:#fff}
+.how .eyebrow{color:var(--amber)}
+.how .eyebrow::before{background:var(--amber)}
+.how .lead{font-size:1.06rem;max-width:600px;color:rgba(255,255,255,.84);margin-bottom:2.5rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem}
+.step{position:relative;padding:1.8rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:var(--radius)}
+.step-num{position:absolute;top:1.2rem;right:1.3rem;font-family:var(--serif);font-weight:600;font-size:2.1rem;color:rgba(224,162,43,.34);line-height:1}
+.step h3{font-size:1.08rem;margin-bottom:.55rem;color:#fff}
+.step p{color:rgba(255,255,255,.74);font-size:.93rem;margin:0;line-height:1.55}
+@media (max-width: 780px){.steps{grid-template-columns:1fr}}
+
+/* ─── Recorridos / destinos ─── */
+.routes{background:var(--cream)}
+.route-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+.route{
+  display:flex;align-items:center;gap:.85rem;padding:1.15rem 1.25rem;background:#fff;
+  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.route:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.route .pin{flex:0 0 38px;width:38px;height:38px;border-radius:10px;background:var(--forest-50);color:var(--forest);display:flex;align-items:center;justify-content:center}
+.route .pin svg{width:20px;height:20px}
+.route .r-name{font-weight:600;font-size:.98rem;color:var(--forest-deep);line-height:1.2}
+.route .r-sub{font-size:.8rem;color:var(--ink-mute);margin-top:2px}
+@media (max-width: 880px){.route-grid{grid-template-columns:1fr 1fr}}
+@media (max-width: 560px){.route-grid{grid-template-columns:1fr}}
+
+/* ─── Para viajeros internacionales ─── */
+.intl{background:var(--sky);color:#fff;position:relative;overflow:hidden}
+.intl .wrap{display:grid;grid-template-columns:1.4fr .6fr;gap:2.5rem;align-items:center}
+.intl h2{color:#fff}
+.intl .eyebrow{color:rgba(255,255,255,.9)}
+.intl .eyebrow::before{background:rgba(255,255,255,.7)}
+.intl p{color:rgba(255,255,255,.9);margin:0;max-width:560px}
+.intl .btn{background:#fff;color:var(--sky);border-color:#fff;justify-self:end}
+.intl .btn:hover{background:var(--cream);color:#27567a}
+@media (max-width: 780px){.intl .wrap{grid-template-columns:1fr;gap:1.5rem}.intl .btn{justify-self:start}}
+
+/* ─── Contacto ─── */
+.visit{background:var(--paper)}
+.visit-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;margin-top:2.5rem;align-items:start}
+.info-cards{display:flex;flex-direction:column;gap:1rem}
+.info-card{display:grid;grid-template-columns:44px 1fr;gap:1rem;padding:1.25rem 1.4rem;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.info-card .ico-wrap{width:44px;height:44px;border-radius:11px;background:var(--forest-50);color:var(--forest);display:flex;align-items:center;justify-content:center}
+.info-card .ico-wrap svg{width:22px;height:22px}
+.info-card .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:.25rem}
+.info-card .value{font-size:1rem;color:var(--ink);font-weight:500;line-height:1.4}
+.info-card a.value{color:var(--clay-deep)}
+.info-card a.value:hover{color:var(--forest)}
+.visit-cta{background:linear-gradient(150deg,var(--forest) 0%,var(--forest-deep) 100%);color:#fff;border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+.visit-cta::before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;border:1.5px solid rgba(224,162,43,.22);top:-50px;right:-70px}
+.visit-cta h3{color:#fff;font-size:1.5rem;margin-bottom:.6rem;position:relative}
+.visit-cta p{color:rgba(255,255,255,.86);font-size:.96rem;margin-bottom:1.4rem;position:relative}
+.visit-cta .btn{background:var(--amber);color:var(--forest-deep);border-color:var(--amber);position:relative}
+.visit-cta .btn:hover{background:#cf9221;color:var(--forest-deep)}
+@media (max-width: 880px){.visit-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* ─── Footer ─── */
+footer{background:var(--forest-deep);color:rgba(255,255,255,.74);padding:3rem 0 2rem;font-size:.9rem}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+footer .brand{color:#fff;margin-bottom:1rem}
+footer .brand-mark{filter:none}
+footer .brand-name{color:#fff}
+footer .brand-sub{color:rgba(255,255,255,.5)}
+footer h4{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.95);margin:0 0 1rem;font-weight:700}
+footer ul{list-style:none;margin:0;padding:0}
+footer li{padding:.25rem 0;color:rgba(255,255,255,.72)}
+footer a{color:rgba(255,255,255,.86)}
+footer a:hover{color:var(--amber)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.10);padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:rgba(255,255,255,.52)}
+.foot-bottom a{color:rgba(255,255,255,.72)}
+@media (max-width: 780px){.foot-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* ─── Chat widget ─── */
+.chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--clay);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(194,90,46,.45),0 4px 8px rgba(194,90,46,.25);transition:transform .2s ease,background .2s ease;font-family:inherit}
+.chat-fab:hover{background:var(--clay-deep);transform:scale(1.05)}
+.chat-fab:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.chat-fab svg{width:28px;height:28px}
+.chat-fab[hidden]{display:none}
+.chat-panel{position:fixed;bottom:1.5rem;right:1.5rem;z-index:61;width:380px;max-width:calc(100vw - 2rem);height:560px;max-height:calc(100vh - 3rem);background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(14,61,41,.22),0 8px 16px rgba(14,61,41,.12);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .25s ease,opacity .25s ease}
+.chat-panel[data-open="true"]{transform:translateY(0);opacity:1;pointer-events:auto}
+.chat-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.95rem 1.1rem;background:var(--forest);color:#fff}
+.chat-header .who{display:flex;align-items:center;gap:.65rem}
+.chat-header .avatar{width:38px;height:38px;border-radius:50%;background-image:var(--brand-mark);background-size:cover;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.chat-header .title{font-weight:600;font-size:.95rem;line-height:1.15}
+.chat-header .subtitle{font-size:.72rem;opacity:.85;display:flex;align-items:center;gap:.35rem}
+.chat-header .subtitle::before{content:'';width:7px;height:7px;border-radius:50%;background:#7CF7C5;box-shadow:0 0 0 2px rgba(124,247,197,.25)}
+.chat-close{background:transparent;color:rgba(255,255,255,.85);border:none;padding:.3rem;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background .15s ease}
+.chat-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.chat-close svg{width:18px;height:18px}
+.chat-body{flex:1;overflow-y:auto;padding:1rem 1.1rem;background:#FAFBF9;display:flex;flex-direction:column;gap:.6rem;scroll-behavior:smooth}
+.chat-body::-webkit-scrollbar{width:6px}
+.chat-body::-webkit-scrollbar-thumb{background:rgba(23,35,27,.14);border-radius:3px}
+.bubble{max-width:80%;padding:.7rem .9rem;border-radius:14px;font-size:.92rem;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+.bubble.bot{background:#fff;color:var(--ink);align-self:flex-start;border:1px solid var(--line);border-bottom-left-radius:4px}
+.bubble.user{background:var(--forest);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.bubble.typing{display:inline-flex;gap:3px;align-items:center;padding:.85rem 1rem}
+.bubble.typing span{width:6px;height:6px;border-radius:50%;background:var(--ink-mute);animation:tdot 1.2s infinite ease-in-out}
+.bubble.typing span:nth-child(2){animation-delay:.15s}
+.bubble.typing span:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-3px);opacity:1}}
+.bubble.error{background:#FEF2F2;color:#991B1B;border:1px solid #FEE2E2;align-self:flex-start;border-bottom-left-radius:4px}
+.wa-cta{display:inline-flex;align-items:center;gap:.5rem;align-self:flex-start;margin-top:.2rem;padding:.7rem 1rem;background:#25D366;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:.88rem;box-shadow:0 6px 14px rgba(37,211,102,.32);transition:transform .15s ease}
+.wa-cta:hover{transform:translateY(-1px);color:#fff}
+.wa-cta svg{width:16px;height:16px}
+.chat-input-row{display:flex;gap:.5rem;padding:.75rem;background:#fff;border-top:1px solid var(--line)}
+.chat-input{flex:1;border:1px solid var(--line);border-radius:10px;padding:.6rem .85rem;font:inherit;font-size:.92rem;color:var(--ink);outline:none;background:#FAFBF9;transition:border-color .15s ease,background .15s ease}
+.chat-input:focus{border-color:var(--forest);background:#fff}
+.chat-send{background:var(--forest);color:#fff;border:none;border-radius:10px;padding:0 .9rem;display:flex;align-items:center;justify-content:center;transition:background .15s ease}
+.chat-send:hover{background:var(--forest-deep)}
+.chat-send:disabled{background:var(--ink-mute);cursor:not-allowed}
+.chat-send svg{width:18px;height:18px}
+.chat-foot{padding:.45rem .75rem;background:#fff;border-top:1px solid var(--line);font-size:.7rem;color:var(--ink-mute);text-align:center}
+@media (max-width: 500px){.chat-panel{bottom:0;right:0;width:100vw;height:100vh;max-height:100vh;border-radius:0;border:none}.chat-fab{bottom:1rem;right:1rem;width:56px;height:56px}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+@media print{
+  .nav,.chat-fab,.hero-art,.scrim,.drawer,footer{display:none}
+  body{background:#fff;color:#000}
+  section{padding:1rem 0;page-break-inside:avoid}
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "additionalType": "https://schema.org/TouristTrip",
+  "name": "Luis Tours",
+  "description": "Tours privados y traslados al aeropuerto en Medellín y Antioquia. Conductor y guía local.",
+  "url": "https://mockups.pymewebpro.com/luis-tours/",
+  "telephone": "+57 312 832 8082",
+  "areaServed": [
+    {"@type": "City", "name": "Medellín"},
+    {"@type": "AdministrativeArea", "name": "Antioquia"}
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Medellín",
+    "addressRegion": "Antioquia",
+    "addressCountry": "CO"
+  },
+  "sameAs": ["https://www.instagram.com/luistours10"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Tours privados y traslados al aeropuerto",
+  "provider": {"@type": "LocalBusiness", "name": "Luis Tours"},
+  "areaServed": {"@type": "AdministrativeArea", "name": "Antioquia, Colombia"},
+  "description": "Traslados al aeropuerto Rionegro (JMC), tours privados por Medellín y recorridos de día completo por Antioquia: Guatapé, Santa Fe de Antioquia y el Oriente antioqueño."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Luis Tours",
+  "url": "https://mockups.pymewebpro.com/luis-tours/",
+  "sameAs": ["https://www.instagram.com/luistours10"]
+}
+</script>
+</head>
+<body data-lang="es">
+
+<!-- ─── Nav ─── -->
+<header class="nav" aria-label="Navegación principal">
+  <div class="nav-inner">
+    <a href="#top" class="brand" aria-label="Luis Tours · inicio">
+      <span class="brand-mark" role="img" aria-label="Logo Luis Tours"></span>
+      <span class="brand-text">
+        <span class="brand-name">Luis Tours</span>
+        <span class="brand-sub">Medellín · Antioquia</span>
+      </span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#servicios"><span data-l="es">Servicios</span><span data-l="en">Services</span></a></li>
+        <li><a href="#conductor"><span data-l="es">Tu conductor</span><span data-l="en">Your driver</span></a></li>
+        <li><a href="#recorridos"><span data-l="es">Recorridos</span><span data-l="en">Tours</span></a></li>
+        <li><a href="#contacto"><span data-l="es">Contacto</span><span data-l="en">Contact</span></a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <button type="button" id="langEs" aria-pressed="true">ES</button>
+        <button type="button" id="langEn" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="btn btn-primary" data-action="open-chat">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span data-l="es">Planea tu viaje</span><span data-l="en">Plan your trip</span>
+      </button>
+      <button type="button" class="hamb" id="hambBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Menú" aria-hidden="true">
+  <div class="draw-head">
+    <span class="brand">
+      <span class="brand-mark" role="img" aria-label="Logo Luis Tours"></span>
+      <span class="brand-text"><span class="brand-name">Luis Tours</span></span>
+    </span>
+    <button type="button" class="drawer-close" id="drawerClose" aria-label="Cerrar menú">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <a class="draw-link" href="#servicios"><span data-l="es">Servicios</span><span data-l="en">Services</span></a>
+  <a class="draw-link" href="#conductor"><span data-l="es">Tu conductor</span><span data-l="en">Your driver</span></a>
+  <a class="draw-link" href="#recorridos"><span data-l="es">Recorridos</span><span data-l="en">Tours</span></a>
+  <a class="draw-link" href="#contacto"><span data-l="es">Contacto</span><span data-l="en">Contact</span></a>
+  <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
+    <span data-l="es">Planea tu viaje</span><span data-l="en">Plan your trip</span>
+  </button>
+</aside>
+
+<main id="top">
+
+<!-- ─── Hero ─── -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span data-l="es">Tours privados · Medellín y Antioquia</span><span data-l="en">Private tours · Medellín &amp; Antioquia</span></span>
+      <h1>
+        <span data-l="es">Recorre Antioquia con quien la conoce <em>de memoria.</em></span>
+        <span data-l="en">See Antioquia with someone who knows it <em>by heart.</em></span>
+      </h1>
+      <p class="lead" data-l="es">Luis te recoge, maneja por ti y arma el recorrido a tu ritmo. Sin afán, sin pelear con el GPS ni con el tráfico. Tú solo disfrutas el camino.</p>
+      <p class="lead" data-l="en">Luis picks you up, does the driving and builds the route at your pace. No rushing, no fighting with the GPS or the traffic. You just enjoy the ride.</p>
+      <div class="hero-ctas">
+        <button type="button" class="btn btn-primary btn-lg" data-action="open-chat">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span data-l="es">Planea tu viaje</span><span data-l="en">Plan your trip</span>
+        </button>
+        <a class="btn btn-ghost btn-lg" href="#recorridos">
+          <span data-l="es">Ver recorridos</span><span data-l="en">See tours</span>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="trust-strip">
+        <span><svg class="dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-l="es">Puntualidad</span><span data-l="en">Always on time</span></span>
+        <span><svg class="dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l1-4a3 3 0 0 1 3-2h6a3 3 0 0 1 3 2l1 4"/><path d="M3 13h18v4H3z"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg><span data-l="es">Vehículo cómodo</span><span data-l="en">Comfortable vehicle</span></span>
+        <span><svg class="dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-l="es">A tu ritmo, sin afán</span><span data-l="en">At your own pace</span></span>
+      </div>
+    </div>
+
+    <figure class="hero-art" aria-label="Ilustración de una carretera de montaña en Antioquia al atardecer">
+      <svg viewBox="0 0 470 560" xmlns="http://www.w3.org/2000/svg" role="img">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FBE3B0"/>
+            <stop offset="0.45" stop-color="#F4D49A"/>
+            <stop offset="1" stop-color="#E9F0E3"/>
+          </linearGradient>
+          <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#C9C2B4"/>
+            <stop offset="1" stop-color="#9A9384"/>
+          </linearGradient>
+        </defs>
+        <rect width="470" height="560" fill="url(#sky)"/>
+        <circle cx="338" cy="118" r="46" fill="#F6B53D" opacity="0.9"/>
+        <circle cx="338" cy="118" r="66" fill="#F6B53D" opacity="0.18"/>
+        <!-- distant ranges -->
+        <path d="M0 250 L70 198 L150 240 L235 185 L320 232 L400 192 L470 226 L470 560 L0 560 Z" fill="#7FA68B"/>
+        <path d="M0 300 L80 250 L175 296 L270 244 L360 292 L470 250 L470 560 L0 560 Z" fill="#4E8163"/>
+        <path d="M0 360 L110 312 L220 358 L340 308 L470 356 L470 560 L0 560 Z" fill="#2E6446"/>
+        <!-- foreground hills -->
+        <path d="M0 430 C120 380 150 470 260 432 C360 398 410 470 470 440 L470 560 L0 560 Z" fill="#1C5037"/>
+        <!-- winding road -->
+        <path d="M250 322 C250 360 150 372 150 420 C150 470 330 470 300 520 C288 540 250 548 230 560 L300 560 C330 545 360 520 360 488 C360 436 210 440 210 414 C210 392 300 384 300 344 C300 332 280 326 268 322 Z" fill="url(#road)"/>
+        <path d="M255 332 C255 364 168 378 168 420 C168 462 320 466 300 510" fill="none" stroke="#F3ECD8" stroke-width="2.4" stroke-dasharray="6 12" stroke-linecap="round" opacity="0.85"/>
+        <!-- white SUV -->
+        <g transform="translate(232 470)">
+          <ellipse cx="30" cy="44" rx="32" ry="6" fill="#0E3D29" opacity="0.28"/>
+          <rect x="6" y="14" width="48" height="22" rx="6" fill="#FBFBF8" stroke="#D8D8D0" stroke-width="1"/>
+          <path d="M12 16 C14 6 22 4 30 4 C38 4 46 6 48 16 Z" fill="#EDEDE8" stroke="#D8D8D0" stroke-width="1"/>
+          <rect x="15" y="8" width="13" height="8" rx="2" fill="#9FC3D6"/>
+          <rect x="32" y="8" width="13" height="8" rx="2" fill="#9FC3D6"/>
+          <circle cx="17" cy="37" r="6.5" fill="#23303A"/><circle cx="17" cy="37" r="2.4" fill="#7C8A93"/>
+          <circle cx="43" cy="37" r="6.5" fill="#23303A"/><circle cx="43" cy="37" r="2.4" fill="#7C8A93"/>
+          <rect x="50" y="22" width="5" height="5" rx="1.5" fill="#F6B53D"/>
+        </g>
+        <!-- little palms -->
+        <g fill="#15402C">
+          <rect x="70" y="430" width="4" height="34"/>
+          <path d="M72 432 q-18 -6 -26 4 q16 -2 26 2 q-12 -14 -24 -16 q14 4 24 10 q-6 -16 -16 -22 q12 8 16 22 q4 -14 16 -20 q-10 8 -12 18 q12 -8 24 -6 q-16 2 -24 10 q12 -2 24 4 q-18 -8 -28 -2 Z"/>
+        </g>
+      </svg>
+      <span class="art-tag"><span data-l="es">Camino al Oriente antioqueño</span><span data-l="en">On the road through Antioquia</span></span>
+    </figure>
+  </div>
+</section>
+
+<!-- ─── Servicios ─── -->
+<section id="servicios" class="services">
+  <div class="wrap">
+    <span class="eyebrow"><span data-l="es">Qué ofrece Luis</span><span data-l="en">What Luis offers</span></span>
+    <h2><span data-l="es">Una sola persona de confianza, varios planes.</span><span data-l="en">One trusted driver, several ways to travel.</span></h2>
+
+    <div class="svc-grid">
+      <article class="card svc-card">
+        <div class="ico-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l8-2 5-9 2 .5-2.5 8 5-1.2 2-3 2 .5-2 4-19 5z"/></svg>
+        </div>
+        <h3><span data-l="es">Traslados al aeropuerto</span><span data-l="en">Airport transfers</span></h3>
+        <p data-l="es">Rionegro (JMC) y Medellín, en los dos sentidos. Puntual, cómodo y sin estrés. Te espera a la salida y te lleva directo a tu destino.</p>
+        <p data-l="en">Rionegro (JMC) and Medellín, both directions. Punctual, comfortable and stress-free. He waits at arrivals and takes you straight to your destination.</p>
+      </article>
+
+      <article class="card svc-card">
+        <div class="ico-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l6-4 6 4v13"/><path d="M15 21V11l6 4v6"/><path d="M7 11h0M7 15h0M11 11h0M11 15h0"/></svg>
+        </div>
+        <h3><span data-l="es">Tours privados por Medellín</span><span data-l="en">Private Medellín tours</span></h3>
+        <p data-l="es">Comuna 13, El Poblado, los miradores y los lugares que de verdad valen la pena. Solo tú y tu grupo, a tu ritmo.</p>
+        <p data-l="en">Comuna 13, El Poblado, the viewpoints and the spots that are actually worth it. Just you and your group, at your pace.</p>
+      </article>
+
+      <article class="card svc-card">
+        <div class="ico-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-11 4 6 2-3 6 8z"/><circle cx="8" cy="6" r="2"/></svg>
+        </div>
+        <h3><span data-l="es">Día completo por Antioquia</span><span data-l="en">Full-day Antioquia trips</span></h3>
+        <p data-l="es">Guatapé y la Piedra del Peñol, Santa Fe de Antioquia, el Oriente. Salimos temprano y ves bastante en un solo día.</p>
+        <p data-l="en">Guatapé and the Peñol rock, Santa Fe de Antioquia, the East. We leave early and you see a lot in a single day.</p>
+      </article>
+
+      <article class="card svc-card">
+        <div class="ico-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19a3 3 0 0 0 3-3V8a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v8a3 3 0 0 0 3 3"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/></svg>
+        </div>
+        <h3><span data-l="es">Viajes a tu medida</span><span data-l="en">Custom trips</span></h3>
+        <p data-l="es">¿Varios días o un destino especial? Armamos la ruta contigo, desde un paseo de un día hasta un viaje a la costa.</p>
+        <p data-l="en">Several days or a special destination? We build the route together, from a day trip to a journey to the coast.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Tu conductor ─── -->
+<section id="conductor" class="driver">
+  <div class="wrap">
+    <div class="driver-grid">
+      <div class="driver-photo" aria-label="Foto de Luis (pendiente)">
+        <div class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>
+          <span class="ph-t">Luis Restrepo Rincón</span>
+          <span class="ph-s" data-l="es">Aquí va una foto de Luis y su vehículo.</span>
+          <span class="ph-s" data-l="en">A photo of Luis and his vehicle goes here.</span>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow"><span data-l="es">Quién te lleva</span><span data-l="en">Who drives you</span></span>
+        <h2><span data-l="es">Luis, tu conductor y guía.</span><span data-l="en">Luis, your driver and guide.</span></h2>
+        <p class="quote"><span data-l="es">&ldquo;Yo conduzco, tú disfrutas, el tiempo es tuyo.&rdquo;</span><span data-l="en">&ldquo;I drive, you enjoy, the time is yours.&rdquo;</span></p>
+        <p class="lead" data-l="es">Soy Luis Restrepo. Llevo años manejando por las carreteras de Antioquia y me conozco los caminos, los miradores y los buenos paraderos. Mi trabajo es sencillo: te recojo a tiempo, manejo por ti y te dejo armar el día como tú quieras.</p>
+        <p class="lead" data-l="en">I am Luis Restrepo. I have spent years driving the roads of Antioquia and I know the routes, the viewpoints and the good places to stop. My job is simple: I pick you up on time, do the driving and let you shape the day however you like.</p>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-l="es">Experiencia en las rutas de Medellín y Antioquia</span><span data-l="en">Experienced on the roads of Medellín and Antioquia</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-l="es">Vehículo propio, limpio y cómodo</span><span data-l="en">His own vehicle, clean and comfortable</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-l="es">Recorridos a tu ritmo, sin agenda apurada</span><span data-l="en">Tours at your pace, no rushed schedule</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-l="es">Trato cercano y personal de principio a fin</span><span data-l="en">Warm, personal attention from start to finish</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Cómo funciona ─── -->
+<section class="how">
+  <div class="wrap">
+    <span class="eyebrow"><span data-l="es">Cómo funciona</span><span data-l="en">How it works</span></span>
+    <h2><span data-l="es">Reservar es así de fácil.</span><span data-l="en">Booking is this simple.</span></h2>
+    <p class="lead" data-l="es">Sin formularios largos ni esperas. Escribes, coordinamos y Luis te recoge. Listo.</p>
+    <p class="lead" data-l="en">No long forms, no waiting around. You write, we coordinate and Luis picks you up. Done.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3><span data-l="es">Escríbenos</span><span data-l="en">Message us</span></h3>
+        <p data-l="es">Cuéntale al asistente a dónde quieres ir o qué día y hora llegas al aeropuerto.</p>
+        <p data-l="en">Tell the assistant where you want to go, or the day and time you land at the airport.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3><span data-l="es">Armamos la ruta</span><span data-l="en">We plan the route</span></h3>
+        <p data-l="es">Coordinamos hora, recorrido y punto de encuentro. Sin sorpresas ni costos escondidos.</p>
+        <p data-l="en">We agree on the time, the route and the meeting point. No surprises, no hidden costs.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3><span data-l="es">Disfrutas el camino</span><span data-l="en">Enjoy the ride</span></h3>
+        <p data-l="es">Luis llega puntual, maneja por ti y tú solo te dejas llevar.</p>
+        <p data-l="en">Luis arrives on time, does the driving and you just sit back and enjoy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Recorridos / destinos ─── -->
+<section id="recorridos" class="routes">
+  <div class="wrap">
+    <span class="eyebrow"><span data-l="es">A dónde te llevamos</span><span data-l="en">Where we take you</span></span>
+    <h2><span data-l="es">Destinos que la gente más pide.</span><span data-l="en">The destinations people ask for most.</span></h2>
+    <div class="route-grid">
+      <div class="route"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l8-2 5-9 2 .5-2.5 8 5-1.2 2-3 2 .5-2 4-19 5z"/></svg></span><span><span class="r-name">Aeropuerto Rionegro (JMC)</span><span class="r-sub" data-l="es">Traslado puntual, ida y vuelta</span><span class="r-sub" data-l="en">Punctual transfer, both ways</span></span></div>
+      <div class="route"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-11 4 6 2-3 6 8z"/><circle cx="8" cy="6" r="2"/></svg></span><span><span class="r-name">Guatapé y la Piedra</span><span class="r-sub" data-l="es">Día completo al embalse</span><span class="r-sub" data-l="en">Full day at the reservoir</span></span></div>
+      <div class="route"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l6-4 6 4v13"/><path d="M15 21V11l6 4v6"/></svg></span><span><span class="r-name">Comuna 13</span><span class="r-sub" data-l="es">Recorrido por la ciudad</span><span class="r-sub" data-l="en">City tour</span></span></div>
+      <div class="route"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></span><span><span class="r-name">Santa Fe de Antioquia</span><span class="r-sub" data-l="es">Pueblo histórico y caluroso</span><span class="r-sub" data-l="en">Historic colonial town</span></span></div>
+      <div class="route"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l5-9 4 5 3-6 6 10z"/></svg></span><span><span class="r-name"><span data-l="es">Oriente antioqueño</span><span data-l="en">Eastern Antioquia</span></span><span class="r-sub" data-l="es">Clima fresco y paisajes verdes</span><span class="r-sub" data-l="en">Cool climate, green landscapes</span></span></div>
+      <div class="route"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19a3 3 0 0 0 3-3V8a3 3 0 0 1 3-3a3 3 0 0 1 3 3v8a3 3 0 0 0 3 3"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/></svg></span><span><span class="r-name"><span data-l="es">Tu destino a la medida</span><span data-l="en">Your custom destination</span></span><span class="r-sub" data-l="es">Lo armamos contigo</span><span class="r-sub" data-l="en">We plan it with you</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Para viajeros internacionales ─── -->
+<section class="intl">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><span data-l="es">Para viajeros internacionales</span><span data-l="en">For international travellers</span></span>
+      <h2><span data-l="es">¿De visita en Medellín? Planéalo en inglés.</span><span data-l="en">Visiting Medellín? Plan it in English.</span></h2>
+      <p data-l="es">Esta página está en español e inglés, y el asistente del chat te responde en inglés para coordinar tu traslado o tu tour. Toda la reserva queda lista antes de que llegues.</p>
+      <p data-l="en">This page is available in English and Spanish, and the chat assistant replies in English to help you arrange your transfer or tour. Everything is sorted before you arrive.</p>
+    </div>
+    <button type="button" class="btn btn-lg" data-action="open-chat">
+      <span data-l="es">Escribir en inglés</span><span data-l="en">Chat in English</span>
+    </button>
+  </div>
+</section>
+
+<!-- ─── Contacto ─── -->
+<section id="contacto" class="visit">
+  <div class="wrap">
+    <span class="eyebrow"><span data-l="es">Coordina tu viaje</span><span data-l="en">Arrange your trip</span></span>
+    <h2><span data-l="es">Estamos a un mensaje de distancia.</span><span data-l="en">We are one message away.</span></h2>
+
+    <div class="visit-grid">
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5-7-11a7 7 0 0 1 14 0c0 6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <div><div class="label"><span data-l="es">Zona</span><span data-l="en">Area</span></div><div class="value"><span data-l="es">Base en Medellín · cubrimos Antioquia</span><span data-l="en">Based in Medellín · serving Antioquia</span></div></div>
+        </div>
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div><div class="label"><span data-l="es">Disponibilidad</span><span data-l="en">Availability</span></div><div class="value"><span data-l="es">Todos los días · coordina por WhatsApp</span><span data-l="en">Every day · coordinate by WhatsApp</span></div></div>
+        </div>
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div><div class="label">WhatsApp</div><a class="value" href="https://wa.me/573128328082" rel="noopener">+57 312 832 8082</a></div>
+        </div>
+        <div class="info-card">
+          <div class="ico-wrap" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>
+          <div><div class="label">Instagram</div><a class="value" href="https://www.instagram.com/luistours10" rel="noopener">@luistours10</a></div>
+        </div>
+      </div>
+
+      <div class="visit-cta">
+        <h3><span data-l="es">¿Listo para rodar?</span><span data-l="en">Ready to roll?</span></h3>
+        <p data-l="es">Cuéntale al asistente tu plan, tu fecha o tu vuelo. Coordinamos tu traslado o tu tour al instante.</p>
+        <p data-l="en">Tell the assistant your plan, your date or your flight. We arrange your transfer or tour right away.</p>
+        <button type="button" class="btn btn-lg" data-action="open-chat">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span data-l="es">Hablar con el asistente</span><span data-l="en">Chat with the assistant</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ─── Footer ─── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="brand" aria-label="Luis Tours · inicio">
+          <span class="brand-mark" role="img" aria-label="Logo Luis Tours"></span>
+          <span class="brand-text">
+            <span class="brand-name">Luis Tours</span>
+            <span class="brand-sub">Medellín · Antioquia</span>
+          </span>
+        </a>
+        <p style="color:rgba(255,255,255,.62);font-size:.88rem;margin-top:1rem;max-width:320px" data-l="es">Tours privados y traslados con Luis. Yo conduzco, tú disfrutas, el tiempo es tuyo.</p>
+        <p style="color:rgba(255,255,255,.62);font-size:.88rem;margin-top:1rem;max-width:320px" data-l="en">Private tours and transfers with Luis. I drive, you enjoy, the time is yours.</p>
+      </div>
+
+      <div>
+        <h4><span data-l="es">Recorridos</span><span data-l="en">Tours</span></h4>
+        <ul>
+          <li><span data-l="es">Traslados al aeropuerto</span><span data-l="en">Airport transfers</span></li>
+          <li><span data-l="es">Tours por Medellín</span><span data-l="en">Medellín tours</span></li>
+          <li>Guatapé · Santa Fe</li>
+          <li><span data-l="es">Viajes a tu medida</span><span data-l="en">Custom trips</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4><span data-l="es">Contacto</span><span data-l="en">Contact</span></h4>
+        <ul>
+          <li><a href="https://wa.me/573128328082" rel="noopener">WhatsApp · 312 832 8082</a></li>
+          <li><a href="https://www.instagram.com/luistours10" rel="noopener">Instagram · @luistours10</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Luis Tours · Medellín, Colombia</span>
+      <span><span data-l="es">Sitio web por</span><span data-l="en">Website by</span> <a href="https://pymewebpro.com" rel="noopener">PymeWebPro</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── Chat widget ─── -->
+<button class="chat-fab" id="chatOpenBtn" aria-label="Hablar con el asistente" aria-expanded="false" aria-controls="chatPanel">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+
+<aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
+  <header class="chat-header">
+    <div class="who">
+      <div class="avatar" role="img" aria-label="Luis Tours"></div>
+      <div>
+        <div class="title" id="chatTitle">Asistente Luis Tours</div>
+        <div class="subtitle"><span data-l="es">en línea</span><span data-l="en">online</span></div>
+      </div>
+    </div>
+    <button class="chat-close" id="chatCloseBtn" aria-label="Cerrar chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </header>
+  <div class="chat-body" id="chatBody" aria-live="polite" aria-atomic="false"></div>
+  <form class="chat-input-row" id="chatForm" autocomplete="off">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu mensaje…" aria-label="Mensaje" maxlength="500" required />
+    <button type="submit" class="chat-send" id="chatSendBtn" aria-label="Enviar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </form>
+  <div class="chat-foot"><span data-l="es">Atendido por IA · siempre puedes hablar por WhatsApp</span><span data-l="en">AI assistant · you can always reach us on WhatsApp</span></div>
+</aside>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ─── Language toggle (ES default / EN) ───
+(function(){
+  var body = document.body;
+  var esBtn = document.getElementById('langEs');
+  var enBtn = document.getElementById('langEn');
+  var input = document.getElementById('chatInput');
+  var titles = {
+    es: 'Luis Tours · Tours privados y traslados en Medellín y Antioquia',
+    en: 'Luis Tours · Private tours and airport transfers in Medellín, Antioquia'
+  };
+  function setLang(lang){
+    body.setAttribute('data-lang', lang);
+    document.documentElement.lang = lang;
+    esBtn.setAttribute('aria-pressed', lang === 'es' ? 'true' : 'false');
+    enBtn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+    document.title = titles[lang];
+    if (input) input.placeholder = lang === 'es' ? 'Escribe tu mensaje…' : 'Type your message…';
+    try { localStorage.setItem('luistours_lang', lang); } catch(e){}
+  }
+  esBtn.addEventListener('click', function(){ setLang('es'); });
+  enBtn.addEventListener('click', function(){ setLang('en'); });
+  var saved = null;
+  try { saved = localStorage.getItem('luistours_lang'); } catch(e){}
+  if (saved === 'en' || (!saved && (navigator.language || '').slice(0,2) === 'en')) setLang('en');
+})();
+
+// ─── Mobile drawer ───
+(function(){
+  var body = document.body;
+  var hamb = document.getElementById('hambBtn');
+  var drawer = document.getElementById('drawer');
+  var scrim = document.getElementById('scrim');
+  var closeBtn = document.getElementById('drawerClose');
+  function open(){
+    body.classList.add('drawer-open');
+    scrim.hidden = false;
+    hamb.setAttribute('aria-expanded','true');
+    drawer.setAttribute('aria-hidden','false');
+  }
+  function close(){
+    body.classList.remove('drawer-open');
+    hamb.setAttribute('aria-expanded','false');
+    drawer.setAttribute('aria-hidden','true');
+    setTimeout(function(){ if(!body.classList.contains('drawer-open')) scrim.hidden = true; }, 280);
+  }
+  hamb.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  scrim.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && body.classList.contains('drawer-open')) close(); });
+  drawer.querySelectorAll('a.draw-link').forEach(function(a){ a.addEventListener('click', close); });
+})();
+
+// ─── Chat widget ───
+(function(){
+  var SLUG = 'luis-tours';
+  var ENDPOINT = 'https://mockups.pymewebpro.com/api/chat/' + SLUG;
+  var WA_FALLBACK = 'https://wa.me/573128328082?text=' + encodeURIComponent('Hola Luis, quiero coordinar un viaje');
+
+  var fab = document.getElementById('chatOpenBtn');
+  var panel = document.getElementById('chatPanel');
+  var closeBtn = document.getElementById('chatCloseBtn');
+  var body = document.getElementById('chatBody');
+  var form = document.getElementById('chatForm');
+  var input = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+
+  var history = [];
+  var greeted = false;
+  function lang(){ return document.body.getAttribute('data-lang') || 'es'; }
+
+  function openPanel(){
+    panel.setAttribute('data-open','true');
+    panel.setAttribute('aria-hidden','false');
+    fab.setAttribute('aria-expanded','true');
+    fab.hidden = true;
+    if (!greeted){ greet(); greeted = true; }
+    setTimeout(function(){ input.focus(); }, 280);
+  }
+  function closePanel(){
+    panel.setAttribute('data-open','false');
+    panel.setAttribute('aria-hidden','true');
+    fab.setAttribute('aria-expanded','false');
+    fab.hidden = false;
+  }
+  fab.addEventListener('click', openPanel);
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.getAttribute('data-open') === 'true') closePanel(); });
+  document.querySelectorAll('[data-action="open-chat"]').forEach(function(btn){
+    btn.addEventListener('click', function(e){ e.preventDefault(); openPanel(); });
+  });
+
+  function addBubble(role, text, opts){
+    opts = opts || {};
+    var el = document.createElement('div');
+    el.className = 'bubble ' + role + (opts.error ? ' error' : '');
+    el.textContent = text;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+  function addTyping(){
+    var el = document.createElement('div');
+    el.className = 'bubble bot typing';
+    el.setAttribute('aria-label','escribiendo');
+    el.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+  function addWaCta(url, label){
+    var a = document.createElement('a');
+    a.className = 'wa-cta';
+    a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span></span>';
+    a.querySelector('span').textContent = label;
+    body.appendChild(a);
+    body.scrollTop = body.scrollHeight;
+  }
+  function greet(){
+    var msg = lang() === 'en'
+      ? 'Hi! I am the Luis Tours assistant. I can help you arrange an airport transfer or a private tour around Medellín and Antioquia. Where would you like to go?'
+      : '¡Hola! Soy el asistente de Luis Tours. Te ayudo a coordinar un traslado al aeropuerto o un tour privado por Medellín y Antioquia. ¿A dónde te gustaría ir?';
+    addBubble('bot', msg);
+  }
+
+  async function send(text){
+    history.push({ role:'user', content:text });
+    addBubble('user', text);
+    input.value = '';
+    sendBtn.disabled = true;
+    var typing = addTyping();
+    var en = lang() === 'en';
+    try {
+      var res = await fetch(ENDPOINT, {
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body: JSON.stringify({ messages: history, lang: lang() }),
+      });
+      typing.remove();
+      if (!res.ok){
+        var msg = en
+          ? 'Sorry, the assistant is briefly offline. Message us directly on WhatsApp and we will reply right away.'
+          : 'El asistente está fuera de línea un momento. Escríbenos directo por WhatsApp y te respondemos de una.';
+        addBubble('bot', msg, { error:true });
+        addWaCta(WA_FALLBACK, en ? 'Message on WhatsApp' : 'Hablar por WhatsApp');
+        return;
+      }
+      var data = await res.json();
+      var reply = (data.reply || '').trim();
+      if (reply) addBubble('bot', reply);
+      if (data.wa_link){
+        addWaCta(data.wa_link, en ? 'Continue on WhatsApp' : 'Continuar por WhatsApp');
+      }
+      history.push({ role:'assistant', content: reply });
+    } catch(err) {
+      typing.remove();
+      addBubble('bot', en ? 'I could not send your message. Reach us on WhatsApp and we will help you right away.' : 'No pude enviar tu mensaje. Escríbenos por WhatsApp y te atendemos de una.', { error:true });
+      addWaCta(WA_FALLBACK, en ? 'Message on WhatsApp' : 'Hablar por WhatsApp');
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text = (input.value || '').trim();
+    if (!text || sendBtn.disabled) return;
+    send(text);
+  });
+})();
+</script>
+
+</body>
+</html>

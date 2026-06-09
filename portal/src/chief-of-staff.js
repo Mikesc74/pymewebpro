@@ -1579,6 +1579,7 @@ async function toolListMockups() {
       "medellin-guide-boutique",
       "central-farma-drogueria",
       "revo-cafe",
+      "luis-tours",
     ],
   };
 }

@@ -41,6 +41,8 @@ export const MOCKUP_SLUGS = new Set([
   // Corporate/portfolio site · engineering consultancy, Barranquilla (added 2026-06-08).
   "inproyectos",
   "inproyectos-v2",
+  // Private driver / tours · Medellín + Antioquia, bilingual ES/EN (added 2026-06-08).
+  "luis-tours",
 ]);
 
 // Backwards-compat shim: a few callers still read `MANUAL_MOCKUPS[slug]`
