@@ -1,0 +1,216 @@
+
+(function() {
+  if (window.__valentinaLoaded) return;
+  window.__valentinaLoaded = true;
+
+  var BASE = "https://valentina.pymewebpro.com";
+  var ENDPOINT = BASE + "/chat";
+  var SESSION_KEY = "valentina_session";
+  var session = sessionStorage.getItem(SESSION_KEY);
+  if (!session) {
+    session = "vs_" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    sessionStorage.setItem(SESSION_KEY, session);
+  }
+
+  // External stylesheet (CSP-friendly).
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = BASE + "/widget.css";
+  document.head.appendChild(link);
+
+  // ---- DOM ----
+  var isEn = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
+  var launcherLabel = isEn ? "Got a question?" : "¿Tienes una pregunta?";
+  var launcher = document.createElement("button");
+  launcher.className = "vt-launcher";
+  launcher.setAttribute("aria-label", launcherLabel);
+  launcher.innerHTML =
+    '<span class="vt-launcher-dot" aria-hidden="true"></span>' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>' +
+    '<span class="vt-launcher-label">' + launcherLabel + '</span>';
+
+  var panel = document.createElement("div");
+  panel.className = "vt-panel";
+  panel.setAttribute("role", "dialog");
+  panel.setAttribute("aria-label", "Conversación con Valentina");
+  panel.innerHTML =
+    '<div class="vt-header">' +
+      '<div class="vt-avatar">V</div>' +
+      '<div><h3>Valentina</h3><p>PymeWebPro · responde en segundos</p></div>' +
+      '<button class="vt-close" aria-label="Cerrar">✕</button>' +
+    '</div>' +
+    '<div class="vt-messages" id="vt-messages"></div>' +
+    '<div class="vt-input">' +
+      '<textarea id="vt-textarea" rows="1" placeholder="Escribe tu mensaje..." aria-label="Mensaje"></textarea>' +
+      '<button class="vt-send" id="vt-send">Enviar</button>' +
+    '</div>' +
+    '<div class="vt-footer">Hecho con <span class="fr">cuidado</span> en Medellín</div>';
+
+  document.body.appendChild(launcher);
+  document.body.appendChild(panel);
+
+  var messagesEl = panel.querySelector("#vt-messages");
+  var textareaEl = panel.querySelector("#vt-textarea");
+  var sendBtn = panel.querySelector("#vt-send");
+  var closeBtn = panel.querySelector(".vt-close");
+
+  function addMessage(text, who) {
+    var div = document.createElement("div");
+    div.className = "vt-msg " + who;
+    var safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    safe = safe.replace(/(https?:\/\/[^\s<>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+    div.innerHTML = safe.replace(/\n/g, "<br>");
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addTyping() {
+    var t = document.createElement("div");
+    t.className = "vt-typing";
+    t.id = "vt-typing";
+    t.innerHTML = "<span></span><span></span><span></span>";
+    messagesEl.appendChild(t);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+  function removeTyping() {
+    var t = document.getElementById("vt-typing");
+    if (t) t.remove();
+  }
+
+  function openPanel(intent) {
+    panel.classList.add("open");
+    setTimeout(function() { textareaEl.focus(); }, 50);
+    if (!messagesEl.children.length) {
+      var greeting;
+      if (intent === "start") {
+        greeting = isEn
+          ? "Great, let's get started on your sales page. Quick details first so we can set you up: what's your name and your WhatsApp number?"
+          : "¡Listo! Empecemos con tu página de ventas. Te tomo unos datos rápidos para arrancar: ¿cómo te llamas y cuál es tu WhatsApp?";
+      } else {
+        greeting = isEn
+          ? "Hi, I'm Valentina · I help with your website. What kind of business do you have and what are you looking for?"
+          : "Hola, soy Valentina · te ayudo con tu página web. ¿Qué tipo de negocio tienes y qué buscas?";
+      }
+      addMessage(greeting, "bot");
+    }
+  }
+  function closePanel() { panel.classList.remove("open"); }
+
+  launcher.addEventListener("click", function() {
+    markInteracted();
+    if (panel.classList.contains("open")) closePanel(); else openPanel();
+  });
+  closeBtn.addEventListener("click", closePanel);
+
+  // ---- Proactive nudge: attention pulse, then a teaser bubble if no engagement.
+  // Fires once per session. Cancelled the moment the user clicks the launcher
+  // or opens the panel. Dismissible. Motion-only cue (no color-coding).
+  var NUDGE_KEY = "valentina_nudge_seen";
+  var nudgeBubble = null;
+  var nudgeTimers = [];
+  var nudgeDone = false;
+
+  function clearNudgeTimers() {
+    for (var i = 0; i < nudgeTimers.length; i++) clearTimeout(nudgeTimers[i]);
+    nudgeTimers = [];
+  }
+  function removeBubble() {
+    if (nudgeBubble) { nudgeBubble.remove(); nudgeBubble = null; }
+  }
+  function markInteracted() {
+    if (nudgeDone) return;
+    nudgeDone = true;
+    clearNudgeTimers();
+    launcher.classList.remove("vt-attention");
+    removeBubble();
+    try { sessionStorage.setItem(NUDGE_KEY, "1"); } catch (e) {}
+  }
+  function showBubble() {
+    if (nudgeDone || nudgeBubble || panel.classList.contains("open")) return;
+    var text = isEn ? "Looking for a website for your business?" : "¿Buscas una página para tu negocio?";
+    nudgeBubble = document.createElement("div");
+    nudgeBubble.className = "vt-nudge";
+    var msg = document.createElement("button");
+    msg.type = "button";
+    msg.className = "vt-nudge-msg";
+    msg.textContent = text;
+    var x = document.createElement("button");
+    x.type = "button";
+    x.className = "vt-nudge-x";
+    x.setAttribute("aria-label", isEn ? "Dismiss" : "Cerrar");
+    x.innerHTML = "\u2715";
+    nudgeBubble.appendChild(msg);
+    nudgeBubble.appendChild(x);
+    document.body.appendChild(nudgeBubble);
+    requestAnimationFrame(function() { if (nudgeBubble) nudgeBubble.classList.add("show"); });
+    msg.addEventListener("click", function() { markInteracted(); openPanel(); });
+    x.addEventListener("click", function(e) { e.stopPropagation(); markInteracted(); });
+  }
+  function startNudge() {
+    var seen = false;
+    try { seen = sessionStorage.getItem(NUDGE_KEY) === "1"; } catch (e) {}
+    if (seen) { nudgeDone = true; return; }
+    // 1) attention pulse ~2s in
+    nudgeTimers.push(setTimeout(function() {
+      if (nudgeDone || panel.classList.contains("open")) return;
+      launcher.classList.add("vt-attention");
+      nudgeTimers.push(setTimeout(function() {
+        launcher.classList.remove("vt-attention");
+      }, 2500));
+    }, 2200));
+    // 2) teaser bubble ~6s in if still no engagement
+    nudgeTimers.push(setTimeout(showBubble, 6000));
+  }
+  if (document.readyState === "complete") startNudge();
+  else window.addEventListener("load", startNudge);
+
+  // Delegated trigger · any element with [data-valentina-open] opens the
+  // panel on click. Lets the marketing page wire CTAs (header button, hero
+  // CTA, footer CTA, etc.) without inline event handlers (which would
+  // require 'unsafe-hashes' in the hash-locked CSP).
+  document.addEventListener("click", function(e) {
+    var trigger = e.target.closest && e.target.closest("[data-valentina-open]");
+    if (!trigger) return;
+    e.preventDefault();
+    openPanel(trigger.getAttribute("data-valentina-open") || "");
+  });
+
+  textareaEl.addEventListener("input", function() {
+    textareaEl.style.height = "auto";
+    textareaEl.style.height = Math.min(90, textareaEl.scrollHeight) + "px";
+  });
+  textareaEl.addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  });
+  sendBtn.addEventListener("click", send);
+
+  async function send() {
+    var text = textareaEl.value.trim();
+    if (!text) return;
+    textareaEl.value = "";
+    textareaEl.style.height = "auto";
+    sendBtn.disabled = true;
+    addMessage(text, "user");
+    addTyping();
+    try {
+      var res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session: session, message: text })
+      });
+      var data = await res.json();
+      removeTyping();
+      if (data && data.reply) addMessage(data.reply, "bot");
+      else addMessage("Disculpa, algo salió mal. ¿Puedes intentar de nuevo?", "bot");
+    } catch (e) {
+      removeTyping();
+      addMessage("Disculpa, no me llegó tu mensaje. ¿Puedes intentar de nuevo?", "bot");
+    } finally {
+      sendBtn.disabled = false;
+      textareaEl.focus();
+    }
+  }
+})();

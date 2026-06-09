@@ -1,0 +1,4 @@
+-- asistente-db schema v9 · Phase 3
+-- NO-OP: booking_url already exists on the clients table from the original
+-- schema (001_init.sql). Phase 3 (monthly reports + booking link) needs no
+-- schema change. This file is intentionally empty of statements.

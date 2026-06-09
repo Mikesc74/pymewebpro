@@ -376,25 +376,140 @@ async function runImageGen(env, prompt) {
   return { ok: false, error: errors.join(" | ") };
 }
 
+// ---- manual upload path -------------------------------------------------
+//
+// When IG scraping fails (Meta's login wall, rate limits) Mike can drop
+// screenshots / downloaded photos directly onto the card. Each file is
+// stored in R2 under `mockup-img/<lead_id>/upload-<n>.<ext>` and pushed
+// into mockup_data.images.gallery so the carousel picks it up immediately.
+// No need to regenerate the whole mockup (which would cost Claude + Gemini).
+
+const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;    // 8MB · IG screenshots are small, this is plenty
+const MAX_UPLOADS_PER_LEAD = 20;             // hard cap so a stuck-on-paste loop can't fill R2
+const ALLOWED_CT = {
+  "image/png": "png",
+  "image/jpeg": "jpg",
+  "image/jpg": "jpg",
+  "image/webp": "webp",
+  "image/gif": "gif",
+};
+
+export async function uploadMockupImage(env, leadId, request) {
+  if (!env.ASSETS) return { ok: false, error: "ASSETS bucket not configured" };
+  const ct = String(request.headers.get("Content-Type") || "").split(";")[0].trim().toLowerCase();
+  const ext = ALLOWED_CT[ct];
+  if (!ext) return { ok: false, error: "unsupported content-type: " + ct };
+
+  // Read body with the cap.
+  const buf = await request.arrayBuffer();
+  if (buf.byteLength === 0) return { ok: false, error: "empty body" };
+  if (buf.byteLength > MAX_UPLOAD_BYTES) return { ok: false, error: "too large (" + buf.byteLength + " > " + MAX_UPLOAD_BYTES + ")" };
+
+  // Load current mockup_data so we can append the new URL and enforce caps.
+  const lead = await env.DB.prepare("SELECT id, mockup_data FROM leads WHERE id = ?").bind(leadId).first();
+  if (!lead) return { ok: false, error: "lead not found" };
+  let mockup = {};
+  try { mockup = lead.mockup_data ? JSON.parse(lead.mockup_data) : {}; } catch {}
+  if (!mockup.images) mockup.images = { logo: null, hero: [], gallery: [] };
+  if (!Array.isArray(mockup.images.gallery)) mockup.images.gallery = [];
+  const existingUploads = mockup.images.gallery.filter((g) => g && g.source === "upload").length;
+  if (existingUploads >= MAX_UPLOADS_PER_LEAD) return { ok: false, error: "upload cap reached (" + MAX_UPLOADS_PER_LEAD + ")" };
+
+  // Pick the next slot number that isn't taken.
+  let slotN = existingUploads + 1;
+  while (slotN < 100) {
+    const candidate = "upload-" + slotN;
+    const taken = (mockup.images.gallery || []).some((g) => g && typeof g.src === "string" && g.src.indexOf("/" + candidate + "?") !== -1) ||
+                  (mockup.images.gallery || []).some((g) => g && typeof g.src === "string" && g.src.endsWith("/" + candidate));
+    if (!taken) break;
+    slotN++;
+  }
+  const slot = "upload-" + slotN;
+  const r2Key = "mockup-img/" + leadId + "/" + slot + "." + ext;
+
+  try {
+    await env.ASSETS.put(r2Key, buf, { httpMetadata: { contentType: ct } });
+  } catch (e) {
+    return { ok: false, error: "R2 put failed: " + String(e && e.message || e) };
+  }
+
+  // Public URL · cache-busted with a timestamp so the carousel sees the new
+  // image right after upload (R2 + browser cache can otherwise lag).
+  const stamp = Date.now();
+  const src = "https://mockups.pymewebpro.com/mockup-img/" + leadId + "/" + slot + "?v=" + stamp;
+
+  mockup.images.gallery.unshift({ src, source: "upload", uploaded_at: stamp });
+  // Hero gets the upload too if there's space (uploads are usually the best
+  // photos · they were hand-picked by Mike/Santi).
+  if (!Array.isArray(mockup.images.hero)) mockup.images.hero = [];
+  mockup.images.hero.unshift({ src, source: "upload", uploaded_at: stamp });
+  mockup.images.hero = mockup.images.hero.slice(0, 3);
+  mockup.generated_at = stamp;
+
+  // If the mockup has no status yet, set 'ready' (an upload alone is enough
+  // to get a card out of the 'needs_review' state).
+  let nextStatus = null;
+  if (!mockup.copy || !mockup.copy.hero) {
+    // No AI copy yet · keep current status untouched, just save images.
+    nextStatus = null;
+  } else {
+    nextStatus = "ready";
+  }
+
+  const updateSql = nextStatus
+    ? "UPDATE leads SET mockup_data = ?, mockup_status = ?, mockup_generated_at = ?, updated_at = ? WHERE id = ?"
+    : "UPDATE leads SET mockup_data = ?, mockup_generated_at = ?, updated_at = ? WHERE id = ?";
+  const binds = nextStatus
+    ? [JSON.stringify(mockup), nextStatus, stamp, stamp, leadId]
+    : [JSON.stringify(mockup), stamp, stamp, leadId];
+  await env.DB.prepare(updateSql).bind(...binds).run();
+
+  return { ok: true, slot, src, uploads: mockup.images.gallery.filter((g) => g.source === "upload").length };
+}
+
+export async function deleteMockupImage(env, leadId, slot) {
+  if (!env.ASSETS) return { ok: false, error: "ASSETS bucket not configured" };
+  const safeSlot = String(slot || "").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 32);
+  if (!safeSlot) return { ok: false, error: "bad slot" };
+  // R2 stores with an extension · try the common ones.
+  for (const ext of ["png", "jpg", "webp", "gif"]) {
+    try { await env.ASSETS.delete("mockup-img/" + leadId + "/" + safeSlot + "." + ext); } catch {}
+  }
+  // Strip from mockup_data.images.gallery + hero.
+  const lead = await env.DB.prepare("SELECT id, mockup_data FROM leads WHERE id = ?").bind(leadId).first();
+  if (!lead) return { ok: false, error: "lead not found" };
+  let mockup = {};
+  try { mockup = lead.mockup_data ? JSON.parse(lead.mockup_data) : {}; } catch {}
+  if (mockup.images) {
+    const matcher = (g) => g && typeof g.src === "string" && g.src.indexOf("/" + safeSlot + "?") === -1 && !g.src.endsWith("/" + safeSlot);
+    if (Array.isArray(mockup.images.gallery)) mockup.images.gallery = mockup.images.gallery.filter(matcher);
+    if (Array.isArray(mockup.images.hero))    mockup.images.hero    = mockup.images.hero.filter(matcher);
+  }
+  await env.DB.prepare("UPDATE leads SET mockup_data = ?, updated_at = ? WHERE id = ?")
+    .bind(JSON.stringify(mockup), Date.now(), leadId).run();
+  return { ok: true };
+}
+
 // Public serving · called from index.js when the worker sees /mockup-img/...
+// Tries each allowed extension since AI-generated images are .png but manual
+// uploads can be jpg / webp / gif. First match wins.
 export async function servePerLeadImage(env, leadId, slot) {
   if (!env.ASSETS) return new Response("not configured", { status: 500 });
-  // slot may end in extension; normalize.
   const safeSlot = String(slot || "").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 32);
   if (!safeSlot) return new Response("bad slot", { status: 400 });
-  const key = "mockup-img/" + leadId + "/" + safeSlot + ".png";
-  try {
-    const obj = await env.ASSETS.get(key);
-    if (!obj) return new Response("not found", { status: 404 });
-    return new Response(obj.body, {
-      headers: {
-        "Content-Type": (obj.httpMetadata && obj.httpMetadata.contentType) || "image/png",
-        "Cache-Control": "public, max-age=86400",
-      },
-    });
-  } catch (e) {
-    return new Response("error", { status: 500 });
+  for (const ext of ["png", "jpg", "webp", "gif"]) {
+    try {
+      const obj = await env.ASSETS.get("mockup-img/" + leadId + "/" + safeSlot + "." + ext);
+      if (!obj) continue;
+      return new Response(obj.body, {
+        headers: {
+          "Content-Type": (obj.httpMetadata && obj.httpMetadata.contentType) || ("image/" + (ext === "jpg" ? "jpeg" : ext)),
+          "Cache-Control": "public, max-age=86400",
+        },
+      });
+    } catch (e) { /* try next extension */ }
   }
+  return new Response("not found", { status: 404 });
 }
 
 // ---- Claude copywriter ---------------------------------------------------

@@ -43,6 +43,146 @@ import { handleEspacioDentalChat } from "./espacio-dental-chat.js";
 import { handleMockupProspects } from "./mockup-prospects.js";
 import { handleProspectChat } from "./prospect-chat.js";
 
+// ─── Mockups gallery (served at mockups.pymewebpro.com/) ────────────────────
+// Visual design matches the ChatClick mockups gallery (mockups.chatclick.ca):
+// navy gradient header, Inter, card grid. Spanish-primary, PymeWebPro-branded.
+// Card links point to the Pages mockups and open in a new tab.
+const MOCKUPS_GALLERY_HTML = `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>PymeWebPro · Galería de demos</title>
+<meta name="description" content="Galería privada de sitios demo de PymeWebPro para clientes. Ejemplos del tipo de página que construimos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0B1F3A;--navy2:#13315c;--ink:#11202e;--ink2:#56657a;--line:#e4e9f0;--paper:#f6f8fb;--card:#fff;--accent:#1f7a8c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 1.4rem}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:3.2rem 0 2.6rem}
+  header .badge{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.14);padding:.35rem .7rem;border-radius:999px;margin-bottom:1rem}
+  header h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em}
+  header p{color:rgba(255,255,255,.82);margin-top:.7rem;max-width:60ch;font-size:1.02rem}
+  main{padding:2.6rem 0 4rem}
+  .note{font-size:.9rem;color:var(--ink2);margin-bottom:1.8rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:.5rem;transition:transform .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(11,31,58,.08)}
+  .card .type{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .card h2{font-size:1.18rem;font-weight:700;letter-spacing:-.01em}
+  .card .desc{font-size:.9rem;color:var(--ink2);flex:1}
+  .links{display:flex;gap:.5rem;margin-top:.6rem}
+  .links a{flex:1;text-align:center;font-size:.85rem;font-weight:700;padding:.55rem .6rem;border-radius:9px;border:1.5px solid var(--navy);color:var(--navy)}
+  .links a.en{background:var(--navy);color:#fff}
+  .links a:hover{background:var(--navy2);color:#fff;border-color:var(--navy2)}
+  footer{border-top:1px solid var(--line);padding:1.8rem 0;color:var(--ink2);font-size:.85rem;text-align:center}
+  footer a{color:var(--navy);font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="badge">PymeWebPro · Galería privada de demos</span>
+    <h1>Sitios demo para clientes</h1>
+    <p>Un conjunto de páginas de ejemplo con asistente de chat 24/7, del tipo de sitio que construye PymeWebPro. Son solo ejemplos, no negocios reales.</p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <p class="note">Tip: abre cada demo y prueba el chat. Las páginas con burbuja de chat corren una demostración guiada.</p>
+    <div class="grid">
+
+      <article class="card">
+        <span class="type">Oficios · Electricista</span>
+        <h2>Electricista Camilo</h2>
+        <p class="desc">Diseño tipo afiche oscuro para un electricista con servicio de urgencias 24/7.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/electricista-camilo/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Oficios · Plomero</span>
+        <h2>Plomero Quilla</h2>
+        <p class="desc">Panel dividido fijo para un plomero disponible 24 horas.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/plomero-quilla/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Oficios · Plomero</span>
+        <h2>Plomeros del Valle</h2>
+        <p class="desc">Hero con foto y sello de 24 horas para urgencias de plomería.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/plomeros-del-valle/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Oficios · Cerrajero</span>
+        <h2>Master Key</h2>
+        <p class="desc">Cuadrícula de servicios en oscuro para un cerrajero automotriz.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/master-key/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Oficios · Pisos y enchapes</span>
+        <h2>Pisos y Enchapes</h2>
+        <p class="desc">Diseño editorial con tipografía serif y foto a sangre completa.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/pisos-y-enchapes/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Oficios · Enchapes</span>
+        <h2>Enchapes Cristal</h2>
+        <p class="desc">Cuadrícula tipo bento / mosaico para un instalador de enchapes.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/enchapes-cristal/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Oficios · Enchapes</span>
+        <h2>Enchapes y Cortes</h2>
+        <p class="desc">Página completa con servicios, galería de trabajos y franja de contacto.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/enchapes-y-cortes/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Retail · Persianas y cortinas</span>
+        <h2>Dekolux Persianas</h2>
+        <p class="desc">Diseño cálido con fotos para un taller de persianas y cortinas.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/dekolux-persianas/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Salud · Droguería</span>
+        <h2>Central Farma Droguería</h2>
+        <p class="desc">Droguería con domicilios, vacunación y chat en vivo.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/central-farma-drogueria/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Salud · Clínica dental</span>
+        <h2>Espacio Dental</h2>
+        <p class="desc">Sitio dental completo con precios, equipo y chat.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/espacio-dental/">Ver demo</a></div>
+      </article>
+
+      <article class="card">
+        <span class="type">Comida · Café</span>
+        <h2>Revo Café</h2>
+        <p class="desc">Café de brunch todo el día con menú, domicilios y chat.</p>
+        <div class="links"><a class="en" target="_blank" rel="noopener" href="https://mockups.pymewebpro.com/revo-cafe/">Ver demo</a></div>
+      </article>
+
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap">Galería privada de demos · creada por <a href="https://pymewebpro.com">PymeWebPro</a> · solo ejemplos, no negocios reales</div>
+</footer>
+</body>
+</html>`;
+
 // ─── Public dispatch (called from index.js) ─────────────────────────────────
 
 export async function handleMockups(req, env, ctx, helpers) {
@@ -104,20 +244,42 @@ export async function handleMockups(req, env, ctx, helpers) {
   // §15 (Template-literal hardening) and the 2026-05-19 entry in
   // ~/code/pymewebpro/CLAUDE.md.
   if (m === "GET" && reqHost === "mockups.pymewebpro.com") {
-    const slugMatch = p.match(/^\/([a-z0-9-]+)\/?$/);
-    const slug = slugMatch ? slugMatch[1] : null;
-    if (slug && MOCKUP_SLUGS.has(slug)) {
-      return Response.redirect("https://pymewebpro.com/manual-mockups/" + slug + "/", 301);
-    }
+    // Gallery landing · matches the ChatClick mockups gallery (mockups.chatclick.ca).
     if (p === "/" || p === "") {
-      // Index of available mockups · links straight to the Pages URLs.
-      const links = Array.from(MOCKUP_SLUGS).sort()
-        .map(s => `<li><a href="https://pymewebpro.com/manual-mockups/${s}/" style="color:#fbbf24">${s}</a></li>`)
-        .join("");
-      return new Response(
-        `<html><body style="font-family:system-ui;padding:40px;background:#0a0e1a;color:#fff"><h1>PymeWebPro Mockups</h1><ul>${links}</ul><p style="color:#888;font-size:14px">Mockups now served from pymewebpro.com/manual-mockups/&lt;slug&gt;/</p></body></html>`,
-        { headers: { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex" } }
-      );
+      return new Response(MOCKUPS_GALLERY_HTML, {
+        headers: { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex, nofollow" },
+      });
+    }
+    // Normalize /<slug> -> /<slug>/ so the demo's folder-relative assets resolve.
+    const bareSlug = p.match(/^\/([a-z0-9-]+)$/);
+    if (bareSlug && MOCKUP_SLUGS.has(bareSlug[1])) {
+      return Response.redirect("https://mockups.pymewebpro.com/" + bareSlug[1] + "/" + (url.search || ""), 301);
+    }
+    // Serve the demo + its assets AT the subdomain by proxying the apex Pages
+    // origin (pymewebpro.com/manual-mockups/<slug>/...). The mockup URL stays on
+    // mockups.pymewebpro.com. The apex _redirects only bounces the bare
+    // /manual-mockups[/] gallery root to this host (NOT the <slug> subpaths),
+    // so this fetch does not loop. Source files still live in
+    // ~/code/pymewebpro/manual-mockups/<slug>/ (git-managed, apex-deployed).
+    const proxyMatch = p.match(/^\/([a-z0-9-]+)\/(.*)$/);
+    if (proxyMatch && MOCKUP_SLUGS.has(proxyMatch[1])) {
+      const rest = proxyMatch[2] || "";
+      // rest is "" for /<slug>/ (Pages serves the folder's index.html), or the
+      // asset subpath otherwise. Pass it straight through.
+      const originUrl = "https://pymewebpro.com/manual-mockups/" + proxyMatch[1] + "/" + rest + (url.search || "");
+      const upstream = await fetch(originUrl, {
+        method: "GET",
+        redirect: "follow",
+        headers: {
+          "user-agent": req.headers.get("user-agent") || "mockups-proxy",
+          "accept": req.headers.get("accept") || "*/*",
+        },
+      });
+      const h = new Headers(upstream.headers);
+      h.set("x-robots-tag", "noindex, nofollow");
+      h.delete("content-security-policy");
+      h.delete("content-security-policy-report-only");
+      return new Response(upstream.body, { status: upstream.status, statusText: upstream.statusText, headers: h });
     }
     return new Response("Mockup not found", { status: 404 });
   }

@@ -1,0 +1,74 @@
+name = "pymewebpro-agent"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+account_id = "c98561adefb602704d4e7a6a1b7e7597"
+
+# Custom domain. Wrangler auto-creates the DNS record on first deploy.
+routes = [
+  { pattern = "valentina.pymewebpro.com", zone_name = "pymewebpro.com", custom_domain = true },
+]
+
+# --- D1 bindings ---------------------------------------------------------
+# AGENT_DB: Valentina's own state (conversations, messages, payment intents).
+# PORTAL_DB: The pymewebpro-portal database. Valentina writes leads + payments
+# here so the existing portal webhook (handleWompiWebhook) handles approval
+# and conversion exactly as it does for portal-originated leads.
+
+[[d1_databases]]
+binding = "AGENT_DB"
+database_name = "pymewebpro-agent-db"
+database_id = "9d867196-db04-47ce-84e9-22892ddd993a"
+
+[[d1_databases]]
+binding = "PORTAL_DB"
+database_name = "pymewebpro-portal"
+database_id = "93fc7e21-713c-4479-bb55-69ae05c275dc"
+
+# --- Plain-text vars ------------------------------------------------------
+[vars]
+ANTHROPIC_MODEL = "claude-sonnet-4-6"
+# Gemini (Google AI Studio) hybrid lever. Used by Valentina for conversation
+# history compression on long sales conversations. Optional · if
+# GEMINI_API_KEY secret is unset, history stays uncompressed (raw Claude).
+# See src/gemini.js. Reuse the same key as Catalina · single key works.
+GEMINI_MODEL = "gemini-2.0-flash"
+AGENT_NAME = "Valentina"
+SITE_ORIGIN = "https://pymewebpro.com"
+APP_URL = "https://colguides.com/portal/pymewebpro"
+WHATSAPP_NUMBER = "+573246353033"
+
+# Mike + Santi personal WhatsApp for escalations.
+MIKE_WA_NUMBER = "+573168013810"
+SANTI_WA_NUMBER = "+573014047722"
+
+# PymeWebPro's own Meta WA number (provision in Meta Business, then set below).
+# WA_PHONE_NUMBER_ID is the phone-number-id from Meta Business.
+WA_PHONE_NUMBER_ID = "1121669684367915"
+
+# --- Secrets (set via `wrangler secret put`) ------------------------------
+#   wrangler secret put ANTHROPIC_API_KEY      --name pymewebpro-agent
+#   wrangler secret put GEMINI_API_KEY         --name pymewebpro-agent  # optional · Gemini hybrid for history compression. Reuse the key from Catalina.
+#   wrangler secret put INBOX_PASSWORD         --name pymewebpro-agent  # optional admin view
+#   wrangler secret put WA_ACCESS_TOKEN        --name pymewebpro-agent  # Meta Cloud API token
+#   wrangler secret put WA_VERIFY_TOKEN        --name pymewebpro-agent  # webhook verify
+#   wrangler secret put WOMPI_PUBLIC_KEY       --name pymewebpro-agent  # same value as portal
+#   wrangler secret put WOMPI_INTEGRITY        --name pymewebpro-agent  # same value as portal
+#   wrangler secret put GCAL_CLIENT_ID            --name pymewebpro-agent  # call booking; same value as catalina
+#   wrangler secret put GCAL_CLIENT_SECRET        --name pymewebpro-agent  # same value as catalina
+#   wrangler secret put SANTI_GCAL_REFRESH_TOKEN  --name pymewebpro-agent  # REQUIRED · Santi does the PWP calls. Mint via Catalina /admin/gcal-auth (authorize as Santi)
+#   (MIKE_GCAL_REFRESH_TOKEN is not used for PymeWebPro booking.)
+
+# --- Build hardening (must stay at end of file so subsequent top-level keys
+# don't get captured as `build.X` or `rules.X` by TOML's section semantics). --
+
+# Bundle *.txt + *.css as Text imports · widget JS/CSS live in widget.js.txt +
+# widget.css instead of JS template literals. See ~/code/PLATFORM.md
+# (Template-literal hardening).
+[[rules]]
+type = "Text"
+globs = ["**/*.txt", "**/*.css"]
+fallthrough = true
+
+# Force `npm run check` on EVERY `wrangler deploy`. See ~/code/PLATFORM.md.
+[build]
+command = "npm run check"

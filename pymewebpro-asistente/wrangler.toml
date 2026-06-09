@@ -1,0 +1,37 @@
+name = "pymewebpro-asistente"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "asistente-db"
+database_id = "2c74be5e-ccdc-4e6d-910c-d19168ec682f"
+
+[vars]
+ENVIRONMENT = "production"
+PORTAL_BASE_URL = "https://asistente.pymewebpro.com"
+ALERT_EMAIL_FROM = "Angela <hola@pymewebpro.com>"   # owner-alert email sender (must be a Resend-verified sender)
+TWILIO_VALIDATE = "on"                               # X-Twilio-Signature check on /wa/webhook; set "off" to bypass
+DEFAULT_MONTHLY_CAP = "3000"                         # per-client monthly bot-reply cap (clients.monthly_msg_cap overrides; <0 = unlimited)
+DATA_RETENTION_MONTHS = "0"                          # Habeas Data: auto-purge conversations older than N months (0 = keep forever)
+PRIVACY_CONTACT = "hola@pymewebpro.com"              # contact email shown on the privacy notice
+
+# Secrets (set with `wrangler secret put`):
+#   ANTHROPIC_API_KEY   · Claude Haiku
+#   TWILIO_ACCOUNT_SID  · Twilio account SID (WhatsApp transport)
+#   TWILIO_AUTH_TOKEN   · Twilio auth token
+#   RESEND_API_KEY      · owner-alert email (Resend)
+#   ADMIN_TOKEN         · PymeWebPro admin console login (/portal/admin)
+#   OPENAI_API_KEY      · OPTIONAL · Whisper transcription of WhatsApp voice notes (without it, voice notes escalate to a human)
+#   TOKEN_ENC_KEY       · encrypts per-client Shopify tokens at rest (AES-GCM); if unset, tokens are stored plaintext
+#   (WA_ACCESS_TOKEN / WA_VERIFY_TOKEN from the Meta path are now unused)
+
+# Cron: monthly client activity reports (1st of the month, 08:00 Colombia)
+[triggers]
+crons = ["0 13 1 * *"]
+
+# Routes
+[[routes]]
+pattern = "asistente.pymewebpro.com/*"
+zone_name = "pymewebpro.com"

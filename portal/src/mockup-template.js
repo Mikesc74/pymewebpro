@@ -105,6 +105,7 @@ export function renderMockupV2(lead, mockup) {
   if (delivery && delivery.title) html.push(renderDelivery(delivery, t));
   html.push(renderVisit({ addrLines, hoursLines, wa, ig, igHandle, t, lang, mapsUrl: facts.maps_url || null }));
   html.push(renderFooter(businessName, footerBlurb, addrLines, hoursLines, wa, ig, igHandle, t));
+  html.push(renderChatbot({ businessName, logo, wa, lang, t }));
   html.push(reviewBanner);
   html.push("<script>");
   html.push("fetch('/api/demo/' + " + JSON.stringify(lead.id) + " + '/seen', {method:'POST'}).catch(function(){});");
@@ -120,6 +121,52 @@ export function renderMockupV2(lead, mockup) {
   html.push("  cs.addEventListener('mouseenter',function(){paused=true;});");
   html.push("  cs.addEventListener('mouseleave',function(){paused=false;});");
   html.push("  dots.forEach(function(d){ d.addEventListener('click',function(){ var to=parseInt(d.getAttribute('data-cs-i'),10)||0; go(to); paused=true; setTimeout(function(){paused=false;},8000); }); });");
+  html.push("})();");
+  // Chatbot · opens/closes the panel, posts to /api/demo-chat/:lead_id with
+  // the full message history each turn (server is stateless).
+  const greeting = (typeof t.chat_greeting === "function" ? t.chat_greeting(businessName) : ("Hola! Soy el asistente de " + businessName + "."));
+  const chatJsCtx = {
+    leadId: lead.id,
+    greeting,
+    placeholder: t.chat_placeholder,
+    typing: t.chat_typing,
+    errorMsg: t.chat_error,
+    send: t.chat_send,
+  };
+  html.push("(function(){");
+  html.push("  var CTX=" + JSON.stringify(chatJsCtx) + ";");
+  html.push("  var bubble=document.querySelector('[data-d=\"chatopen\"]');");
+  html.push("  var panel=document.querySelector('[data-d=\"chatpanel\"]');");
+  html.push("  if(!bubble||!panel) return;");
+  html.push("  var body=panel.querySelector('[data-d=\"chatbody\"]'); var inp=panel.querySelector('[data-d=\"chatinput\"]'); var send=panel.querySelector('[data-d=\"chatsend\"]'); var close=panel.querySelector('[data-d=\"chatclose\"]');");
+  html.push("  var msgs=[];");
+  html.push("  function esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\\'':'&#39;'})[c];});}");
+  html.push("  function row(role,text,extra){var d=document.createElement('div');d.className='chat-msg '+role+(extra||'');d.textContent=text;body.appendChild(d);body.scrollTop=body.scrollHeight;return d;}");
+  html.push("  function open(){panel.classList.add('open');bubble.style.display='none';panel.setAttribute('aria-hidden','false');setTimeout(function(){inp.focus();},150);if(!msgs.length){row('bot',CTX.greeting);}}");
+  html.push("  function shut(){panel.classList.remove('open');bubble.style.display='';panel.setAttribute('aria-hidden','true');}");
+  html.push("  bubble.addEventListener('click',open);");
+  html.push("  close.addEventListener('click',shut);");
+  // Any [data-d=\"cta-chat\"] on the page (hero CTA etc) opens the chat
+  // instead of routing to WhatsApp. We capture clicks during the bubbling
+  // phase so even CTAs rendered later (if any) still wire up.
+  html.push("  document.querySelectorAll('[data-d=\"cta-chat\"]').forEach(function(b){ b.addEventListener('click',function(e){ e.preventDefault(); open(); }); });");
+  html.push("  async function submit(){");
+  html.push("    var text=(inp.value||'').trim(); if(!text) return;");
+  html.push("    inp.value=''; send.disabled=true;");
+  html.push("    row('user',text);");
+  html.push("    msgs.push({role:'user',content:text});");
+  html.push("    var typing=row('bot',CTX.typing,' typing');");
+  html.push("    try{");
+  html.push("      var r=await fetch('/api/demo-chat/'+CTX.leadId,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs})});");
+  html.push("      var data=await r.json();");
+  html.push("      typing.remove();");
+  html.push("      if(!r.ok||!data.ok){ row('bot',data.error?CTX.errorMsg+' ('+data.error+')':CTX.errorMsg); }");
+  html.push("      else { row('bot',data.reply); msgs.push({role:'assistant',content:data.reply}); }");
+  html.push("    }catch(e){ typing.remove(); row('bot',CTX.errorMsg); }");
+  html.push("    send.disabled=false; inp.focus();");
+  html.push("  }");
+  html.push("  send.addEventListener('click',submit);");
+  html.push("  inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submit();}});");
   html.push("})();");
   html.push("</script>");
   html.push("</body></html>");
@@ -139,19 +186,20 @@ function renderTopBar(name, logo, wa, lang, t) {
   const logoHtml = logo
     ? '<img src="' + esc(logo) + '" alt="" class="logo">'
     : '<span class="logo logo-text">' + esc(initials(name)) + '</span>';
-  const waBtn = wa
-    ? '<a class="wa-btn" href="https://wa.me/' + esc(wa) + '" target="_blank" rel="noopener">' + esc(t.wa_button) + '</a>'
-    : '';
-  return '<header class="topbar"><div class="wrap"><a class="brand" href="#top">' + logoHtml + '<span class="brand-name">' + esc(name) + '</span></a><nav><a href="#services">' + esc(t.nav_services) + '</a><a href="#visit">' + esc(t.nav_visit) + '</a></nav>' + waBtn + '</div></header>';
+  // WhatsApp button intentionally removed from the topbar · the floating
+  // chatbot bottom-right is the primary interaction. WhatsApp links still
+  // live in the Visit section + footer for redundancy.
+  return '<header class="topbar"><div class="wrap"><a class="brand" href="#top">' + logoHtml + '<span class="brand-name">' + esc(name) + '</span></a><nav><a href="#services">' + esc(t.nav_services) + '</a><a href="#visit">' + esc(t.nav_visit) + '</a></nav></div></header>';
 }
 
 function renderHero({ eyebrow, headline, sub, chips, cta, wa, heroImgs, lang, t }) {
   const chipsHtml = chips.length
     ? '<div class="chips">' + chips.map((c) => '<span class="chip">' + esc(c) + '</span>').join("") + '</div>'
     : "";
-  const ctaHtml = wa
-    ? '<a class="cta" href="https://wa.me/' + esc(wa) + '" target="_blank" rel="noopener">' + esc(cta) + " →" + '</a>'
-    : '<a class="cta" href="#visit">' + esc(cta) + " →" + '</a>';
+  // Hero CTA opens the chatbot panel · NOT WhatsApp. The bot handles the
+  // first question and only escalates to WA when needed (per Mike: the
+  // primary interaction on the page is the chatbot).
+  const ctaHtml = '<a class="cta" href="#" data-d="cta-chat">' + esc(cta) + " →" + '</a>';
 
   // Rotating carousel · always rendered, even with 0 images (it falls back to
   // a brand-coloured gradient placeholder). Multiple images crossfade every
@@ -256,6 +304,35 @@ function renderFooter(name, blurb, addrLines, hoursLines, wa, ig, igHandle, t) {
   '</div></footer>';
 }
 
+// Floating chatbot · the page's only piece of interactive AI. Backed by
+// /api/demo-chat/:lead_id which reads the lead's mockup_data and answers in
+// the business's voice. Falls back to a WhatsApp handoff when needed.
+function renderChatbot({ businessName, logo, wa, lang, t }) {
+  const logoHtml = logo
+    ? '<img class="ch-logo" src="' + esc(logo) + '" alt="">'
+    : '<div class="ch-logo" style="display:flex;align-items:center;justify-content:center;font-weight:800;color:#A8381A;font-size:.8rem">' + esc(initials(businessName)) + '</div>';
+  const waLink = wa
+    ? '<div class="chat-wa-row">' + esc(t.chat_or_text) + ' <a href="https://wa.me/' + esc(wa) + '" target="_blank" rel="noopener">' + esc(t.chat_open_wa) + " →" + '</a></div>'
+    : "";
+  const assistantName = (lang === "en" ? "Assistant" : "Asistente") + " · " + businessName;
+  return '<button class="chat-bubble" data-d="chatopen" aria-label="' + esc(t.chat_aria) + '"><span class="cb-ic">💬</span>' + esc(t.chat_bubble) + '</button>' +
+    '<div class="chat-panel" data-d="chatpanel" aria-hidden="true">' +
+      '<div class="chat-head">' +
+        logoHtml +
+        '<div class="ch-name"><b>' + esc(assistantName) + '</b><span>● ' + esc(t.chat_online) + '</span></div>' +
+        '<button class="ch-x" data-d="chatclose" aria-label="' + esc(t.chat_close_aria) + '">×</button>' +
+      '</div>' +
+      '<div class="chat-body" data-d="chatbody"></div>' +
+      '<div class="chat-foot">' +
+        '<div class="chat-input-row">' +
+          '<input type="text" data-d="chatinput" placeholder="' + esc(t.chat_placeholder) + '" autocomplete="off">' +
+          '<button data-d="chatsend">' + esc(t.chat_send) + "</button>" +
+        '</div>' +
+        waLink +
+      '</div>' +
+    '</div>';
+}
+
 // ---- strings (es / en) ----------------------------------------------------
 
 function strings(lang) {
@@ -279,6 +356,17 @@ function strings(lang) {
     contact_us: "Contact",
     credit_made_by: "Made by",
     errorBuilding: "Auto-generation incomplete. PymeWebPro will polish this version before sending.",
+    chat_bubble: "Ask us anything",
+    chat_aria: "Open chat with the assistant",
+    chat_close_aria: "Close chat",
+    chat_online: "Online · powered by AI",
+    chat_placeholder: "Write your question...",
+    chat_send: "Send",
+    chat_or_text: "Prefer text?",
+    chat_open_wa: "Open WhatsApp",
+    chat_greeting: function (name) { return "Hi! I'm the assistant for " + name + ". I can help with services, hours, location, and how to reach us. What do you need?"; },
+    chat_typing: "Typing...",
+    chat_error: "Sorry, something went wrong. Try again in a moment, or reach us on WhatsApp.",
   };
   return {
     previewTitle: "Página de ejemplo (PymeWebPro)",
@@ -300,6 +388,17 @@ function strings(lang) {
     contact_us: "Contacto",
     credit_made_by: "Página hecha por",
     errorBuilding: "Generación incompleta · PymeWebPro pulirá esta versión antes de enviarla.",
+    chat_bubble: "Pregúntanos",
+    chat_aria: "Abrir chat con el asistente",
+    chat_close_aria: "Cerrar chat",
+    chat_online: "En línea · atendido por IA",
+    chat_placeholder: "Escribe tu pregunta...",
+    chat_send: "Enviar",
+    chat_or_text: "¿Prefieres escribir?",
+    chat_open_wa: "Abrir WhatsApp",
+    chat_greeting: function (name) { return "¡Hola! Soy el asistente de " + name + ". Te puedo ayudar con servicios, horario, ubicación y cómo contactarnos. ¿Qué necesitas?"; },
+    chat_typing: "Escribiendo...",
+    chat_error: "Algo falló, vuelve a intentar en un momento o escríbenos por WhatsApp.",
   };
 }
 
@@ -342,7 +441,7 @@ html,body{margin:0;padding:0;font-family:'Inter Tight',system-ui,-apple-system,'
 .topbar .logo{width:34px;height:34px;border-radius:8px;object-fit:cover;background:#E8DFC8;border:1px solid rgba(26,22,18,.14)}
 .topbar .logo-text{display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#A8381A;background:#FFE9DF}
 .topbar .brand-name{font-size:.98rem}
-.topbar nav{display:flex;gap:1rem;margin-left:1rem}
+.topbar nav{display:flex;gap:1rem;margin-left:auto}
 .topbar nav a{color:rgba(26,22,18,.6);text-decoration:none;font-size:.88rem}
 .topbar nav a:hover{color:#1A1612}
 .topbar .wa-btn{margin-left:auto;background:#D24A1D;color:#fff;text-decoration:none;font-weight:600;padding:.45rem .85rem;border-radius:8px;font-size:.85rem}
@@ -403,4 +502,32 @@ footer a:hover{color:#fff}
 .foot-grid h5{margin:0 0 .4rem;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(242,233,213,.5);font-weight:700}
 .foot-grid div div{font-size:.9rem;color:rgba(242,233,213,.85);margin:.1rem 0}
 .foot-credit{font-size:.76rem;color:rgba(242,233,213,.5);border-top:1px solid rgba(242,233,213,.1);padding-top:.9rem}
+/* Floating chatbot widget · grounded in the lead's mockup_data via demo-chat.js */
+.chatbot{position:fixed;right:1.1rem;bottom:1.1rem;z-index:50;font-family:inherit}
+.chat-bubble{position:fixed;right:1.1rem;bottom:1.1rem;z-index:50;display:flex;align-items:center;gap:.55rem;background:#D24A1D;color:#fff;border:0;padding:.7rem 1.1rem .7rem .9rem;border-radius:999px;font-weight:600;font-size:.92rem;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.25);font-family:inherit}
+.chat-bubble:hover{background:#A8381A}
+.chat-bubble .cb-ic{font-size:1.1rem;line-height:1}
+.chat-panel{position:fixed;right:1.1rem;bottom:1.1rem;width:360px;max-width:calc(100vw - 2rem);height:520px;max-height:calc(100vh - 2rem);background:#FBF7EC;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;z-index:51}
+.chat-panel.open{display:flex}
+.chat-head{background:#1A1612;color:#F2E9D5;padding:.7rem .9rem;display:flex;align-items:center;gap:.6rem}
+.chat-head .ch-logo{width:32px;height:32px;border-radius:50%;object-fit:cover;background:#FFE9DF;flex:none}
+.chat-head .ch-name{flex:1;display:flex;flex-direction:column;line-height:1.2}
+.chat-head .ch-name b{font-size:.92rem;color:#fff}
+.chat-head .ch-name span{font-size:.7rem;color:#A6D49A}
+.chat-head .ch-x{background:none;border:0;color:rgba(242,233,213,.7);font-size:1.2rem;cursor:pointer;line-height:1;padding:.1rem .3rem}
+.chat-body{flex:1 1 auto;overflow-y:auto;padding:.9rem;display:flex;flex-direction:column;gap:.55rem;background:#FBF7EC}
+.chat-msg{max-width:84%;padding:.55rem .8rem;border-radius:14px;font-size:.9rem;line-height:1.4;white-space:pre-wrap;overflow-wrap:break-word}
+.chat-msg.bot{background:#fff;border:1px solid rgba(26,22,18,.1);align-self:flex-start;border-bottom-left-radius:4px}
+.chat-msg.user{background:#D24A1D;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-msg.typing{color:#A8381A;font-style:italic;font-size:.85rem}
+.chat-foot{background:#FBF7EC;border-top:1px solid rgba(26,22,18,.1);padding:.6rem .7rem;display:flex;flex-direction:column;gap:.5rem}
+.chat-input-row{display:flex;gap:.4rem}
+.chat-input-row input{flex:1;font:inherit;font-size:.92rem;padding:.55rem .7rem;border:1px solid rgba(26,22,18,.15);border-radius:8px;background:#fff;color:#1A1612}
+.chat-input-row input:focus{outline:none;border-color:#D24A1D}
+.chat-input-row button{background:#D24A1D;color:#fff;border:0;border-radius:8px;padding:.55rem .9rem;font-weight:600;cursor:pointer;font-family:inherit;font-size:.9rem}
+.chat-input-row button:disabled{opacity:.5;cursor:default}
+.chat-wa-row{font-size:.72rem;color:rgba(26,22,18,.55);text-align:center}
+.chat-wa-row a{color:#A8381A;font-weight:600;text-decoration:none}
+.chat-wa-row a:hover{text-decoration:underline}
+@media(max-width:480px){.chat-panel{width:calc(100vw - 1.4rem);right:.7rem;bottom:.7rem;height:calc(100vh - 1.4rem)}}
 </style>`;

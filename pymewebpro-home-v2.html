@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PymeWebPro · Una página que hace que te elijan a ti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F8F5EF; --card:#FFFFFF; --ink:#1E1A16; --ink2:#574E45; --mute:#8A8076;
+    --line:#E7E0D5; --accent:#D24A1D; --accent-d:#A8381A; --soft:#FBEEE6; --green:#1B6E4B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+  .wrap{max-width:980px;margin:0 auto;padding:0 1.3rem}
+  a{color:inherit}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;border-radius:10px;padding:.85rem 1.4rem;font-size:1rem}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.primary:hover{background:var(--accent-d)}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  /* topbar */
+  .top{position:sticky;top:0;z-index:20;background:rgba(248,245,239,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;gap:1rem;padding:.8rem 1.3rem}
+  .logo{font-weight:800;font-size:1.15rem}
+  .logo span{color:var(--accent)}
+  .top .sp{flex:1}
+  .top .btn{padding:.55rem 1rem;font-size:.9rem}
+  /* hero */
+  .hero{padding:3.4rem 0 2.6rem}
+  .eyebrow{color:var(--accent-d);font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.9rem}
+  h1{font-size:clamp(2.1rem,5.2vw,3.3rem);line-height:1.08;letter-spacing:-.02em;font-weight:800;max-width:16ch}
+  .hero p.lede{font-size:1.18rem;color:var(--ink2);margin:1.1rem 0 1.6rem;max-width:54ch}
+  .hero .cta-row{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
+  .hero .note{color:var(--mute);font-size:.92rem;margin-top:1rem}
+  /* honest band */
+  .band{background:var(--ink);color:#F3EDE4;padding:2.4rem 0;margin:2.4rem 0}
+  .band h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:800;max-width:22ch}
+  .band h2 b{color:#F2A07F}
+  .band p{color:#C9BFB2;margin-top:.7rem;max-width:60ch;font-size:1.05rem}
+  /* sections */
+  section.pad{padding:2.6rem 0}
+  h2.sec{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:800;letter-spacing:-.01em;margin-bottom:.4rem}
+  .sub{color:var(--mute);margin-bottom:1.5rem;max-width:56ch;font-size:1.02rem}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:.45rem .9rem;font-size:.92rem;font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.4rem}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .feat{list-style:none;display:grid;gap:.6rem}
+  .feat li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;font-size:1rem;display:flex;gap:.6rem;align-items:flex-start}
+  .feat li b{color:var(--accent-d)}
+  .check{color:var(--accent);font-weight:800;flex:none}
+  /* proof */
+  .proof{background:var(--soft);border:1px solid #F0D7C7;border-radius:16px;padding:1.6rem 1.5rem;display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap}
+  .proof .stars{color:var(--accent);font-size:1.2rem;letter-spacing:2px}
+  .proof .who{font-weight:700;margin-top:.4rem}
+  .proof .who span{color:var(--mute);font-weight:400}
+  .proof .q{font-size:1.1rem;color:var(--ink);max-width:46ch}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
+  @media(max-width:620px){.stats{grid-template-columns:1fr}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;text-align:center}
+  .stat b{display:block;font-size:1.7rem;font-weight:800;color:var(--accent-d)}
+  .stat span{font-size:.85rem;color:var(--mute)}
+  /* price */
+  .price{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:1.4rem 1.5rem}
+  .price .big{font-size:2rem;font-weight:800}
+  .price .small{color:var(--ink2);margin-top:.3rem}
+  .price .pres{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--ink2);font-size:.96rem}
+  .price .pres b{color:var(--ink)}
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  @media(max-width:720px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem}
+  .step .n{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem}
+  .step h3{font-size:1.05rem;margin-bottom:.2rem}
+  .step p{color:var(--ink2);font-size:.95rem}
+  /* final cta */
+  .final{background:var(--accent);color:#fff;border-radius:18px;padding:2.4rem;text-align:center;margin:2.4rem 0}
+  .final h2{font-size:1.8rem;font-weight:800;margin-bottom:.5rem}
+  .final p{opacity:.95;margin-bottom:1.2rem}
+  .final .btn.primary{background:#fff;color:var(--accent-d)}
+  footer{color:var(--mute);font-size:.85rem;text-align:center;padding:2rem 0 3rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="logo">Pyme<span>WebPro</span></div>
+    <div class="sp"></div>
+    <a class="btn primary" href="https://wa.me/573014047722" target="_blank" rel="noopener">Escríbenos</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Páginas de ventas para PYMES · Medellín</div>
+    <h1>Una página que hace que te elijan a ti.</h1>
+    <p class="lede">Tus clientes ya te buscan: en Google, en redes y por recomendación. Nosotros hacemos que cuando te encuentren, te veas serio y profesional, y que escribirte sea de un solo toque.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="https://wa.me/573014047722" target="_blank" rel="noopener">Pídenos un ejemplo gratis</a>
+      <a class="btn ghost" href="#como">Ver cómo funciona</a>
+    </div>
+    <p class="note">Página propia, hecha a tu medida, lista en 48 horas. Desde $390.000 COP, pago único.</p>
+  </div>
+</header>
+
+<div class="band">
+  <div class="wrap">
+    <h2>Tú traes la gente. Nosotros hacemos que <b>te elijan</b>.</h2>
+    <p>El tráfico es tuyo: tus clientes, tu Instagram, el voz a voz, Google. La página es nuestra: que cuando lleguen te vean como un negocio serio y que contactarte sea facilísimo. No te prometemos clientes de la nada. Nos aseguramos de que los que ya te buscan no se te escapen.</p>
+  </div>
+</div>
+
+<section class="pad">
+  <div class="wrap">
+    <h2 class="sec">Para quién es</h2>
+    <p class="sub">Para negocios que viven de que los busquen y los recomienden, donde el cliente compara antes de decidir y necesita confiar en ti.</p>
+    <div class="chips">
+      <span class="chip">Vendedores y fabricantes</span>
+      <span class="chip">Talleres y herrería</span>
+      <span class="chip">Instaladores (toldos, aire, vidrios)</span>
+      <span class="chip">Construcción y remodelación</span>
+      <span class="chip">Servicios especializados</span>
+      <span class="chip">Consultorios y clínicas</span>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="como" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="sec">Qué recibes</h2>
+    <p class="sub">Una sola página, enfocada en una acción: que te escriban o reserven. Sin pestañas que nadie lee.</p>
+    <ul class="feat">
+      <li><span class="check">+</span><div>Una página rápida, hecha a tu medida (<b>no plantilla</b>): tus colores, tus fotos, tu oferta.</div></li>
+      <li><span class="check">+</span><div>Botón directo de WhatsApp y formulario, para que contactarte sea de un toque.</div></li>
+      <li><span class="check">+</span><div>Tu <b>Ficha de Google</b> optimizada, para que aparezcas en el mapa cuando te buscan.</div></li>
+      <li><span class="check">+</span><div>En tu propio dominio, con hosting rápido. Lista en <b>48 horas</b>.</div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="sec">La prueba</h2>
+    <p class="sub">Clientes reales, no promesas.</p>
+    <div class="proof">
+      <div>
+        <div class="stars">★★★★★</div>
+        <p class="q">Le montamos la página a INVIERSOL, vendedor de parasoles y sombrillas en Envigado. Quedó contento y nos dejó 5 estrellas en Google.</p>
+        <div class="who">INVIERSOL <span>· parasoles y sombrillas · Envigado (reseña real, verificable en Google)</span></div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>48 h</b><span>de tu aprobación a estar en línea</span></div>
+      <div class="stat"><b>&lt;1 s</b><span>carga en el celular</span></div>
+      <div class="stat"><b>$390k</b><span>precio fijo, sin sorpresas</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="sec">Precio claro</h2>
+    <div class="price">
+      <div class="big">$390.000 COP</div>
+      <div class="small">La página de ventas. Pago único, IVA incluido. Incluye 1 mes de hosting y soporte.</div>
+      <div class="pres"><b>Plan de presencia (opcional): $59.000/mes.</b> Incluye el hosting, tu página siempre al día, tu Ficha de Google activa, hasta 2 cambios al mes, y un reporte mensual con tus números. Trabajo que hacemos, no mensualidad obligatoria.</div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="sec">Cómo empezar</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Ejemplo gratis</h3><p>Te armamos un ejemplo con tu negocio, para que veas cómo se vería. Sin compromiso.</p></div>
+      <div class="step"><div class="n">2</div><h3>Lo apruebas</h3><p>Si te gusta, arrancamos con el 30% de depósito. El resto al lanzar.</p></div>
+      <div class="step"><div class="n">3</div><h3>En 48 horas</h3><p>Tu página queda en línea, en tu dominio, lista para recibir clientes.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="final">
+    <h2>¿Te armamos tu ejemplo gratis?</h2>
+    <p>Escríbenos por WhatsApp con el nombre de tu negocio. Te mostramos cómo se vería tu página, sin compromiso.</p>
+    <a class="btn primary" href="https://wa.me/573014047722" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+  </div>
+</div>
+
+<footer>
+  PymeWebPro · Estudio colombiano-canadiense, Medellín · Norte Sur Consulting S.A.S. · NIT 901.956.771-1
+</footer>
+
+</body>
+</html>

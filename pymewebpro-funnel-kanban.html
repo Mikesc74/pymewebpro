@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PymeWebPro · Funnel kanban (Mi día v2)</title>
+<style>
+  :root{
+    --ink:#1a1d21; --ink-mute:#5b6470; --line:#d9dee5; --paper:#ffffff; --bg:#eef1f4;
+    --blue:#1f4e79; --blue-fill:#d6e8fb;
+    --alert:#c0392b; --alert-fill:#fbe4e1;
+    --gray:#8a929c; --gray-fill:#eceef1;
+    --col:#f7f9fb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{background:var(--ink);color:#fff;padding:16px 22px}
+  header .brand{font-weight:700;font-size:18px;letter-spacing:-.2px}
+  header .brand em{font-style:normal;color:#7fb2e6}
+  header .sub{color:#aab4c0;font-size:13px;margin-top:2px}
+  .wrap{max-width:1480px;margin:0 auto;padding:18px}
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:16px}
+  h2{font-size:13px;margin:0 0 10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-mute)}
+  .legend{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+  .lg{display:flex;align-items:center;gap:8px;font-size:13px}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid currentColor}
+  .chip.alert{color:var(--alert);background:var(--alert-fill)}
+  .chip.wait{color:var(--ink-mute);background:var(--gray-fill);border-style:dashed}
+  .chip.won{color:var(--blue);background:var(--blue-fill)}
+  .chip.lost{color:#555;background:#e6e6e6}
+
+  .board{display:flex;gap:13px;overflow-x:auto;padding-bottom:8px}
+  .col{flex:0 0 238px;background:var(--col);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column}
+  .col-h{padding:11px 13px;border-bottom:1px solid var(--line)}
+  .col-h .t{font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+  .col-h .n{font-size:12px;color:var(--ink-mute);background:#fff;border:1px solid var(--line);border-radius:999px;padding:0 8px}
+  .col-h .s{font-size:11px;color:var(--ink-mute);margin-top:3px}
+  .col-h .arr{font-size:10.5px;color:var(--blue);margin-top:5px}
+  .cards{padding:9px;display:flex;flex-direction:column;gap:9px;min-height:60px}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 10px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .card .biz{font-weight:700;font-size:13px}
+  .card .meta{font-size:11px;color:var(--ink-mute);margin-top:1px}
+  .card .body{font-size:11.5px;color:#33383f;margin-top:6px;background:#f5f7f9;border-radius:6px;padding:6px 7px}
+  .card .btns{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .b{font-size:11px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 8px;cursor:default}
+  .b.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+  .card.wait{border-style:dashed;opacity:.78}
+  .card.alert{border-color:var(--alert);border-left:5px solid var(--alert)}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px}
+  .gen{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-mute);margin-top:7px}
+  .spin{width:13px;height:13px;border:2px solid var(--line);border-top-color:var(--blue);border-radius:50%;animation:sp 0.8s linear infinite;flex:none}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  .form{margin-top:7px;font-size:11.5px}
+  .form .opt{display:flex;align-items:center;gap:6px;margin:3px 0}
+  .form .opt .px{margin-left:auto;color:var(--ink-mute)}
+  .form textarea{width:100%;border:1px solid var(--line);border-radius:6px;font:inherit;font-size:11px;padding:5px;margin-top:5px;resize:none}
+
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:820px){.cols2{grid-template-columns:1fr}}
+  ul{margin:6px 0 0;padding-left:18px} li{margin:5px 0}
+  .q{background:#fff8ec;border:1px solid #f0d9a8;border-radius:8px;padding:6px 10px;margin:8px 0;font-size:13.5px}
+  .q b{color:#b3640a}
+  code{background:#eef1f4;padding:1px 5px;border-radius:4px;font-size:12px}
+  b.auto{color:var(--blue)} b.manual{color:#b3640a}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Pyme<em>WebPro</em> · Funnel kanban</div>
+  <div class="sub">Cards move left to right. Red + ⚠ means "Santi, do this now." Working draft. v2, 2026-05-24.</div>
+</header>
+
+<div class="wrap">
+
+  <div class="panel">
+    <h2>The attention system</h2>
+    <div class="legend">
+      <span class="lg"><span class="chip alert">⚠ Needs you now</span> red card, jumps to top of its column</span>
+      <span class="lg"><span class="chip wait">waiting</span> dashed + dimmed, nothing to do yet</span>
+      <span class="lg"><span class="chip won">✓ Won</span></span>
+      <span class="lg"><span class="chip lost">✕ Lost</span></span>
+    </div>
+    <p style="margin:8px 0 0;font-size:12.5px;color:var(--ink-mute)">Red is always paired with the ⚠ symbol and a text label, never color alone. <b class="auto">Blue text</b> = the system does it automatically in the background. <b class="manual">Orange text</b> = Santi taps it. To drop a dead lead, Santi drags the card into the Closed column at any stage.</p>
+  </div>
+
+  <div class="board">
+
+    <!-- 1 To contact -->
+    <div class="col">
+      <div class="col-h">
+        <div class="t">To contact <span class="n">2</span></div>
+        <div class="s">Has a number, never messaged.</div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="biz">Deluxe Smile</div>
+          <div class="meta">Dentist · Sabaneta</div>
+          <div class="btns"><span class="b primary">Draft message</span><span class="b">View</span></div>
+        </div>
+        <div class="card">
+          <div class="biz">Odontoss</div>
+          <div class="meta">Dentist · Laureles</div>
+          <div class="btns"><span class="b primary">Draft message</span><span class="b">View</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 Follow-up -->
+    <div class="col">
+      <div class="col-h">
+        <div class="t">Follow-up <span class="n">3</span></div>
+        <div class="s">Messaged, waiting. Turns red when a nudge is due.</div>
+        <div class="arr">← arrives when Santi sends the 1st message <b class="auto">(auto)</b></div>
+      </div>
+      <div class="cards">
+        <div class="card alert">
+          <div class="top"><div class="biz">Odontorisas</div><span class="chip alert">⚠ Follow up now</span></div>
+          <div class="meta">Dentist · Belen · 3 days, no reply</div>
+          <div class="btns"><span class="b primary">Draft follow-up</span><span class="b">Replied → advance</span></div>
+        </div>
+        <div class="card wait">
+          <div class="top"><div class="biz">Shine Odontologia</div><span class="chip wait">waiting</span></div>
+          <div class="meta">Dentist · Belen · sent today</div>
+        </div>
+        <div class="card wait">
+          <div class="top"><div class="biz">ProSmile</div><span class="chip wait">waiting</span></div>
+          <div class="meta">Dentist · Belen · sent yesterday</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Mockup -->
+    <div class="col">
+      <div class="col-h">
+        <div class="t">Mockup <span class="n">2</span></div>
+        <div class="s">System builds mockup + message. Red when ready.</div>
+        <div class="arr">← Santi advances a positive reply <b class="manual">(tap)</b></div>
+      </div>
+      <div class="cards">
+        <div class="card alert">
+          <div class="top"><div class="biz">Oral 10</div><span class="chip alert">⚠ Ready to send</span></div>
+          <div class="meta">Dentist · El Poblado</div>
+          <div class="body">"Hola Dr., aqui esta el ejemplo para Oral 10, con el nombre de su clinica..."<br><span style="color:var(--blue)">mockups.pymewebpro.com/demo/...</span></div>
+          <div class="btns"><span class="b primary">Review &amp; send</span><span class="b">Edit</span></div>
+        </div>
+        <div class="card">
+          <div class="biz">Fisiocinetics</div>
+          <div class="meta">Physio · Belen</div>
+          <div class="gen"><span class="spin"></span> Building mockup + message <b class="auto">(auto)</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Proposal (NEW) -->
+    <div class="col">
+      <div class="col-h">
+        <div class="t">Proposal <span class="n">2</span></div>
+        <div class="s">Santi picks what they want. System writes the proposal. Red when ready.</div>
+        <div class="arr">← Santi advances after a good mockup reply <b class="manual">(tap)</b></div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="top"><div class="biz">All Smiles</div></div>
+          <div class="meta">Dentist · Sabaneta · what do they want?</div>
+          <div class="form">
+            <div class="opt"><input type="checkbox" checked disabled> La pagina de ventas <span class="px">$390.000</span></div>
+            <div class="opt"><input type="checkbox" checked disabled> Ficha de Google <span class="px">$90.000</span></div>
+            <div class="opt"><input type="checkbox" disabled> Bilingue <span class="px">$75.000</span></div>
+            <div class="opt"><input type="checkbox" disabled> CRM <span class="px">$190.000</span></div>
+            <textarea rows="2" disabled placeholder="Notas / lo que pidio el cliente"></textarea>
+          </div>
+          <div class="btns"><span class="b primary">Generate proposal</span></div>
+        </div>
+        <div class="card alert">
+          <div class="top"><div class="biz">Dental Clinic Soluciones</div><span class="chip alert">⚠ Ready to send</span></div>
+          <div class="meta">Dentist · Sabaneta</div>
+          <div class="body">Proposal PDF ready · base + Ficha de Google + bilingue · <b>$555.000 COP</b> · 30% deposit $166.500</div>
+          <div class="btns"><span class="b primary">Review &amp; send</span><span class="b">Edit</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 To close -->
+    <div class="col">
+      <div class="col-h">
+        <div class="t">To close <span class="n">2</span></div>
+        <div class="s">Proposal sent. System flags quiet deals and drafts a nudge. Red when they open it or the deposit lands.</div>
+        <div class="arr">← arrives when Santi sends the proposal <b class="auto">(auto)</b></div>
+      </div>
+      <div class="cards">
+        <div class="card alert">
+          <div class="top"><div class="biz">Tooth Dentistry</div><span class="chip alert">⚠ Nudge ready</span></div>
+          <div class="meta">Dentist · Sabaneta · 4 days quiet</div>
+          <div class="body">"Hola Dr., le escribo por la propuesta que le pase. ¿Quedo alguna duda? Con el deposito del 30% arrancamos esta semana..."</div>
+          <div class="btns"><span class="b primary">Review &amp; send</span><span class="b">Deposit link</span><span class="b">Won</span></div>
+        </div>
+        <div class="card wait">
+          <div class="top"><div class="biz">Nueva Piel Spa</div><span class="chip wait">waiting</span></div>
+          <div class="meta">Aesthetic · Laureles · sent 2 days ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 Closed -->
+    <div class="col">
+      <div class="col-h">
+        <div class="t">Closed <span class="n">2</span></div>
+        <div class="s">Won goes to production. Lost can be revived.</div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="top"><div class="biz">LR Clinica</div><span class="chip won">✓ Won</span></div>
+          <div class="meta">Deposit paid · handed to production</div>
+        </div>
+        <div class="card wait">
+          <div class="top"><div class="biz">La Piel Spa</div><span class="chip lost">✕ Lost</span></div>
+          <div class="meta">Site broken · no reply after 14 days</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cols2" style="margin-top:16px">
+    <div class="panel">
+      <h2>How cards move</h2>
+      <ul>
+        <li><b>To contact → Follow-up:</b> Santi sends the first message, card moves on its own. <b class="auto">(auto)</b></li>
+        <li><b>Inside Follow-up:</b> when a nudge is due (D+1 / D+3 / D+7) the card turns red, jumps to top, ⚠ Follow up now. Santi drafts a follow-up (resets to waiting) or, if they replied well, taps "Replied → advance."</li>
+        <li><b>Follow-up → Mockup:</b> Santi advances a positive reply. <b class="manual">(tap)</b> On arrival the system builds the named mockup + the WhatsApp message <b class="auto">(auto)</b>, then turns red ⚠ Ready to send. Santi reviews and sends.</li>
+        <li><b>Mockup → Proposal:</b> after a good mockup reply, Santi advances. <b class="manual">(tap)</b> He ticks what the client wants (add-ons + notes). The system writes the proposal in the background <b class="auto">(auto)</b>, then turns red ⚠ Ready to send.</li>
+        <li><b>Proposal → To close:</b> Santi sends the proposal, card moves on its own. <b class="auto">(auto)</b></li>
+        <li><b>Inside To close:</b> the system watches for movement. If the deal goes quiet (no open, no reply) for a few days, it drafts a nudge to close and turns the card red ⚠ Nudge ready. <b class="auto">(auto)</b> Santi reviews and sends. The card also turns red the moment they open the proposal or the deposit lands.</li>
+        <li><b>To close → Closed:</b> Won (deposit paid) or Lost. Stale leads auto-flag for Lost after 14 days.</li>
+        <li><b>Lost from anywhere:</b> at any stage, if the prospect says no, Santi drags the card into the Closed column. It leaves the board and can be revived later. <b class="manual">(drag)</b></li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h2>Decisions to lock (forks)</h2>
+      <div class="q"><b>1.</b> Advance cards by <b>button</b> ("Advance →") or <b>drag and drop</b>? Buttons are safer on a phone, drag is nicer on desktop. Could do both.</div>
+      <div class="q"><b>2.</b> Background generation (mockup message + proposal): build it the <b>moment the card enters the column</b> so it is usually ready when Santi looks, or <b>when he opens the card</b>? Pre-building matches your "turns red when ready" idea, but the proposal needs his add-on choices first, so Proposal generates right after he ticks the boxes.</div>
+      <div class="q"><b>3.</b> The proposal output: reuse the CRM's existing proposal generator (deal-stage package) and surface it here, or a new lighter PDF? I lean on reusing what exists.</div>
+      <div class="q"><b>4.</b> This is now a 6-stage pipeline. We add two stage values to <code>lead_stage</code> (<code>mockup</code>, <code>proposal</code>) on top of the current ones. No table migration, just new text values + code that reads them. Agree?</div>
+      <div class="q"><b>5.</b> "No number" leads: keep them in a separate lane before "To contact," same as now?</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

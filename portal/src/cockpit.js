@@ -11,7 +11,7 @@
 
 import { generateProposal } from "./proposal-generator.js";
 import { genDemoImg, DEMO_IMG_KEYS } from "./demo-img.js";
-import { buildMockup } from "./mockup-generator.js";
+import { buildMockup, uploadMockupImage, deleteMockupImage } from "./mockup-generator.js";
 
 const MODEL = "claude-haiku-4-5-20251001";
 const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
@@ -36,6 +36,44 @@ export async function handleCockpitRoutes(request, env, helpers) {
       let body = {}; try { body = await request.json(); } catch {}
       const result = await buildMockup(env, m[1], { regenerate: !!body.regenerate });
       return json(result, result.ok ? 200 : 502);
+    }
+  }
+  // Manual image upload (Mike: "let's have an image upload box where we can
+  // drop images from instagram by hand"). One file per request, raw bytes
+  // in the body with Content-Type set to the image MIME. The handler stores
+  // the file in R2 and patches mockup_data.images so the carousel picks it
+  // up immediately.
+  {
+    const m = path.match(/^\/api\/admin\/cockpit\/mockup-upload\/([\w-]+)$/);
+    if (m && request.method === "POST") {
+      if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+      const result = await uploadMockupImage(env, m[1], request);
+      return json(result, result.ok ? 200 : 400);
+    }
+  }
+  {
+    const m = path.match(/^\/api\/admin\/cockpit\/mockup-upload\/([\w-]+)\/([\w-]+)$/);
+    if (m && request.method === "DELETE") {
+      if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+      const result = await deleteMockupImage(env, m[1], m[2]);
+      return json(result, result.ok ? 200 : 400);
+    }
+  }
+  // List manually uploaded images for a lead · used by the modal to render
+  // existing thumbnails when it opens. Reads mockup_data.images.gallery and
+  // returns only the entries with source='upload'.
+  {
+    const m = path.match(/^\/api\/admin\/cockpit\/mockup-uploads\/([\w-]+)$/);
+    if (m && request.method === "GET") {
+      if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+      const row = await env.DB.prepare("SELECT mockup_data FROM leads WHERE id = ?").bind(m[1]).first();
+      let uploads = [];
+      try {
+        const d = row && row.mockup_data ? JSON.parse(row.mockup_data) : {};
+        const g = d && d.images && Array.isArray(d.images.gallery) ? d.images.gallery : [];
+        uploads = g.filter((x) => x && x.source === "upload");
+      } catch {}
+      return json({ ok: true, uploads });
     }
   }
   if (path === "/api/admin/cockpit/proposal" && request.method === "POST") {

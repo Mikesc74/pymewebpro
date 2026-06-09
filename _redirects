@@ -33,3 +33,11 @@ http://www.pymewebpro.com/*   https://pymewebpro.com/:splat  301!
 # URL and 308-redirects /name.html → /name. So /hosting.html, /terminos.html,
 # /politica-de-datos.html, /privacy.html all resolve at the extension-less path.
 # All canonical URLs and sitemap entries use the extension-less form.
+
+# Mockups gallery moved to the mockups.pymewebpro.com subdomain (served by the
+# portal worker, which proxies the demo files from /manual-mockups/<slug>/ below).
+# IMPORTANT: only the bare gallery root bounces. Do NOT add a /manual-mockups/*
+# splat rule: the worker proxy fetches /manual-mockups/<slug>/... from this apex,
+# so a splat redirect would loop the proxy. The <slug> subpaths stay served.
+/manual-mockups   https://mockups.pymewebpro.com/   301!
+/manual-mockups/  https://mockups.pymewebpro.com/   301!

@@ -1,0 +1,15 @@
+{
+  "name": "pymewebpro-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Valentina · PymeWebPro sales agent (Cloudflare Worker).",
+  "type": "module",
+  "scripts": {
+    "check": "for f in src/*.js; do node --check \"$f\" || exit 1; done && echo '[check] OK · all worker source files parse cleanly'",
+    "predeploy": "npm run check",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "migrate:remote": "wrangler d1 execute pymewebpro-agent-db --remote --file=migrations/0001_initial.sql",
+    "migrate:local": "wrangler d1 execute pymewebpro-agent-db --local --file=migrations/0001_initial.sql"
+  }
+}

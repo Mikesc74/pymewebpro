@@ -37,6 +37,9 @@ const EDITABLE_COLUMNS = {
     // Why this prospect needs PymeWebPro · drives AI pitch tailoring
     // (added by 0013_pain_reason.sql).
     "pain_reason",
+    // Real "Responded" signal · set when the prospect actually replies
+    // (added by 0014_client_replied.sql). NULL = no reply yet.
+    "client_replied_at",
   ],
   clients: [
     "email", "business_name", "status", "language", "plan", "site_url",
@@ -131,6 +134,7 @@ async function loadGrid(env, json) {
               facebook_url, x_url, tiktok_url, demo_lang,
               rating, review_count, place_id, pain_reason,
               mockup_status, mockup_generated_at, owner,
+              client_replied_at,
               created_at, updated_at
          FROM leads ORDER BY COALESCE(updated_at, created_at) DESC LIMIT 8000`
     ).all(),

@@ -37,7 +37,10 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 .col h2{font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;margin:0 0 .2rem;display:flex;align-items:center;gap:.5rem}
 .col .sub{color:var(--mute);font-size:.8rem;margin:0 0 .9rem}
 .col .count{background:var(--accent);color:#fff;border-radius:999px;font-size:.72rem;padding:.1rem .5rem;font-weight:700}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.5rem .6rem;margin:0 0 .5rem;box-shadow:0 1px 0 rgba(26,22,18,.03);overflow:hidden;overflow-wrap:break-word;cursor:pointer}
+.card{position:relative;display:flex;flex-direction:column;gap:.34rem;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.5rem .6rem;margin:0 0 .5rem;box-shadow:0 1px 0 rgba(26,22,18,.03);overflow:hidden;overflow-wrap:break-word;cursor:pointer}
+.card .card-tags{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center}
+.card .card-tags .pill{margin-left:0}
+.card .tag{display:inline-block;font-size:.64rem;font-weight:700;letter-spacing:.03em;padding:.1rem .42rem;border-radius:999px;background:rgba(26,22,18,.05);border:1px solid var(--line);color:var(--ink2)}
 .card .card-del{position:absolute;top:.18rem;left:.22rem;width:1.15rem;height:1.15rem;line-height:1;padding:0;border:0;border-radius:50%;background:transparent;color:var(--mute);font-size:1rem;font-weight:700;cursor:pointer;opacity:0;transition:opacity .12s,background .12s,color .12s;z-index:3}
 /* Owner badge · always visible, top-right. Identity is carried by the TEXT
    (first name + initials), never by colour alone. The colour tint is decorative
@@ -56,10 +59,10 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',system-u
 .card:hover{border-color:var(--accent)}
 .card .biz,.card .meta,.card .cmini{overflow-wrap:break-word;max-width:100%}
 .card .biz{color:var(--ink)}
-.card .cardchip{margin:0 0 .3rem}
-.card .cmini{font-size:.72rem;color:var(--mute);margin-top:.18rem}
+.card .cardchip{margin:0}
+.card .cmini{font-size:.72rem;color:var(--mute);margin:0}
 .card .biz{font-weight:700;font-size:.88rem;margin:0;line-height:1.3}
-.card .meta{color:var(--mute);font-size:.73rem;margin:.12rem 0 0}
+.card .meta{color:var(--mute);font-size:.73rem;margin:0}
 .card .why{font-size:.85rem;color:var(--ink2);background:rgba(210,74,29,.06);border-left:3px solid var(--accent);padding:.4rem .6rem;border-radius:4px;margin:0 0 .7rem}
 .contact{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:0 0 .8rem}
 .ci{display:inline-flex;align-items:center;gap:.32rem;font-size:.82rem;color:var(--accent2);text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:.35rem .65rem;background:#fff;white-space:nowrap;line-height:1}
@@ -718,9 +721,18 @@ function openDetail(lead){
   var primaryBtn = waNum(lead)
     ? '<button class="act primary" data-d="msg">Draft message</button>'
     : '<button class="act primary" data-d="addnum">Add WhatsApp</button>';
+  // Real "Responded" signal · a one-click marker the rep sets when the prospect
+  // actually writes back. Drives the Team stats "Responded" column. Colour is
+  // never the only cue (Mike is red-green colour blind): the active state also
+  // carries a ✓ and the word "replied".
+  var replied = !!lead.client_replied_at;
+  var replyBtn = '<button class="act" data-d="replied" aria-pressed="'+(replied?'true':'false')+'"'
+    + ' style="'+(replied?'border-color:#2563eb;color:#1d4ed8;font-weight:600':'')+'">'
+    + (replied?'✓ Client replied':'Mark client replied')+'</button>';
   var ctaRow = '<div class="row">'+primaryBtn
     + (atMock?'<button class="act" data-d="mockup">Send mockup</button>':'')
     + (atClose?'<button class="act" data-d="deposit">Charge deposit</button>':'')
+    + replyBtn
     + '<button class="act" data-d="call">Book call</button></div>';
 
   var bg=el('<div class="modal-bg"><div class="modal" style="max-width:600px"><div class="mh"><h3>'+esc(leadName(lead))+'</h3><div style="display:flex;gap:.4rem;align-items:center"><button data-d="editlead" title="Edit lead info" style="background:none;border:1px solid rgba(242,233,213,.3);color:rgba(242,233,213,.85);padding:.25rem .6rem;border-radius:6px;font-size:.78rem;cursor:pointer;font-family:inherit">✎ Edit</button><button data-x="close">&times;</button></div></div>'
@@ -841,6 +853,21 @@ function openDetail(lead){
     };
   }
   bg.querySelector('[data-d="call"]').onclick=function(){bg.remove();bookCall(lead);};
+  // Toggle the real "client replied" marker. Sets client_replied_at to now (or
+  // clears it), PATCHes the lead, updates local state, and re-renders so the
+  // Team stats "Responded" count reflects it immediately. We never overwrite an
+  // existing timestamp on re-mark · only set it the first time.
+  var repB=bg.querySelector('[data-d="replied"]');
+  if(repB) repB.onclick=async function(){
+    var now=lead.client_replied_at ? null : Date.now();
+    this.disabled=true;
+    try{
+      await api('/api/admin/crm/leads/'+lead.id, {method:'PATCH', body: JSON.stringify({client_replied_at:now})});
+      lead.client_replied_at=now; if(BY_ID[lead.id]) BY_ID[lead.id].client_replied_at=now;
+      toast(now?'Marked: client replied':'Reply mark cleared');
+      bg.remove(); render();
+    }catch(err){ toast('Error: '+(err && err.message || err), true); this.disabled=false; }
+  };
   var mkB=bg.querySelector('[data-d="mockup"]'); if(mkB) mkB.onclick=function(){bg.remove();sendMockup(lead);};
   var epB=bg.querySelector('[data-d="editprop"]'); if(epB) epB.onclick=function(){bg.remove();showProposalPanel(lead);};
   var dpB=bg.querySelector('[data-d="deposit"]'); if(dpB) dpB.onclick=function(){bg.remove();chargeDeposit(lead);};
@@ -994,31 +1021,46 @@ function ownerRowHTML(lead){
   return '<div class="d-owner"><span class="d-ow-lbl">Owner</span>'+(nm?'<b>'+esc(nm)+'</b>':'<span class="d-ow-unassigned">Unassigned</span>')+'</div>';
 }
 
+// Stage name for the card. The lead also lives in a column for this stage, but
+// Mike wants it spelled out on the card too. Quiet neutral chip.
+function stageTag(l, col){
+  var map = {contact:'To contact', followup:'Follow-up', mockup:'Mockup', proposal:'Proposal', close:'Closing'};
+  var label = map[col];
+  return label ? '<span class="tag">'+esc(label)+'</span>' : '';
+}
+
 function cardHTML(l, col){
-  var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
-  var al = alertFor(l, col);
+  // Clean, scannable card: company name, then a tidy chip row (stage / status +
+  // heat), then category and city, then the next step. Owner badge sits top-
+  // right. Even vertical spacing comes from the card's flex gap, not ad-hoc
+  // margins, so nothing reads jumbled. Every coloured chip carries a text label
+  // (colour is never the only signal · colour-blind safe).
   var viewed = col!=='closed' && viewedMockup(l);
   var mockCls = mockClass(l);
   var mockC = mockChip(l);
-  var chip = '';
-  // Priority: closed terminal state > viewed-mockup (most actionable signal,
-  // matches the "N prospects viewed your mockup" banner count) > mockup build
-  // state > generic alert. Previously mockup_status outranked viewed which
-  // caused a green card AND a "4 viewed" banner to disagree on the same lead.
-  if(col==='closed'){ chip = isWon(l) ? '<span class="chip won">✓ Won</span>' : '<span class="chip lost">✕ Lost</span>'; }
-  else if(viewed){ chip = '<span class="chip view">Viewed mockup</span>'; }
-  else if(mockC){ chip = mockC; }
-  var cls = viewed ? ' viewed' : (mockCls ? (' ' + mockCls) : (al ? ' alert' : ''));
-  var mark = (viewed || mockCls) ? '' : (al ? '<span class="wmark">⚠</span> ' : '');
+  var statusChip = '';
+  if(col==='closed'){ statusChip = isWon(l) ? '<span class="chip won">✓ Won</span>' : '<span class="chip lost">✕ Lost</span>'; }
+  else if(viewed){ statusChip = '<span class="chip view">Viewed mockup</span>'; }
+  else if(mockC){ statusChip = mockC; }
+
+  // Tag row: the deal status if there is one, otherwise the stage name; then heat.
+  var tags = [];
+  if(statusChip) tags.push(statusChip);
+  else { var st = stageTag(l, col); if(st) tags.push(st); }
+  if(col!=='closed' && l.heat) tags.push('<span class="pill '+esc(l.heat)+'">'+esc(l.heat)+'</span>');
+
+  var meta = [l.category, l.city].filter(Boolean).map(esc).join(' · ');
   var t = l.touches_count||0;
-  var mini = (col==='closed') ? esc(touchLine(l)) : esc(nextStep(l))+(t?' · '+t+' touch'+(t===1?'':'es'):'');
+  var mini = (col==='closed') ? touchLine(l) : nextStep(l)+(t?' · '+t+' touch'+(t===1?'':'es'):'');
+  // Border classes only where a visible chip accompanies them.
+  var cls = viewed ? ' viewed' : (mockCls ? (' ' + mockCls) : '');
   return '<div class="card'+cls+'" draggable="true" data-id="'+esc(l.id)+'">'
     + '<button class="card-del" title="Delete permanently" data-del="'+esc(l.id)+'" aria-label="Delete">×</button>'
     + ownerBadge(l)
-    + (chip?'<div class="cardchip">'+chip+'</div>':'')
-    + '<div class="biz">'+mark+esc(leadName(l))+heatPill(l.heat)+'</div>'
-    + (meta?'<div class="meta">'+meta+'</div>':'')
-    + '<div class="cmini">'+mini+'</div>'
+    + '<div class="biz">'+esc(leadName(l))+'</div>'
+    + (tags.length?'<div class="card-tags">'+tags.join('')+'</div>':'')
+    + (meta?'<div class="meta">'+esc(meta)+'</div>':'')
+    + (mini?'<div class="cmini">'+esc(mini)+'</div>':'')
     + '</div>';
 }
 
@@ -1418,19 +1460,14 @@ document.getElementById('btn-add').addEventListener('click', function(){
 });
 
 // ---- Team stats view ----
-// "Responded" proxy: the client-side activity rows on this page carry only
-// kind/subject/body/owner/timestamps · there is no per-activity `outcome` or
-// `direction` field to read, so the preferred outcome-based signal is not
-// available here. We use the most accurate signal we DO have: a prospect is
-// counted as "responded" when their lead has advanced past the contacted
-// phase (lead_stage is mockup, proposal, or sales_qualified / won) OR their
-// heat is HOT or WARM. Both states only happen once a prospect engages back.
+// "Responded" = the prospect actually wrote back. Driven by the explicit
+// `client_replied_at` marker a rep sets via "Mark client replied" on the lead
+// card (added 0014_client_replied.sql). This replaced the old heat/stage proxy,
+// which over-counted: heat (HOT/WARM) is a manual tag a rep can set without any
+// reply having happened, so a rep who tagged every lead WARM showed 100%
+// "responded" with zero real replies.
 function teamResponded(l){
-  var s = l.lead_stage;
-  if(s==='mockup' || s==='proposal' || s==='sales_qualified') return true;
-  if(isWon(l)) return true;
-  var h = String(l.heat||'').toUpperCase();
-  return h==='HOT' || h==='WARM';
+  return !!l.client_replied_at;
 }
 function _teamOwnerKey(l){ var k=_ownerKey(l.owner); return (k && k!=='system' && k!=='ai') ? k : ''; }
 function teamRows(){
@@ -1504,7 +1541,7 @@ function teamTableHTML(){
     + (adminCol ? '<th></th>' : '')
     + '</tr></thead>'
     + '<tbody>'+body+'</tbody></table>'
-    + '<p class="team-foot">Sorted by Sold, then Leads actioned. <b>Responded</b> counts a prospect once their lead has advanced past the contacted phase (mockup, proposal, or closing / won stage) or their heat is HOT or WARM, since the activity log on this page does not expose a per-message reply flag.</p>'
+    + '<p class="team-foot">Sorted by Sold, then Leads actioned. <b>Responded</b> counts a prospect only once a rep has marked that the client actually wrote back (the "Mark client replied" button on the lead card). It is no longer inferred from heat or stage, so the number reflects real replies, not warm tags.</p>'
     + '</div>';
 }
 

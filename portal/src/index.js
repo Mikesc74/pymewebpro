@@ -60,6 +60,13 @@ import { handleProposalRoutes } from "./proposal-generator.js";
 //   GET/POST/DELETE /api/admin/backups[...]   · admin list / create / download
 //   runScheduledBackups(env)                   · weekly+monthly cron + prune
 import { handleBackups, runScheduledBackups } from "./backups.js";
+// Production pipeline · stage-by-stage view of each client's website build workflow.
+//   GET  /admin/pipeline            · standalone pipeline page
+//   GET  /api/admin/pipeline/clients · list all clients with production_stage
+//   POST /api/admin/pipeline/clients · add a new client
+//   POST /api/admin/pipeline/:id/stage   · set stage directly
+//   POST /api/admin/pipeline/:id/action  · perform a stage action
+import { handlePipelineApi, pipelinePageHTML } from "./pipeline.js";
 //
 // Modules in order:  utils.js, auth.js, client.js, deliverables.js, admin.js,
 //                    files.js, leads.js, payments.js, frontend.js, index.js
@@ -422,7 +429,7 @@ async function handleClient(request, env) {
 
 // ─── Customer project portal endpoints ─────────────────────────────────────
 async function getClientProject(session, env) {
-  const client = await env.DB.prepare("SELECT id, email, business_name, plan, status, language FROM clients WHERE id = ?")
+  const client = await env.DB.prepare("SELECT id, email, business_name, plan, status, language, submitted_at FROM clients WHERE id = ?")
     .bind(session.client_id).first();
   if (!client) return json({ error: "client not found" }, 404);
 
@@ -614,7 +621,11 @@ async function saveSection(request, session, env, section) {
 }
 async function submitIntake(session, env) {
   const now = Date.now();
-  await env.DB.prepare(`UPDATE clients SET status = 'submitted', submitted_at = ?, updated_at = ? WHERE id = ?`).bind(now, now, session.client_id).run();
+  // Do NOT auto-advance to assets_received. Keep at wizard_sent so admin can
+  // review the submitted intake data in the Assets column and manually confirm.
+  await env.DB.prepare(
+    `UPDATE clients SET status = 'submitted', submitted_at = ?, updated_at = ? WHERE id = ?`
+  ).bind(now, now, session.client_id).run();
   await logEvent(env, session.client_id, "intake_submitted");
   const client = await env.DB.prepare("SELECT email, business_name FROM clients WHERE id = ?").bind(session.client_id).first();
   if (env.ADMIN_EMAIL) {
@@ -1934,6 +1945,22 @@ const src_default = {
       if (__demo && request.method === "GET") return await serveDemo(env, __demo[1]);
       const __demoSeen = path.match(/^\/api\/demo\/([a-zA-Z0-9-]+)\/seen$/);
       if (__demoSeen && request.method === "POST") return await logDemoView(env, __demoSeen[1]);
+      // Per-lead demo chatbot. Public (no Access). Grounded in mockup_data.
+      const __demoChat = path.match(/^\/api\/demo-chat\/([a-zA-Z0-9-]+)$/);
+      if (__demoChat && request.method === "POST") {
+        const { handleDemoChat } = await import("./demo-chat.js");
+        return await handleDemoChat(env, __demoChat[1], request);
+      }
+      if (__demoChat && request.method === "OPTIONS") {
+        return new Response(null, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Max-Age": "600",
+          },
+        });
+      }
       const __demoImg = path.match(/^\/demo-img\/([a-z0-9-]+)$/);
       if (__demoImg && request.method === "GET") return await serveDemoImg(env, __demoImg[1]);
       // Per-lead AI-generated mockup images (mockup v2). Stored in R2 by
@@ -2009,6 +2036,12 @@ const src_default = {
       // ─── mockup engine routes (must run BEFORE the /api/admin/* and /api/* catch-alls) ───
       const __mockupResp = await handleMockups(request, env, ctx, { json, isAdmin, randomToken, uuid, sha256, escapeHtml });
       if (__mockupResp) return cors(__mockupResp);
+      // Production pipeline API. Must run BEFORE the /api/admin/* catch-all.
+      if (path.startsWith("/api/admin/pipeline")) {
+        if (!isAdmin(request, env)) return cors(json({ error: "Unauthorized" }, 401));
+        const subpath = path.replace(/^\/api\/admin\/pipeline\/?/, '');
+        return cors(await handlePipelineApi(subpath, request, env));
+      }
       // Managed client backups. Must run BEFORE the /api/admin/* catch-all.
       if (path.startsWith("/api/admin/backups")) return cors(await handleBackups(request, env, ctx, { json, isAdmin, uuid }));
       if (path.startsWith("/api/admin/")) return cors(await handleAdmin(request, env, ctx));
@@ -2047,6 +2080,62 @@ const src_default = {
             "Content-Security-Policy": embedCSP,
           },
         }));
+      }
+      // Pipeline page · standalone stage-by-stage production view.
+      if (path === "/admin/pipeline" || path === "/admin/pipeline/") {
+        return withSecurityHeaders(new Response(pipelinePageHTML(env), {
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+          },
+        }));
+      }
+      // AI-generated pipeline mockup — serve the HTML Claude generated for a client.
+      // Admin-only: requires a valid session (isAdmin check) so client cannot guess the URL.
+      const __pipelineMockup = path.match(/^\/pipeline-mockup\/([a-zA-Z0-9-]+)\/?$/);
+      if (__pipelineMockup && request.method === "GET") {
+        // Accept ?admin=<token> for direct browser navigation (token lives in localStorage, not cookies)
+        const adminQp = url.searchParams.get("admin");
+        const adminOk = isAdmin(request, env) || (adminQp && env.ADMIN_TOKEN && adminQp === env.ADMIN_TOKEN);
+        if (!adminOk) return new Response("Unauthorized", { status: 401, headers: { "Content-Type": "text/plain" } });
+        const clientId = __pipelineMockup[1];
+        const row = await env.DB.prepare(
+          "SELECT generated_mockup, business_name FROM clients WHERE id = ?"
+        ).bind(clientId).first();
+        if (!row || !row.generated_mockup) {
+          return new Response(
+            "<!DOCTYPE html><html lang='es'><head><meta charset='utf-8'><title>Sin mockup</title>" +
+            "<style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#1e2129;color:#fff}" +
+            "div{text-align:center} h1{color:#FF5C2E} p{color:rgba(255,255,255,.5)}</style></head>" +
+            "<body><div><h1>Sin mockup generado</h1><p>No hay mockup AI para este cliente aun. Generalo desde la vista de pipeline.</p></div></body></html>",
+            { status: 404, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } }
+          );
+        }
+        // ?source=1 dumps the raw HTML for debugging
+        if (url.searchParams.get("source") === "1") {
+          return new Response(row.generated_mockup, {
+            headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
+          });
+        }
+        // Inject:
+        // 1. A CSS safety baseline so the page is readable even if Claude used bad color contrast
+        // 2. A fixed admin banner so we can always identify the mockup and view its source
+        const bannerToken = encodeURIComponent(url.searchParams.get("admin") || "");
+        const safetyCSS = '<style id="pwp-safety">' +
+          'body{background-color:#ffffff!important;color:#111111!important}' +
+          '</style>';
+        const banner = '<div style="position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#FF5C2E;color:#fff;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;font-weight:600;padding:6px 16px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,.3)">' +
+          '<span>&lt;pwp/&gt; AI Mockup: ' + (row.business_name || clientId) + '</span>' +
+          '<a href="?admin=' + bannerToken + '&source=1" style="color:rgba(255,255,255,.8);margin-left:auto;font-weight:400" target="_blank">View source</a>' +
+          '</div><div style="height:34px"></div>';
+        let served = row.generated_mockup;
+        served = served.replace(/<head(\s[^>]*)?>/i, (m) => m + safetyCSS);
+        served = served.replace(/<body(\s[^>]*)?>/i, (m) => m + banner);
+        return new Response(served, {
+          headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+        });
       }
       // Site audit report page · standalone HTML that fetches the JSON API on the
       // client (using the admin token in localStorage) and auto-opens the print
