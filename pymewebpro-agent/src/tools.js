@@ -75,6 +75,22 @@ export const TOOLS = [
       required: ["reason", "summary"]
     }
   },
+  {
+    name: "start_mockup",
+    description: "Create a free, no-commitment mockup for an interested prospect and get a private intake-wizard link to send them. Call this once you have their business name and a way to reach them, and they want to see a sample of their page. It adds them to the team board in the 'mockup' stage and returns a link to a short Spanish wizard where they upload their logo, a few photos, and their vision. Send them that EXACT link and say it is optional but makes the mockup come out much better. No payment and no commitment. Prefer this over capture_contact for prospects who want a mockup.",
+    input_schema: {
+      type: "object",
+      properties: {
+        business_name: { type: "string", description: "Prospect's business name." },
+        contact_name: { type: "string", description: "Prospect's name." },
+        phone: { type: "string", description: "WhatsApp / phone with country code." },
+        contact_email: { type: "string", description: "Email (optional if phone is given)." },
+        city: { type: "string", description: "City or service area (optional)." },
+        message: { type: "string", description: "Optional: what they want or any context." }
+      },
+      required: ["business_name"]
+    }
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -211,6 +227,57 @@ async function runEscalateToHuman(input, ctx) {
   };
 }
 
+async function runStartMockup(input, ctx) {
+  const { env, db, conversationId } = ctx;
+  const portal = env.PORTAL_DB;
+  if (!portal) return { ok: false, error: "portal db not bound", fallback: "use capture_contact" };
+
+  const leadId = crypto.randomUUID();
+  const token = crypto.randomUUID().replace(/-/g, "");
+  const now = Date.now();
+  let language = "es";
+  try {
+    const conv = await db.prepare("SELECT language FROM conversations WHERE id = ?").bind(conversationId).first();
+    if (conv && conv.language) language = conv.language;
+  } catch {}
+
+  const metadata = JSON.stringify({ source: "valentina-agent", conversation_id: conversationId, mockup_mode: true, city: input.city || null });
+  try {
+    await portal.prepare(
+      `INSERT INTO leads (id, source, name, email, phone, business_name, message, language, status, lead_stage, plan, hosting, metadata, wizard_token, created_at, updated_at)
+       VALUES (?, 'valentina-agent', ?, ?, ?, ?, ?, ?, 'new', 'mockup', 'esencial', 'none', ?, ?, ?, ?)`
+    ).bind(
+      leadId,
+      input.contact_name || null,
+      input.contact_email || null,
+      input.phone || null,
+      input.business_name || null,
+      `Mockup iniciado por Valentina. ${input.message || ""}`.trim(),
+      language,
+      metadata,
+      token,
+      now, now,
+    ).run();
+  } catch (e) {
+    console.error("start_mockup insert failed", e);
+    return { ok: false, error: "no se pudo crear el lead", fallback: "use capture_contact" };
+  }
+
+  const link = `https://valentina.pymewebpro.com/w/${token}`;
+  // Ping Santi so the team sees the new mockup lead on the board.
+  try {
+    await sendWhatsAppText(env, env.SANTI_WA_NUMBER,
+      `Nuevo mockup (Valentina): ${input.business_name || input.contact_name || "(sin nombre)"}\nWizard: ${link}\nLead: ${leadId}`);
+  } catch {}
+
+  return {
+    ok: true,
+    wizard_link: link,
+    note_for_user_es: `Listo, ya empecé tu muestra gratis. Para que quede a tu medida, abre este enlace y sube tu logo, unas fotos y cuéntanos tu visión (unos minutos, es opcional pero mejora mucho el resultado): ${link}`,
+    note_for_user_en: `Done, I started your free mockup. To make it yours, open this link to add your logo, a few photos, and your vision (a few minutes, optional but it makes the result much better): ${link}`,
+  };
+}
+
 export async function runTool(name, input, ctx) {
   try {
     let result;
@@ -219,6 +286,7 @@ export async function runTool(name, input, ctx) {
     else if (name === "list_call_slots") result = await runListCallSlots(input, ctx);
     else if (name === "book_call") result = await runBookCall(input, ctx);
     else if (name === "escalate_to_human") result = await runEscalateToHuman(input, ctx);
+    else if (name === "start_mockup") result = await runStartMockup(input, ctx);
     else result = { ok: false, error: `Unknown tool: ${name}` };
     return JSON.stringify(result);
   } catch (e) {

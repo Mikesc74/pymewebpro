@@ -5,6 +5,7 @@ import { chatTurn } from "./agent.js";
 import { getOrCreateWebConversation, getOrCreateWhatsAppConversation } from "./db.js";
 import { verifyWebhook, parseInboundMessage, sendWhatsAppText } from "./whatsapp.js";
 import { WIDGET_JS, WIDGET_CSS } from "./widget.js";
+import { serveWizard, handleWizardSubmit } from "./wizard.js";
 
 const ALLOWED_ORIGINS = new Set([
   "https://pymewebpro.com",
@@ -155,6 +156,17 @@ export default {
         console.error("preview lead insert failed:", e); // never break the visitor flow
       }
       return json({ ok: true }, 200, origin);
+    }
+
+    // -- Spanish intake wizard (public, token-gated). GET serves the form,
+    //    POST saves answers + uploads. Token is the only secret. --
+    const mWizard = url.pathname.match(/^\/w\/([A-Za-z0-9]{8,})$/);
+    if (mWizard && request.method === "GET") {
+      return serveWizard(env, mWizard[1]);
+    }
+    const mWizardApi = url.pathname.match(/^\/api\/w\/([A-Za-z0-9]{8,})$/);
+    if (mWizardApi && request.method === "POST") {
+      return handleWizardSubmit(request, env, mWizardApi[1]);
     }
 
     return new Response("not found", { status: 404 });

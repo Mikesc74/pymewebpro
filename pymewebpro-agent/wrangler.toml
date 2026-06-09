@@ -24,6 +24,14 @@ binding = "PORTAL_DB"
 database_name = "pymewebpro-portal"
 database_id = "93fc7e21-713c-4479-bb55-69ae05c275dc"
 
+# --- R2 binding ----------------------------------------------------------
+# ASSETS: the portal's client-assets bucket. The Spanish intake wizard
+# (/w/<token>) stores the prospect's uploaded logo + photos under
+# wizard/<leadId>/... here, same bucket the portal already uses.
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "pymewebpro-client-assets"
+
 # --- Plain-text vars ------------------------------------------------------
 [vars]
 ANTHROPIC_MODEL = "claude-sonnet-4-6"
