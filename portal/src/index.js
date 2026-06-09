@@ -43,7 +43,7 @@ import { handleOutreach } from "./outreach.js";
 //   POST /api/admin/deals/:dealId/deposit-link   · 30% deposit Wompi URL
 //   POST /api/admin/deals/:dealId/balance-link   · 70% balance Wompi URL
 import { handleDepositLinks, processDepositPayment, processBalancePayment } from "./deposit-links.js";
-import { handlePayPage, handlePayAccept, processFullPayment } from "./agreement.js";
+import { handlePayPage, handlePayAccept, processFullPayment, processPlanPayment } from "./agreement.js";
 // Chief of Staff · agente en español, widget flotante en cada página admin.
 //   /api/admin/chief-of-staff/chat  -> backend Anthropic loop con tools CRM
 //   CHIEF_OF_STAFF_WIDGET_HTML       -> snippet HTML inyectado antes de </body>
@@ -1500,6 +1500,8 @@ async function handleWompiWebhook(request, env) {
       await processBalancePayment(env, payment);
     } else if (ref.startsWith("pwp-full-")) {
       await processFullPayment(env, payment);
+    } else if (ref.startsWith("pwp-plan-")) {
+      await processPlanPayment(env, payment);
     } else if (payment.plan === "hosting") {
       await processHostingPayment(env, payment);
     } else {

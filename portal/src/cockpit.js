@@ -12,7 +12,7 @@
 import { generateProposal } from "./proposal-generator.js";
 import { genDemoImg, DEMO_IMG_KEYS } from "./demo-img.js";
 import { buildMockup, uploadMockupImage, deleteMockupImage } from "./mockup-generator.js";
-import { toggleLaunchStep } from "./agreement.js";
+import { toggleLaunchStep, buildPlanCheckout } from "./agreement.js";
 
 const MODEL = "claude-haiku-4-5-20251001";
 const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
@@ -42,6 +42,11 @@ export async function handleCockpitRoutes(request, env, helpers) {
   if (path === "/api/admin/cockpit/payment-link" && request.method === "POST") {
     if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
     return await paymentLink(request, env, json);
+  }
+  // Genera el link del plan mensual ($150.000 Wompi) y redacta el WhatsApp.
+  if (path === "/api/admin/cockpit/plan-link" && request.method === "POST") {
+    if (!isAdmin(request, env)) return json({ ok: false, error: "Unauthorized" }, 401);
+    return await planLink(request, env, json);
   }
   // Toggle one post-payment launch checklist step. Body: {lead_id, key, done}.
   if (path === "/api/admin/cockpit/launch-step" && request.method === "POST") {
@@ -299,4 +304,31 @@ async function paymentLink(request, env, json) {
   ).bind(crypto.randomUUID(), message, leadId, now, now, now).run();
 
   return json({ ok: true, url: link, draft: message, paid: !!lead.paid_at });
+}
+
+// ---- plan-link (plan mensual opcional, link recurrente por WhatsApp) -------
+async function planLink(request, env, json) {
+  let body;
+  try { body = await request.json(); } catch { return json({ ok: false, error: "Invalid JSON" }, 400); }
+  const leadId = body && body.lead_id;
+  if (!leadId) return json({ ok: false, error: "Missing lead_id" }, 400);
+
+  const lead = await env.DB.prepare("SELECT id, name, business_name FROM leads WHERE id = ?").bind(leadId).first();
+  if (!lead) return json({ ok: false, error: "Lead not found" }, 404);
+
+  const r = await buildPlanCheckout(env, leadId);
+  if (!r.ok || !r.url) return json({ ok: false, error: r.error || "No se pudo generar el link" }, 502);
+
+  const negocio = lead.business_name || lead.name || "tu negocio";
+  const message = "Para mantener " + negocio + " con el plan mensual todo incluido (hosting, Ficha de Google activa, "
+    + "asistente 24/7, cambios del mes), acá está el link seguro del plan ($150.000 COP/mes). Tu primer mes va incluido, "
+    + "así que esto cubre el siguiente: \n" + r.url;
+
+  const now = Date.now();
+  await env.DB.prepare(
+    "INSERT INTO activities (id, kind, subject, body, lead_id, owner, occurred_at, created_at, updated_at, done) " +
+    "VALUES (?, 'note', 'Listo: mensual', ?, ?, 'system', ?, ?, ?, 0)"
+  ).bind(crypto.randomUUID(), message, leadId, now, now, now).run();
+
+  return json({ ok: true, url: r.url, draft: message });
 }

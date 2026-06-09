@@ -9,15 +9,19 @@
 // reseña). COP only. No em dashes.
 
 const SETUP_COP = 400000;
+const PLAN_COP = 150000; // optional monthly plan, todo incluido
 const MOCKUP_BASE = "https://mockups.pymewebpro.com";
 const PAY_BASE = "https://portal.pymewebpro.com";
+const DAY = 86400000;
 
-// Canonical 5-step launch checklist (same shape as ChatClick, Spanish labels).
+// Canonical launch checklist (same shape as ChatClick, Spanish labels). The
+// `mensual` step sends the optional monthly-plan Wompi link.
 export const LAUNCH_STEPS = [
   { key: "dominio",   label: "Conectar el dominio" },
   { key: "gbp",       label: "Configurar la Ficha de Google" },
   { key: "asistente", label: "Activar el asistente" },
   { key: "live",      label: "Confirmar que la página está en vivo" },
+  { key: "mensual",   label: "Enviar el link del plan mensual (opcional)" },
   { key: "review",    label: "Enviar la solicitud de reseña en Google" },
 ];
 export const LAUNCH_KEYS = LAUNCH_STEPS.map((s) => s.key);
@@ -126,8 +130,9 @@ export async function processFullPayment(env, payment) {
       "       last_touched_at = ?, last_touched_kind = 'payment', " +
       "       touches_count = COALESCE(touches_count, 0) + 1, " +
       "       next_action = 'Publicar + activar asistente', " +
-      "       launch_steps = COALESCE(launch_steps, ?), updated_at = ? WHERE id = ?"
-    ).bind(now, now, initialLaunchStepsJson(), now, leadId).run();
+      "       launch_steps = COALESCE(launch_steps, ?), " +
+      "       plan_expires_at = COALESCE(plan_expires_at, ?), updated_at = ? WHERE id = ?"
+    ).bind(now, now, initialLaunchStepsJson(), now + 30 * DAY, now, leadId).run();
   } catch (e) { console.error("processFullPayment lead update failed", e); }
 
   try {
@@ -140,6 +145,52 @@ export async function processFullPayment(env, payment) {
       leadId, now, now, now,
     ).run();
   } catch (e) { console.error("processFullPayment activity failed", e); }
+}
+
+// ---- monthly plan link (recurring Wompi link, sent on WhatsApp) -----------
+// No tokenized auto-debit: each approved pwp-plan-<leadId>-<ts> payment extends
+// plan_expires_at by 30 days. Returns the hosted Wompi checkout URL.
+export async function buildPlanCheckout(env, leadId) {
+  if (!env.WOMPI_PUBLIC_KEY || !env.WOMPI_INTEGRITY) return { ok: false, error: "Pagos no configurados" };
+  const lead = await env.DB.prepare("SELECT id, business_name, name FROM leads WHERE id = ?").bind(leadId).first();
+  if (!lead) return { ok: false, error: "Lead no encontrado" };
+  const now = Date.now();
+  const amountCents = PLAN_COP * 100;
+  const reference = "pwp-plan-" + lead.id + "-" + now.toString(36);
+  const sig = await sha256Hex(reference + amountCents + "COP" + env.WOMPI_INTEGRITY);
+  try {
+    await env.DB.prepare(
+      "INSERT INTO payments (id, lead_id, reference, amount_cents, currency, plan, hosting, status, created_at, updated_at) " +
+      "VALUES (?, ?, ?, ?, 'COP', 'plan-mensual', 'none', 'pending', ?, ?)"
+    ).bind(crypto.randomUUID(), lead.id, reference, amountCents, now, now).run();
+  } catch (e) { console.error("plan payment row insert failed", e); }
+  const params = new URLSearchParams({
+    "public-key": env.WOMPI_PUBLIC_KEY,
+    "currency": "COP",
+    "amount-in-cents": String(amountCents),
+    "reference": reference,
+    "signature:integrity": sig,
+    "redirect-url": PAY_BASE + "/?plan=ok",
+  });
+  return { ok: true, url: "https://checkout.wompi.co/p/?" + params.toString(), reference, amount_cop: PLAN_COP };
+}
+
+export async function processPlanPayment(env, payment) {
+  const leadId = payment.lead_id;
+  if (!leadId) { console.warn("plan payment with no lead_id", payment.reference); return; }
+  const now = Date.now();
+  const row = await env.DB.prepare("SELECT plan_expires_at FROM leads WHERE id = ?").bind(leadId).first();
+  const base = Math.max(now, (row && row.plan_expires_at) || now);
+  try {
+    await env.DB.prepare("UPDATE leads SET plan_expires_at = ?, updated_at = ? WHERE id = ?")
+      .bind(base + 30 * DAY, now, leadId).run();
+  } catch (e) { console.error("processPlanPayment update failed", e); }
+  try {
+    await env.DB.prepare(
+      "INSERT INTO activities (id, kind, subject, body, lead_id, owner, occurred_at, created_at, updated_at, done) " +
+      "VALUES (?, 'note', 'Plan mensual pagado via Wompi', ?, ?, 'system', ?, ?, ?, 1)"
+    ).bind(crypto.randomUUID(), JSON.stringify({ reference: payment.reference, amount_cents: payment.amount_cents }), leadId, now, now, now).run();
+  } catch (e) { console.error("processPlanPayment activity failed", e); }
 }
 
 // ---- HTML -----------------------------------------------------------------

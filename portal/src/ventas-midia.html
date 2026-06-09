@@ -888,6 +888,7 @@ function openDetail(lead){
     catch(err){ toast('Error: '+err.message, true); b.disabled=false; }
   }; });
   var lrB=bg.querySelector('[data-launchreview]'); if(lrB) lrB.onclick=function(){ bg.remove(); sendReviewRequest(lead); };
+  var lmB=bg.querySelector('[data-launchmensual]'); if(lmB) lmB.onclick=function(){ bg.remove(); sendPlanLink(lead); };
   bg.querySelectorAll('[data-actdel]').forEach(function(b){ b.onclick=async function(){
     var aid=b.getAttribute('data-actdel');
     try{
@@ -1255,6 +1256,18 @@ async function sendWizardLink(lead){
 
 // Solicitud de reseña en Google de un clic: redacta el mensaje al cliente ya
 // publicado y marca el paso de reseña como hecho. Mike/Santi ponen el link real.
+// Link del plan mensual ($150.000 Wompi) de un clic: lo genera, redacta el
+// mensaje de WhatsApp y marca el paso como hecho.
+async function sendPlanLink(lead){
+  toast('Generando link del plan...');
+  try{
+    var r = await api('/api/admin/cockpit/plan-link', {method:'POST', body: JSON.stringify({lead_id:lead.id})});
+    try{ await api('/api/admin/cockpit/launch-step', {method:'POST', body: JSON.stringify({lead_id:lead.id, key:'mensual', done:true})}); }catch(e){}
+    await loadAll();
+    showPanel(lead, null, (r && r.draft) || '');
+  }catch(err){ toast('Error: '+err.message, true); }
+}
+
 async function sendReviewRequest(lead){
   var biz = leadName(lead);
   var text = 'Hola, qué bueno tenerte en línea con tu nueva página. Si quedaste contento, una reseña corta en Google nos ayudaría muchísimo: [tu enlace de reseña de Google]. ¡Mil gracias!';
@@ -1265,8 +1278,8 @@ async function sendReviewRequest(lead){
 
 // Checklist de lanzamiento (paga = aparecen los 5 pasos) y estado del asistente
 // de datos. Seguro para daltonismo: icono + texto, nunca solo color.
-var LAUNCH_ORDER = ['dominio','gbp','asistente','live','review'];
-var LAUNCH_LABELS = {dominio:'Conectar el dominio', gbp:'Configurar la Ficha de Google', asistente:'Activar el asistente', live:'Confirmar que la página está en vivo', review:'Enviar la solicitud de reseña en Google'};
+var LAUNCH_ORDER = ['dominio','gbp','asistente','live','mensual','review'];
+var LAUNCH_LABELS = {dominio:'Conectar el dominio', gbp:'Configurar la Ficha de Google', asistente:'Activar el asistente', live:'Confirmar que la página está en vivo', mensual:'Enviar el link del plan mensual (opcional)', review:'Enviar la solicitud de reseña en Google'};
 function launchSteps(l){ var s={}; try{ s=l.launch_steps?JSON.parse(l.launch_steps):{}; }catch(e){} return s; }
 function launchCounts(l){ var s=launchSteps(l), done=0; LAUNCH_ORDER.forEach(function(k){ if(s[k]) done++; }); return {done:done,total:LAUNCH_ORDER.length}; }
 function launchBlockHTML(lead){
@@ -1274,8 +1287,9 @@ function launchBlockHTML(lead){
   var rows = LAUNCH_ORDER.map(function(k){
     var done=!!s[k];
     var review=(k==='review' && !done)?'<button class="act" data-launchreview="1" style="margin-left:.3rem">Enviar</button>':'';
+    var mensual=(k==='mensual' && !done)?'<button class="act" data-launchmensual="1" style="margin-left:.3rem">Enviar link</button>':'';
     var toggle='<button class="act ghost" data-launch="'+k+'" data-done="'+(done?'1':'0')+'" style="min-width:96px">'+(done?'Deshacer':'Marcar hecho')+'</button>';
-    return '<div style="display:flex;align-items:center;gap:.5rem;margin:.25rem 0"><span aria-hidden="true" style="width:1.1em;text-align:center">'+(done?'✔':'○')+'</span><span style="flex:1;font-size:.82rem'+(done?';color:var(--mute);text-decoration:line-through':'')+'">'+esc(LAUNCH_LABELS[k])+'</span>'+review+toggle+'</div>';
+    return '<div style="display:flex;align-items:center;gap:.5rem;margin:.25rem 0"><span aria-hidden="true" style="width:1.1em;text-align:center">'+(done?'✔':'○')+'</span><span style="flex:1;font-size:.82rem'+(done?';color:var(--mute);text-decoration:line-through':'')+'">'+esc(LAUNCH_LABELS[k])+'</span>'+review+mensual+toggle+'</div>';
   }).join('');
   var hd = (c.done===c.total) ? '✔ Publicado · todos los pasos hechos' : '⏳ Lanzando · '+c.done+' de '+c.total+' hechos';
   return '<div style="background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:.6rem .8rem;margin:0 0 .8rem"><div style="font-weight:700;font-size:.82rem;margin-bottom:.4rem">'+esc(hd)+'</div>'+rows+'</div>';
