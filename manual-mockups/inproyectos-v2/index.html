@@ -89,8 +89,8 @@
   .clients .lbl{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-soft);display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1.4rem}
   .clients .lbl::before{content:"";width:22px;height:2px;background:var(--accent);flex:0 0 auto}
   .clients-logos{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:1.3rem 2.4rem}
-  .clients-logos img{height:48px;width:auto;max-width:140px;object-fit:contain;opacity:.75;filter:brightness(0) invert(1);transition:opacity .2s}
-  .clients-logos img:hover{opacity:1}
+  .clients-logos img{height:46px;width:auto;max-width:150px;object-fit:contain;background:#fff;padding:.65rem 1rem;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.2);transition:transform .2s}
+  .clients-logos img:hover{transform:translateY(-2px)}
 
   /* sections */
   section.block{padding:5rem 0}
@@ -270,6 +270,11 @@
   .svc{overflow:hidden}
   .svc-art{position:absolute;right:-16px;bottom:-16px;width:130px;height:130px;color:var(--accent);opacity:0;transform:translateY(12px) rotate(-8deg);transition:opacity .35s ease,transform .35s ease;pointer-events:none}
   .svc:hover .svc-art{opacity:.13;transform:translateY(0) rotate(0)}
+  /* language toggle */
+  .lang{display:flex;align-items:center;gap:.2rem;font-family:var(--mono);font-size:.78rem;font-weight:600}
+  .lang button{background:none;border:none;cursor:pointer;color:var(--mute);font:inherit;padding:.2rem .2rem;line-height:1}
+  .lang button.on{color:var(--navy);text-decoration:underline;text-underline-offset:3px}
+  .lang .sep{color:var(--line-dk);opacity:.5}
 </style>
 </head>
 <body>
@@ -283,13 +288,13 @@
   </a>
   <div class="nav-in">
     <nav class="nav-links" aria-label="Principal">
-      <a href="#nosotros">Nosotros</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#areas">Áreas</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#nosotros" data-en="About">Nosotros</a>
+      <a href="#servicios" data-en="Services">Servicios</a>
+      <a href="#areas" data-en="Sectors">Áreas</a>
+      <a href="#proyectos" data-en="Projects">Proyectos</a>
+      <a href="#contacto" data-en="Contact">Contacto</a>
     </nav>
-    <div class="nav-cta"><button class="btn btn-primary" data-action="open-chat">Hablar con nosotros</button></div>
+    <div class="nav-cta"><div class="lang"><button id="langEs" class="on" aria-label="Español">ES</button><span class="sep">/</span><button id="langEn" aria-label="English">EN</button></div><button class="btn btn-primary" data-action="open-chat" data-en="Talk to us">Hablar con nosotros</button></div>
   </div>
 </header>
 
@@ -301,15 +306,15 @@
   <div class="wrap hero-in">
     <div>
       <div class="chips">
-        <span class="chip">Barranquilla y Bogotá</span>
-        <span class="chip">Desde <b>1985</b></span>
-        <span class="chip">Miembro <b>CCI</b></span>
+        <span class="chip" data-en="Barranquilla &amp; Bogotá">Barranquilla y Bogotá</span>
+        <span class="chip" data-en="Since &lt;b&gt;1985&lt;/b&gt;">Desde <b>1985</b></span>
+        <span class="chip" data-en="&lt;b&gt;CCI&lt;/b&gt; member">Miembro <b>CCI</b></span>
       </div>
-      <h1>Interventoría y consultoría para la <span class="u">infraestructura</span> de Colombia.</h1>
-      <p class="lead">Cuatro décadas respaldando la inversión pública y privada, con interventoría independiente y rigor técnico. Desde 1985.</p>
+      <h1 data-en="Engineering oversight &amp; consulting for Colombia&#39;s &lt;span class=&quot;u&quot;&gt;infrastructure&lt;/span&gt;.">Interventoría y consultoría para la <span class="u">infraestructura</span> de Colombia.</h1>
+      <p class="lead" data-en="Four decades supporting public and private investment, with independent oversight and technical rigor. Since 1985.">Cuatro décadas respaldando la inversión pública y privada, con interventoría independiente y rigor técnico. Desde 1985.</p>
       <div class="cta-row">
-        <button class="btn btn-light" data-action="open-chat">Cuéntenos su proyecto</button>
-        <a class="btn btn-outline-light" href="#proyectos">Ver proyectos</a>
+        <button class="btn btn-light" data-action="open-chat" data-en="Tell us about your project">Cuéntenos su proyecto</button>
+        <a class="btn btn-outline-light" href="#proyectos" data-en="View projects">Ver proyectos</a>
       </div>
       <div class="dimline"><i></i> EST. 1985 · Barranquilla · Bogotá</div>
     </div>
@@ -317,17 +322,17 @@
       <article class="slide is-active" data-slide="0">
         <img class="art" src="./px-dragado.jpg" alt="Dragado del canal de acceso al Puerto de Barranquilla" loading="eager" onerror="this.style.display='none'">
         <div class="scrim" aria-hidden="true"></div>
-        <div class="meta"><span class="role">Interventoría</span><div class="sector">Puertos y obras hidráulicas</div><h3>Profundización del canal de acceso, Puerto de Barranquilla</h3><div class="ent">Atlántico</div></div>
+        <div class="meta"><span class="role" data-en="Oversight">Interventoría</span><div class="sector" data-en="Ports &amp; hydraulic works">Puertos y obras hidráulicas</div><h3 data-en="Access channel deepening, Port of Barranquilla">Profundización del canal de acceso, Puerto de Barranquilla</h3><div class="ent">Atlántico</div></div>
       </article>
       <article class="slide" data-slide="1">
         <img class="art" src="./px-av34.jpg" alt="Segunda calzada de la Avenida 34, Medellín" loading="lazy" onerror="this.style.display='none'">
         <div class="scrim" aria-hidden="true"></div>
-        <div class="meta"><span class="role">Interventoría</span><div class="sector">Vías y transporte</div><h3>Construcción 2da calzada Avenida 34</h3><div class="ent">Medellín, Antioquia</div></div>
+        <div class="meta"><span class="role" data-en="Oversight">Interventoría</span><div class="sector" data-en="Roads &amp; transport">Vías y transporte</div><h3 data-en="Avenida 34 second carriageway">Construcción 2da calzada Avenida 34</h3><div class="ent">Medellín, Antioquia</div></div>
       </article>
       <article class="slide" data-slide="2">
         <img class="art" src="./px-cartagena.jpg" alt="Obras de protección marítima, Cartagena" loading="lazy" onerror="this.style.display='none'">
         <div class="scrim" aria-hidden="true"></div>
-        <div class="meta"><span class="role">Consultoría</span><div class="sector">Puertos y obras hidráulicas</div><h3>Obras de protección marítima</h3><div class="ent">Cartagena, Bolívar</div></div>
+        <div class="meta"><span class="role" data-en="Consulting">Consultoría</span><div class="sector" data-en="Ports &amp; hydraulic works">Puertos y obras hidráulicas</div><h3 data-en="Maritime protection works">Obras de protección marítima</h3><div class="ent">Cartagena, Bolívar</div></div>
       </article>
       <div class="dots" id="flagDots" aria-hidden="true"></div>
     </div>
@@ -339,25 +344,25 @@
   <div class="wrap">
     <div class="about-grid">
       <div>
-        <span class="eyebrow">Nosotros</span>
-        <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;color:var(--navy);margin:.6rem 0 1.3rem">Cuatro décadas de ingeniería de consulta</h2>
-        <p>Ingeniería de Proyectos S.A.S fue creada en 1985 con el propósito de apoyar las decisiones de inversión de los sectores público y privado, ofreciendo servicios de ingeniería altamente calificados. Desde nuestros inicios hemos participado en proyectos para un número importante de departamentos e industrias del país y del exterior.</p>
-        <p class="muted">Contamos con el conocimiento, la experiencia y la creatividad necesarios para garantizar un servicio de ingeniería integral y especializado, con un equipo profesional en ingeniería civil, industrial, mecánica, eléctrica, ambiental, arquitectura y administración.</p>
+        <span class="eyebrow" data-en="About us">Nosotros</span>
+        <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;color:var(--navy);margin:.6rem 0 1.3rem" data-en="Four decades of consulting engineering">Cuatro décadas de ingeniería de consulta</h2>
+        <p data-en="Ingeniería de Proyectos S.A.S was founded in 1985 to support public and private investment decisions with highly qualified engineering services. From our beginnings we have taken part in projects for a significant number of departments and industries, in Colombia and abroad.">Ingeniería de Proyectos S.A.S fue creada en 1985 con el propósito de apoyar las decisiones de inversión de los sectores público y privado, ofreciendo servicios de ingeniería altamente calificados. Desde nuestros inicios hemos participado en proyectos para un número importante de departamentos e industrias del país y del exterior.</p>
+        <p class="muted" data-en="We bring the knowledge, experience and creativity needed to deliver integral, specialized engineering, with a professional team across civil, industrial, mechanical, electrical and environmental engineering, architecture and administration.">Contamos con el conocimiento, la experiencia y la creatividad necesarios para garantizar un servicio de ingeniería integral y especializado, con un equipo profesional en ingeniería civil, industrial, mecánica, eléctrica, ambiental, arquitectura y administración.</p>
         <div class="pillars">
-          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h4>Interventoría independiente</h4><p>Supervisamos sin vínculos con el contratista: la independencia protege la inversión.</p></div></div>
-          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg></span><div><h4>Rigor técnico</h4><p>Control de calidad, costo y tiempo en todas las fases del proyecto.</p></div></div>
-          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15.5 20c0-2 1-3.6 2.5-4.4"/></svg></span><div><h4>Equipo multidisciplinario</h4><p>Profesionales de seis disciplinas de la ingeniería y la arquitectura.</p></div></div>
+          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h4 data-en="Independent oversight">Interventoría independiente</h4><p data-en="We supervise with no ties to the contractor: independence protects the investment.">Supervisamos sin vínculos con el contratista: la independencia protege la inversión.</p></div></div>
+          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg></span><div><h4 data-en="Technical rigor">Rigor técnico</h4><p data-en="Control of quality, cost and time across every phase of the project.">Control de calidad, costo y tiempo en todas las fases del proyecto.</p></div></div>
+          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15.5 20c0-2 1-3.6 2.5-4.4"/></svg></span><div><h4 data-en="Multidisciplinary team">Equipo multidisciplinario</h4><p data-en="Professionals across six engineering and architecture disciplines.">Profesionales de seis disciplinas de la ingeniería y la arquitectura.</p></div></div>
         </div>
       </div>
       <div>
         <img class="about-photo" src="./empresa.jpg" alt="Profundización del canal de acceso al Puerto de Barranquilla" onerror="this.style.aspectRatio='4/3'">
-        <div class="about-cap">Profundización canal de acceso · Puerto de Barranquilla</div>
+        <div class="about-cap" data-en="Access channel deepening · Port of Barranquilla">Profundización canal de acceso · Puerto de Barranquilla</div>
         <aside class="about-side">
-          <div class="row"><span class="k">Razón social</span><span class="v">Ingeniería de Proyectos S.A.S</span></div>
+          <div class="row"><span class="k" data-en="Legal name">Razón social</span><span class="v">Ingeniería de Proyectos S.A.S</span></div>
           <div class="row"><span class="k">NIT</span><span class="v">890.116.722-8</span></div>
-          <div class="row"><span class="k">Fundación</span><span class="v">1985</span></div>
-          <div class="row"><span class="k">Sedes</span><span class="v">Barranquilla y Bogotá</span></div>
-          <div class="row"><span class="k">Gremio</span><span class="v">Miembro CCI · Seccional Norte</span></div>
+          <div class="row"><span class="k" data-en="Founded">Fundación</span><span class="v">1985</span></div>
+          <div class="row"><span class="k" data-en="Offices">Sedes</span><span class="v" data-en="Barranquilla &amp; Bogotá">Barranquilla y Bogotá</span></div>
+          <div class="row"><span class="k" data-en="Association">Gremio</span><span class="v" data-en="CCI member · Norte chapter">Miembro CCI · Seccional Norte</span></div>
         </aside>
       </div>
     </div>
@@ -367,7 +372,7 @@
 <!-- CLIENTS -->
 <div class="clients">
   <div class="wrap clients-in">
-    <div class="lbl">Clientes y aliados</div>
+    <div class="lbl" data-en="Clients &amp; partners">Clientes y aliados</div>
     <div class="clients-logos">
       <img src="./cli-01.png" alt="Cliente" onerror="this.style.display='none'">
       <img src="./cli-02.png" alt="Cliente" onerror="this.style.display='none'">
@@ -389,32 +394,32 @@
 <!-- SERVICIOS -->
 <section class="block" id="servicios" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Servicios</span><h2>Lo que hacemos</h2><p>Acompañamos el ciclo completo del proyecto, desde los estudios y diseños hasta la supervisión y la dirección de la obra.</p></div>
+    <div class="sec-head"><span class="eyebrow" data-en="Services">Servicios</span><h2 data-en="What we do">Lo que hacemos</h2><p data-en="We cover the full project cycle, from studies and design through oversight and construction management.">Acompañamos el ciclo completo del proyecto, desde los estudios y diseños hasta la supervisión y la dirección de la obra.</p></div>
     <div class="svc-grid">
       <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <h3>Interventoría de proyectos</h3>
-        <p>Supervisión técnica, administrativa y financiera de obras y contratos, con independencia y transparencia.</p>
+        <h3 data-en="Project oversight">Interventoría de proyectos</h3>
+        <p data-en="Technical, administrative and financial supervision of works and contracts, with independence and transparency.">Supervisión técnica, administrativa y financiera de obras y contratos, con independencia y transparencia.</p>
       </article>
       <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <h3>Estudios y diseños</h3>
-        <p>Estudios, diseños y estructuración de proyectos para respaldar decisiones de inversión sólidas.</p>
+        <h3 data-en="Studies &amp; design">Estudios y diseños</h3>
+        <p data-en="Studies, design and project structuring to support sound investment decisions.">Estudios, diseños y estructuración de proyectos para respaldar decisiones de inversión sólidas.</p>
       </article>
       <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg></div>
-        <h3>Gerencia de proyectos</h3>
-        <p>Dirección integral: planeación, coordinación y control de alcance, tiempo, costo y calidad.</p>
+        <h3 data-en="Project management">Gerencia de proyectos</h3>
+        <p data-en="End-to-end direction: planning, coordination and control of scope, time, cost and quality.">Dirección integral: planeación, coordinación y control de alcance, tiempo, costo y calidad.</p>
       </article>
       <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 12h8M8 16h6"/></svg></div>
-        <h3>Asesorías técnicas y administrativas</h3>
-        <p>Acompañamiento experto en la estructuración, contratación y seguimiento de proyectos.</p>
+        <h3 data-en="Technical &amp; administrative advisory">Asesorías técnicas y administrativas</h3>
+        <p data-en="Expert support in structuring, contracting and monitoring projects.">Acompañamiento experto en la estructuración, contratación y seguimiento de proyectos.</p>
       </article>
       <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></div>
-        <h3>Supervisión ambiental</h3>
-        <p>Gestión y supervisión ambiental de proyectos, con foco en cumplimiento y sostenibilidad.</p>
+        <h3 data-en="Environmental supervision">Supervisión ambiental</h3>
+        <p data-en="Environmental management and supervision of projects, focused on compliance and sustainability.">Gestión y supervisión ambiental de proyectos, con foco en cumplimiento y sostenibilidad.</p>
       </article>
     </div>
   </div>
@@ -423,14 +428,14 @@
 <!-- AREAS -->
 <section class="block areas" id="areas">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow light">Áreas de interés</span><h2>Dónde trabajamos</h2><p>Experiencia comprobada en los frentes de infraestructura que mueven la inversión pública y privada en Colombia.</p></div>
+    <div class="sec-head"><span class="eyebrow light" data-en="Sectors">Áreas de interés</span><h2 data-en="Where we work">Dónde trabajamos</h2><p data-en="Proven experience across the infrastructure fronts that drive public and private investment in Colombia.">Experiencia comprobada en los frentes de infraestructura que mueven la inversión pública y privada en Colombia.</p></div>
     <div class="area-grid">
-      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4M8 4H4v4M20 16v4h-4"/><path d="M4 14l6 6"/></svg></span><h4>Vías y transporte</h4><p>Interventoría, estudios y diseños de infraestructura vial y de transporte.</p></div>
-      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M5 18V9l7-4 7 4v9"/><path d="M2 21h20"/></svg></span><h4>Puertos y obras hidráulicas</h4><p>Dragados, canales de acceso, obras de protección marítima e hidráulica.</p></div>
-      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-5h6v5"/></svg></span><h4>Obras civiles, edificaciones y urbanismo</h4><p>Edificaciones, espacio público, urbanismo y restauración patrimonial.</p></div>
-      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg></span><h4>Agua y saneamiento</h4><p>Acueducto, alcantarillado y sistemas de tratamiento y almacenamiento.</p></div>
-      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg></span><h4>Medio ambiente y desarrollo institucional</h4><p>Gestión ambiental, sostenibilidad y fortalecimiento institucional.</p></div>
-      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><h4>Energía y telecomunicaciones</h4><p>Infraestructura de energía y de telecomunicaciones.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4M8 4H4v4M20 16v4h-4"/><path d="M4 14l6 6"/></svg></span><h4 data-en="Roads &amp; transport">Vías y transporte</h4><p data-en="Oversight, studies and design of road and transport infrastructure.">Interventoría, estudios y diseños de infraestructura vial y de transporte.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M5 18V9l7-4 7 4v9"/><path d="M2 21h20"/></svg></span><h4 data-en="Ports &amp; hydraulic works">Puertos y obras hidráulicas</h4><p data-en="Dredging, access channels, maritime and hydraulic protection works.">Dragados, canales de acceso, obras de protección marítima e hidráulica.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-5h6v5"/></svg></span><h4 data-en="Civil works, buildings &amp; urbanism">Obras civiles, edificaciones y urbanismo</h4><p data-en="Buildings, public space, urbanism and heritage restoration.">Edificaciones, espacio público, urbanismo y restauración patrimonial.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg></span><h4 data-en="Water &amp; sanitation">Agua y saneamiento</h4><p data-en="Water supply, sewerage and treatment and storage systems.">Acueducto, alcantarillado y sistemas de tratamiento y almacenamiento.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg></span><h4 data-en="Environment &amp; institutional development">Medio ambiente y desarrollo institucional</h4><p data-en="Environmental management, sustainability and institutional strengthening.">Gestión ambiental, sostenibilidad y fortalecimiento institucional.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><h4 data-en="Energy &amp; telecommunications">Energía y telecomunicaciones</h4><p data-en="Energy and telecommunications infrastructure.">Infraestructura de energía y de telecomunicaciones.</p></div>
     </div>
   </div>
 </section>
@@ -438,23 +443,23 @@
 <!-- PROYECTOS -->
 <section class="block blueprint" id="proyectos">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Proyectos</span><h2>Proyectos destacados</h2><p>Una selección del trabajo realizado a lo largo de cuatro décadas. Filtre por área.</p></div>
+    <div class="sec-head"><span class="eyebrow" data-en="Projects">Proyectos</span><h2 data-en="Featured projects">Proyectos destacados</h2><p data-en="A selection of work delivered over four decades. Filter by sector.">Una selección del trabajo realizado a lo largo de cuatro décadas. Filtre por área.</p></div>
     <div class="filters" id="filters">
-      <button class="on" data-f="all">Todos</button>
-      <button data-f="puertos">Puertos y obras hidráulicas</button>
-      <button data-f="vias">Vías y transporte</button>
-      <button data-f="civiles">Obras civiles y urbanismo</button>
-      <button data-f="agua">Agua y saneamiento</button>
+      <button class="on" data-f="all" data-en="All">Todos</button>
+      <button data-f="puertos" data-en="Ports &amp; hydraulic works">Puertos y obras hidráulicas</button>
+      <button data-f="vias" data-en="Roads &amp; transport">Vías y transporte</button>
+      <button data-f="civiles" data-en="Civil works &amp; urbanism">Obras civiles y urbanismo</button>
+      <button data-f="agua" data-en="Water &amp; sanitation">Agua y saneamiento</button>
     </div>
     <div class="proj-grid" id="projGrid">
-      <article class="proj" data-sector="puertos"><div class="ph"><span class="tag">Puertos</span><img src="./px-dragado.jpg" alt="Dragado canal de acceso Puerto de Barranquilla" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Dragado del canal de acceso, Puerto de Barranquilla</h4><div class="loc">Atlántico · Interventoría</div></div></article>
-      <article class="proj" data-sector="vias"><div class="ph"><span class="tag">Vías</span><img src="./px-av34.jpg" alt="Segunda calzada Avenida 34 Medellín" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción 2da calzada Avenida 34</h4><div class="loc">Medellín, Antioquia · Interventoría</div></div></article>
-      <article class="proj" data-sector="puertos"><div class="ph"><span class="tag">Puertos</span><img src="./px-cartagena.jpg" alt="Obras de protección marítima Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Obras de protección marítima</h4><div class="loc">Cartagena, Bolívar</div></div></article>
-      <article class="proj" data-sector="vias"><div class="ph"><span class="tag">Vías</span><img src="./px-crespo.jpg" alt="Anillo Vial de Crespo Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Anillo Vial de Crespo</h4><div class="loc">Cartagena, Bolívar</div></div></article>
-      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag">Obras civiles</span><img src="./px-malecon.jpg" alt="Malecón Avenida al Río Barranquilla" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción Malecón Avenida al Río</h4><div class="loc">Barranquilla, Atlántico</div></div></article>
-      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag">Edificaciones</span><img src="./px-kennedy.jpg" alt="Colegio Las Américas Kennedy Bogotá" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción Colegio Las Américas, Kennedy</h4><div class="loc">Bogotá D.C.</div></div></article>
-      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag">Restauración</span><img src="./px-valdehoyos.jpg" alt="Casa del Marqués de Valdehoyos Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Restauración Casa del Marqués de Valdehoyos</h4><div class="loc">Cartagena, Bolívar</div></div></article>
-      <article class="proj" data-sector="agua"><div class="ph"><span class="tag">Agua</span><img src="./px-tanque.jpg" alt="Tanque Cupino Puerto Colombia" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción Tanque Cupino</h4><div class="loc">Puerto Colombia, Atlántico</div></div></article>
+      <article class="proj" data-sector="puertos"><div class="ph"><span class="tag" data-en="Ports">Puertos</span><img src="./px-dragado.jpg" alt="Dragado canal de acceso Puerto de Barranquilla" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Access channel dredging, Port of Barranquilla">Dragado del canal de acceso, Puerto de Barranquilla</h4><div class="loc" data-en="Atlántico · Oversight">Atlántico · Interventoría</div></div></article>
+      <article class="proj" data-sector="vias"><div class="ph"><span class="tag" data-en="Roads">Vías</span><img src="./px-av34.jpg" alt="Segunda calzada Avenida 34 Medellín" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Avenida 34 second carriageway">Construcción 2da calzada Avenida 34</h4><div class="loc" data-en="Medellín, Antioquia · Oversight">Medellín, Antioquia · Interventoría</div></div></article>
+      <article class="proj" data-sector="puertos"><div class="ph"><span class="tag" data-en="Ports">Puertos</span><img src="./px-cartagena.jpg" alt="Obras de protección marítima Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Maritime protection works">Obras de protección marítima</h4><div class="loc">Cartagena, Bolívar</div></div></article>
+      <article class="proj" data-sector="vias"><div class="ph"><span class="tag" data-en="Roads">Vías</span><img src="./px-crespo.jpg" alt="Anillo Vial de Crespo Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Crespo Ring Road">Anillo Vial de Crespo</h4><div class="loc">Cartagena, Bolívar</div></div></article>
+      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag" data-en="Civil works">Obras civiles</span><img src="./px-malecon.jpg" alt="Malecón Avenida al Río Barranquilla" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Avenida al Río waterfront">Construcción Malecón Avenida al Río</h4><div class="loc">Barranquilla, Atlántico</div></div></article>
+      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag" data-en="Buildings">Edificaciones</span><img src="./px-kennedy.jpg" alt="Colegio Las Américas Kennedy Bogotá" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Las Américas School, Kennedy">Construcción Colegio Las Américas, Kennedy</h4><div class="loc">Bogotá D.C.</div></div></article>
+      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag" data-en="Restoration">Restauración</span><img src="./px-valdehoyos.jpg" alt="Casa del Marqués de Valdehoyos Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Casa del Marqués de Valdehoyos restoration">Restauración Casa del Marqués de Valdehoyos</h4><div class="loc">Cartagena, Bolívar</div></div></article>
+      <article class="proj" data-sector="agua"><div class="ph"><span class="tag" data-en="Water">Agua</span><img src="./px-tanque.jpg" alt="Tanque Cupino Puerto Colombia" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4 data-en="Cupino water tank">Construcción Tanque Cupino</h4><div class="loc">Puerto Colombia, Atlántico</div></div></article>
     </div>
   </div>
 </section>
@@ -463,9 +468,9 @@
 <section class="block">
   <div class="wrap">
     <div class="vision"><div class="glow" aria-hidden="true"></div><div class="in">
-      <span class="eyebrow light">Visión 2030</span>
-      <h2>Un grupo empresarial con presencia en Colombia y Latinoamérica</h2>
-      <p>Para 2030, Ingeniería de Proyectos S.A.S se habrá consolidado como líder de un grupo empresarial con participación en proyectos en Colombia y Latinoamérica, reconocido por su capacidad técnica, financiera y operativa y su alto perfil ético, garantizando un crecimiento sostenible y responsable.</p>
+      <span class="eyebrow light" data-en="Vision 2030">Visión 2030</span>
+      <h2 data-en="A business group with a presence in Colombia and Latin America">Un grupo empresarial con presencia en Colombia y Latinoamérica</h2>
+      <p data-en="By 2030, Ingeniería de Proyectos S.A.S will have consolidated as the leader of a business group with participation in projects across Colombia and Latin America, recognized for its technical, financial and operational capacity and high ethical standards, ensuring sustainable and responsible growth.">Para 2030, Ingeniería de Proyectos S.A.S se habrá consolidado como líder de un grupo empresarial con participación en proyectos en Colombia y Latinoamérica, reconocido por su capacidad técnica, financiera y operativa y su alto perfil ético, garantizando un crecimiento sostenible y responsable.</p>
     </div></div>
   </div>
 </section>
@@ -475,9 +480,9 @@
   <div class="wrap">
     <div class="contact-grid">
       <div>
-        <span class="eyebrow">Contacto</span>
-        <h2>Hablemos de su proyecto</h2>
-        <p class="sub">Tenemos oficinas en Barranquilla y Bogotá y trabajamos en proyectos en todo el país.</p>
+        <span class="eyebrow" data-en="Contact">Contacto</span>
+        <h2 data-en="Let&#39;s talk about your project">Hablemos de su proyecto</h2>
+        <p class="sub" data-en="We have offices in Barranquilla and Bogotá and work on projects across the country.">Tenemos oficinas en Barranquilla y Bogotá y trabajamos en proyectos en todo el país.</p>
         <div class="offices">
           <div class="office">
             <h4>Barranquilla</h4>
@@ -490,13 +495,13 @@
             <div class="ph">(601) 356 2691</div>
           </div>
         </div>
-        <div class="email">Correo: <a href="mailto:info@inproyectos.com">info@inproyectos.com</a></div>
+        <div class="email" data-en="Email: &lt;a href=&quot;mailto:info@inproyectos.com&quot;&gt;info@inproyectos.com&lt;/a&gt;">Correo: <a href="mailto:info@inproyectos.com">info@inproyectos.com</a></div>
       </div>
       <div class="contact-card">
-        <h3>Cuéntenos su proyecto</h3>
-        <p>Nuestro asistente le ayuda a orientar su consulta y a coordinar una conversación con el equipo.</p>
-        <button class="btn btn-primary" data-action="open-chat">Iniciar conversación</button>
-        <a class="btn btn-outline-light" href="tel:+576053686110">Llamar (605) 368 6110</a>
+        <h3 data-en="Tell us about your project">Cuéntenos su proyecto</h3>
+        <p data-en="Our assistant helps direct your inquiry and coordinate a conversation with the team.">Nuestro asistente le ayuda a orientar su consulta y a coordinar una conversación con el equipo.</p>
+        <button class="btn btn-primary" data-action="open-chat" data-en="Start a conversation">Iniciar conversación</button>
+        <a class="btn btn-outline-light" href="tel:+576053686110" data-en="Call (605) 368 6110">Llamar (605) 368 6110</a>
       </div>
     </div>
   </div>
@@ -507,19 +512,19 @@
   <div class="wrap ft-in">
     <div>
       <img src="./logo.png" alt="Ingeniería de Proyectos S.A.S" class="ft-logo" onerror="this.style.display='none'">
-      <p class="legal"><b>Ingeniería de Proyectos S.A.S</b> · NIT 890.116.722-8<br>Barranquilla: Calle 77B No. 57-103, Of. 907, Edificio Green Towers<br>Bogotá: Avenida 19 No. 120-71, Of. 104, Edificio Global Business Center<br>(605) 368 6110 · info@inproyectos.com · Miembro de la CCI, Seccional Norte.</p>
+      <p class="legal" data-en="&lt;b&gt;Ingeniería de Proyectos S.A.S&lt;/b&gt; · NIT 890.116.722-8&lt;br&gt;Barranquilla: Calle 77B No. 57-103, Of. 907, Edificio Green Towers&lt;br&gt;Bogotá: Avenida 19 No. 120-71, Of. 104, Edificio Global Business Center&lt;br&gt;(605) 368 6110 · info@inproyectos.com · Member of the CCI, Norte chapter."><b>Ingeniería de Proyectos S.A.S</b> · NIT 890.116.722-8<br>Barranquilla: Calle 77B No. 57-103, Of. 907, Edificio Green Towers<br>Bogotá: Avenida 19 No. 120-71, Of. 104, Edificio Global Business Center<br>(605) 368 6110 · info@inproyectos.com · Miembro de la CCI, Seccional Norte.</p>
     </div>
     <div class="links">
-      <a href="#nosotros">Nosotros</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#areas">Áreas</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#nosotros" data-en="About">Nosotros</a>
+      <a href="#servicios" data-en="Services">Servicios</a>
+      <a href="#areas" data-en="Sectors">Áreas</a>
+      <a href="#proyectos" data-en="Projects">Proyectos</a>
+      <a href="#contacto" data-en="Contact">Contacto</a>
     </div>
   </div>
   <div class="wrap ft-bottom">
-    <span>© <span id="year">2026</span> Ingeniería de Proyectos S.A.S. Todos los derechos reservados.</span>
-    <span>Sitio web por <a href="https://pymewebpro.com" target="_blank" rel="noopener">PymeWebPro</a></span>
+    <span data-en="© 2026 Ingeniería de Proyectos S.A.S. All rights reserved.">© <span id="year">2026</span> Ingeniería de Proyectos S.A.S. Todos los derechos reservados.</span>
+    <span data-en="Website by &lt;a href=&quot;https://pymewebpro.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;PymeWebPro&lt;/a&gt;">Sitio web por <a href="https://pymewebpro.com" target="_blank" rel="noopener">PymeWebPro</a></span>
   </div>
 </footer>
 
@@ -530,16 +535,16 @@
 <aside class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
   <header class="chat-header">
     <div class="who"><div class="avatar" role="img" aria-label="Ingeniería de Proyectos"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
-      <div><div class="title" id="chatTitle">Asistente · Ingeniería de Proyectos</div><div class="subtitle">en línea</div></div>
+      <div><div class="title" id="chatTitle" data-en="Assistant · Ingeniería de Proyectos">Asistente · Ingeniería de Proyectos</div><div class="subtitle" data-en="online">en línea</div></div>
     </div>
     <button class="chat-close" id="chatCloseBtn" aria-label="Cerrar chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </header>
   <div class="chat-body" id="chatBody" aria-live="polite"></div>
   <form class="chat-input-row" id="chatForm" autocomplete="off">
-    <input type="text" class="chat-input" id="chatInput" placeholder="Escriba su mensaje…" aria-label="Mensaje" maxlength="500" required />
+    <input type="text" class="chat-input" id="chatInput" placeholder="Escriba su mensaje…" data-en-ph="Type your message…" aria-label="Mensaje" maxlength="500" required />
     <button type="submit" class="chat-send" id="chatSendBtn" aria-label="Enviar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
   </form>
-  <div class="chat-foot">Atendido por IA · siempre puede hablar con una persona del equipo</div>
+  <div class="chat-foot" data-en="AI-assisted · you can always reach a team member">Atendido por IA · siempre puede hablar con una persona del equipo</div>
 </aside>
 
 <script type="application/ld+json">
@@ -548,6 +553,20 @@
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+(function(){
+  var KEY='inproy_lang', es=document.getElementById('langEs'), en=document.getElementById('langEn');
+  function apply(l){
+    document.querySelectorAll('[data-en]').forEach(function(el){ if(el.dataset.esHtml===undefined) el.dataset.esHtml=el.innerHTML; el.innerHTML=(l==='en')?el.getAttribute('data-en'):el.dataset.esHtml; });
+    document.querySelectorAll('[data-en-ph]').forEach(function(el){ if(el.dataset.esPh===undefined) el.dataset.esPh=el.getAttribute('placeholder')||''; el.setAttribute('placeholder',(l==='en')?el.getAttribute('data-en-ph'):el.dataset.esPh); });
+    document.documentElement.lang=l; window.__lang=l;
+    if(es)es.classList.toggle('on',l==='es'); if(en)en.classList.toggle('on',l==='en');
+    try{localStorage.setItem(KEY,l);}catch(e){}
+  }
+  var saved='es'; try{saved=localStorage.getItem(KEY)||'es';}catch(e){}
+  if(es)es.addEventListener('click',function(){apply('es');});
+  if(en)en.addEventListener('click',function(){apply('en');});
+  apply(saved);
+})();
 // Hero flagship rotator
 (function(){
   var flag=document.getElementById('flag'); if(!flag) return;
@@ -575,6 +594,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   var PHONE='+576053686110',PHONE_LABEL='(605) 368 6110',EMAIL='info@inproyectos.com';
   var fab=document.getElementById('chatOpenBtn'),panel=document.getElementById('chatPanel'),closeBtn=document.getElementById('chatCloseBtn'),body=document.getElementById('chatBody'),form=document.getElementById('chatForm'),input=document.getElementById('chatInput'),sendBtn=document.getElementById('chatSendBtn');
   var history=[],greeted=false;
+  function T(a,b){return window.__lang==='en'?b:a;}
   function openPanel(){panel.setAttribute('data-open','true');panel.setAttribute('aria-hidden','false');fab.setAttribute('aria-expanded','true');fab.hidden=true;if(!greeted){greet();greeted=true;}setTimeout(function(){input.focus();},280);}
   function closePanel(){panel.setAttribute('data-open','false');panel.setAttribute('aria-hidden','true');fab.setAttribute('aria-expanded','false');fab.hidden=false;}
   fab.addEventListener('click',openPanel);closeBtn.addEventListener('click',closePanel);
@@ -582,13 +602,13 @@ document.getElementById('year').textContent = new Date().getFullYear();
   document.querySelectorAll('[data-action="open-chat"]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPanel();});});
   function addBubble(role,text,opts){opts=opts||{};var el=document.createElement('div');el.className='bubble '+role+(opts.error?' error':'');el.textContent=text;body.appendChild(el);body.scrollTop=body.scrollHeight;return el;}
   function addTyping(){var el=document.createElement('div');el.className='bubble bot typing';el.innerHTML='<span></span><span></span><span></span>';body.appendChild(el);body.scrollTop=body.scrollHeight;return el;}
-  function addContact(){var c=document.createElement('a');c.className='c-cta call';c.href='tel:'+PHONE;c.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span></span>';c.querySelector("span").textContent="Llamar "+PHONE_LABEL;body.appendChild(c);var m=document.createElement("a");m.className="c-cta mail";m.href="mailto:"+EMAIL;m.textContent="Escribir a "+EMAIL;body.appendChild(m);body.scrollTop=body.scrollHeight;}
-  function greet(){addBubble('bot','Buen día. Soy el asistente de Ingeniería de Proyectos S.A.S. Le ayudo con información sobre consultoría, interventoría y gerencia de proyectos, o coordino una conversación con el equipo. ¿En qué le puedo ayudar?');}
+  function addContact(){var c=document.createElement('a');c.className='c-cta call';c.href='tel:'+PHONE;c.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span></span>';c.querySelector("span").textContent=T("Llamar ","Call ")+PHONE_LABEL;body.appendChild(c);var m=document.createElement("a");m.className="c-cta mail";m.href="mailto:"+EMAIL;m.textContent=T("Escribir a ","Email ")+EMAIL;body.appendChild(m);body.scrollTop=body.scrollHeight;}
+  function greet(){addBubble('bot',T('Buen día. Soy el asistente de Ingeniería de Proyectos S.A.S. Le ayudo con información sobre consultoría, interventoría y gerencia de proyectos, o coordino una conversación con el equipo. ¿En qué le puedo ayudar?','Hello. I am the assistant for Ingeniería de Proyectos S.A.S. I can help with consulting, oversight and project management, or connect you with the team. How can I help?'));}
   async function send(text){history.push({role:'user',content:text});addBubble('user',text);input.value='';sendBtn.disabled=true;var typing=addTyping();
     try{var res=await fetch(ENDPOINT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history})});typing.remove();
-      if(!res.ok){addBubble('bot',res.status===503?'El asistente está temporalmente fuera de línea. Puede llamarnos o escribirnos.':'Algo no salió bien. Puede llamarnos o escribirnos y le atendemos.',{error:true});addContact();return;}
+      if(!res.ok){addBubble('bot',res.status===503?T('El asistente está temporalmente fuera de línea. Puede llamarnos o escribirnos.','The assistant is temporarily offline. You can call or email us.'):T('Algo no salió bien. Puede llamarnos o escribirnos y le atendemos.','Something went wrong. You can call or email us and we will help.'),{error:true});addContact();return;}
       var data=await res.json();var reply=(data.reply||'').trim();if(reply)addBubble('bot',reply);if(data.wa_link)addContact();history.push({role:'assistant',content:reply});
-    }catch(err){typing.remove();addBubble('bot','No pude enviar su mensaje. Puede llamarnos o escribirnos.',{error:true});addContact();}
+    }catch(err){typing.remove();addBubble('bot',T('No pude enviar su mensaje. Puede llamarnos o escribirnos.','I could not send your message. You can call or email us.'),{error:true});addContact();}
     finally{sendBtn.disabled=false;input.focus();}}
   form.addEventListener('submit',function(e){e.preventDefault();var t=(input.value||'').trim();if(!t||sendBtn.disabled)return;send(t);});
 })();
