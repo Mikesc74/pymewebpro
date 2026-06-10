@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ingeniería de Proyectos S.A.S · Consultoría, interventoría y gerencia de proyectos · Barranquilla</title>
-<meta name="description" content="Cuatro décadas de consultoría, interventoría y gerencia de proyectos de infraestructura para el sector público y privado. Barranquilla, Colombia, desde 1985.">
+<title>Ingeniería de Proyectos S.A.S · Consultoría, interventoría y gerencia de proyectos · Barranquilla y Bogotá</title>
+<meta name="description" content="Cuatro décadas de consultoría, interventoría y gerencia de proyectos de infraestructura para el sector público y privado. Barranquilla y Bogotá, desde 1985.">
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ingeniería de Proyectos S.A.S">
@@ -15,9 +15,7 @@
 <style>
   /* ===========================================================
      Ingeniería de Proyectos S.A.S · corporate site (rebuild v2)
-     Vision: Servicios x Sectores axes, flagship-project hero,
-     clients band, filterable projects, independence/rigor voice.
-     Brand: lime green #84B418 + navy #18243C.
+     Real content + imagery. Brand: green #84B418 + navy #18243C.
      =========================================================== */
   :root{
     --navy:#18243C; --navy-2:#22304C; --steel:#48546C;
@@ -32,8 +30,11 @@
   a{color:inherit;text-decoration:none}
   h1,h2,h3,h4{font-family:'Archivo','Inter',sans-serif;line-height:1.08;letter-spacing:-.015em}
   .wrap{max-width:1160px;margin:0 auto;padding:0 1.6rem}
+  img{max-width:100%}
   .eyebrow{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dk);display:inline-flex;align-items:center;gap:.55rem}
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--accent);flex:0 0 auto}
   .eyebrow.light{color:var(--accent-soft)}
+  .eyebrow.light::before{background:var(--accent-soft)}
   .btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.92rem;padding:.8rem 1.35rem;border-radius:9px;cursor:pointer;border:none;font-family:inherit;transition:transform .15s,background .15s,box-shadow .15s}
   .btn-primary{background:var(--accent);color:var(--navy);box-shadow:0 8px 20px rgba(132,180,24,.30)}
   .btn-primary:hover{background:var(--accent-dk);color:#fff;transform:translateY(-1px)}
@@ -41,18 +42,16 @@
   .btn-light:hover{transform:translateY(-1px)}
   .btn-outline-light{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.45)}
   .btn-outline-light:hover{border-color:#fff;background:rgba(255,255,255,.06)}
-  .btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--accent);color:var(--accent-dk)}
 
-  /* nav */
-  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px}
-  .brand{display:flex;align-items:center;gap:.7rem}
-  .brand-logo{height:36px;width:auto;display:block;max-width:240px;object-fit:contain}
-  .brand .name{font-family:'Archivo',sans-serif;font-weight:800;font-size:.95rem;color:var(--navy);white-space:nowrap;line-height:1.05}
-  .brand .name small{display:block;font-weight:600;font-size:.64rem;letter-spacing:.16em;color:var(--mute);text-transform:uppercase;margin-top:2px}
-  .nav-links{display:flex;align-items:center;gap:1.9rem}
-  .nav-links a{font-size:.9rem;font-weight:500;color:var(--ink);transition:color .15s}
+  /* nav · angled navy brand block transitioning to white */
+  header.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);height:72px}
+  .brand-block{position:absolute;left:0;top:0;height:72px;display:flex;align-items:center;padding:0 4.8rem 0 max(1.6rem,calc((100vw - 1160px)/2 + 1.6rem));z-index:2}
+  .brand-bg{position:absolute;inset:0;background:var(--accent);clip-path:polygon(0 0,100% 0,calc(100% - 72px) 100%,0 100%);z-index:0}
+  .brand-bg.navy{background:var(--navy);clip-path:polygon(0 0,calc(100% - 6px) 0,calc(100% - 78px) 100%,0 100%)}
+  .brand-block img{position:relative;z-index:1;height:34px;width:auto;display:block}
+  .nav-in{position:relative;z-index:1;height:72px;max-width:1160px;margin:0 auto;padding:0 1.6rem;display:flex;align-items:center;justify-content:flex-end;gap:1.9rem}
+  .nav-links{display:flex;align-items:center;gap:1.8rem}
+  .nav-links a{font-size:.9rem;font-weight:600;color:var(--navy);transition:color .15s}
   .nav-links a:hover{color:var(--accent-dk)}
   .nav-cta{display:flex;gap:.6rem;align-items:center}
 
@@ -60,45 +59,47 @@
   .hero{position:relative;background:var(--navy);color:#fff;overflow:hidden}
   .hero .grid-bg{position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:radial-gradient(ellipse 75% 70% at 80% 35%,#000 35%,transparent 100%);mask-image:radial-gradient(ellipse 75% 70% at 80% 35%,#000 35%,transparent 100%)}
   .hero .glow{position:absolute;top:-25%;right:-8%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(132,180,24,.26),transparent 65%);filter:blur(8px)}
-  .hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;padding-top:4.5rem;padding-bottom:4.8rem}
+  .hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1.02fr .98fr;gap:3rem;align-items:center;padding-top:4.2rem;padding-bottom:4.5rem}
   .hero .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
   .chip{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.02em;padding:.38rem .75rem;border-radius:50px;border:1px solid rgba(255,255,255,.22);color:#dfe7ef}
   .chip b{color:var(--accent-soft);font-weight:700}
-  .hero h1{font-size:clamp(2.2rem,4.6vw,3.6rem);font-weight:900;letter-spacing:-.02em}
+  .hero h1{font-size:clamp(2.2rem,4.6vw,3.6rem);font-weight:900;letter-spacing:-.02em;overflow-wrap:anywhere}
   .hero h1 .u{color:var(--accent-soft)}
   .hero p.lead{font-size:1.16rem;color:#cdd8e3;margin-top:1.3rem;max-width:46ch}
   .hero .cta-row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
 
   /* hero flagship rotating card */
-  .flag{position:relative;border-radius:16px;overflow:hidden;min-height:340px;border:1px solid var(--line-dk);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+  .flag{position:relative;border-radius:16px;overflow:hidden;min-height:380px;background:linear-gradient(160deg,#13324a,#0c2236);border:1px solid var(--line-dk);box-shadow:0 30px 60px rgba(0,0,0,.35)}
   .flag .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem}
   .flag .slide.is-active{opacity:1}
-  .flag .slide .art{position:absolute;inset:0;z-index:0}
-  .flag .slide .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,20,35,.15),rgba(10,20,35,.85))}
+  .flag .slide img.art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .flag .slide .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,20,35,.05),rgba(10,20,35,.55) 45%,rgba(10,20,35,.9))}
   .flag .slide .meta{position:relative;z-index:2}
-  .flag .slide .role{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--navy);padding:.28rem .6rem;border-radius:50px;margin-bottom:.7rem}
-  .flag .slide .sector{font-size:.74rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:.3rem}
-  .flag .slide h3{color:#fff;font-size:1.3rem;font-weight:700;line-height:1.2}
-  .flag .slide .ent{color:#cdd8e3;font-size:.9rem;margin-top:.4rem}
+  .flag .slide .role{display:inline-block;font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--navy);padding:.28rem .6rem;border-radius:50px;margin-bottom:.7rem}
+  .flag .slide .sector{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:.3rem}
+  .flag .slide h3{color:#fff;font-size:1.3rem;font-weight:700;line-height:1.2;overflow-wrap:anywhere}
+  .flag .slide .ent{color:#dfe7ef;font-size:.9rem;margin-top:.4rem;font-family:var(--mono)}
   .flag .dots{position:absolute;z-index:3;bottom:1.1rem;right:1.4rem;display:flex;gap:.4rem}
-  .flag .dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.4);cursor:pointer;padding:0}
+  .flag .dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.45);cursor:pointer;padding:0}
   .flag .dots button.on{background:var(--accent)}
-  .flag .ph-tag{position:absolute;z-index:3;top:1rem;left:1.2rem;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);border:1px dashed rgba(255,255,255,.35);padding:.2rem .5rem;border-radius:6px}
 
   /* clients band */
   .clients{background:var(--cream);border-bottom:1px solid var(--line)}
-  .clients-in{padding-top:2rem;padding-bottom:2rem;display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.6rem;justify-content:center}
-  .clients .lbl{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:700;width:100%;text-align:center;margin-bottom:.4rem}
-  .clients .c{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.02rem;color:var(--navy);opacity:.85}
+  .clients-in{padding-top:2.4rem;padding-bottom:2.4rem}
+  .clients .lbl{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:600;text-align:center;margin-bottom:1.4rem}
+  .clients-logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1.3rem 2.4rem}
+  .clients-logos img{height:48px;width:auto;max-width:140px;object-fit:contain;opacity:.65;filter:grayscale(1);transition:opacity .2s,filter .2s}
+  .clients-logos img:hover{opacity:1;filter:none}
 
   /* sections */
   section.block{padding:5rem 0}
-  .sec-head{max-width:680px;margin-bottom:2.6rem}
+  .sec-head{max-width:700px;margin-bottom:2.6rem}
   .sec-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;color:var(--navy);margin-top:.6rem}
   .sec-head p{color:var(--mute);font-size:1.05rem;margin-top:.8rem}
 
   /* nosotros */
-  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3.2rem;align-items:start}
+  .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3.2rem;align-items:start}
+  .about-grid>*{min-width:0}
   .about-grid p{color:var(--ink);font-size:1.04rem;margin-bottom:1.1rem}
   .about-grid p.muted{color:var(--mute)}
   .pillars{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.6rem}
@@ -107,57 +108,56 @@
   .pillar .ic svg{width:22px;height:22px;stroke:var(--accent-dk)}
   .pillar h4{font-size:1.02rem;color:var(--navy);margin-bottom:.2rem}
   .pillar p{font-size:.92rem;color:var(--mute);margin:0}
-  .about-side{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:1.9rem;border-top:4px solid var(--accent)}
-  .about-side h3{font-size:1.1rem;color:var(--navy);margin-bottom:1rem}
-  .about-side .row{display:flex;gap:.8rem;padding:.7rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
+  .about-photo{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block;background:linear-gradient(160deg,#13324a,#0c2236)}
+  .about-cap{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--mute);margin-top:.7rem;text-align:center}
+  .about-side{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.8rem;border-top:4px solid var(--accent);margin-top:1.4rem}
+  .about-side .row{display:flex;gap:.8rem;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
   .about-side .row:last-child{border-bottom:none}
   .about-side .row .k{color:var(--mute);min-width:104px;flex:0 0 auto}
-  .about-side .row .v{color:var(--ink);font-weight:600}
+  .about-side .row .v{color:var(--ink);font-weight:600;min-width:0;overflow-wrap:anywhere}
 
   /* servicios */
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-  .svc{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:2rem 1.7rem;transition:box-shadow .2s,transform .2s,border-color .2s}
+  .svc{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:2rem 1.7rem;transition:box-shadow .2s,transform .2s,border-color .2s;min-width:0}
   .svc:hover{box-shadow:0 18px 40px rgba(24,36,60,.10);transform:translateY(-3px);border-color:var(--accent-soft)}
   .svc .ic{width:52px;height:52px;border-radius:11px;background:var(--navy);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
   .svc .ic svg{width:26px;height:26px;stroke:#fff}
-  .svc h3{font-size:1.18rem;color:var(--navy);margin-bottom:.6rem}
-  .svc p{color:var(--mute);font-size:.95rem}
-  .svc ul{list-style:none;margin-top:1rem;display:flex;flex-direction:column;gap:.4rem}
-  .svc li{font-size:.89rem;color:var(--ink);padding-left:1.3rem;position:relative}
-  .svc li::before{content:'';position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+  .svc h3{font-size:1.14rem;color:var(--navy);margin-bottom:.5rem}
+  .svc p{color:var(--mute);font-size:.93rem}
+  .tick::before,.tick::after{content:"";position:absolute;width:12px;height:12px;pointer-events:none;opacity:.8}
+  .tick::before{top:.7rem;left:.7rem;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+  .tick::after{bottom:.7rem;right:.7rem;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
 
-  /* sectores */
-  .sectores{background:var(--navy);color:#fff}
-  .sectores .sec-head h2{color:#fff}
-  .sectores .sec-head p{color:#bcc9d6}
-  .sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dk);border:1px solid var(--line-dk);border-radius:14px;overflow:hidden}
-  .sct{background:var(--navy-2);padding:1.8rem 1.6rem;transition:background .2s}
-  .sct:hover{background:#27395a}
-  .sct .ic{width:44px;height:44px;border-radius:10px;background:rgba(132,180,24,.18);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
-  .sct .ic svg{width:23px;height:23px;stroke:var(--accent-soft)}
-  .sct h4{font-size:1.08rem;color:#fff;margin-bottom:.35rem}
-  .sct p{font-size:.88rem;color:#9fb1c2;line-height:1.5}
-  .sct .n{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-soft);margin-top:.8rem;display:inline-block}
+  /* areas (dark) */
+  .areas{background:var(--navy);color:#fff}
+  .areas .sec-head h2{color:#fff}
+  .areas .sec-head p{color:#bcc9d6}
+  .area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dk);border:1px solid var(--line-dk);border-radius:14px;overflow:hidden}
+  .area{background:var(--navy-2);padding:1.8rem 1.6rem;transition:background .2s;min-width:0}
+  .area:hover{background:#27395a}
+  .area .ic{width:44px;height:44px;border-radius:10px;background:rgba(132,180,24,.18);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+  .area .ic svg{width:23px;height:23px;stroke:var(--accent-soft)}
+  .area h4{font-size:1.04rem;color:#fff;margin-bottom:.35rem}
+  .area p{font-size:.87rem;color:#9fb1c2;line-height:1.5}
 
   /* proyectos */
   .filters{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:2rem}
-  .filters button{font-family:inherit;font-size:.84rem;font-weight:600;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:.5rem .95rem;border-radius:50px;cursor:pointer;transition:all .15s}
+  .filters button{font-family:var(--mono);font-size:.78rem;font-weight:500;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:.5rem .95rem;border-radius:50px;cursor:pointer;transition:all .15s}
   .filters button:hover{border-color:var(--accent)}
   .filters button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
   .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-  .proj{border:1px solid var(--line);border-radius:14px;background:var(--paper);display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s,border-color .2s}
-  .proj:hover{box-shadow:0 14px 34px rgba(24,36,60,.10);transform:translateY(-2px);border-color:var(--accent-soft)}
-  .proj .body{padding:1.5rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
-  .proj .tags{display:flex;flex-wrap:wrap;gap:.4rem}
-  .proj .pill{font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--steel);padding:.24rem .55rem;border-radius:50px}
-  .proj .pill.sct{background:var(--accent-soft);color:var(--accent-dk)}
-  .proj .client{font-size:.76rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-dk);margin-top:.3rem}
-  .proj h4{font-size:1rem;color:var(--navy);line-height:1.3}
-  .proj p{font-size:.86rem;color:var(--mute)}
-  .proj .meta{margin-top:auto;display:flex;justify-content:space-between;gap:.5rem;padding-top:.9rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink);font-weight:600}
+  .proj{border:1px solid var(--line);border-radius:14px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s,border-color .2s;min-width:0}
+  .proj:hover{box-shadow:0 16px 38px rgba(24,36,60,.12);transform:translateY(-3px);border-color:var(--accent-soft)}
+  .proj .ph{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(160deg,#13324a,#0c2236);position:relative}
+  .proj .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+  .proj:hover .ph img{transform:scale(1.05)}
+  .proj .ph .tag{position:absolute;top:.8rem;left:.8rem;z-index:2;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);background:var(--accent-soft);padding:.26rem .6rem;border-radius:50px}
+  .proj .body{padding:1.3rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+  .proj h4{font-size:1.02rem;color:var(--navy);line-height:1.3;overflow-wrap:anywhere}
+  .proj .loc{font-family:var(--mono);font-size:.78rem;color:var(--mute);letter-spacing:.02em}
   .proj.hide{display:none}
 
-  /* vision callout */
+  /* vision */
   .vision{background:linear-gradient(135deg,var(--navy),#0e1c30);color:#fff;border-radius:18px;padding:3.4rem;position:relative;overflow:hidden}
   .vision .glow{position:absolute;bottom:-30%;left:-5%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(132,180,24,.22),transparent 65%)}
   .vision .in{position:relative;max-width:760px}
@@ -167,15 +167,16 @@
   /* contacto */
   .contact{background:var(--paper-2);border-top:1px solid var(--line)}
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+  .contact-grid>*{min-width:0}
   .contact h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:800;color:var(--navy)}
   .contact p.sub{color:var(--mute);font-size:1.05rem;margin-top:.8rem;max-width:46ch}
-  .ci{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
-  .ci:last-child{border-bottom:none}
-  .ci .ic{flex:0 0 auto;width:44px;height:44px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center}
-  .ci .ic svg{width:21px;height:21px;stroke:#fff}
-  .ci .k{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-  .ci .v{font-size:1rem;color:var(--ink);font-weight:600}
-  .contact-card{background:var(--navy);color:#fff;border-radius:16px;padding:2.4rem}
+  .offices{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin-top:2rem}
+  .office h4{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-dk);margin-bottom:.6rem}
+  .office p{font-size:.92rem;color:var(--ink);line-height:1.6}
+  .office .ph{font-family:var(--mono);font-size:.84rem;color:var(--mute);margin-top:.4rem}
+  .contact .email{margin-top:1.6rem;font-family:var(--mono);font-size:.92rem}
+  .contact .email a{color:var(--accent-dk);font-weight:700}
+  .contact-card{background:var(--navy);color:#fff;border-radius:16px;padding:2.4rem;align-self:start}
   .contact-card h3{font-size:1.35rem;margin-bottom:.6rem}
   .contact-card p{color:#cdd8e3;font-size:.96rem;margin-bottom:1.6rem}
   .contact-card .btn{width:100%;justify-content:center;margin-bottom:.7rem}
@@ -184,7 +185,7 @@
   footer.ft{background:#101c30;color:#9fb1c2;padding:3rem 0 2rem;font-size:.88rem}
   .ft-in{display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start}
   .ft-logo{height:32px;width:auto;display:block;margin-bottom:.6rem;background:#fff;padding:9px 13px;border-radius:9px}
-  .ft .legal{max-width:430px;line-height:1.7}
+  .ft .legal{max-width:460px;line-height:1.7}
   .ft .legal b{color:#cdd8e3}
   .ft .links{display:flex;flex-direction:column;gap:.5rem}
   .ft .links a{color:#9fb1c2}
@@ -232,15 +233,27 @@
   .chat-send svg{width:18px;height:18px}
   .chat-foot{padding:.45rem .75rem;background:#fff;border-top:1px solid var(--line);font-size:.7rem;color:var(--mute);text-align:center}
 
+  /* blueprint + hero truss */
+  .blueprint{position:relative}
+  .blueprint::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(24,36,60,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(24,36,60,.05) 1px,transparent 1px);background-size:34px 34px;-webkit-mask-image:radial-gradient(ellipse 95% 85% at 50% 0%,#000,transparent 78%);mask-image:radial-gradient(ellipse 95% 85% at 50% 0%,#000,transparent 78%)}
+  .blueprint>.wrap{position:relative;z-index:1}
+  .hero-truss{position:absolute;left:0;right:0;bottom:0;width:100%;height:80px;opacity:.14;z-index:1;color:var(--accent)}
+  .dimline{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.4rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:#9fb1c2;text-transform:uppercase;flex-wrap:wrap}
+  .dimline i{display:inline-block;width:56px;height:7px;border-left:2px solid var(--accent-soft);border-right:2px solid var(--accent-soft);border-bottom:2px solid var(--accent-soft)}
+
   /* responsive */
   @media (max-width:900px){
     .nav-links{display:none}
     .hero-in,.about-grid,.contact-grid{grid-template-columns:1fr;gap:2rem}
-    .svc-grid,.sec-grid,.proj-grid{grid-template-columns:1fr 1fr}
+    .svc-grid,.area-grid,.proj-grid{grid-template-columns:1fr 1fr}
   }
   @media (max-width:620px){
-    .svc-grid,.sec-grid,.proj-grid{grid-template-columns:1fr}
+    .svc-grid,.area-grid,.proj-grid,.offices{grid-template-columns:1fr}
     .vision{padding:2.2rem}
+    .brand-block{padding-right:3rem}
+    .brand-bg{clip-path:polygon(0 0,100% 0,calc(100% - 48px) 100%,0 100%)}
+    .brand-bg.navy{clip-path:polygon(0 0,calc(100% - 5px) 0,calc(100% - 53px) 100%,0 100%)}
+    .brand-block img{height:30px}
   }
   @media (max-width:500px){
     .chat-panel{bottom:0;right:0;width:100vw;height:100vh;max-height:100vh;border-radius:0;border:none}
@@ -249,45 +262,22 @@
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   @media print{.chat-fab,.chat-panel,header.nav,.contact-card{display:none!important}body{color:#000}}
-
-  /* ---- industrial / blueprint design system ---- */
-  .eyebrow::before{content:"";width:22px;height:2px;background:var(--accent);flex:0 0 auto}
-  .eyebrow.light::before{background:var(--accent-soft)}
-  .proj .meta{font-family:var(--mono);letter-spacing:.01em}
-  .flag .slide .ent{font-family:var(--mono);letter-spacing:.01em}
-  .hero-truss{position:absolute;left:0;right:0;bottom:0;width:100%;height:80px;opacity:.16;z-index:1;color:var(--accent)}
-  .dimline{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.4rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:#9fb1c2;text-transform:uppercase}
-  .dimline i{display:inline-block;width:56px;height:7px;border-left:2px solid var(--accent-soft);border-right:2px solid var(--accent-soft);border-bottom:2px solid var(--accent-soft)}
-  .tick{position:relative}
-  .tick::before,.tick::after{content:"";position:absolute;width:12px;height:12px;pointer-events:none;opacity:.8;z-index:2}
-  .tick::before{top:.7rem;left:.7rem;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
-  .tick::after{bottom:.7rem;right:.7rem;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
-  .blueprint{position:relative}
-  .blueprint::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(24,36,60,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(24,36,60,.05) 1px,transparent 1px);background-size:34px 34px;-webkit-mask-image:radial-gradient(ellipse 95% 85% at 50% 0%,#000,transparent 78%);mask-image:radial-gradient(ellipse 95% 85% at 50% 0%,#000,transparent 78%)}
-  .blueprint>.wrap{position:relative;z-index:1}
-  /* ---- mobile overflow safety ---- */
-  img,svg{max-width:100%}
-  .hero-in>*,.about-grid>*,.contact-grid>*{min-width:0}
-  .svc,.proj,.sct,.flag{min-width:0}
-  .about-side .row{min-width:0}
-  .about-side .row .v{min-width:0;overflow-wrap:anywhere}
-  .dimline{flex-wrap:wrap}
-  .flag .slide h3,.proj h4,.hero h1{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <header class="nav">
-  <div class="wrap nav-in">
-    <a class="brand" href="#inicio" aria-label="Ingeniería de Proyectos S.A.S">
-      <img src="./logo.png" alt="Ingeniería de Proyectos S.A.S" class="brand-logo" onerror="this.style.display='none';document.getElementById('brandText').style.display='block'">
-      <span class="name" id="brandText" style="display:none">Ingeniería de Proyectos<small>S.A.S · Barranquilla</small></span>
-    </a>
+  <a class="brand-block" href="#inicio" aria-label="Ingeniería de Proyectos S.A.S">
+    <span class="brand-bg" aria-hidden="true"></span>
+    <span class="brand-bg navy" aria-hidden="true"></span>
+    <img src="./logo-white.png" alt="Ingeniería de Proyectos S.A.S" onerror="this.style.display='none'">
+  </a>
+  <div class="nav-in">
     <nav class="nav-links" aria-label="Principal">
       <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
-      <a href="#sectores">Sectores</a>
+      <a href="#areas">Áreas</a>
       <a href="#proyectos">Proyectos</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -299,58 +289,62 @@
 <section class="hero" id="inicio">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="glow" aria-hidden="true"></div>
-  <svg class="hero-truss" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2"><line x1="0" y1="10" x2="1200" y2="10"/><line x1="0" y1="70" x2="1200" y2="70"/><path d="M0 70 L100 10 L200 70 L300 10 L400 70 L500 10 L600 70 L700 10 L800 70 L900 10 L1000 70 L1100 10 L1200 70"/><path d="M0 10 L100 70 L200 10 L300 70 L400 10 L500 70 L600 10 L700 70 L800 10 L900 70 L1000 10 L1100 70 L1200 10" opacity=".5"/></svg>
+  <svg class="hero-truss" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2"><line x1="0" y1="10" x2="1200" y2="10"/><line x1="0" y1="70" x2="1200" y2="70"/><path d="M0 70 L100 10 L200 70 L300 10 L400 70 L500 10 L600 70 L700 10 L800 70 L900 10 L1000 70 L1100 10 L1200 70"/></svg>
   <div class="wrap hero-in">
     <div>
       <div class="chips">
-        <span class="chip">Barranquilla · Colombia</span>
+        <span class="chip">Barranquilla y Bogotá</span>
         <span class="chip">Desde <b>1985</b></span>
         <span class="chip">Miembro <b>CCI</b></span>
       </div>
       <h1>Interventoría y consultoría para la <span class="u">infraestructura</span> de Colombia.</h1>
-      <p class="lead">Cuatro décadas respaldando la inversión pública y privada, con interventoría independiente y rigor técnico. Desde 1985, desde Barranquilla, para todo el país.</p>
+      <p class="lead">Cuatro décadas respaldando la inversión pública y privada, con interventoría independiente y rigor técnico. Desde 1985.</p>
       <div class="cta-row">
         <button class="btn btn-light" data-action="open-chat">Cuéntenos su proyecto</button>
         <a class="btn btn-outline-light" href="#proyectos">Ver proyectos</a>
       </div>
-      <div class="dimline"><i></i> EST. 1985 · Barranquilla · Colombia</div>
+      <div class="dimline"><i></i> EST. 1985 · Barranquilla · Bogotá</div>
     </div>
-    <!-- rotating flagship project (designed art, real projects · swap for photos when available) -->
     <div class="flag" id="flag" aria-label="Proyectos destacados">
-      <span class="ph-tag">Foto del proyecto por confirmar</span>
       <article class="slide is-active" data-slide="0">
-        <div class="art" aria-hidden="true" style="background:linear-gradient(160deg,#13324a,#0c2236)"></div>
-        <svg class="art" aria-hidden="true" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" style="opacity:.5"><g fill="none" stroke="#84B418" stroke-width="2"><path d="M-20 250 Q80 210 180 250 T400 250" opacity=".5"/><path d="M-20 280 Q90 240 190 280 T420 280" opacity=".7"/><path d="M-20 220 Q70 185 170 220 T400 220" opacity=".3"/></g></svg>
+        <img class="art" src="./px-dragado.jpg" alt="Dragado del canal de acceso al Puerto de Barranquilla" loading="eager" onerror="this.style.display='none'">
         <div class="scrim" aria-hidden="true"></div>
-        <div class="meta"><span class="role">Consultoría · Diseños</span><div class="sector">Protección contra inundaciones</div><h3>Estructuras de protección, Macroproyecto La Mojana</h3><div class="ent">Fondo Adaptación · San Marcos y Magangué</div></div>
+        <div class="meta"><span class="role">Interventoría</span><div class="sector">Puertos y obras hidráulicas</div><h3>Profundización del canal de acceso, Puerto de Barranquilla</h3><div class="ent">Atlántico</div></div>
       </article>
       <article class="slide" data-slide="1">
-        <div class="art" aria-hidden="true" style="background:linear-gradient(160deg,#123a44,#0c2236)"></div>
-        <svg class="art" aria-hidden="true" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" style="opacity:.5"><g stroke="#84B418" stroke-width="2" fill="none"><line x1="40" y1="120" x2="40" y2="250"/><line x1="40" y1="150" x2="120" y2="150"/><rect x="110" y="150" width="70" height="40"/><path d="M-20 260 h440" stroke-width="3"/><circle cx="300" cy="120" r="3" fill="#84B418"/><path d="M240 200 l60-20 40 30" /></g></svg>
+        <img class="art" src="./px-av34.jpg" alt="Segunda calzada de la Avenida 34, Medellín" loading="lazy" onerror="this.style.display='none'">
         <div class="scrim" aria-hidden="true"></div>
-        <div class="meta"><span class="role">Interventoría</span><div class="sector">Puertos y dragado</div><h3>Dragado del canal de acceso al Puerto de Buenaventura</h3><div class="ent">INVÍAS · Valle del Cauca</div></div>
+        <div class="meta"><span class="role">Interventoría</span><div class="sector">Vías y transporte</div><h3>Construcción 2da calzada Avenida 34</h3><div class="ent">Medellín, Antioquia</div></div>
       </article>
       <article class="slide" data-slide="2">
-        <div class="art" aria-hidden="true" style="background:linear-gradient(160deg,#1a3350,#0c2236)"></div>
-        <svg class="art" aria-hidden="true" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" style="opacity:.5"><g stroke="#84B418" stroke-width="2" fill="none"><path d="M-20 300 L200 90 L420 300" /><path d="M40 300 L200 150 L360 300" stroke-dasharray="6 8"/><line x1="200" y1="90" x2="200" y2="300"/></g></svg>
+        <img class="art" src="./px-cartagena.jpg" alt="Obras de protección marítima, Cartagena" loading="lazy" onerror="this.style.display='none'">
         <div class="scrim" aria-hidden="true"></div>
-        <div class="meta"><span class="role">Interventoría</span><div class="sector">Vías y transporte</div><h3>Segunda calzada de la Av. 34, La Aguacatala a Los Balsos</h3><div class="ent">Alcaldía de Medellín</div></div>
+        <div class="meta"><span class="role">Consultoría</span><div class="sector">Puertos y obras hidráulicas</div><h3>Obras de protección marítima</h3><div class="ent">Cartagena, Bolívar</div></div>
       </article>
       <div class="dots" id="flagDots" aria-hidden="true"></div>
     </div>
   </div>
 </section>
 
-<!-- CLIENTS BAND -->
+<!-- CLIENTS -->
 <div class="clients">
   <div class="wrap clients-in">
-    <span class="lbl">Hemos trabajado para entidades como</span>
-    <span class="c">INVÍAS</span>
-    <span class="c">Fondo Adaptación</span>
-    <span class="c">ENTerritorio</span>
-    <span class="c">Acueducto de Bogotá</span>
-    <span class="c">Alcaldía de Medellín</span>
-    <span class="c">Presidencia de la República</span>
+    <div class="lbl">Clientes y aliados</div>
+    <div class="clients-logos">
+      <img src="./cli-01.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-02.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-03.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-04.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-05.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-06.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-07.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-08.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-09.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-10.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-11.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-12.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-13.png" alt="Cliente" onerror="this.style.display='none'">
+    </div>
   </div>
 </div>
 
@@ -359,25 +353,27 @@
   <div class="wrap">
     <div class="about-grid">
       <div>
-        <span class="eyebrow">01 / Nosotros</span>
+        <span class="eyebrow">Nosotros</span>
         <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;color:var(--navy);margin:.6rem 0 1.3rem">Cuatro décadas de ingeniería de consulta</h2>
-        <p>Ingeniería de Proyectos S.A.S nació en 1985 para respaldar las decisiones de inversión del sector público y privado con servicios de ingeniería altamente calificados. Somos una firma de consulta especializada en el desarrollo integral de proyectos de infraestructura.</p>
-        <p class="muted">Trabajamos en consultoría, interventoría y gerencia de proyectos para entidades públicas y empresas privadas en todo el país, con un equipo multidisciplinario y altos estándares de calidad y ética profesional.</p>
+        <p>Ingeniería de Proyectos S.A.S fue creada en 1985 con el propósito de apoyar las decisiones de inversión de los sectores público y privado, ofreciendo servicios de ingeniería altamente calificados. Desde nuestros inicios hemos participado en proyectos para un número importante de departamentos e industrias del país y del exterior.</p>
+        <p class="muted">Contamos con el conocimiento, la experiencia y la creatividad necesarios para garantizar un servicio de ingeniería integral y especializado, con un equipo profesional en ingeniería civil, industrial, mecánica, eléctrica, ambiental, arquitectura y administración.</p>
         <div class="pillars">
-          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h4>Interventoría independiente</h4><p>Supervisamos sin vínculos con el contratista: nuestra independencia protege la inversión.</p></div></div>
+          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h4>Interventoría independiente</h4><p>Supervisamos sin vínculos con el contratista: la independencia protege la inversión.</p></div></div>
           <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg></span><div><h4>Rigor técnico</h4><p>Control de calidad, costo y tiempo en todas las fases del proyecto.</p></div></div>
-          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15.5 20c0-2 1-3.6 2.5-4.4"/></svg></span><div><h4>Equipo multidisciplinario</h4><p>Ingeniería civil, industrial, mecánica, eléctrica, ambiental y arquitectura.</p></div></div>
+          <div class="pillar"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15.5 20c0-2 1-3.6 2.5-4.4"/></svg></span><div><h4>Equipo multidisciplinario</h4><p>Profesionales de seis disciplinas de la ingeniería y la arquitectura.</p></div></div>
         </div>
       </div>
-      <aside class="about-side tick">
-        <h3>La empresa</h3>
-        <div class="row"><span class="k">Razón social</span><span class="v">Ingeniería de Proyectos S.A.S</span></div>
-        <div class="row"><span class="k">NIT</span><span class="v">890.116.722-8</span></div>
-        <div class="row"><span class="k">Fundación</span><span class="v">1985</span></div>
-        <div class="row"><span class="k">Sector</span><span class="v">Consultor · CCI Norte</span></div>
-        <div class="row"><span class="k">Actividad</span><span class="v">Ingeniería y consultoría técnica (CIIU 7112)</span></div>
-        <div class="row"><span class="k">Sede</span><span class="v">Barranquilla, Atlántico</span></div>
-      </aside>
+      <div>
+        <img class="about-photo" src="./empresa.jpg" alt="Profundización del canal de acceso al Puerto de Barranquilla" onerror="this.style.aspectRatio='4/3'">
+        <div class="about-cap">Profundización canal de acceso · Puerto de Barranquilla</div>
+        <aside class="about-side">
+          <div class="row"><span class="k">Razón social</span><span class="v">Ingeniería de Proyectos S.A.S</span></div>
+          <div class="row"><span class="k">NIT</span><span class="v">890.116.722-8</span></div>
+          <div class="row"><span class="k">Fundación</span><span class="v">1985</span></div>
+          <div class="row"><span class="k">Sedes</span><span class="v">Barranquilla y Bogotá</span></div>
+          <div class="row"><span class="k">Gremio</span><span class="v">Miembro CCI · Seccional Norte</span></div>
+        </aside>
+      </div>
     </div>
   </div>
 </section>
@@ -385,41 +381,48 @@
 <!-- SERVICIOS -->
 <section class="block" id="servicios" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">02 / Servicios</span><h2>Lo que hacemos</h2><p>Acompañamos el ciclo completo del proyecto, desde los estudios y diseños hasta la supervisión y la dirección de la obra.</p></div>
+    <div class="sec-head"><span class="eyebrow">Servicios</span><h2>Lo que hacemos</h2><p>Acompañamos el ciclo completo del proyecto, desde los estudios y diseños hasta la supervisión y la dirección de la obra.</p></div>
     <div class="svc-grid">
       <article class="svc tick">
-        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <h3>Consultoría y diseños</h3>
-        <p>Estudios, diseños y estructuración de proyectos para respaldar decisiones de inversión sólidas.</p>
-        <ul><li>Estudios y diseños de infraestructura</li><li>Estructuración de proyectos</li><li>Asesoría técnica especializada</li></ul>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Interventoría de proyectos</h3>
+        <p>Supervisión técnica, administrativa y financiera de obras y contratos, con independencia y transparencia.</p>
       </article>
       <article class="svc tick">
-        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <h3>Interventoría (supervisión)</h3>
-        <p>Supervisión técnica, administrativa, financiera y ambiental de obras y contratos, con independencia y transparencia.</p>
-        <ul><li>Interventoría técnica y administrativa</li><li>Control de calidad y de obra</li><li>Seguimiento de contratos públicos y privados</li></ul>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h3>Estudios y diseños</h3>
+        <p>Estudios, diseños y estructuración de proyectos para respaldar decisiones de inversión sólidas.</p>
       </article>
       <article class="svc tick">
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg></div>
         <h3>Gerencia de proyectos</h3>
-        <p>Dirección integral: planeación, coordinación y control de alcance, tiempo, costo y calidad de principio a fin.</p>
-        <ul><li>Planeación y control de proyectos</li><li>Coordinación de equipos y contratistas</li><li>Gestión de alcance, tiempo y costo</li></ul>
+        <p>Dirección integral: planeación, coordinación y control de alcance, tiempo, costo y calidad.</p>
+      </article>
+      <article class="svc tick">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 12h8M8 16h6"/></svg></div>
+        <h3>Asesorías técnicas y administrativas</h3>
+        <p>Acompañamiento experto en la estructuración, contratación y seguimiento de proyectos.</p>
+      </article>
+      <article class="svc tick">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></div>
+        <h3>Supervisión ambiental</h3>
+        <p>Gestión y supervisión ambiental de proyectos, con foco en cumplimiento y sostenibilidad.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- SECTORES -->
-<section class="block sectores" id="sectores">
+<!-- AREAS -->
+<section class="block areas" id="areas">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow light">03 / Sectores</span><h2>Dónde trabajamos</h2><p>Experiencia comprobada en los frentes de infraestructura que mueven la inversión pública en Colombia.</p></div>
-    <div class="sec-grid">
-      <div class="sct"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4M8 4H4v4M20 16v4h-4"/><path d="M4 14l6 6"/></svg></span><h4>Vías y transporte</h4><p>Interventoría y consultoría de mejoramiento, mantenimiento y conservación vial.</p></div>
-      <div class="sct"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M5 18V9l7-4 7 4v9"/><path d="M9 18v-4h6v4"/><path d="M2 21h20"/></svg></span><h4>Puertos y dragado</h4><p>Interventoría a dragados de mantenimiento de canales de acceso portuario.</p></div>
-      <div class="sct"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg></span><h4>Agua y saneamiento</h4><p>Interventoría a redes de acueducto y alcantarillado.</p></div>
-      <div class="sct"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-4 10-4 10 4 10 4M2 17s3-4 10-4 10 4 10 4M2 7s3-4 10-4 10 4 10 4"/></svg></span><h4>Protección contra inundaciones</h4><p>Diseños de estructuras de protección y control de inundaciones.</p></div>
-      <div class="sct"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-5h6v5"/></svg></span><h4>Obras urbanas y edificaciones</h4><p>Interventoría a equipamientos comunitarios y obras urbanas.</p></div>
-      <div class="sct"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h4>Y más</h4><p>Más de 40 años atendiendo proyectos en el sector público y privado.</p></div>
+    <div class="sec-head"><span class="eyebrow light">Áreas de interés</span><h2>Dónde trabajamos</h2><p>Experiencia comprobada en los frentes de infraestructura que mueven la inversión pública y privada en Colombia.</p></div>
+    <div class="area-grid">
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4M8 4H4v4M20 16v4h-4"/><path d="M4 14l6 6"/></svg></span><h4>Vías y transporte</h4><p>Interventoría, estudios y diseños de infraestructura vial y de transporte.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M5 18V9l7-4 7 4v9"/><path d="M2 21h20"/></svg></span><h4>Puertos y obras hidráulicas</h4><p>Dragados, canales de acceso, obras de protección marítima e hidráulica.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-5h6v5"/></svg></span><h4>Obras civiles, edificaciones y urbanismo</h4><p>Edificaciones, espacio público, urbanismo y restauración patrimonial.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg></span><h4>Agua y saneamiento</h4><p>Acueducto, alcantarillado y sistemas de tratamiento y almacenamiento.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg></span><h4>Medio ambiente y desarrollo institucional</h4><p>Gestión ambiental, sostenibilidad y fortalecimiento institucional.</p></div>
+      <div class="area"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><h4>Energía y telecomunicaciones</h4><p>Infraestructura de energía y de telecomunicaciones.</p></div>
     </div>
   </div>
 </section>
@@ -427,25 +430,23 @@
 <!-- PROYECTOS -->
 <section class="block blueprint" id="proyectos">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">04 / Proyectos</span><h2>Experiencia comprobable</h2><p>Una selección de contratos de obra pública ejecutados, verificables en el registro SECOP. Filtre por sector.</p></div>
+    <div class="sec-head"><span class="eyebrow">Proyectos</span><h2>Proyectos destacados</h2><p>Una selección del trabajo realizado a lo largo de cuatro décadas. Filtre por área.</p></div>
     <div class="filters" id="filters">
       <button class="on" data-f="all">Todos</button>
+      <button data-f="puertos">Puertos y obras hidráulicas</button>
       <button data-f="vias">Vías y transporte</button>
-      <button data-f="puertos">Puertos y dragado</button>
+      <button data-f="civiles">Obras civiles y urbanismo</button>
       <button data-f="agua">Agua y saneamiento</button>
-      <button data-f="inundaciones">Protección contra inundaciones</button>
-      <button data-f="urbano">Obras urbanas</button>
     </div>
     <div class="proj-grid" id="projGrid">
-      <article class="proj" data-sector="inundaciones"><div class="body"><div class="tags"><span class="pill">Consultoría</span><span class="pill sct">Protección contra inundaciones</span></div><span class="client">Fondo Adaptación</span><h4>Diseño de estructuras de protección, San Marcos y Magangué</h4><p>Macroproyecto La Mojana. Diseño de detalle de obras de protección contra inundaciones.</p><div class="meta"><span>Región de La Mojana</span><span>COP 3.654 millones</span></div></div></article>
-      <article class="proj" data-sector="vias"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Vías y transporte</span></div><span class="client">Alcaldía de Medellín</span><h4>Segunda calzada de la Av. 34, La Aguacatala a Los Balsos</h4><p>Interventoría de preconstrucción y construcción y obras complementarias.</p><div class="meta"><span>Medellín, Antioquia</span><span>COP 944 millones</span></div></div></article>
-      <article class="proj" data-sector="vias"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Vías y transporte</span></div><span class="client">Alcaldía de Medellín</span><h4>Prolongación de la Carrera 15 (San Lucas)</h4><p>Interventoría de preconstrucción y construcción y obras complementarias.</p><div class="meta"><span>Medellín, Antioquia</span><span>COP 646 millones</span></div></div></article>
-      <article class="proj" data-sector="vias"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Vías y transporte</span></div><span class="client">INVÍAS</span><h4>Mejoramiento y conservación de vías para conectividad regional</h4><p>Valle de San José y Ocamonte. Recursos de la enajenación de ISAGEN.</p><div class="meta"><span>Santander</span><span>COP 815 millones</span></div></div></article>
-      <article class="proj" data-sector="vias"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Vías y transporte</span></div><span class="client">INVÍAS</span><h4>Mejoramiento de la vía La Paz a Los Encantos</h4><p>Implementación de los Acuerdos de Paz. Recursos OCAD-PAZ del SGR.</p><div class="meta"><span>Cesar</span><span>COP 612 millones</span></div></div></article>
-      <article class="proj" data-sector="puertos"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Puertos y dragado</span></div><span class="client">INVÍAS</span><h4>Dragado de mantenimiento del canal de acceso al Puerto de Buenaventura</h4><p>Interventoría al dragado del canal de acceso portuario.</p><div class="meta"><span>Valle del Cauca</span><span>COP 341 millones</span></div></div></article>
-      <article class="proj" data-sector="puertos"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Puertos y dragado</span></div><span class="client">INVÍAS</span><h4>Dragado de mantenimiento del canal de acceso al Puerto de Tumaco</h4><p>Interventoría al dragado del canal de acceso portuario.</p><div class="meta"><span>Nariño</span><span>COP 245 millones</span></div></div></article>
-      <article class="proj" data-sector="urbano"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Obras urbanas</span></div><span class="client">ENTerritorio</span><h4>Centro Integrado Comunitario (CISCO) San José, Manizales</h4><p>Interventoría técnica, administrativa y de control presupuestal, Fase I.</p><div class="meta"><span>Caldas</span><span>COP 335 millones</span></div></div></article>
-      <article class="proj" data-sector="agua"><div class="body"><div class="tags"><span class="pill">Interventoría</span><span class="pill sct">Agua y saneamiento</span></div><span class="client">Acueducto de Bogotá</span><h4>Redes de alcantarillado sanitario, barrio Buenavista, Usaquén</h4><p>Interventoría durante la construcción de redes en la zona 1 de la EAAB ESP.</p><div class="meta"><span>Bogotá</span><span>COP 322 millones</span></div></div></article>
+      <article class="proj" data-sector="puertos"><div class="ph"><span class="tag">Puertos</span><img src="./px-dragado.jpg" alt="Dragado canal de acceso Puerto de Barranquilla" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Dragado del canal de acceso, Puerto de Barranquilla</h4><div class="loc">Atlántico · Interventoría</div></div></article>
+      <article class="proj" data-sector="vias"><div class="ph"><span class="tag">Vías</span><img src="./px-av34.jpg" alt="Segunda calzada Avenida 34 Medellín" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción 2da calzada Avenida 34</h4><div class="loc">Medellín, Antioquia · Interventoría</div></div></article>
+      <article class="proj" data-sector="puertos"><div class="ph"><span class="tag">Puertos</span><img src="./px-cartagena.jpg" alt="Obras de protección marítima Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Obras de protección marítima</h4><div class="loc">Cartagena, Bolívar</div></div></article>
+      <article class="proj" data-sector="vias"><div class="ph"><span class="tag">Vías</span><img src="./px-crespo.jpg" alt="Anillo Vial de Crespo Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Anillo Vial de Crespo</h4><div class="loc">Cartagena, Bolívar</div></div></article>
+      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag">Obras civiles</span><img src="./px-malecon.jpg" alt="Malecón Avenida al Río Barranquilla" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción Malecón Avenida al Río</h4><div class="loc">Barranquilla, Atlántico</div></div></article>
+      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag">Edificaciones</span><img src="./px-kennedy.jpg" alt="Colegio Las Américas Kennedy Bogotá" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción Colegio Las Américas, Kennedy</h4><div class="loc">Bogotá D.C.</div></div></article>
+      <article class="proj" data-sector="civiles"><div class="ph"><span class="tag">Restauración</span><img src="./px-valdehoyos.jpg" alt="Casa del Marqués de Valdehoyos Cartagena" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Restauración Casa del Marqués de Valdehoyos</h4><div class="loc">Cartagena, Bolívar</div></div></article>
+      <article class="proj" data-sector="agua"><div class="ph"><span class="tag">Agua</span><img src="./px-tanque.jpg" alt="Tanque Cupino Puerto Colombia" loading="lazy" onerror="this.style.display='none'"></div><div class="body"><h4>Construcción Tanque Cupino</h4><div class="loc">Puerto Colombia, Atlántico</div></div></article>
     </div>
   </div>
 </section>
@@ -454,9 +455,9 @@
 <section class="block">
   <div class="wrap">
     <div class="vision"><div class="glow" aria-hidden="true"></div><div class="in">
-      <span class="eyebrow light">05 / Visión 2030</span>
+      <span class="eyebrow light">Visión 2030</span>
       <h2>Un grupo empresarial con presencia en Colombia y Latinoamérica</h2>
-      <p>Para 2030 nos proyectamos consolidados como líderes de un grupo empresarial con participación en proyectos en Colombia y Latinoamérica, reconocidos por nuestra capacidad técnica y financiera, nuestra capacidad operativa y un alto perfil ético.</p>
+      <p>Para 2030, Ingeniería de Proyectos S.A.S se habrá consolidado como líder de un grupo empresarial con participación en proyectos en Colombia y Latinoamérica, reconocido por su capacidad técnica, financiera y operativa y su alto perfil ético, garantizando un crecimiento sostenible y responsable.</p>
     </div></div>
   </div>
 </section>
@@ -466,20 +467,28 @@
   <div class="wrap">
     <div class="contact-grid">
       <div>
-        <span class="eyebrow">06 / Contacto</span>
+        <span class="eyebrow">Contacto</span>
         <h2>Hablemos de su proyecto</h2>
-        <p class="sub">Estamos en Barranquilla y trabajamos en proyectos en todo el país. Escríbanos y le respondemos con gusto.</p>
-        <div style="margin-top:2rem">
-          <div class="ci"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div><div class="k">Dirección</div><div class="v">Calle 77B No. 57-103, Oficina 907<br>Barranquilla, Atlántico</div></div></div>
-          <div class="ci"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><div><div class="k">Teléfono</div><div class="v">(605) 368 6111</div></div></div>
-          <div class="ci"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></span><div><div class="k">Contacto principal</div><div class="v">Mónica Gutiérrez</div></div></div>
+        <p class="sub">Tenemos oficinas en Barranquilla y Bogotá y trabajamos en proyectos en todo el país.</p>
+        <div class="offices">
+          <div class="office">
+            <h4>Barranquilla</h4>
+            <p>Calle 77B No. 57-103, Of. 907<br>Edificio Green Towers, Atlántico</p>
+            <div class="ph">(605) 368 6110 · 368 6111<br>(605) 385 5007</div>
+          </div>
+          <div class="office">
+            <h4>Bogotá</h4>
+            <p>Avenida 19 No. 120-71, Of. 104<br>Edificio Global Business Center</p>
+            <div class="ph">(601) 356 2691</div>
+          </div>
         </div>
+        <div class="email">Correo: <a href="mailto:info@inproyectos.com">info@inproyectos.com</a></div>
       </div>
       <div class="contact-card">
         <h3>Cuéntenos su proyecto</h3>
         <p>Nuestro asistente le ayuda a orientar su consulta y a coordinar una conversación con el equipo.</p>
         <button class="btn btn-primary" data-action="open-chat">Iniciar conversación</button>
-        <a class="btn btn-outline-light" href="tel:+576053686111">Llamar (605) 368 6111</a>
+        <a class="btn btn-outline-light" href="tel:+576053686110">Llamar (605) 368 6110</a>
       </div>
     </div>
   </div>
@@ -490,11 +499,12 @@
   <div class="wrap ft-in">
     <div>
       <img src="./logo.png" alt="Ingeniería de Proyectos S.A.S" class="ft-logo" onerror="this.style.display='none'">
-      <p class="legal"><b>Ingeniería de Proyectos S.A.S</b> · NIT 890.116.722-8<br>Calle 77B No. 57-103, Oficina 907, Barranquilla, Atlántico, Colombia<br>Teléfono (605) 368 6111<br>Miembro de la Cámara Colombiana de la Infraestructura (CCI), Seccional Norte.</p>
+      <p class="legal"><b>Ingeniería de Proyectos S.A.S</b> · NIT 890.116.722-8<br>Barranquilla: Calle 77B No. 57-103, Of. 907, Edificio Green Towers<br>Bogotá: Avenida 19 No. 120-71, Of. 104, Edificio Global Business Center<br>(605) 368 6110 · info@inproyectos.com · Miembro de la CCI, Seccional Norte.</p>
     </div>
     <div class="links">
+      <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
-      <a href="#sectores">Sectores</a>
+      <a href="#areas">Áreas</a>
       <a href="#proyectos">Proyectos</a>
       <a href="#contacto">Contacto</a>
     </div>
@@ -525,41 +535,31 @@
 </aside>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"Ingeniería de Proyectos S.A.S","description":"Consultoría, interventoría y gerencia de proyectos de infraestructura para el sector público y privado, desde 1985.","foundingDate":"1985","telephone":"+57-605-368-6111","areaServed":"CO","address":{"@type":"PostalAddress","streetAddress":"Calle 77B No. 57-103, Oficina 907","addressLocality":"Barranquilla","addressRegion":"Atlántico","addressCountry":"CO"},"identifier":{"@type":"PropertyValue","propertyID":"NIT","value":"890.116.722-8"},"memberOf":{"@type":"Organization","name":"Cámara Colombiana de la Infraestructura (CCI)"},"knowsAbout":["Interventoría","Consultoría","Gerencia de proyectos","Vías","Puertos","Agua y saneamiento","Infraestructura"]}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Ingeniería de Proyectos S.A.S","description":"Consultoría, interventoría y gerencia de proyectos de infraestructura para el sector público y privado, desde 1985.","foundingDate":"1985","email":"info@inproyectos.com","telephone":"+57-605-368-6110","areaServed":"CO","identifier":{"@type":"PropertyValue","propertyID":"NIT","value":"890.116.722-8"},"memberOf":{"@type":"Organization","name":"Cámara Colombiana de la Infraestructura (CCI)"},"knowsAbout":["Interventoría","Consultoría","Gerencia de proyectos","Vías y transporte","Puertos y obras hidráulicas","Agua y saneamiento"]}
 </script>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-
 // Hero flagship rotator
 (function(){
   var flag=document.getElementById('flag'); if(!flag) return;
   var slides=[].slice.call(flag.querySelectorAll('.slide'));
   var dotsWrap=document.getElementById('flagDots');
   slides.forEach(function(_,i){var b=document.createElement('button');if(i===0)b.className='on';b.addEventListener('click',function(){show(i);restart();});dotsWrap.appendChild(b);});
-  var dots=[].slice.call(dotsWrap.children);
-  var i=0,timer=null;
+  var dots=[].slice.call(dotsWrap.children),i=0,timer=null;
   function show(n){i=n;slides.forEach(function(s,k){s.classList.toggle('is-active',k===n);});dots.forEach(function(d,k){d.classList.toggle('on',k===n);});}
   function tick(){show((i+1)%slides.length);}
   function start(){if(!timer&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(tick,4500);}
   function restart(){if(timer){clearInterval(timer);timer=null;}start();}
   flag.addEventListener('mouseenter',function(){if(timer){clearInterval(timer);timer=null;}});
-  flag.addEventListener('mouseleave',start);
-  start();
+  flag.addEventListener('mouseleave',start);start();
 })();
-
 // Project filter
 (function(){
   var bar=document.getElementById('filters'); if(!bar) return;
   var cards=[].slice.call(document.querySelectorAll('#projGrid .proj'));
-  bar.addEventListener('click',function(e){
-    var btn=e.target.closest('button'); if(!btn) return;
-    [].slice.call(bar.children).forEach(function(b){b.classList.toggle('on',b===btn);});
-    var f=btn.getAttribute('data-f');
-    cards.forEach(function(c){c.classList.toggle('hide',!(f==='all'||c.getAttribute('data-sector')===f));});
-  });
+  bar.addEventListener('click',function(e){var btn=e.target.closest('button');if(!btn)return;[].slice.call(bar.children).forEach(function(b){b.classList.toggle('on',b===btn);});var f=btn.getAttribute('data-f');cards.forEach(function(c){c.classList.toggle('hide',!(f==='all'||c.getAttribute('data-sector')===f));});});
 })();
-
 // Chat widget
 (function(){
   var SLUG='inproyectos-v2';
@@ -574,7 +574,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   document.querySelectorAll('[data-action="open-chat"]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openPanel();});});
   function addBubble(role,text,opts){opts=opts||{};var el=document.createElement('div');el.className='bubble '+role+(opts.error?' error':'');el.textContent=text;body.appendChild(el);body.scrollTop=body.scrollHeight;return el;}
   function addTyping(){var el=document.createElement('div');el.className='bubble bot typing';el.innerHTML='<span></span><span></span><span></span>';body.appendChild(el);body.scrollTop=body.scrollHeight;return el;}
-  function addContact(){var c=document.createElement('a');c.className='c-cta call';c.href='tel:'+PHONE;c.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span></span>';c.querySelector('span').textContent='Llamar '+PHONE_LABEL;body.appendChild(c);var m=document.createElement('a');m.className='c-cta mail';m.href='mailto:'+EMAIL;m.textContent='Escribir a '+EMAIL;body.appendChild(m);body.scrollTop=body.scrollHeight;}
+  function addContact(){var c=document.createElement('a');c.className='c-cta call';c.href='tel:'+PHONE;c.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span></span>';c.querySelector("span").textContent="Llamar "+PHONE_LABEL;body.appendChild(c);var m=document.createElement("a");m.className="c-cta mail";m.href="mailto:"+EMAIL;m.textContent="Escribir a "+EMAIL;body.appendChild(m);body.scrollTop=body.scrollHeight;}
   function greet(){addBubble('bot','Buen día. Soy el asistente de Ingeniería de Proyectos S.A.S. Le ayudo con información sobre consultoría, interventoría y gerencia de proyectos, o coordino una conversación con el equipo. ¿En qué le puedo ayudar?');}
   async function send(text){history.push({role:'user',content:text});addBubble('user',text);input.value='';sendBtn.disabled=true;var typing=addTyping();
     try{var res=await fetch(ENDPOINT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history})});typing.remove();
