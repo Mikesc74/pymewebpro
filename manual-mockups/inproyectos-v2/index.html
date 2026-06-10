@@ -86,8 +86,9 @@
   /* clients band */
   .clients{background:var(--cream);border-bottom:1px solid var(--line)}
   .clients-in{padding-top:2.4rem;padding-bottom:2.4rem}
-  .clients .lbl{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:600;text-align:center;margin-bottom:1.4rem}
-  .clients-logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1.3rem 2.4rem}
+  .clients .lbl{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dk);display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1.4rem}
+  .clients .lbl::before{content:"";width:22px;height:2px;background:var(--accent);flex:0 0 auto}
+  .clients-logos{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:1.3rem 2.4rem}
   .clients-logos img{height:48px;width:auto;max-width:140px;object-fit:contain;opacity:.65;filter:grayscale(1);transition:opacity .2s,filter .2s}
   .clients-logos img:hover{opacity:1;filter:none}
 
@@ -263,7 +264,7 @@
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   @media print{.chat-fab,.chat-panel,header.nav,.contact-card{display:none!important}body{color:#000}}
   /* tighten nosotros -> servicios gap */
-  #nosotros{padding-bottom:1.2rem}
+  #nosotros{padding-bottom:2.5rem}
   #servicios{padding-top:3rem}
   /* servicios hover art */
   .svc{overflow:hidden}
@@ -333,28 +334,6 @@
   </div>
 </section>
 
-<!-- CLIENTS -->
-<div class="clients">
-  <div class="wrap clients-in">
-    <div class="lbl">Clientes y aliados</div>
-    <div class="clients-logos">
-      <img src="./cli-01.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-02.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-03.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-04.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-05.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-06.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-07.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-08.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-09.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-10.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-11.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-12.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-13.png" alt="Cliente" onerror="this.style.display='none'">
-    </div>
-  </div>
-</div>
-
 <!-- NOSOTROS -->
 <section class="block blueprint" id="nosotros">
   <div class="wrap">
@@ -384,6 +363,28 @@
     </div>
   </div>
 </section>
+
+<!-- CLIENTS -->
+<div class="clients">
+  <div class="wrap clients-in">
+    <div class="lbl">Clientes y aliados</div>
+    <div class="clients-logos">
+      <img src="./cli-01.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-02.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-03.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-04.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-05.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-06.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-07.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-08.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-09.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-10.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-11.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-12.png" alt="Cliente" onerror="this.style.display='none'">
+      <img src="./cli-13.png" alt="Cliente" onerror="this.style.display='none'">
+    </div>
+  </div>
+</div>
 
 <!-- SERVICIOS -->
 <section class="block" id="servicios" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
