@@ -36,11 +36,14 @@
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[
-{"@type":"Question","name":"How is this different from Wix or Squarespace?","acceptedAnswer":{"@type":"Answer","text":"Wix sells you a brochure builder. We build you a salesperson. Custom, no template, sub-1-second load, written to convert, fully yours."}},
-{"@type":"Question","name":"Do you guarantee customers?","acceptedAnswer":{"@type":"Answer","text":"No. We cannot promise traffic or conversions, that depends on your advertising and the quality of your offer. What we promise is the page itself: clear structure, fast load, a form that works, written to convert. The 30 day money-back guarantee covers your satisfaction with the work."}},
-{"@type":"Question","name":"What if I do not like it?","acceptedAnswer":{"@type":"Answer","text":"30 day money-back guarantee. If the page does not work for you, we refund every peso."}},
-{"@type":"Question","name":"Do I need to buy a domain?","acceptedAnswer":{"@type":"Answer","text":"Yes. After paying, we walk you through it inside the portal. If you already have a domain, we connect it. If not, we point you where to buy it (typically between $20.000 and $60.000 COP a year) and handle all the technical setup ourselves. The domain is always registered in your name, never ours."}},
-{"@type":"Question","name":"How much is hosting after the included period?","acceptedAnswer":{"@type":"Answer","text":"The page includes 1 month of hosting and support. After that, your monthly plan continues at $150.000 COP a month, all included (hosting, Google Business Profile, 24/7 assistant and more). No contract, cancel anytime, the site files are always yours."}}
+{"@type":"Question","name":"How smart is the assistant?","acceptedAnswer":{"@type":"Answer","text":"It runs on Claude Sonnet 4.6, the model behind Anthropic's flagship product. We train it on your services, prices, hours, and FAQ from your form, so it knows your business specifically. When it doesn't know an answer, it hands you the conversation instead of guessing."}},
+{"@type":"Question","name":"Does it speak English?","acceptedAnswer":{"@type":"Answer","text":"Yes. It detects Spanish or English and replies in the same language. The bilingual version is included in the monthly plan."}},
+{"@type":"Question","name":"Do you build online stores or membership sites?","acceptedAnswer":{"@type":"Answer","text":"Our package is built to win customers for service businesses, but if you have a different need we're happy to take a look and put a proposal together. Open the chat and tell us what you have in mind."}},
+{"@type":"Question","name":"Why does it cost less than an agency?","acceptedAnswer":{"@type":"Answer","text":"Because it's one focused product, not an agency with project managers and hourly billing. We build it efficiently, with automation where we can, and pass you one clear fixed price, everything included, no surprise charges."}},
+{"@type":"Question","name":"What if I want to cancel?","acceptedAnswer":{"@type":"Answer","text":"It's month to month. Email us with 30 days notice. You keep your domain, and if you want them, we hand off your site files."}},
+{"@type":"Question","name":"What if the assistant says something wrong to my customer?","acceptedAnswer":{"@type":"Answer","text":"It's trained only on your business and answers from what you give us. When it isn't sure, it hands you the conversation instead of guessing, and flags anything sensitive. You approve what it knows before it goes live, and you can change it anytime."}},
+{"@type":"Question","name":"Is the page mine, or am I locked in?","acceptedAnswer":{"@type":"Answer","text":"It's yours. You keep your domain, it's month to month, and if you ever leave we hand off your site files. No lock-in, no fine print."}},
+{"@type":"Question","name":"Isn't a single page too thin for a real business?","acceptedAnswer":{"@type":"Answer","text":"A focused page usually converts better than one full of tabs, because it points every visitor at one action: contacting you. If you need more pages, a store, or a blog, we add them. Most businesses get more customers from one clear page than from ten they never update."}}
 ]}
 </script>
 <style>
@@ -259,7 +262,7 @@
       <a href="#demos">Demos</a>
       <a href="#precio">Pricing</a>
       <a href="#faq">FAQ</a>
-      <button class="btn" type="button" data-valentina-open="start" style="padding: 9px 18px; font-size: 14px; color: white;">Talk to us</button>
+      <button class="btn" type="button" data-valentina-open="start" style="padding: 9px 18px; font-size: 14px; color: white;">Get your free mockup</button>
       <span class="lang"><a href="/" hreflang="es">ES</a><a href="#top" class="active" aria-current="page">EN</a></span>
     </nav>
   </div>
@@ -412,7 +415,7 @@
 <section id="precio" class="buy">
   <div class="wrap" style="max-width: 1040px; text-align: center;">
     <span class="kicker">$ Clear pricing</span>
-    <h2 style="font-size: 44px; margin: 0 0 32px; letter-spacing: -0.02em;">One bundle. One account.<br><span class="pop-text">Clear</span> pricing.</h2>
+    <h2 style="font-size: 44px; margin: 0 0 32px; letter-spacing: -0.02em;">A bundle of options.<br><span class="pop-text">One</span> low cost.</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; text-align: left;" class="buy-grid">
 
       <div>
@@ -437,7 +440,7 @@
           <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px;">The PymeWebPro bundle, everything in</div>
           <div style="display:flex; align-items:baseline; justify-content:center; gap:10px;">
             <span style="font-size: 56px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em;">$400.000</span>
-            <span style="font-size: 16px; color: var(--ink-soft); font-weight: 600;">once</span>
+            <span style="font-size: 16px; color: var(--ink-soft); font-weight: 600;">setup</span>
           </div>
           <p style="font-size: 17px; color: var(--ink); margin: 16px 0 0; font-weight: 600;">then $150.000 / month, all included · cancel anytime</p>
           <button class="btn" id="precioBtn" type="button" data-valentina-open="start" style="display: block; width: 100%; font-size: 17px; padding: 16px; color: white; margin: 26px auto 0;">Get Started With Your Free Mockup →</button>
@@ -493,14 +496,14 @@
         <div style="position: absolute; top: -22px; left: 50%; transform: translateX(-50%); width: 44px; height: 44px; background: var(--accent); color: white; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 18px;">1</div>
         <div style="font-size: 36px; margin: 0 0 12px;">📤</div>
         <h3 style="margin: 0 0 10px; font-size: 19px;">Tell us about your business</h3>
-        <p style="color: var(--ink-soft); margin: 0 0 20px; font-size: 14px; line-height: 1.55;">Message the assistant and answer a few quick questions, then add your logo, photos, and what makes you different through a short link. We turn that into a free mockup of your page, with the assistant live on it. No forms, no card, no commitment.</p>
+        <p style="color: var(--ink-soft); margin: 0 0 20px; font-size: 14px; line-height: 1.55;">Ask the assistant for a mockup and it sends you a link to a short wizard. Drop in your vision, your logo, and your photos, and we build you a free draft mockup of your page, with the assistant live on it. No card, no commitment.</p>
         <button class="btn" type="button" data-valentina-open="start" style="font-size: 15px; padding: 12px 22px;">Get your free mockup →</button>
       </div>
       <div style="text-align: center; padding: 36px 24px 28px; border: 2px solid var(--pop); border-radius: 12px; position: relative; background: linear-gradient(180deg, white, var(--pop-soft));">
         <div style="position: absolute; top: -22px; left: 50%; transform: translateX(-50%); width: 44px; height: 44px; background: var(--pop); color: white; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 18px;">2</div>
         <div style="font-size: 36px; margin: 0 0 12px;">🚀</div>
         <h3 style="margin: 0 0 10px; font-size: 19px;">See it, approve it, go live</h3>
-        <p style="color: var(--ink-soft); margin: 0; font-size: 14px; line-height: 1.55;">We build your page and train the assistant on your business, then send you a preview to review. Ask for any tweaks you want. Once you're happy, you pay in full ($400.000 COP), we point your domain, and customers start coming in, all within 48 hours.</p>
+        <p style="color: var(--ink-soft); margin: 0; font-size: 14px; line-height: 1.55;">You review the draft and tell us what to change. We refine it until it's exactly right and train the assistant on your business. Once you're happy, you pay in full ($400.000 COP), we point your domain, and you go live, all within 48 hours.</p>
       </div>
     </div>
   </div>
@@ -553,24 +556,36 @@
   <div class="wrap" style="max-width: 800px;">
     <h2>Frequently asked questions</h2>
     <details class="faq-item">
-      <summary>How is this different from Wix or Squarespace?</summary>
-      <p>Wix sells you a brochure builder. We build you a salesperson. Custom, no template, loads in under a second, written to convert, and fully yours.</p>
+      <summary>How smart is the assistant?</summary>
+      <p>It runs on Claude Sonnet 4.6, the model behind Anthropic's flagship product. We train it on your services, prices, hours, and FAQ from your form, so it knows your business specifically. When it doesn't know an answer, it hands you the conversation instead of guessing.</p>
     </details>
     <details class="faq-item">
-      <summary>Do you guarantee customers?</summary>
-      <p>No. We cannot promise traffic or conversions, that depends on your advertising and the quality of your offer. What we promise is the page itself: clear structure, fast load, a form that works, written to convert. The 30 day money-back guarantee covers your satisfaction with the work.</p>
+      <summary>Does it speak English?</summary>
+      <p>Yes. It detects Spanish or English and replies in the same language. The bilingual version is included in the monthly plan.</p>
     </details>
     <details class="faq-item">
-      <summary>What if I don't like it?</summary>
-      <p>30 day money-back guarantee. If the page does not work for you, we refund every peso.</p>
+      <summary>Do you build online stores or membership sites?</summary>
+      <p>Our package is built to win customers for service businesses, but if you have a different need we're happy to take a look and put a proposal together. Open the chat and tell us what you have in mind.</p>
     </details>
     <details class="faq-item">
-      <summary>Do I need to buy a domain?</summary>
-      <p>Yes. After paying, we walk you through it inside the portal. If you already have a domain, we connect it. If not, we point you where to buy it (typically between $20.000 and $60.000 COP a year) and handle all the technical setup ourselves. The domain is always registered in your name, never ours.</p>
+      <summary>Why does it cost less than an agency?</summary>
+      <p>Because it's one focused product, not an agency with project managers and hourly billing. We build it efficiently, with automation where we can, and pass you one clear fixed price, everything included, no surprise charges.</p>
     </details>
     <details class="faq-item">
-      <summary>How much is hosting after the included period?</summary>
-      <p>The page includes 1 month of hosting and support. After that, your monthly plan continues at $150.000 COP a month, all included (hosting, Google Business Profile, 24/7 assistant and more). No contract, cancel anytime, the site files are always yours.</p>
+      <summary>What if I want to cancel?</summary>
+      <p>It's month to month. Email us with 30 days notice. You keep your domain, and if you want them, we hand off your site files.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What if the assistant says something wrong to my customer?</summary>
+      <p>It's trained only on your business and answers from what you give us. When it isn't sure, it hands you the conversation instead of guessing, and flags anything sensitive. You approve what it knows before it goes live, and you can change it anytime.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is the page mine, or am I locked in?</summary>
+      <p>It's yours. You keep your domain, it's month to month, and if you ever leave we hand off your site files. No lock-in, no fine print.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Isn't a single page too thin for a real business?</summary>
+      <p>A focused page usually converts better than one full of tabs, because it points every visitor at one action: contacting you. If you need more pages, a store, or a blog, we add them. Most businesses get more customers from one clear page than from ten they never update.</p>
     </details>
   </div>
 </section>
