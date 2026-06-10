@@ -262,6 +262,13 @@
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   @media print{.chat-fab,.chat-panel,header.nav,.contact-card{display:none!important}body{color:#000}}
+  /* tighten nosotros -> servicios gap */
+  #nosotros{padding-bottom:1.2rem}
+  #servicios{padding-top:3rem}
+  /* servicios hover art */
+  .svc{overflow:hidden}
+  .svc-art{position:absolute;right:-16px;bottom:-16px;width:130px;height:130px;color:var(--accent);opacity:0;transform:translateY(12px) rotate(-8deg);transition:opacity .35s ease,transform .35s ease;pointer-events:none}
+  .svc:hover .svc-art{opacity:.13;transform:translateY(0) rotate(0)}
 </style>
 </head>
 <body>
@@ -383,27 +390,27 @@
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow">Servicios</span><h2>Lo que hacemos</h2><p>Acompañamos el ciclo completo del proyecto, desde los estudios y diseños hasta la supervisión y la dirección de la obra.</p></div>
     <div class="svc-grid">
-      <article class="svc tick">
+      <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <h3>Interventoría de proyectos</h3>
         <p>Supervisión técnica, administrativa y financiera de obras y contratos, con independencia y transparencia.</p>
       </article>
-      <article class="svc tick">
+      <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
         <h3>Estudios y diseños</h3>
         <p>Estudios, diseños y estructuración de proyectos para respaldar decisiones de inversión sólidas.</p>
       </article>
-      <article class="svc tick">
+      <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg></div>
         <h3>Gerencia de proyectos</h3>
         <p>Dirección integral: planeación, coordinación y control de alcance, tiempo, costo y calidad.</p>
       </article>
-      <article class="svc tick">
+      <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 12h8M8 16h6"/></svg></div>
         <h3>Asesorías técnicas y administrativas</h3>
         <p>Acompañamiento experto en la estructuración, contratación y seguimiento de proyectos.</p>
       </article>
-      <article class="svc tick">
+      <article class="svc tick"><svg class="svc-art" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M4 92 L36 26 L68 92 L100 26"/><path d="M4 92 H100"/></svg>
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></div>
         <h3>Supervisión ambiental</h3>
         <p>Gestión y supervisión ambiental de proyectos, con foco en cumplimiento y sostenibilidad.</p>
