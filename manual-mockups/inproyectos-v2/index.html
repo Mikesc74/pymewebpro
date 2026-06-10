@@ -562,7 +562,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
     if(es)es.classList.toggle('on',l==='es'); if(en)en.classList.toggle('on',l==='en');
     try{localStorage.setItem(KEY,l);}catch(e){}
   }
-  var saved='es'; try{saved=localStorage.getItem(KEY)||'es';}catch(e){}
+  var saved=null; try{saved=localStorage.getItem(KEY);}catch(e){}
+  if(!saved){var nl=(navigator.language||navigator.userLanguage||'es').toLowerCase(); saved=nl.indexOf('en')===0?'en':'es';}
   if(es)es.addEventListener('click',function(){apply('es');});
   if(en)en.addEventListener('click',function(){apply('en');});
   apply(saved);
