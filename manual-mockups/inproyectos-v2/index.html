@@ -84,13 +84,17 @@
   .flag .dots button.on{background:var(--accent)}
 
   /* clients band */
-  .clients{background:var(--navy);border-top:1px solid var(--line-dk);border-bottom:1px solid var(--line-dk)}
-  .clients-in{padding-top:2.4rem;padding-bottom:2.4rem}
+  .clients{background:var(--navy);border-top:1px solid var(--line-dk);border-bottom:1px solid var(--line-dk);padding:2.6rem 0;overflow:hidden}
+  .clients-in{padding-top:2.4rem;padding-bottom:2.4rem}/* (legacy) */
   .clients .lbl{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-soft);display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1.4rem}
   .clients .lbl::before{content:"";width:22px;height:2px;background:var(--accent);flex:0 0 auto}
-  .clients-logos{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:1.3rem 2.4rem}
-  .clients-logos img{height:46px;width:auto;max-width:150px;object-fit:contain;background:#fff;padding:.65rem 1rem;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.2);transition:transform .2s}
-  .clients-logos img:hover{transform:translateY(-2px)}
+  .marquee-rail{background:#fff;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.3);overflow:hidden;padding:1.2rem 0}
+  .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .marquee-track{display:flex;align-items:center;width:max-content;animation:marq 38s linear infinite}
+  .marquee-rail:hover .marquee-track{animation-play-state:paused}
+  .marquee-track img{height:58px;width:auto;max-width:none;object-fit:contain;flex:0 0 auto;display:block;margin-right:3.2rem}
+  @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto}.marquee-track img{margin:.6rem 1.6rem}}
 
   /* sections */
   section.block{padding:5rem 0}
@@ -371,23 +375,9 @@
 
 <!-- CLIENTS -->
 <div class="clients">
-  <div class="wrap clients-in">
+  <div class="wrap">
     <div class="lbl" data-en="Clients &amp; partners">Clientes y aliados</div>
-    <div class="clients-logos">
-      <img src="./cli-01.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-02.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-03.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-04.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-05.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-06.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-07.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-08.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-09.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-10.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-11.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-12.png" alt="Cliente" onerror="this.style.display='none'">
-      <img src="./cli-13.png" alt="Cliente" onerror="this.style.display='none'">
-    </div>
+    <div class="marquee-rail"><div class="marquee"><div class="marquee-track"><img src="./cli-01.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-02.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-03.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-04.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-05.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-06.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-07.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-08.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-09.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-10.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-11.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-12.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-13.png" alt="Cliente" onerror="this.style.display='none'"><img src="./cli-01.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-02.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-03.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-04.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-05.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-06.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-07.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-08.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-09.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-10.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-11.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-12.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img src="./cli-13.png" alt="" aria-hidden="true" onerror="this.style.display='none'"></div></div></div>
   </div>
 </div>
 
